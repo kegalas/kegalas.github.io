@@ -124,17 +124,17 @@
     <section class="article-content">
     <h1 id="向量">向量</h1>
 <h2 id="题目描述">题目描述</h2>
-<p>​	给你n个向量，请问是否可以通过旋转异或伸缩任意一个向量，使得这n个向量相加等于0向量。
+<p>​    给你n个向量，请问是否可以通过旋转异或伸缩任意一个向量，使得这n个向量相加等于0向量。
 ​</p>
-<p>​	注意，在本题中，我们认为0向量只能伸缩为0向量，非0向量可以伸缩为0向量、方向相同长度任意的向量、方向相反长度任意的向量。</p>
+<p>​    注意，在本题中，我们认为0向量只能伸缩为0向量，非0向量可以伸缩为0向量、方向相同长度任意的向量、方向相反长度任意的向量。</p>
 <h3 id="输入">输入</h3>
-<p>​	单组输入</p>
-<p>​	第一行一个正整数 $n(1\le n\le 10^5)$，即向量的个数。</p>
-<p>​	接下来$n$行，每行两个整数$x_i$, $y_i$ $(0\le |x_i|,|y_i|\le 10^9)$，分别代表第$i$个向量$x$轴与$y$轴的大小方向。</p>
+<p>​    单组输入</p>
+<p>​    第一行一个正整数 $n(1\le n\le 10^5)$，即向量的个数。</p>
+<p>​    接下来$n$行，每行两个整数$x_i$, $y_i$ $(0\le |x_i|,|y_i|\le 10^9)$，分别代表第$i$个向量$x$轴与$y$轴的大小方向。</p>
 <p>数据保证</p>
 <p>$$\sum_{i=1}^{n}(|x_i|+|y_i|)\le 10^9$$</p>
 <h3 id="输出">输出</h3>
-<p>​	若存在满足要求的操作输出 “yes”，反之输出 “no”。</p>
+<p>​    若存在满足要求的操作输出 “yes”，反之输出 “no”。</p>
 <h3 id="样例">样例</h3>
 <table>
 <thead>
@@ -198,7 +198,6 @@
     <span class="k">else</span> <span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&#34;no&#34;</span><span class="p">;</span>
     <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
 <span class="p">}</span>
-
 </code></pre></div><h2 id="正确性证明">正确性证明</h2>
 <p>首先分析题目，出题人的表达和数据结果并不一致。“是否可以通过旋转异或伸缩任意一个向量”实际上应该是“是否可以通过旋转异或伸缩某一个向量”，从而“使得这n个向量相加等于0向量”。</p>
 <p>数据也就$10^5$，直接枚举就行。先将所有向量加到一起记为allSum，然后建立一个tmpSum = allSum-我们当前枚举的向量，记为v。</p>
@@ -266,6 +265,18 @@
         <h2 class="section-title">相关文章</h2>
         <div class="related-contents">
             <div class="flex article-list--tile">
+                
+                    
+<article class="">
+    <a href="/p/%E7%AE%97%E6%B3%95%E7%AB%9E%E8%B5%9B%E5%B8%B8%E7%94%A8%E6%A8%A1%E6%9D%BF%E6%95%B4%E7%90%86/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">算法竞赛常用模板整理</h2>
+        </div>
+    </a>
+</article>
                 
                     
 <article class="has-image">
