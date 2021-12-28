@@ -18,7 +18,7 @@ mathjax: true
 #include <stdio.h>
 
 void merge(long *num,long *tmp, int left, int mid_index ,int right){
-    
+
     int first=left, second = mid_index+1, tmp_index = left;
     while(first<mid_index+1&&second<right+1){
         if(*(num+first)<*(num+second)){
@@ -70,15 +70,13 @@ int main(){
     }
 
     merge_sort(num,tmp,1,num_count);
-    
+
     for(i=1;i<=num_count;i++){
         printf("%d ",num[i]);
     }
 
     return 0;
 }
-
-
 ```
 
 ## 技巧
@@ -112,9 +110,6 @@ int main(){
 
     return 0;
 }
-
-
-
 ```
 
 ## 字符串
@@ -152,7 +147,7 @@ int getNext(){
             r++;
         }
     }
-    
+
     return 0;
 }
 
@@ -181,7 +176,7 @@ int main(){
             cout<<tar-pos+1<<endl;
             pos = nxt[pos-1];
         }
-        
+
     }
 
     for(int i=0;i<s2.length();i++){
@@ -189,16 +184,14 @@ int main(){
     }
 
     cout<<endl;
-    
 
-    
+
+
 
 
 
     return 0;
 }
-
-
 ```
 
 ### 字典树(Trie)
@@ -243,7 +236,7 @@ bool find_prefix(string s){
 }
 
 int main(){
-    
+
     int n;
     cin>>n;
     for(int i=1;i<=n;i++){
@@ -260,8 +253,6 @@ int main(){
 
     return 0;
 }
-
-
 ```
 
 ## 数论
@@ -295,7 +286,6 @@ int main(){
     cout<<x<<" "<<y<<" "<<z<<endl;
     return 0;
 }
-
 ```
 
 ### 欧几里得算法
@@ -327,7 +317,6 @@ int main(){
 
     return 0;
 }
-
 ```
 
 ### 欧拉筛
@@ -360,7 +349,6 @@ int main(){
     }
     return 0;
 }
-
 ```
 
 ### Miller-Rabin素数测试
@@ -411,7 +399,6 @@ int main(){
     }
     return 0;
 }
-
 ```
 
 ### 乘法逆元
@@ -494,7 +481,6 @@ int main(){
 
     return 0;
 }
-
 ```
 
 ### 线性同余方程
@@ -552,7 +538,6 @@ int main(){
 
     return 0;
 }
-
 ```
 
 ### 中国剩余定理
@@ -601,7 +586,6 @@ int main(){
     cout<<ans<<endl;
     return 0;
 }
-
 ```
 
 ## 图论
@@ -652,7 +636,7 @@ int main(){
 
     scanf("%d%d%d",&n,&m,&s);
 
-    
+
 
     for(int i=1;i<=m;i++){
         int a,b,c;
@@ -693,7 +677,7 @@ int main(){
     for(int i=1;i<=n;i++){
         printf("%d ",dis[i]);
     }
-    
+
 
 
 
@@ -728,7 +712,7 @@ vector<edge> graph[MAXN];
 
 
 int main(){
-    
+
     cin>>n>>m>>s;
 
     for(int i=1;i<=n;i++) dis[i]=INF; 
@@ -771,24 +755,19 @@ int main(){
         //else{
         //    cout<<"2147483647 ";//根据luogu P3371要输出这个数
         //}
-        
+
     }
 
 
     return 0;
 }
-
-
-
-
 ```
 
 #### SPFA
 
 ```cpp
-
 /*
-	spfa
+    spfa
     bellman-ford的优化
     只有上一次被松弛的结点，所连接的边，
     才有可能引起下一次的松弛操作
@@ -876,17 +855,14 @@ int main(){
         //else{
         //    cout<<"2147483647 ";//根据luogu P3371要输出这个数
         //}
-        
+
     }
 
 
-    
+
 
     return 0;
 }
-
-
-
 ```
 
 #### Floyd
@@ -939,10 +915,7 @@ int main(){
 
     return 0;
 }
-
 ```
-
-
 
 ### 拓扑排序
 
@@ -973,7 +946,7 @@ int main(){
     for(int i = 1;i<=n;i++){
         point1[i].in_num=0;
     }
-    
+
     for (int i=1;i<=m;i++){
         int a,b,value;
         cin>>a>>b;//本次是无权图
@@ -1016,14 +989,12 @@ int main(){
     else{
         cout<<"none";
     }
-    
-    
-    
+
+
+
 
     return 0;
 }
-
-
 ```
 
 ### 最小生成树
@@ -1077,7 +1048,7 @@ int main(){
         if(x!=y){
             ans += w[tmp];
             find_sets[x] = y;
-            
+
         }
     }
 
@@ -1086,7 +1057,6 @@ int main(){
 
     return 0;
 }
-
 ```
 
 ### 网络流
@@ -1165,7 +1135,7 @@ int main(){
         G[a].push_back(Edge(b,c,G[b].size()));//这里第三个参数实际上是反向边的编号
         G[b].push_back(Edge(a,0,G[a].size()-1));
     }
-    
+
     ll ans = max_flow(s,t);
     printf("%ld",ans);
     //cout<<ans<<endl;
@@ -1180,8 +1150,6 @@ int main(){
 2 1 30
 1 3 40
 */
-
-
 ```
 
 ###### EdmondsKarp
@@ -1273,8 +1241,6 @@ int main(){
 
     return 0;
 }
-
-
 ```
 
 ## 计算几何
@@ -1365,8 +1331,6 @@ int main(){
 
     return 0;
 }
-
-
 ```
 
 ### 旋转卡壳求最远点对
@@ -1462,7 +1426,7 @@ void rc(vector<Point> ans){
         }else{
             j = (j+1)%tn;
         }
-        
+
         cnt++;
     }
     cout<<res<<endl;
@@ -1482,8 +1446,6 @@ int main(){
     rc(qs);
     return 0;
 }
-
-
 ```
 
 ## 组合数学
@@ -1529,8 +1491,6 @@ int main(){
 
     return 0;
 }
-
-
 ```
 
 ### 稳定婚姻问题
@@ -1577,7 +1537,7 @@ int main(){
             scanf("%s",str);
             femaleName[i]=str[0]-'A';
         }
-        
+
         for(int i=0;i<couple;i++){
             scanf("%s",str);
             for(int j=0;j<couple;j++){
@@ -1619,7 +1579,6 @@ int main(){
 
     return 0;
 }
-
 ```
 
 ## 树
@@ -1681,8 +1640,6 @@ int main(){
     }
     return 0;
 }
-
-
 ```
 
 ### 并查集
@@ -1828,5 +1785,4 @@ int main(){
 
     return 0;
 }
-
 ```
