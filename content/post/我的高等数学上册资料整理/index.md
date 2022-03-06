@@ -638,6 +638,8 @@ $$
 
 ### 常系数齐次线性微分方程
 
+#### 二阶形式如下
+
 $$
 y''+py'+qy=0
 $$
@@ -681,6 +683,32 @@ $$
    $$
    y=e^{\alpha x}(C_1cos\ \beta x+C_2sin\ \beta x)
    $$
+
+#### n阶形式如下
+
+$$
+y^{(n)}+p_1y^{(n-1)}+p_2y^{(n-2)}+\dots+p_{n-1}y'+p_ny=0
+$$
+
+其中$p_1\dots p_n$都是常数。
+
+其特征方程如下
+
+$$
+r^n+p_1r^{n-1}+\dots+p_{n-1}r+p_n=0
+$$
+
+分四种情况
+
+1. 单实根$r$，给出一项：$Ce^{rx}$
+
+2. 一对单负根$r_{1,2}=\alpha\pm\beta i$，给出两项：$e^{\alpha x}(C_1cos\beta x+C_2sin\beta x)$
+
+3. k重实根r，给出$k$项：$e^{rx}(C_1+C_2x+\dots+C_kx^{k-1})$
+
+4. 一对k重复根$r_{1,2}=\alpha\pm\beta i$，给出$2k$项：$e^{\alpha x}[(C_1+C_2x+\dots+C_kx^{k-1})cos\beta x+(D_1+D_2x+\dots+D_kx^{k-1})sin\beta x]$
+
+
 
 ### 常系数非齐次线性微分方程
 
