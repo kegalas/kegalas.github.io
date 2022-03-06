@@ -112,7 +112,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 6 分钟
+                    阅读时长: 7 分钟
                 </time>
             </div>
         
@@ -617,7 +617,7 @@ $$</p>
 <p>$$
 y''+P(x)y'+Q(x)y=f_1(x)+f_2(x)
 $$</p>
-<p>而$y_1^{<em>}(x)$与$y_2^{</em>}(x)$分别是方程</p>
+<p>而$y_1^* (x)$与$y_2^*(x)$分别是方程</p>
 <p>$$
 y''+P(x)y'+Q(x)y=f_1(x)
 $$</p>
@@ -625,8 +625,9 @@ $$</p>
 <p>$$
 y''+P(x)y'+Q(x)y=f_2(x)
 $$</p>
-<p>的特解，则$y_1^{<em>}(x)+y_2^{</em>}(x)$就是原方程的特解</p>
+<p>的特解，则$y_1^*(x)+y_2^ *(x)$就是原方程的特解</p>
 <h3 id="常系数齐次线性微分方程">常系数齐次线性微分方程</h3>
+<h4 id="二阶形式如下">二阶形式如下</h4>
 <p>$$
 y''+py'+qy=0
 $$</p>
@@ -662,6 +663,30 @@ $$</p>
 <p>$$
 y=e^{\alpha x}(C_1cos\ \beta x+C_2sin\ \beta x)
 $$</p>
+</li>
+</ol>
+<h4 id="n阶形式如下">n阶形式如下</h4>
+<p>$$
+y^{(n)}+p_1y^{(n-1)}+p_2y^{(n-2)}+\dots+p_{n-1}y'+p_ny=0
+$$</p>
+<p>其中$p_1\dots p_n$都是常数。</p>
+<p>其特征方程如下</p>
+<p>$$
+r^n+p_1r^{n-1}+\dots+p_{n-1}r+p_n=0
+$$</p>
+<p>分四种情况</p>
+<ol>
+<li>
+<p>单实根$r$，给出一项：$Ce^{rx}$</p>
+</li>
+<li>
+<p>一对单负根$r_{1,2}=\alpha\pm\beta i$，给出两项：$e^{\alpha x}(C_1cos\beta x+C_2sin\beta x)$</p>
+</li>
+<li>
+<p>k重实根r，给出$k$项：$e^{rx}(C_1+C_2x+\dots+C_kx^{k-1})$</p>
+</li>
+<li>
+<p>一对k重复根$r_{1,2}=\alpha\pm\beta i$，给出$2k$项：$e^{\alpha x}[(C_1+C_2x+\dots+C_kx^{k-1})cos\beta x+(D_1+D_2x+\dots+D_kx^{k-1})sin\beta x]$</p>
 </li>
 </ol>
 <h3 id="常系数非齐次线性微分方程">常系数非齐次线性微分方程</h3>
@@ -1026,7 +1051,12 @@ $$</p>
             <li><a href="#定理4">定理4</a></li>
           </ol>
         </li>
-        <li><a href="#常系数齐次线性微分方程">常系数齐次线性微分方程</a></li>
+        <li><a href="#常系数齐次线性微分方程">常系数齐次线性微分方程</a>
+          <ol>
+            <li><a href="#二阶形式如下">二阶形式如下</a></li>
+            <li><a href="#n阶形式如下">n阶形式如下</a></li>
+          </ol>
+        </li>
         <li><a href="#常系数非齐次线性微分方程">常系数非齐次线性微分方程</a>
           <ol>
             <li><a href="#fxelambda-xp_mx型">$f(x)=e^{\lambda x}P_m(x)$型</a></li>
