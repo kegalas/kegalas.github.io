@@ -112,6 +112,43 @@ int main(){
 }
 ```
 
+### 离散化
+
+```cpp
+//离散化 例如将1,500,40,1000保持相对大小不变，离散化为1,3,2,4
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+vector<int> arr,assi;
+
+int main(){
+    int n;
+    cin>>n;
+    for(int i=1;i<=n;i++){
+        int a;
+        cin>>a;
+        arr.push_back(a);
+        assi.push_back(a);
+    }
+    sort(assi.begin(),assi.end());
+    unique(assi.begin(),assi.end());
+
+    for(int i=0;i<n;i++){
+        arr[i] = upper_bound(assi.begin(),assi.end(),arr[i])-assi.begin();
+    }
+
+    for(int i=0;i<n;i++){
+        cout<<arr[i]<<" ";
+    }
+    cout<<endl;
+
+    return 0;
+}
+```
+
 ## 字符串
 
 ### KMP
@@ -1059,6 +1096,176 @@ int main(){
 }
 ```
 
+#### Prim算法
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <queue>
+
+using namespace std;
+
+const int MAXN = 5005;
+const int MAXM = 200005;
+const int INF = 0x5fffffff;
+
+struct edge{
+    int v,w;
+
+    edge()=default;
+    edge(int v,int w):v(v),w(w){}
+
+    bool operator>(const edge& x) const {return w>x.w;}
+};
+
+vector<edge> graph[MAXN];
+bool vis[MAXN];
+
+priority_queue<edge, vector<edge>, greater<edge> > pq;
+
+//以下orz代表不连通
+
+int main(){
+    int n,m;
+    scanf("%d%d",&n,&m);
+    int ans = 0;
+    int cnt = 1;
+
+    for(int i=1;i<=m;i++){
+        int a,b,c;
+        scanf("%d%d%d",&a,&b,&c);
+        graph[a].push_back(edge(b,c));
+        graph[b].push_back(edge(a,c));
+    }
+
+    for(int i=0;i<graph[1].size();i++){
+        pq.push(graph[1][i]);
+    }
+    vis[1]=true;
+
+    while(cnt!=n&&!pq.empty()){
+        edge minx=pq.top();
+        pq.pop();
+        while(vis[minx.v]){
+            if(pq.empty()){
+                cout<<"orz"<<endl;
+                return 0;
+            }
+            minx=pq.top();
+            pq.pop();
+        }
+
+        vis[minx.v] = true;
+        ans+=minx.w;
+        cnt++;
+
+        for(int i=0;i<graph[minx.v].size();i++){
+            if(!vis[graph[minx.v][i].v])
+                pq.push(graph[minx.v][i]);
+        }
+    }
+
+    if(cnt<n){
+        cout<<"orz"<<endl;
+    }
+    else{
+        cout<<ans<<endl;
+    }
+
+    return 0;
+}
+```
+
+### 最小树形图
+
+#### 朱刘算法
+
+```cpp
+//最小树形图，朱刘算法
+//luogu4716
+#include <iostream>
+
+using namespace std;
+
+const int MAXN = 105;
+const int MAXM = 10005;
+const int INF = 0x7fffffff;
+
+struct Edge{
+    int u,v,w;
+};
+
+Edge edge[MAXM]; 
+int vis[MAXN],id[MAXN];
+int in[MAXN],pre[MAXN];
+int n,m,root;
+
+int zhuliu(){
+    int ans = 0;
+    for(;;){
+        for(int i=1;i<=n;i++) in[i]=INF;
+        for(int i=1;i<=m;i++){
+            int u = edge[i].u;
+            int v = edge[i].v;
+            if(u!=v&&edge[i].w<in[v]){
+                in[v] = edge[i].w;
+                pre[v] = u;
+            }
+        }
+        for(int i=1;i<=n;i++){
+            if(i!=root&&in[i]==INF){
+                return -1;
+            }
+        }
+        int cnt = 0;//记录环数以及下一次循环的点数
+        for(int i=1;i<=n;i++){
+            vis[i] = -1;
+            id[i] = -1;
+        }
+        in[root] = 0;
+        for(int i=1;i<=n;i++){
+            if(i==root) continue;
+            ans += in[i];
+            int v=i;
+            while(vis[v]!=i&&id[v]==-1&&v!=root){
+                vis[v] = i;
+                v = pre[v];
+            }
+            if(v!=root&&id[v]==-1){
+                id[v] = ++cnt;
+                for(int u=pre[v];u!=v;u=pre[u]) id[u] = cnt;
+            }
+        }
+        if(cnt==0){
+            break;
+        }
+        for(int i=1;i<=n;i++){
+            if(id[i]==-1) id[i]=++cnt;
+        }
+        for(int i=1;i<=m;i++){
+            int u = edge[i].u;
+            int v = edge[i].v;
+            edge[i].u = id[u];
+            edge[i].v = id[v];
+            if(edge[i].u!=edge[i].v) edge[i].w -= in[v];
+        }
+        n = cnt;
+        root = id[root];
+    }
+    return ans;
+}
+
+int main(){
+    //freopen("in.in","r",stdin);
+    cin>>n>>m>>root;
+    for(int i=1;i<=m;i++){
+        cin>>edge[i].u>>edge[i].v>>edge[i].w;
+    }
+    cout<<zhuliu()<<endl;
+    return 0;
+}
+```
+
 ### 网络流
 
 #### 最大流
@@ -1239,6 +1446,191 @@ int main(){
 
     cout<<EK.Maxflow(s,t)<<endl;
 
+    return 0;
+}
+```
+
+### 连通性相关
+
+#### 强连通分量
+
+##### Tarjan算法
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <stack>
+
+using namespace std;
+
+const int MAXN = 5005;
+const int MAXM = 10005;
+
+int dfn[MAXN], low[MAXN], instk[MAXN], scc[MAXN], cnt=0, cscc=0;
+//scc代表每个店所属的强连通分量的编号
+vector<int> edges[MAXN];
+stack<int> stk;
+
+void tarjan(int u){
+    low[u] = dfn[u] = ++cnt;
+    instk[u] = 1;
+    stk.push(u);
+    for(int i=0;i<edges[u].size();i++){
+        int v = edges[u][i];
+        if(!dfn[v]){
+            tarjan(v);
+            low[u] = min(low[u],low[v]);
+        }
+        else if(instk[v]){
+            low[u] = min(low[u], dfn[v]);
+        }
+    }
+    if(low[u]==dfn[u]){
+        int top;
+        cscc++;
+        do{
+            top = stk.top();
+            stk.pop();
+            instk[top] = 0;
+            scc[top] = cscc;
+        }while(top!=u);
+    }
+}
+
+int main(){
+    int n,m;
+    cin>>n>>m;
+    for(int i=1;i<=m;i++){
+        int a,b;
+        cin>>a>>b;
+        edges[a].push_back(b);
+    }
+    for(int i=1;i<=n;i++){
+        if(!dfn[i])
+            tarjan(i);
+    }
+    for(int i=1;i<=n;i++){
+        cout<<scc[i]<<endl;
+    }
+    return 0;
+}
+```
+
+### 割点
+
+#### Tarjan算法
+
+```cpp
+//tarjan求割点,luogu P3388
+#include <iostream>
+#include <vector>
+#include <stack>
+#include <algorithm>
+
+using namespace std;
+
+const int MAXN = 20005;
+const int MAXM = 100005;
+
+int dfn[MAXN], low[MAXN], cnt=0;
+vector<int> edges[MAXN];
+vector<int> cut;//存储割点
+
+void tarjan(int u, bool root = true){
+    int tot = 0;
+    low[u] = dfn[u] = ++cnt;
+    for(int i=0;i<edges[u].size();i++){
+        int v = edges[u][i];
+       if(!dfn[v]){
+            tarjan(v,false);
+            low[u] = min(low[u],low[v]);
+            tot += (low[v]>=dfn[u]);//统计满足的点的个数
+        }
+        else{
+            low[u] = min(low[u], dfn[v]);
+        }
+    }
+    if(tot>root){//如果是根节点，则需要有至少两个子树，否则只需要有一个子树
+        cut.push_back(u);
+    }
+}
+
+int main(){
+    int n,m;
+    cin>>n>>m;
+    for(int i=1;i<=m;i++){
+        int a,b;
+        cin>>a>>b;
+        edges[a].push_back(b);
+        edges[b].push_back(a);
+    }
+    for(int i=1;i<=n;i++){
+        if(!dfn[i])
+            tarjan(i);
+    }
+    cout<<cut.size()<<endl;
+    sort(cut.begin(),cut.end());
+    for(int i=0;i<cut.size();i++){
+        cout<<cut[i]<<" ";
+    }
+    return 0;
+}
+```
+
+### 割边
+
+#### Tarjan算法
+
+```cpp
+//tarjan求割边
+#include <iostream>
+#include <vector>
+#include <stack>
+#include <algorithm>
+
+using namespace std;
+
+const int MAXN = 20005;
+const int MAXM = 100005;
+
+int dfn[MAXN], low[MAXN], cnt=0, fa[MAXN];//fa记录父节点
+vector<int> edges[MAXN];
+vector<pair<int, int>> bridges;//存储割边
+
+void tarjan(int u){
+    low[u] = dfn[u] = ++cnt;
+    for(int i=0;i<edges[u].size();i++){
+        int v = edges[u][i];
+        if(!dfn[v]){
+            fa[v] = u;
+            tarjan(v);
+            low[u] = min(low[u],low[v]);            
+            if(low[v]>dfn[u])
+                bridges.emplace_back(u,v);
+        }
+        else if(fa[u]!=v){
+            low[u] = min(low[u], dfn[v]);
+        }
+    }
+}
+
+int main(){
+    int n,m;
+    cin>>n>>m;
+    for(int i=1;i<=m;i++){
+        int a,b;
+        cin>>a>>b;
+        edges[a].push_back(b);
+        edges[b].push_back(a);
+    }
+    for(int i=1;i<=n;i++){
+        if(!dfn[i])
+            tarjan(i);
+    }
+    cout<<bridges.size()<<endl;
+    for(int i=0;i<bridges.size();i++){
+        cout<<bridges[i].first<<" "<<bridges[i].second<<endl;;
+    }
     return 0;
 }
 ```
@@ -1764,7 +2156,7 @@ int main(){
     int n,m;
     scanf("%d%d",&n,&m);
     for(int i=1;i<=n;i++){
-        scanf("%d",&arr[i]);   
+        scanf("%ld",&arr[i]);   
     }
     build(1,n,1);
 
