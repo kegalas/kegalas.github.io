@@ -398,7 +398,7 @@ int main(){
 
 using namespace std;
 
-const int cnt = 10;
+const int test_time = 10;
 
 int qPowMod(int a, int m, int n){
     if(m==0) return 1;
@@ -414,14 +414,22 @@ int qPowMod(int a, int m, int n){
     return ans;
 }
 
-
-bool millerRabin(int n){
-    if(n==2) return true;
-    for(int i=0;i<cnt;i++){
-        int a = rand() % (n-2) + 2;
-        if(qPowMod(a,n,n)!=a) return false;
+bool millerRabin(int n) {
+    if (n < 3 || n % 2 == 0) return n == 2;
+    int a = n - 1, b = 0;
+    while (a % 2 == 0) a /= 2, ++b;
+    // test_time 为测试次数,建议设为不小于 8
+    // 的整数以保证正确率,但也不宜过大,否则会影响效率
+    for (int i = 1, j; i <= test_time; ++i) {
+        int x = rand() % (n - 2) + 2, v = qPowMod(x, a, n);
+        if (v == 1) continue;
+        for (j = 0; j < b; ++j) {
+            if (v == n - 1) break;
+            v = (long long)v * v % n;
+        }
+        if (j >= b) return 0;
     }
-    return true;
+    return 1;
 }
 
 int main(){
@@ -436,6 +444,7 @@ int main(){
     }
     return 0;
 }
+
 ```
 
 ### 乘法逆元
@@ -524,7 +533,7 @@ int main(){
 
 ```cpp
 #include <iostream>
-
+//ax≡b (mod n)求解x
 using namespace std;
 
 int exgcd(int a, int b, int &x, int &y){
@@ -1846,7 +1855,7 @@ int main(){
 
 ```cpp
 #include <iostream>
-
+//前几项：1, 1, 2, 5, 14, 42, 132, 429, 1430, 4862, 16796
 using namespace std;
 
 typedef long long ll;
