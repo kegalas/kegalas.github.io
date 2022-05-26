@@ -88,8 +88,6 @@ $$
 A_2x+B_2y+C_2z+D_2=0
 $$
 
-
-
 即两个平面的交线（大括号hugo支持不好，打不出来，后同）
 
 另外两个平面的法向量的向量积可以算出直线的切向量
@@ -414,10 +412,14 @@ $$
 两边应用求导法则得
 
 $$
-F_x+F_u\frac{\partial u}{\partial x}+F_v\frac{\partial v}{\partial x}=0\\
-
-\\G_x+G_u\frac{\partial u}{\partial x}+G_v\frac{\partial v}{\partial x}=0
+F_x+F_u\frac{\partial u}{\partial x}+F_v\frac{\partial v}{\partial x}=0
 $$
+
+$$
+G_x+G_u\frac{\partial u}{\partial x}+G_v\frac{\partial v}{\partial x}=0
+$$
+
+
 
 解方程求出偏导数，求关于$y$的偏导数同理。
 
@@ -563,15 +565,12 @@ $$
 
 ### 方向导数与梯度
 
-方向导数:
+方向导数：
 
 $$
 \frac{\partial f}{\partial l}\bigg|_{(x_0,y_0)}=
-\lim_{t\to 0^+}
-\frac{f(x_0+tcos\alpha,y_0+tcos\beta)-f(x_0,y_0)}{t}
+\lim _{t\to 0^+}\frac{f(x_0+tcos\alpha,y_0+tcos\beta)-f(x_0,y_0)}{t}
 $$
-
-
 
 如果函数$f(x,y)$在点$P_0(x_0,y_0)$可微分，那么函数在该点沿任一方向$l$的方向导数存在，且有
 
