@@ -419,8 +419,6 @@ $$
 G_x+G_u\frac{\partial u}{\partial x}+G_v\frac{\partial v}{\partial x}=0
 $$
 
-
-
 解方程求出偏导数，求关于$y$的偏导数同理。
 
 ### 多元函数积分学的几何应用
@@ -659,3 +657,250 @@ L(x,y)=f(x,y)+\lambda\varphi(x,y)+\mu\psi(x,y)
 $$
 
 分别求$L_x=0,L_y=0,L_\lambda=0,L\mu=0$，代入原函数中求可能的极值点。
+
+## 重积分
+
+### 二重积分的概念与性质
+
+性质：
+
+1. 设$\alpha,\beta$为常数，则
+
+$$
+\iint\limits_{D}[\alpha f(x,y)+\beta g(x,y)]d\sigma=
+\alpha\iint\limits_{D}f(x,y)d\sigma+\beta\iint\limits_{D}g(x,y)d\sigma
+$$
+
+2. 如果闭区域$D$被有限条曲线分为有限个部分闭区域，那么在$D$上的二重积分等于在各部分闭区域上的二重积分的和
+
+$$
+\iint\limits_{D}f(x,y)d\sigma=
+\iint\limits_{D_1}f(x,y)d\sigma+\iint\limits_{D_2}f(x,y)d\sigma
+$$
+
+3. 如果在$D$上，$f(x,y)=1$,$\sigma$为$D$的面积，那么
+
+$$
+\sigma=\iint\limits_{D}1\cdot d\sigma=\iint\limits_{D}d\sigma
+$$
+
+4. 如果在$D$上，$f(x,y)\leq g(x,y)$，那么有
+
+$$
+\iint\limits_{D}f(x,y)d\sigma\leq\iint\limits_{D}g(x,y)d\sigma
+$$
+
+特别的，有
+
+$$
+|\iint\limits_{D}f(x,y)d\sigma|=
+\iint\limits_{D}|f(x,y)|d\sigma
+$$
+
+5. 设$M$和$N$分别是$f(x,y)$在闭区域$D$上的最大值和最小值，$\sigma$是$D$的面积，则有
+
+$$
+m\sigma\leq\iint\limits_{D}f(x,y)d\sigma\leq M\sigma
+$$
+
+6. 设函数$f(x,y)$在闭区域D上连续，$\sigma$是$D$的面积，则在$D$上至少存在一点$(\xi,\eta)$，使得
+
+$$
+\iint\limits_{D}f(x,y)d\sigma=f(\xi,\eta)\sigma
+$$
+
+### 二重积分的计算法
+
+#### 利用直角坐标计算二重积分
+
+![10-4](10-4.jpg)
+
+在如图的区域中，积分上限为上方曲线，积分下限为下方曲线。
+
+$$
+\iint\limits_{D}f(x,y)d\sigma=\int_a^bdx\int_{\varphi_1(x)}
+^{\varphi_2(x)}f(x,y)dy
+$$
+
+![10-6](10-6.jpg)
+
+如图则，积分上限为右侧曲线，下限为左侧曲线。
+
+$$
+\iint\limits_{D}f(x,y)d\sigma=\int_c^ddy\int_{\psi_1(y)}
+^{\psi_2(y)}f(x,y)dx
+$$
+
+
+
+#### 利用极坐标计算二重积分
+
+有
+
+$$
+x=\rho cos\theta
+$$
+
+$$
+y=\rho sin\theta
+$$
+
+且有对于下图
+
+![10-18](10-18.jpg)
+
+$$
+\iint\limits_{D}f(x,y)d\sigma=\iint\limits_{D}f(\rho cos\theta,
+\rho sin\theta)\rho d\rho d\theta
+$$
+
+$$
+=\int_\alpha^\beta d\theta\int_{\varphi_1(\theta)}
+^{\varphi_2(\theta)}f(\rho cos\theta,
+\rho sin\theta)\rho d\rho
+$$
+
+### 三重积分的计算
+
+#### 利用直角坐标计算三重积分
+
+1. “先1后2法”，即先以$z$为积分变量计算
+
+$$
+\iiint\limits_\Omega f(x,y,z)dv=\int_a^bdx\int_{y_1(x)}^{y_2(x)}
+dy\int_{z_1(x,y)}^{z_2(x,y)}f(x,y,z)dz
+$$
+
+2. "先2后1法"，即先以$xy$为积分变量计算
+
+$$
+\iiint\limits_\Omega f(x,y,z)dv=\int_{c_1}^{c_2}dz\iint\limits_{D_z}
+f(x,y,z)dxdy
+$$
+
+#### 利用柱面坐标计算
+
+有
+
+$$
+x=\rho cos\theta
+$$
+
+$$
+y=\rho sin\theta
+$$
+
+$$
+z=z
+$$
+
+有
+
+$$
+\iiint\limits_{\Omega}f(x,y,z)dxdydz=
+\iiint\limits_{\Omega}F(\rho,\theta,z)\rho d\rho d\theta dz
+$$
+
+#### 利用球面坐标计算
+
+有
+
+$$
+x=rsin\varphi cos\theta
+
+$$
+
+$$
+y=rsin\varphi sin\theta
+$$
+
+$$
+z=rcos\varphi
+$$
+
+有
+
+$$
+\iiint\limits_{\Omega}f(x,y,z)dxdydz=
+\iiint\limits_{\Omega}F(r,\varphi,\theta)r^2sin\varphi drd\varphi d\theta 
+$$
+
+### 拆分被积函数
+
+详细的证明没有在书中和老师的教学中找到，互联网搜索也较难
+
+书上有许多例子，如当
+
+$$
+\rho ^2\leq z\leq4,0\leq\rho\leq2,0\leq\theta\leq2\pi
+$$
+
+有
+
+$$
+\iiint\limits_{\Omega}zdxdydz=\iiint\limits_{\Omega}z\rho d\rho d\theta
+dz=\int_0^{2\pi}d\theta\int_0^2\rho d\rho\int_{\rho^2}^4zdz
+$$
+
+推断为，首先被积函数要是$f(z)g(\rho)$等用乘法连接的，如$z\rho$，而不能是加法如$z+\rho$，才能拆分。另外跟积分上下限的关系不明。
+
+如果是加法，如$x+y+z$可以从轮换对称性考虑（如果有）
+
+### 重积分的应用
+
+#### 曲面面积
+
+设曲面为$z=f(x,y)$，则
+
+$$
+A=\iint\limits_D\sqrt{1+f_x^2(x,y)+f_y^2(x,y)}dxdy
+$$
+
+#### 质心
+
+设有一平面薄片，占据$xOy$面上的闭区域$D$，在点$(x,y)$处的面密度为$\mu(x,y)$
+
+则有
+
+$$
+M_y=\iint\limits_Dx\mu(x,y)d\sigma, M_x=\iint\limits_Dy\mu(x,y)d\sigma
+$$
+
+$$
+M=\iint\limits_D\mu(x,y)d\sigma
+$$
+
+质心坐标为
+
+$$
+\bar{x}=\frac{M_y}{M}=
+\frac{\iint\limits_Dx\mu(x,y)d\sigma}{\iint\limits_D\mu(x,y)d\sigma}
+$$
+
+$$
+\bar{y}=\frac{M_x}{M}=\frac{\iint\limits_Dy\mu(x,y)d\sigma}{\iint\limits_D\mu(x,y)d\sigma}
+$$
+
+#### 转动惯量
+
+$$
+I_x=\iint\limits_Dy^2\mu(x,y)d\sigma,I_y=\iint\limits_Dx^2\mu(x,y)d\sigma
+$$
+
+#### 引力
+
+空间一物体对物体外一点$P_0(x_0,y_0,z_0)$的单位质量的质点的引力
+
+物体密度$\rho(x,y,z)$，
+
+$$
+\bold{F}=(F_x,F_y,F_z)
+$$
+
+$$
+=\left (
+\iiint\limits_\Omega\frac{G\rho(x,y,z)(x-x_0)}{r^3}dv,
+\iiint\limits_\Omega\frac{G\rho(x,y,z)(y-y_0)}{r^3}dv,
+\iiint\limits_\Omega\frac{G\rho(x,y,z)(z-z_0)}{r^3}dv
+\right ) 
+$$
