@@ -802,6 +802,101 @@ $$&lt;/p&gt;
 \iiint\limits_\Omega\frac{G\rho(x,y,z)(z-z_0)}{r^3}dv
 \right ) 
 $$&lt;/p&gt;
+&lt;h2 id=&#34;曲线积分与曲面积分&#34;&gt;曲线积分与曲面积分&lt;/h2&gt;
+&lt;h3 id=&#34;对弧长的曲线积分&#34;&gt;对弧长的曲线积分&lt;/h3&gt;
+&lt;h4 id=&#34;性质&#34;&gt;性质&lt;/h4&gt;
+&lt;ol&gt;
+&lt;li&gt;设$\alpha,\beta$为常数，则&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;$$
+\int_L[\alpha f(x,y)+\beta g(x,y)]ds=\alpha\int_L f(x,y)ds+\beta
+\int_Lg(x,y)ds
+$$&lt;/p&gt;
+&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;若积分弧段$L$课分成两段光滑曲线弧$L_1$和$L_2$，则&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;$$
+\int_Lf(x,y)ds=\int_{L_1}f(x,y)ds+\int_{L_2}f(x,y)ds
+$$&lt;/p&gt;
+&lt;ol start=&#34;3&#34;&gt;
+&lt;li&gt;设在$L$上$f(x,y)\leq g(x,y)$, 则&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;$$
+\int_L f(x,y)ds\leq\int_L g(x,y)ds
+$$&lt;/p&gt;
+&lt;p&gt;特别地，有&lt;/p&gt;
+&lt;p&gt;$$
+\left|\int_L f(x,y)ds\right|\leq\int_L|f(x,y)|ds
+$$&lt;/p&gt;
+&lt;h4 id=&#34;对弧长的曲线积分的计算法&#34;&gt;对弧长的曲线积分的计算法&lt;/h4&gt;
+&lt;p&gt;设$f(x,y)$在曲线弧$L$上有定义且连续，$L$的参数方程为&lt;/p&gt;
+&lt;p&gt;$$
+x=\varphi(t)
+$$&lt;/p&gt;
+&lt;p&gt;$$
+y=\psi(t)
+$$&lt;/p&gt;
+&lt;p&gt;$$
+(\alpha\leq t\leq\beta)
+$$&lt;/p&gt;
+&lt;p&gt;若$\varphi(t)$、$\psi(t)$在$[\alpha,\beta]$上具有一阶连续导数，且$\varphi&amp;rsquo;^2(t)+\psi&amp;rsquo;^2(t)\neq0$，则曲线积分$\int_Lf(x,y)ds$存在，且&lt;/p&gt;
+&lt;p&gt;$$
+\int_Lf(x,y)ds=\int_\alpha^\beta f[\varphi(t),\psi(t)]
+\sqrt{\varphi&amp;rsquo;^2(t)+\psi&amp;rsquo;^2(t)}dt (a&amp;lt;\beta)
+$$&lt;/p&gt;
+&lt;p&gt;注意$\alpha&amp;lt;\beta$是一定要有的。&lt;/p&gt;
+&lt;h3 id=&#34;对坐标的曲线积分&#34;&gt;对坐标的曲线积分&lt;/h3&gt;
+&lt;p&gt;$$
+\int_LP(x,y)dx+Q(x,y)dy
+$$&lt;/p&gt;
+&lt;p&gt;也可以写作向量形式&lt;/p&gt;
+&lt;p&gt;$$
+\int_L\bold{F(x,y)}\cdot d\bold{r}
+$$&lt;/p&gt;
+&lt;p&gt;其中$\bold{F}=P\bold{i}+Q\bold{j}$,$d\bold{r}=dx\bold{i}+dy\bold{j}$.&lt;/p&gt;
+&lt;h4 id=&#34;性质-1&#34;&gt;性质&lt;/h4&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;与上节相同&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;与上节相同&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;设$L$是有向光滑曲线弧，$L^-$是$L$的反向曲线弧，则&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;$$
+\int_{L^-}\bold F(x,y)d\bold r = -\int_L\bold F(x,y)d\bold r
+$$&lt;/p&gt;
+&lt;h4 id=&#34;对坐标的曲线积分的计算方法&#34;&gt;对坐标的曲线积分的计算方法&lt;/h4&gt;
+&lt;p&gt;条件相似，不再重复，查阅书籍&lt;/p&gt;
+&lt;p&gt;$$
+x=\varphi(t)
+$$&lt;/p&gt;
+&lt;p&gt;$$
+y=\psi(t)
+$$&lt;/p&gt;
+&lt;p&gt;$t$单调地由$\alpha$变到$\beta$&lt;/p&gt;
+&lt;p&gt;$$
+\int_LP(x,y)dx+Q(x,y)dy
+$$&lt;/p&gt;
+&lt;p&gt;$$
+=\int_\alpha^\beta{P[\varphi(t),\psi(t)]\varphi&amp;rsquo;(t)+
+Q[\varphi(t),\psi(t)]\psi&amp;rsquo;(t)}dt
+$$&lt;/p&gt;
+&lt;p&gt;不需要$\alpha&amp;lt;\beta$，有时有$x=x,y=y(x)$，类似的替换公式即可。&lt;/p&gt;
+&lt;h4 id=&#34;两类曲线积分之间的联系&#34;&gt;两类曲线积分之间的联系&lt;/h4&gt;
+&lt;p&gt;$$
+\int_LPdx+Qdy=\int_L(Pcos\alpha+Qcos\beta)ds
+$$&lt;/p&gt;
+&lt;p&gt;易推广至三维&lt;/p&gt;
+&lt;p&gt;也可以写成向量形式&lt;/p&gt;
+&lt;p&gt;$$
+\int_L\bold A\cdot d\bold r = \int_L\bold A\cdot\bold{\tau}ds=
+\int_LA_{\tau}ds
+$$&lt;/p&gt;
+&lt;p&gt;注意中间那个$\tau$是向量形式，疑似是markdown支持不好&lt;/p&gt;
 </description>
         </item>
         <item>

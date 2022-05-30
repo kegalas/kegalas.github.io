@@ -112,7 +112,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 9 分钟
+                    阅读时长: 11 分钟
                 </time>
             </div>
         
@@ -912,6 +912,101 @@ $$</p>
 \iiint\limits_\Omega\frac{G\rho(x,y,z)(z-z_0)}{r^3}dv
 \right ) 
 $$</p>
+<h2 id="曲线积分与曲面积分">曲线积分与曲面积分</h2>
+<h3 id="对弧长的曲线积分">对弧长的曲线积分</h3>
+<h4 id="性质">性质</h4>
+<ol>
+<li>设$\alpha,\beta$为常数，则</li>
+</ol>
+<p>$$
+\int_L[\alpha f(x,y)+\beta g(x,y)]ds=\alpha\int_L f(x,y)ds+\beta
+\int_Lg(x,y)ds
+$$</p>
+<ol start="2">
+<li>若积分弧段$L$课分成两段光滑曲线弧$L_1$和$L_2$，则</li>
+</ol>
+<p>$$
+\int_Lf(x,y)ds=\int_{L_1}f(x,y)ds+\int_{L_2}f(x,y)ds
+$$</p>
+<ol start="3">
+<li>设在$L$上$f(x,y)\leq g(x,y)$, 则</li>
+</ol>
+<p>$$
+\int_L f(x,y)ds\leq\int_L g(x,y)ds
+$$</p>
+<p>特别地，有</p>
+<p>$$
+\left|\int_L f(x,y)ds\right|\leq\int_L|f(x,y)|ds
+$$</p>
+<h4 id="对弧长的曲线积分的计算法">对弧长的曲线积分的计算法</h4>
+<p>设$f(x,y)$在曲线弧$L$上有定义且连续，$L$的参数方程为</p>
+<p>$$
+x=\varphi(t)
+$$</p>
+<p>$$
+y=\psi(t)
+$$</p>
+<p>$$
+(\alpha\leq t\leq\beta)
+$$</p>
+<p>若$\varphi(t)$、$\psi(t)$在$[\alpha,\beta]$上具有一阶连续导数，且$\varphi&rsquo;^2(t)+\psi&rsquo;^2(t)\neq0$，则曲线积分$\int_Lf(x,y)ds$存在，且</p>
+<p>$$
+\int_Lf(x,y)ds=\int_\alpha^\beta f[\varphi(t),\psi(t)]
+\sqrt{\varphi&rsquo;^2(t)+\psi&rsquo;^2(t)}dt (a&lt;\beta)
+$$</p>
+<p>注意$\alpha&lt;\beta$是一定要有的。</p>
+<h3 id="对坐标的曲线积分">对坐标的曲线积分</h3>
+<p>$$
+\int_LP(x,y)dx+Q(x,y)dy
+$$</p>
+<p>也可以写作向量形式</p>
+<p>$$
+\int_L\bold{F(x,y)}\cdot d\bold{r}
+$$</p>
+<p>其中$\bold{F}=P\bold{i}+Q\bold{j}$,$d\bold{r}=dx\bold{i}+dy\bold{j}$.</p>
+<h4 id="性质-1">性质</h4>
+<ol>
+<li>
+<p>与上节相同</p>
+</li>
+<li>
+<p>与上节相同</p>
+</li>
+<li>
+<p>设$L$是有向光滑曲线弧，$L^-$是$L$的反向曲线弧，则</p>
+</li>
+</ol>
+<p>$$
+\int_{L^-}\bold F(x,y)d\bold r = -\int_L\bold F(x,y)d\bold r
+$$</p>
+<h4 id="对坐标的曲线积分的计算方法">对坐标的曲线积分的计算方法</h4>
+<p>条件相似，不再重复，查阅书籍</p>
+<p>$$
+x=\varphi(t)
+$$</p>
+<p>$$
+y=\psi(t)
+$$</p>
+<p>$t$单调地由$\alpha$变到$\beta$</p>
+<p>$$
+\int_LP(x,y)dx+Q(x,y)dy
+$$</p>
+<p>$$
+=\int_\alpha^\beta{P[\varphi(t),\psi(t)]\varphi&rsquo;(t)+
+Q[\varphi(t),\psi(t)]\psi&rsquo;(t)}dt
+$$</p>
+<p>不需要$\alpha&lt;\beta$，有时有$x=x,y=y(x)$，类似的替换公式即可。</p>
+<h4 id="两类曲线积分之间的联系">两类曲线积分之间的联系</h4>
+<p>$$
+\int_LPdx+Qdy=\int_L(Pcos\alpha+Qcos\beta)ds
+$$</p>
+<p>易推广至三维</p>
+<p>也可以写成向量形式</p>
+<p>$$
+\int_L\bold A\cdot d\bold r = \int_L\bold A\cdot\bold{\tau}ds=
+\int_LA_{\tau}ds
+$$</p>
+<p>注意中间那个$\tau$是向量形式，疑似是markdown支持不好</p>
 
 </section>
 
@@ -1264,6 +1359,23 @@ $$</p>
             <li><a href="#质心">质心</a></li>
             <li><a href="#转动惯量">转动惯量</a></li>
             <li><a href="#引力">引力</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+    <li><a href="#曲线积分与曲面积分">曲线积分与曲面积分</a>
+      <ol>
+        <li><a href="#对弧长的曲线积分">对弧长的曲线积分</a>
+          <ol>
+            <li><a href="#性质">性质</a></li>
+            <li><a href="#对弧长的曲线积分的计算法">对弧长的曲线积分的计算法</a></li>
+          </ol>
+        </li>
+        <li><a href="#对坐标的曲线积分">对坐标的曲线积分</a>
+          <ol>
+            <li><a href="#性质-1">性质</a></li>
+            <li><a href="#对坐标的曲线积分的计算方法">对坐标的曲线积分的计算方法</a></li>
+            <li><a href="#两类曲线积分之间的联系">两类曲线积分之间的联系</a></li>
           </ol>
         </li>
       </ol>

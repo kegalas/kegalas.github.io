@@ -731,8 +731,6 @@ $$
 ^{\psi_2(y)}f(x,y)dx
 $$
 
-
-
 #### 利用极坐标计算二重积分
 
 有
@@ -904,3 +902,127 @@ $$
 \iiint\limits_\Omega\frac{G\rho(x,y,z)(z-z_0)}{r^3}dv
 \right ) 
 $$
+
+## 曲线积分与曲面积分
+
+### 对弧长的曲线积分
+
+#### 性质
+
+1. 设$\alpha,\beta$为常数，则
+
+$$
+\int_L[\alpha f(x,y)+\beta g(x,y)]ds=\alpha\int_L f(x,y)ds+\beta
+\int_Lg(x,y)ds
+$$
+
+2. 若积分弧段$L$课分成两段光滑曲线弧$L_1$和$L_2$，则
+
+$$
+\int_Lf(x,y)ds=\int_{L_1}f(x,y)ds+\int_{L_2}f(x,y)ds
+$$
+
+3. 设在$L$上$f(x,y)\leq g(x,y)$, 则
+
+$$
+\int_L f(x,y)ds\leq\int_L g(x,y)ds
+$$
+
+特别地，有
+
+$$
+\left|\int_L f(x,y)ds\right|\leq\int_L|f(x,y)|ds
+$$
+
+#### 对弧长的曲线积分的计算法
+
+设$f(x,y)$在曲线弧$L$上有定义且连续，$L$的参数方程为
+
+$$
+x=\varphi(t)
+$$
+
+$$
+y=\psi(t)
+$$
+
+$$
+(\alpha\leq t\leq\beta)
+$$
+
+若$\varphi(t)$、$\psi(t)$在$[\alpha,\beta]$上具有一阶连续导数，且$\varphi'^2(t)+\psi'^2(t)\neq0$，则曲线积分$\int_Lf(x,y)ds$存在，且
+
+$$
+\int_Lf(x,y)ds=\int_\alpha^\beta f[\varphi(t),\psi(t)]
+\sqrt{\varphi'^2(t)+\psi'^2(t)}dt (a<\beta)
+$$
+
+注意$\alpha<\beta$是一定要有的。
+
+### 对坐标的曲线积分
+
+$$
+\int_LP(x,y)dx+Q(x,y)dy
+$$
+
+也可以写作向量形式
+
+$$
+\int_L\bold{F(x,y)}\cdot d\bold{r}
+$$
+
+其中$\bold{F}=P\bold{i}+Q\bold{j}$,$d\bold{r}=dx\bold{i}+dy\bold{j}$.
+
+#### 性质
+
+1. 与上节相同
+
+2. 与上节相同
+
+3. 设$L$是有向光滑曲线弧，$L^-$是$L$的反向曲线弧，则
+
+$$
+\int_{L^-}\bold F(x,y)d\bold r = -\int_L\bold F(x,y)d\bold r
+$$
+
+#### 对坐标的曲线积分的计算方法
+
+条件相似，不再重复，查阅书籍
+
+$$
+x=\varphi(t)
+$$
+
+$$
+y=\psi(t)
+$$
+
+$t$单调地由$\alpha$变到$\beta$
+
+$$
+\int_LP(x,y)dx+Q(x,y)dy
+$$
+
+$$
+=\int_\alpha^\beta\{P[\varphi(t),\psi(t)]\varphi'(t)+
+Q[\varphi(t),\psi(t)]\psi'(t)\}dt
+$$
+
+不需要$\alpha<\beta$，有时有$x=x,y=y(x)$，类似的替换公式即可。
+
+#### 两类曲线积分之间的联系
+
+$$
+\int_LPdx+Qdy=\int_L(Pcos\alpha+Qcos\beta)ds
+$$
+
+易推广至三维
+
+也可以写成向量形式
+
+$$
+\int_L\bold A\cdot d\bold r = \int_L\bold A\cdot\bold{\tau}ds=
+\int_LA_{\tau}ds
+$$
+
+注意中间那个$\tau$是向量形式，疑似是markdown支持不好
