@@ -6,7 +6,10 @@ tags: [高等数学,大学]
 description: 高等数学下册资料整理
 categories: 数学
 mathjax: true
+markup: pandoc
 ---
+
+[TOC]
 
 ## 向量代数与空间解析几何
 
@@ -81,14 +84,13 @@ $$
 ### 空间直线的一般方程
 
 $$
-A_1x+B_1y+C_1z+D_1=0
-$$
-
-$$
+\left\{\begin{matrix}
+A_1x+B_1y+C_1z+D_1=0\\
 A_2x+B_2y+C_2z+D_2=0
+\end{matrix}\right.
 $$
 
-即两个平面的交线（大括号hugo支持不好，打不出来，后同）
+即两个平面的交线
 
 另外两个平面的法向量的向量积可以算出直线的切向量
 
@@ -127,15 +129,11 @@ $$
 则有
 
 $$
-x=x_0+mt 
-$$
-
-$$
-y=y_0+nt
-$$
-
-$$
+\left\{\begin{matrix}
+x=x_0+mt  \\
+y=y_0+nt  \\
 z=z_0+pt
+\end{matrix}\right.
 $$
 
 ### 两直线的夹角
@@ -221,25 +219,20 @@ $$
 即两个曲面的交线
 
 $$
-F(x,y,z) = 0
-$$
-
-$$
+\left\{\begin{matrix}
+F(x,y,z) = 0 \\
 G(x,y,z) = 0
+\end{matrix}\right.
 $$
 
 #### 参数方程
 
 $$
-x=x(t)
-$$
-
-$$
-y=y(t)
-$$
-
-$$
+\left\{\begin{matrix}
+x=x(t) \\
+y=y(t) \\
 z=z(t)
+\end{matrix}\right.
 $$
 
 ## 多元函数微分法及其应用
@@ -397,8 +390,10 @@ $$
 考虑如下方程组
 
 $$
+\left\{\begin{matrix}
 F(x,y,u,v)=0\\
 G(x,y,u,v)=0
+\end{matrix}\right.
 $$
 
 一般四个变量只能有两个变量独立变化
@@ -428,15 +423,12 @@ $$
 空间曲线$\Gamma$的参数方程为
 
 $$
-x=\varphi(t),
-$$
-
-$$
-y=\psi(t),t\in[\alpha,\beta]
-$$
-
-$$
+\left\{\begin{matrix}
+x=\varphi(t), \\
+y=\psi(t), \\
 z=\omega(t)
+\end{matrix}\right.
+t\in[\alpha,\beta]
 $$
 
 写成向量形式，则为
@@ -486,15 +478,11 @@ $$
 若$\Gamma$变为
 
 $$
-x=x
-$$
-
-$$
-y=\varphi(x)
-$$
-
-$$
+\left\{\begin{matrix}
+x=x \\
+y=\varphi(x) \\
 z=\psi(x)
+\end{matrix}\right.
 $$
 
 则切线方程变为
@@ -637,15 +625,11 @@ $$
 令
 
 $$
-L_x=f_x+\lambda\varphi_x=0
-$$
-
-$$
-L_y=f_y+\lambda\varphi_y=0
-$$
-
-$$
+\left\{\begin{matrix}
+L_x=f_x+\lambda\varphi_x=0 \\
+L_y=f_y+\lambda\varphi_y=0 \\
 L_{\lambda}=\varphi=0
+\end{matrix}\right.
 $$
 
 解出$x,y,\lambda$，代入函数$f$中求得可能的极值点。
@@ -693,7 +677,7 @@ $$
 特别的，有
 
 $$
-|\iint\limits_{D}f(x,y)d\sigma|=
+\left|\iint\limits_{D}f(x,y)d\sigma\right|=
 \iint\limits_{D}|f(x,y)|d\sigma
 $$
 
@@ -781,15 +765,11 @@ $$
 有
 
 $$
-x=\rho cos\theta
-$$
-
-$$
-y=\rho sin\theta
-$$
-
-$$
+\left\{\begin{matrix}
+x=\rho cos\theta \\
+y=\rho sin\theta \\
 z=z
+\end{matrix}\right.
 $$
 
 有
@@ -804,16 +784,11 @@ $$
 有
 
 $$
-x=rsin\varphi cos\theta
-
-$$
-
-$$
-y=rsin\varphi sin\theta
-$$
-
-$$
+\left\{\begin{matrix}
+x=rsin\varphi cos\theta \\
+y=rsin\varphi sin\theta \\
 z=rcos\varphi
+\end{matrix}\right.
 $$
 
 有
@@ -939,14 +914,10 @@ $$
 设$f(x,y)$在曲线弧$L$上有定义且连续，$L$的参数方程为
 
 $$
-x=\varphi(t)
-$$
-
-$$
+\left\{\begin{matrix}
+x=\varphi(t) \\
 y=\psi(t)
-$$
-
-$$
+\end{matrix}\right.
 (\alpha\leq t\leq\beta)
 $$
 
@@ -990,11 +961,10 @@ $$
 条件相似，不再重复，查阅书籍
 
 $$
-x=\varphi(t)
-$$
-
-$$
+\left\{\begin{matrix}
+x=\varphi(t) \\
 y=\psi(t)
+\end{matrix}\right.
 $$
 
 $t$单调地由$\alpha$变到$\beta$
@@ -1026,3 +996,476 @@ $$
 $$
 
 注意中间那个$\tau$是向量形式，疑似是markdown支持不好
+
+### 格林公式
+
+定理1，设闭区域$D$由分段光滑的曲线$L$围成，若函数$P(x,y)$及$Q(x,y)$在$D$上具有一阶连续偏导数，则有
+
+$$
+\iint\limits_D(\frac{\partial Q}{\partial x}-\frac{\partial P}{\partial y})
+dxdy=\oint_LPdx+Qdy
+$$
+
+其中$L$是$D$的取正向的边界曲线。
+
+对平面区域$D$的边界曲线$L$，规定正向如下：当观察者沿着$L$的这个方向行走时，$D$总在他的左边。
+
+定理2，设区域$G$是一个单连通域（复连通不是充要条件），若函数$P(x,y),Q(x,y)$在$G$内具有一阶连续偏导数，则曲线积分$\int_LPdx+Qdy$在$G$内与路径无关（或沿着$G$内任意闭曲线的曲线积分为0）的充分必要条件是
+
+$$
+\frac{\partial P}{\partial y}=\frac{\partial Q}{\partial x}
+$$
+
+在$G$内恒成立。
+
+定理3，设区域$G$是一个单连通域（复连通不是充要条件，若函数$P(x,y),Q(x,y)$在$G$内具有一阶连续偏导数，则$P(x,y)dx+Q(x,y)dy$在$G$内为某一函数$u(x,y)$的全微分的充分必要条件是
+
+$$
+\frac{\partial P}{\partial y}=\frac{\partial Q}{\partial x}
+$$
+
+在$G$内恒成立。
+
+### 对面积的曲面积分
+
+$$
+\iint\limits_{\Sigma}f(x,y,z)dS
+$$
+
+$$
+=\iint\limits_{D_{xy}}f[x,y,z(x,y)]\sqrt{1+z_x^2(x,y)+z_y^2(x,y)}dxdy
+$$
+
+### 对坐标的曲面积分
+#### 关于方向
+假设某块小曲面$\Delta S$与$z$轴的夹角为$\gamma$角，在$xOy$面上的投影是$(\Delta\sigma)_{xy}$，则规定$\Delta S$在$xOy$面上的投影$(\Delta S)_{xy}$为
+
+$$
+(\Delta S)_{xy}=\left\{\begin{matrix}
+(\Delta\sigma)_{xy}, cos\gamma>0 \\
+-(\Delta\sigma)_{xy}, cos\gamma<0 \\
+0, cos\gamma\equiv 0
+\end{matrix}\right.
+$$
+
+投影到其他坐标面类似，总而言之向上、向右、向前是正向曲面。
+
+#### 对坐标的曲面积分的计算法
+如果曲面积分是在曲面$\Sigma$上侧的，那么
+
+$$
+\iint\limits_\Sigma R(x,y,z)dxdy=\iint\limits_{D_{xy}}R[x,y,z(x,y)]dxdy
+$$
+
+若在下侧，则
+
+$$
+\iint\limits_\Sigma R(x,y,z)dxdy=-\iint\limits_{D_{xy}}R[x,y,z(x,y)]dxdy
+$$
+
+同理有
+
+$$
+\iint\limits_\Sigma P(x,y,z)dydz=\pm\iint\limits_{D_{yz}}P[x(y,z),y,z]dydz
+$$
+
+$$
+\iint\limits_\Sigma Q(x,y,z)dzdx=\pm\iint\limits_{D_{zx}}Q[x,y(z,x),z]dzdx
+$$
+
+#### 两类曲面积分之间的联系
+$$
+\iint\limits_\Sigma Pdydz+Qdzdx+Rdxdy=\iint\limits_\Sigma(Pcos\alpha+Qcos\beta+Rcos\gamma)dS
+$$
+
+写成向量形式
+
+$$
+\iint\limits_\Sigma \bold{A}\cdot d\bold{S}=\iint\limits_\Sigma \bold{A}\cdot\bold{n}dS
+$$
+
+### 高斯公式 通量与散度
+#### 高斯公式
+设空间闭区域$\Omega$是由分片光滑的闭曲面$\Sigma$所围成，若函数$P(x,y,z),Q(x,y,z),R(x,y,z)$在$\Omega$上具有一阶连续偏导数，则有
+$$
+\iiint\limits_\Omega(\frac{\partial P}{\partial x}+\frac{\partial Q}{\partial y}+\frac{\partial R}{\partial z})dv=\oiint\limits_\Sigma Pdydz+Qdzdx+Rdxdy
+$$
+
+或 
+
+$$
+\iiint\limits_\Omega(\frac{\partial P}{\partial x}+\frac{\partial Q}{\partial y}+\frac{\partial R}{\partial z})dv=\oiint\limits_\Sigma(Pcos\alpha+Qcos\beta+Rcos\gamma)dS
+$$
+
+这里$\Sigma$是$\Omega$的整个边界曲面的外侧，$cos\alpha、cos\beta、cos\gamma$是$\Sigma$在点$(x,y,z)$处的法向量的方向余弦。
+
+#### 沿任意闭曲面的曲面积分为零的条件
+
+设$G$是空间二维单连通取余，若$P(x,y,z),Q(x,y,z),R(x,y,z)$在$G$内具有一阶连续偏导数，则曲面积分
+
+$$
+\iint\limits_\Sigma Pdydz+Qdzdx+Rdxdy
+$$
+
+在$G$内所取曲面$\Sigma$无关而只取决于$\Sigma$的边界曲线(或沿$G$内任一闭曲面的曲面积分为零)的充分必要条件是
+
+$$
+\frac{\partial P}{\partial x}+\frac{\partial Q}{\partial y}+\frac{\partial R}{\partial z}=0
+$$
+
+在$G$内恒成立。
+
+#### 通量与散度
+
+设有向量场
+
+$$
+\bold{A}(x,y,z) = P(x,y,z)\bold i+Q(x,y,z)\bold j+R(x,y,z)\bold k
+$$
+
+其中函数$P,Q,R$均有一阶连续偏导数，$\Sigma$是场内的一片有向曲面，$\bold n$是$\Sigma$在点$(x,y,z)$处的单位法向量，则积分
+
+$$
+\iint\limits_\Sigma \bold A\cdot \bold ndS
+$$
+
+称为向量场$\bold A$通过曲面$\Sigma$向着指定侧的通量（或流量）。
+又可表达为
+
+$$
+\iint\limits_\Sigma \bold A\cdot \bold ndS=\iint\limits_\Sigma \bold Ad\bold S=\iint\limits_\Sigma Pdydz+Qdzdx+Rdxdy
+$$
+
+对于这个向量场，其散度记作$div\bold A$，即
+
+$$
+div\bold A=\frac{\partial P}{\partial x}+\frac{\partial Q}{\partial y}+\frac{\partial R}{\partial z}
+$$
+
+利用向量微分算子$\nabla$，也可以表示为
+
+$$
+div\bold A = \nabla\cdot\bold A
+$$
+
+利用向量场的通量和散度，高斯公式可以写成
+
+$$
+\iiint\limits_{\Omega}div\bold Adv=\iint\limits_\Sigma A_ndS
+$$
+
+### 斯托克斯公式 环流量与旋度
+
+#### 斯托克斯公式
+
+设$\Gamma$为分段光滑的空间有向闭曲线，$\Sigma$是以$\Gamma$为边界的分片光滑的有向曲面，$\Gamma$的正向与$\Sigma$的侧符合右手规则，若函数$P(x,y,z),Q(x,y,z),R(x,y,z)$在曲面$\Sigma$(连同边界$\Gamma$)上具有一阶连续偏导数，则有
+
+$$
+\iint\limits_\Sigma\left(\frac{\partial R}{\partial y}-\frac{\partial Q}{\partial z}\right)dydz+\left(\frac{\partial P}{\partial z}-\frac{\partial R}{\partial x}\right)dzdx+\left(\frac{\partial Q}{\partial x}-\frac{\partial P}{\partial y}\right)dxdy
+$$
+
+$$
+=\oint_\Gamma Pdx+Qdy+Rdz
+$$
+
+#### 空间曲线积分与路径无关的条件
+
+设空间区域$G$是一维单连通域，若函数$P(x,y,z),Q(x,y,z),R(x,y,z)$在$G$内具有一阶连续偏导数，则空间曲线积分$\int_\Gamma Pdx+Qdy+Rdz$在$G$内与路径无关（或沿$G$内任意闭合曲线的曲线积分为零）的充分必要条件是
+
+$$
+\frac{\partial P}{\partial y}=\frac{\partial Q}{\partial x},\frac{\partial Q}{\partial z}=\frac{\partial R}{\partial y},\frac{\partial R}{\partial x}=\frac{\partial P}{\partial z}
+$$
+
+在$G$内恒成立
+
+#### 环流量与旋度
+
+设有向量场
+
+$$
+\bold{A}(x,y,z) = P(x,y,z)\bold i+Q(x,y,z)\bold j+R(x,y,z)\bold k
+$$
+
+其中函数$P,Q,R$均连续，$\Gamma$是$\bold A$的定义域内的一条分段光滑的有向闭曲线，$\bold\tau$(粗体，下同)是$\Gamma$在点$(x,y,z)$处的单位切向量，则积分
+
+$$
+\oint_L\bold A\cdot\bold {\tau}ds
+$$
+
+称为向量场$\bold A$沿有向闭曲线$\Gamma$的环流量。
+
+又可表述为
+
+$$
+\oint_L\bold A\cdot\bold {\tau}ds=\oint_L\bold Ad\bold r = \oint_\Gamma Pdx+Qdy+Rdz
+$$
+
+向量场$\bold A$的旋度，记作$\bold{rotA}$，即
+
+$$
+\bold{rotA} = \left(\frac{\partial R}{\partial y}-\frac{\partial Q}{\partial z}\right)\bold i+\left(\frac{\partial P}{\partial z}-\frac{\partial R}{\partial x}\right)\bold j+\left(\frac{\partial Q}{\partial x}-\frac{\partial P}{\partial y}\right)\bold k
+$$
+
+$$
+\bold{rotA}=\nabla\times\bold A
+$$
+
+同样的，斯托克斯公式可以写成
+
+$$
+\iint\limits_\Sigma\bold{rotA}\cdot\bold{n}dS=\oint_\Gamma\bold{A}\cdot\bold{\tau}ds
+$$
+
+$$
+\iint\limits_\Sigma(\bold{rotA})_ndS=\oint_{\Gamma}\bold{A}_{\tau} ds
+$$
+
+## 无穷级数
+
+### 常数项级数的概念和性质
+
+#### 常数项级数的概念
+
+如果级数$\sum^{\infty}_{i=1}u_i$的部分和数列$\{s_n\}$有极限s，即
+
+$$
+\lim\limits_{n\to\infty}s_n=s
+$$
+
+那么称无穷级数$\sum^{\infty}_{i=1}u_i$收敛，这时极限$s$叫做这级数的和，并写成
+
+$$
+s=u_1+u_2+\dots+u_n+\cdots
+$$
+
+如果$\{s_n\}$没有极限，那么称无穷级数$\sum^{\infty}_{i=1}u_i$发散
+
+#### 收敛级数的基本性质
+
+**性质1** 如果级数$\sum^{\infty}_{n=1}u_n$收敛于和$s$，那么级数$\sum^{\infty}_{i=1}ku_i$也收敛，且其和为$ks$.
+
+**性质2** 如果级数$\sum^{\infty}_{n=1}u_n$与$\sum^{\infty}_{n=1}v_n$分别收敛于$s,\sigma$，那么级数$\sum^{\infty}_{n=1}(u_n\pm v_n)$也收敛，且其和为$s\pm\sigma$
+
+**性质3** 在级数中去掉、加上或改变有限项，不会改变级数的收敛性
+
+**性质4** 如果级数$\sum^{\infty}_{n=1}u_n$收敛，那么对于这级数的项任意加括号后所成的级数仍收敛，且其和不变
+
+**性质5（级数收敛的必要条件）** 如果级数$\sum^{\infty}_{n=1}u_n$收敛，那么它的一般项$u_n$趋于0，即
+
+$$
+\lim\limits_{n\to\infty}u_n=0
+$$
+
+
+### 常数项级数的审敛法
+
+#### 正项级数及其审敛法
+
+**定理1** 正项级数$\sum^{\infty}_{n=1}u_n$收敛的充分必要条件是：它的部分和数列$\{s_n\}$有界
+
+**定理2（比较审敛法）** 设$\sum^{\infty}_{n=1}u_n$和$\sum^{\infty}_{n=1}v_n$都是正项级数，且$u_n\leq v_n$.若级数$\sum^{\infty}_{n=1}v_n$收敛，则级数$\sum^{\infty}_{n=1}u_n$收敛，若级数$\sum^{\infty}_{n=1}u_n$发散，则级数$\sum^{\infty}_{n=1}v_n$发散.
+
+**推论** 设$\sum^{\infty}_{n=1}u_n$和$\sum^{\infty}_{n=1}v_n$都是正项级数，如果级数$\sum^{\infty}_{n=1}v_n$收敛，且存在正整数$N$使当$n\ge N$时有$u_n\leq kv_n(k>0)$成立，那么级数$\sum^{\infty}_{n=1}u_n$收敛；如果级数$\sum^{\infty}_{n=1}v_n$发散，且存在正整数$N$使当$n\ge N$时有$u_n\ge kv_n(k>0)$成立，那么级数$\sum^{\infty}_{n=1}u_n$发散.
+
+**定理3（比较审敛法的极限形式）** 设$\sum^{\infty}_{n=1}u_n$和$\sum^{\infty}_{n=1}v_n$都是正项级数，
+
+1. 如果$\lim\limits_{n\to\infty}\frac{u_n}{v_n}=l(0\leq l<+\infty)$，且级数$\sum^{\infty}_{n=1}v_n$收敛，那么级数$\sum^{\infty}_{n=1}u_n$收敛；
+2. 如果$\lim\limits_{n\to\infty}\frac{u_n}{v_n}=l>0$或$\lim\limits_{n\to\infty}\frac{u_n}{v_n}=+\infty$，且级数$\sum^{\infty}_{n=1}v_n$发散，那么级数$\sum^{\infty}_{n=1}u_n$发散；
+
+**定理4（比值审敛法，达朗贝尔判别法）** 设$\sum^{\infty}_{n=1}u_n$是正项级数，如果
+
+$$
+\lim\limits_{n\to\infty}\frac{u_{n+1}}{u_n}=\rho
+$$
+
+那么当$\rho<1$时级数收敛，$\rho>1$(或$\lim\limits_{n\to\infty}\frac{u_{n+1}}{u_n}=\infty$)时级数发散，$\rho=1$时级数可能收敛也可能发散。
+
+**定理5（根值审敛法，柯西判别法）** 设$\sum^{\infty}_{n=1}u_n$是正项级数，如果
+
+$$
+\lim\limits_{n\to\infty}\sqrt[n]{u_n}=\rho
+$$
+
+那么当$\rho<1$时级数收敛，$\rho>1$(或$\lim\limits_{n\to\infty}\sqrt[n]{u_n}=+\infty$)时级数发散，$\rho=1$时级数可能收敛也可能发散。
+
+**定理6（极限审敛法）** $\sum^{\infty}_{n=1}u_n$是正项级数，
+
+1. 如果$\lim\limits_{n\to\infty}nu_n=l>0$(或$\lim\limits_{n\to\infty}nu_n=+\infty$)，那么该级数发散；
+2. 如果$p>1$，而$\lim\limits_{n\to\infty}n^pu_n=l>0(0\leq l<+\infty)$，那么该级数收敛.
+
+#### 交错级数及其审敛法
+
+**定理7（莱布尼茨定理）** 如果交错级数$\sum^{\infty}_{n=1}(-1)^{n-1}u_n$满足条件：
+1. $u_n\ge u_{n+1}$
+2. $\lim\limits_{n\to\infty}u_n=0$
+
+那么级数收敛，且其和$s\leq u_1$，其余项$r_n$的绝对值小于等于$u_{n+1}$
+
+#### 绝对收敛与条件收敛
+
+对于级数$\sum^{\infty}_{n=1}u_n$，若$\sum^{\infty}_{n=1}|u_n|$收敛，那么称$\sum^{\infty}_{n=1}u_n$绝对收敛；如果$\sum^{\infty}_{n=1}u_n$收敛，而$\sum^{\infty}_{n=1}|u_n|$发散，则成$\sum^{\infty}_{n=1}u_n$条件收敛。
+
+**定理8** 如果级数$\sum^{\infty}_{n=1}u_n$绝对收敛，那么$\sum^{\infty}_{n=1}u_n$必定收敛。
+
+#### 绝对收敛级数的性质
+**定理9** 绝对收敛级数经改变项的位置后构成的级数也收敛，且与原级数有相同的和.
+
+**定理10** （绝对收敛级数的乘法） 设$\sum^{\infty}_{n=1}u_n$和$\sum^{\infty}_{n=1}v_n$都是绝对收敛，其和分别为$s,\sigma$，则它们的柯西乘积
+
+$$
+u_1v_1+(u_1v_2+u_2v_1)+\dots+(u_1v_n+u_2v_{n-1}+\dots+u_nv_1)+\cdots
+$$
+
+也是绝对收敛的，且其和为$s\sigma$
+
+### 幂级数
+收敛域：开区间；收敛区间：要判断边界点
+
+**定理1（阿贝尔定理)** 如果级数$\sum^{\infty}_{n=0}a_nx^n$当$x=x_0\neq0$时收敛，那么适合不等式$|x|<|x_0|$的一切$x$使这幂级数绝对收敛，反之，如果级数$\sum^{\infty}_{n=0}a_nx^n$当$x=x_0\neq0$当$x=x_0$时发散，那么适合不等式$|x|>|x_0|$的一切$x$使这幂级数发散.
+
+**推论** 如果幂级数$\sum^{\infty}_{n=0}a_nx^n$不仅在$x=0$一点收敛，也不是在整个数轴上都收敛，那么必有一个确定的正数$R$存在，使得
+
+当$|x|<R$时，幂级数绝对收敛
+
+当$|x|>R$时，幂级数发散
+
+当$|x|=R$时，幂级数可能收敛也可能发散，如果收敛可能是绝对或条件收敛。
+
+正数$R$通常叫做收敛半径。
+
+**定理2** 如果
+$$
+\lim\limits_{n\to\infty}\left|\frac{a_{n+1}}{a_n}\right|=\rho
+$$
+
+其中$a_n,a_{n+1}$是幂级数$\sum^{\infty}_{n=0}a_nx^n$的相邻两项的系数，那么这幂级数的收敛半径
+
+$$
+R=\left\{\begin{matrix}
+\frac{1}{\rho}, \rho\ne0\\
++\infty, \rho=0 \\
+0, \rho=+\infty
+\end{matrix}\right.
+$$
+
+注意如果级数的项中为$x^{2n}$等不能化为$x^n$的，不能用这个定理，只能用比值审敛法等通用手段。
+
+#### 幂级数的运算
+设$\sum^{\infty}_{n=0}a_nx^n$和$\sum^{\infty}_{n=0}b_nx^n$分别在区间$(-R,R),(-R',R')$内收敛，则对于这两个幂级数，
+
+1. $\sum^{\infty}_{n=0}a_nx^n\pm\sum^{\infty}_{n=0}b_nx^n=\sum^{\infty}_{n=0}(a_n\pm b_n)x^n$在$(-R,R),(-R',R')$中较小的区间内成立.
+2. $\sum^{\infty}_{n=0}a_nx^n\sum^{\infty}_{n=0}b_nx^n=a_0b_0+(a_0b_1+a_1b_0)x+\dots+(a_0b_n+a_1b_{n-1}+\dots+a_nb_0)x^n+\cdots$$(-R,R),(-R',R')$中较小的区间内成立.
+3. $\frac{\sum^{\infty}_{n=0}a_nx^n}{\sum^{\infty}_{n=0}b_nx^n}=\sum^{\infty}_{n=0}c_nx^n$，假设$b_0\ne0$，$c$可以由下式求出
+$$
+a_0=b_0c_0\\
+a_1=b_1c_0+b_0c_1\\
+a_2=b_2c_0+b_1c_1+b_0c_2\\
+\cdots
+$$
+幂级数$\sum^{\infty}_{n=0}c_nx^n$的收敛区间可能比原来两级数的收敛区间小得多。
+
+**幂级数的和函数的性质**
+
+**性质1** 幂级数$\sum^{\infty}_{n=0}a_nx^n$的和函数$s(x)$在其收敛域$I$上连续
+
+**性质2** 幂级数$\sum^{\infty}_{n=0}a_nx^n$的和函数$s(x)$在其收敛域$I$上可积，并有逐项积分公式
+
+$$
+\int_0^xs(x)dt=\int_0^x[\sum^{\infty}_{n=0}a_nt^n]dt=\sum^{\infty}_{n=0}\int_0^xa_nt^ndt=\sum^{\infty}_{n=0}\frac{a_n}{n+1}x^{n+1}(x\in I),
+$$
+
+逐项积分后所得到的幂级数和原级数有相同的收敛半径。
+
+**性质3** 幂级数$\sum^{\infty}_{n=0}a_nx^n$的和函数$s(x)$在其收敛域$I$上可导，且有逐项求导公式
+
+$$
+s'(x)=(\sum^{\infty}_{n=0}a_nx^n)'=\sum^{\infty}_{n=0}(a_nx^n)'=\sum^{\infty}_{n=1}na_nx^{n-1}
+$$
+
+逐项求导后所得到的幂级数和原级数有相同的收敛半径.
+
+反复应用上述结论可得：$s(x)$在其收敛区间$(-R,R)$内具有任意阶导数。
+
+### 函数展开成幂级数
+
+泰勒级数和麦克劳林级数不再重复，见上册整理。
+
+$f(x)$能在某个邻域展开成泰勒级数的充要条件是
+
+$$
+\lim\limits_{n\to\infty}R_n(x)=0, x\in U(x_0)
+$$
+
+除了直接展开外，通常也会有间接展开的办法。即通过四则运算、求导、积分、变量替换等等运算转化为一些常见的函数，再代入这些常见函数的展开式。
+
+下面给出一些常见函数的展开式
+
+$$
+\frac{1}{1-x}=\sum_{n=0}^{\infty}x^n,x\in(-1,1)
+$$
+
+$$
+\frac{1}{1+x}=\sum_{n=0}^{\infty}(-1)^nx^n,x\in(-1,1)
+$$
+
+$$
+e^x=\sum_{n=0}^{\infty}\frac{x^n}{n!},x\in(-\infty,\infty)
+$$
+
+$$
+sinx=\sum_{n=0}^{\infty}\frac{(-1)^n}{(2n+1)!}x^{2n+1},x\in(-\infty,\infty)
+$$
+
+$$
+cosx=\sum_{n=0}^{\infty}\frac{(-1)^n}{(2n)!}x^{2n},x\in(-\infty,\infty)
+$$
+
+$$
+ln(1+x)=\sum_{n=0}^{\infty}\frac{(-1)^n}{n+1}x^{n+1}= \sum_{n=1}^{\infty}\frac{(-1)^{n-1}}{n}x^{n},x\in(-1,1]
+$$
+
+$$
+(1+x)^m=1+mx+\frac{m(m-1)}{2!}x^2+\cdots+\frac{m(m-1)\cdots(m-n+1)}{n!}x^n+\cdots
+$$
+
+### 傅里叶级数
+一个定义在$(-\infty,\infty)$上周期为$2\pi$的函数$f(x)$，如果它在一个周期上可积，那么一定可以做出$f(x)$的傅里叶级数
+
+$$
+f(x) = \frac{a_0}{2}+\sum_{n=1}^{\infty}(a_ncosnx+b_nsinnx)
+$$
+
+其中
+
+$$
+a_n=\frac{1}{\pi}\int^\pi_{-\pi}f(x)\cos nxdx,(n=0,1,2,3,\cdots)
+$$
+
+$$
+b_n=\frac{1}{\pi}\int^\pi_{-\pi}f(x)\sin nxdx,(n=1,2,3,\cdots)
+$$
+
+**定理** 设$f(x)$是周期为$2\pi$的周期函数，如果它满足：
+
+1. 在一个周期内连续或只有有限个第一类间断点
+2. 在一个周期内至多只有有限个极值点
+
+那么$f(x)$的傅立叶级数收敛，并且
+
+当$x$是$f(x)$的连续点时，级数收敛于$f(x)$;
+
+当$x$是$f(x)$的间断点时，级数收敛于$\frac{1}{2}[f(x^-)+f(x^+)]$
+
+如果函数只在$[-\pi,\pi]$上有定义，可以使用周期延拓来展开成傅里叶级数。
+
+#### 正弦级数和余弦级数
+
+当$f(x)$为奇函数时，可以展开为正弦级数
+$$
+\sum_{n=1}^\infty b_n\sin nx
+$$
+
+当$f(x)$为偶函数时，可以展开为余弦函数
+$$
+\frac{a_0}{2}+\sum_{n=1}^\infty a_n\cos nx
+$$
