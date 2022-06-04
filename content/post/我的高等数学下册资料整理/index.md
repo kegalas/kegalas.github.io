@@ -991,11 +991,9 @@ $$
 也可以写成向量形式
 
 $$
-\int_L\bold A\cdot d\bold r = \int_L\bold A\cdot\bold{\tau}ds=
+\int_L\bold A\cdot d\bold r = \int_L\bold A\cdot\bm{\tau}ds=
 \int_LA_{\tau}ds
 $$
-
-注意中间那个$\tau$是向量形式，疑似是markdown支持不好
 
 ### 格林公式
 
@@ -1186,10 +1184,10 @@ $$
 \bold{A}(x,y,z) = P(x,y,z)\bold i+Q(x,y,z)\bold j+R(x,y,z)\bold k
 $$
 
-其中函数$P,Q,R$均连续，$\Gamma$是$\bold A$的定义域内的一条分段光滑的有向闭曲线，$\bold\tau$(粗体，下同)是$\Gamma$在点$(x,y,z)$处的单位切向量，则积分
+其中函数$P,Q,R$均连续，$\Gamma$是$\bold A$的定义域内的一条分段光滑的有向闭曲线，$\bm\tau$是$\Gamma$在点$(x,y,z)$处的单位切向量，则积分
 
 $$
-\oint_L\bold A\cdot\bold {\tau}ds
+\oint_L\bold A\cdot\bm {\tau}ds
 $$
 
 称为向量场$\bold A$沿有向闭曲线$\Gamma$的环流量。
@@ -1197,7 +1195,7 @@ $$
 又可表述为
 
 $$
-\oint_L\bold A\cdot\bold {\tau}ds=\oint_L\bold Ad\bold r = \oint_\Gamma Pdx+Qdy+Rdz
+\oint_L\bold A\cdot\bm {\tau}ds=\oint_L\bold Ad\bold r = \oint_\Gamma Pdx+Qdy+Rdz
 $$
 
 向量场$\bold A$的旋度，记作$\bold{rotA}$，即
@@ -1213,7 +1211,7 @@ $$
 同样的，斯托克斯公式可以写成
 
 $$
-\iint\limits_\Sigma\bold{rotA}\cdot\bold{n}dS=\oint_\Gamma\bold{A}\cdot\bold{\tau}ds
+\iint\limits_\Sigma\bold{rotA}\cdot\bold{n}dS=\oint_\Gamma\bold{A}\cdot\bm{\tau}ds
 $$
 
 $$
