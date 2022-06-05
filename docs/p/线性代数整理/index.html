@@ -366,7 +366,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 20 分钟
+                    阅读时长: 31 分钟
                 </time>
             </div>
         
@@ -653,6 +653,8 @@ class="math inline">\(\bold{A}\)</span>经有限次初等变换成矩阵<span
 class="math inline">\(\bold{B}\)</span>，那么称这两个矩阵等价，记作<span
 class="math inline">\(\bold{A} \sim \bold{B}\)</span></p>
 <p>等价关系具有：自反性、对称性、传递性。</p>
+<p>相似一定等价，等价不一定相似。 合同一定等价，等价不一定合同。
+合同不一定相似，相似不一定合同。</p>
 <h3 id="矩阵的秩">矩阵的秩</h3>
 <p>设<span class="math inline">\(\bold{A}\)</span>为<span
 class="math inline">\(m\times n\)</span>矩阵，<span
@@ -721,26 +723,19 @@ id="对于一个矩阵一些相互等价的命题">对于一个矩阵一些相�
 <p>设<span class="math inline">\(\bold{A}\)</span>为<span
 class="math inline">\(n\)</span>阶方阵，那么下列命题等价</p>
 <ol type="1">
-<li><span class="math inline">\(\bold{A}\)</span>可逆</li>
-<li>线性方程组<span
-class="math inline">\(\bold{Ax=0}\)</span>只有零解</li>
-<li><span
-class="math inline">\(\bold{A}\)</span>可以经过有限次初等行变换华为单位矩阵<span
-class="math inline">\(\bold{E}_n\)</span></li>
-<li><span
-class="math inline">\(\bold{A}\)</span>可以表示为有限个初等矩阵的乘积。</li>
-</ol>
-<h4 id="第二组">第二组</h4>
-<p>设<span class="math inline">\(\bold{A}\)</span>为<span
-class="math inline">\(n\)</span>阶方阵，那么下列命题等价</p>
-<ol type="1">
 <li>满秩</li>
 <li>非奇异</li>
 <li>可逆</li>
 <li><span class="math inline">\(\bold{Ax=0}\)</span>只有零解</li>
 <li><span class="math inline">\(|\bold{A}|\ne0\)</span></li>
+<li><span
+class="math inline">\(\bold{A}\)</span>可以经过有限次初等行变换华为单位矩阵<span
+class="math inline">\(\bold{E}_n\)</span></li>
+<li><span
+class="math inline">\(\bold{A}\)</span>可以表示为有限个初等矩阵的乘积。</li>
+<li>特征值均非零</li>
 </ol>
-<h4 id="第三组">第三组</h4>
+<h4 id="第二组">第二组</h4>
 <p>设<span class="math inline">\(\bold{A}\)</span>为<span
 class="math inline">\(n\)</span>阶方阵，那么下列命题等价</p>
 <ol type="1">
@@ -749,6 +744,12 @@ class="math inline">\(n\)</span>阶方阵，那么下列命题等价</p>
 <li>不可逆</li>
 <li><span class="math inline">\(\bold{Ax=0}\)</span>不只有零解</li>
 <li><span class="math inline">\(|\bold{A}|=0\)</span></li>
+<li><span
+class="math inline">\(\bold{A}\)</span>不可以经过有限次初等行变换华为单位矩阵<span
+class="math inline">\(\bold{E}_n\)</span></li>
+<li><span
+class="math inline">\(\bold{A}\)</span>不可以表示为有限个初等矩阵的乘积。</li>
+<li>特征值至少有一个为零</li>
 </ol>
 <h2 id="行列式">行列式</h2>
 <h3 id="二阶行列式">二阶行列式</h3>
@@ -1162,16 +1163,101 @@ class="math inline">\(|\bm{A}|=\pm1\)</span></li>
 <p><span class="math inline">\(n\)</span>阶方阵<span
 class="math inline">\(\bm{A}\)</span>为正交矩阵的充要条件是<span
 class="math inline">\(\bm{A}\)</span>的列（行）向量组是标准向量组。</p>
+<h3 id="基维数与坐标">基、维数与坐标</h3>
+<h4 id="向量空间的基与维数">向量空间的基与维数</h4>
+<p>设<span
+class="math inline">\(\bm{V}\)</span>是向量空间，如果向量<span
+class="math inline">\(\bm{\alpha}_1,\bm{\alpha}_2,\cdots,\bm{\alpha}_r\in\bm{V}\)</span>，满足</p>
+<ol type="1">
+<li><span
+class="math inline">\(\bm{\alpha}_1,\bm{\alpha}_2,\cdots,\bm{\alpha}_r\)</span>线性无关</li>
+<li><span class="math inline">\(\bm{V}\)</span>中任一向量都可以由<span
+class="math inline">\(\bm{\alpha}_1,\bm{\alpha}_2,\cdots,\bm{\alpha}_r\)</span>线性表示</li>
+</ol>
+<p>则称向量组<span
+class="math inline">\(\bm{\alpha}_1,\bm{\alpha}_2,\cdots,\bm{\alpha}_r\)</span>是向量空间<span
+class="math inline">\(\bm{V}\)</span>的一组基，<span
+class="math inline">\(r\)</span>称为向量空间的维数，记为<span
+class="math inline">\(dim\bm{V}=r\)</span>，规定零向量构成的向量空间的维数为0.</p>
+<p>类似的还有正交基和标准（规范）正交基的概念。</p>
+<h4 id="向量的坐标">向量的坐标</h4>
+<p>设<span class="math inline">\(\bm{V}\)</span>是<span
+class="math inline">\(r\)</span>维向量空间，<span
+class="math inline">\(\bm{\alpha}_1,\bm{\alpha}_2,\cdots,\bm{\alpha}_r\)</span>是<span
+class="math inline">\(\bm{V}\)</span>的一组基，则<span
+class="math inline">\(\bm{V}\)</span>中的任一向量<span
+class="math inline">\(\bm{x}\)</span>可由<span
+class="math inline">\(\bm{\alpha}_1,\bm{\alpha}_2,\cdots,\bm{\alpha}_r\)</span>唯一线性表示为<span
+class="math inline">\(\bm{x}=x_1\bm{\alpha}_1+\cdots+x_r\bm{\alpha}_r\)</span>，数组<span
+class="math inline">\(x_1,x_2,\cdots,x_r\)</span>称为向量<span
+class="math inline">\(\bm{x}\)</span>在基<span
+class="math inline">\(\bm{\alpha}_1,\bm{\alpha}_2,\cdots,\bm{\alpha}_r\)</span>下的坐标。</p>
+<p><strong>过渡矩阵与基变换公式</strong></p>
+<p>设<span
+class="math inline">\(\bm{\alpha}_1,\bm{\alpha}_2,\cdots,\bm{\alpha}_r\)</span>和<span
+class="math inline">\(\bm{\beta}_1,\bm{\beta}_2,\cdots,\bm{\beta}_r\)</span>是<span
+class="math inline">\(r\)</span>维向量空间<span
+class="math inline">\(\bm{V}\)</span>的两组基，则两个向量组等价，从而有<span
+class="math inline">\(\bm{\beta}_j=k_{1j}\bm{\alpha}_1+\cdots+k_{rj}\bm{\alpha}_r\)</span>，即</p>
+<p><span class="math display">\[
+[\bm{\beta}_1,\cdots,\bm{\beta}_r]=[\bm{\alpha}_1,\cdots,\bm{\alpha}_r]
+\begin{bmatrix}
+k_{11} &amp; \cdots &amp; k_{1r}\\
+\vdots &amp;  &amp; \vdots\\
+k_{r1} &amp; \cdots &amp; k_{rr}
+\end{bmatrix}
+=[\bm{\alpha}_1,\cdots,\bm{\alpha}_r]\bm{K}
+\]</span></p>
+<p>称<span class="math inline">\(\bm{K}\)</span>是由<span
+class="math inline">\(\bm{A}\)</span>到<span
+class="math inline">\(\bm{B}\)</span>的过度矩阵，上式为基变换公式。另外<span
+class="math inline">\(\bm{K}\)</span>一定是可逆矩阵。</p>
+<p><strong>坐标变换公式</strong></p>
+<p>设<span class="math inline">\(\bm{\alpha}\)</span>在两组基<span
+class="math inline">\(\bm{A,B}\)</span>下的坐标分别为<span
+class="math inline">\([x_1,\cdots,x_r]^T\)</span>和<span
+class="math inline">\([y_1,\cdots,y_r]^T\)</span>，则有</p>
+<p><span class="math display">\[
+\begin{bmatrix}
+x_1 \\
+\vdots \\
+x_r
+\end{bmatrix}
+=\bm{K}
+\begin{bmatrix}
+y_1 \\
+\vdots \\
+y_r
+\end{bmatrix}
+or
+\begin{bmatrix}
+y_1 \\
+\vdots \\
+y_r
+\end{bmatrix}
+=\bm{K}^{-1}
+\begin{bmatrix}
+x_1 \\
+\vdots \\
+x_r
+\end{bmatrix}
+\]</span></p>
+<p>一般有<span
+class="math inline">\(\bm{K}=\bm{A}^{-1}\bm{B}\)</span></p>
 <h2 id="线性方程组">线性方程组</h2>
 <h3 id="解法">解法</h3>
 <h4 id="高斯消元法">高斯消元法</h4>
 <p>即通过对增广矩阵进行初等行变换（只能是行变换），化为简单的形式进行求解。</p>
+<h4 id="克莱默法则">克莱默法则</h4>
+<p>见前</p>
 <h3 id="性质定理">性质定理</h3>
 <ol type="1">
 <li><p>齐次线性方程组<span class="math inline">\(\bold{A}_{m\times
 n}\bold{x=0}\)</span>有非零解的充要条件是<span
 class="math inline">\(R(\bold{A})=r&lt;n\)</span>，且有无穷多解，自由量为<span
-class="math inline">\(n-r\)</span>个。</p></li>
+class="math inline">\(n-r\)</span>个（解空间的维数为<span
+class="math inline">\(n-r\)</span>）。这个充要条件可以替换为<span
+class="math inline">\(|\bm A|=0\)</span>及其他等价命题。</p></li>
 <li><p>非齐次线性方程组<span class="math inline">\(\bold{A}_{m\times
 n}\bold{x=b}\)</span>有解的充要条件是<span
 class="math inline">\(R(\bold{A})=R(\~\bold{A})=r\)</span>，且当</p>
@@ -1183,6 +1269,369 @@ class="math inline">\(r&lt;n\)</span>时有无穷多解，自由量是<span
 class="math inline">\(n-r\)</span>个，称为欠定线性方程组</li>
 </ol></li>
 </ol>
+<h3 id="线性方程组解的结构">线性方程组解的结构</h3>
+<h4 id="齐次情况">齐次情况</h4>
+<p>设<span
+class="math inline">\(\bm{\xi}_1,\bm{\xi}_2,\cdots,\bm{\xi}_t\)</span>是<span
+class="math inline">\(\bm{Ax=0}\)</span>的解，则<span
+class="math inline">\(c_1\bm{\xi}_1+c_2\bm{\xi}_2+\cdots+c_t\bm{\xi}_t\)</span>也是解，<span
+class="math inline">\(c_i\)</span>为任意常数。</p>
+<p>齐次线性方程组<span
+class="math inline">\(\bm{Ax=0}\)</span>的解空间的一组基<span
+class="math inline">\(\bm{\xi}_1,\bm{\xi}_2,\cdots,\bm{\xi}_{n-r}\)</span>也称为方程组的一个基础解系。</p>
+<p>换言之，基础解系<span
+class="math inline">\(\bm{\xi}_1,\bm{\xi}_2,\cdots,\bm{\xi}_{n-r}\)</span>是<span
+class="math inline">\(\bm{Ax=0}\)</span>的解向量，且满足</p>
+<ol type="1">
+<li><span
+class="math inline">\(\bm{\xi}_1,\bm{\xi}_2,\cdots,\bm{\xi}_{n-r}\)</span>线性无关</li>
+<li><span class="math inline">\(\bm{Ax=0}\)</span>的任一解都可由<span
+class="math inline">\(\bm{\xi}_1,\bm{\xi}_2,\cdots,\bm{\xi}_{n-r}\)</span>线性表示</li>
+</ol>
+<p>通过基础解系可以写出通解为<span
+class="math inline">\(\bm{x}=c_1\bm{\xi}_1+c_2\bm{\xi}_2+\cdots+c_{n-r}\bm{\xi}_{n-r}\)</span>，<span
+class="math inline">\(c_i\)</span>为任意常数。</p>
+<h4 id="非齐次情况">非齐次情况</h4>
+<p>有如下性质：</p>
+<ol type="1">
+<li>设<span
+class="math inline">\(\bm{x}=\bm{\eta}_1+\bm{\eta}_2+\cdots+\bm{\eta}_{t}\)</span>为<span
+class="math inline">\(\bm{Ax=b}\)</span>的解，令<span
+class="math inline">\(\bm{\eta}=c_1\bm{\eta}_1+c_2\bm{\eta}_2+\cdots+c_{t}\bm{\eta}_{t}\)</span>，当<span
+class="math inline">\(c_1+\cdots+c_t=0\)</span>时，<span
+class="math inline">\(\bm{\eta}\)</span>为<span
+class="math inline">\(\bm{Ax=0}\)</span>的解，当<span
+class="math inline">\(c_1+\cdots+c_t=1\)</span>时<span
+class="math inline">\(\bm{\eta}\)</span>为<span
+class="math inline">\(\bm{Ax=b}\)</span>的解</li>
+<li>设<span class="math inline">\(\bm\xi\)</span>为<span
+class="math inline">\(\bm{Ax=0}\)</span>的解，<span
+class="math inline">\(\bm\eta\)</span>为<span
+class="math inline">\(\bm{Ax=b}\)</span>的解，则<span
+class="math inline">\(\bm{x=\xi+\eta}\)</span>仍为<span
+class="math inline">\(\bm{Ax=b}\)</span>的解。</li>
+<li>非齐次线性方程组的解集关于加法和数乘不封闭，因此不构成向量空间</li>
+</ol>
+<p>由此可知，<span
+class="math inline">\(\bm{Ax=b}(R(\bm{A})=R(\~{\bm{A}})=r\)</span>的通解为</p>
+<p><span class="math display">\[
+\bm x=k_1\bm{\xi}_1+\cdots+k_{n-r}\bm{\xi}_{n-r}+\bm\eta^*
+\]</span></p>
+<p>其中<span
+class="math inline">\(\bm{x}=\bm{\xi}_1+\bm{\xi}_2+\cdots+\bm{\xi}_{n-r}\)</span>为导出组<span
+class="math inline">\(\bm{Ax=0}\)</span>的一个基础解系，<span
+class="math inline">\(\bm\eta^*\)</span>为<span
+class="math inline">\(\bm{Ax=b}\)</span>的任意一个解，称为特解。</p>
+<h2 id="相似矩阵与二次型">相似矩阵与二次型</h2>
+<h3 id="特征值和特征向量">特征值和特征向量</h3>
+<p>设<span class="math inline">\(\bm{A}\)</span>为<span
+class="math inline">\(n\)</span>阶矩阵，如果存在数<span
+class="math inline">\(\lambda\)</span>和<span
+class="math inline">\(n\)</span>维非零（注意非零）列向量<span
+class="math inline">\(\bm\alpha\)</span>使得</p>
+<p><span class="math display">\[
+\bm A\bm\alpha=\lambda\bm\alpha
+\]</span></p>
+<p>则称<span class="math inline">\(\lambda\)</span>为<span
+class="math inline">\(\bm A\)</span>的特征值，<span
+class="math inline">\(\bm\alpha\)</span>为<span
+class="math inline">\(\bm A\)</span>对于这个<span
+class="math inline">\(\lambda\)</span>的特征向量。</p>
+<p>由上式可知，<span
+class="math inline">\(\bm\alpha\)</span>必是如下方程的非零解</p>
+<p><span class="math display">\[
+(\lambda\bm E-\bm A)\bm x=\bm 0
+\]</span></p>
+<p>显然有非零解当且仅当<span class="math inline">\(|\lambda\bm E-\bm
+A|=0\)</span>，<span class="math inline">\(\lambda\bm E-\bm
+A\)</span>称为特征矩阵，<span class="math inline">\(|\lambda\bm E-\bm
+A|\)</span>称为特征多项式，<span class="math inline">\(|\lambda\bm E-\bm
+A|=0\)</span>称为特征方程。</p>
+<p><strong>特征值和特征向量的求解步骤</strong></p>
+<ol type="1">
+<li>求<span class="math inline">\(|\lambda\bm E-\bm
+A|=0\)</span>的全体根，记为<span
+class="math inline">\(\lambda_1,\lambda_2,\cdots,\lambda_n\)</span></li>
+<li>对于每个特征值<span
+class="math inline">\(\lambda_i\)</span>，求出对应其次线性方程组<span
+class="math inline">\((\lambda_i\bm E-\bm A)\bm
+x=\bm0\)</span>的一个基础解系<span
+class="math inline">\(\bm{\alpha}_1,\cdots,\bm{\alpha}_s\)</span>，并以此求出<span
+class="math inline">\(\lambda_i\)</span>对应的全部特征向量<span
+class="math inline">\(k_1\bm{\alpha}_1,\cdots,k_s\bm{\alpha}_s\)</span>。其中<span
+class="math inline">\(k_1,\cdots,k_s\)</span>是任意不全为零的常数。</li>
+</ol>
+<h3 id="特征值和特征向量的性质">特征值和特征向量的性质</h3>
+<ol type="1">
+<li><p>设<span class="math inline">\(\lambda\)</span>为<span
+class="math inline">\(\bm A\)</span>的任一特征值，<span
+class="math inline">\(\bm\alpha\)</span>为其对应的特征向量，则<span
+class="math inline">\(f(\lambda)\)</span>是<span
+class="math inline">\(f(\bm
+A)\)</span>的特征值，其对应的特征向量还是<span
+class="math inline">\(\bm\alpha\)</span>，其中<span
+class="math inline">\(f(x)\)</span>是<span
+class="math inline">\(x\)</span>的<span
+class="math inline">\(m\)</span>次多项式。</p></li>
+<li><p>设<span class="math inline">\(\lambda\)</span>为<span
+class="math inline">\(\bm A\)</span>的任一非零特征值，<span
+class="math inline">\(\bm\alpha\)</span>为其对应的特征向量，则<span
+class="math inline">\(\bm A^*\)</span>的特征值为<span
+class="math inline">\(|\bm A|/\lambda\)</span>。特征向量仍为<span
+class="math inline">\(\bm\alpha\)</span></p></li>
+<li><p>若矩阵<span class="math inline">\(\bm A\)</span>可逆，则<span
+class="math inline">\(1/\lambda\)</span>是<span
+class="math inline">\(A^{-1}\)</span>的特征值。特征向量仍为<span
+class="math inline">\(\bm\alpha\)</span></p></li>
+<li><p>转置矩阵由于行列式不变，所以特征值不变。但是特征向量并不一定一样。</p></li>
+<li><p>设<span class="math inline">\(n\)</span>阶矩阵<span
+class="math inline">\(\bm A\)</span>的<span
+class="math inline">\(n\)</span>个特征值为<span
+class="math inline">\(\lambda_1,\lambda_2,\cdots,\lambda_n\)</span>（重根按重数计算），则</p>
+<ol type="1">
+<li><span
+class="math inline">\(\lambda_1+\lambda_2+\cdots+\lambda_n=a_{11}+a_{22}+\cdots+a_{nn}=tr(\bm
+A)\)</span>,<span class="math inline">\(tr(\bm
+A)\)</span>称之为矩阵的迹</li>
+<li><span class="math inline">\(\lambda_1\lambda_2\cdots\lambda_n=|\bm
+A|\)</span></li>
+</ol></li>
+<li><p>矩阵可逆<span
+class="math inline">\(\Leftrightarrow\)</span>所有特征值均非0</p></li>
+<li><p>若<span
+class="math inline">\(\lambda_1+\lambda_2+\cdots+\lambda_m\)</span>是<span
+class="math inline">\(\bm A\)</span>的互不相同的特征值，<span
+class="math inline">\(\bm{\alpha}_1,\bm{\alpha}_2,\cdots,\bm{\alpha}_m\)</span>是对应的特征向量，则<span
+class="math inline">\(\bm{\alpha}_1,\bm{\alpha}_2,\cdots,\bm{\alpha}_m\)</span>线性无关</p></li>
+<li><p>设<span class="math inline">\(\lambda\)</span>是<span
+class="math inline">\(k\)</span>重特征值，对于<span
+class="math inline">\(\lambda\)</span>的线性无关的特征向量的最大个数为<span
+class="math inline">\(l\)</span>，则<span class="math inline">\(k\ge
+l\)</span></p></li>
+</ol>
+<h3 id="相似矩阵">相似矩阵</h3>
+<h4 id="相似矩阵的定义和性质">相似矩阵的定义和性质</h4>
+<p>设<span class="math inline">\(\bm{A,B}\)</span>为<span
+class="math inline">\(n\)</span>阶矩阵，若存在<span
+class="math inline">\(n\)</span>阶可逆矩阵<span
+class="math inline">\(\bm P\)</span>，使得</p>
+<p><span class="math display">\[
+\bm P^{-1}\bm A\bm P=\bm B
+\]</span></p>
+<p>则称<span class="math inline">\(\bm A\)</span>与<span
+class="math inline">\(\bm B\)</span>相似，记作<span
+class="math inline">\(\bm A\sim \bm B\)</span></p>
+<p>具有以下性质：自反性、传递性、对称性。</p>
+<p>以及</p>
+<ol type="1">
+<li>如果两矩阵相似，则具有相同的特征多项式，从而有相同的特征值。但特征向量不一定相同。并且特征多项式相同并不能推出两矩阵相似。</li>
+<li>两矩阵相似，则具有相同的秩。</li>
+<li>两矩阵相似，则具有相同的迹。</li>
+<li>两矩阵相似，则具有相同的行列式。</li>
+<li>若<span class="math inline">\(\bm A\sim \bm B\)</span>，且<span
+class="math inline">\(\bm A\)</span>可逆，则<span
+class="math inline">\(\bm B\)</span>可逆，并且有<span
+class="math inline">\(\bm A^{-1}\sim \bm B^{-1}\)</span></li>
+<li>若<span class="math inline">\(\bm A\sim \bm
+B\)</span>，则对任一多项式<span
+class="math inline">\(g(x)\)</span>，有<span class="math inline">\(g(\bm
+A)\sim g(\bm B)\)</span></li>
+</ol>
+<h4 id="矩阵可对角化的条件">矩阵可对角化的条件</h4>
+<p>设<span class="math inline">\(\bm A\)</span>为<span
+class="math inline">\(n\)</span>阶矩阵，如果存在一个<span
+class="math inline">\(n\)</span>阶可逆矩阵<span
+class="math inline">\(\bm P\)</span>，使得<span
+class="math inline">\(\bm P^{-1}\bm A\bm P\)</span>为对角矩阵，则称<span
+class="math inline">\(\bm A\)</span>可对角化。</p>
+<p>有如下定理：</p>
+<ol type="1">
+<li><span class="math inline">\(\bm A\)</span>可对角化的充要条件是<span
+class="math inline">\(\bm A\)</span>有<span
+class="math inline">\(n\)</span>个线性无关的特征向量。</li>
+<li><span class="math inline">\(n\)</span>阶矩阵<span
+class="math inline">\(\bm A\)</span>的<span
+class="math inline">\(n\)</span>个特征值互不相同<span
+class="math inline">\(\Rightarrow\)</span><span
+class="math inline">\(\bm A\)</span>可对角化</li>
+<li><span class="math inline">\(\bm
+A\)</span>可对角化的充要条件是对于<span class="math inline">\(\bm
+A\)</span>的每个<span class="math inline">\(k\)</span>重特征值<span
+class="math inline">\(\lambda\)</span>，都有<span
+class="math inline">\(R(\lambda\bm E-\bm A)=n-k\)</span></li>
+</ol>
+<h3 id="实对称矩阵的对角化">实对称矩阵的对角化</h3>
+<p>实对称矩阵一定能对角化</p>
+<p>并且有如下定理：</p>
+<ol type="1">
+<li>实对称矩阵的特征值都为实数</li>
+<li>实对称矩阵的不同特征值所对应的特征向量必正交</li>
+<li>设<span class="math inline">\(\bm A\)</span>为<span
+class="math inline">\(n\)</span>阶实对称矩阵，则存在正交矩阵<span
+class="math inline">\(\bm Q\)</span>使得</li>
+</ol>
+<p><span class="math display">\[
+\bm Q^T\bm{AQ}=\bm Q^{-1}\bm{AQ}=
+\begin{bmatrix}
+\lambda_1 &amp;  &amp;  &amp; \\
+&amp; \lambda_2 &amp;  &amp; \\
+&amp;  &amp; \ddots &amp; \\
+&amp;  &amp;  &amp; \lambda_n
+\end{bmatrix}
+\]</span></p>
+<p>其中<span class="math inline">\(\lambda_i\)</span>为<span
+class="math inline">\(\bm A\)</span>的特征值。</p>
+<ol start="4" type="1">
+<li>设<span class="math inline">\(\bm A\)</span>为<span
+class="math inline">\(n\)</span>阶实对称矩阵，<span
+class="math inline">\(\lambda\)</span>为<span class="math inline">\(\bm
+A\)</span>的<span class="math inline">\(k\)</span>重特征值，则<span
+class="math inline">\(\bm A\)</span>必有<span
+class="math inline">\(k\)</span>个对于特征值<span
+class="math inline">\(\lambda\)</span>的线性无关的特征向量</li>
+</ol>
+<p><strong>求解对角阵的方法</strong></p>
+<ol type="1">
+<li>求<span class="math inline">\(\bm A\)</span>的全部不同特征值<span
+class="math inline">\(\lambda_1,\lambda_2,\cdots,\lambda_s\)</span></li>
+<li>对于每个不同的特征值，求出齐次线性方程组<span
+class="math inline">\((\lambda_i\bm E-\bm A)\bm x=\bm
+0\)</span>的基础解系，将其正交化、单位化</li>
+<li>将所得的正交单位特征向量作为列向量组构成正交矩阵（注意特征向量和特征值的顺序）<span
+class="math inline">\(\bm Q\)</span>，则<span class="math inline">\(\bm
+Q^T\bm{AQ}=\bm
+Q^{-1}\bm{AQ}=diag(\lambda_1,\lambda_2,\cdots,\lambda_n)\)</span></li>
+</ol>
+<h3 id="二次型及其标准型">二次型及其标准型</h3>
+<h4 id="n元二次型的定义如下">n元二次型的定义如下</h4>
+<p><span class="math display">\[
+f(x_1,\cdots,x_n)=a_{11}x_1^2+2a_{12}x_1x_2+\cdots+2a_{1n}x_1x_n+a_{22}x_2^2+2a_{2n}x_2x_n+\cdots+a_{nn}x_{n}^2\\=
+(x_1,\cdots,x_n)
+\begin{bmatrix}
+a_{11}x_1+a_{12}x_2+\cdots+a_{1n}x_n\\
+a_{21}x_1+a_{22}x_2+\cdots+a_{2n}x_n\\
+\vdots\\
+a_{n1}x_1+a_{n2}x_2+\cdots+a_{nn}x_n
+\end{bmatrix}\\=
+(x_1,\cdots,x_n)
+\begin{bmatrix}
+a_{11} &amp; a_{12} &amp; \cdots &amp; a_{1n}\\
+a_{21} &amp; a_{22} &amp; \cdots &amp; a_{2n}\\
+\vdots &amp; \vdots &amp; &amp; \vdots\\
+a_{n1} &amp; a_{n2} &amp; \cdots &amp; a_{nn}
+\end{bmatrix}
+\begin{bmatrix}
+x_1\\
+x_2\\
+\vdots\\
+x_n
+\end{bmatrix}
+\]</span></p>
+<p>亦可表示为<span class="math inline">\(f(\bm x)=\bm x^T\bm
+{Ax}\)</span>。其中<span class="math inline">\(\bm A^T=\bm
+A\)</span>为实对称矩阵。<span class="math inline">\(\bm
+A\)</span>称为二次型式的矩阵，其秩称为二次型式的秩。</p>
+<p>仅含平方项的二次型称之为标准型。</p>
+<p>显然<span class="math inline">\(\bm x^T\bm
+{Ax}\)</span>为标准型的充要条件是<span class="math inline">\(\bm
+A\)</span>为对角矩阵。</p>
+<p><span class="math inline">\(\bm
+A\)</span>可以直接读出，先写一个对角矩阵，对角线的元素值即为平方项的系数，对角线以上的元素找对应项的系数除以2，之后再将对角线以上的元素“对称地”写到对角线以下的元素</p>
+<h4 id="矩阵的合同">矩阵的合同</h4>
+<p>设<span class="math inline">\(\bm{A,B}\)</span>为<span
+class="math inline">\(n\)</span>阶矩阵，若存在<span
+class="math inline">\(n\)</span>阶可逆矩阵<span
+class="math inline">\(\bm C\)</span>，使得<span
+class="math inline">\(\bm C^{T}\bm A\bm C=\bm B\)</span>则称<span
+class="math inline">\(\bm A\)</span>与<span class="math inline">\(\bm
+B\)</span>合同，记作<span class="math inline">\(\bm A\simeq \bm
+B\)</span></p>
+<p>具有以下性质：自反性、传递性、对称性。</p>
+<p>以及若<span class="math inline">\(\bm{A,B}\)</span>合同，且<span
+class="math inline">\(\bm A\)</span>为对称矩阵，则<span
+class="math inline">\(\bm B\)</span>也为对称矩阵，且<span
+class="math inline">\(R(\bm A)=R(\bm B)\)</span></p>
+<h4 id="化二次型为标准型">化二次型为标准型</h4>
+<p>有三种方法</p>
+<p><strong>1.正交变换法</strong></p>
+<p>若<span class="math inline">\(\bm
+Q\)</span>为正交矩阵，则称线性变换<span
+class="math inline">\(\bm{x=Qy}\)</span>为正交变换。</p>
+<p>对于任意<span class="math inline">\(n\)</span>元二次型</p>
+<p><span class="math display">\[
+f(x_1,x_2,\cdots,x_n)=\bm{x}^T\bm{Ax}
+\]</span></p>
+<p>总存在正交变换<span
+class="math inline">\(\bm{x=Qy}\)</span>，使得</p>
+<p><span class="math display">\[
+f(x_1,x_2,\cdots,x_n)\xlongequal{\bm{x=Qy}}\lambda_1y_1^2+\lambda_2y_2^2+\cdots+\lambda_ny_n^2
+\]</span></p>
+<p>其中<span
+class="math inline">\(\lambda_1,\lambda_2,\cdots,\lambda_n\)</span>为<span
+class="math inline">\(\bm A\)</span>的全部特征值。</p>
+<p><span class="math inline">\(\bm Q\)</span>的计算方法：</p>
+<ol type="1">
+<li>求<span class="math inline">\(\bm A\)</span>的特征向量</li>
+<li>将所有特征向量正交化、单位化</li>
+<li>再将得到的向量组成列向量组，即为<span class="math inline">\(\bm
+Q\)</span>。注意组合的顺序</li>
+</ol>
+<p><strong>2.配方法</strong></p>
+<p>例如：</p>
+<p><span class="math display">\[
+f(x_1,x_2.x_3)=2(x_1^2+2x_1x_2+4x_1x_3)+x_2^2+14x_2x_3-x_3^2\\
+=2(x_1+x_2+2x_3)^2-(x_2-3x_3)^2
+\]</span></p>
+<p>令</p>
+<p><span class="math display">\[
+\left\{\begin{matrix}
+y_1=x_1+x_2+2x_3 \\
+y_2=x_2-3x_3 \\
+y_3=x_3
+\end{matrix}\right.
+\]</span></p>
+<p>则有</p>
+<p><span class="math display">\[
+\left\{\begin{matrix}
+x_1=y_1-y_2-5y_3 \\
+x_2=y_2+3y_3 \\
+x_3=y_3
+\end{matrix}\right.
+\]</span></p>
+<p>即</p>
+<p><span class="math display">\[
+\bm x=
+\begin{bmatrix}
+x_1 \\
+x_2 \\
+x_3
+\end{bmatrix}
+=
+\begin{bmatrix}
+1 &amp; -1 &amp; -5 \\
+0 &amp; 1 &amp; 3 \\
+0 &amp; 0 &amp; 1
+\end{bmatrix}
+=\bm{Qy}
+\]</span></p>
+<p><strong>3.初等变换法</strong></p>
+<p>对<span class="math inline">\(2n\times
+n\)</span>矩阵实施一次初等列变换及相应的初等行变换，直至把<span
+class="math inline">\(\bm A\)</span>化为对角矩阵<span
+class="math inline">\(\bm \Lambda\)</span>，即</p>
+<p><span class="math display">\[
+\begin{bmatrix}
+\bm A \\
+\bm E
+\end{bmatrix}
+\sim
+\begin{bmatrix}
+\bm \Lambda \\
+\bm Q
+\end{bmatrix}
+\]</span></p>
+<p>且有<span
+class="math inline">\(\bm{Q}^T\bm{AQ}=\bm\Lambda\)</span></p>
 
 </section>
 

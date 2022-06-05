@@ -289,6 +289,8 @@ class=&#34;math inline&#34;&gt;\(\bold{A}\)&lt;/span&gt;经有限次初等变换
 class=&#34;math inline&#34;&gt;\(\bold{B}\)&lt;/span&gt;，那么称这两个矩阵等价，记作&lt;span
 class=&#34;math inline&#34;&gt;\(\bold{A} \sim \bold{B}\)&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;等价关系具有：自反性、对称性、传递性。&lt;/p&gt;
+&lt;p&gt;相似一定等价，等价不一定相似。 合同一定等价，等价不一定合同。
+合同不一定相似，相似不一定合同。&lt;/p&gt;
 &lt;h3 id=&#34;矩阵的秩&#34;&gt;矩阵的秩&lt;/h3&gt;
 &lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(\bold{A}\)&lt;/span&gt;为&lt;span
 class=&#34;math inline&#34;&gt;\(m\times n\)&lt;/span&gt;矩阵，&lt;span
@@ -357,26 +359,19 @@ id=&#34;对于一个矩阵一些相互等价的命题&#34;&gt;对于一个矩阵
 &lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(\bold{A}\)&lt;/span&gt;为&lt;span
 class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;阶方阵，那么下列命题等价&lt;/p&gt;
 &lt;ol type=&#34;1&#34;&gt;
-&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(\bold{A}\)&lt;/span&gt;可逆&lt;/li&gt;
-&lt;li&gt;线性方程组&lt;span
-class=&#34;math inline&#34;&gt;\(\bold{Ax=0}\)&lt;/span&gt;只有零解&lt;/li&gt;
-&lt;li&gt;&lt;span
-class=&#34;math inline&#34;&gt;\(\bold{A}\)&lt;/span&gt;可以经过有限次初等行变换华为单位矩阵&lt;span
-class=&#34;math inline&#34;&gt;\(\bold{E}_n\)&lt;/span&gt;&lt;/li&gt;
-&lt;li&gt;&lt;span
-class=&#34;math inline&#34;&gt;\(\bold{A}\)&lt;/span&gt;可以表示为有限个初等矩阵的乘积。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h4 id=&#34;第二组&#34;&gt;第二组&lt;/h4&gt;
-&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(\bold{A}\)&lt;/span&gt;为&lt;span
-class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;阶方阵，那么下列命题等价&lt;/p&gt;
-&lt;ol type=&#34;1&#34;&gt;
 &lt;li&gt;满秩&lt;/li&gt;
 &lt;li&gt;非奇异&lt;/li&gt;
 &lt;li&gt;可逆&lt;/li&gt;
 &lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(\bold{Ax=0}\)&lt;/span&gt;只有零解&lt;/li&gt;
 &lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(|\bold{A}|\ne0\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span
+class=&#34;math inline&#34;&gt;\(\bold{A}\)&lt;/span&gt;可以经过有限次初等行变换华为单位矩阵&lt;span
+class=&#34;math inline&#34;&gt;\(\bold{E}_n\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span
+class=&#34;math inline&#34;&gt;\(\bold{A}\)&lt;/span&gt;可以表示为有限个初等矩阵的乘积。&lt;/li&gt;
+&lt;li&gt;特征值均非零&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h4 id=&#34;第三组&#34;&gt;第三组&lt;/h4&gt;
+&lt;h4 id=&#34;第二组&#34;&gt;第二组&lt;/h4&gt;
 &lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(\bold{A}\)&lt;/span&gt;为&lt;span
 class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;阶方阵，那么下列命题等价&lt;/p&gt;
 &lt;ol type=&#34;1&#34;&gt;
@@ -385,6 +380,12 @@ class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;阶方阵，那么下列命题�
 &lt;li&gt;不可逆&lt;/li&gt;
 &lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(\bold{Ax=0}\)&lt;/span&gt;不只有零解&lt;/li&gt;
 &lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(|\bold{A}|=0\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span
+class=&#34;math inline&#34;&gt;\(\bold{A}\)&lt;/span&gt;不可以经过有限次初等行变换华为单位矩阵&lt;span
+class=&#34;math inline&#34;&gt;\(\bold{E}_n\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span
+class=&#34;math inline&#34;&gt;\(\bold{A}\)&lt;/span&gt;不可以表示为有限个初等矩阵的乘积。&lt;/li&gt;
+&lt;li&gt;特征值至少有一个为零&lt;/li&gt;
 &lt;/ol&gt;
 &lt;h2 id=&#34;行列式&#34;&gt;行列式&lt;/h2&gt;
 &lt;h3 id=&#34;二阶行列式&#34;&gt;二阶行列式&lt;/h3&gt;
@@ -798,16 +799,101 @@ class=&#34;math inline&#34;&gt;\(|\bm{A}|=\pm1\)&lt;/span&gt;&lt;/li&gt;
 &lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;阶方阵&lt;span
 class=&#34;math inline&#34;&gt;\(\bm{A}\)&lt;/span&gt;为正交矩阵的充要条件是&lt;span
 class=&#34;math inline&#34;&gt;\(\bm{A}\)&lt;/span&gt;的列（行）向量组是标准向量组。&lt;/p&gt;
+&lt;h3 id=&#34;基维数与坐标&#34;&gt;基、维数与坐标&lt;/h3&gt;
+&lt;h4 id=&#34;向量空间的基与维数&#34;&gt;向量空间的基与维数&lt;/h4&gt;
+&lt;p&gt;设&lt;span
+class=&#34;math inline&#34;&gt;\(\bm{V}\)&lt;/span&gt;是向量空间，如果向量&lt;span
+class=&#34;math inline&#34;&gt;\(\bm{\alpha}_1,\bm{\alpha}_2,\cdots,\bm{\alpha}_r\in\bm{V}\)&lt;/span&gt;，满足&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;&lt;span
+class=&#34;math inline&#34;&gt;\(\bm{\alpha}_1,\bm{\alpha}_2,\cdots,\bm{\alpha}_r\)&lt;/span&gt;线性无关&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(\bm{V}\)&lt;/span&gt;中任一向量都可以由&lt;span
+class=&#34;math inline&#34;&gt;\(\bm{\alpha}_1,\bm{\alpha}_2,\cdots,\bm{\alpha}_r\)&lt;/span&gt;线性表示&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;则称向量组&lt;span
+class=&#34;math inline&#34;&gt;\(\bm{\alpha}_1,\bm{\alpha}_2,\cdots,\bm{\alpha}_r\)&lt;/span&gt;是向量空间&lt;span
+class=&#34;math inline&#34;&gt;\(\bm{V}\)&lt;/span&gt;的一组基，&lt;span
+class=&#34;math inline&#34;&gt;\(r\)&lt;/span&gt;称为向量空间的维数，记为&lt;span
+class=&#34;math inline&#34;&gt;\(dim\bm{V}=r\)&lt;/span&gt;，规定零向量构成的向量空间的维数为0.&lt;/p&gt;
+&lt;p&gt;类似的还有正交基和标准（规范）正交基的概念。&lt;/p&gt;
+&lt;h4 id=&#34;向量的坐标&#34;&gt;向量的坐标&lt;/h4&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(\bm{V}\)&lt;/span&gt;是&lt;span
+class=&#34;math inline&#34;&gt;\(r\)&lt;/span&gt;维向量空间，&lt;span
+class=&#34;math inline&#34;&gt;\(\bm{\alpha}_1,\bm{\alpha}_2,\cdots,\bm{\alpha}_r\)&lt;/span&gt;是&lt;span
+class=&#34;math inline&#34;&gt;\(\bm{V}\)&lt;/span&gt;的一组基，则&lt;span
+class=&#34;math inline&#34;&gt;\(\bm{V}\)&lt;/span&gt;中的任一向量&lt;span
+class=&#34;math inline&#34;&gt;\(\bm{x}\)&lt;/span&gt;可由&lt;span
+class=&#34;math inline&#34;&gt;\(\bm{\alpha}_1,\bm{\alpha}_2,\cdots,\bm{\alpha}_r\)&lt;/span&gt;唯一线性表示为&lt;span
+class=&#34;math inline&#34;&gt;\(\bm{x}=x_1\bm{\alpha}_1+\cdots+x_r\bm{\alpha}_r\)&lt;/span&gt;，数组&lt;span
+class=&#34;math inline&#34;&gt;\(x_1,x_2,\cdots,x_r\)&lt;/span&gt;称为向量&lt;span
+class=&#34;math inline&#34;&gt;\(\bm{x}\)&lt;/span&gt;在基&lt;span
+class=&#34;math inline&#34;&gt;\(\bm{\alpha}_1,\bm{\alpha}_2,\cdots,\bm{\alpha}_r\)&lt;/span&gt;下的坐标。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;过渡矩阵与基变换公式&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span
+class=&#34;math inline&#34;&gt;\(\bm{\alpha}_1,\bm{\alpha}_2,\cdots,\bm{\alpha}_r\)&lt;/span&gt;和&lt;span
+class=&#34;math inline&#34;&gt;\(\bm{\beta}_1,\bm{\beta}_2,\cdots,\bm{\beta}_r\)&lt;/span&gt;是&lt;span
+class=&#34;math inline&#34;&gt;\(r\)&lt;/span&gt;维向量空间&lt;span
+class=&#34;math inline&#34;&gt;\(\bm{V}\)&lt;/span&gt;的两组基，则两个向量组等价，从而有&lt;span
+class=&#34;math inline&#34;&gt;\(\bm{\beta}_j=k_{1j}\bm{\alpha}_1+\cdots+k_{rj}\bm{\alpha}_r\)&lt;/span&gt;，即&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+[\bm{\beta}_1,\cdots,\bm{\beta}_r]=[\bm{\alpha}_1,\cdots,\bm{\alpha}_r]
+\begin{bmatrix}
+k_{11} &amp;amp; \cdots &amp;amp; k_{1r}\\
+\vdots &amp;amp;  &amp;amp; \vdots\\
+k_{r1} &amp;amp; \cdots &amp;amp; k_{rr}
+\end{bmatrix}
+=[\bm{\alpha}_1,\cdots,\bm{\alpha}_r]\bm{K}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;称&lt;span class=&#34;math inline&#34;&gt;\(\bm{K}\)&lt;/span&gt;是由&lt;span
+class=&#34;math inline&#34;&gt;\(\bm{A}\)&lt;/span&gt;到&lt;span
+class=&#34;math inline&#34;&gt;\(\bm{B}\)&lt;/span&gt;的过度矩阵，上式为基变换公式。另外&lt;span
+class=&#34;math inline&#34;&gt;\(\bm{K}\)&lt;/span&gt;一定是可逆矩阵。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;坐标变换公式&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(\bm{\alpha}\)&lt;/span&gt;在两组基&lt;span
+class=&#34;math inline&#34;&gt;\(\bm{A,B}\)&lt;/span&gt;下的坐标分别为&lt;span
+class=&#34;math inline&#34;&gt;\([x_1,\cdots,x_r]^T\)&lt;/span&gt;和&lt;span
+class=&#34;math inline&#34;&gt;\([y_1,\cdots,y_r]^T\)&lt;/span&gt;，则有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\begin{bmatrix}
+x_1 \\
+\vdots \\
+x_r
+\end{bmatrix}
+=\bm{K}
+\begin{bmatrix}
+y_1 \\
+\vdots \\
+y_r
+\end{bmatrix}
+or
+\begin{bmatrix}
+y_1 \\
+\vdots \\
+y_r
+\end{bmatrix}
+=\bm{K}^{-1}
+\begin{bmatrix}
+x_1 \\
+\vdots \\
+x_r
+\end{bmatrix}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;一般有&lt;span
+class=&#34;math inline&#34;&gt;\(\bm{K}=\bm{A}^{-1}\bm{B}\)&lt;/span&gt;&lt;/p&gt;
 &lt;h2 id=&#34;线性方程组&#34;&gt;线性方程组&lt;/h2&gt;
 &lt;h3 id=&#34;解法&#34;&gt;解法&lt;/h3&gt;
 &lt;h4 id=&#34;高斯消元法&#34;&gt;高斯消元法&lt;/h4&gt;
 &lt;p&gt;即通过对增广矩阵进行初等行变换（只能是行变换），化为简单的形式进行求解。&lt;/p&gt;
+&lt;h4 id=&#34;克莱默法则&#34;&gt;克莱默法则&lt;/h4&gt;
+&lt;p&gt;见前&lt;/p&gt;
 &lt;h3 id=&#34;性质定理&#34;&gt;性质定理&lt;/h3&gt;
 &lt;ol type=&#34;1&#34;&gt;
 &lt;li&gt;&lt;p&gt;齐次线性方程组&lt;span class=&#34;math inline&#34;&gt;\(\bold{A}_{m\times
 n}\bold{x=0}\)&lt;/span&gt;有非零解的充要条件是&lt;span
 class=&#34;math inline&#34;&gt;\(R(\bold{A})=r&amp;lt;n\)&lt;/span&gt;，且有无穷多解，自由量为&lt;span
-class=&#34;math inline&#34;&gt;\(n-r\)&lt;/span&gt;个。&lt;/p&gt;&lt;/li&gt;
+class=&#34;math inline&#34;&gt;\(n-r\)&lt;/span&gt;个（解空间的维数为&lt;span
+class=&#34;math inline&#34;&gt;\(n-r\)&lt;/span&gt;）。这个充要条件可以替换为&lt;span
+class=&#34;math inline&#34;&gt;\(|\bm A|=0\)&lt;/span&gt;及其他等价命题。&lt;/p&gt;&lt;/li&gt;
 &lt;li&gt;&lt;p&gt;非齐次线性方程组&lt;span class=&#34;math inline&#34;&gt;\(\bold{A}_{m\times
 n}\bold{x=b}\)&lt;/span&gt;有解的充要条件是&lt;span
 class=&#34;math inline&#34;&gt;\(R(\bold{A})=R(\~\bold{A})=r\)&lt;/span&gt;，且当&lt;/p&gt;
@@ -819,6 +905,369 @@ class=&#34;math inline&#34;&gt;\(r&amp;lt;n\)&lt;/span&gt;时有无穷多解，�
 class=&#34;math inline&#34;&gt;\(n-r\)&lt;/span&gt;个，称为欠定线性方程组&lt;/li&gt;
 &lt;/ol&gt;&lt;/li&gt;
 &lt;/ol&gt;
+&lt;h3 id=&#34;线性方程组解的结构&#34;&gt;线性方程组解的结构&lt;/h3&gt;
+&lt;h4 id=&#34;齐次情况&#34;&gt;齐次情况&lt;/h4&gt;
+&lt;p&gt;设&lt;span
+class=&#34;math inline&#34;&gt;\(\bm{\xi}_1,\bm{\xi}_2,\cdots,\bm{\xi}_t\)&lt;/span&gt;是&lt;span
+class=&#34;math inline&#34;&gt;\(\bm{Ax=0}\)&lt;/span&gt;的解，则&lt;span
+class=&#34;math inline&#34;&gt;\(c_1\bm{\xi}_1+c_2\bm{\xi}_2+\cdots+c_t\bm{\xi}_t\)&lt;/span&gt;也是解，&lt;span
+class=&#34;math inline&#34;&gt;\(c_i\)&lt;/span&gt;为任意常数。&lt;/p&gt;
+&lt;p&gt;齐次线性方程组&lt;span
+class=&#34;math inline&#34;&gt;\(\bm{Ax=0}\)&lt;/span&gt;的解空间的一组基&lt;span
+class=&#34;math inline&#34;&gt;\(\bm{\xi}_1,\bm{\xi}_2,\cdots,\bm{\xi}_{n-r}\)&lt;/span&gt;也称为方程组的一个基础解系。&lt;/p&gt;
+&lt;p&gt;换言之，基础解系&lt;span
+class=&#34;math inline&#34;&gt;\(\bm{\xi}_1,\bm{\xi}_2,\cdots,\bm{\xi}_{n-r}\)&lt;/span&gt;是&lt;span
+class=&#34;math inline&#34;&gt;\(\bm{Ax=0}\)&lt;/span&gt;的解向量，且满足&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;&lt;span
+class=&#34;math inline&#34;&gt;\(\bm{\xi}_1,\bm{\xi}_2,\cdots,\bm{\xi}_{n-r}\)&lt;/span&gt;线性无关&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(\bm{Ax=0}\)&lt;/span&gt;的任一解都可由&lt;span
+class=&#34;math inline&#34;&gt;\(\bm{\xi}_1,\bm{\xi}_2,\cdots,\bm{\xi}_{n-r}\)&lt;/span&gt;线性表示&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;通过基础解系可以写出通解为&lt;span
+class=&#34;math inline&#34;&gt;\(\bm{x}=c_1\bm{\xi}_1+c_2\bm{\xi}_2+\cdots+c_{n-r}\bm{\xi}_{n-r}\)&lt;/span&gt;，&lt;span
+class=&#34;math inline&#34;&gt;\(c_i\)&lt;/span&gt;为任意常数。&lt;/p&gt;
+&lt;h4 id=&#34;非齐次情况&#34;&gt;非齐次情况&lt;/h4&gt;
+&lt;p&gt;有如下性质：&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;设&lt;span
+class=&#34;math inline&#34;&gt;\(\bm{x}=\bm{\eta}_1+\bm{\eta}_2+\cdots+\bm{\eta}_{t}\)&lt;/span&gt;为&lt;span
+class=&#34;math inline&#34;&gt;\(\bm{Ax=b}\)&lt;/span&gt;的解，令&lt;span
+class=&#34;math inline&#34;&gt;\(\bm{\eta}=c_1\bm{\eta}_1+c_2\bm{\eta}_2+\cdots+c_{t}\bm{\eta}_{t}\)&lt;/span&gt;，当&lt;span
+class=&#34;math inline&#34;&gt;\(c_1+\cdots+c_t=0\)&lt;/span&gt;时，&lt;span
+class=&#34;math inline&#34;&gt;\(\bm{\eta}\)&lt;/span&gt;为&lt;span
+class=&#34;math inline&#34;&gt;\(\bm{Ax=0}\)&lt;/span&gt;的解，当&lt;span
+class=&#34;math inline&#34;&gt;\(c_1+\cdots+c_t=1\)&lt;/span&gt;时&lt;span
+class=&#34;math inline&#34;&gt;\(\bm{\eta}\)&lt;/span&gt;为&lt;span
+class=&#34;math inline&#34;&gt;\(\bm{Ax=b}\)&lt;/span&gt;的解&lt;/li&gt;
+&lt;li&gt;设&lt;span class=&#34;math inline&#34;&gt;\(\bm\xi\)&lt;/span&gt;为&lt;span
+class=&#34;math inline&#34;&gt;\(\bm{Ax=0}\)&lt;/span&gt;的解，&lt;span
+class=&#34;math inline&#34;&gt;\(\bm\eta\)&lt;/span&gt;为&lt;span
+class=&#34;math inline&#34;&gt;\(\bm{Ax=b}\)&lt;/span&gt;的解，则&lt;span
+class=&#34;math inline&#34;&gt;\(\bm{x=\xi+\eta}\)&lt;/span&gt;仍为&lt;span
+class=&#34;math inline&#34;&gt;\(\bm{Ax=b}\)&lt;/span&gt;的解。&lt;/li&gt;
+&lt;li&gt;非齐次线性方程组的解集关于加法和数乘不封闭，因此不构成向量空间&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;由此可知，&lt;span
+class=&#34;math inline&#34;&gt;\(\bm{Ax=b}(R(\bm{A})=R(\~{\bm{A}})=r\)&lt;/span&gt;的通解为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\bm x=k_1\bm{\xi}_1+\cdots+k_{n-r}\bm{\xi}_{n-r}+\bm\eta^*
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span
+class=&#34;math inline&#34;&gt;\(\bm{x}=\bm{\xi}_1+\bm{\xi}_2+\cdots+\bm{\xi}_{n-r}\)&lt;/span&gt;为导出组&lt;span
+class=&#34;math inline&#34;&gt;\(\bm{Ax=0}\)&lt;/span&gt;的一个基础解系，&lt;span
+class=&#34;math inline&#34;&gt;\(\bm\eta^*\)&lt;/span&gt;为&lt;span
+class=&#34;math inline&#34;&gt;\(\bm{Ax=b}\)&lt;/span&gt;的任意一个解，称为特解。&lt;/p&gt;
+&lt;h2 id=&#34;相似矩阵与二次型&#34;&gt;相似矩阵与二次型&lt;/h2&gt;
+&lt;h3 id=&#34;特征值和特征向量&#34;&gt;特征值和特征向量&lt;/h3&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(\bm{A}\)&lt;/span&gt;为&lt;span
+class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;阶矩阵，如果存在数&lt;span
+class=&#34;math inline&#34;&gt;\(\lambda\)&lt;/span&gt;和&lt;span
+class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;维非零（注意非零）列向量&lt;span
+class=&#34;math inline&#34;&gt;\(\bm\alpha\)&lt;/span&gt;使得&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\bm A\bm\alpha=\lambda\bm\alpha
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;则称&lt;span class=&#34;math inline&#34;&gt;\(\lambda\)&lt;/span&gt;为&lt;span
+class=&#34;math inline&#34;&gt;\(\bm A\)&lt;/span&gt;的特征值，&lt;span
+class=&#34;math inline&#34;&gt;\(\bm\alpha\)&lt;/span&gt;为&lt;span
+class=&#34;math inline&#34;&gt;\(\bm A\)&lt;/span&gt;对于这个&lt;span
+class=&#34;math inline&#34;&gt;\(\lambda\)&lt;/span&gt;的特征向量。&lt;/p&gt;
+&lt;p&gt;由上式可知，&lt;span
+class=&#34;math inline&#34;&gt;\(\bm\alpha\)&lt;/span&gt;必是如下方程的非零解&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+(\lambda\bm E-\bm A)\bm x=\bm 0
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;显然有非零解当且仅当&lt;span class=&#34;math inline&#34;&gt;\(|\lambda\bm E-\bm
+A|=0\)&lt;/span&gt;，&lt;span class=&#34;math inline&#34;&gt;\(\lambda\bm E-\bm
+A\)&lt;/span&gt;称为特征矩阵，&lt;span class=&#34;math inline&#34;&gt;\(|\lambda\bm E-\bm
+A|\)&lt;/span&gt;称为特征多项式，&lt;span class=&#34;math inline&#34;&gt;\(|\lambda\bm E-\bm
+A|=0\)&lt;/span&gt;称为特征方程。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;特征值和特征向量的求解步骤&lt;/strong&gt;&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;求&lt;span class=&#34;math inline&#34;&gt;\(|\lambda\bm E-\bm
+A|=0\)&lt;/span&gt;的全体根，记为&lt;span
+class=&#34;math inline&#34;&gt;\(\lambda_1,\lambda_2,\cdots,\lambda_n\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;对于每个特征值&lt;span
+class=&#34;math inline&#34;&gt;\(\lambda_i\)&lt;/span&gt;，求出对应其次线性方程组&lt;span
+class=&#34;math inline&#34;&gt;\((\lambda_i\bm E-\bm A)\bm
+x=\bm0\)&lt;/span&gt;的一个基础解系&lt;span
+class=&#34;math inline&#34;&gt;\(\bm{\alpha}_1,\cdots,\bm{\alpha}_s\)&lt;/span&gt;，并以此求出&lt;span
+class=&#34;math inline&#34;&gt;\(\lambda_i\)&lt;/span&gt;对应的全部特征向量&lt;span
+class=&#34;math inline&#34;&gt;\(k_1\bm{\alpha}_1,\cdots,k_s\bm{\alpha}_s\)&lt;/span&gt;。其中&lt;span
+class=&#34;math inline&#34;&gt;\(k_1,\cdots,k_s\)&lt;/span&gt;是任意不全为零的常数。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;特征值和特征向量的性质&#34;&gt;特征值和特征向量的性质&lt;/h3&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(\lambda\)&lt;/span&gt;为&lt;span
+class=&#34;math inline&#34;&gt;\(\bm A\)&lt;/span&gt;的任一特征值，&lt;span
+class=&#34;math inline&#34;&gt;\(\bm\alpha\)&lt;/span&gt;为其对应的特征向量，则&lt;span
+class=&#34;math inline&#34;&gt;\(f(\lambda)\)&lt;/span&gt;是&lt;span
+class=&#34;math inline&#34;&gt;\(f(\bm
+A)\)&lt;/span&gt;的特征值，其对应的特征向量还是&lt;span
+class=&#34;math inline&#34;&gt;\(\bm\alpha\)&lt;/span&gt;，其中&lt;span
+class=&#34;math inline&#34;&gt;\(f(x)\)&lt;/span&gt;是&lt;span
+class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;的&lt;span
+class=&#34;math inline&#34;&gt;\(m\)&lt;/span&gt;次多项式。&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(\lambda\)&lt;/span&gt;为&lt;span
+class=&#34;math inline&#34;&gt;\(\bm A\)&lt;/span&gt;的任一非零特征值，&lt;span
+class=&#34;math inline&#34;&gt;\(\bm\alpha\)&lt;/span&gt;为其对应的特征向量，则&lt;span
+class=&#34;math inline&#34;&gt;\(\bm A^*\)&lt;/span&gt;的特征值为&lt;span
+class=&#34;math inline&#34;&gt;\(|\bm A|/\lambda\)&lt;/span&gt;。特征向量仍为&lt;span
+class=&#34;math inline&#34;&gt;\(\bm\alpha\)&lt;/span&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;若矩阵&lt;span class=&#34;math inline&#34;&gt;\(\bm A\)&lt;/span&gt;可逆，则&lt;span
+class=&#34;math inline&#34;&gt;\(1/\lambda\)&lt;/span&gt;是&lt;span
+class=&#34;math inline&#34;&gt;\(A^{-1}\)&lt;/span&gt;的特征值。特征向量仍为&lt;span
+class=&#34;math inline&#34;&gt;\(\bm\alpha\)&lt;/span&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;转置矩阵由于行列式不变，所以特征值不变。但是特征向量并不一定一样。&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;阶矩阵&lt;span
+class=&#34;math inline&#34;&gt;\(\bm A\)&lt;/span&gt;的&lt;span
+class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;个特征值为&lt;span
+class=&#34;math inline&#34;&gt;\(\lambda_1,\lambda_2,\cdots,\lambda_n\)&lt;/span&gt;（重根按重数计算），则&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;&lt;span
+class=&#34;math inline&#34;&gt;\(\lambda_1+\lambda_2+\cdots+\lambda_n=a_{11}+a_{22}+\cdots+a_{nn}=tr(\bm
+A)\)&lt;/span&gt;,&lt;span class=&#34;math inline&#34;&gt;\(tr(\bm
+A)\)&lt;/span&gt;称之为矩阵的迹&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(\lambda_1\lambda_2\cdots\lambda_n=|\bm
+A|\)&lt;/span&gt;&lt;/li&gt;
+&lt;/ol&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;矩阵可逆&lt;span
+class=&#34;math inline&#34;&gt;\(\Leftrightarrow\)&lt;/span&gt;所有特征值均非0&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;若&lt;span
+class=&#34;math inline&#34;&gt;\(\lambda_1+\lambda_2+\cdots+\lambda_m\)&lt;/span&gt;是&lt;span
+class=&#34;math inline&#34;&gt;\(\bm A\)&lt;/span&gt;的互不相同的特征值，&lt;span
+class=&#34;math inline&#34;&gt;\(\bm{\alpha}_1,\bm{\alpha}_2,\cdots,\bm{\alpha}_m\)&lt;/span&gt;是对应的特征向量，则&lt;span
+class=&#34;math inline&#34;&gt;\(\bm{\alpha}_1,\bm{\alpha}_2,\cdots,\bm{\alpha}_m\)&lt;/span&gt;线性无关&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(\lambda\)&lt;/span&gt;是&lt;span
+class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt;重特征值，对于&lt;span
+class=&#34;math inline&#34;&gt;\(\lambda\)&lt;/span&gt;的线性无关的特征向量的最大个数为&lt;span
+class=&#34;math inline&#34;&gt;\(l\)&lt;/span&gt;，则&lt;span class=&#34;math inline&#34;&gt;\(k\ge
+l\)&lt;/span&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;相似矩阵&#34;&gt;相似矩阵&lt;/h3&gt;
+&lt;h4 id=&#34;相似矩阵的定义和性质&#34;&gt;相似矩阵的定义和性质&lt;/h4&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(\bm{A,B}\)&lt;/span&gt;为&lt;span
+class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;阶矩阵，若存在&lt;span
+class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;阶可逆矩阵&lt;span
+class=&#34;math inline&#34;&gt;\(\bm P\)&lt;/span&gt;，使得&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\bm P^{-1}\bm A\bm P=\bm B
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;则称&lt;span class=&#34;math inline&#34;&gt;\(\bm A\)&lt;/span&gt;与&lt;span
+class=&#34;math inline&#34;&gt;\(\bm B\)&lt;/span&gt;相似，记作&lt;span
+class=&#34;math inline&#34;&gt;\(\bm A\sim \bm B\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;具有以下性质：自反性、传递性、对称性。&lt;/p&gt;
+&lt;p&gt;以及&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;如果两矩阵相似，则具有相同的特征多项式，从而有相同的特征值。但特征向量不一定相同。并且特征多项式相同并不能推出两矩阵相似。&lt;/li&gt;
+&lt;li&gt;两矩阵相似，则具有相同的秩。&lt;/li&gt;
+&lt;li&gt;两矩阵相似，则具有相同的迹。&lt;/li&gt;
+&lt;li&gt;两矩阵相似，则具有相同的行列式。&lt;/li&gt;
+&lt;li&gt;若&lt;span class=&#34;math inline&#34;&gt;\(\bm A\sim \bm B\)&lt;/span&gt;，且&lt;span
+class=&#34;math inline&#34;&gt;\(\bm A\)&lt;/span&gt;可逆，则&lt;span
+class=&#34;math inline&#34;&gt;\(\bm B\)&lt;/span&gt;可逆，并且有&lt;span
+class=&#34;math inline&#34;&gt;\(\bm A^{-1}\sim \bm B^{-1}\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;若&lt;span class=&#34;math inline&#34;&gt;\(\bm A\sim \bm
+B\)&lt;/span&gt;，则对任一多项式&lt;span
+class=&#34;math inline&#34;&gt;\(g(x)\)&lt;/span&gt;，有&lt;span class=&#34;math inline&#34;&gt;\(g(\bm
+A)\sim g(\bm B)\)&lt;/span&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id=&#34;矩阵可对角化的条件&#34;&gt;矩阵可对角化的条件&lt;/h4&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(\bm A\)&lt;/span&gt;为&lt;span
+class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;阶矩阵，如果存在一个&lt;span
+class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;阶可逆矩阵&lt;span
+class=&#34;math inline&#34;&gt;\(\bm P\)&lt;/span&gt;，使得&lt;span
+class=&#34;math inline&#34;&gt;\(\bm P^{-1}\bm A\bm P\)&lt;/span&gt;为对角矩阵，则称&lt;span
+class=&#34;math inline&#34;&gt;\(\bm A\)&lt;/span&gt;可对角化。&lt;/p&gt;
+&lt;p&gt;有如下定理：&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(\bm A\)&lt;/span&gt;可对角化的充要条件是&lt;span
+class=&#34;math inline&#34;&gt;\(\bm A\)&lt;/span&gt;有&lt;span
+class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;个线性无关的特征向量。&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;阶矩阵&lt;span
+class=&#34;math inline&#34;&gt;\(\bm A\)&lt;/span&gt;的&lt;span
+class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;个特征值互不相同&lt;span
+class=&#34;math inline&#34;&gt;\(\Rightarrow\)&lt;/span&gt;&lt;span
+class=&#34;math inline&#34;&gt;\(\bm A\)&lt;/span&gt;可对角化&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(\bm
+A\)&lt;/span&gt;可对角化的充要条件是对于&lt;span class=&#34;math inline&#34;&gt;\(\bm
+A\)&lt;/span&gt;的每个&lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt;重特征值&lt;span
+class=&#34;math inline&#34;&gt;\(\lambda\)&lt;/span&gt;，都有&lt;span
+class=&#34;math inline&#34;&gt;\(R(\lambda\bm E-\bm A)=n-k\)&lt;/span&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;实对称矩阵的对角化&#34;&gt;实对称矩阵的对角化&lt;/h3&gt;
+&lt;p&gt;实对称矩阵一定能对角化&lt;/p&gt;
+&lt;p&gt;并且有如下定理：&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;实对称矩阵的特征值都为实数&lt;/li&gt;
+&lt;li&gt;实对称矩阵的不同特征值所对应的特征向量必正交&lt;/li&gt;
+&lt;li&gt;设&lt;span class=&#34;math inline&#34;&gt;\(\bm A\)&lt;/span&gt;为&lt;span
+class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;阶实对称矩阵，则存在正交矩阵&lt;span
+class=&#34;math inline&#34;&gt;\(\bm Q\)&lt;/span&gt;使得&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\bm Q^T\bm{AQ}=\bm Q^{-1}\bm{AQ}=
+\begin{bmatrix}
+\lambda_1 &amp;amp;  &amp;amp;  &amp;amp; \\
+&amp;amp; \lambda_2 &amp;amp;  &amp;amp; \\
+&amp;amp;  &amp;amp; \ddots &amp;amp; \\
+&amp;amp;  &amp;amp;  &amp;amp; \lambda_n
+\end{bmatrix}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(\lambda_i\)&lt;/span&gt;为&lt;span
+class=&#34;math inline&#34;&gt;\(\bm A\)&lt;/span&gt;的特征值。&lt;/p&gt;
+&lt;ol start=&#34;4&#34; type=&#34;1&#34;&gt;
+&lt;li&gt;设&lt;span class=&#34;math inline&#34;&gt;\(\bm A\)&lt;/span&gt;为&lt;span
+class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;阶实对称矩阵，&lt;span
+class=&#34;math inline&#34;&gt;\(\lambda\)&lt;/span&gt;为&lt;span class=&#34;math inline&#34;&gt;\(\bm
+A\)&lt;/span&gt;的&lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt;重特征值，则&lt;span
+class=&#34;math inline&#34;&gt;\(\bm A\)&lt;/span&gt;必有&lt;span
+class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt;个对于特征值&lt;span
+class=&#34;math inline&#34;&gt;\(\lambda\)&lt;/span&gt;的线性无关的特征向量&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;求解对角阵的方法&lt;/strong&gt;&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;求&lt;span class=&#34;math inline&#34;&gt;\(\bm A\)&lt;/span&gt;的全部不同特征值&lt;span
+class=&#34;math inline&#34;&gt;\(\lambda_1,\lambda_2,\cdots,\lambda_s\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;对于每个不同的特征值，求出齐次线性方程组&lt;span
+class=&#34;math inline&#34;&gt;\((\lambda_i\bm E-\bm A)\bm x=\bm
+0\)&lt;/span&gt;的基础解系，将其正交化、单位化&lt;/li&gt;
+&lt;li&gt;将所得的正交单位特征向量作为列向量组构成正交矩阵（注意特征向量和特征值的顺序）&lt;span
+class=&#34;math inline&#34;&gt;\(\bm Q\)&lt;/span&gt;，则&lt;span class=&#34;math inline&#34;&gt;\(\bm
+Q^T\bm{AQ}=\bm
+Q^{-1}\bm{AQ}=diag(\lambda_1,\lambda_2,\cdots,\lambda_n)\)&lt;/span&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;二次型及其标准型&#34;&gt;二次型及其标准型&lt;/h3&gt;
+&lt;h4 id=&#34;n元二次型的定义如下&#34;&gt;n元二次型的定义如下&lt;/h4&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+f(x_1,\cdots,x_n)=a_{11}x_1^2+2a_{12}x_1x_2+\cdots+2a_{1n}x_1x_n+a_{22}x_2^2+2a_{2n}x_2x_n+\cdots+a_{nn}x_{n}^2\\=
+(x_1,\cdots,x_n)
+\begin{bmatrix}
+a_{11}x_1+a_{12}x_2+\cdots+a_{1n}x_n\\
+a_{21}x_1+a_{22}x_2+\cdots+a_{2n}x_n\\
+\vdots\\
+a_{n1}x_1+a_{n2}x_2+\cdots+a_{nn}x_n
+\end{bmatrix}\\=
+(x_1,\cdots,x_n)
+\begin{bmatrix}
+a_{11} &amp;amp; a_{12} &amp;amp; \cdots &amp;amp; a_{1n}\\
+a_{21} &amp;amp; a_{22} &amp;amp; \cdots &amp;amp; a_{2n}\\
+\vdots &amp;amp; \vdots &amp;amp; &amp;amp; \vdots\\
+a_{n1} &amp;amp; a_{n2} &amp;amp; \cdots &amp;amp; a_{nn}
+\end{bmatrix}
+\begin{bmatrix}
+x_1\\
+x_2\\
+\vdots\\
+x_n
+\end{bmatrix}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;亦可表示为&lt;span class=&#34;math inline&#34;&gt;\(f(\bm x)=\bm x^T\bm
+{Ax}\)&lt;/span&gt;。其中&lt;span class=&#34;math inline&#34;&gt;\(\bm A^T=\bm
+A\)&lt;/span&gt;为实对称矩阵。&lt;span class=&#34;math inline&#34;&gt;\(\bm
+A\)&lt;/span&gt;称为二次型式的矩阵，其秩称为二次型式的秩。&lt;/p&gt;
+&lt;p&gt;仅含平方项的二次型称之为标准型。&lt;/p&gt;
+&lt;p&gt;显然&lt;span class=&#34;math inline&#34;&gt;\(\bm x^T\bm
+{Ax}\)&lt;/span&gt;为标准型的充要条件是&lt;span class=&#34;math inline&#34;&gt;\(\bm
+A\)&lt;/span&gt;为对角矩阵。&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(\bm
+A\)&lt;/span&gt;可以直接读出，先写一个对角矩阵，对角线的元素值即为平方项的系数，对角线以上的元素找对应项的系数除以2，之后再将对角线以上的元素“对称地”写到对角线以下的元素&lt;/p&gt;
+&lt;h4 id=&#34;矩阵的合同&#34;&gt;矩阵的合同&lt;/h4&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(\bm{A,B}\)&lt;/span&gt;为&lt;span
+class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;阶矩阵，若存在&lt;span
+class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;阶可逆矩阵&lt;span
+class=&#34;math inline&#34;&gt;\(\bm C\)&lt;/span&gt;，使得&lt;span
+class=&#34;math inline&#34;&gt;\(\bm C^{T}\bm A\bm C=\bm B\)&lt;/span&gt;则称&lt;span
+class=&#34;math inline&#34;&gt;\(\bm A\)&lt;/span&gt;与&lt;span class=&#34;math inline&#34;&gt;\(\bm
+B\)&lt;/span&gt;合同，记作&lt;span class=&#34;math inline&#34;&gt;\(\bm A\simeq \bm
+B\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;具有以下性质：自反性、传递性、对称性。&lt;/p&gt;
+&lt;p&gt;以及若&lt;span class=&#34;math inline&#34;&gt;\(\bm{A,B}\)&lt;/span&gt;合同，且&lt;span
+class=&#34;math inline&#34;&gt;\(\bm A\)&lt;/span&gt;为对称矩阵，则&lt;span
+class=&#34;math inline&#34;&gt;\(\bm B\)&lt;/span&gt;也为对称矩阵，且&lt;span
+class=&#34;math inline&#34;&gt;\(R(\bm A)=R(\bm B)\)&lt;/span&gt;&lt;/p&gt;
+&lt;h4 id=&#34;化二次型为标准型&#34;&gt;化二次型为标准型&lt;/h4&gt;
+&lt;p&gt;有三种方法&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;1.正交变换法&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;若&lt;span class=&#34;math inline&#34;&gt;\(\bm
+Q\)&lt;/span&gt;为正交矩阵，则称线性变换&lt;span
+class=&#34;math inline&#34;&gt;\(\bm{x=Qy}\)&lt;/span&gt;为正交变换。&lt;/p&gt;
+&lt;p&gt;对于任意&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;元二次型&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+f(x_1,x_2,\cdots,x_n)=\bm{x}^T\bm{Ax}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;总存在正交变换&lt;span
+class=&#34;math inline&#34;&gt;\(\bm{x=Qy}\)&lt;/span&gt;，使得&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+f(x_1,x_2,\cdots,x_n)\xlongequal{\bm{x=Qy}}\lambda_1y_1^2+\lambda_2y_2^2+\cdots+\lambda_ny_n^2
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span
+class=&#34;math inline&#34;&gt;\(\lambda_1,\lambda_2,\cdots,\lambda_n\)&lt;/span&gt;为&lt;span
+class=&#34;math inline&#34;&gt;\(\bm A\)&lt;/span&gt;的全部特征值。&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(\bm Q\)&lt;/span&gt;的计算方法：&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;求&lt;span class=&#34;math inline&#34;&gt;\(\bm A\)&lt;/span&gt;的特征向量&lt;/li&gt;
+&lt;li&gt;将所有特征向量正交化、单位化&lt;/li&gt;
+&lt;li&gt;再将得到的向量组成列向量组，即为&lt;span class=&#34;math inline&#34;&gt;\(\bm
+Q\)&lt;/span&gt;。注意组合的顺序&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;2.配方法&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;例如：&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+f(x_1,x_2.x_3)=2(x_1^2+2x_1x_2+4x_1x_3)+x_2^2+14x_2x_3-x_3^2\\
+=2(x_1+x_2+2x_3)^2-(x_2-3x_3)^2
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;令&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\left\{\begin{matrix}
+y_1=x_1+x_2+2x_3 \\
+y_2=x_2-3x_3 \\
+y_3=x_3
+\end{matrix}\right.
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;则有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\left\{\begin{matrix}
+x_1=y_1-y_2-5y_3 \\
+x_2=y_2+3y_3 \\
+x_3=y_3
+\end{matrix}\right.
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;即&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\bm x=
+\begin{bmatrix}
+x_1 \\
+x_2 \\
+x_3
+\end{bmatrix}
+=
+\begin{bmatrix}
+1 &amp;amp; -1 &amp;amp; -5 \\
+0 &amp;amp; 1 &amp;amp; 3 \\
+0 &amp;amp; 0 &amp;amp; 1
+\end{bmatrix}
+=\bm{Qy}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;3.初等变换法&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;对&lt;span class=&#34;math inline&#34;&gt;\(2n\times
+n\)&lt;/span&gt;矩阵实施一次初等列变换及相应的初等行变换，直至把&lt;span
+class=&#34;math inline&#34;&gt;\(\bm A\)&lt;/span&gt;化为对角矩阵&lt;span
+class=&#34;math inline&#34;&gt;\(\bm \Lambda\)&lt;/span&gt;，即&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\begin{bmatrix}
+\bm A \\
+\bm E
+\end{bmatrix}
+\sim
+\begin{bmatrix}
+\bm \Lambda \\
+\bm Q
+\end{bmatrix}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;且有&lt;span
+class=&#34;math inline&#34;&gt;\(\bm{Q}^T\bm{AQ}=\bm\Lambda\)&lt;/span&gt;&lt;/p&gt;
 </description>
         </item>
         <item>
