@@ -366,7 +366,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 12 分钟
+                    阅读时长: 24 分钟
                 </time>
             </div>
         
@@ -1053,6 +1053,665 @@ class="math inline">\(P(a)\)</span>，才能保证两者都为真。</p>
 class="math inline">\(\Gamma\)</span>是已知公理和前提的合取，<span
 class="math inline">\(\Gamma\)</span>中没有自由变元<span
 class="math inline">\(x\)</span>的出现。</p>
+<h2 id="集合">集合</h2>
+<h3 id="集合的表示方法">集合的表示方法</h3>
+<ol type="1">
+<li>列举法</li>
+<li>描述法：用自然语言或谓词描述集合中元素的共同特征。</li>
+<li>归纳定义法（见后）</li>
+</ol>
+<h3 id="集合间的关系">集合间的关系</h3>
+<p><strong>外延性公理</strong></p>
+<p>两个集合<span class="math inline">\(A,B\)</span>相等，记为<span
+class="math inline">\(A=B\)</span>，当且仅当它们有相同的元素，即</p>
+<p><span class="math display">\[
+A=B\Leftrightarrow \forall x(x\in A\leftrightarrow x\in B)
+\]</span></p>
+<p>两个集合不相等，通常记为<span class="math inline">\(A\neq
+B\)</span></p>
+<p><strong>子集</strong></p>
+<p>设<span
+class="math inline">\(A、B\)</span>是任意的两个集合，若集合<span
+class="math inline">\(A\)</span>的每个元素都是集合<span
+class="math inline">\(B\)</span>的元素，则称<span
+class="math inline">\(A\)</span>为<span
+class="math inline">\(B\)</span>的子集或称<span
+class="math inline">\(B\)</span>包含<span
+class="math inline">\(A\)</span>,记为<span
+class="math inline">\(A\subseteq B\)</span>或<span
+class="math inline">\(B\supseteq A\)</span>，用逻辑公式表示为</p>
+<p><span class="math display">\[
+A\subseteq B\Leftrightarrow\forall x(x\in A\to x\in B)
+\]</span></p>
+<p>如果<span class="math inline">\(A\)</span>不是<span
+class="math inline">\(B\)</span>的子集，通常记为<span
+class="math inline">\(A\nsubseteq B\)</span></p>
+<p><strong>真子集</strong></p>
+<p>如果集合<span class="math inline">\(A\)</span>的每一个元素都属于<span
+class="math inline">\(B\)</span>，但集合<span
+class="math inline">\(B\)</span>中至少有一个元素不属于<span
+class="math inline">\(A\)</span>，则称<span
+class="math inline">\(A\)</span>为<span
+class="math inline">\(B\)</span>的真子集，记为<span
+class="math inline">\(A\subset B\)</span>，用逻辑公式表示为</p>
+<p><span class="math display">\[
+A\subset B\Leftrightarrow\forall x(x\in A\to x\in B)\wedge \exist y(y\in
+B\wedge y\notin A)\Leftrightarrow(A\subseteq B)\wedge(A\neq B)
+\]</span></p>
+<p><strong>全集</strong></p>
+<p>在一定范围内所有事物组成的集合称为该范围内的全集记为<span
+class="math inline">\(U\)</span>，用逻辑公式表示为</p>
+<p><span class="math display">\[
+U = \{x|P(x)\vee\neg P(x)\}
+\]</span></p>
+<p>其中，<span class="math inline">\(P(x)\)</span>是任意的谓词</p>
+<p><strong>空集</strong></p>
+<p>不含任何元素的集合称为空集，记为<span
+class="math inline">\(\phi\)</span>，用逻辑公式表示为</p>
+<p><span class="math display">\[
+\phi = \{x|P(x)\wedge\neg P(x)\}
+\]</span></p>
+<p>其中，<span
+class="math inline">\(P(x)\)</span>是任意的谓词，并且显然有<span
+class="math inline">\(|\phi|=0\)</span></p>
+<p>几个定理</p>
+<p><strong>定理1</strong></p>
+<p>空集是任一集合的子集，并且是任何非空集合的真子集。</p>
+<p><strong>定理2</strong></p>
+<p>设<span class="math inline">\(A,B,C\)</span>是集合，若<span
+class="math inline">\(A\subseteq B\)</span>且<span
+class="math inline">\(B\subseteq C\)</span>，则<span
+class="math inline">\(A\subseteq C\)</span>。</p>
+<p><strong>定理3</strong></p>
+<p>集合<span class="math inline">\(A,B\)</span>相等的充要条件是<span
+class="math inline">\(A,B\)</span>互为子集。</p>
+<p><strong>定理3.1</strong></p>
+<p>对于任何集合<span class="math inline">\(A\)</span>，有<span
+class="math inline">\(A\subseteq A\)</span></p>
+<p><strong>定理4</strong></p>
+<p>空集是唯一的。</p>
+<h3 id="集合的运算">集合的运算</h3>
+<p><strong>集合的交，交集</strong></p>
+<p><span class="math display">\[
+A\cap B = \{x|x\in A\wedge x\in B\}
+\]</span></p>
+<p><strong>集合的并，并集</strong></p>
+<p><span class="math display">\[
+A\cup B = \{x|x\in A\vee x\in B\}
+\]</span></p>
+<p><strong>集合的差，相对补集</strong></p>
+<p><span class="math display">\[
+A-B=\{x|x\in A\wedge x\notin B\}
+\]</span></p>
+<p><strong>集合的补，绝对补集</strong></p>
+<p><span class="math display">\[
+\bar{A}=U-A=\{x|x\in U\wedge x\notin A\}
+\]</span></p>
+<p><strong>集合的对称差</strong></p>
+<p><span class="math display">\[
+A\oplus B=(A-B)\cup(B-A)=\{x|(x\in A\wedge x\notin B)\vee(x\in B\wedge
+x\notin A)\}
+\]</span></p>
+<p><strong>集合的环积</strong></p>
+<p><span class="math display">\[
+A\otimes B=\overline{A\oplus B}=(A\cap
+B)\cup(\bar{A}\cap\bar{B})=\{x|(x\in A\wedge x\in B)\vee(x\notin A\wedge
+x\notin B)\}
+\]</span></p>
+<p>满足如下运算律</p>
+<figure>
+<img src="3.2.1.jpg" alt="3.2.1" />
+<figcaption aria-hidden="true">3.2.1</figcaption>
+</figure>
+<p><strong>幂集</strong></p>
+<p>给定集合<span class="math inline">\(A\)</span>，由<span
+class="math inline">\(A\)</span>所有子集为元素构成的集合，称为<span
+class="math inline">\(A\)</span>的幂集，记作<span
+class="math inline">\(\rho(A)\)</span>。若<span
+class="math inline">\(|A|=n\)</span>，则有<span
+class="math inline">\(|\rho(A)=2^n|\)</span></p>
+<h3 id="容斥原理">容斥原理</h3>
+<p><strong>定理1</strong></p>
+<p>设<span
+class="math inline">\(A_1,A_2\)</span>是有限集合，其元素个数分别为<span
+class="math inline">\(|A_1|,|A_2|\)</span>，则<span
+class="math inline">\(|A_1\cup A_2|=|A_1|+|A_2|-|A_1\cap
+A_2|\)</span></p>
+<p><strong>容斥原理</strong></p>
+<p>将上式推广，得</p>
+<p><span class="math display">\[
+|A_1\cup A_2\cup\cdots\cup A_n|=\sum_{i=1}^n|A-i|-\sum_{1\leq i&lt;j\leq
+n}|A_i\cap A_j|+\\
+\sum_{1\leq i&lt;j&lt;k\leq n}|A_i\cap A_j\cap
+A_k|-\cdots+(-1)^{n+1}|A_1\cap A_2\cap\cdots\cap A_n|
+\]</span></p>
+<h3 id="归纳证明">归纳证明</h3>
+<h4 id="集合的归纳定义">集合的归纳定义</h4>
+<ol type="1">
+<li>基础条款：指出某些事物属于<span
+class="math inline">\(S\)</span>，其功能是给集合<span
+class="math inline">\(S\)</span>指定初始元素使其不为空。</li>
+<li>归纳条款：指出由集合<span
+class="math inline">\(S\)</span>中的已有元素构造新元素的办法。</li>
+<li>极小性条款：断言一个事物除非能有限次应用基础条款和归纳条款构成，否则它不在集合<span
+class="math inline">\(S\)</span>中。</li>
+</ol>
+<h4 id="归纳法证明">归纳法证明</h4>
+<ol type="1">
+<li>基础步骤。对于基础条款中的指定的每个初始元素<span
+class="math inline">\(t\)</span>，证明命题<span
+class="math inline">\(P(t)\)</span>为真。</li>
+<li>归纳步骤。证明如果事物<span
+class="math inline">\(x,y,\cdots\)</span>有<span
+class="math inline">\(P\)</span>性质，那么用归纳条款指定的方法组合它们所得的新元素也具有性质<span
+class="math inline">\(P\)</span></li>
+</ol>
+<h4 id="数学归纳法">数学归纳法</h4>
+<p><strong>第一原理</strong></p>
+<ol type="1">
+<li>（归纳基础）证明<span
+class="math inline">\(P(0)\)</span>为真（可以用任何办法）</li>
+<li>（归纳假设）任取<span
+class="math inline">\(n(n\ge0)\)</span>，假设<span
+class="math inline">\(P(n)\)</span>为真。</li>
+<li>（归纳推理）由<span
+class="math inline">\(P(n)\)</span>为真，推出<span
+class="math inline">\(P(n+1)\)</span>也为真。</li>
+</ol>
+<p><strong>第二原理</strong></p>
+<ol type="1">
+<li>（归纳基础）证明<span
+class="math inline">\(P(0)\)</span>为真（可以用任何办法）</li>
+<li>（归纳假设）假设对任意的<span
+class="math inline">\(n&lt;k\)</span>，均有<span
+class="math inline">\(P(k)\)</span>为真。</li>
+<li>（归纳推理）证明<span
+class="math inline">\(P(n)\)</span>也为真。</li>
+</ol>
+<h3 id="集合的笛卡尔积">集合的笛卡尔积</h3>
+<p><strong>序偶</strong></p>
+<p>两个元素<span class="math inline">\(a\)</span>和<span
+class="math inline">\(b\)</span>组成的具有固定次序的序列称为序偶或二元组，记为<span
+class="math inline">\(&lt;a,b&gt;\)</span>。对于序偶<span
+class="math inline">\(&lt;a,b&gt;\)</span>，<span
+class="math inline">\(a\)</span>称为第<span
+class="math inline">\(1\)</span>元素，<span
+class="math inline">\(b\)</span>称为第<span
+class="math inline">\(2\)</span>元素。</p>
+<p><strong>序偶的相等</strong></p>
+<p>两个序偶<span class="math inline">\(&lt;a,b&gt;\)</span>和<span
+class="math inline">\(&lt;c,d&gt;\)</span>相等，记为<span
+class="math inline">\(&lt;a,b&gt;=&lt;c,d&gt;\)</span>，当且仅当<span
+class="math inline">\(a=c\)</span>且<span
+class="math inline">\(b=d\)</span>。</p>
+<p><strong>笛卡尔积（叉积）</strong></p>
+<p><span class="math display">\[
+A\times B=\{&lt;a,b&gt;|a\in A,b\in B\}
+\]</span></p>
+<p>对于多个集合，有</p>
+<p><span class="math display">\[
+A_1\times A_2\times\cdots\times A_n=\{&lt;a_1,a_2, \cdots,a_n&gt;|a_i\in
+A_i,1\leq i\leq n\}
+\]</span></p>
+<p>其中<span class="math inline">\(A\times A\times\cdots\times
+A\)</span>（<span class="math inline">\(n\)</span>个）可以记作<span
+class="math inline">\(A^n\)</span></p>
+<p>规定<span class="math inline">\(&lt;a_1,a_2,
+\cdots,a_n&gt;=&lt;&lt;a_1,a_2,
+\cdots,a_{n-1}&gt;,a_n&gt;\)</span>，而不等于<span
+class="math inline">\(&lt;a_1,&lt;a_2,
+\cdots,a_n&gt;&gt;\)</span>等等其他序偶。</p>
+<p>关于笛卡尔积有如下定理</p>
+<p><strong>定理1</strong></p>
+<ol type="1">
+<li><span class="math inline">\(A\times(B\cup C)=(A\times B)\cup(A\times
+C)\)</span></li>
+<li><span class="math inline">\(A\times(B\cap C)=(A\times B)\cap(A\times
+C)\)</span></li>
+<li><span class="math inline">\((A\cup B)\times C=(A\times
+C)\cup(B\times C)\)</span></li>
+<li><span class="math inline">\((A\cap B)\times C=(A\times
+C)\cap(B\times C)\)</span></li>
+</ol>
+<p><strong>定理2</strong></p>
+<p>如果<span
+class="math inline">\(A_i(i=1,2,\cdots,n)\)</span>都是有限集合，那么</p>
+<p><span class="math display">\[
+|A_1\times A_2\times\cdots\times
+A_n|=|A_1|\cdot|A_2|\cdot\cdots\cdot|A_n|
+\]</span></p>
+<h3 id="二元关系">二元关系</h3>
+<h4 id="关系的定义">关系的定义</h4>
+<p>两个集合<span class="math inline">\(A\)</span>和<span
+class="math inline">\(B\)</span>的笛卡儿积<span
+class="math inline">\(A\times B\)</span>的任一子集<span
+class="math inline">\(R\)</span>,称为集合<span
+class="math inline">\(A\)</span>到<span
+class="math inline">\(B\)</span>上的二元关系。二元关系<span
+class="math inline">\(R\)</span>是由序偶构成的集合，若<span
+class="math inline">\(&lt;x,y&gt;\in R\)</span>，则称<span
+class="math inline">\(x\)</span>与<span
+class="math inline">\(y\)</span>有<span
+class="math inline">\(R\)</span>关系，也记为<span
+class="math inline">\(xRy\)</span>;否则,<span
+class="math inline">\(&lt;x,y&gt;\notin R\)</span>，称<span
+class="math inline">\(x\)</span>与<span
+class="math inline">\(y\)</span>没有<span
+class="math inline">\(R\)</span>关系，也记为<span
+class="math inline">\(x\cancel{R}y\)</span>。</p>
+<p>设<span class="math inline">\(R\)</span>是集合<span
+class="math inline">\(A\)</span>到<span
+class="math inline">\(B\)</span>的二元关系。集合<span
+class="math inline">\(A\)</span>称为<span
+class="math inline">\(R\)</span>的前域，集合<span
+class="math inline">\(B\)</span>称为<span
+class="math inline">\(R\)</span>的陪域。集合<span
+class="math inline">\(\{x|(\exist y)(&lt;x,y&gt;\in
+R)\}\)</span>称为<span
+class="math inline">\(R\)</span>的定义域，记为<span
+class="math inline">\(domR\)</span>。集合<span
+class="math inline">\(\{y|(\exist x)(&lt;x,y&gt;)\in
+R)\}\)</span>称为<span class="math inline">\(R\)</span>的值域，记为<span
+class="math inline">\(ranR\)</span>。显然, <span
+class="math inline">\(domR\subseteq A\)</span>和<span
+class="math inline">\(ranR\subseteq B\)</span>。</p>
+<h4 id="关系的表示">关系的表示</h4>
+<ol type="1">
+<li>关系矩阵</li>
+</ol>
+<p><span class="math display">\[
+r_{ij}=
+\left\{\begin{matrix}
+1, if&lt;a_i,b_j&gt;\in R\\
+0, if&lt;a_i,b_j&gt;\notin R
+\end{matrix}\right.
+\]</span></p>
+<ol start="2" type="1">
+<li>关系图</li>
+</ol>
+<figure>
+<img src="3.6.2.jpg" alt="3.6.2" />
+<figcaption aria-hidden="true">3.6.2</figcaption>
+</figure>
+<h4 id="关系的运算">关系的运算</h4>
+<p>所有集合的运算对于二元关系同样适用。</p>
+<p><strong>复合运算</strong></p>
+<p>设<span class="math inline">\(R\)</span>为集合<span
+class="math inline">\(A\)</span>到<span
+class="math inline">\(B\)</span>的二元关系，<span
+class="math inline">\(S\)</span>为<span
+class="math inline">\(B\)</span>到<span
+class="math inline">\(C\)</span>的二元关系，令</p>
+<p><span class="math display">\[
+R\circ S=\{&lt;a,c&gt;|a\in A\wedge c\in C\wedge(\exist b)(b\in
+B\wedge&lt;a,b&gt;\in R\wedge &lt;b,c&gt;\in S)\}
+\]</span></p>
+<p>称<span class="math inline">\(R\circ S\)</span>为<span
+class="math inline">\(R\)</span>与<span
+class="math inline">\(S\)</span>的复合关系。</p>
+<p>复合运算可以通过关系的矩阵的运算来实现</p>
+<p><span class="math display">\[
+\bm{M}_{R\circ S}=\bm{M}_R\odot\bm{M}_S
+\]</span></p>
+<p>其中<span class="math inline">\(\odot\)</span>是布尔乘法运算，<span
+class="math inline">\(c_{ij}=\bigvee_{k=1}^{n}(a_{ik}\wedge
+b_{kj})\)</span></p>
+<p>复合运算有如下定理</p>
+<p><strong>定理1</strong></p>
+<p><span class="math inline">\((R\circ S)\circ T=R\circ(S\circ
+T)\)</span></p>
+<p><strong>关系的逆，逆关系</strong></p>
+<p><span class="math display">\[
+R^{-1}=\{&lt;b,a&gt;|&lt;a,b&gt;\in R\}
+\]</span></p>
+<p>关系矩阵即为原矩阵的转置</p>
+<p>关系图即将箭头反向</p>
+<p>有如下定理</p>
+<p><strong>定理1</strong></p>
+<ol type="1">
+<li><span class="math inline">\((R^{-1})^{-1}=R\)</span></li>
+<li><span class="math inline">\((R_1\cup R_2)^{-1}=R_1^{-1}\cup
+R_2^{-1}\)</span></li>
+<li><span class="math inline">\((R_1\cap R_2)^{-1}=R_1^{-1}\cap
+R_2^{-1}\)</span></li>
+<li><span
+class="math inline">\((\overline{R})^{-1}=\overline{R^{-1}}\)</span>，其中<span
+class="math inline">\(\overline{R}=(A\times B)-R\)</span>，<span
+class="math inline">\(\overline{R^{-1}}=(B\times
+A)-R^{-1}\)</span>。</li>
+<li><span
+class="math inline">\((R_1-R_2)^{-1}=R_1^{-1}-R_2^{-1}\)</span></li>
+</ol>
+<p><strong>定理2</strong></p>
+<p><span class="math display">\[
+(R\circ S)^{-1}=S^{-1}\circ R^{-1}
+\]</span></p>
+<h3 id="集合上的二元关系及其特性">集合上的二元关系及其特性</h3>
+<h4 id="集合上的二元关系">集合上的二元关系</h4>
+<p>集合<span class="math inline">\(A\)</span>与<span
+class="math inline">\(A\)</span>的笛卡尔积<span
+class="math inline">\(A\times A\)</span>的子集称为<span
+class="math inline">\(A\)</span>上的二元关系。</p>
+<p><strong>相等关系</strong></p>
+<p><span class="math display">\[
+I_A=\{&lt;a,a&gt;|a\in A\}
+\]</span></p>
+<p><strong><span class="math inline">\(R\)</span>的幂次</strong></p>
+<p>设<span class="math inline">\(R\)</span>是<span
+class="math inline">\(A\)</span>上的二元关系，<span
+class="math inline">\(n\in Z^+\)</span>，称<span
+class="math inline">\(R\circ R\circ\cdots\circ R\)</span>(n个)为<span
+class="math inline">\(R\)</span>的<span
+class="math inline">\(n\)</span>次幂。记为<span
+class="math inline">\(R^n\)</span></p>
+<p>约定<span class="math inline">\(R^0=I_A\)</span></p>
+<p>有如下定理</p>
+<p><strong>定理1</strong></p>
+<ol type="1">
+<li><span class="math inline">\(R^m\circ R^n=R^{m+n}\)</span></li>
+<li><span class="math inline">\((R^m)^n=R^{mn}\)</span></li>
+</ol>
+<p><strong>定理2</strong></p>
+<p>设存在<span class="math inline">\(i,j\in R\)</span>，使得<span
+class="math inline">\(R^i=R^j\)</span>，则有</p>
+<ol type="1">
+<li>对任意<span class="math inline">\(k\ge 0,
+R^{i+k}=R^{j+k}\)</span></li>
+<li>对任意<span class="math inline">\(k,m\ge 0,
+R^{i+md+k}=R^{i+k}\)</span>，其中<span
+class="math inline">\(d=j-i\)</span></li>
+<li>记<span
+class="math inline">\(S=\{R_0,R^1,\cdots,R^{j-1}\}\)</span>，对于任意<span
+class="math inline">\(n\in N\)</span>，均有<span
+class="math inline">\(R^n\in S\)</span></li>
+</ol>
+<h4 id="二元关系的特性">二元关系的特性</h4>
+<ol type="1">
+<li>自反性。对于<span class="math inline">\(A\)</span>中的每个元素<span
+class="math inline">\(a\)</span>，都有<span
+class="math inline">\(aRa\)</span>，则称<span
+class="math inline">\(R\)</span>在<span
+class="math inline">\(A\)</span>上是自反的。</li>
+<li>反自反性。对于<span
+class="math inline">\(A\)</span>中的每个元素<span
+class="math inline">\(a\)</span>，都有<span
+class="math inline">\(a\cancel{R}a\)</span>。空集上的空关系即是自反的也是反自反的。</li>
+<li>对称性。对于任意<span class="math inline">\(a,b\in
+A\)</span>，若有<span class="math inline">\(aRb\)</span>，则必有<span
+class="math inline">\(bRa\)</span>。</li>
+<li>反对称性。对于任意<span class="math inline">\(a,b\in
+A\)</span>，若有<span class="math inline">\(aRb\)</span>且<span
+class="math inline">\(bRa\)</span>，则必有<span
+class="math inline">\(a=b\)</span>。若关系图上只有零个或多个自回路，则既是对称的，又是反对称的。</li>
+<li>传递性。对于任意<span class="math inline">\(a,b,c\in
+A\)</span>，若<span class="math inline">\(aRb,bRc\)</span>则必有<span
+class="math inline">\(aRc\)</span>。</li>
+</ol>
+<h3 id="关系的闭包运算">关系的闭包运算</h3>
+<p>设<span class="math inline">\(R\)</span>是集合<span
+class="math inline">\(A\)</span>上的二元关系，如果<span
+class="math inline">\(A\)</span>上另外一个二元关系<span
+class="math inline">\(R&#39;\)</span>满足： 1. <span
+class="math inline">\(R&#39;\)</span>是自反的（对称的，传递的） 2. <span
+class="math inline">\(R&#39;\subseteq R\)</span> 3. 对于<span
+class="math inline">\(A\)</span>上任何自反的（对称的，传递的）关系<span
+class="math inline">\(R&#39;&#39;\)</span>，若<span
+class="math inline">\(R&#39;&#39;\subseteq R\)</span>，有<span
+class="math inline">\(R&#39;&#39;\subseteq R&#39;\)</span>，则称<span
+class="math inline">\(R&#39;\)</span>是<span
+class="math inline">\(R\)</span>的自反（对称，传递）闭包，记为<span
+class="math inline">\(r(R)(s(R),t(R))\)</span>。</p>
+<p>有如下定理</p>
+<p><strong>定理1</strong></p>
+<ol type="1">
+<li><span class="math inline">\(R\)</span>是自反的当且仅当<span
+class="math inline">\(r(R)=R\)</span></li>
+<li><span class="math inline">\(R\)</span>是对称的当且仅当<span
+class="math inline">\(s(R)=R\)</span></li>
+<li><span class="math inline">\(R\)</span>是传递的当且仅当<span
+class="math inline">\(t(R)=R\)</span></li>
+</ol>
+<p><strong>定理2</strong></p>
+<ol type="1">
+<li><span class="math inline">\(r(R)=R\cup I_A\)</span></li>
+<li><span class="math inline">\(s(R)=R\cup R^{-1}\)</span></li>
+<li><span
+class="math inline">\(t(R)=\bigcup_{i=1}^{\infty}R^i\)</span></li>
+</ol>
+<p><strong>定理3</strong></p>
+<p>假设<span class="math inline">\(|A|=n\)</span>，那么<span
+class="math inline">\(t(R)=\bigcup_{i=1}^{n}R^i\)</span></p>
+<p><strong>定理4</strong></p>
+<ol type="1">
+<li>如果<span class="math inline">\(R\)</span>是自反的，那么<span
+class="math inline">\(s(R),t(R)\)</span>也是自反的。</li>
+<li>如果<span class="math inline">\(R\)</span>是对称的，那么<span
+class="math inline">\(r(R),t(R)\)</span>也是对称的。</li>
+<li>如果<span class="math inline">\(R\)</span>是传递的，那么<span
+class="math inline">\(r(R)\)</span>也是传递的。</li>
+</ol>
+<p><strong>定理5</strong></p>
+<ol type="1">
+<li><span class="math inline">\(sr(R)=rs(R)\)</span>，（<span
+class="math inline">\(sr(R)=s(r(R))\)</span>以下运算顺序相同）。</li>
+<li><span class="math inline">\(tr(R)=rt(R)\)</span></li>
+<li><span class="math inline">\(ts(R)\subseteq st(R)\)</span></li>
+</ol>
+<h3 id="等价关系">等价关系</h3>
+<h4 id="集合的划分">集合的划分</h4>
+<p>给定非空集合<span class="math inline">\(A\)</span>和集合簇<span
+class="math inline">\(\pi=\{A_1,A_2,\cdots,A_m\}\)</span>，如果</p>
+<ol type="1">
+<li><span class="math inline">\(A_i\subseteq A\)</span>且<span
+class="math inline">\(A_i\neq\phi\)</span></li>
+<li><span class="math inline">\(A=\bigcup_{i=1}^{m}A_i\)</span></li>
+<li><span class="math inline">\(A_i\cap A_j=\phi, i\neq j\)</span></li>
+</ol>
+<p>那么称<span class="math inline">\(\pi\)</span>是<span
+class="math inline">\(A\)</span>的一个划分，若<span
+class="math inline">\(\pi\)</span>满足1.2.则称<span
+class="math inline">\(\pi\)</span>是<span
+class="math inline">\(A\)</span>的一个覆盖。</p>
+<h4 id="等价关系和等价类">等价关系和等价类</h4>
+<p><strong>等价关系</strong></p>
+<p><span class="math inline">\(R\)</span>是<span
+class="math inline">\(A\)</span>上的二元关系，若<span
+class="math inline">\(R\)</span>是自反的、对称的、传递的，则称<span
+class="math inline">\(R\)</span>是等价关系。</p>
+<p><strong>等价类</strong></p>
+<p>设<span class="math inline">\(R\)</span>是非空集合<span
+class="math inline">\(A\)</span>上的等价关系，对于任意<span
+class="math inline">\(a\in A\)</span>，称集合<span
+class="math inline">\([a]_R=\{x|x\in A,xRa\}\)</span>为<span
+class="math inline">\(a\)</span>关于<span
+class="math inline">\(R\)</span>的等价类，<span
+class="math inline">\(a\)</span>称为等价类<span
+class="math inline">\([a]_R\)</span>的代表元素。如果等价类个数有限，则<span
+class="math inline">\(R\)</span>的不同等价类的个数叫做<span
+class="math inline">\(R\)</span>的秩，否则秩是无限的。</p>
+<p>有如下定理</p>
+<p><strong>定理1</strong></p>
+<p>设<span class="math inline">\(R\)</span>是非空集合<span
+class="math inline">\(A\)</span>上的等价关系，对于<span
+class="math inline">\(a,b\in A\)</span>有<span
+class="math inline">\(aRb\)</span>，当且仅当<span
+class="math inline">\([a]_R=[b]_R\)</span></p>
+<p><strong>商集</strong></p>
+<p>设<span class="math inline">\(R\)</span>是集合<span
+class="math inline">\(A\)</span>上的等价关系，由<span
+class="math inline">\(R\)</span>确定的所有等价类组成的集合，称为集合<span
+class="math inline">\(A\)</span>上关于<span
+class="math inline">\(R\)</span>的商集，记为<span
+class="math inline">\(A/R\)</span></p>
+<p><span class="math display">\[
+A/R = \{[x]_R|x\in A\}
+\]</span></p>
+<p>有如下定理</p>
+<p><strong>定理1</strong></p>
+<ol type="1">
+<li>任取<span class="math inline">\(x\in A\)</span>，<span
+class="math inline">\([x]_R\neq\phi\)</span></li>
+<li>任取<span class="math inline">\(x,y\in A\)</span>，要么<span
+class="math inline">\([x]_R=[y]_R\)</span>，要么<span
+class="math inline">\([x]_R\cap[y]_R=\phi\)</span></li>
+<li><span class="math inline">\(\bigcup_{x\in A}[x]_R=A\)</span></li>
+</ol>
+<p><strong>定理2</strong></p>
+<p>设<span class="math inline">\(\pi\)</span>是非空集合<span
+class="math inline">\(A\)</span>的一个划分，则<span
+class="math inline">\(A\)</span>上的二元关系<span
+class="math inline">\(R=\bigcup_{B\in\pi} B\times B\)</span>是<span
+class="math inline">\(A\)</span>上的等价关系（称为由划分<span
+class="math inline">\(\pi\)</span>诱导的<span
+class="math inline">\(A\)</span>上的等价关系）。</p>
+<p><strong>定理3</strong></p>
+<p>设<span class="math inline">\(R_1\)</span>和<span
+class="math inline">\(R_1\)</span>是非空集合<span
+class="math inline">\(A\)</span>上的等价关系，则<span
+class="math inline">\(R_1=R_2\Leftrightarrow A/R_1=A/R_2\)</span></p>
+<p><strong>定理4</strong></p>
+<p>设<span class="math inline">\(R\)</span>是非空集合<span
+class="math inline">\(A\)</span>上的任意一个等价关系,<span
+class="math inline">\(\pi\)</span>是<span
+class="math inline">\(A\)</span>的任意一个划分，那么<span
+class="math inline">\(R\)</span>诱导出<span
+class="math inline">\(\pi\)</span>当且仅当<span
+class="math inline">\(\pi\)</span>诱导出<span
+class="math inline">\(R\)</span>。即说明等价关系和集合的划分是一一对应的。</p>
+<h3 id="序关系">序关系</h3>
+<h4 id="偏序集合的概念与表示">偏序集合的概念与表示</h4>
+<p><strong>偏序</strong></p>
+<p>如果<span class="math inline">\(A\)</span>上的关系<span
+class="math inline">\(R\)</span>是自反的，反对称的和传递的，那么<span
+class="math inline">\(R\)</span>是<span
+class="math inline">\(A\)</span>上的偏序，通常用符号<span
+class="math inline">\(\preceq\)</span>表示，称序偶<span
+class="math inline">\(&lt;A,\preceq&gt;\)</span>为偏序集合。通常用<span
+class="math inline">\(x\prec y\)</span>表示<span
+class="math inline">\(x\preceq y\)</span>且<span
+class="math inline">\(x\neq y\)</span></p>
+<p><strong>可比与不可比</strong></p>
+<p>在偏序集合<span
+class="math inline">\(&lt;A,\preceq&gt;\)</span>中，对于元素<span
+class="math inline">\(a,b\in A\)</span>，如果<span
+class="math inline">\(a\preceq b\)</span>或者<span
+class="math inline">\(b\preceq a\)</span>，那么称<span
+class="math inline">\(a\)</span>或<span
+class="math inline">\(b\)</span>是可比的，否则不可比的。</p>
+<p><strong>盖住</strong></p>
+<p>在偏序集合<span
+class="math inline">\(&lt;A,\preceq&gt;\)</span>中，对于<span
+class="math inline">\(x,y\in A\)</span>，如果<span
+class="math inline">\(x\prec y\)</span>且没有其他元素<span
+class="math inline">\(z\in A\)</span>满足<span
+class="math inline">\(x\prec z\prec y\)</span>，则称<span
+class="math inline">\(y\)</span>盖住<span
+class="math inline">\(x\)</span></p>
+<p><strong>哈斯图</strong></p>
+<figure>
+<img src="3.10.1.jpg" alt="3.10.1" />
+<figcaption aria-hidden="true">3.10.1</figcaption>
+</figure>
+<p><strong>链</strong></p>
+<p>设<span
+class="math inline">\(&lt;A,\preceq&gt;\)</span>是一个偏序集合，<span
+class="math inline">\(B\subseteq A\)</span>。如果<span
+class="math inline">\(B\)</span>中的任意两个元素都是可比的，那么称<span
+class="math inline">\(B\)</span>为<span
+class="math inline">\(&lt;A，\preceq&gt;\)</span>中的链，<span
+class="math inline">\(B\)</span>中元素的个数称为该链的长度。如果<span
+class="math inline">\(B\)</span>中的任意两个不同的元素都是不可比的，那么称<span
+class="math inline">\(B\)</span>为<span
+class="math inline">\(&lt;A，\preceq&gt;\)</span>中的反链。</p>
+<h4 id="偏序集合中的特殊元素">偏序集合中的特殊元素</h4>
+<p><strong>极大元</strong></p>
+<p>设<span
+class="math inline">\(&lt;A，\preceq&gt;\)</span>是偏序集合，且<span
+class="math inline">\(B\subseteq A\)</span>。如果<span
+class="math inline">\(b\in B\)</span>，且<span
+class="math inline">\(B\)</span>中不存在元素<span
+class="math inline">\(x\)</span>，使得<span class="math inline">\(x\neq
+b\)</span>且<span class="math inline">\(b\preceq x\)</span>，那么<span
+class="math inline">\(b\)</span>称为<span
+class="math inline">\(B\)</span>的极大元。</p>
+<p><strong>极小元</strong></p>
+<p>设<span
+class="math inline">\(&lt;A，\preceq&gt;\)</span>是偏序集合，且<span
+class="math inline">\(B\subseteq A\)</span>。如果<span
+class="math inline">\(b\in B\)</span>，且<span
+class="math inline">\(B\)</span>中不存在元素<span
+class="math inline">\(x\)</span>，使得<span class="math inline">\(x\neq
+b\)</span>且<span class="math inline">\(x\preceq b\)</span>，那么<span
+class="math inline">\(b\)</span>称为<span
+class="math inline">\(B\)</span>的极大元。</p>
+<p><strong>最大元</strong></p>
+<p>设<span
+class="math inline">\(&lt;A，\preceq&gt;\)</span>是偏序集合，且<span
+class="math inline">\(B\subseteq A\)</span>。如果<span
+class="math inline">\(b\in B\)</span>，对于任意元素<span
+class="math inline">\(x\in B\)</span>，均有<span
+class="math inline">\(x\preceq b\)</span>，那么<span
+class="math inline">\(b\)</span>称为<span
+class="math inline">\(B\)</span>的最大元。</p>
+<p><strong>最小元</strong></p>
+<p>设<span
+class="math inline">\(&lt;A，\preceq&gt;\)</span>是偏序集合，且<span
+class="math inline">\(B\subseteq A\)</span>。如果<span
+class="math inline">\(b\in B\)</span>，对于任意元素<span
+class="math inline">\(x\in B\)</span>，均有<span
+class="math inline">\(b\preceq x\)</span>，那么<span
+class="math inline">\(b\)</span>称为<span
+class="math inline">\(B\)</span>的最小元。</p>
+<p>又如下定理</p>
+<p><strong>定理1</strong></p>
+<p>设<span
+class="math inline">\(&lt;A，\preceq&gt;\)</span>是偏序集合，且<span
+class="math inline">\(B\subseteq A\)</span>。如果<span
+class="math inline">\(B\)</span>有最大（最小元），那么它是唯一的。</p>
+<p><strong>上界</strong></p>
+<p>设<span
+class="math inline">\(&lt;A，\preceq&gt;\)</span>是偏序集合，且<span
+class="math inline">\(B\subseteq A\)</span>。如果<span
+class="math inline">\(a\in A\)</span>，对于任意元素<span
+class="math inline">\(x\in B\)</span>，均有<span
+class="math inline">\(b\preceq a\)</span>，那么<span
+class="math inline">\(a\)</span>称为<span
+class="math inline">\(B\)</span>的上界。</p>
+<p><strong>下界</strong></p>
+<p>设<span
+class="math inline">\(&lt;A，\preceq&gt;\)</span>是偏序集合，且<span
+class="math inline">\(B\subseteq A\)</span>。如果<span
+class="math inline">\(a\in A\)</span>，对于任意元素<span
+class="math inline">\(x\in B\)</span>，均有<span
+class="math inline">\(a\preceq b\)</span>，那么<span
+class="math inline">\(a\)</span>称为<span
+class="math inline">\(B\)</span>的下界。</p>
+<p><strong>最小上界（上确界）</strong></p>
+<p>设<span
+class="math inline">\(&lt;A，\preceq&gt;\)</span>是偏序集合，且<span
+class="math inline">\(B\subseteq A\)</span>。<span
+class="math inline">\(a\)</span>为<span
+class="math inline">\(B\)</span>的上界，若对<span
+class="math inline">\(B\)</span>的任意上界<span
+class="math inline">\(a&#39;\)</span>均有<span
+class="math inline">\(a\preceq a&#39;\)</span>，则称<span
+class="math inline">\(a\)</span>为<span
+class="math inline">\(B\)</span>的最小上界或上确界。</p>
+<p><strong>最大下界（下确界）</strong></p>
+<p>设<span
+class="math inline">\(&lt;A，\preceq&gt;\)</span>是偏序集合，且<span
+class="math inline">\(B\subseteq A\)</span>。<span
+class="math inline">\(a\)</span>为<span
+class="math inline">\(B\)</span>的下界，若对<span
+class="math inline">\(B\)</span>的任意下界<span
+class="math inline">\(a&#39;\)</span>均有<span
+class="math inline">\(a&#39;\preceq a\)</span>，则称<span
+class="math inline">\(a\)</span>为<span
+class="math inline">\(B\)</span>的最大下界或下确界。</p>
+<p>有如下定理</p>
+<p><strong>定理1</strong></p>
+<p>若<span
+class="math inline">\(B\)</span>有最小上界（最大下界），那么它是唯一的。</p>
 
 </section>
 

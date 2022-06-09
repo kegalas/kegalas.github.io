@@ -689,6 +689,665 @@ class=&#34;math inline&#34;&gt;\(P(a)\)&lt;/span&gt;，才能保证两者都为�
 class=&#34;math inline&#34;&gt;\(\Gamma\)&lt;/span&gt;是已知公理和前提的合取，&lt;span
 class=&#34;math inline&#34;&gt;\(\Gamma\)&lt;/span&gt;中没有自由变元&lt;span
 class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;的出现。&lt;/p&gt;
+&lt;h2 id=&#34;集合&#34;&gt;集合&lt;/h2&gt;
+&lt;h3 id=&#34;集合的表示方法&#34;&gt;集合的表示方法&lt;/h3&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;列举法&lt;/li&gt;
+&lt;li&gt;描述法：用自然语言或谓词描述集合中元素的共同特征。&lt;/li&gt;
+&lt;li&gt;归纳定义法（见后）&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;集合间的关系&#34;&gt;集合间的关系&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;外延性公理&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;两个集合&lt;span class=&#34;math inline&#34;&gt;\(A,B\)&lt;/span&gt;相等，记为&lt;span
+class=&#34;math inline&#34;&gt;\(A=B\)&lt;/span&gt;，当且仅当它们有相同的元素，即&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+A=B\Leftrightarrow \forall x(x\in A\leftrightarrow x\in B)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;两个集合不相等，通常记为&lt;span class=&#34;math inline&#34;&gt;\(A\neq
+B\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;子集&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span
+class=&#34;math inline&#34;&gt;\(A、B\)&lt;/span&gt;是任意的两个集合，若集合&lt;span
+class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;的每个元素都是集合&lt;span
+class=&#34;math inline&#34;&gt;\(B\)&lt;/span&gt;的元素，则称&lt;span
+class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;为&lt;span
+class=&#34;math inline&#34;&gt;\(B\)&lt;/span&gt;的子集或称&lt;span
+class=&#34;math inline&#34;&gt;\(B\)&lt;/span&gt;包含&lt;span
+class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;,记为&lt;span
+class=&#34;math inline&#34;&gt;\(A\subseteq B\)&lt;/span&gt;或&lt;span
+class=&#34;math inline&#34;&gt;\(B\supseteq A\)&lt;/span&gt;，用逻辑公式表示为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+A\subseteq B\Leftrightarrow\forall x(x\in A\to x\in B)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;如果&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;不是&lt;span
+class=&#34;math inline&#34;&gt;\(B\)&lt;/span&gt;的子集，通常记为&lt;span
+class=&#34;math inline&#34;&gt;\(A\nsubseteq B\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;真子集&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;如果集合&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;的每一个元素都属于&lt;span
+class=&#34;math inline&#34;&gt;\(B\)&lt;/span&gt;，但集合&lt;span
+class=&#34;math inline&#34;&gt;\(B\)&lt;/span&gt;中至少有一个元素不属于&lt;span
+class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;，则称&lt;span
+class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;为&lt;span
+class=&#34;math inline&#34;&gt;\(B\)&lt;/span&gt;的真子集，记为&lt;span
+class=&#34;math inline&#34;&gt;\(A\subset B\)&lt;/span&gt;，用逻辑公式表示为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+A\subset B\Leftrightarrow\forall x(x\in A\to x\in B)\wedge \exist y(y\in
+B\wedge y\notin A)\Leftrightarrow(A\subseteq B)\wedge(A\neq B)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;全集&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;在一定范围内所有事物组成的集合称为该范围内的全集记为&lt;span
+class=&#34;math inline&#34;&gt;\(U\)&lt;/span&gt;，用逻辑公式表示为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+U = \{x|P(x)\vee\neg P(x)\}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中，&lt;span class=&#34;math inline&#34;&gt;\(P(x)\)&lt;/span&gt;是任意的谓词&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;空集&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;不含任何元素的集合称为空集，记为&lt;span
+class=&#34;math inline&#34;&gt;\(\phi\)&lt;/span&gt;，用逻辑公式表示为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\phi = \{x|P(x)\wedge\neg P(x)\}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中，&lt;span
+class=&#34;math inline&#34;&gt;\(P(x)\)&lt;/span&gt;是任意的谓词，并且显然有&lt;span
+class=&#34;math inline&#34;&gt;\(|\phi|=0\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;几个定理&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定理1&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;空集是任一集合的子集，并且是任何非空集合的真子集。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定理2&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(A,B,C\)&lt;/span&gt;是集合，若&lt;span
+class=&#34;math inline&#34;&gt;\(A\subseteq B\)&lt;/span&gt;且&lt;span
+class=&#34;math inline&#34;&gt;\(B\subseteq C\)&lt;/span&gt;，则&lt;span
+class=&#34;math inline&#34;&gt;\(A\subseteq C\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定理3&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;集合&lt;span class=&#34;math inline&#34;&gt;\(A,B\)&lt;/span&gt;相等的充要条件是&lt;span
+class=&#34;math inline&#34;&gt;\(A,B\)&lt;/span&gt;互为子集。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定理3.1&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;对于任何集合&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;，有&lt;span
+class=&#34;math inline&#34;&gt;\(A\subseteq A\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定理4&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;空集是唯一的。&lt;/p&gt;
+&lt;h3 id=&#34;集合的运算&#34;&gt;集合的运算&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;集合的交，交集&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+A\cap B = \{x|x\in A\wedge x\in B\}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;集合的并，并集&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+A\cup B = \{x|x\in A\vee x\in B\}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;集合的差，相对补集&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+A-B=\{x|x\in A\wedge x\notin B\}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;集合的补，绝对补集&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\bar{A}=U-A=\{x|x\in U\wedge x\notin A\}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;集合的对称差&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+A\oplus B=(A-B)\cup(B-A)=\{x|(x\in A\wedge x\notin B)\vee(x\in B\wedge
+x\notin A)\}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;集合的环积&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+A\otimes B=\overline{A\oplus B}=(A\cap
+B)\cup(\bar{A}\cap\bar{B})=\{x|(x\in A\wedge x\in B)\vee(x\notin A\wedge
+x\notin B)\}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;满足如下运算律&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;3.2.1.jpg&#34; alt=&#34;3.2.1&#34; /&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;3.2.1&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;&lt;strong&gt;幂集&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;给定集合&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;，由&lt;span
+class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;所有子集为元素构成的集合，称为&lt;span
+class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;的幂集，记作&lt;span
+class=&#34;math inline&#34;&gt;\(\rho(A)\)&lt;/span&gt;。若&lt;span
+class=&#34;math inline&#34;&gt;\(|A|=n\)&lt;/span&gt;，则有&lt;span
+class=&#34;math inline&#34;&gt;\(|\rho(A)=2^n|\)&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;容斥原理&#34;&gt;容斥原理&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;定理1&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span
+class=&#34;math inline&#34;&gt;\(A_1,A_2\)&lt;/span&gt;是有限集合，其元素个数分别为&lt;span
+class=&#34;math inline&#34;&gt;\(|A_1|,|A_2|\)&lt;/span&gt;，则&lt;span
+class=&#34;math inline&#34;&gt;\(|A_1\cup A_2|=|A_1|+|A_2|-|A_1\cap
+A_2|\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;容斥原理&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;将上式推广，得&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+|A_1\cup A_2\cup\cdots\cup A_n|=\sum_{i=1}^n|A-i|-\sum_{1\leq i&amp;lt;j\leq
+n}|A_i\cap A_j|+\\
+\sum_{1\leq i&amp;lt;j&amp;lt;k\leq n}|A_i\cap A_j\cap
+A_k|-\cdots+(-1)^{n+1}|A_1\cap A_2\cap\cdots\cap A_n|
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;归纳证明&#34;&gt;归纳证明&lt;/h3&gt;
+&lt;h4 id=&#34;集合的归纳定义&#34;&gt;集合的归纳定义&lt;/h4&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;基础条款：指出某些事物属于&lt;span
+class=&#34;math inline&#34;&gt;\(S\)&lt;/span&gt;，其功能是给集合&lt;span
+class=&#34;math inline&#34;&gt;\(S\)&lt;/span&gt;指定初始元素使其不为空。&lt;/li&gt;
+&lt;li&gt;归纳条款：指出由集合&lt;span
+class=&#34;math inline&#34;&gt;\(S\)&lt;/span&gt;中的已有元素构造新元素的办法。&lt;/li&gt;
+&lt;li&gt;极小性条款：断言一个事物除非能有限次应用基础条款和归纳条款构成，否则它不在集合&lt;span
+class=&#34;math inline&#34;&gt;\(S\)&lt;/span&gt;中。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id=&#34;归纳法证明&#34;&gt;归纳法证明&lt;/h4&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;基础步骤。对于基础条款中的指定的每个初始元素&lt;span
+class=&#34;math inline&#34;&gt;\(t\)&lt;/span&gt;，证明命题&lt;span
+class=&#34;math inline&#34;&gt;\(P(t)\)&lt;/span&gt;为真。&lt;/li&gt;
+&lt;li&gt;归纳步骤。证明如果事物&lt;span
+class=&#34;math inline&#34;&gt;\(x,y,\cdots\)&lt;/span&gt;有&lt;span
+class=&#34;math inline&#34;&gt;\(P\)&lt;/span&gt;性质，那么用归纳条款指定的方法组合它们所得的新元素也具有性质&lt;span
+class=&#34;math inline&#34;&gt;\(P\)&lt;/span&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id=&#34;数学归纳法&#34;&gt;数学归纳法&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;第一原理&lt;/strong&gt;&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;（归纳基础）证明&lt;span
+class=&#34;math inline&#34;&gt;\(P(0)\)&lt;/span&gt;为真（可以用任何办法）&lt;/li&gt;
+&lt;li&gt;（归纳假设）任取&lt;span
+class=&#34;math inline&#34;&gt;\(n(n\ge0)\)&lt;/span&gt;，假设&lt;span
+class=&#34;math inline&#34;&gt;\(P(n)\)&lt;/span&gt;为真。&lt;/li&gt;
+&lt;li&gt;（归纳推理）由&lt;span
+class=&#34;math inline&#34;&gt;\(P(n)\)&lt;/span&gt;为真，推出&lt;span
+class=&#34;math inline&#34;&gt;\(P(n+1)\)&lt;/span&gt;也为真。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;第二原理&lt;/strong&gt;&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;（归纳基础）证明&lt;span
+class=&#34;math inline&#34;&gt;\(P(0)\)&lt;/span&gt;为真（可以用任何办法）&lt;/li&gt;
+&lt;li&gt;（归纳假设）假设对任意的&lt;span
+class=&#34;math inline&#34;&gt;\(n&amp;lt;k\)&lt;/span&gt;，均有&lt;span
+class=&#34;math inline&#34;&gt;\(P(k)\)&lt;/span&gt;为真。&lt;/li&gt;
+&lt;li&gt;（归纳推理）证明&lt;span
+class=&#34;math inline&#34;&gt;\(P(n)\)&lt;/span&gt;也为真。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;集合的笛卡尔积&#34;&gt;集合的笛卡尔积&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;序偶&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;两个元素&lt;span class=&#34;math inline&#34;&gt;\(a\)&lt;/span&gt;和&lt;span
+class=&#34;math inline&#34;&gt;\(b\)&lt;/span&gt;组成的具有固定次序的序列称为序偶或二元组，记为&lt;span
+class=&#34;math inline&#34;&gt;\(&amp;lt;a,b&amp;gt;\)&lt;/span&gt;。对于序偶&lt;span
+class=&#34;math inline&#34;&gt;\(&amp;lt;a,b&amp;gt;\)&lt;/span&gt;，&lt;span
+class=&#34;math inline&#34;&gt;\(a\)&lt;/span&gt;称为第&lt;span
+class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt;元素，&lt;span
+class=&#34;math inline&#34;&gt;\(b\)&lt;/span&gt;称为第&lt;span
+class=&#34;math inline&#34;&gt;\(2\)&lt;/span&gt;元素。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;序偶的相等&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;两个序偶&lt;span class=&#34;math inline&#34;&gt;\(&amp;lt;a,b&amp;gt;\)&lt;/span&gt;和&lt;span
+class=&#34;math inline&#34;&gt;\(&amp;lt;c,d&amp;gt;\)&lt;/span&gt;相等，记为&lt;span
+class=&#34;math inline&#34;&gt;\(&amp;lt;a,b&amp;gt;=&amp;lt;c,d&amp;gt;\)&lt;/span&gt;，当且仅当&lt;span
+class=&#34;math inline&#34;&gt;\(a=c\)&lt;/span&gt;且&lt;span
+class=&#34;math inline&#34;&gt;\(b=d\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;笛卡尔积（叉积）&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+A\times B=\{&amp;lt;a,b&amp;gt;|a\in A,b\in B\}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;对于多个集合，有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+A_1\times A_2\times\cdots\times A_n=\{&amp;lt;a_1,a_2, \cdots,a_n&amp;gt;|a_i\in
+A_i,1\leq i\leq n\}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(A\times A\times\cdots\times
+A\)&lt;/span&gt;（&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;个）可以记作&lt;span
+class=&#34;math inline&#34;&gt;\(A^n\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;规定&lt;span class=&#34;math inline&#34;&gt;\(&amp;lt;a_1,a_2,
+\cdots,a_n&amp;gt;=&amp;lt;&amp;lt;a_1,a_2,
+\cdots,a_{n-1}&amp;gt;,a_n&amp;gt;\)&lt;/span&gt;，而不等于&lt;span
+class=&#34;math inline&#34;&gt;\(&amp;lt;a_1,&amp;lt;a_2,
+\cdots,a_n&amp;gt;&amp;gt;\)&lt;/span&gt;等等其他序偶。&lt;/p&gt;
+&lt;p&gt;关于笛卡尔积有如下定理&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定理1&lt;/strong&gt;&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(A\times(B\cup C)=(A\times B)\cup(A\times
+C)\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(A\times(B\cap C)=(A\times B)\cap(A\times
+C)\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\((A\cup B)\times C=(A\times
+C)\cup(B\times C)\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\((A\cap B)\times C=(A\times
+C)\cap(B\times C)\)&lt;/span&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;定理2&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;如果&lt;span
+class=&#34;math inline&#34;&gt;\(A_i(i=1,2,\cdots,n)\)&lt;/span&gt;都是有限集合，那么&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+|A_1\times A_2\times\cdots\times
+A_n|=|A_1|\cdot|A_2|\cdot\cdots\cdot|A_n|
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;二元关系&#34;&gt;二元关系&lt;/h3&gt;
+&lt;h4 id=&#34;关系的定义&#34;&gt;关系的定义&lt;/h4&gt;
+&lt;p&gt;两个集合&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;和&lt;span
+class=&#34;math inline&#34;&gt;\(B\)&lt;/span&gt;的笛卡儿积&lt;span
+class=&#34;math inline&#34;&gt;\(A\times B\)&lt;/span&gt;的任一子集&lt;span
+class=&#34;math inline&#34;&gt;\(R\)&lt;/span&gt;,称为集合&lt;span
+class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;到&lt;span
+class=&#34;math inline&#34;&gt;\(B\)&lt;/span&gt;上的二元关系。二元关系&lt;span
+class=&#34;math inline&#34;&gt;\(R\)&lt;/span&gt;是由序偶构成的集合，若&lt;span
+class=&#34;math inline&#34;&gt;\(&amp;lt;x,y&amp;gt;\in R\)&lt;/span&gt;，则称&lt;span
+class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;与&lt;span
+class=&#34;math inline&#34;&gt;\(y\)&lt;/span&gt;有&lt;span
+class=&#34;math inline&#34;&gt;\(R\)&lt;/span&gt;关系，也记为&lt;span
+class=&#34;math inline&#34;&gt;\(xRy\)&lt;/span&gt;;否则,&lt;span
+class=&#34;math inline&#34;&gt;\(&amp;lt;x,y&amp;gt;\notin R\)&lt;/span&gt;，称&lt;span
+class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;与&lt;span
+class=&#34;math inline&#34;&gt;\(y\)&lt;/span&gt;没有&lt;span
+class=&#34;math inline&#34;&gt;\(R\)&lt;/span&gt;关系，也记为&lt;span
+class=&#34;math inline&#34;&gt;\(x\cancel{R}y\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(R\)&lt;/span&gt;是集合&lt;span
+class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;到&lt;span
+class=&#34;math inline&#34;&gt;\(B\)&lt;/span&gt;的二元关系。集合&lt;span
+class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;称为&lt;span
+class=&#34;math inline&#34;&gt;\(R\)&lt;/span&gt;的前域，集合&lt;span
+class=&#34;math inline&#34;&gt;\(B\)&lt;/span&gt;称为&lt;span
+class=&#34;math inline&#34;&gt;\(R\)&lt;/span&gt;的陪域。集合&lt;span
+class=&#34;math inline&#34;&gt;\(\{x|(\exist y)(&amp;lt;x,y&amp;gt;\in
+R)\}\)&lt;/span&gt;称为&lt;span
+class=&#34;math inline&#34;&gt;\(R\)&lt;/span&gt;的定义域，记为&lt;span
+class=&#34;math inline&#34;&gt;\(domR\)&lt;/span&gt;。集合&lt;span
+class=&#34;math inline&#34;&gt;\(\{y|(\exist x)(&amp;lt;x,y&amp;gt;)\in
+R)\}\)&lt;/span&gt;称为&lt;span class=&#34;math inline&#34;&gt;\(R\)&lt;/span&gt;的值域，记为&lt;span
+class=&#34;math inline&#34;&gt;\(ranR\)&lt;/span&gt;。显然, &lt;span
+class=&#34;math inline&#34;&gt;\(domR\subseteq A\)&lt;/span&gt;和&lt;span
+class=&#34;math inline&#34;&gt;\(ranR\subseteq B\)&lt;/span&gt;。&lt;/p&gt;
+&lt;h4 id=&#34;关系的表示&#34;&gt;关系的表示&lt;/h4&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;关系矩阵&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+r_{ij}=
+\left\{\begin{matrix}
+1, if&amp;lt;a_i,b_j&amp;gt;\in R\\
+0, if&amp;lt;a_i,b_j&amp;gt;\notin R
+\end{matrix}\right.
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;ol start=&#34;2&#34; type=&#34;1&#34;&gt;
+&lt;li&gt;关系图&lt;/li&gt;
+&lt;/ol&gt;
+&lt;figure&gt;
+&lt;img src=&#34;3.6.2.jpg&#34; alt=&#34;3.6.2&#34; /&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;3.6.2&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;h4 id=&#34;关系的运算&#34;&gt;关系的运算&lt;/h4&gt;
+&lt;p&gt;所有集合的运算对于二元关系同样适用。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;复合运算&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(R\)&lt;/span&gt;为集合&lt;span
+class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;到&lt;span
+class=&#34;math inline&#34;&gt;\(B\)&lt;/span&gt;的二元关系，&lt;span
+class=&#34;math inline&#34;&gt;\(S\)&lt;/span&gt;为&lt;span
+class=&#34;math inline&#34;&gt;\(B\)&lt;/span&gt;到&lt;span
+class=&#34;math inline&#34;&gt;\(C\)&lt;/span&gt;的二元关系，令&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+R\circ S=\{&amp;lt;a,c&amp;gt;|a\in A\wedge c\in C\wedge(\exist b)(b\in
+B\wedge&amp;lt;a,b&amp;gt;\in R\wedge &amp;lt;b,c&amp;gt;\in S)\}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;称&lt;span class=&#34;math inline&#34;&gt;\(R\circ S\)&lt;/span&gt;为&lt;span
+class=&#34;math inline&#34;&gt;\(R\)&lt;/span&gt;与&lt;span
+class=&#34;math inline&#34;&gt;\(S\)&lt;/span&gt;的复合关系。&lt;/p&gt;
+&lt;p&gt;复合运算可以通过关系的矩阵的运算来实现&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\bm{M}_{R\circ S}=\bm{M}_R\odot\bm{M}_S
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(\odot\)&lt;/span&gt;是布尔乘法运算，&lt;span
+class=&#34;math inline&#34;&gt;\(c_{ij}=\bigvee_{k=1}^{n}(a_{ik}\wedge
+b_{kj})\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;复合运算有如下定理&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定理1&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\((R\circ S)\circ T=R\circ(S\circ
+T)\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;关系的逆，逆关系&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+R^{-1}=\{&amp;lt;b,a&amp;gt;|&amp;lt;a,b&amp;gt;\in R\}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;关系矩阵即为原矩阵的转置&lt;/p&gt;
+&lt;p&gt;关系图即将箭头反向&lt;/p&gt;
+&lt;p&gt;有如下定理&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定理1&lt;/strong&gt;&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\((R^{-1})^{-1}=R\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\((R_1\cup R_2)^{-1}=R_1^{-1}\cup
+R_2^{-1}\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\((R_1\cap R_2)^{-1}=R_1^{-1}\cap
+R_2^{-1}\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span
+class=&#34;math inline&#34;&gt;\((\overline{R})^{-1}=\overline{R^{-1}}\)&lt;/span&gt;，其中&lt;span
+class=&#34;math inline&#34;&gt;\(\overline{R}=(A\times B)-R\)&lt;/span&gt;，&lt;span
+class=&#34;math inline&#34;&gt;\(\overline{R^{-1}}=(B\times
+A)-R^{-1}\)&lt;/span&gt;。&lt;/li&gt;
+&lt;li&gt;&lt;span
+class=&#34;math inline&#34;&gt;\((R_1-R_2)^{-1}=R_1^{-1}-R_2^{-1}\)&lt;/span&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;定理2&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+(R\circ S)^{-1}=S^{-1}\circ R^{-1}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;集合上的二元关系及其特性&#34;&gt;集合上的二元关系及其特性&lt;/h3&gt;
+&lt;h4 id=&#34;集合上的二元关系&#34;&gt;集合上的二元关系&lt;/h4&gt;
+&lt;p&gt;集合&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;与&lt;span
+class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;的笛卡尔积&lt;span
+class=&#34;math inline&#34;&gt;\(A\times A\)&lt;/span&gt;的子集称为&lt;span
+class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;上的二元关系。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;相等关系&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+I_A=\{&amp;lt;a,a&amp;gt;|a\in A\}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&lt;span class=&#34;math inline&#34;&gt;\(R\)&lt;/span&gt;的幂次&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(R\)&lt;/span&gt;是&lt;span
+class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;上的二元关系，&lt;span
+class=&#34;math inline&#34;&gt;\(n\in Z^+\)&lt;/span&gt;，称&lt;span
+class=&#34;math inline&#34;&gt;\(R\circ R\circ\cdots\circ R\)&lt;/span&gt;(n个)为&lt;span
+class=&#34;math inline&#34;&gt;\(R\)&lt;/span&gt;的&lt;span
+class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;次幂。记为&lt;span
+class=&#34;math inline&#34;&gt;\(R^n\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;约定&lt;span class=&#34;math inline&#34;&gt;\(R^0=I_A\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;有如下定理&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定理1&lt;/strong&gt;&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(R^m\circ R^n=R^{m+n}\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\((R^m)^n=R^{mn}\)&lt;/span&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;定理2&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设存在&lt;span class=&#34;math inline&#34;&gt;\(i,j\in R\)&lt;/span&gt;，使得&lt;span
+class=&#34;math inline&#34;&gt;\(R^i=R^j\)&lt;/span&gt;，则有&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;对任意&lt;span class=&#34;math inline&#34;&gt;\(k\ge 0,
+R^{i+k}=R^{j+k}\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;对任意&lt;span class=&#34;math inline&#34;&gt;\(k,m\ge 0,
+R^{i+md+k}=R^{i+k}\)&lt;/span&gt;，其中&lt;span
+class=&#34;math inline&#34;&gt;\(d=j-i\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;记&lt;span
+class=&#34;math inline&#34;&gt;\(S=\{R_0,R^1,\cdots,R^{j-1}\}\)&lt;/span&gt;，对于任意&lt;span
+class=&#34;math inline&#34;&gt;\(n\in N\)&lt;/span&gt;，均有&lt;span
+class=&#34;math inline&#34;&gt;\(R^n\in S\)&lt;/span&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id=&#34;二元关系的特性&#34;&gt;二元关系的特性&lt;/h4&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;自反性。对于&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;中的每个元素&lt;span
+class=&#34;math inline&#34;&gt;\(a\)&lt;/span&gt;，都有&lt;span
+class=&#34;math inline&#34;&gt;\(aRa\)&lt;/span&gt;，则称&lt;span
+class=&#34;math inline&#34;&gt;\(R\)&lt;/span&gt;在&lt;span
+class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;上是自反的。&lt;/li&gt;
+&lt;li&gt;反自反性。对于&lt;span
+class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;中的每个元素&lt;span
+class=&#34;math inline&#34;&gt;\(a\)&lt;/span&gt;，都有&lt;span
+class=&#34;math inline&#34;&gt;\(a\cancel{R}a\)&lt;/span&gt;。空集上的空关系即是自反的也是反自反的。&lt;/li&gt;
+&lt;li&gt;对称性。对于任意&lt;span class=&#34;math inline&#34;&gt;\(a,b\in
+A\)&lt;/span&gt;，若有&lt;span class=&#34;math inline&#34;&gt;\(aRb\)&lt;/span&gt;，则必有&lt;span
+class=&#34;math inline&#34;&gt;\(bRa\)&lt;/span&gt;。&lt;/li&gt;
+&lt;li&gt;反对称性。对于任意&lt;span class=&#34;math inline&#34;&gt;\(a,b\in
+A\)&lt;/span&gt;，若有&lt;span class=&#34;math inline&#34;&gt;\(aRb\)&lt;/span&gt;且&lt;span
+class=&#34;math inline&#34;&gt;\(bRa\)&lt;/span&gt;，则必有&lt;span
+class=&#34;math inline&#34;&gt;\(a=b\)&lt;/span&gt;。若关系图上只有零个或多个自回路，则既是对称的，又是反对称的。&lt;/li&gt;
+&lt;li&gt;传递性。对于任意&lt;span class=&#34;math inline&#34;&gt;\(a,b,c\in
+A\)&lt;/span&gt;，若&lt;span class=&#34;math inline&#34;&gt;\(aRb,bRc\)&lt;/span&gt;则必有&lt;span
+class=&#34;math inline&#34;&gt;\(aRc\)&lt;/span&gt;。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;关系的闭包运算&#34;&gt;关系的闭包运算&lt;/h3&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(R\)&lt;/span&gt;是集合&lt;span
+class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;上的二元关系，如果&lt;span
+class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;上另外一个二元关系&lt;span
+class=&#34;math inline&#34;&gt;\(R&amp;#39;\)&lt;/span&gt;满足： 1. &lt;span
+class=&#34;math inline&#34;&gt;\(R&amp;#39;\)&lt;/span&gt;是自反的（对称的，传递的） 2. &lt;span
+class=&#34;math inline&#34;&gt;\(R&amp;#39;\subseteq R\)&lt;/span&gt; 3. 对于&lt;span
+class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;上任何自反的（对称的，传递的）关系&lt;span
+class=&#34;math inline&#34;&gt;\(R&amp;#39;&amp;#39;\)&lt;/span&gt;，若&lt;span
+class=&#34;math inline&#34;&gt;\(R&amp;#39;&amp;#39;\subseteq R\)&lt;/span&gt;，有&lt;span
+class=&#34;math inline&#34;&gt;\(R&amp;#39;&amp;#39;\subseteq R&amp;#39;\)&lt;/span&gt;，则称&lt;span
+class=&#34;math inline&#34;&gt;\(R&amp;#39;\)&lt;/span&gt;是&lt;span
+class=&#34;math inline&#34;&gt;\(R\)&lt;/span&gt;的自反（对称，传递）闭包，记为&lt;span
+class=&#34;math inline&#34;&gt;\(r(R)(s(R),t(R))\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;有如下定理&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定理1&lt;/strong&gt;&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(R\)&lt;/span&gt;是自反的当且仅当&lt;span
+class=&#34;math inline&#34;&gt;\(r(R)=R\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(R\)&lt;/span&gt;是对称的当且仅当&lt;span
+class=&#34;math inline&#34;&gt;\(s(R)=R\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(R\)&lt;/span&gt;是传递的当且仅当&lt;span
+class=&#34;math inline&#34;&gt;\(t(R)=R\)&lt;/span&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;定理2&lt;/strong&gt;&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(r(R)=R\cup I_A\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(s(R)=R\cup R^{-1}\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span
+class=&#34;math inline&#34;&gt;\(t(R)=\bigcup_{i=1}^{\infty}R^i\)&lt;/span&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;定理3&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;假设&lt;span class=&#34;math inline&#34;&gt;\(|A|=n\)&lt;/span&gt;，那么&lt;span
+class=&#34;math inline&#34;&gt;\(t(R)=\bigcup_{i=1}^{n}R^i\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定理4&lt;/strong&gt;&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;如果&lt;span class=&#34;math inline&#34;&gt;\(R\)&lt;/span&gt;是自反的，那么&lt;span
+class=&#34;math inline&#34;&gt;\(s(R),t(R)\)&lt;/span&gt;也是自反的。&lt;/li&gt;
+&lt;li&gt;如果&lt;span class=&#34;math inline&#34;&gt;\(R\)&lt;/span&gt;是对称的，那么&lt;span
+class=&#34;math inline&#34;&gt;\(r(R),t(R)\)&lt;/span&gt;也是对称的。&lt;/li&gt;
+&lt;li&gt;如果&lt;span class=&#34;math inline&#34;&gt;\(R\)&lt;/span&gt;是传递的，那么&lt;span
+class=&#34;math inline&#34;&gt;\(r(R)\)&lt;/span&gt;也是传递的。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;定理5&lt;/strong&gt;&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(sr(R)=rs(R)\)&lt;/span&gt;，（&lt;span
+class=&#34;math inline&#34;&gt;\(sr(R)=s(r(R))\)&lt;/span&gt;以下运算顺序相同）。&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(tr(R)=rt(R)\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(ts(R)\subseteq st(R)\)&lt;/span&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;等价关系&#34;&gt;等价关系&lt;/h3&gt;
+&lt;h4 id=&#34;集合的划分&#34;&gt;集合的划分&lt;/h4&gt;
+&lt;p&gt;给定非空集合&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;和集合簇&lt;span
+class=&#34;math inline&#34;&gt;\(\pi=\{A_1,A_2,\cdots,A_m\}\)&lt;/span&gt;，如果&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(A_i\subseteq A\)&lt;/span&gt;且&lt;span
+class=&#34;math inline&#34;&gt;\(A_i\neq\phi\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(A=\bigcup_{i=1}^{m}A_i\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(A_i\cap A_j=\phi, i\neq j\)&lt;/span&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;那么称&lt;span class=&#34;math inline&#34;&gt;\(\pi\)&lt;/span&gt;是&lt;span
+class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;的一个划分，若&lt;span
+class=&#34;math inline&#34;&gt;\(\pi\)&lt;/span&gt;满足1.2.则称&lt;span
+class=&#34;math inline&#34;&gt;\(\pi\)&lt;/span&gt;是&lt;span
+class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;的一个覆盖。&lt;/p&gt;
+&lt;h4 id=&#34;等价关系和等价类&#34;&gt;等价关系和等价类&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;等价关系&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(R\)&lt;/span&gt;是&lt;span
+class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;上的二元关系，若&lt;span
+class=&#34;math inline&#34;&gt;\(R\)&lt;/span&gt;是自反的、对称的、传递的，则称&lt;span
+class=&#34;math inline&#34;&gt;\(R\)&lt;/span&gt;是等价关系。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;等价类&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(R\)&lt;/span&gt;是非空集合&lt;span
+class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;上的等价关系，对于任意&lt;span
+class=&#34;math inline&#34;&gt;\(a\in A\)&lt;/span&gt;，称集合&lt;span
+class=&#34;math inline&#34;&gt;\([a]_R=\{x|x\in A,xRa\}\)&lt;/span&gt;为&lt;span
+class=&#34;math inline&#34;&gt;\(a\)&lt;/span&gt;关于&lt;span
+class=&#34;math inline&#34;&gt;\(R\)&lt;/span&gt;的等价类，&lt;span
+class=&#34;math inline&#34;&gt;\(a\)&lt;/span&gt;称为等价类&lt;span
+class=&#34;math inline&#34;&gt;\([a]_R\)&lt;/span&gt;的代表元素。如果等价类个数有限，则&lt;span
+class=&#34;math inline&#34;&gt;\(R\)&lt;/span&gt;的不同等价类的个数叫做&lt;span
+class=&#34;math inline&#34;&gt;\(R\)&lt;/span&gt;的秩，否则秩是无限的。&lt;/p&gt;
+&lt;p&gt;有如下定理&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定理1&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(R\)&lt;/span&gt;是非空集合&lt;span
+class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;上的等价关系，对于&lt;span
+class=&#34;math inline&#34;&gt;\(a,b\in A\)&lt;/span&gt;有&lt;span
+class=&#34;math inline&#34;&gt;\(aRb\)&lt;/span&gt;，当且仅当&lt;span
+class=&#34;math inline&#34;&gt;\([a]_R=[b]_R\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;商集&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(R\)&lt;/span&gt;是集合&lt;span
+class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;上的等价关系，由&lt;span
+class=&#34;math inline&#34;&gt;\(R\)&lt;/span&gt;确定的所有等价类组成的集合，称为集合&lt;span
+class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;上关于&lt;span
+class=&#34;math inline&#34;&gt;\(R\)&lt;/span&gt;的商集，记为&lt;span
+class=&#34;math inline&#34;&gt;\(A/R\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+A/R = \{[x]_R|x\in A\}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;有如下定理&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定理1&lt;/strong&gt;&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;任取&lt;span class=&#34;math inline&#34;&gt;\(x\in A\)&lt;/span&gt;，&lt;span
+class=&#34;math inline&#34;&gt;\([x]_R\neq\phi\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;任取&lt;span class=&#34;math inline&#34;&gt;\(x,y\in A\)&lt;/span&gt;，要么&lt;span
+class=&#34;math inline&#34;&gt;\([x]_R=[y]_R\)&lt;/span&gt;，要么&lt;span
+class=&#34;math inline&#34;&gt;\([x]_R\cap[y]_R=\phi\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(\bigcup_{x\in A}[x]_R=A\)&lt;/span&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;定理2&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(\pi\)&lt;/span&gt;是非空集合&lt;span
+class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;的一个划分，则&lt;span
+class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;上的二元关系&lt;span
+class=&#34;math inline&#34;&gt;\(R=\bigcup_{B\in\pi} B\times B\)&lt;/span&gt;是&lt;span
+class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;上的等价关系（称为由划分&lt;span
+class=&#34;math inline&#34;&gt;\(\pi\)&lt;/span&gt;诱导的&lt;span
+class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;上的等价关系）。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定理3&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(R_1\)&lt;/span&gt;和&lt;span
+class=&#34;math inline&#34;&gt;\(R_1\)&lt;/span&gt;是非空集合&lt;span
+class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;上的等价关系，则&lt;span
+class=&#34;math inline&#34;&gt;\(R_1=R_2\Leftrightarrow A/R_1=A/R_2\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定理4&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(R\)&lt;/span&gt;是非空集合&lt;span
+class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;上的任意一个等价关系,&lt;span
+class=&#34;math inline&#34;&gt;\(\pi\)&lt;/span&gt;是&lt;span
+class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;的任意一个划分，那么&lt;span
+class=&#34;math inline&#34;&gt;\(R\)&lt;/span&gt;诱导出&lt;span
+class=&#34;math inline&#34;&gt;\(\pi\)&lt;/span&gt;当且仅当&lt;span
+class=&#34;math inline&#34;&gt;\(\pi\)&lt;/span&gt;诱导出&lt;span
+class=&#34;math inline&#34;&gt;\(R\)&lt;/span&gt;。即说明等价关系和集合的划分是一一对应的。&lt;/p&gt;
+&lt;h3 id=&#34;序关系&#34;&gt;序关系&lt;/h3&gt;
+&lt;h4 id=&#34;偏序集合的概念与表示&#34;&gt;偏序集合的概念与表示&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;偏序&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;如果&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;上的关系&lt;span
+class=&#34;math inline&#34;&gt;\(R\)&lt;/span&gt;是自反的，反对称的和传递的，那么&lt;span
+class=&#34;math inline&#34;&gt;\(R\)&lt;/span&gt;是&lt;span
+class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;上的偏序，通常用符号&lt;span
+class=&#34;math inline&#34;&gt;\(\preceq\)&lt;/span&gt;表示，称序偶&lt;span
+class=&#34;math inline&#34;&gt;\(&amp;lt;A,\preceq&amp;gt;\)&lt;/span&gt;为偏序集合。通常用&lt;span
+class=&#34;math inline&#34;&gt;\(x\prec y\)&lt;/span&gt;表示&lt;span
+class=&#34;math inline&#34;&gt;\(x\preceq y\)&lt;/span&gt;且&lt;span
+class=&#34;math inline&#34;&gt;\(x\neq y\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;可比与不可比&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;在偏序集合&lt;span
+class=&#34;math inline&#34;&gt;\(&amp;lt;A,\preceq&amp;gt;\)&lt;/span&gt;中，对于元素&lt;span
+class=&#34;math inline&#34;&gt;\(a,b\in A\)&lt;/span&gt;，如果&lt;span
+class=&#34;math inline&#34;&gt;\(a\preceq b\)&lt;/span&gt;或者&lt;span
+class=&#34;math inline&#34;&gt;\(b\preceq a\)&lt;/span&gt;，那么称&lt;span
+class=&#34;math inline&#34;&gt;\(a\)&lt;/span&gt;或&lt;span
+class=&#34;math inline&#34;&gt;\(b\)&lt;/span&gt;是可比的，否则不可比的。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;盖住&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;在偏序集合&lt;span
+class=&#34;math inline&#34;&gt;\(&amp;lt;A,\preceq&amp;gt;\)&lt;/span&gt;中，对于&lt;span
+class=&#34;math inline&#34;&gt;\(x,y\in A\)&lt;/span&gt;，如果&lt;span
+class=&#34;math inline&#34;&gt;\(x\prec y\)&lt;/span&gt;且没有其他元素&lt;span
+class=&#34;math inline&#34;&gt;\(z\in A\)&lt;/span&gt;满足&lt;span
+class=&#34;math inline&#34;&gt;\(x\prec z\prec y\)&lt;/span&gt;，则称&lt;span
+class=&#34;math inline&#34;&gt;\(y\)&lt;/span&gt;盖住&lt;span
+class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;哈斯图&lt;/strong&gt;&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;3.10.1.jpg&#34; alt=&#34;3.10.1&#34; /&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;3.10.1&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;&lt;strong&gt;链&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span
+class=&#34;math inline&#34;&gt;\(&amp;lt;A,\preceq&amp;gt;\)&lt;/span&gt;是一个偏序集合，&lt;span
+class=&#34;math inline&#34;&gt;\(B\subseteq A\)&lt;/span&gt;。如果&lt;span
+class=&#34;math inline&#34;&gt;\(B\)&lt;/span&gt;中的任意两个元素都是可比的，那么称&lt;span
+class=&#34;math inline&#34;&gt;\(B\)&lt;/span&gt;为&lt;span
+class=&#34;math inline&#34;&gt;\(&amp;lt;A，\preceq&amp;gt;\)&lt;/span&gt;中的链，&lt;span
+class=&#34;math inline&#34;&gt;\(B\)&lt;/span&gt;中元素的个数称为该链的长度。如果&lt;span
+class=&#34;math inline&#34;&gt;\(B\)&lt;/span&gt;中的任意两个不同的元素都是不可比的，那么称&lt;span
+class=&#34;math inline&#34;&gt;\(B\)&lt;/span&gt;为&lt;span
+class=&#34;math inline&#34;&gt;\(&amp;lt;A，\preceq&amp;gt;\)&lt;/span&gt;中的反链。&lt;/p&gt;
+&lt;h4 id=&#34;偏序集合中的特殊元素&#34;&gt;偏序集合中的特殊元素&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;极大元&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span
+class=&#34;math inline&#34;&gt;\(&amp;lt;A，\preceq&amp;gt;\)&lt;/span&gt;是偏序集合，且&lt;span
+class=&#34;math inline&#34;&gt;\(B\subseteq A\)&lt;/span&gt;。如果&lt;span
+class=&#34;math inline&#34;&gt;\(b\in B\)&lt;/span&gt;，且&lt;span
+class=&#34;math inline&#34;&gt;\(B\)&lt;/span&gt;中不存在元素&lt;span
+class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;，使得&lt;span class=&#34;math inline&#34;&gt;\(x\neq
+b\)&lt;/span&gt;且&lt;span class=&#34;math inline&#34;&gt;\(b\preceq x\)&lt;/span&gt;，那么&lt;span
+class=&#34;math inline&#34;&gt;\(b\)&lt;/span&gt;称为&lt;span
+class=&#34;math inline&#34;&gt;\(B\)&lt;/span&gt;的极大元。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;极小元&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span
+class=&#34;math inline&#34;&gt;\(&amp;lt;A，\preceq&amp;gt;\)&lt;/span&gt;是偏序集合，且&lt;span
+class=&#34;math inline&#34;&gt;\(B\subseteq A\)&lt;/span&gt;。如果&lt;span
+class=&#34;math inline&#34;&gt;\(b\in B\)&lt;/span&gt;，且&lt;span
+class=&#34;math inline&#34;&gt;\(B\)&lt;/span&gt;中不存在元素&lt;span
+class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;，使得&lt;span class=&#34;math inline&#34;&gt;\(x\neq
+b\)&lt;/span&gt;且&lt;span class=&#34;math inline&#34;&gt;\(x\preceq b\)&lt;/span&gt;，那么&lt;span
+class=&#34;math inline&#34;&gt;\(b\)&lt;/span&gt;称为&lt;span
+class=&#34;math inline&#34;&gt;\(B\)&lt;/span&gt;的极大元。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;最大元&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span
+class=&#34;math inline&#34;&gt;\(&amp;lt;A，\preceq&amp;gt;\)&lt;/span&gt;是偏序集合，且&lt;span
+class=&#34;math inline&#34;&gt;\(B\subseteq A\)&lt;/span&gt;。如果&lt;span
+class=&#34;math inline&#34;&gt;\(b\in B\)&lt;/span&gt;，对于任意元素&lt;span
+class=&#34;math inline&#34;&gt;\(x\in B\)&lt;/span&gt;，均有&lt;span
+class=&#34;math inline&#34;&gt;\(x\preceq b\)&lt;/span&gt;，那么&lt;span
+class=&#34;math inline&#34;&gt;\(b\)&lt;/span&gt;称为&lt;span
+class=&#34;math inline&#34;&gt;\(B\)&lt;/span&gt;的最大元。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;最小元&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span
+class=&#34;math inline&#34;&gt;\(&amp;lt;A，\preceq&amp;gt;\)&lt;/span&gt;是偏序集合，且&lt;span
+class=&#34;math inline&#34;&gt;\(B\subseteq A\)&lt;/span&gt;。如果&lt;span
+class=&#34;math inline&#34;&gt;\(b\in B\)&lt;/span&gt;，对于任意元素&lt;span
+class=&#34;math inline&#34;&gt;\(x\in B\)&lt;/span&gt;，均有&lt;span
+class=&#34;math inline&#34;&gt;\(b\preceq x\)&lt;/span&gt;，那么&lt;span
+class=&#34;math inline&#34;&gt;\(b\)&lt;/span&gt;称为&lt;span
+class=&#34;math inline&#34;&gt;\(B\)&lt;/span&gt;的最小元。&lt;/p&gt;
+&lt;p&gt;又如下定理&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定理1&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span
+class=&#34;math inline&#34;&gt;\(&amp;lt;A，\preceq&amp;gt;\)&lt;/span&gt;是偏序集合，且&lt;span
+class=&#34;math inline&#34;&gt;\(B\subseteq A\)&lt;/span&gt;。如果&lt;span
+class=&#34;math inline&#34;&gt;\(B\)&lt;/span&gt;有最大（最小元），那么它是唯一的。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;上界&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span
+class=&#34;math inline&#34;&gt;\(&amp;lt;A，\preceq&amp;gt;\)&lt;/span&gt;是偏序集合，且&lt;span
+class=&#34;math inline&#34;&gt;\(B\subseteq A\)&lt;/span&gt;。如果&lt;span
+class=&#34;math inline&#34;&gt;\(a\in A\)&lt;/span&gt;，对于任意元素&lt;span
+class=&#34;math inline&#34;&gt;\(x\in B\)&lt;/span&gt;，均有&lt;span
+class=&#34;math inline&#34;&gt;\(b\preceq a\)&lt;/span&gt;，那么&lt;span
+class=&#34;math inline&#34;&gt;\(a\)&lt;/span&gt;称为&lt;span
+class=&#34;math inline&#34;&gt;\(B\)&lt;/span&gt;的上界。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;下界&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span
+class=&#34;math inline&#34;&gt;\(&amp;lt;A，\preceq&amp;gt;\)&lt;/span&gt;是偏序集合，且&lt;span
+class=&#34;math inline&#34;&gt;\(B\subseteq A\)&lt;/span&gt;。如果&lt;span
+class=&#34;math inline&#34;&gt;\(a\in A\)&lt;/span&gt;，对于任意元素&lt;span
+class=&#34;math inline&#34;&gt;\(x\in B\)&lt;/span&gt;，均有&lt;span
+class=&#34;math inline&#34;&gt;\(a\preceq b\)&lt;/span&gt;，那么&lt;span
+class=&#34;math inline&#34;&gt;\(a\)&lt;/span&gt;称为&lt;span
+class=&#34;math inline&#34;&gt;\(B\)&lt;/span&gt;的下界。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;最小上界（上确界）&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span
+class=&#34;math inline&#34;&gt;\(&amp;lt;A，\preceq&amp;gt;\)&lt;/span&gt;是偏序集合，且&lt;span
+class=&#34;math inline&#34;&gt;\(B\subseteq A\)&lt;/span&gt;。&lt;span
+class=&#34;math inline&#34;&gt;\(a\)&lt;/span&gt;为&lt;span
+class=&#34;math inline&#34;&gt;\(B\)&lt;/span&gt;的上界，若对&lt;span
+class=&#34;math inline&#34;&gt;\(B\)&lt;/span&gt;的任意上界&lt;span
+class=&#34;math inline&#34;&gt;\(a&amp;#39;\)&lt;/span&gt;均有&lt;span
+class=&#34;math inline&#34;&gt;\(a\preceq a&amp;#39;\)&lt;/span&gt;，则称&lt;span
+class=&#34;math inline&#34;&gt;\(a\)&lt;/span&gt;为&lt;span
+class=&#34;math inline&#34;&gt;\(B\)&lt;/span&gt;的最小上界或上确界。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;最大下界（下确界）&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span
+class=&#34;math inline&#34;&gt;\(&amp;lt;A，\preceq&amp;gt;\)&lt;/span&gt;是偏序集合，且&lt;span
+class=&#34;math inline&#34;&gt;\(B\subseteq A\)&lt;/span&gt;。&lt;span
+class=&#34;math inline&#34;&gt;\(a\)&lt;/span&gt;为&lt;span
+class=&#34;math inline&#34;&gt;\(B\)&lt;/span&gt;的下界，若对&lt;span
+class=&#34;math inline&#34;&gt;\(B\)&lt;/span&gt;的任意下界&lt;span
+class=&#34;math inline&#34;&gt;\(a&amp;#39;\)&lt;/span&gt;均有&lt;span
+class=&#34;math inline&#34;&gt;\(a&amp;#39;\preceq a\)&lt;/span&gt;，则称&lt;span
+class=&#34;math inline&#34;&gt;\(a\)&lt;/span&gt;为&lt;span
+class=&#34;math inline&#34;&gt;\(B\)&lt;/span&gt;的最大下界或下确界。&lt;/p&gt;
+&lt;p&gt;有如下定理&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定理1&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;若&lt;span
+class=&#34;math inline&#34;&gt;\(B\)&lt;/span&gt;有最小上界（最大下界），那么它是唯一的。&lt;/p&gt;
 </description>
         </item>
         <item>
