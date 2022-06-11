@@ -366,7 +366,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 24 分钟
+                    阅读时长: 40 分钟
                 </time>
             </div>
         
@@ -1662,7 +1662,7 @@ class="math inline">\(x\in B\)</span>，均有<span
 class="math inline">\(b\preceq x\)</span>，那么<span
 class="math inline">\(b\)</span>称为<span
 class="math inline">\(B\)</span>的最小元。</p>
-<p>又如下定理</p>
+<p>有如下定理</p>
 <p><strong>定理1</strong></p>
 <p>设<span
 class="math inline">\(&lt;A，\preceq&gt;\)</span>是偏序集合，且<span
@@ -1712,6 +1712,680 @@ class="math inline">\(B\)</span>的最大下界或下确界。</p>
 <p><strong>定理1</strong></p>
 <p>若<span
 class="math inline">\(B\)</span>有最小上界（最大下界），那么它是唯一的。</p>
+<p><strong>定理2</strong></p>
+<p>设<span
+class="math inline">\(&lt;A，\preceq&gt;\)</span>是偏序集合，且<span
+class="math inline">\(B\subseteq A\)</span>。</p>
+<ol type="1">
+<li>若<span class="math inline">\(b\)</span>是<span
+class="math inline">\(B\)</span>的最大元，则<span
+class="math inline">\(b\)</span>是<span
+class="math inline">\(B\)</span>的极大元。</li>
+<li>若<span class="math inline">\(b\)</span>是<span
+class="math inline">\(B\)</span>的最大元，则<span
+class="math inline">\(b\)</span>是<span
+class="math inline">\(B\)</span>的最小上界。</li>
+<li><span class="math inline">\(b\in B\)</span>，若<span
+class="math inline">\(b\)</span>是<span
+class="math inline">\(B\)</span>的上界，当且仅当<span
+class="math inline">\(b\)</span>是<span
+class="math inline">\(B\)</span>的最小上界。</li>
+<li>若<span class="math inline">\(b\)</span>是<span
+class="math inline">\(B\)</span>的最小元，则<span
+class="math inline">\(b\)</span>是<span
+class="math inline">\(B\)</span>的极小元。</li>
+<li>若<span class="math inline">\(b\)</span>是<span
+class="math inline">\(B\)</span>的最行元，则<span
+class="math inline">\(b\)</span>是<span
+class="math inline">\(B\)</span>的最大下界。</li>
+<li><span class="math inline">\(b\in B\)</span>，若<span
+class="math inline">\(b\)</span>是<span
+class="math inline">\(B\)</span>的下界，当且仅当<span
+class="math inline">\(b\)</span>是<span
+class="math inline">\(B\)</span>的最大下界。</li>
+</ol>
+<p><strong>定理3</strong></p>
+<p>设<span
+class="math inline">\(&lt;A，\preceq&gt;\)</span>是非空有限偏序集，则<span
+class="math inline">\(A\)</span>中必存在极大元和极小元。</p>
+<p><strong>定理4</strong></p>
+<p>设<span
+class="math inline">\(&lt;A，\preceq&gt;\)</span>是偏序集合，如果<span
+class="math inline">\(A\)</span>中最长链的长度为<span
+class="math inline">\(n\)</span>，则<span
+class="math inline">\(A\)</span>中元素能划分为<span
+class="math inline">\(n\)</span>个互不相交的反链。</p>
+<h4 id="线序和良序">线序和良序</h4>
+<p>设<span
+class="math inline">\(&lt;A，\preceq&gt;\)</span>是偏序集合，如果任取<span
+class="math inline">\(a,b\in A\)</span>，都有<span
+class="math inline">\(a\preceq b\)</span>或者<span
+class="math inline">\(b\preceq a\)</span>，那么称<span
+class="math inline">\(\preceq\)</span>为<span
+class="math inline">\(A\)</span>上的线序或全序。称<span
+class="math inline">\(&lt;A，\preceq&gt;\)</span>为线序集合，称<span
+class="math inline">\(A\)</span>为链。</p>
+<p>如果<span class="math inline">\(A\)</span>上的一个二元关系<span
+class="math inline">\(R\)</span>是一个线序，且<span
+class="math inline">\(A\)</span>的每一非空子集都有最小元，那么称<span
+class="math inline">\(R\)</span>为<span
+class="math inline">\(A\)</span>上的良序，称<span
+class="math inline">\(&lt;A,R&gt;\)</span>为良序集合。</p>
+<p>有如下定理</p>
+<p><strong>定理</strong></p>
+<p>每一有限线序集合都是良序集合。</p>
+<h2 id="函数与无限集合">函数与无限集合</h2>
+<h3 id="函数的定义">函数的定义</h3>
+<p>注意对于每个<span class="math inline">\(x\in
+A\)</span>，都只和唯一一个<span class="math inline">\(y\in
+Y\)</span>有<span class="math inline">\(f\)</span>关系。<span
+class="math inline">\(y\)</span>是<span
+class="math inline">\(x\)</span>的函数值或像，<span
+class="math inline">\(x\)</span>是<span
+class="math inline">\(y\)</span>的原像。</p>
+<p>定义域必须是整个前域，值域可以不是整个陪域。一般<span
+class="math inline">\(X,Y\)</span>指的是前域和陪域。</p>
+<p><strong>函数相等</strong></p>
+<p><span class="math inline">\(f:A\to B\)</span>, <span
+class="math inline">\(g:C\to D\)</span>，如果<span
+class="math inline">\(A=C,B=D\)</span>，且对于所有的<span
+class="math inline">\(x\in A\)</span>有<span
+class="math inline">\(f(x)=g(x)\)</span>，则称<span
+class="math inline">\(f,g\)</span>相等，记作<span
+class="math inline">\(f=g\)</span></p>
+<p><strong>多元函数</strong></p>
+<p>前域是<span
+class="math inline">\(n\)</span>个集合的笛卡尔积，称为<span
+class="math inline">\(n\)</span>元函数，像记作<span
+class="math inline">\(f(x_1,x_2,\cdots,x_n)\)</span></p>
+<h4 id="递归定义的函数">递归定义的函数</h4>
+<p>前域是归纳定义的集合时，可以采用递归定义方法来定义函数。规则是：用已经得到的元素函数值和给定的函数来计算新元素的函数值。</p>
+<h3 id="特殊函数">特殊函数</h3>
+<p><strong>单射</strong></p>
+<p>任取<span class="math inline">\(x_1,x_2\in X\)</span>，如果<span
+class="math inline">\(x_1\neq x_2\)</span>，那么<span
+class="math inline">\(f(x_1)\neq f(x_2)\)</span>，则称<span
+class="math inline">\(f\)</span>为单射函数，也称一对一函数。</p>
+<p><strong>满射</strong></p>
+<p>若任取<span class="math inline">\(y\in Y\)</span>，存在<span
+class="math inline">\(x\in X\)</span>，使得<span
+class="math inline">\(f(x)=y\)</span>，则称为满射函数。</p>
+<p><strong>双射</strong></p>
+<p>既是单射又是满射，称为双射函数。也称一一对应函数。</p>
+<p>有如下定理</p>
+<p><strong>定理1</strong></p>
+<p>设<span class="math inline">\(X,Y\)</span>是有线集合，<span
+class="math inline">\(f:X\to Y\)</span></p>
+<ol type="1">
+<li>若<span class="math inline">\(f\)</span>是单射，则必有<span
+class="math inline">\(|X|\leq|Y|\)</span></li>
+<li>若<span class="math inline">\(f\)</span>是满射，则必有<span
+class="math inline">\(|X|\ge|Y|\)</span></li>
+<li>若<span class="math inline">\(f\)</span>是双射，则必有<span
+class="math inline">\(|X|=|Y|\)</span></li>
+</ol>
+<p><strong>定理2</strong></p>
+<p>设<span class="math inline">\(X\)</span>和<span
+class="math inline">\(Y\)</span>是有限集合，<span
+class="math inline">\(f\)</span>是从集合<span
+class="math inline">\(X\)</span>到<span
+class="math inline">\(Y\)</span>的函数。若<span
+class="math inline">\(|X|=|Y|\)</span>，则<span
+class="math inline">\(f\)</span>是单射，当且仅当<span
+class="math inline">\(f\)</span>是满射。</p>
+<p><strong>常数函数</strong></p>
+<p>存在<span class="math inline">\(c\in Y\)</span>，对任意<span
+class="math inline">\(x\in X\)</span>,<span
+class="math inline">\(f(x)=c\)</span></p>
+<p><strong>恒等函数</strong></p>
+<p><span class="math inline">\(f(x)=x\)</span></p>
+<p><strong>置换（排列）</strong></p>
+<p>对于函数<span class="math inline">\(f:X\to X\)</span>，若<span
+class="math inline">\(f\)</span>是双射的，则称<span
+class="math inline">\(f\)</span>为<span
+class="math inline">\(X\)</span>上的置换或排列。<span
+class="math inline">\(X\)</span>上的恒等函数称为恒等置换或者幺置换。<span
+class="math inline">\(|X|=n\)</span>时称为<span
+class="math inline">\(n\)</span>次置换，<span
+class="math inline">\(|X|\)</span>无限时称为无限次置换。</p>
+<p>通常写成</p>
+<p><span class="math display">\[
+P=
+\begin{pmatrix}
+x_1 &amp; x_2 &amp; \cdots &amp; x_n\\
+f(x_1) &amp; f(x_2) &amp; \cdots &amp; f(x_n)  
+\end{pmatrix}
+\]</span></p>
+<h3 id="复合函数和逆函数">复合函数和逆函数</h3>
+<p>类似于关系的复合运算</p>
+<p>但是注意书写顺序。<span class="math inline">\(g\diamond
+f\)</span>和<span class="math inline">\(f\circ
+g\)</span>的顺序正好相反</p>
+<p><strong>定理1</strong></p>
+<p><span class="math inline">\(f:X\to Y,g:Y\to Z\)</span>，那么<span
+class="math inline">\(g\diamond f\)</span>是<span
+class="math inline">\(X\)</span>到<span
+class="math inline">\(Z\)</span>的函数。</p>
+<p><strong>定理2</strong></p>
+<p><span class="math inline">\(h\diamond(g\diamond f)=(h\diamond
+g)\diamond f\)</span></p>
+<ol type="1">
+<li><span class="math inline">\(f^0=I_x\)</span></li>
+<li><span class="math inline">\(f^{n+1}=f\diamond f^n\)</span></li>
+</ol>
+<p><strong>定理3</strong></p>
+<p><span class="math inline">\(f:X\to Y,g:Y\to Z\)</span></p>
+<ol type="1">
+<li>若<span class="math inline">\(f,g\)</span>满射，则<span
+class="math inline">\(g\diamond f\)</span>满射。</li>
+<li>若<span class="math inline">\(f,g\)</span>单射，则<span
+class="math inline">\(g\diamond f\)</span>单射。</li>
+<li>若<span class="math inline">\(f,g\)</span>双射，则<span
+class="math inline">\(g\diamond f\)</span>双射。</li>
+<li>若<span class="math inline">\(g\diamond f\)</span>满射，则<span
+class="math inline">\(g\)</span>满射</li>
+<li>若<span class="math inline">\(g\diamond f\)</span>单射，则<span
+class="math inline">\(f\)</span>单射</li>
+<li>若<span class="math inline">\(g\diamond f\)</span>双射，则<span
+class="math inline">\(g\)</span>满射，<span
+class="math inline">\(f\)</span>单射。</li>
+</ol>
+<h4 id="逆函数">逆函数</h4>
+<p>设<span class="math inline">\(f\)</span>是双射函数，则<span
+class="math inline">\(f^{-1}=\{&lt;y,x&gt;|&lt;x,y&gt;\in
+f\}\)</span>。显然逆函数也是双射函数。</p>
+<p><strong>定理1</strong></p>
+<ol type="1">
+<li><span class="math inline">\((f^{-1})^{-1}=f\)</span></li>
+<li><span class="math inline">\(f^{-1}\diamond f=I_X\)</span></li>
+<li><span class="math inline">\(f\diamond f^{-1}=I_X\)</span></li>
+</ol>
+<p><strong>定理2</strong></p>
+<p><span class="math inline">\((g\diamond f)^{-1}=f^{-1}\diamond
+g^{-1}\)</span></p>
+<h3 id="可数与不可数集合">可数与不可数集合</h3>
+<h4 id="集合的基数">集合的基数</h4>
+<p><strong>基数</strong></p>
+<p>度量<span
+class="math inline">\(A\)</span>大小的数称为基数或势，记为<span
+class="math inline">\(|A|\)</span>。</p>
+<p><strong>等势</strong></p>
+<p>若<span class="math inline">\(A\)</span>到<span
+class="math inline">\(B\)</span>能建立起双射函数，则称<span
+class="math inline">\(A,B\)</span>等势，记为<span
+class="math inline">\(A\sim B\)</span>，或<span
+class="math inline">\(|A|=|B|\)</span></p>
+<p><strong>定理1</strong></p>
+<p>等势是任何集合簇上的等价关系。即是自反的、对称的、传递的。</p>
+<p><strong>有限集合、无限集合</strong></p>
+<p>含有有限个（包含0）元素的集合称为有限集合，不是有限集合的称为无限集合。</p>
+<p><strong>定理1</strong></p>
+<p>有限集合的任意子集是有限集合。无限集合的超集是无限集合。</p>
+<p><strong>定理2</strong></p>
+<p>无限集合存在与其等势的真子集。</p>
+<h4 id="可数集">可数集</h4>
+<p>与自然数集<span
+class="math inline">\(N\)</span>等势的集合称为可数无限集合，简称可数集。可数集的基数用<span
+class="math inline">\(\alef_0\)</span>表示。</p>
+<p>有限集和可数集通称为至多可数集。</p>
+<p><strong>枚举</strong></p>
+<p>设<span class="math inline">\(A\)</span>是一个集合，如果<span
+class="math inline">\(f\)</span>是从<span
+class="math inline">\(N\)</span>或从<span
+class="math inline">\(N_k=\{0,1,2,\cdots,k-1\}\)</span>到<span
+class="math inline">\(A\)</span>的一个满射函数，则称<span
+class="math inline">\(f\)</span>为<span
+class="math inline">\(A\)</span>的一个枚举。如果<span
+class="math inline">\(f\)</span>是双射的，则称为无重复枚举，否则称为重复枚举。</p>
+<p><strong>定理1</strong></p>
+<p>一个无限集合<span
+class="math inline">\(A\)</span>是可数集，当且仅当存在<span
+class="math inline">\(A\)</span>的枚举。</p>
+<p><strong>定理2</strong></p>
+<p>可数无限集的任一无限子集是可数集。</p>
+<p><strong>定理3</strong></p>
+<p>任意两个可数集的并是可数集。</p>
+<p><strong>定理4</strong></p>
+<p><span class="math inline">\(N\times N\)</span>是可数集。</p>
+<p><strong>定理5</strong></p>
+<p>可数个可数集的并是可数集。</p>
+<h4 id="不可数集">不可数集</h4>
+<p>与自然数集不等势的无限集称为不可数集</p>
+<p><strong>定理1</strong></p>
+<p>实数集的子集<span class="math inline">\((0,1)\)</span>是不可数集</p>
+<h3 id="基数的比较">基数的比较</h3>
+<p><strong>Zemelo三歧性定理</strong></p>
+<p>以下三条恰有一条成立</p>
+<ol type="1">
+<li>|A|&lt;|B|</li>
+<li>|A|&gt;|B|</li>
+<li>|A|=|B|</li>
+</ol>
+<p><strong>Cantor-Schroder-Bernstein定理</strong></p>
+<p><span class="math inline">\(|A|\leq|B|\)</span>且<span
+class="math inline">\(|A|\ge|B|\)</span>，则<span
+class="math inline">\(|A|=|B|\)</span></p>
+<p><strong>定理3</strong></p>
+<p>设<span class="math inline">\(A\)</span>是任意有限集合，则<span
+class="math inline">\(|A|&lt;\alef_0&lt;\alef\)</span></p>
+<p><strong>定理4</strong></p>
+<p>任意无限集合必定存在可数无限子集</p>
+<p><strong>定理5</strong></p>
+<p><span class="math inline">\(\alef_0\)</span>是最小的无限集基数</p>
+<p><strong>Cantor定理</strong></p>
+<p><span class="math inline">\(|M|&lt;|\rho (M)|\)</span></p>
+<h2 id="图论">图论</h2>
+<h3 id="图的基本概念">图的基本概念</h3>
+<p>按边是否有方向，图可以分为有向图、无向图和混合图。</p>
+<p>设<span class="math inline">\(G\)</span>是一个有向图，如果将<span
+class="math inline">\(G\)</span>中的每条边的方向去掉就能得到一个无向图<span
+class="math inline">\(G&#39;\)</span>，则称<span
+class="math inline">\(G&#39;\)</span>为<span
+class="math inline">\(G\)</span>的底图。</p>
+<p><strong>邻接点</strong></p>
+<p>关联于同一条边的两个结点被称为邻接点。</p>
+<p><strong>邻接边</strong></p>
+<p>关联于一个结点的两条边被称为邻接边。</p>
+<p><strong>孤立结点</strong></p>
+<p>不与任何结点邻接的结点称之为孤立节点</p>
+<p><strong>零图</strong></p>
+<p>仅由若干个孤立节点构成的图称为零图。</p>
+<p><strong>平凡图</strong></p>
+<p>仅由单个孤立节点组成的图称为平凡图。</p>
+<p><strong>平行边</strong></p>
+<p><span class="math inline">\(e_1=e_2=\{u,v\}\)</span>，若<span
+class="math inline">\(e_1,e_2\)</span>是两条不同的边，则称<span
+class="math inline">\(e_1,e_2\)</span>为平行边。</p>
+<p><strong>自回路（环）</strong></p>
+<p><span class="math inline">\(e=\{u,u\}\)</span></p>
+<p><strong>多重图</strong></p>
+<p>有平行边的图。</p>
+<p><strong>线图</strong></p>
+<p>不含平行边的图。</p>
+<p><strong>简单图</strong></p>
+<p>不含自回路的图。</p>
+<h4 id="结点的度数">结点的度数</h4>
+<p>与结点<span class="math inline">\(v\)</span>关联的边数称为结点<span
+class="math inline">\(v\)</span>的度数（无向图），记为<span
+class="math inline">\(deg(v)\)</span>。</p>
+<p>如果是有向图，则以结点<span
+class="math inline">\(v\)</span>为终点的边数称为入度<span
+class="math inline">\(deg^-(v)\)</span>，为始点的边数称为出度<span
+class="math inline">\(deg^+(v)\)</span>。显然有<span
+class="math inline">\(deg(v)=deg^-(v)+deg^+(v)\)</span></p>
+<p>有如下定理</p>
+<p><strong>握手定理</strong></p>
+<p>任何图中，所有节点的度数之和等于边数的两倍。</p>
+<p><strong>定理2</strong></p>
+<p>任何图中，奇数度的节点必有偶数个。</p>
+<p><strong>定理3</strong></p>
+<p>任何有向图中，所有节点的入度等于所有节点的出度。</p>
+<h4 id="特殊图">特殊图</h4>
+<p><strong>无向完全图</strong></p>
+<p>无向简单图中，任何两个不同结点间都恰有一条边相连。<span
+class="math inline">\(n\)</span>个结点的无向完全图记为<span
+class="math inline">\(K^n\)</span>。</p>
+<p><strong>有向完全图</strong></p>
+<p>有向图<span class="math inline">\(G=&lt;V,E&gt;\)</span>满足<span
+class="math inline">\(E=V\times V\)</span>。记为<span
+class="math inline">\(D_n\)</span>。</p>
+<p><strong>二部图</strong></p>
+<p>非零图，节点集合<span
+class="math inline">\(V\)</span>可以划分成两个不相交的子集<span
+class="math inline">\(X\)</span>和<span
+class="math inline">\(Y\)</span>，使<span
+class="math inline">\(G\)</span>中的每一条边的一个端点在<span
+class="math inline">\(X\)</span>中而另一个端点在<span
+class="math inline">\(Y\)</span>中，则称<span
+class="math inline">\(G\)</span>为二部图，记为<span
+class="math inline">\(G=&lt;X,E,Y&gt;\)</span></p>
+<p>可以通过标号法确定一个图是不是二部图。</p>
+<p>二部图必无自回路，但可以有平行边。</p>
+<h4 id="子图与补图">子图与补图</h4>
+<p><strong>子图</strong></p>
+<p>设<span class="math inline">\(G=&lt;V,E&gt;\)</span>，<span
+class="math inline">\(G&#39;=&lt;V&#39;,E&#39;&gt;\)</span>，若有<span
+class="math inline">\(E&#39;\subseteq E\)</span>且<span
+class="math inline">\(V&#39;\subseteq V\)</span>，则称<span
+class="math inline">\(G&#39;\)</span>是<span
+class="math inline">\(G\)</span>的子图。</p>
+<p><strong>生成子图</strong></p>
+<p><span class="math inline">\(V&#39;=V\)</span>时，<span
+class="math inline">\(G&#39;\)</span>是<span
+class="math inline">\(G\)</span>的生成子图。</p>
+<p><strong>导出子图</strong></p>
+<p>设<span class="math inline">\(G&#39;\)</span>是<span
+class="math inline">\(G\)</span>的子图，<span
+class="math inline">\(V&#39;\)</span>仅由<span
+class="math inline">\(E&#39;\)</span>中边相关联的结点组成，则称<span
+class="math inline">\(G&#39;\)</span>为由边集<span
+class="math inline">\(E&#39;\)</span>导出的子图。</p>
+<p><strong>补图</strong></p>
+<p>给定一个图<span class="math inline">\(G\)</span>，由<span
+class="math inline">\(G\)</span>中所有的结点及所有能使<span
+class="math inline">\(G\)</span>成为完全图的添加边组成的图，称为<span
+class="math inline">\(G\)</span>相对于完全图的补图，简称为<span
+class="math inline">\(G\)</span>的补图，记为<span
+class="math inline">\(\bar{G}\)</span>。</p>
+<h4 id="图的同构">图的同构</h4>
+<p>设<span
+class="math inline">\(G=&lt;V,E&gt;,G&#39;=&lt;V&#39;,E&#39;&gt;\)</span>，如果存在双射函数<span
+class="math inline">\(f:V\to V&#39;,g:E\to
+E&#39;\)</span>，对于任何<span class="math inline">\(e\in E,e=[v_i,
+v_j]\)</span>当且仅当<span
+class="math inline">\(g(e)=[f(v_i),f(v_j)]\)</span>。则称<span
+class="math inline">\(G,G&#39;\)</span>同构，记作<span
+class="math inline">\(G\cong G&#39;\)</span>。</p>
+<p>相互同构的图只是画法不同或者结点与边的命名不同而已。</p>
+<p>两幅图同构的必要条件</p>
+<ol type="1">
+<li>结点数相同</li>
+<li>边数相同</li>
+<li>度数相同的结点数目相同</li>
+</ol>
+<h3 id="图的连通性">图的连通性</h3>
+<h4 id="路和回路">路和回路</h4>
+<p><strong>通路</strong></p>
+<p>经过的结点不重复的路。</p>
+<p><strong>迹</strong></p>
+<p>经过的边不重复的路。回路为闭迹，非回路为开迹。</p>
+<p><strong>圈</strong></p>
+<p>除始点和终点外没有相同结点的闭迹称为圈。长度为<span
+class="math inline">\(k\)</span>的圈称为<span
+class="math inline">\(k\)</span>圈，又可根据<span
+class="math inline">\(k\)</span>分为奇圈和偶圈。</p>
+<p><strong>定理1</strong></p>
+<p>在一个具有<span
+class="math inline">\(n\)</span>个节点的图中，如果两个结点连通，则两个结点间必有一条长度小于<span
+class="math inline">\(n\)</span>的路（也存在小于<span
+class="math inline">\(n\)</span>的通路）。</p>
+<p><strong>定理2</strong></p>
+<p>在一个具有<span
+class="math inline">\(n\)</span>个节点的图中，如果存在闭迹，则必存在一条长度小于等于<span
+class="math inline">\(n\)</span>的圈。</p>
+<p><strong>定理3</strong></p>
+<p>设<span class="math inline">\(G\)</span>是一个无向图，若<span
+class="math inline">\(G\)</span>中每个结点的度数大于等于<span
+class="math inline">\(2\)</span>，<span
+class="math inline">\(G\)</span>中必含有圈。</p>
+<p><strong>定理4</strong></p>
+<p><span class="math inline">\(G=&lt;V,E&gt;\)</span>是无向图，<span
+class="math inline">\(|E|&gt;0\)</span>，<span
+class="math inline">\(G\)</span>是二部图当且仅当<span
+class="math inline">\(G\)</span>中不含有奇圈。</p>
+<h4 id="无向图的连通性">无向图的连通性</h4>
+<p><strong>割点与割点集</strong></p>
+<p>删除某个结点和其相连边后，图变成不连通的，则称为割点。删除某个点集中的所有点和所连接边，图变成不连通的，并且删除该点集的任意真子集图仍然连通，则称这个点集为割点集。</p>
+<p><strong>k连通</strong></p>
+<p>由<span
+class="math inline">\(G\)</span>产生一个不连通子图最少需要删去<span
+class="math inline">\(k\)</span>个结点。则称<span
+class="math inline">\(G\)</span>为<span
+class="math inline">\(k\)</span>连通图。</p>
+<p><strong>定理1</strong></p>
+<p>无向图中，一个结点是割点，当且仅当存在两个结点间的每条路都要通过该节点。</p>
+<p><strong>割边与割边集</strong></p>
+<p>与割点相似。</p>
+<p><strong>k边连通</strong></p>
+<p>与<span class="math inline">\(k\)</span>连通相似。</p>
+<p><strong>定理1</strong></p>
+<p>无向图中，一条边是割边，当且仅当它不包含在任一圈中。</p>
+<h4 id="有向图的连通性">有向图的连通性</h4>
+<p><strong>强连通，单侧连通，弱连通</strong></p>
+<p>强连通则是两个结点双向可达。单侧连通则是单向可达。若联通则是看成无向图。</p>
+<p><strong>定理1</strong></p>
+<p>有向图是强连通的，当且仅当它存在一条回路，至少包含每个结点一次。</p>
+<h4 id="最短路">最短路</h4>
+<p>见算法竞赛模板。</p>
+<h3 id="图的矩阵表示">图的矩阵表示</h3>
+<h4 id="邻接矩阵">邻接矩阵</h4>
+<p><strong><span class="math inline">\(AA^T\)</span></strong></p>
+<p><span class="math inline">\(G\)</span>中刚好有<span
+class="math inline">\(b_{ij}\)</span>个结点，从<span
+class="math inline">\(v_i\)</span>和<span
+class="math inline">\(v_j\)</span>均有边引出到这些节点。</p>
+<p><strong><span class="math inline">\(A^TA\)</span></strong></p>
+<p><span class="math inline">\(G\)</span>中刚好有<span
+class="math inline">\(b_{ij}\)</span>个结点，以这些节点为始边，既有边到<span
+class="math inline">\(v_i\)</span>又有边到<span
+class="math inline">\(v_j\)</span>。</p>
+<p><strong><span class="math inline">\(A\times A\)</span></strong></p>
+<p>从<span class="math inline">\(v_i\)</span>到<span
+class="math inline">\(v_j\)</span>的路，长度为2的有<span
+class="math inline">\(b_{ij}\)</span>条。</p>
+<p>同理可知<span class="math inline">\(A^{(m)}\)</span>的含义。</p>
+<h4 id="可达矩阵">可达矩阵</h4>
+<p><span class="math inline">\(P(G)=A^{(0)}\vee A^{(1)}\vee\cdots\vee
+A^{(n-1)}\)</span></p>
+<p><strong>定理</strong></p>
+<ol type="1">
+<li>无向图是连通图，当且仅当可达矩阵所有元素都为1.</li>
+<li>有向图是强连通图，当且仅当可达矩阵所有元素都为1.</li>
+<li>有向图是单侧连通图，当且仅当<span class="math inline">\(P\vee
+P^T\)</span>所有元素都为1.</li>
+<li>有向图是弱连通图，当且仅当以<span class="math inline">\(A\vee
+A^T\)</span>作为邻接矩阵求出来的可达矩阵<span
+class="math inline">\(P&#39;\)</span>所有元素都为1.</li>
+</ol>
+<h4 id="求传递闭包的快速算法">求传递闭包的快速算法</h4>
+<p>设<span class="math inline">\(R\)</span>是集合<span
+class="math inline">\(V\)</span>上的二元关系，<span
+class="math inline">\(n\in \bm{Z}^+\)</span>，对于任意<span
+class="math inline">\(a,b\in V,&lt;a,b&gt;\in
+R^n\)</span>，当且仅当<span
+class="math inline">\(R\)</span>的关系图<span
+class="math inline">\(G=&lt;V,E&gt;\)</span>中存在从<span
+class="math inline">\(a\)</span>到<span
+class="math inline">\(b\)</span>有长度为<span
+class="math inline">\(n\)</span>的有向路。</p>
+<p>设<span class="math inline">\(\bm{M}_R\)</span>是<span
+class="math inline">\(V\)</span>上二元关系<span
+class="math inline">\(R\)</span>的关系矩阵，则</p>
+<p><span class="math display">\[
+\bm{M}_{t(R)}=\bm{M}_R\vee\bm{M}_R^{(2)}\vee\cdots\vee\bm{M}_R^{(n)}
+\]</span></p>
+<h3 id="欧拉图与汉密尔顿图">欧拉图与汉密尔顿图</h3>
+<h4 id="欧拉图">欧拉图</h4>
+<p><strong>欧拉路（欧拉迹）</strong></p>
+<p>包含图中所有边的开迹。</p>
+<p><strong>欧拉回路</strong></p>
+<p>包含图中所有边的闭迹。</p>
+<p><strong>欧拉图</strong></p>
+<p>包含欧拉回路的图称为欧拉图。</p>
+<p><strong>定理1</strong></p>
+<p>无向图是欧拉图当且仅当图是连通的并且每个结点的度均为偶数。</p>
+<p>无向图中存在一条欧拉路，当且仅当图是联通的，并且图中恰有两个奇数度的点。并且这两个点是起点和终点。</p>
+<p><strong>定理2</strong></p>
+<p>有向图是欧拉图，当且仅当它是联通的，并且每个结点的出度等于入度。</p>
+<p>有向图有欧拉路，当且仅当它是联通的，并且除了两个结点以外都出度等于入度，这两个结点必须一个出度比入度大一，另一个入度比出度大一。</p>
+<h4 id="汉密尔顿图">汉密尔顿图</h4>
+<p>包含图中每个结点一次且仅一次的通路称为汉密尔顿路。包含图中每个结点一次且仅一次的圈叫汉密尔顿回路。含汉密尔顿回路的图叫做汉密尔顿图。</p>
+<p><strong>定理1（必要条件）</strong></p>
+<p>若<span
+class="math inline">\(G\)</span>是汉密尔顿图，则对于结点集<span
+class="math inline">\(V\)</span>的每一个非空子集<span
+class="math inline">\(S\)</span>都有</p>
+<p><span class="math display">\[
+\omega(G-S)\leq|S|
+\]</span></p>
+<p>其中<span class="math inline">\(\omega(G-S)\)</span>表示<span
+class="math inline">\(G\)</span>删除<span
+class="math inline">\(S\)</span>中所有结点后得到的连通分支的个数。</p>
+<p><strong>定理2（必要条件）</strong></p>
+<p>设<span
+class="math inline">\(G=&lt;X,E,Y&gt;\)</span>是无向连通二部图，其中<span
+class="math inline">\(|X|=m,|Y|=n\)</span>，若<span
+class="math inline">\(m\neq n\)</span>，则必不是汉密尔顿图。</p>
+<p>若<span
+class="math inline">\(|m-n|&gt;1\)</span>，则必不存在汉密尔顿路。</p>
+<p><strong>定理3（充分条件）</strong></p>
+<p>设<span class="math inline">\(G=&lt;V,E&gt;\)</span>是含有<span
+class="math inline">\(n(n\ge3)\)</span>个节点的简单无向图，如果<span
+class="math inline">\(G\)</span>中的任何两个不同结点的度数之和都大于等于<span
+class="math inline">\(n-1\)</span>，则<span
+class="math inline">\(G\)</span>中存在汉密尔顿路。</p>
+<p>如果都大于等于<span
+class="math inline">\(n\)</span>，则存在汉密尔顿回路。</p>
+<h3 id="平面图">平面图</h3>
+<p><strong>平面嵌入</strong></p>
+<p>将一个平面图<span
+class="math inline">\(G\)</span>重新排列得到边不相交的图<span
+class="math inline">\(G&#39;\)</span>，<span
+class="math inline">\(G&#39;\)</span>称为一个平面嵌入。</p>
+<p><strong>面的次数</strong></p>
+<p>面<span
+class="math inline">\(r\)</span>的边界回路长度称为面的次数，记作<span
+class="math inline">\(deg(r)\)</span></p>
+<p><strong>定理1</strong></p>
+<p>连通平面图，所有面的次数之和等于边数的两倍</p>
+<p><strong>定理2</strong></p>
+<p>连通平面图，有<span class="math inline">\(n\)</span>个节点，<span
+class="math inline">\(m\)</span>条边，<span
+class="math inline">\(r\)</span>个面，则有<span
+class="math inline">\(n-m+r=2\)</span>成立。</p>
+<p>若<span class="math inline">\(n\ge3\)</span>，则<span
+class="math inline">\(m\leq3n-6\)</span></p>
+<p>若每个面至少由<span class="math inline">\(k\)</span>边围成，则有<span
+class="math inline">\(m\leq\frac{k(n-2)}{k-2}\)</span></p>
+<p><strong>同胚</strong></p>
+<p>给定两个图<span class="math inline">\(G_1\)</span>和<span
+class="math inline">\(G_2\)</span>，如果它们本身是同构的，或者通过反复插入度为2的结点(在某边上嵌入结点)或反复删除度为2的结点(仅去除结点,其关联边拼接)后，能够使<span
+class="math inline">\(G_1\)</span>和<span
+class="math inline">\(G_2\)</span>同构，则称<span
+class="math inline">\(G_1\)</span>和<span
+class="math inline">\(G_2\)</span>在<span
+class="math inline">\(2\)</span>度结点内同构，亦称同胚。</p>
+<p><strong>库拉托夫斯基定理</strong></p>
+<p>一个图是平面图，当且仅当它不包含与<span
+class="math inline">\(K_{3,3}\)</span>和<span
+class="math inline">\(K_5\)</span>同胚的子图。</p>
+<h3 id="图的着色">图的着色</h3>
+<h4 id="图的结点着色">图的结点着色</h4>
+<p><strong>正常着色</strong></p>
+<p>无向图，给每个结点指定一种颜色，若满足邻接的两个结点颜色不同，则称为正常着色。</p>
+<p><strong>可k-着色</strong></p>
+<p>可以用<span
+class="math inline">\(k\)</span>种不同的颜色给无向图正常着色。</p>
+<p><strong>k色图</strong></p>
+<p>对无向图正常着色所需要的最少的颜色数，称为顶着色数，简称色数，记为<span
+class="math inline">\(\mathcal{X}(G)\)</span>。色数为<span
+class="math inline">\(k\)</span>的图称为<span
+class="math inline">\(k\)</span>色图</p>
+<p><strong>Welch Powell着色法</strong></p>
+<ol type="1">
+<li>将图<span
+class="math inline">\(G\)</span>中的结点按度数递减的次序进行排列。</li>
+<li>用一种与已着色结点所着颜色不同的新的颜色<span
+class="math inline">\(C\)</span>对排列最前的尚未着色的节点着色，并按排列次序对与前面已着上颜色<span
+class="math inline">\(C\)</span>的结点均不相邻的每一结点着同样的颜色<span
+class="math inline">\(C\)</span>。</li>
+<li>重复2知道着色结束。</li>
+</ol>
+<p><strong>定理1</strong></p>
+<p>任何图均满足<span class="math inline">\(\mathcal{X}(G)\leq
+\Delta(G)+1\)</span>。<span
+class="math inline">\(\Delta(G)=max\{d(u)|u\in V\}\)</span></p>
+<p><strong>定理2</strong></p>
+<p><span class="math inline">\(\mathcal{X}(G)=2\)</span>，当且仅当<span
+class="math inline">\(G\)</span>是二部图。</p>
+<h4 id="平面图的着色">平面图的着色</h4>
+<p><strong>对偶图</strong></p>
+<p>设<span class="math inline">\(G=&lt;V,E&gt;\)</span>是平面图，<span
+class="math inline">\(G&#39;\)</span>是<span
+class="math inline">\(G\)</span>的一个平面嵌入，<span
+class="math inline">\(F(G&#39;)\)</span>是<span
+class="math inline">\(G&#39;\)</span>的面集合。构造图<span
+class="math inline">\(G^*\)</span>，若<span
+class="math inline">\(G^*\)</span>的结点集合<span
+class="math inline">\(V(G^*)=F(G&#39;)\)</span>，且任取两个结点<span
+class="math inline">\(f_1,f_2\in V(G^*)\)</span>，<span
+class="math inline">\(f_1\)</span>和<span
+class="math inline">\(f_2\)</span>之间存在边<span
+class="math inline">\(e\)</span>当且仅当<span
+class="math inline">\(f_1\)</span>和<span
+class="math inline">\(f_2\)</span>在<span
+class="math inline">\(G&#39;\)</span>中有一条公共边，则称<span
+class="math inline">\(G^*\)</span>是<span
+class="math inline">\(G\)</span>的对偶图。</p>
+<p><strong>定理</strong></p>
+<p>设<span
+class="math inline">\(G=&lt;V,E&gt;\)</span>是一个连通简单平面图，且<span
+class="math inline">\(|V|\ge 3,|E|=m\)</span>，则<span
+class="math inline">\(G\)</span>中必存在结点<span
+class="math inline">\(u\in V\)</span>，满足<span
+class="math inline">\(deg(u)\leq 5\)</span>。</p>
+<p><strong>希伍德五色定理</strong></p>
+<p>任何一个连通简单平面图都是5可着色的。</p>
+<p><strong>四色定理</strong></p>
+<p>平面图的色数不超过4。</p>
+<h3 id="树">树</h3>
+<h4 id="无向树的定义">无向树的定义</h4>
+<p><strong>平凡树</strong></p>
+<p>只有一个孤立节点的树。</p>
+<p><strong>定理1</strong></p>
+<p>对于一个含有<span class="math inline">\(n\)</span>个结点<span
+class="math inline">\(m\)</span>条边的无向树，以下定义等价</p>
+<ol type="1">
+<li>无圈且连通</li>
+<li>无圈且<span class="math inline">\(m=n-1\)</span></li>
+<li>连通且<span class="math inline">\(m=n-1\)</span></li>
+<li>无圈，但任意新增一条边，恰得到一个圈</li>
+<li>连通，且每条边都是割边</li>
+<li>每一对结点有且只有一条通路</li>
+</ol>
+<p><strong>定理2</strong></p>
+<p>任何一颗非平凡树中至少有两片树叶</p>
+<h4 id="生成树">生成树</h4>
+<p><strong>定理1</strong></p>
+<p>任何一个无向连通图至少有一颗生成树</p>
+<p><strong>定理2</strong></p>
+<p>连通图中的一个圈与其任何一棵生成树的补至少有一条公共边。</p>
+<p><strong>定理3</strong></p>
+<p>一个边割集和任何一棵生成树至少有一条公共边。</p>
+<p><strong>最小生成树及其算法</strong></p>
+<p>见竞赛模板。</p>
+<h4 id="根树及其应用">根树及其应用</h4>
+<p><strong>根树</strong></p>
+<p>一棵有向树，恰有一个节点入度为0，其余节点入度都为1。</p>
+<p><strong>m元树</strong></p>
+<p>每个结点的出度均小于等于<span
+class="math inline">\(m\)</span>的根树。</p>
+<p>每个节点的出度均等于<span class="math inline">\(0\)</span>或<span
+class="math inline">\(m\)</span>的根树称为正则<span
+class="math inline">\(m\)</span>元树。</p>
+<p><strong>定理1</strong></p>
+<p>正则<span class="math inline">\(m\)</span>元树<span
+class="math inline">\(T\)</span>，其树叶数为<span
+class="math inline">\(t\)</span>，分支结点数为<span
+class="math inline">\(i\)</span>，则有<span
+class="math inline">\((m-1)i=t-1\)</span></p>
+<p><strong>带权树</strong></p>
+<p>如果一颗二元树<span class="math inline">\(T\)</span>共有<span
+class="math inline">\(n\)</span>片树叶，分别带权<span
+class="math inline">\(\omega_1,\omega_2,\cdots,\omega_n\)</span>。定义这棵二元树<span
+class="math inline">\(T\)</span>的权值为，</p>
+<p><span class="math display">\[
+W(T)=\sum_{i=1}^{n}\omega_iL(\omega_i)
+\]</span></p>
+<p>其中<span class="math inline">\(L(\omega_i)\)</span>为带权<span
+class="math inline">\(\omega_i\)</span>的树叶的深度（根深度为0）。在所有带这些权的二元树中，具有最小权的二元树称为最优二元树。</p>
+<p><strong>定理1</strong></p>
+<p>最优二元树是一颗正则二元树。</p>
+<p><strong>定理2</strong></p>
+<p>最优二元树中，层数最大的分支节点的两个儿子所带权分别为最小的两个权。</p>
+<p><strong>最优二元树的构造方法</strong></p>
+<figure>
+<img src="7.7.12.jpg" alt="7.7.12" />
+<figcaption aria-hidden="true">7.7.12</figcaption>
+</figure>
+<p><strong>前缀码</strong></p>
+<p>给定一个以<span
+class="math inline">\(0,1\)</span>组成序列为元素的集合，若没有一个序列是另一个序列的前缀，则该集合称为前缀码。</p>
+<p><strong>利用有序正则二元树解决前缀码问题</strong></p>
+<figure>
+<img src="7.7.13.jpg" alt="7.7.13" />
+<figcaption aria-hidden="true">7.7.13</figcaption>
+</figure>
 
 </section>
 
