@@ -580,6 +580,12 @@ $$
 y(x,t)=Acos\left[\omega\left(t-\frac{x}{u}\right)+\varphi_0\right]
 $$
 
+或者写成
+
+$$
+y(x,t)=Acos\left[2\pi\left(\frac{t}{T}-\frac{x}{\lambda}\right)+\varphi_0\right]
+$$
+
 负向传播：
 
 $$
@@ -604,7 +610,7 @@ $$
 w=\frac{W}{\Delta V}=\frac{W}{\Delta x\Delta S}=\rho A^2\omega^2sin^2\left[\omega\left(t-\frac{x}{u}\right)+\varphi_0\right]
 $$
 
-3. 能流密度
+3. 能流密度（波的强度）
 
 $$
 I=\overline{w}u
@@ -617,6 +623,16 @@ $$
 $$
 \bm{I}=\overline{w}\bm{u}
 $$
+
+$$
+w_{max}=2\overline{w}
+$$
+
+$$
+I=\frac{P}{S}
+$$
+
+其中$P$是功率，$S$是波面面积。
 
 4. 平面波和球面波的振幅
 
@@ -843,7 +859,7 @@ $$
 3. 艾里斑
 
 $$
-\theta_0\approxsin\theta_0=1.22\frac{\lambda}{D}
+\theta_0\approx sin\theta_0=1.22\frac{\lambda}{D}
 $$
 
 $D$是圆孔直径。
