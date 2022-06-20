@@ -677,7 +677,7 @@ $$
 特别的，有
 
 $$
-\left|\iint\limits_{D}f(x,y)d\sigma\right|=
+\left|\iint\limits_{D}f(x,y)d\sigma\right|\leq
 \iint\limits_{D}|f(x,y)|d\sigma
 $$
 
