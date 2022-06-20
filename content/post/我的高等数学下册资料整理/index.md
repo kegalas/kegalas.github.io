@@ -677,7 +677,7 @@ $$
 特别的，有
 
 $$
-\left|\iint\limits_{D}f(x,y)d\sigma\right|\leq
+\left|\iint\limits_{D}f(x,y)d\sigma\right|\l
 \iint\limits_{D}|f(x,y)|d\sigma
 $$
 
@@ -1099,7 +1099,7 @@ $$
 
 #### 沿任意闭曲面的曲面积分为零的条件
 
-设$G$是空间二维单连通取余，若$P(x,y,z),Q(x,y,z),R(x,y,z)$在$G$内具有一阶连续偏导数，则曲面积分
+设$G$是空间二维单连通区域，若$P(x,y,z),Q(x,y,z),R(x,y,z)$在$G$内具有一阶连续偏导数，则曲面积分
 
 $$
 \iint\limits_\Sigma Pdydz+Qdzdx+Rdxdy
@@ -1466,4 +1466,12 @@ $$
 当$f(x)$为偶函数时，可以展开为余弦函数
 $$
 \frac{a_0}{2}+\sum_{n=1}^\infty a_n\cos nx
+$$
+
+### 一般周期的傅里叶级数
+
+**周期为$2l$**
+
+$$
+f(x)=\frac{a_0}{2}+\sum^\infty_{n=1}\left(a_ncos\frac{n\pi x}{l}+b_nsin\frac{n\pi x}{l}\right)(x\in C)
 $$
