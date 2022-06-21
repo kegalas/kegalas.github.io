@@ -550,7 +550,7 @@ class="math inline">\(P\leftrightarrow V\)</span></th>
 </tbody>
 </table>
 <h4 id="联结词的运算优先级">联结词的运算优先级</h4>
-<p>TODO: 联结词的运算优先级</p>
+<p>从高到低依次为，否定、合取、析取、条件、双条件</p>
 <h3 id="命题公式">命题公式</h3>
 <h4 id="一些定义">一些定义</h4>
 <p><strong>定义1，命题变元与常元</strong></p>
@@ -649,8 +649,8 @@ class="math inline">\(A\Leftrightarrow C\)</span>。</p>
 class="math inline">\(B\)</span>是命题公式，如果<span
 class="math inline">\(A\to B\)</span>是一个重言式,则称<span
 class="math inline">\(A\)</span>蕴含<span
-class="math inline">\(B\)</span>,记做<span class="math inline">\(A\to
-B\)</span>。</p>
+class="math inline">\(B\)</span>,记做<span
+class="math inline">\(A\Rightarrow B\)</span>。</p>
 <p>一些常见的蕴含公式</p>
 <figure>
 <img src="1.3.7-1.jpg" alt="1.3.7-1" />
@@ -660,6 +660,20 @@ B\)</span>。</p>
 <img src="1.3.7-2.jpg" alt="1.3.7-2" />
 <figcaption aria-hidden="true">1.3.7-2</figcaption>
 </figure>
+<p>证明蕴含式<span class="math inline">\(A\Rightarrow
+B\)</span>的一些方法：</p>
+<ol type="1">
+<li>肯定前件法。假设<span class="math inline">\(A\)</span>为<span
+class="math inline">\(T\)</span>，如果能够推出<span
+class="math inline">\(B\)</span>为<span
+class="math inline">\(T\)</span>，则有<span
+class="math inline">\(A\Rightarrow B\)</span></li>
+<li>否定后件法。假设<span class="math inline">\(B\)</span>为<span
+class="math inline">\(F\)</span>，如果能够推出<span
+class="math inline">\(A\)</span>为<span
+class="math inline">\(F\)</span>，则有<span
+class="math inline">\(A\Rightarrow B\)</span></li>
+</ol>
 <p>几个定理</p>
 <p><strong>定理1</strong></p>
 <p>设<span class="math inline">\(A\)</span>和<span
@@ -752,7 +766,7 @@ class="math inline">\(A_1,A_2,\cdots,A_n\)</span>是析取式。</p>
 <h4 id="主析取范式">主析取范式</h4>
 <p><strong>极小项</strong></p>
 <p>一个含<span
-class="math inline">\(n\)</span>个命题变元的合取式，如果其中每个变元和其否定不同时存在，但两者之一必须出现且仅出现一次，则称改合取式为极小项。</p>
+class="math inline">\(n\)</span>个命题变元的合取式，如果其中每个变元和其否定不同时存在，但两者之一必须出现且仅出现一次，则称该合取式为极小项。</p>
 <p><span class="math inline">\(n\)</span>个命题变元<span
 class="math inline">\(P_1,P_2,\cdots,P_n\)</span>可构成<span
 class="math inline">\(2^n\)</span>个不同的极小项，其形式为：</p>
@@ -1035,8 +1049,8 @@ class="math inline">\(a\)</span></p>
 <p>注意如果同时指定<span class="math inline">\(\exist
 xP(x)\)</span>和<span class="math inline">\(\forall
 xQ(x)\)</span>，应当先指定<span
-class="math inline">\(Q(a)\)</span>，再指定<span
-class="math inline">\(P(a)\)</span>，才能保证两者都为真。</p>
+class="math inline">\(P(a)\)</span>，再指定<span
+class="math inline">\(Q(a)\)</span>，才能保证两者都为真。</p>
 <ol start="3" type="1">
 <li>存在推广原则（EG）</li>
 </ol>
@@ -1180,7 +1194,7 @@ A_2|\)</span></p>
 <p><strong>容斥原理</strong></p>
 <p>将上式推广，得</p>
 <p><span class="math display">\[
-|A_1\cup A_2\cup\cdots\cup A_n|=\sum_{i=1}^n|A-i|-\sum_{1\leq i&lt;j\leq
+|A_1\cup A_2\cup\cdots\cup A_n|=\sum_{i=1}^n|A_i|-\sum_{1\leq i&lt;j\leq
 n}|A_i\cap A_j|+\\
 \sum_{1\leq i&lt;j&lt;k\leq n}|A_i\cap A_j\cap
 A_k|-\cdots+(-1)^{n+1}|A_1\cap A_2\cap\cdots\cap A_n|
@@ -1566,7 +1580,7 @@ class="math inline">\(\pi\)</span>诱导的<span
 class="math inline">\(A\)</span>上的等价关系）。</p>
 <p><strong>定理3</strong></p>
 <p>设<span class="math inline">\(R_1\)</span>和<span
-class="math inline">\(R_1\)</span>是非空集合<span
+class="math inline">\(R_2\)</span>是非空集合<span
 class="math inline">\(A\)</span>上的等价关系，则<span
 class="math inline">\(R_1=R_2\Leftrightarrow A/R_1=A/R_2\)</span></p>
 <p><strong>定理4</strong></p>
@@ -1643,7 +1657,7 @@ class="math inline">\(B\)</span>中不存在元素<span
 class="math inline">\(x\)</span>，使得<span class="math inline">\(x\neq
 b\)</span>且<span class="math inline">\(x\preceq b\)</span>，那么<span
 class="math inline">\(b\)</span>称为<span
-class="math inline">\(B\)</span>的极大元。</p>
+class="math inline">\(B\)</span>的极小元。</p>
 <p><strong>最大元</strong></p>
 <p>设<span
 class="math inline">\(&lt;A，\preceq&gt;\)</span>是偏序集合，且<span
@@ -1673,7 +1687,7 @@ class="math inline">\(B\)</span>有最大（最小元），那么它是唯一的
 class="math inline">\(&lt;A，\preceq&gt;\)</span>是偏序集合，且<span
 class="math inline">\(B\subseteq A\)</span>。如果<span
 class="math inline">\(a\in A\)</span>，对于任意元素<span
-class="math inline">\(x\in B\)</span>，均有<span
+class="math inline">\(b\in B\)</span>，均有<span
 class="math inline">\(b\preceq a\)</span>，那么<span
 class="math inline">\(a\)</span>称为<span
 class="math inline">\(B\)</span>的上界。</p>
@@ -1682,7 +1696,7 @@ class="math inline">\(B\)</span>的上界。</p>
 class="math inline">\(&lt;A，\preceq&gt;\)</span>是偏序集合，且<span
 class="math inline">\(B\subseteq A\)</span>。如果<span
 class="math inline">\(a\in A\)</span>，对于任意元素<span
-class="math inline">\(x\in B\)</span>，均有<span
+class="math inline">\(b\in B\)</span>，均有<span
 class="math inline">\(a\preceq b\)</span>，那么<span
 class="math inline">\(a\)</span>称为<span
 class="math inline">\(B\)</span>的下界。</p>
@@ -1735,7 +1749,7 @@ class="math inline">\(B\)</span>的最小元，则<span
 class="math inline">\(b\)</span>是<span
 class="math inline">\(B\)</span>的极小元。</li>
 <li>若<span class="math inline">\(b\)</span>是<span
-class="math inline">\(B\)</span>的最行元，则<span
+class="math inline">\(B\)</span>的最小元，则<span
 class="math inline">\(b\)</span>是<span
 class="math inline">\(B\)</span>的最大下界。</li>
 <li><span class="math inline">\(b\in B\)</span>，若<span
@@ -1814,7 +1828,7 @@ class="math inline">\(f(x)=y\)</span>，则称为满射函数。</p>
 <p>既是单射又是满射，称为双射函数。也称一一对应函数。</p>
 <p>有如下定理</p>
 <p><strong>定理1</strong></p>
-<p>设<span class="math inline">\(X,Y\)</span>是有线集合，<span
+<p>设<span class="math inline">\(X,Y\)</span>是有限集合，<span
 class="math inline">\(f:X\to Y\)</span></p>
 <ol type="1">
 <li>若<span class="math inline">\(f\)</span>是单射，则必有<span

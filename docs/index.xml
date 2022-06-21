@@ -1280,7 +1280,7 @@ class=&#34;math inline&#34;&gt;\(P\leftrightarrow V\)&lt;/span&gt;&lt;/th&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
 &lt;h4 id=&#34;联结词的运算优先级&#34;&gt;联结词的运算优先级&lt;/h4&gt;
-&lt;p&gt;TODO: 联结词的运算优先级&lt;/p&gt;
+&lt;p&gt;从高到低依次为，否定、合取、析取、条件、双条件&lt;/p&gt;
 &lt;h3 id=&#34;命题公式&#34;&gt;命题公式&lt;/h3&gt;
 &lt;h4 id=&#34;一些定义&#34;&gt;一些定义&lt;/h4&gt;
 &lt;p&gt;&lt;strong&gt;定义1，命题变元与常元&lt;/strong&gt;&lt;/p&gt;
@@ -1379,8 +1379,8 @@ class=&#34;math inline&#34;&gt;\(A\Leftrightarrow C\)&lt;/span&gt;。&lt;/p&gt;
 class=&#34;math inline&#34;&gt;\(B\)&lt;/span&gt;是命题公式，如果&lt;span
 class=&#34;math inline&#34;&gt;\(A\to B\)&lt;/span&gt;是一个重言式,则称&lt;span
 class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;蕴含&lt;span
-class=&#34;math inline&#34;&gt;\(B\)&lt;/span&gt;,记做&lt;span class=&#34;math inline&#34;&gt;\(A\to
-B\)&lt;/span&gt;。&lt;/p&gt;
+class=&#34;math inline&#34;&gt;\(B\)&lt;/span&gt;,记做&lt;span
+class=&#34;math inline&#34;&gt;\(A\Rightarrow B\)&lt;/span&gt;。&lt;/p&gt;
 &lt;p&gt;一些常见的蕴含公式&lt;/p&gt;
 &lt;figure&gt;
 &lt;img src=&#34;1.3.7-1.jpg&#34; alt=&#34;1.3.7-1&#34; /&gt;
@@ -1390,6 +1390,20 @@ B\)&lt;/span&gt;。&lt;/p&gt;
 &lt;img src=&#34;1.3.7-2.jpg&#34; alt=&#34;1.3.7-2&#34; /&gt;
 &lt;figcaption aria-hidden=&#34;true&#34;&gt;1.3.7-2&lt;/figcaption&gt;
 &lt;/figure&gt;
+&lt;p&gt;证明蕴含式&lt;span class=&#34;math inline&#34;&gt;\(A\Rightarrow
+B\)&lt;/span&gt;的一些方法：&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;肯定前件法。假设&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;为&lt;span
+class=&#34;math inline&#34;&gt;\(T\)&lt;/span&gt;，如果能够推出&lt;span
+class=&#34;math inline&#34;&gt;\(B\)&lt;/span&gt;为&lt;span
+class=&#34;math inline&#34;&gt;\(T\)&lt;/span&gt;，则有&lt;span
+class=&#34;math inline&#34;&gt;\(A\Rightarrow B\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;否定后件法。假设&lt;span class=&#34;math inline&#34;&gt;\(B\)&lt;/span&gt;为&lt;span
+class=&#34;math inline&#34;&gt;\(F\)&lt;/span&gt;，如果能够推出&lt;span
+class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;为&lt;span
+class=&#34;math inline&#34;&gt;\(F\)&lt;/span&gt;，则有&lt;span
+class=&#34;math inline&#34;&gt;\(A\Rightarrow B\)&lt;/span&gt;&lt;/li&gt;
+&lt;/ol&gt;
 &lt;p&gt;几个定理&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;定理1&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;和&lt;span
@@ -1482,7 +1496,7 @@ class=&#34;math inline&#34;&gt;\(A_1,A_2,\cdots,A_n\)&lt;/span&gt;是析取式�
 &lt;h4 id=&#34;主析取范式&#34;&gt;主析取范式&lt;/h4&gt;
 &lt;p&gt;&lt;strong&gt;极小项&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;一个含&lt;span
-class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;个命题变元的合取式，如果其中每个变元和其否定不同时存在，但两者之一必须出现且仅出现一次，则称改合取式为极小项。&lt;/p&gt;
+class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;个命题变元的合取式，如果其中每个变元和其否定不同时存在，但两者之一必须出现且仅出现一次，则称该合取式为极小项。&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;个命题变元&lt;span
 class=&#34;math inline&#34;&gt;\(P_1,P_2,\cdots,P_n\)&lt;/span&gt;可构成&lt;span
 class=&#34;math inline&#34;&gt;\(2^n\)&lt;/span&gt;个不同的极小项，其形式为：&lt;/p&gt;
@@ -1765,8 +1779,8 @@ class=&#34;math inline&#34;&gt;\(a\)&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;注意如果同时指定&lt;span class=&#34;math inline&#34;&gt;\(\exist
 xP(x)\)&lt;/span&gt;和&lt;span class=&#34;math inline&#34;&gt;\(\forall
 xQ(x)\)&lt;/span&gt;，应当先指定&lt;span
-class=&#34;math inline&#34;&gt;\(Q(a)\)&lt;/span&gt;，再指定&lt;span
-class=&#34;math inline&#34;&gt;\(P(a)\)&lt;/span&gt;，才能保证两者都为真。&lt;/p&gt;
+class=&#34;math inline&#34;&gt;\(P(a)\)&lt;/span&gt;，再指定&lt;span
+class=&#34;math inline&#34;&gt;\(Q(a)\)&lt;/span&gt;，才能保证两者都为真。&lt;/p&gt;
 &lt;ol start=&#34;3&#34; type=&#34;1&#34;&gt;
 &lt;li&gt;存在推广原则（EG）&lt;/li&gt;
 &lt;/ol&gt;
@@ -1910,7 +1924,7 @@ A_2|\)&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;容斥原理&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;将上式推广，得&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
-|A_1\cup A_2\cup\cdots\cup A_n|=\sum_{i=1}^n|A-i|-\sum_{1\leq i&amp;lt;j\leq
+|A_1\cup A_2\cup\cdots\cup A_n|=\sum_{i=1}^n|A_i|-\sum_{1\leq i&amp;lt;j\leq
 n}|A_i\cap A_j|+\\
 \sum_{1\leq i&amp;lt;j&amp;lt;k\leq n}|A_i\cap A_j\cap
 A_k|-\cdots+(-1)^{n+1}|A_1\cap A_2\cap\cdots\cap A_n|
@@ -2296,7 +2310,7 @@ class=&#34;math inline&#34;&gt;\(\pi\)&lt;/span&gt;诱导的&lt;span
 class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;上的等价关系）。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;定理3&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(R_1\)&lt;/span&gt;和&lt;span
-class=&#34;math inline&#34;&gt;\(R_1\)&lt;/span&gt;是非空集合&lt;span
+class=&#34;math inline&#34;&gt;\(R_2\)&lt;/span&gt;是非空集合&lt;span
 class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;上的等价关系，则&lt;span
 class=&#34;math inline&#34;&gt;\(R_1=R_2\Leftrightarrow A/R_1=A/R_2\)&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;定理4&lt;/strong&gt;&lt;/p&gt;
@@ -2373,7 +2387,7 @@ class=&#34;math inline&#34;&gt;\(B\)&lt;/span&gt;中不存在元素&lt;span
 class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;，使得&lt;span class=&#34;math inline&#34;&gt;\(x\neq
 b\)&lt;/span&gt;且&lt;span class=&#34;math inline&#34;&gt;\(x\preceq b\)&lt;/span&gt;，那么&lt;span
 class=&#34;math inline&#34;&gt;\(b\)&lt;/span&gt;称为&lt;span
-class=&#34;math inline&#34;&gt;\(B\)&lt;/span&gt;的极大元。&lt;/p&gt;
+class=&#34;math inline&#34;&gt;\(B\)&lt;/span&gt;的极小元。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;最大元&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;设&lt;span
 class=&#34;math inline&#34;&gt;\(&amp;lt;A，\preceq&amp;gt;\)&lt;/span&gt;是偏序集合，且&lt;span
@@ -2403,7 +2417,7 @@ class=&#34;math inline&#34;&gt;\(B\)&lt;/span&gt;有最大（最小元），那�
 class=&#34;math inline&#34;&gt;\(&amp;lt;A，\preceq&amp;gt;\)&lt;/span&gt;是偏序集合，且&lt;span
 class=&#34;math inline&#34;&gt;\(B\subseteq A\)&lt;/span&gt;。如果&lt;span
 class=&#34;math inline&#34;&gt;\(a\in A\)&lt;/span&gt;，对于任意元素&lt;span
-class=&#34;math inline&#34;&gt;\(x\in B\)&lt;/span&gt;，均有&lt;span
+class=&#34;math inline&#34;&gt;\(b\in B\)&lt;/span&gt;，均有&lt;span
 class=&#34;math inline&#34;&gt;\(b\preceq a\)&lt;/span&gt;，那么&lt;span
 class=&#34;math inline&#34;&gt;\(a\)&lt;/span&gt;称为&lt;span
 class=&#34;math inline&#34;&gt;\(B\)&lt;/span&gt;的上界。&lt;/p&gt;
@@ -2412,7 +2426,7 @@ class=&#34;math inline&#34;&gt;\(B\)&lt;/span&gt;的上界。&lt;/p&gt;
 class=&#34;math inline&#34;&gt;\(&amp;lt;A，\preceq&amp;gt;\)&lt;/span&gt;是偏序集合，且&lt;span
 class=&#34;math inline&#34;&gt;\(B\subseteq A\)&lt;/span&gt;。如果&lt;span
 class=&#34;math inline&#34;&gt;\(a\in A\)&lt;/span&gt;，对于任意元素&lt;span
-class=&#34;math inline&#34;&gt;\(x\in B\)&lt;/span&gt;，均有&lt;span
+class=&#34;math inline&#34;&gt;\(b\in B\)&lt;/span&gt;，均有&lt;span
 class=&#34;math inline&#34;&gt;\(a\preceq b\)&lt;/span&gt;，那么&lt;span
 class=&#34;math inline&#34;&gt;\(a\)&lt;/span&gt;称为&lt;span
 class=&#34;math inline&#34;&gt;\(B\)&lt;/span&gt;的下界。&lt;/p&gt;
@@ -2465,7 +2479,7 @@ class=&#34;math inline&#34;&gt;\(B\)&lt;/span&gt;的最小元，则&lt;span
 class=&#34;math inline&#34;&gt;\(b\)&lt;/span&gt;是&lt;span
 class=&#34;math inline&#34;&gt;\(B\)&lt;/span&gt;的极小元。&lt;/li&gt;
 &lt;li&gt;若&lt;span class=&#34;math inline&#34;&gt;\(b\)&lt;/span&gt;是&lt;span
-class=&#34;math inline&#34;&gt;\(B\)&lt;/span&gt;的最行元，则&lt;span
+class=&#34;math inline&#34;&gt;\(B\)&lt;/span&gt;的最小元，则&lt;span
 class=&#34;math inline&#34;&gt;\(b\)&lt;/span&gt;是&lt;span
 class=&#34;math inline&#34;&gt;\(B\)&lt;/span&gt;的最大下界。&lt;/li&gt;
 &lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(b\in B\)&lt;/span&gt;，若&lt;span
@@ -2544,7 +2558,7 @@ class=&#34;math inline&#34;&gt;\(f(x)=y\)&lt;/span&gt;，则称为满射函数�
 &lt;p&gt;既是单射又是满射，称为双射函数。也称一一对应函数。&lt;/p&gt;
 &lt;p&gt;有如下定理&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;定理1&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(X,Y\)&lt;/span&gt;是有线集合，&lt;span
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(X,Y\)&lt;/span&gt;是有限集合，&lt;span
 class=&#34;math inline&#34;&gt;\(f:X\to Y\)&lt;/span&gt;&lt;/p&gt;
 &lt;ol type=&#34;1&#34;&gt;
 &lt;li&gt;若&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;是单射，则必有&lt;span
@@ -4969,7 +4983,7 @@ class=&#34;math inline&#34;&gt;\(f(x,y)\leq g(x,y)\)&lt;/span&gt;，那么有&lt
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;特别的，有&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
-\left|\iint\limits_{D}f(x,y)d\sigma\right|\l
+\left|\iint\limits_{D}f(x,y)d\sigma\right|\leq
 \iint\limits_{D}|f(x,y)|d\sigma
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;ol start=&#34;5&#34; type=&#34;1&#34;&gt;
@@ -5802,6 +5816,19 @@ class=&#34;math display&#34;&gt;\[
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 f(x)=\frac{a_0}{2}+\sum^\infty_{n=1}\left(a_ncos\frac{n\pi
 x}{l}+b_nsin\frac{n\pi x}{l}\right)(x\in C)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+a_n=\frac{1}{l}\int_{-l}^lf(x)cos\frac{n\pi x}{l}dx\quad
+(n=0,1,2,\cdots)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+b_n=\frac{1}{l}\int_{-l}^lf(x)sin\frac{n\pi x}{l}dx\quad
+(n=1,2,3,\cdots)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+C=\left\{x\left|f(x)=\frac{1}{2}[f(x^-)
++f(x^+)]\right. \right\}
 \]&lt;/span&gt;&lt;/p&gt;
 </description>
         </item>

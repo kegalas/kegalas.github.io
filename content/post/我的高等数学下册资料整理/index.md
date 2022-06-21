@@ -677,7 +677,7 @@ $$
 特别的，有
 
 $$
-\left|\iint\limits_{D}f(x,y)d\sigma\right|\l
+\left|\iint\limits_{D}f(x,y)d\sigma\right|\leq
 \iint\limits_{D}|f(x,y)|d\sigma
 $$
 
@@ -1475,3 +1475,19 @@ $$
 $$
 f(x)=\frac{a_0}{2}+\sum^\infty_{n=1}\left(a_ncos\frac{n\pi x}{l}+b_nsin\frac{n\pi x}{l}\right)(x\in C)
 $$
+
+其中
+
+$$
+a_n=\frac{1}{l}\int_{-l}^lf(x)cos\frac{n\pi x}{l}dx\quad (n=0,1,2,\cdots)
+$$
+
+$$
+b_n=\frac{1}{l}\int_{-l}^lf(x)sin\frac{n\pi x}{l}dx\quad (n=1,2,3,\cdots)
+$$
+
+$$
+C=\left\{x\left|f(x)=\frac{1}{2}[f(x^-)
++f(x^+)]\right. \right\}
+$$
+
