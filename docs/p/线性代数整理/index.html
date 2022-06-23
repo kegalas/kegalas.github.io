@@ -764,7 +764,7 @@ class="math inline">\(\bold{A}\)</span>不可以表示为有限个初等矩阵�
 <h4 id="第三组">第三组</h4>
 <p>设<span
 class="math inline">\(f(x_1,\cdots,x_n)=\bm{x}^T\bm{Ax}\)</span>是<span
-class="math inline">\(n\)</span>远实二次型，则下列命题等价</p>
+class="math inline">\(n\)</span>元实二次型，则下列命题等价</p>
 <ol type="1">
 <li><span
 class="math inline">\(f=\bm{x}^T\bm{Ax}\)</span>是正定二次型，即<span
@@ -782,7 +782,7 @@ class="math inline">\(\bm{A=B}^T\bm B\)</span></li>
 <h4 id="第四组">第四组</h4>
 <p>设<span
 class="math inline">\(f(x_1,\cdots,x_n)=\bm{x}^T\bm{Ax}\)</span>是<span
-class="math inline">\(n\)</span>远实二次型，则下列命题等价</p>
+class="math inline">\(n\)</span>元实二次型，则下列命题等价</p>
 <ol type="1">
 <li><span class="math inline">\(f\)</span>是负定二次型</li>
 <li><span class="math inline">\(f\)</span>的负惯性指数为<span
@@ -1160,7 +1160,7 @@ class="math inline">\(\bm{x}=[x_1,x_2,\cdots,x_n]^T\)</span>，称</p>
 class="math inline">\(||\bm{x}||\ge0,||\bm{x}||=0\)</span>当且仅当<span
 class="math inline">\(\bm{x}=\bm{0}\)</span></li>
 <li><span
-class="math inline">\(k||\bm{x}||=|k|||\bm{x}||\)</span>，k为实数</li>
+class="math inline">\(||k\bm{x}||=|k|||\bm{x}||\)</span>，k为实数</li>
 <li><span
 class="math inline">\(||\bm{x}+\bm{y}||\leq||\bm{x}||+||\bm{y}||\)</span></li>
 </ol>
@@ -1174,7 +1174,7 @@ class="math inline">\(n\)</span>维非零向量，称</p>
 class="math inline">\(\bm{x,y}\)</span>的夹角。特别的，当<span
 class="math inline">\(&lt;\bm{x},\bm{y}&gt;=0时\)</span>，<span
 class="math inline">\(\theta=\pm\frac{\pi}{2}\)</span>，称两向量正交（或垂直）。</p>
-<p>两两正交的向量组称为正交向量组。由单位向量构成的正交向量组称为标准（规范）正交向量组</p>
+<p>两两正交的向量组称为正交向量组。由单位向量构成的正交向量组称为标准（规范）标准正交组</p>
 <p>有如下定理：</p>
 <ol type="1">
 <li>不含零向量的正交向量组必线性无关。</li>
@@ -1455,7 +1455,7 @@ A|\)</span></li>
 <li><p>矩阵可逆<span
 class="math inline">\(\Leftrightarrow\)</span>所有特征值均非0</p></li>
 <li><p>若<span
-class="math inline">\(\lambda_1+\lambda_2+\cdots+\lambda_m\)</span>是<span
+class="math inline">\(\lambda_1,\lambda_2,\cdots,\lambda_m\)</span>是<span
 class="math inline">\(\bm A\)</span>的互不相同的特征值，<span
 class="math inline">\(\bm{\alpha}_1,\bm{\alpha}_2,\cdots,\bm{\alpha}_m\)</span>是对应的特征向量，则<span
 class="math inline">\(\bm{\alpha}_1,\bm{\alpha}_2,\cdots,\bm{\alpha}_m\)</span>线性无关</p></li>
@@ -1718,6 +1718,7 @@ class="math inline">\(q\)</span>称为负惯性指数。<span
 class="math inline">\(p-q\)</span>称为二次型的符号差。</p>
 <p>并且有如下定理</p>
 <p><strong>定理</strong></p>
+<p>任何实对称矩阵必合同于如下形式的对角矩阵</p>
 <p><span class="math display">\[
 \begin{bmatrix}
 \bm{E}_p  &amp;  &amp; \\
@@ -1746,10 +1747,12 @@ class="math inline">\(\bm{A}\)</span>正定的充要条件是<span
 class="math inline">\(\bm{B}\)</span>正定。</p>
 <p><strong>定理3</strong></p>
 <p>若<span class="math inline">\(\bm A\)</span>是<span
-class="math inline">\(n\)</span>阶正定矩阵，则 1. <span
-class="math inline">\(\bm A\)</span>的主对角线元<span
-class="math inline">\(a_{ii}&gt;0\)</span> 2. <span
-class="math inline">\(|\bm A|&gt;0\)</span></p>
+class="math inline">\(n\)</span>阶正定矩阵，则</p>
+<ol type="1">
+<li><span class="math inline">\(\bm A\)</span>的主对角线元<span
+class="math inline">\(a_{ii}&gt;0\)</span></li>
+<li><span class="math inline">\(|\bm A|&gt;0\)</span></li>
+</ol>
 <p><strong><span
 class="math inline">\(k\)</span>阶顺序主子式</strong></p>
 <p>设<span class="math inline">\(\bm A\)</span>为<span
