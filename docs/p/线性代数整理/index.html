@@ -366,7 +366,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 31 分钟
+                    阅读时长: 34 分钟
                 </time>
             </div>
         
@@ -469,9 +469,9 @@ class="math inline">\(\bold{A}^T=-\bold{A}\)</span>的矩阵称为反对称矩�
 <p>满足以下两个条件</p>
 <ol type="1">
 <li>如果有零行（元素全为0的行），则零行位于非零行的下方</li>
-<li>非零行（元素不全为0的行）的首歌非零元素，其前面零元素的个数逐行增加。</li>
+<li>非零行（元素不全为0的行）的首个非零元素，其前面零元素的个数逐行增加。</li>
 </ol>
-<p>最简行阶梯型矩阵：进一步满足非零行的首非零元军委1，且所在列的其余元素为0.</p>
+<p>最简行阶梯型矩阵：进一步满足非零行的首非零元均为1，且所在列的其余元素为0.</p>
 <h4 id="初等矩阵">初等矩阵</h4>
 <p>由<span class="math inline">\(n\)</span>阶单位矩阵<span
 class="math inline">\(\bold{E}\)</span>经过一次初等变换所得到的矩阵称为初等矩阵或初等方阵。</p>
@@ -499,6 +499,7 @@ class="math inline">\(\bold{AA^*}=\bold{A^*A}=\bold{|A|E}\)</span></p>
 <p>并且可推知，当<span class="math inline">\(\bold{|A|}\ne
 0\)</span>时，有<span
 class="math inline">\(\bold{|A^*|}=\bold{|A|}^{n-1}\)</span></p>
+<p>另外注意，伴随矩阵的序号和原矩阵的序号相当于进行了转置。</p>
 <h4 id="正交矩阵">正交矩阵</h4>
 <p>见后</p>
 <h3 id="矩阵的运算">矩阵的运算</h3>
@@ -616,7 +617,6 @@ class="math inline">\(\bold{A},\bold{B}\)</span>都可逆，并且</p>
 <p><span class="math display">\[
 \bold{A}^{-1}=\bold{B},\bold{B}^{-1}=\bold{A}
 \]</span></p>
-<p>可逆矩阵的求法见行列式一章.</p>
 <h4 id="可逆矩阵的性质">可逆矩阵的性质</h4>
 <ol type="1">
 <li>若<span class="math inline">\(\bold{A}\)</span>可逆，则<span
@@ -637,6 +637,16 @@ class="math inline">\((\bold{A}\bold{B})^{-1}=\bold{B}^{-1}\bold{A}^{-1}\)</span
 class="math inline">\(\bold{A}^{T}\)</span>也可逆，并且<span
 class="math inline">\((\bold{A}^T)^{-1}=(\bold{A}^{-1})^{T}\)</span></li>
 </ol>
+<h4 id="逆矩阵的求法">逆矩阵的求法</h4>
+<ol type="1">
+<li>借用伴随矩阵和行列式，见行列式一章</li>
+<li>初等变换法</li>
+</ol>
+<p>设有方阵<span class="math inline">\(\bm
+A\)</span>，将其和同阶单位阵写在一起<span
+class="math inline">\((A,E)\)</span>，然后通过初等行变换（只能是行变换），化成<span
+class="math inline">\((E,A&#39;)\)</span>的形式，然后<span
+class="math inline">\(A&#39;\)</span>就是逆矩阵。</p>
 <h3 id="分块矩阵">分块矩阵</h3>
 <p>加减法、数乘、乘法与普通矩阵相似。转置时除了将整个矩阵，还要将每个元素本身转置。</p>
 <h3 id="初等变换">初等变换</h3>
@@ -751,6 +761,38 @@ class="math inline">\(\bold{E}_n\)</span></li>
 class="math inline">\(\bold{A}\)</span>不可以表示为有限个初等矩阵的乘积。</li>
 <li>特征值至少有一个为零</li>
 </ol>
+<h4 id="第三组">第三组</h4>
+<p>设<span
+class="math inline">\(f(x_1,\cdots,x_n)=\bm{x}^T\bm{Ax}\)</span>是<span
+class="math inline">\(n\)</span>远实二次型，则下列命题等价</p>
+<ol type="1">
+<li><span
+class="math inline">\(f=\bm{x}^T\bm{Ax}\)</span>是正定二次型，即<span
+class="math inline">\(\bm{A}\)</span>是正定矩阵</li>
+<li><span class="math inline">\(\bm{A}\)</span>的特征值均为正数</li>
+<li><span
+class="math inline">\(f=\bm{x}^T\bm{Ax}\)</span>的正惯性指数为<span
+class="math inline">\(n\)</span></li>
+<li><span class="math inline">\(\bm{A}\)</span>与单位矩阵<span
+class="math inline">\(\bm{E}\)</span>合同</li>
+<li>存在可逆矩阵<span class="math inline">\(\bm B\)</span>，使得<span
+class="math inline">\(\bm{A=B}^T\bm B\)</span></li>
+<li>顺序主子式均大于零</li>
+</ol>
+<h4 id="第四组">第四组</h4>
+<p>设<span
+class="math inline">\(f(x_1,\cdots,x_n)=\bm{x}^T\bm{Ax}\)</span>是<span
+class="math inline">\(n\)</span>远实二次型，则下列命题等价</p>
+<ol type="1">
+<li><span class="math inline">\(f\)</span>是负定二次型</li>
+<li><span class="math inline">\(f\)</span>的负惯性指数为<span
+class="math inline">\(n\)</span></li>
+<li><span class="math inline">\(\bm A\)</span>的特征值全为负数</li>
+<li><span class="math inline">\(\bm A\)</span>合同于<span
+class="math inline">\(-\bm E\)</span></li>
+<li><span class="math inline">\(\bm
+A\)</span>的奇数阶顺序主子式均为负数，偶数阶顺序主子式均为负数</li>
+</ol>
 <h2 id="行列式">行列式</h2>
 <h3 id="二阶行列式">二阶行列式</h3>
 <p><span class="math display">\[
@@ -810,7 +852,7 @@ class="math inline">\(|k\bold{A}|=k^n|\bold{A}|\)</span></li>
 <li>如果行列式中有两行（或两列）元素相同，则行列式为0.</li>
 <li>行列式中若有两行（或两列）对应元素成比例，则行列式为0</li>
 </ol></li>
-<li><p>若行列式某一行（或列）的元素是两项之和，则改行列式可以写成两个行列式之和，即</p></li>
+<li><p>若行列式某一行（或列）的元素是两项之和，则该行列式可以写成两个行列式之和，即</p></li>
 </ol>
 <p><span class="math display">\[
 \begin{vmatrix}
@@ -831,11 +873,11 @@ a_{i1} &amp; \cdots &amp; a_{ij} &amp; \cdots &amp; a_{in}\\
 a_{n1}  &amp; \cdots &amp; a_{nj} &amp; \cdots &amp; a_{nn}
 \end{vmatrix}+
 \begin{vmatrix}
-b_{11} &amp; \cdots &amp; b_{1j} &amp; \cdots &amp; b_{1n}\\
+a_{11} &amp; \cdots &amp; a_{1j} &amp; \cdots &amp; a_{1n}\\
 \vdots &amp; &amp; \vdots &amp;  &amp; \vdots\\
 b_{i1}  &amp; \cdots &amp; b_{ij} &amp; \cdots &amp; b_{in}\\
 \vdots &amp;  &amp; \vdots &amp;  &amp; \vdots\\
-b_{n1}  &amp; \cdots &amp; b_{nj} &amp; \cdots &amp; b_{nn}
+a_{n1}  &amp; \cdots &amp; a_{nj} &amp; \cdots &amp; a_{nn}
 \end{vmatrix}
 \]</span></p>
 <ol start="5" type="1">
@@ -895,7 +937,7 @@ D_2=|[\bold{a}_1,\bold{b},\bold{a}_3,\cdots,\bold{a}_n]|\\
 D_n=|[\bold{a}_1,\bold{a}_2,\bold{a}_3,\cdots,\bold{b}]|\\
 \]</span></p>
 <p>当<span
-class="math inline">\(D\ne0\)</span>时，该方程组游唯一解，其解为</p>
+class="math inline">\(D\ne0\)</span>时，该方程组有唯一解，其解为</p>
 <p><span class="math display">\[
 x_1=\frac{D_1}{D},x_2=\frac{D_2}{D},\cdots,x_n=\frac{D_n}{D}
 \]</span></p>
@@ -1039,6 +1081,20 @@ class="math inline">\(I\)</span>的秩不超过<span
 class="math inline">\(II\)</span>的秩；</li>
 <li>等价向量组的秩相等。</li>
 </ol>
+<h4 id="极大无关组表示其他向量">极大无关组表示其他向量</h4>
+<figure>
+<img src="1.jpg" alt="1.jpg" />
+<figcaption aria-hidden="true">1.jpg</figcaption>
+</figure>
+<p>转化为行最简形为</p>
+<figure>
+<img src="2.jpg" alt="2.jpg" />
+<figcaption aria-hidden="true">2.jpg</figcaption>
+</figure>
+<p>显然极大无关组是<span
+class="math inline">\(\alpha_1,\alpha_3,\alpha_5\)</span>。</p>
+<p>并且有<span
+class="math inline">\(\alpha_2=3\alpha_1,\alpha_4=-2\alpha_1+\alpha_3,\alpha_6=\alpha_1+2\alpha_3-\alpha_5\)</span></p>
 <h3 id="向量空间">向量空间</h3>
 <h4 id="向量空间的定义">向量空间的定义</h4>
 <p>设<span class="math inline">\(\bm{V}\)</span>是非空<span
@@ -1131,7 +1187,7 @@ class="math inline">\(\bm{\alpha}_1,\bm{\alpha}_2,\cdots,\bm{\alpha}_m\)</span>�
 \bm{\beta}_2=\bm{\alpha}_2-\frac{&lt;\bm{\alpha}_2,\bm{\beta}_1&gt;}{&lt;\bm{\beta}_1,\bm{\beta}_1&gt;}\bm{\beta}_1\\
 \bm{\beta}_3=\bm{\alpha}_3-\frac{&lt;\bm{\alpha}_3,\bm{\beta}_1&gt;}{&lt;\bm{\beta}_1,\bm{\beta}_1&gt;}\bm{\beta}_1-\frac{&lt;\bm{\alpha}_3,\bm{\beta}_2&gt;}{&lt;\bm{\beta}_2,\bm{\beta}_2&gt;}\bm{\beta}_2\\
 \cdots\\
-\bm{\beta}_n=\bm{\alpha}_m-\sum_{j=1}^{m-1}\frac{&lt;\bm{\alpha}_m,\bm{\beta}_j&gt;}{&lt;\bm{\beta}_j,\bm{\beta}_j&gt;}\bm{\beta}_j
+\bm{\beta}_m=\bm{\alpha}_m-\sum_{j=1}^{m-1}\frac{&lt;\bm{\alpha}_m,\bm{\beta}_j&gt;}{&lt;\bm{\beta}_j,\bm{\beta}_j&gt;}\bm{\beta}_j
 \]</span></p>
 <p>则<span
 class="math inline">\(\bm{\beta}_1,\bm{\beta}_2,\cdots,\bm{\beta}_m\)</span>是与<span
@@ -1632,6 +1688,86 @@ class="math inline">\(\bm \Lambda\)</span>，即</p>
 \]</span></p>
 <p>且有<span
 class="math inline">\(\bm{Q}^T\bm{AQ}=\bm\Lambda\)</span></p>
+<h4 id="二次型的规范型">二次型的规范型</h4>
+<p>设实二次型<span
+class="math inline">\(f(x_1,x_2,\cdots,x_n)\)</span>经过可逆线性变换转化为标准型</p>
+<p><span class="math display">\[
+f(x_1,x_2,\cdots,x_n)=d_1y_1^2+\cdots+d_py_p^2-d_{p+1}y_{p+1}^2-\cdots-d_ry_r^2
+\]</span></p>
+<p>其中<span class="math inline">\(r\)</span>是二次型的秩，<span
+class="math inline">\(d_i&gt;0\)</span>，则可以再做一次线性变换</p>
+<p><span class="math display">\[
+\left\{\begin{matrix}
+y_1=\frac{1}{\sqrt{d_1}}z_1 \\
+\vdots \\
+y_r = \frac{1}{\sqrt{d_r}}z_r \\
+y_{r+1}=z_{r+1} \\
+\vdots\\
+y_n=z_n         
+\end{matrix}\right.
+\]</span></p>
+<p>则得到</p>
+<p><span class="math display">\[
+f(x_1,x_2,\cdots,x_n)=z_1^2+\cdots+z_p^2-z_{p+1}^2-\cdots-z_r^2
+\]</span></p>
+<p>称为规范标准型，简称规范型。</p>
+<p>二次型的标准型是不唯一的，但规范标准型是唯一的（并且对于实二次型来说一定存在规范型）。这也被称作惯性定律。</p>
+<p>标准型中正平方项的个数<span
+class="math inline">\(p\)</span>称为正惯性指数，负平方项的个数<span
+class="math inline">\(q\)</span>称为负惯性指数。<span
+class="math inline">\(p-q\)</span>称为二次型的符号差。</p>
+<p>并且有如下定理</p>
+<p><strong>定理</strong></p>
+<p><span class="math display">\[
+\begin{bmatrix}
+\bm{E}_p  &amp;  &amp; \\
+  &amp; -\bm{E}_q &amp; \\
+  &amp;  &amp; \bm{0}
+\end{bmatrix}
+\]</span></p>
+<h3 id="正定二次型">正定二次型</h3>
+<p>对于任何非零（强调非零）向量<span
+class="math inline">\(\bm{x}=(x_1,\cdots,x_n)\)</span>都有</p>
+<p><span class="math display">\[
+f(x_1,\cdots,x_n)=\bm{x}^T\bm{Ax}&gt;0(&lt;0)
+\]</span></p>
+<p>则称<span class="math inline">\(f\)</span>是正定（负定）二次型，<span
+class="math inline">\(\bm{A}\)</span>称为正定（负定）矩阵。</p>
+<p>如果上式取<span
+class="math inline">\(\ge(\leq)\)</span>，则为半正定（半负定）二次型。</p>
+<p>如果<span
+class="math inline">\(f\)</span>既不是半正定的，也不是半负定的，则称为不定的。</p>
+<p>有如下定理</p>
+<p><strong>定理1</strong></p>
+<p>可逆的线性变换不改变二次型的正定性</p>
+<p><strong>定理2</strong></p>
+<p><span class="math inline">\(\bm{A,B}\)</span>合同，则<span
+class="math inline">\(\bm{A}\)</span>正定的充要条件是<span
+class="math inline">\(\bm{B}\)</span>正定。</p>
+<p><strong>定理3</strong></p>
+<p>若<span class="math inline">\(\bm A\)</span>是<span
+class="math inline">\(n\)</span>阶正定矩阵，则 1. <span
+class="math inline">\(\bm A\)</span>的主对角线元<span
+class="math inline">\(a_{ii}&gt;0\)</span> 2. <span
+class="math inline">\(|\bm A|&gt;0\)</span></p>
+<p><strong><span
+class="math inline">\(k\)</span>阶顺序主子式</strong></p>
+<p>设<span class="math inline">\(\bm A\)</span>为<span
+class="math inline">\(n\)</span>阶方阵，依次取<span
+class="math inline">\(\bm A\)</span>的前<span
+class="math inline">\(k\)</span>行与前<span
+class="math inline">\(k\)</span>列所构成的子式的行列式称为矩阵<span
+class="math inline">\(\bm A\)</span>的<span
+class="math inline">\(k\)</span>阶顺序主子式。</p>
+<p>显然<span class="math inline">\(n\)</span>阶方阵<span
+class="math inline">\(\bm A\)</span>的顺序主子式有且只有<span
+class="math inline">\(n\)</span>个。</p>
+<p>有如下定理</p>
+<p><strong>霍尔维茨定理</strong></p>
+<p><span class="math inline">\(n\)</span>元实二次型<span
+class="math inline">\(f=\bm{x}^T\bm{Ax}\)</span>正定的充要条件是<span
+class="math inline">\(\bm A\)</span>的<span
+class="math inline">\(n\)</span>个顺序主子式均大于零。</p>
 
 </section>
 
