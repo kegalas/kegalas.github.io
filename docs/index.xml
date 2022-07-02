@@ -6,13 +6,17 @@
         <description>Recent content on KegalaS的个人博客</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Tue, 28 Jun 2022 12:14:24 +0800</lastBuildDate><atom:link href="https://kegalas.top/index.xml" rel="self" type="application/rss+xml" /><item>
-        <title>图形学基础 Chapter8</title>
-        <link>https://kegalas.top/p/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80-chapter8/</link>
-        <pubDate>Tue, 28 Jun 2022 12:14:24 +0800</pubDate>
+        <lastBuildDate>Fri, 01 Jul 2022 12:05:59 +0800</lastBuildDate><atom:link href="https://kegalas.top/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>MSYS2报错David Macek is unknown trust</title>
+        <link>https://kegalas.top/p/msys2%E6%8A%A5%E9%94%99david-macek-is-unknown-trust/</link>
+        <pubDate>Fri, 01 Jul 2022 12:05:59 +0800</pubDate>
         
-        <guid>https://kegalas.top/p/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80-chapter8/</guid>
-        <description>
+        <guid>https://kegalas.top/p/msys2%E6%8A%A5%E9%94%99david-macek-is-unknown-trust/</guid>
+        <description>&lt;p&gt;在MSYS2中安装程序时遇到如下问题：&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;error: mingw-w64-x86_64-mpc: signature from &amp;#34;David Macek &amp;lt;david.macek.0@gmail.com&amp;gt;&amp;#34; is unknown trust
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;尝试通过&lt;a class=&#34;link&#34; href=&#34;https://packages.msys2.org/package/msys2-keyring?repo=msys&amp;amp;variant=x86_64&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://packages.msys2.org/&lt;/a&gt;中提供的方法，安装了key，解决问题。&lt;/p&gt;
+&lt;p&gt;或者直接输入pacman -S msys2-keyring&lt;/p&gt;
 </description>
         </item>
         <item>
@@ -116,7 +120,11 @@ first,\bm v_2=\bm{Sv}_1,then,\bm v_3=\bm{Sv}_2
 &lt;p&gt;则&lt;span
 class=&#34;math inline&#34;&gt;\(\bm{M=RS}\)&lt;/span&gt;就是复合变换，其中变换顺序是从右到左的。&lt;/p&gt;
 &lt;h2 id=&#34;线性变换的拆分&#34;&gt;线性变换的拆分&lt;/h2&gt;
-&lt;p&gt;TODO&lt;/p&gt;
+&lt;p&gt;例如，有一个&lt;span class=&#34;math inline&#34;&gt;\(2\times
+2\)&lt;/span&gt;正方形的左下角在点&lt;span
+class=&#34;math inline&#34;&gt;\((1,1)\)&lt;/span&gt;处，我们想要将它绕&lt;span
+class=&#34;math inline&#34;&gt;\((1,1)\)&lt;/span&gt;旋转&lt;span
+class=&#34;math inline&#34;&gt;\(\phi\)&lt;/span&gt;度，我们就可以拆分成三个变换。首先，左下角平移到原点；然后，进行旋转；最后再平移回去。&lt;/p&gt;
 &lt;h2 id=&#34;三维线性变换&#34;&gt;三维线性变换&lt;/h2&gt;
 &lt;p&gt;总体来说，三维线性变换就是二维的扩展&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
@@ -159,7 +167,21 @@ shear-x(d_y,d_z)=
 0 &amp;amp; 0 &amp;amp; 1
 \end{bmatrix}
 \]&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;未完待续&lt;/p&gt;
+&lt;p&gt;如果要绕过原点的固定轴&lt;span class=&#34;math inline&#34;&gt;\(\bm
+n\)&lt;/span&gt;旋转，可以有罗德里格斯公式如下&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\bm R(\bm n,\alpha) = cos(\alpha)\bm
+I+(1-cos(\alpha))\bm{nn}^T+sin(\alpha)\bm N
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(\bm I\)&lt;/span&gt;是单位矩阵，&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\bm N=
+\begin{bmatrix}
+0  &amp;amp; -n_z &amp;amp; n_y\\
+n_z  &amp;amp; 0 &amp;amp; -n_x\\
+-n_y  &amp;amp; n_x &amp;amp; 0
+\end{bmatrix}
+\]&lt;/span&gt;&lt;/p&gt;
 &lt;h2 id=&#34;平移&#34;&gt;平移&lt;/h2&gt;
 &lt;p&gt;平移不能被写作矩阵的形式，所以它不是线性变换。&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
@@ -263,7 +285,7 @@ y\\
 &lt;h2 id=&#34;逆变换&#34;&gt;逆变换&lt;/h2&gt;
 &lt;p&gt;变换&lt;span class=&#34;math inline&#34;&gt;\(\bm M^{-1}\)&lt;/span&gt;是变换&lt;span
 class=&#34;math inline&#34;&gt;\(\bm M\)&lt;/span&gt;在矩阵和几何意义上的逆变换。&lt;/p&gt;
-&lt;p&gt;TODO&lt;/p&gt;
+&lt;p&gt;显然，根据变换的复合，变换和其逆变换的复合相当于没变，两个变换矩阵的乘积是单位矩阵。故逆变换矩阵是变换矩阵的逆矩阵。&lt;/p&gt;
 &lt;h2 id=&#34;坐标变换&#34;&gt;坐标变换&lt;/h2&gt;
 &lt;p&gt;TODO&lt;/p&gt;
 </description>

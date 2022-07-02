@@ -362,7 +362,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 2 分钟
+                    阅读时长: 3 分钟
                 </time>
             </div>
         
@@ -467,7 +467,11 @@ first,\bm v_2=\bm{Sv}_1,then,\bm v_3=\bm{Sv}_2
 <p>则<span
 class="math inline">\(\bm{M=RS}\)</span>就是复合变换，其中变换顺序是从右到左的。</p>
 <h2 id="线性变换的拆分">线性变换的拆分</h2>
-<p>TODO</p>
+<p>例如，有一个<span class="math inline">\(2\times
+2\)</span>正方形的左下角在点<span
+class="math inline">\((1,1)\)</span>处，我们想要将它绕<span
+class="math inline">\((1,1)\)</span>旋转<span
+class="math inline">\(\phi\)</span>度，我们就可以拆分成三个变换。首先，左下角平移到原点；然后，进行旋转；最后再平移回去。</p>
 <h2 id="三维线性变换">三维线性变换</h2>
 <p>总体来说，三维线性变换就是二维的扩展</p>
 <p><span class="math display">\[
@@ -510,7 +514,21 @@ shear-x(d_y,d_z)=
 0 &amp; 0 &amp; 1
 \end{bmatrix}
 \]</span></p>
-<p>未完待续</p>
+<p>如果要绕过原点的固定轴<span class="math inline">\(\bm
+n\)</span>旋转，可以有罗德里格斯公式如下</p>
+<p><span class="math display">\[
+\bm R(\bm n,\alpha) = cos(\alpha)\bm
+I+(1-cos(\alpha))\bm{nn}^T+sin(\alpha)\bm N
+\]</span></p>
+<p>其中<span class="math inline">\(\bm I\)</span>是单位矩阵，</p>
+<p><span class="math display">\[
+\bm N=
+\begin{bmatrix}
+0  &amp; -n_z &amp; n_y\\
+n_z  &amp; 0 &amp; -n_x\\
+-n_y  &amp; n_x &amp; 0
+\end{bmatrix}
+\]</span></p>
 <h2 id="平移">平移</h2>
 <p>平移不能被写作矩阵的形式，所以它不是线性变换。</p>
 <p><span class="math display">\[
@@ -614,7 +632,7 @@ y\\
 <h2 id="逆变换">逆变换</h2>
 <p>变换<span class="math inline">\(\bm M^{-1}\)</span>是变换<span
 class="math inline">\(\bm M\)</span>在矩阵和几何意义上的逆变换。</p>
-<p>TODO</p>
+<p>显然，根据变换的复合，变换和其逆变换的复合相当于没变，两个变换矩阵的乘积是单位矩阵。故逆变换矩阵是变换矩阵的逆矩阵。</p>
 <h2 id="坐标变换">坐标变换</h2>
 <p>TODO</p>
 
@@ -677,18 +695,6 @@ class="math inline">\(\bm M\)</span>在矩阵和几何意义上的逆变换。</
         <h2 class="section-title">相关文章</h2>
         <div class="related-contents">
             <div class="flex article-list--tile">
-                
-                    
-<article class="">
-    <a href="/p/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80-chapter8/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">图形学基础 Chapter8</h2>
-        </div>
-    </a>
-</article>
                 
                     
 <article class="">
