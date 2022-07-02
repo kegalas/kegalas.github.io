@@ -20,6 +20,173 @@
 </description>
         </item>
         <item>
+        <title>计算机图形学基础（第五版）-第八章笔记</title>
+        <link>https://kegalas.top/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E7%AC%AC%E4%BA%94%E7%89%88-%E7%AC%AC%E5%85%AB%E7%AB%A0%E7%AC%94%E8%AE%B0/</link>
+        <pubDate>Tue, 28 Jun 2022 12:14:24 +0800</pubDate>
+        
+        <guid>https://kegalas.top/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E7%AC%AC%E4%BA%94%E7%89%88-%E7%AC%AC%E5%85%AB%E7%AB%A0%E7%AC%94%E8%AE%B0/</guid>
+        <description>&lt;h2 id=&#34;viewing-transformations&#34;&gt;Viewing Transformations&lt;/h2&gt;
+&lt;h3 id=&#34;视口变换viewport-transformation&#34;&gt;视口变换（Viewport
+Transformation）&lt;/h3&gt;
+&lt;p&gt;将&lt;span
+class=&#34;math inline&#34;&gt;\([-1,1]^2\)&lt;/span&gt;的正方形映射到屏幕上。这个屏幕宽&lt;span
+class=&#34;math inline&#34;&gt;\(n_x\)&lt;/span&gt;像素，高&lt;span
+class=&#34;math inline&#34;&gt;\(n_y\)&lt;/span&gt;像素。并且由于左下角像素中心点位置为原点，我们要有负0.5个像素，即映射到&lt;span
+class=&#34;math inline&#34;&gt;\([-0.5,n_x-0.5]\times[-0.5,n_y-0.5]\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;需要如下变换&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\begin{bmatrix}
+x_{screen} \\
+y_{screen} \\
+1
+\end{bmatrix}=
+\begin{bmatrix}
+n_x/2  &amp;amp; 0 &amp;amp; (n_x-1)/2\\
+0  &amp;amp; n_y/2 &amp;amp; (n_y-1)/2\\
+0  &amp;amp; 0 &amp;amp; 1
+\end{bmatrix}
+\begin{bmatrix}
+x_{canonical}\\
+y_{canonical}\\
+1
+\end{bmatrix}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;三维形式有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+M_{vp}=
+\begin{bmatrix}
+n_x/2 &amp;amp; 0 &amp;amp; 0 &amp;amp; (n_x-1)/2\\
+0  &amp;amp; n_y/2  &amp;amp; 0 &amp;amp; (n_y-1)/2\\
+0  &amp;amp; 0 &amp;amp; 1 &amp;amp;0\\
+0 &amp;amp; 0 &amp;amp; 0 &amp;amp; 1
+\end{bmatrix}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h3
+id=&#34;正交投影变换orthographic-projection-transformation&#34;&gt;正交投影变换（Orthographic
+Projection Transformation）&lt;/h3&gt;
+&lt;p&gt;将一个&lt;span
+class=&#34;math inline&#34;&gt;\([l,r]\times[b,t]\times[f,n]\)&lt;/span&gt;矩阵变换到&lt;span
+class=&#34;math inline&#34;&gt;\([-1,1]^3\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(l\)&lt;/span&gt;即left是&lt;span
+class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;坐标小的平面，&lt;span
+class=&#34;math inline&#34;&gt;\(r\)&lt;/span&gt;即right是&lt;span
+class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;坐标大的平面。&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(b\)&lt;/span&gt;即bottom是&lt;span
+class=&#34;math inline&#34;&gt;\(y\)&lt;/span&gt;坐标小的平面，&lt;span
+class=&#34;math inline&#34;&gt;\(t\)&lt;/span&gt;即top是&lt;span
+class=&#34;math inline&#34;&gt;\(y\)&lt;/span&gt;坐标大的平面。&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;即far是&lt;span
+class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;坐标小的平面，&lt;span
+class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;即near是&lt;span
+class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;坐标大的平面。&lt;/p&gt;
+&lt;p&gt;注意&lt;span
+class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;可能与常识不太相同，因为我们的相机所看的方向是&lt;span
+class=&#34;math inline&#34;&gt;\(-z\)&lt;/span&gt;方向。&lt;/p&gt;
+&lt;p&gt;这也导致了OpenGL使用左手坐标系。&lt;/p&gt;
+&lt;p&gt;完成这个变换的矩阵是&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\begin{bmatrix}
+\frac{2}{r-l}  &amp;amp; 0 &amp;amp; 0 &amp;amp; 0\\
+0  &amp;amp; \frac{2}{t-b} &amp;amp; 0 &amp;amp; 0\\
+0  &amp;amp; 0 &amp;amp; \frac{2}{n-f} &amp;amp; 0\\
+0  &amp;amp; 0 &amp;amp; 0 &amp;amp; 1
+\end{bmatrix}
+\begin{bmatrix}
+1  &amp;amp; 0 &amp;amp; 0 &amp;amp; -\frac{r+l}{2}\\
+0  &amp;amp; 1 &amp;amp; 0 &amp;amp; -\frac{t+b}{2}\\
+0  &amp;amp; 0 &amp;amp; 1 &amp;amp; -\frac{n+f}{2}\\
+0  &amp;amp; 0 &amp;amp; 0 &amp;amp; 1
+\end{bmatrix}=
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\begin{bmatrix}
+\frac{2}{r-l}  &amp;amp; 0 &amp;amp; 0 &amp;amp; -\frac{r+l}{r-l}\\
+0  &amp;amp; \frac{2}{t-b} &amp;amp; 0 &amp;amp; -\frac{t+b}{t-b}\\
+0  &amp;amp; 0 &amp;amp; \frac{2}{n-f} &amp;amp; -\frac{n+f}{n-f}\\
+0  &amp;amp; 0 &amp;amp; 0 &amp;amp; 1
+\end{bmatrix}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;相机变换camera-transformation&#34;&gt;相机变换（Camera
+Transformation）&lt;/h3&gt;
+&lt;p&gt;首先知道三个向量：&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(\bm e\)&lt;/span&gt;，相机位置（eye
+position）向量&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(\hat{\bm
+g}\)&lt;/span&gt;，相机视线（gaze）方向。&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(\hat{\bm
+t}\)&lt;/span&gt;，相机头顶方向。（和视线方向正交）&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;我们要将相机位置变换到原点，将视线方向定为&lt;span
+class=&#34;math inline&#34;&gt;\(-z\)&lt;/span&gt;方向，头顶方向为&lt;span
+class=&#34;math inline&#34;&gt;\(y\)&lt;/span&gt;方向。同时所有物体都跟随相机变换，最终结果相机看到的画面不变。&lt;/p&gt;
+&lt;p&gt;首先，显然的，将相机位置变换到原点的矩阵是&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+T_{view}
+\begin{bmatrix}
+1  &amp;amp; 0 &amp;amp; 0 &amp;amp; -x_e\\
+0  &amp;amp; 1 &amp;amp; 0 &amp;amp; -y_e\\
+0  &amp;amp; 0 &amp;amp; 1 &amp;amp; -z_e\\
+0  &amp;amp; 0 &amp;amp; 0 &amp;amp; 1
+\end{bmatrix}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;然后对两个另外两个向量进行旋转，直接想不太方便，可以反过来由&lt;span
+class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;和&lt;span
+class=&#34;math inline&#34;&gt;\(y\)&lt;/span&gt;变换到&lt;span class=&#34;math inline&#34;&gt;\(-\hat
+g\)&lt;/span&gt;和&lt;span class=&#34;math inline&#34;&gt;\(\hat t\)&lt;/span&gt;，&lt;span
+class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;变换到&lt;span class=&#34;math inline&#34;&gt;\(\hat
+g\times \hat t\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+R_{view}^{-1}=
+\begin{bmatrix}
+x_{\hat g\times \hat t}  &amp;amp; x_{\hat t} &amp;amp; x_{-\hat{g}} &amp;amp; 0\\
+y_{\hat g\times \hat t}  &amp;amp; y_{\hat t} &amp;amp; y_{-\hat{g}} &amp;amp; 0\\
+z_{\hat g\times \hat t}  &amp;amp; z_{\hat t} &amp;amp; z_{-\hat{g}} &amp;amp; 0\\
+0  &amp;amp; 0 &amp;amp; 0 &amp;amp; 1
+\end{bmatrix}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;然后再得到逆变换，由于这是个正交矩阵，逆矩阵就是转置矩阵&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+R_{view}=
+\begin{bmatrix}
+x_{\hat g\times \hat t}  &amp;amp; y_{\hat g\times \hat t} &amp;amp; z_{\hat
+g\times \hat t} &amp;amp; 0\\
+x_{\hat t}  &amp;amp; y_{\hat t} &amp;amp; z_{\hat t} &amp;amp; 0\\
+x_{-\hat{g}}  &amp;amp; y_{-\hat{g}} &amp;amp; z_{-\hat{g}} &amp;amp; 0\\
+0  &amp;amp; 0 &amp;amp; 0 &amp;amp; 1
+\end{bmatrix}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h2 id=&#34;透视投影perspective-projection&#34;&gt;透视投影（Perspective
+Projection）&lt;/h2&gt;
+&lt;p&gt;由透视投影变换到正交投影，矩阵如下&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+P=
+\begin{bmatrix}
+n  &amp;amp; 0 &amp;amp; 0 &amp;amp; 0\\
+0  &amp;amp; n &amp;amp; 0 &amp;amp; 0\\
+0  &amp;amp; 0 &amp;amp; n+f &amp;amp; -fn\\
+0  &amp;amp; 0 &amp;amp; 1 &amp;amp; 0
+\end{bmatrix}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;直观上的理解就是，将视锥中远平面压小到等于近平面。&lt;/p&gt;
+&lt;h2 id=&#34;视野field-of-view&#34;&gt;视野（Field-of-View）&lt;/h2&gt;
+&lt;p&gt;通常，对于近平面，我们可以用&lt;span
+class=&#34;math inline&#34;&gt;\(l,r,b,t\)&lt;/span&gt;描述（假设&lt;span
+class=&#34;math inline&#34;&gt;\(l=-r,b=-t\)&lt;/span&gt;，即平面中心位于&lt;span
+class=&#34;math inline&#34;&gt;\(-z\)&lt;/span&gt;轴上，且平面与&lt;span
+class=&#34;math inline&#34;&gt;\(-z\)&lt;/span&gt;垂直），也可以用垂直视野&lt;span
+class=&#34;math inline&#34;&gt;\(fovY\)&lt;/span&gt;和近平面的宽高比来表示。&lt;/p&gt;
+&lt;p&gt;首先相机到近平面的距离为&lt;span
+class=&#34;math inline&#34;&gt;\(|n|\)&lt;/span&gt;，则有如下关系&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+tan\frac{fovY}{2} = \frac{t}{|n|}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+aspect = \frac{r}{t}
+\]&lt;/span&gt;&lt;/p&gt;
+</description>
+        </item>
+        <item>
         <title>计算机图形学基础（第五版）-第七章笔记</title>
         <link>https://kegalas.top/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E7%AC%AC%E4%BA%94%E7%89%88-%E7%AC%AC%E4%B8%83%E7%AB%A0%E7%AC%94%E8%AE%B0/</link>
         <pubDate>Mon, 27 Jun 2022 16:25:19 +0800</pubDate>
