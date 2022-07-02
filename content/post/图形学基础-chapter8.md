@@ -1,11 +1,164 @@
 ---
-title: "图形学基础 Chapter8"
+title: "计算机图形学基础（第五版）-第八章笔记"
 date: 2022-06-28T12:14:24+08:00
-draft: true
+draft: false
 tags: [图形学]
 categories: 图形学
 mathjax: true
 markup: pandoc
 ---
 
+## Viewing Transformations
+
+### 视口变换（Viewport Transformation）
+
+将$[-1,1]^2$的正方形映射到屏幕上。这个屏幕宽$n_x$像素，高$n_y$像素。并且由于左下角像素中心点位置为原点，我们要有负0.5个像素，即映射到$[-0.5,n_x-0.5]\times[-0.5,n_y-0.5]$
+
+需要如下变换
+
+$$
+\begin{bmatrix}
+x_{screen} \\
+y_{screen} \\
+1
+\end{bmatrix}=
+\begin{bmatrix}
+n_x/2  & 0 & (n_x-1)/2\\
+0  & n_y/2 & (n_y-1)/2\\
+0  & 0 & 1
+\end{bmatrix}
+\begin{bmatrix}
+x_{canonical}\\
+y_{canonical}\\
+1
+\end{bmatrix}
+$$
+
+三维形式有
+
+$$
+M_{vp}=
+\begin{bmatrix}
+n_x/2 & 0 & 0 & (n_x-1)/2\\
+0  & n_y/2  & 0 & (n_y-1)/2\\
+0  & 0 & 1 &0\\
+0 & 0 & 0 & 1
+\end{bmatrix}
+$$
+
+### 正交投影变换（Orthographic Projection Transformation）
+
+将一个$[l,r]\times[b,t]\times[f,n]$矩阵变换到$[-1,1]^3$。
+
+其中$l$即left是$x$坐标小的平面，$r$即right是$x$坐标大的平面。
+
+其中$b$即bottom是$y$坐标小的平面，$t$即top是$y$坐标大的平面。
+
+其中$f$即far是$z$坐标小的平面，$n$即near是$z$坐标大的平面。
+
+注意$z$可能与常识不太相同，因为我们的相机所看的方向是$-z$方向。
+
+这也导致了OpenGL使用左手坐标系。
+
+完成这个变换的矩阵是
+
+$$
+\begin{bmatrix}
+\frac{2}{r-l}  & 0 & 0 & 0\\
+0  & \frac{2}{t-b} & 0 & 0\\
+0  & 0 & \frac{2}{n-f} & 0\\
+0  & 0 & 0 & 1
+\end{bmatrix}
+\begin{bmatrix}
+1  & 0 & 0 & -\frac{r+l}{2}\\
+0  & 1 & 0 & -\frac{t+b}{2}\\
+0  & 0 & 1 & -\frac{n+f}{2}\\
+0  & 0 & 0 & 1
+\end{bmatrix}=
+$$
+
+$$
+\begin{bmatrix}
+\frac{2}{r-l}  & 0 & 0 & -\frac{r+l}{r-l}\\
+0  & \frac{2}{t-b} & 0 & -\frac{t+b}{t-b}\\
+0  & 0 & \frac{2}{n-f} & -\frac{n+f}{n-f}\\
+0  & 0 & 0 & 1
+\end{bmatrix}
+$$
+
+### 相机变换（Camera Transformation）
+
+首先知道三个向量：
+
+1. $\bm e$，相机位置（eye position）向量
+2. $\hat{\bm g}$，相机视线（gaze）方向。
+3. $\hat{\bm t}$，相机头顶方向。（和视线方向正交）
+
+我们要将相机位置变换到原点，将视线方向定为$-z$方向，头顶方向为$y$方向。同时所有物体都跟随相机变换，最终结果相机看到的画面不变。
+
+首先，显然的，将相机位置变换到原点的矩阵是
+
+$$
+T_{view}
+\begin{bmatrix}
+1  & 0 & 0 & -x_e\\
+0  & 1 & 0 & -y_e\\
+0  & 0 & 1 & -z_e\\
+0  & 0 & 0 & 1
+\end{bmatrix}
+$$
+
+然后对两个另外两个向量进行旋转，直接想不太方便，可以反过来由$z$和$y$变换到$-\hat g$和$\hat t$，$x$变换到$\hat g\times \hat t$
+
+$$
+R_{view}^{-1}=
+\begin{bmatrix}
+x_{\hat g\times \hat t}  & x_{\hat t} & x_{-\hat{g}} & 0\\
+y_{\hat g\times \hat t}  & y_{\hat t} & y_{-\hat{g}} & 0\\
+z_{\hat g\times \hat t}  & z_{\hat t} & z_{-\hat{g}} & 0\\
+0  & 0 & 0 & 1
+\end{bmatrix}
+$$
+
+然后再得到逆变换，由于这是个正交矩阵，逆矩阵就是转置矩阵
+
+$$
+R_{view}=
+\begin{bmatrix}
+x_{\hat g\times \hat t}  & y_{\hat g\times \hat t} & z_{\hat g\times \hat t} & 0\\
+x_{\hat t}  & y_{\hat t} & z_{\hat t} & 0\\
+x_{-\hat{g}}  & y_{-\hat{g}} & z_{-\hat{g}} & 0\\
+0  & 0 & 0 & 1
+\end{bmatrix}
+$$
+
+## 透视投影（Perspective Projection）
+
+由透视投影变换到正交投影，矩阵如下
+
+$$
+P=
+\begin{bmatrix}
+n  & 0 & 0 & 0\\
+0  & n & 0 & 0\\
+0  & 0 & n+f & -fn\\
+0  & 0 & 1 & 0
+\end{bmatrix}
+$$
+
+直观上的理解就是，将视锥中远平面压小到等于近平面。
+
+## 视野（Field-of-View）
+
+通常，对于近平面，我们可以用$l,r,b,t$描述（假设$l=-r,b=-t$，即平面中心位于$-z$轴上，且平面与$-z$垂直），也可以用垂直视野$fovY$和近平面的宽高比来表示。
+
+首先相机到近平面的距离为$|n|$，则有如下关系
+
+$$
+tan\frac{fovY}{2} = \frac{t}{|n|}
+$$
+
+$$
+aspect = \frac{r}{t}
+$$
 
