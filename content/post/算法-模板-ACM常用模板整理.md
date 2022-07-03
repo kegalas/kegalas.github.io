@@ -2186,3 +2186,152 @@ int main(){
     return 0;
 }
 ```
+
+## 倍增
+
+### ST表
+
+对于经典的RMQ（即给定一个数组，求区间内的最大值）问题，有如下代码
+
+```cpp
+//luogu P3865
+#include <cstdio>
+#include <iostream>
+
+const int MAXN = 100005;
+const int LOGN = 21;
+
+int fmax[MAXN][LOGN+1];
+int logn[MAXN];
+
+int main(){
+    int n,m;
+    scanf("%d%d",&n,&m);
+
+    for(int i=1;i<=n;i++){
+        scanf("%d",&fmax[i][0]);
+    }
+
+    logn[1] = 0;
+    logn[2] = 1;
+
+    for(int i=3;i<MAXN;i++){
+        logn[i] = logn[i/2]+1;
+    }
+
+    for(int j=1;j<=LOGN;j++){
+        for(int i=1;i+(1<<j)-1<=n;i++){
+            fmax[i][j] = std::max(fmax[i][j-1],fmax[i+(1<<(j-1))][j-1]);
+        }
+    }
+
+    for(int i=1;i<=m;i++){
+        int a,b;
+        scanf("%d%d",&a,&b);
+        int s = logn[b-a+1];
+        printf("%d\n",std::max(fmax[a][s],fmax[b-(1<<s)+1][s]));
+    }
+
+
+
+    return 0;
+}
+```
+
+### 倍增求最近公共祖先
+
+```cpp
+//luogu P3379
+#include <iostream>
+#include <vector>
+#include <cstdio>
+
+const int MAXN = 500005;
+const int LOGN = 31;
+
+std::vector<int> edge[MAXN];
+int fa[MAXN][LOGN],deep[MAXN];
+
+void build(int v,int father){
+    fa[v][0] = father;
+    deep[v] = deep[father]+1;
+
+    for(int i=1;i<LOGN;i++){
+        fa[v][i] = fa[fa[v][i-1]][i-1];
+    }
+
+    for(auto v1:edge[v]){
+        if(v1==father) continue;
+        build(v1,v);
+    }
+}
+
+int lca(int x,int y){
+    if(deep[x]>deep[y]) std::swap(x,y);
+
+    int tmp = deep[y]-deep[x];
+    for(int i=0;tmp;i++,tmp>>=1){
+        if(tmp&1) y=fa[y][i];
+    }
+
+    if(x==y) return y;
+
+    for(int i=LOGN-1;i>=0&&y!=x;i--){
+        if(fa[x][i]!=fa[y][i]){
+            x = fa[x][i];
+            y = fa[y][i];
+        }
+    }
+
+    return fa[y][0];
+}
+
+int main(){
+    int n,m,s;
+    scanf("%d%d%d",&n,&m,&s);
+
+    for(int i=1;i<=n-1;i++){
+        int a,b;
+        scanf("%d%d",&a,&b);
+        edge[a].push_back(b);
+        edge[b].push_back(a);
+    }
+
+    build(s,0);
+
+    for(int i=1;i<=m;i++){
+        int x,y;
+        scanf("%d%d",&x,&y);
+        printf("%d\n",lca(x,y));
+    }
+
+    return 0;
+}
+
+```
+
+## 二分
+
+### 二分答案
+
+给出一个通用代码
+
+```cpp
+int l = 0;
+int r = MAXR;
+
+while(l+1<r){
+    int mid = (l+r)>>1;
+    if(judge(mid)) l=mid;
+    else r = mid;
+}
+
+if(judge(l)) std::cout<<l<<"\n";
+else std::cout<<r<<"\n";
+```
+judge函数应该根据题意写出。
+
+如果是浮点数的二分，则不推荐使用EPS进行精度判断（有可能会丢精度）。而是使用计数器，一般迭代100次就能保证符合题目要求。
+
+
+
