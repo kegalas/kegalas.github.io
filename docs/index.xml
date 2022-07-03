@@ -6,7 +6,88 @@
         <description>Recent content on KegalaS的个人博客</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Fri, 01 Jul 2022 12:05:59 +0800</lastBuildDate><atom:link href="https://kegalas.top/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sun, 03 Jul 2022 15:21:12 +0800</lastBuildDate><atom:link href="https://kegalas.top/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>计算机图形学基础（第五版）-第九章笔记</title>
+        <link>https://kegalas.top/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E7%AC%AC%E4%BA%94%E7%89%88-%E7%AC%AC%E4%B9%9D%E7%AB%A0%E7%AC%94%E8%AE%B0/</link>
+        <pubDate>Sun, 03 Jul 2022 15:21:12 +0800</pubDate>
+        
+        <guid>https://kegalas.top/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E7%AC%AC%E4%BA%94%E7%89%88-%E7%AC%AC%E4%B9%9D%E7%AB%A0%E7%AC%94%E8%AE%B0/</guid>
+        <description>&lt;h2 id=&#34;光栅化&#34;&gt;光栅化&lt;/h2&gt;
+&lt;h3 id=&#34;线段绘制&#34;&gt;线段绘制&lt;/h3&gt;
+&lt;p&gt;对于一条给定线段&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+f(x,y)\equiv(y_0-y_1)x+(x_1-x_0)y+x_0y_1-x_1y_0=0
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;假设&lt;span class=&#34;math inline&#34;&gt;\(x_0\leq
+x_1\)&lt;/span&gt;，否则交换两个点。&lt;/p&gt;
+&lt;p&gt;设&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+m=\frac{y_1-y_0}{x_1-x_0}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;下面的讨论建立在&lt;span class=&#34;math inline&#34;&gt;\(m\in
+(0,1]\)&lt;/span&gt;上，其他的取值情况类似。&lt;/p&gt;
+&lt;p&gt;给出伪代码如下&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;y=y0
+
+for x=x0 to x1 do
+    draw(x,y)
+    if(some condition) then
+        y = y+1
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(x,y\)&lt;/span&gt;都取整数。&lt;/p&gt;
+&lt;p&gt;一种判断&lt;span
+class=&#34;math inline&#34;&gt;\(y=y+1\)&lt;/span&gt;的方法是，假设当前画出来的点的坐标（而不是序号下标）是&lt;span
+class=&#34;math inline&#34;&gt;\((x,y)\)&lt;/span&gt;（根据本书的规则，左下角的像素的中心点是原点），则下一个要画的点只有两种情况，要么是右边的点，要么是右上角的点。即&lt;span
+class=&#34;math inline&#34;&gt;\((x+1,y),(x+1,y+1)\)&lt;/span&gt;，我们取中点，即&lt;span
+class=&#34;math inline&#34;&gt;\((x+1,y+0.5)\)&lt;/span&gt;，如果直线在这个点的下方，则画右边的点；如果直线在这个点的上方，则画右上方的点。&lt;/p&gt;
+&lt;p&gt;如果直线在上方（或者点在下方），那么&lt;span
+class=&#34;math inline&#34;&gt;\(f(x+1,y+0.5)&amp;lt;0\)&lt;/span&gt;，在下方则大于0.如果刚好等于零，可以任意画。&lt;/p&gt;
+&lt;p&gt;所以可以写伪代码如下&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;if f(x+1,y+0.5)&amp;lt;0 then
+    y=y+1&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;对于这个算法有优化的办法。主要是针对每次都要调用&lt;span
+class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;计算来进行的优化。&lt;/p&gt;
+&lt;p&gt;注意到我们可能计算过&lt;span
+class=&#34;math inline&#34;&gt;\(f(x-1,y+0.5),f(x-1,y-0.5)\)&lt;/span&gt;，并且我们有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+f(x+1,y)=f(x,y)+(y_0-y_1)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+f(x+1,y+1) = f(x,y)+(y_0-y_1)+(x_1-x_0)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;有如下伪代码&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;y = y0
+d = f(x0+1,y0+0.5)
+for x = x0 to x1 do
+    draw(x,y)
+    if d&amp;lt;0 then
+        y = y+1
+        d = d+(x1-x0)+(y0-y1)
+    else
+        d = d+(y0-y1)&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;三角形绘制&#34;&gt;三角形绘制&lt;/h3&gt;
+</description>
+        </item>
+        <item>
+        <title>计算机图形学基础（第五版）-第三章笔记</title>
+        <link>https://kegalas.top/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E7%AC%AC%E4%BA%94%E7%89%88-%E7%AC%AC%E4%B8%89%E7%AB%A0%E7%AC%94%E8%AE%B0/</link>
+        <pubDate>Sun, 03 Jul 2022 15:05:15 +0800</pubDate>
+        
+        <guid>https://kegalas.top/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E7%AC%AC%E4%BA%94%E7%89%88-%E7%AC%AC%E4%B8%89%E7%AB%A0%E7%AC%94%E8%AE%B0/</guid>
+        <description>&lt;h2 id=&#34;分辨率与坐标&#34;&gt;分辨率与坐标&lt;/h2&gt;
+&lt;p&gt;假设屏幕分辨率是&lt;span class=&#34;math inline&#34;&gt;\(n_x\times
+n_y\)&lt;/span&gt;，则，按照本书的规则，左下角的像素的中心点定为原点，那么有坐标范围为&lt;span
+class=&#34;math inline&#34;&gt;\([-0.5,n_x-0.5]\times
+[-0.5,n_y-0.5]\)&lt;/span&gt;。若按照games101的规则，则坐标范围为&lt;span
+class=&#34;math inline&#34;&gt;\([0,n_x]\times[0,n_y]\)&lt;/span&gt;。&lt;/p&gt;
+&lt;h2 id=&#34;rgb格式&#34;&gt;RGB格式&lt;/h2&gt;
+&lt;p&gt;出于方便目的，RGB的三个分量的取值范围都是&lt;span
+class=&#34;math inline&#34;&gt;\([0,1]\)&lt;/span&gt;。在具体实现时，如8-bit图片，每个分量的所有可能的取值为&lt;span
+class=&#34;math inline&#34;&gt;\(0,1/255,2/255,\)&lt;/span&gt;&lt;span
+class=&#34;math inline&#34;&gt;\(\cdots,254/255,1\)&lt;/span&gt;。&lt;/p&gt;
+</description>
+        </item>
+        <item>
         <title>MSYS2报错David Macek is unknown trust</title>
         <link>https://kegalas.top/p/msys2%E6%8A%A5%E9%94%99david-macek-is-unknown-trust/</link>
         <pubDate>Fri, 01 Jul 2022 12:05:59 +0800</pubDate>
@@ -32,7 +113,8 @@ Transformation）&lt;/h3&gt;
 class=&#34;math inline&#34;&gt;\([-1,1]^2\)&lt;/span&gt;的正方形映射到屏幕上。这个屏幕宽&lt;span
 class=&#34;math inline&#34;&gt;\(n_x\)&lt;/span&gt;像素，高&lt;span
 class=&#34;math inline&#34;&gt;\(n_y\)&lt;/span&gt;像素。并且由于左下角像素中心点位置为原点，我们要有负0.5个像素，即映射到&lt;span
-class=&#34;math inline&#34;&gt;\([-0.5,n_x-0.5]\times[-0.5,n_y-0.5]\)&lt;/span&gt;&lt;/p&gt;
+class=&#34;math inline&#34;&gt;\([-0.5,n_x-0.5]\times[-0.5,n_y-0.5]\)&lt;/span&gt;。（注，在games101中映射到的是&lt;span
+class=&#34;math inline&#34;&gt;\([0,n_x]\times[0,n_y]\)&lt;/span&gt;）&lt;/p&gt;
 &lt;p&gt;需要如下变换&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 \begin{bmatrix}
