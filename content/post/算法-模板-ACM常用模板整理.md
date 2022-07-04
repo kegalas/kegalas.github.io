@@ -154,6 +154,7 @@ int main(){
 ### KMP
 
 ```cpp
+//kmp,luogu3375
 #include <iostream>
 #include <cstdio>
 #include <string>
@@ -184,14 +185,13 @@ int getNext(){
             r++;
         }
     }
-
+    
     return 0;
 }
 
-
-
 int main(){
     cin>>s1>>s2;
+    //给定两个字符串
     getNext();
 
     int pos=0,tar=0;
@@ -211,21 +211,18 @@ int main(){
 
         if (pos==s2.length()){
             cout<<tar-pos+1<<endl;
+            //输出s2在s1中出现的位置
             pos = nxt[pos-1];
         }
-
+        
     }
 
     for(int i=0;i<s2.length();i++){
         cout<<nxt[i]<<" ";
+        //表示s2​的长度为i的前缀的最长border长度。
     }
 
     cout<<endl;
-
-
-
-
-
 
     return 0;
 }
@@ -321,6 +318,7 @@ int main(){
     cin>>a>>b;
     z = exgcd(a,b,x,y);
     cout<<x<<" "<<y<<" "<<z<<endl;
+    //x,y的意义见开头，z即是最大公约数
     return 0;
 }
 ```
@@ -351,6 +349,7 @@ int main(){
     }
 
     cout<<ans<<endl;
+    //返回最大公约数
 
     return 0;
 }
@@ -371,6 +370,7 @@ int main(){
     int n, prime[MAXN], cnt=0;
     bool is_not_prime[MAXN];
     cin>>n;
+    //2~n中有多少个素数
     memset(is_not_prime, 0, sizeof(prime));
 
     for (int i = 2;i<=n;i++){
@@ -383,6 +383,7 @@ int main(){
 
     for(int i = 1;i<=cnt;i++){
         cout<<prime[i]<<" ";
+        //输出素数
     }
     return 0;
 }
@@ -522,8 +523,6 @@ int main(){
     }
     */
 
-
-
     return 0;
 }
 ```
@@ -531,8 +530,10 @@ int main(){
 ### 线性同余方程
 
 ```cpp
+//ax≡c (mod b)求解x
+//和ax+by=c等价
 #include <iostream>
-//ax≡b (mod n)求解x
+
 using namespace std;
 
 int exgcd(int a, int b, int &x, int &y){
@@ -557,8 +558,6 @@ int linearEquation(int a, int b, int c, int &x, int &y){
     return d;
 }
 
-
-
 int main(){
     int a,b,c,x,y;
 
@@ -566,6 +565,7 @@ int main(){
     c=1;
 
     int d = linearEquation(a,b,c,x,y);
+    //d是a,b的最大公约数
 
     if(d==-1){
         cout<<"None"<<endl;
@@ -578,14 +578,23 @@ int main(){
         cout<<x<<endl;
     }
 
-
-
-
     return 0;
 }
+
 ```
 
 ### 中国剩余定理
+
+求解如下方程中的$x$
+
+$$
+\left\{\begin{matrix}
+x \equiv a_1(mod\quad r_1) \\
+x \equiv a_2(mod\quad r_2 \\
+\vdots \\
+x \equiv a_k(mod\quad r_k)
+\end{matrix}\right.
+$$
 
 ```cpp
 #include <iostream>
@@ -609,15 +618,17 @@ long long exgcd(ll a, ll b, ll &x, ll &y){
     x = y;
     y = tmp - (a/b)*y;
     return d;
-
 }
 
 int main(){
     int k;
     cin>>k;
+    //共有k个方程
     for(int i=1;i<=k;i++){
         cin>>a[i]>>r[i];
+		//x≡ai(mod ri)
     }
+    
     ll n=1,ans=0;
     for(int i=1;i<=k;i++){
         n = n * r[i];
@@ -628,7 +639,9 @@ int main(){
         exgcd(m,r[i],x,y);
         ans = (ans+a[i]*m*x%n)%n;
     }
+    
     cout<<ans<<endl;
+    //输出x的值
     return 0;
 }
 ```
@@ -640,15 +653,12 @@ int main(){
 #### Dijkstra
 
 ```cpp
-//dijkstra
 #include <iostream>
 #include <cstring>
 #include <vector>
 #include <queue>
 #define MAXN 500005
 #define MAXINT 0x7fffffff
-
-
 
 using namespace std;
 
@@ -671,21 +681,13 @@ bool tag[MAXN];
 
 priority_queue<node, vector<node>, greater<node> > pq;
 
-
-
-
 int main(){
-
-    //freopen("in.in","r",stdin);
-    //freopen("out.out","w",stdout);
-
     scanf("%d%d%d",&n,&m,&s);
-
-
 
     for(int i=1;i<=m;i++){
         int a,b,c;
         scanf("%d%d%d",&a,&b,&c);
+        //起点，终点，边权
         edge t;
         t.v=b;
         t.w=c;
@@ -694,6 +696,7 @@ int main(){
 
     for(int i=1;i<=n;i++){
         dis[i] = MAXINT;
+        //初始化为无限远
     }
 
     dis[s]=0;
@@ -723,18 +726,13 @@ int main(){
         printf("%d ",dis[i]);
     }
 
-
-
-
     return 0;
-
 }
 ```
 
 #### Bellman-Ford
 
 ```cpp
-//bellman-ford
 #include <iostream>
 #include <vector>
 #include <cstring>
@@ -750,14 +748,11 @@ struct edge{
 };
 
 int n,m,s;
-
 int dis[MAXN];
-
 vector<edge> graph[MAXN];
 
-
 int main(){
-
+    
     cin>>n>>m>>s;
 
     for(int i=1;i<=n;i++) dis[i]=INF; 
@@ -766,6 +761,7 @@ int main(){
         edge tmp;
         int a,b,c;
         cin>>a>>b>>c;
+        //起点，终点，边权
         tmp.v=b;
         tmp.w=c;
         graph[a].push_back(tmp);
@@ -800,10 +796,9 @@ int main(){
         //else{
         //    cout<<"2147483647 ";//根据luogu P3371要输出这个数
         //}
-
+        
     }
-
-
+    
     return 0;
 }
 ```
@@ -812,15 +807,10 @@ int main(){
 
 ```cpp
 /*
-    spfa
     bellman-ford的优化
     只有上一次被松弛的结点，所连接的边，
     才有可能引起下一次的松弛操作
 */
-
-
-
-
 #include <iostream>
 #include <vector>
 #include <queue>
@@ -840,13 +830,10 @@ int cnt[MAXN];//算到达本节点所要经过的边数，若cnt>=n，则说明�
 bool tag[MAXN];//用于判断是否为上次松弛过的节点的边所连的点
 
 int n,m,s;
-
 queue<int> qu;
-
 vector<edge> graph[MAXN];
 
 int main(){
-
     cin>>n>>m>>s;
 
     for(int i=1;i<=n;i++){
@@ -859,6 +846,7 @@ int main(){
     for(int i=1;i<=m;i++){
         int a,b,c;
         cin>>a>>b>>c;
+        //起点，终点，边权
         edge tmp;
         tmp.v=b;
         tmp.w=c;
@@ -900,11 +888,7 @@ int main(){
         //else{
         //    cout<<"2147483647 ";//根据luogu P3371要输出这个数
         //}
-
     }
-
-
-
 
     return 0;
 }
@@ -920,13 +904,12 @@ int main(){
 #define MAXN 5005
 #define MAXINT 0x3fffffff //不能设置为int的最大值，否则后面加法可能导致溢出
 
-
 using namespace std;
 
 int graph[MAXN][MAXN];
 
 int main(){
-    int n,m;
+    int n,m;//点数，边数
     cin>>n>>m;
     for(int i = 1;i<=n;i++){
         for(int j = 1;j<=n;j++){
@@ -938,7 +921,7 @@ int main(){
     }
     for(int i=1;i<=m;i++){
         int a,b,v;
-        cin>>a>>b>>v;
+        cin>>a>>b>>v;//起点，终点，边权
         graph[a][b] = v;
     }
 
@@ -966,6 +949,7 @@ int main(){
 
 ```cpp
 //拓扑排序
+//拓扑排序
 #include <iostream>
 #include <vector>
 #include <queue>
@@ -983,7 +967,6 @@ struct point
     vector<graph> graph1;
 }point1[100];
 
-
 int main(){
     int n,m;
     cin>>n>>m;
@@ -991,16 +974,17 @@ int main(){
     for(int i = 1;i<=n;i++){
         point1[i].in_num=0;
     }
-
+    
     for (int i=1;i<=m;i++){
         int a,b,value;
-        cin>>a>>b;//本次是无权图
+        cin>>a>>b;//起点，终点；本次是无权图
         graph tmp;
         tmp.to=b;
         tmp.value = 0;
         point1[a].graph1.push_back(tmp);
         point1[b].in_num++;
     }
+    
     queue<int> que;
     vector<int> ans;
 
@@ -1035,9 +1019,6 @@ int main(){
         cout<<"none";
     }
 
-
-
-
     return 0;
 }
 ```
@@ -1047,19 +1028,15 @@ int main(){
 #### Kruskal
 
 ```cpp
-//kruskal
 #include <iostream>
 #include <algorithm>
-#define MAXN 500005
-
+#define MAXN 200005
 
 using namespace std;
 
-
-int u[MAXN],v[MAXN],w[MAXN];//一条边的两个点和边权值
+int u[MAXN],v[MAXN],w[MAXN];
 int r[MAXN];//临时边序号，间接排序
 int find_sets[MAXN];//并查集
-
 
 int cmp(const int i, const int j){return w[i]<w[j];}
 
@@ -1068,10 +1045,10 @@ int find(int x){return find_sets[x]==x ? x : find_sets[x] = find(find_sets[x]);}
 int main(){
     int n,m;//点数和边数
 
-
     cin>>n>>m;
     for(int i=1;i<=m;i++){
         cin>>u[i]>>v[i]>>w[i];
+        //起点，终点，边权
     }
 
     for(int i = 1;i<=n;i++){
@@ -1084,6 +1061,7 @@ int main(){
     sort(r+1,r+m+1,cmp);
 
     int ans = 0;
+    //int cnt=0;
 
     for(int i=1;i<=m;i++){
         int tmp = r[i];
@@ -1093,12 +1071,19 @@ int main(){
         if(x!=y){
             ans += w[tmp];
             find_sets[x] = y;
-
+            //cnt++;
         }
     }
+    //计数，如果小于n-1则不连通
+    /*
+    if(cnt<n-1){
+        cout<<"orz"<<endl;
+        return 0;
+        //如果是多个样例注意这个return 0
+    }
+    */
 
     cout<<ans<<endl;
-
 
     return 0;
 }
@@ -1134,16 +1119,17 @@ priority_queue<edge, vector<edge>, greater<edge> > pq;
 //以下orz代表不连通
 
 int main(){
-    int n,m;
+    int n,m;//点数，边数
     scanf("%d%d",&n,&m);
     int ans = 0;
     int cnt = 1;
 
     for(int i=1;i<=m;i++){
-        int a,b,c;
+        int a,b,c;//起点，终点，边权
         scanf("%d%d%d",&a,&b,&c);
         graph[a].push_back(edge(b,c));
         graph[b].push_back(edge(a,c));
+        //无向图
     }
 
     for(int i=0;i<graph[1].size();i++){
@@ -1162,11 +1148,11 @@ int main(){
             minx=pq.top();
             pq.pop();
         }
-
+        
         vis[minx.v] = true;
         ans+=minx.w;
         cnt++;
-
+        
         for(int i=0;i<graph[minx.v].size();i++){
             if(!vis[graph[minx.v][i].v])
                 pq.push(graph[minx.v][i]);
@@ -1190,6 +1176,7 @@ int main(){
 
 ```cpp
 //最小树形图，朱刘算法
+//从根节点能到达其他所有点
 //luogu4716
 #include <iostream>
 
@@ -1212,25 +1199,31 @@ int zhuliu(){
     int ans = 0;
     for(;;){
         for(int i=1;i<=n;i++) in[i]=INF;
+        
         for(int i=1;i<=m;i++){
             int u = edge[i].u;
             int v = edge[i].v;
-            if(u!=v&&edge[i].w<in[v]){
+            if(u!=v&&edge[i].w<in[v]){//遍历所有边，找到对每个点的最短入边
                 in[v] = edge[i].w;
                 pre[v] = u;
             }
         }
+        
         for(int i=1;i<=n;i++){
             if(i!=root&&in[i]==INF){
-                return -1;
+                return -1;//无解
             }
         }
+        
         int cnt = 0;//记录环数以及下一次循环的点数
+        
         for(int i=1;i<=n;i++){
             vis[i] = -1;
             id[i] = -1;
         }
+        
         in[root] = 0;
+        
         for(int i=1;i<=n;i++){
             if(i==root) continue;
             ans += in[i];
@@ -1244,12 +1237,15 @@ int zhuliu(){
                 for(int u=pre[v];u!=v;u=pre[u]) id[u] = cnt;
             }
         }
-        if(cnt==0){
+        
+        if(cnt==0){//无环，得到解
             break;
         }
+        
         for(int i=1;i<=n;i++){
             if(id[i]==-1) id[i]=++cnt;
         }
+        
         for(int i=1;i<=m;i++){
             int u = edge[i].u;
             int v = edge[i].v;
@@ -1257,6 +1253,7 @@ int zhuliu(){
             edge[i].v = id[v];
             if(edge[i].u!=edge[i].v) edge[i].w -= in[v];
         }
+        
         n = cnt;
         root = id[root];
     }
@@ -1264,10 +1261,10 @@ int zhuliu(){
 }
 
 int main(){
-    //freopen("in.in","r",stdin);
-    cin>>n>>m>>root;
+    cin>>n>>m>>root;//点数，边数，根节点序号
     for(int i=1;i<=m;i++){
         cin>>edge[i].u>>edge[i].v>>edge[i].w;
+        //起点，终点，边权
     }
     cout<<zhuliu()<<endl;
     return 0;
@@ -1283,6 +1280,8 @@ int main(){
 ###### DFS实现的Ford-Fulkerson
 
 ```cpp
+//luogu P3376
+//超时
 #include <iostream>
 #include <vector>
 #include <cstring>
@@ -1295,8 +1294,6 @@ typedef unsigned long long ull;
 
 const ll INF = 0xffffffff;
 const int MAXM = 100005;
-
-
 
 struct Edge{
     int to;
@@ -1340,18 +1337,22 @@ ll max_flow(int s, int t){
 int main(){
     int n,m;
     cin>>n>>m;
+    //点数，边数
     int s,t;
     cin>>s>>t;
+    //源点，汇点
     for(int i=1;i<=m;i++){
         int a,b;
         ll c;
         scanf("%d%d%ld",&a,&b,&c);
+        //起点，终点，边容量
         //cin>>a>>b>>c;
         G[a].push_back(Edge(b,c,G[b].size()));//这里第三个参数实际上是反向边的编号
         G[b].push_back(Edge(a,0,G[a].size()-1));
     }
-
+    
     ll ans = max_flow(s,t);
+    //得到最大流
     printf("%ld",ans);
     //cout<<ans<<endl;
     return 0;
@@ -1374,22 +1375,26 @@ int main(){
 #include <vector>
 #include <queue>
 #include <cstring>
-#define MAXN 50005
-#define INF 0x3f3f3f3f
 
 using namespace std;
 
+typedef long long ll;
+
+const int MAXN = 205;
+const ll INF = 1LL<<35;
+
 struct Edge{
-    int from, to, cap, flow;
-    Edge(int u, int v, int c, int f):from(u),to(v),cap(c),flow(f){}
+    int from, to;
+    ll cap,flow;
+    Edge(int u, int v, ll c, ll f):from(u),to(v),cap(c),flow(f){}
 };
 
 struct EdmondKarp{
     int n,m;
     vector<Edge> edges;  
     vector<int> G[MAXN]; //邻接表
-    int a[MAXN];
-    int p[MAXN];
+    ll a[MAXN];
+    ll p[MAXN];
 
     void init(int n){
         for(int i=0;i<n;i++){
@@ -1398,7 +1403,7 @@ struct EdmondKarp{
         edges.clear();
     }
 
-    void AddEdge(int from, int to, int cap){
+    void AddEdge(int from, int to, ll cap){
         edges.push_back(Edge(from, to, cap, 0));
         edges.push_back(Edge(to, from, 0, 0));
         m = edges.size();
@@ -1407,14 +1412,14 @@ struct EdmondKarp{
     }
 
     int Maxflow(int s, int t){
-        int flow = 0;
+        ll flow = 0;
         for(;;){
             memset(a, 0 ,sizeof(a));
-            queue<int> Q;
+            queue<ll> Q;
             Q.push(s);
             a[s] = INF;
             while(!Q.empty()){
-                int x=Q.front();
+                ll x=Q.front();
                 Q.pop();
                 for(int i=0;i<G[x].size();i++){
                     Edge& e = edges[G[x][i]];
@@ -1435,20 +1440,20 @@ struct EdmondKarp{
         }
         return flow;
     }
-
-
 };
-
 
 int main(){
     EdmondKarp EK;
     cin>>EK.n;
+    //点数
     int s,t;
     int m;
     cin>>m>>s>>t;
+    //边数，源点，汇点
     for(int i=1;i<=m;i++){
         int tmp1,tmp2,tmp3;
         cin>>tmp1>>tmp2>>tmp3;
+        //起点，终点，边容量
         EK.AddEdge(tmp1,tmp2,tmp3);
     }
 
@@ -1508,9 +1513,11 @@ void tarjan(int u){
 int main(){
     int n,m;
     cin>>n>>m;
+    //点数，边数
     for(int i=1;i<=m;i++){
         int a,b;
         cin>>a>>b;
+        //起点，终点
         edges[a].push_back(b);
     }
     for(int i=1;i<=n;i++){
@@ -1549,7 +1556,7 @@ void tarjan(int u, bool root = true){
     low[u] = dfn[u] = ++cnt;
     for(int i=0;i<edges[u].size();i++){
         int v = edges[u][i];
-       if(!dfn[v]){
+        if(!dfn[v]){
             tarjan(v,false);
             low[u] = min(low[u],low[v]);
             tot += (low[v]>=dfn[u]);//统计满足的点的个数
@@ -1566,11 +1573,14 @@ void tarjan(int u, bool root = true){
 int main(){
     int n,m;
     cin>>n>>m;
+    //点数，边数
     for(int i=1;i<=m;i++){
         int a,b;
         cin>>a>>b;
+        //起点，终点
         edges[a].push_back(b);
         edges[b].push_back(a);
+        //无向图
     }
     for(int i=1;i<=n;i++){
         if(!dfn[i])
@@ -1580,6 +1590,7 @@ int main(){
     sort(cut.begin(),cut.end());
     for(int i=0;i<cut.size();i++){
         cout<<cut[i]<<" ";
+        //输出割点的编号
     }
     return 0;
 }
@@ -1625,11 +1636,14 @@ void tarjan(int u){
 int main(){
     int n,m;
     cin>>n>>m;
+    //点数，边数
     for(int i=1;i<=m;i++){
         int a,b;
         cin>>a>>b;
+        //起点，终点
         edges[a].push_back(b);
         edges[b].push_back(a);
+		//无向图
     }
     for(int i=1;i<=n;i++){
         if(!dfn[i])
@@ -1637,7 +1651,8 @@ int main(){
     }
     cout<<bridges.size()<<endl;
     for(int i=0;i<bridges.size();i++){
-        cout<<bridges[i].first<<" "<<bridges[i].second<<endl;;
+        cout<<bridges[i].first<<" "<<bridges[i].second<<endl;
+        //输出割边
     }
     return 0;
 }
@@ -1679,7 +1694,6 @@ struct Point{
     double det(Point p){//叉积
         return x*(p.y)-(p.x)*y;
     }
-
 };
 
 int n;
@@ -1691,6 +1705,7 @@ bool cmp(Point& a, Point& b){
 }
 
 vector<Point> convexHull(){
+	//返回凸包上的点
     int k = 0;
     vector<Point> qs;
     for(int i=0;i<n;i++){
@@ -1714,10 +1729,10 @@ vector<Point> convexHull(){
 }
 
 int main(){
-
     cin>>n;
     for(int i=0;i<n;i++){
         cin>>po[i].x>>po[i].y;
+        //输入点的横纵坐标
     }
 
     sort(po,po+n,cmp);
@@ -1726,9 +1741,6 @@ int main(){
         cout<<p.x<<" "<<p.y<<endl;
     }
 
-
-
-
     return 0;
 }
 ```
@@ -1736,6 +1748,7 @@ int main(){
 ### 旋转卡壳求最远点对
 
 ```cpp
+//Luogu P1452
 //旋转卡壳和凸包
 #include <iostream>
 #include <cstring>
@@ -1776,6 +1789,7 @@ int n;
 Point po[MAXN];
 
 vector<Point> convexHull(){
+	//返回凸包上的点
     vector<Point> ans;
     int k = 0;
     for(int i=0;i<n;i++){
@@ -1820,26 +1834,24 @@ void rc(vector<Point> ans){
     int si=i,sj=j;
     while(i!=sj||j!=si){
         res = max(res,dist(ans[i],ans[j]));
-        //cout<<i<<" "<<j<<endl;
         if((ans[(i+1)%tn]-ans[i]).det(ans[(j+1)%tn]-ans[j])<0){
             i = (i+1)%tn;
         }else{
             j = (j+1)%tn;
         }
-
+        
         cnt++;
     }
+    //返回凸包最远点对的距离的平方
     cout<<res<<endl;
 }
-
-
-
 
 int main(){
     cin>>n;
     vector<Point> qs;
     for(int i=0;i<n;i++){
         cin>>po[i].x>>po[i].y;
+        //按横纵坐标输入点对
     }
     sort(po,po+n,cmp);
     qs = convexHull();
@@ -1898,12 +1910,12 @@ int main(){
 #### Gale-Shapley算法
 
 ```cpp
+//POJ 3487
 #include <iostream>
 #include <queue>
 #include <algorithm>
 #include <cstring>
 using namespace std;
-
 
 const int N   = 30;
 const int inf = 1<<29;
@@ -1916,59 +1928,69 @@ int maleLike[N][N], femaleLike[N][N];
 int maleChoice[N],  femaleChoice[N];
 int maleName[N],    femaleName[N];
 char str[N];
-queue<int>freemale;
+queue<int>freemale;//目前单身的男人
 
 int main(){
     int t;
-    scanf("%d",&t);
+    scanf("%d",&t);//数据组数
     while(t--){
-        scanf("%d",&couple);
+        scanf("%d",&couple);//男女对数
         while(!freemale.empty()){
             freemale.pop();
         }
         for(int i=0;i<couple;i++){
             scanf("%s",str);
-            maleName[i]=str[0]-'a';
+            maleName[i]=str[0]-'a';//题目中是以小写字母给男人名字，转化为数字
             freemale.push(maleName[i]);
         }
-        sort(maleName, maleName+couple);
+        sort(maleName, maleName+couple);//名字排序，便于字典序
 
         for(int i=0;i<couple;i++){
             scanf("%s",str);
-            femaleName[i]=str[0]-'A';
+            femaleName[i]=str[0]-'A';//女人名字是大写字母
         }
-
+        
         for(int i=0;i<couple;i++){
             scanf("%s",str);
             for(int j=0;j<couple;j++){
-                maleLike[i][j]=str[j+2]-'A';
+                maleLike[i][j]=str[j+2]-'A';//男人喜好顺序由男人名字:女人名字列表给出;降序排列
             }
         }
+        
+        //女士对男士的打分，添加虚拟人物，编号couple，为女士的初始对象
         for(int i=0;i<couple;i++){
             scanf("%s",str);
             for(int j=0;j<couple;j++){
-                femaleLike[i][str[j+2]-'a']=couple-j;
+                femaleLike[i][str[j+2]-'a']=couple-j;//排名越前打分越高
             }
             femaleLike[i][couple]=0;
         }
         memset(maleChoice,0,sizeof(maleChoice));
+        //一开始男士的期望都是最喜欢的女士
 
         for(int i=0;i<couple;i++){
             femaleChoice[i]=couple;
         }
+        
         while(!freemale.empty()){
             int male=freemale.front();
+            //找出未配对的男士
             int female=maleLike[male][maleChoice[male]];
+            //找出心意的女士
             if(femaleLike[female][male]>femaleLike[female][femaleChoice[female]]){
+            //比现男友好
                 freemale.pop();
                 if(femaleChoice[female]!=couple){
+                //前男友再次单身，并且不能将虚拟人物加入队列
                     freemale.push(femaleChoice[female]);
                     maleChoice[femaleChoice[female]]++;
                 }
                 femaleChoice[female]=male;
+				//更换男友
             }
             else
                 maleChoice[male]++;
+                //如果被拒绝，则选择下一位
         }
         for(int i=0;i<couple;i++){
             printf("%c %c\n",maleName[i]+'a', maleLike[maleName[i]][maleChoice[maleName[i]]]+'A');
@@ -2019,6 +2041,7 @@ long long query(int p){
 
 int main(){
     scanf("%d%d",&n,&m);
+    //数组长度，查询数
     for(int i=1;i<=n;i++){
         scanf("%d",&arr[i]);
         update(i,arr[i]);
@@ -2031,10 +2054,12 @@ int main(){
         scanf("%d",&x);
         if(op==1){
             scanf("%d",&k);
+            //将单点修改为k
             update(x,k);
         }
         else{
             scanf("%d",&y);
+            //输出[x,y]的数组和
             cout<<query(y)-query(x-1)<<endl;
         }
     }
@@ -2067,11 +2092,13 @@ void unionSet(int x, int y){
 int main(){
     int n;
     cin>>n;
+    //点数
     for(int i=1;i<=n;i++){
         find_sets[i]=i;
     }
     int m;
     cin>>m;
+    //边数
     for(int i=1;i<=m;i++){
         int a,b;
         cin>>a>>b;
@@ -2139,10 +2166,10 @@ void update(int l, int r, int s, int t, int p, ll c){//c表示加减的数值
     if(l<=m) update(l, r, s, m, p*2, c);
     if(r>m)  update(l, r, m+1, t, p*2+1, c);
     st[p] = st[p*2] + st[p*2+1];
-
 }
 
 ll query(int l, int r, int s, int t, int p){
+    //查询[l,r]的和
     if(l<=s&&t<=r){
         return st[p];
     }
@@ -2163,6 +2190,7 @@ ll query(int l, int r, int s, int t, int p){
 int main(){
     int n,m;
     scanf("%d%d",&n,&m);
+    //数组长度，查询次数
     for(int i=1;i<=n;i++){
         scanf("%ld",&arr[i]);   
     }
@@ -2174,11 +2202,13 @@ int main(){
         if(ope==1){
             int x,y,z;
             scanf("%d%d%d",&x,&y,&z);
+            //[x,y]加上z
             update(x, y, 1, n, 1, z);
         }
         else{
             int x,y;
             scanf("%d%d",&x,&y);
+            //查询[x,y]的和
             cout<<query(x, y, 1, n, 1)<<endl;
         }
     }
@@ -2202,10 +2232,13 @@ const int MAXN = 100005;
 const int LOGN = 21;
 
 int fmax[MAXN][LOGN+1];
+//fmax[a][b]表示[a,a+2^b-1]中的最大值
 int logn[MAXN];
+//预先计算logn
 
 int main(){
     int n,m;
+    //数组大小以及查询次数
     scanf("%d%d",&n,&m);
 
     for(int i=1;i<=n;i++){
@@ -2217,6 +2250,7 @@ int main(){
 
     for(int i=3;i<MAXN;i++){
         logn[i] = logn[i/2]+1;
+        //预先计算logn
     }
 
     for(int j=1;j<=LOGN;j++){
@@ -2228,11 +2262,10 @@ int main(){
     for(int i=1;i<=m;i++){
         int a,b;
         scanf("%d%d",&a,&b);
+        //查询[a,b]分为两部分，即[a,a+2^s-1]与[b-2^s+1,b]
         int s = logn[b-a+1];
         printf("%d\n",std::max(fmax[a][s],fmax[b-(1<<s)+1][s]));
     }
-
-
 
     return 0;
 }
@@ -2249,8 +2282,9 @@ int main(){
 const int MAXN = 500005;
 const int LOGN = 31;
 
-std::vector<int> edge[MAXN];
+std::vector<int> edge[MAXN];//邻接表
 int fa[MAXN][LOGN],deep[MAXN];
+//fa[a][b]代表a的第2^b个祖先，deep是深度，根节点深度为1
 
 void build(int v,int father){
     fa[v][0] = father;
@@ -2268,6 +2302,7 @@ void build(int v,int father){
 
 int lca(int x,int y){
     if(deep[x]>deep[y]) std::swap(x,y);
+    //保证y比x深
 
     int tmp = deep[y]-deep[x];
     for(int i=0;tmp;i++,tmp>>=1){
@@ -2289,10 +2324,12 @@ int lca(int x,int y){
 int main(){
     int n,m,s;
     scanf("%d%d%d",&n,&m,&s);
+    //点数，询问数，根节点序号
 
     for(int i=1;i<=n-1;i++){
         int a,b;
         scanf("%d%d",&a,&b);
+        //读入树
         edge[a].push_back(b);
         edge[b].push_back(a);
     }
@@ -2302,12 +2339,12 @@ int main(){
     for(int i=1;i<=m;i++){
         int x,y;
         scanf("%d%d",&x,&y);
+        //查询x,y的最近公共祖先
         printf("%d\n",lca(x,y));
     }
 
     return 0;
 }
-
 ```
 
 ## 二分
