@@ -66,6 +66,62 @@ for x = x0 to x1 do
     else
         d = d+(y0-y1)&lt;/code&gt;&lt;/pre&gt;
 &lt;h3 id=&#34;三角形绘制&#34;&gt;三角形绘制&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;高洛德插值(Gouraud Interpolation)&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;运用重心坐标系，我们可以对颜色进行插值。&lt;/p&gt;
+&lt;p&gt;假设三个点的颜色值分别为&lt;span class=&#34;math inline&#34;&gt;\(\bm c_0,\bm
+c_1,\bm c_2\)&lt;/span&gt;。假设我们要绘制的点的重心坐标为&lt;span
+class=&#34;math inline&#34;&gt;\((\alpha,\beta,\gamma)\)&lt;/span&gt;，则其颜色为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\bm c = \alpha\bm c_0+\beta\bm c_1+\gamma\bm c_2
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;暴力光栅化算法&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;伪代码如下&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;for all x do
+    for all y do
+        compute(alpha,beta,gamma) for (x,y)
+        if(alpha,beta,gamma in [0,1]) then
+            c = alpha*c0+beta*c1+gamma*c2
+            drawpixel(x,y) with color c&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;优化后的算法&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;xMin = floor(xi)
+xMax = ceiling(xi)
+yMin = floor(yi)
+yMax = ceiling(yi)
+for y = yMin to yMax do
+    for x = xMin to xMax do
+        alpha = f12(x,y)/f12(x0,y0)
+        beta = f20(x,y)/f20(x1,y1)
+        gamma = f01(x,y)/f01(x2,y2)
+        if(alpha,beta,gamma&amp;gt;0) then
+            c=alpha*c0+beta*c1+gamma*c2
+            drawpixel(x,y) with color c&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;其中的&lt;span class=&#34;math inline&#34;&gt;\(f_{ij}\)&lt;/span&gt;为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+f_{01}(x,y) = (y_0-y_1)x+(x_1-x_0)y+x_0y_1-x_1y_0\\
+f_{12}(x,y) = (y_1-y_2)x+(x_2-x_1)y+x_1y_2-x_2y_1\\
+f_{20}(x,y) = (y_2-y_0)x+(x_0-x_2)y+x_2y_0-x_0y_2
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;对于公共边上的点的处理&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;xMin = floor(xi)
+xMax = ceiling(xi)
+yMin = floor(yi)
+yMax = ceiling(yi)
+
+fAlpha = f12(x0,y0)
+fBeta = f20(x1,x1)
+fGamma = f01(x2,y2)
+
+for y = yMin to yMax do
+    for x = xMin to xMax do
+        alpha = f12(x,y)/fAlpha
+        beta = f20(x,y)/fBeta
+        gamma = f01(x,y)/fGamma
+        if(alpha,beta,gamma&amp;gt;=0) then
+            if(alpha&amp;gt;0 or fAlpha*f12(-1,-1)&amp;gt;0)and
+            (beta&amp;gt;0 or fBeta*f20(-1,-1)&amp;gt;0)and
+            (gamma&amp;gt;0 or fGamma*f01(-1,-1)&amp;gt;0) then
+                c=alpha*c0+beta*c1+gamma*c2
+                drawpixel(x,y) with color c&lt;/code&gt;&lt;/pre&gt;
 </description>
         </item>
         <item>
@@ -588,6 +644,37 @@ class=&#34;math inline&#34;&gt;\(S^2\)&lt;/span&gt;，在单位球面上的三�
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 S = \frac{1}{4}\sqrt{(a+b+c)(-a+b+c)(a-b+c)(a+b-c)}
 \]&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;重心坐标系&#34;&gt;重心坐标系&lt;/h3&gt;
+&lt;p&gt;可以用三个点&lt;span
+class=&#34;math inline&#34;&gt;\(\bm{a,b,c}\)&lt;/span&gt;表示三角形。&lt;/p&gt;
+&lt;p&gt;假设三点不共线，则&lt;span
+class=&#34;math inline&#34;&gt;\(\bm{c-a},\bm{b-a}\)&lt;/span&gt;线性无关，即可以作为二维坐标的一组基底。&lt;/p&gt;
+&lt;p&gt;二维空间中任何一点都可以由&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\bm{p}=\bm a+\beta(\bm{b-a})+\gamma(\bm{c-a})
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;表示&lt;/p&gt;
+&lt;p&gt;整理得&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\bm{p}=(1-\beta-\gamma)\bm a+\beta\bm{b}+\gamma\bm{c}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;令&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\alpha\equiv 1-\beta-\gamma
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;则有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\bm p(\alpha,\beta,\gamma)=\alpha\bm a+\beta\bm{b}+\gamma\bm{c}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\alpha+\beta+\gamma = 1
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;一个点在三角形内部当且仅当&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+0&amp;lt;\alpha&amp;lt;1,0&amp;lt;\beta&amp;lt;1,0&amp;lt;\gamma&amp;lt;1
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;同时成立。也可以用向量叉乘的办法判断是否在内部。&lt;/p&gt;
 &lt;h2 id=&#34;向量&#34;&gt;向量&lt;/h2&gt;
 &lt;p&gt;同高中和线性代数&lt;/p&gt;
 &lt;h2 id=&#34;积分&#34;&gt;积分&lt;/h2&gt;
