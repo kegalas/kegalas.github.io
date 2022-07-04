@@ -80,5 +80,77 @@ for x = x0 to x1 do
 ```
 ### 三角形绘制
 
+**高洛德插值(Gouraud Interpolation)**
+
+运用重心坐标系，我们可以对颜色进行插值。
+
+假设三个点的颜色值分别为$\bm c_0,\bm c_1,\bm c_2$。假设我们要绘制的点的重心坐标为$(\alpha,\beta,\gamma)$，则其颜色为
+
+$$
+\bm c = \alpha\bm c_0+\beta\bm c_1+\gamma\bm c_2
+$$
+
+**暴力光栅化算法**
+
+伪代码如下
+
+```
+for all x do
+    for all y do
+        compute(alpha,beta,gamma) for (x,y)
+        if(alpha,beta,gamma in [0,1]) then
+            c = alpha*c0+beta*c1+gamma*c2
+            drawpixel(x,y) with color c
+```
+
+**优化后的算法**
+
+```
+xMin = floor(xi)
+xMax = ceiling(xi)
+yMin = floor(yi)
+yMax = ceiling(yi)
+for y = yMin to yMax do
+    for x = xMin to xMax do
+        alpha = f12(x,y)/f12(x0,y0)
+        beta = f20(x,y)/f20(x1,y1)
+        gamma = f01(x,y)/f01(x2,y2)
+        if(alpha,beta,gamma>0) then
+            c=alpha*c0+beta*c1+gamma*c2
+            drawpixel(x,y) with color c
+```
+
+其中的$f_{ij}$为
+
+$$
+f_{01}(x,y) = (y_0-y_1)x+(x_1-x_0)y+x_0y_1-x_1y_0\\
+f_{12}(x,y) = (y_1-y_2)x+(x_2-x_1)y+x_1y_2-x_2y_1\\
+f_{20}(x,y) = (y_2-y_0)x+(x_0-x_2)y+x_2y_0-x_0y_2
+$$
+
+**对于公共边上的点的处理**
+
+```
+xMin = floor(xi)
+xMax = ceiling(xi)
+yMin = floor(yi)
+yMax = ceiling(yi)
+
+fAlpha = f12(x0,y0)
+fBeta = f20(x1,x1)
+fGamma = f01(x2,y2)
+
+for y = yMin to yMax do
+    for x = xMin to xMax do
+        alpha = f12(x,y)/fAlpha
+        beta = f20(x,y)/fBeta
+        gamma = f01(x,y)/fGamma
+        if(alpha,beta,gamma>=0) then
+            if(alpha>0 or fAlpha*f12(-1,-1)>0)and
+            (beta>0 or fBeta*f20(-1,-1)>0)and
+            (gamma>0 or fGamma*f01(-1,-1)>0) then
+                c=alpha*c0+beta*c1+gamma*c2
+                drawpixel(x,y) with color c
+```
 
 

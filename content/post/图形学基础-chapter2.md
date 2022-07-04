@@ -36,6 +36,52 @@ $$
 S = \frac{1}{4}\sqrt{(a+b+c)(-a+b+c)(a-b+c)(a+b-c)}
 $$
 
+### 重心坐标系
+
+可以用三个点$\bm{a,b,c}$表示三角形。
+
+假设三点不共线，则$\bm{c-a},\bm{b-a}$线性无关，即可以作为二维坐标的一组基底。
+
+二维空间中任何一点都可以由
+
+$$
+\bm{p}=\bm a+\beta(\bm{b-a})+\gamma(\bm{c-a})
+$$
+
+表示
+
+整理得
+
+$$
+\bm{p}=(1-\beta-\gamma)\bm a+\beta\bm{b}+\gamma\bm{c}
+$$
+
+令
+
+$$
+\alpha\equiv 1-\beta-\gamma
+$$
+
+则有
+
+$$
+\bm p(\alpha,\beta,\gamma)=\alpha\bm a+\beta\bm{b}+\gamma\bm{c}
+$$
+
+其中
+
+$$
+\alpha+\beta+\gamma = 1
+$$
+
+一个点在三角形内部当且仅当
+
+$$
+0<\alpha<1,0<\beta<1,0<\gamma<1
+$$
+
+同时成立。也可以用向量叉乘的办法判断是否在内部。
+
 ## 向量
 
 同高中和线性代数
