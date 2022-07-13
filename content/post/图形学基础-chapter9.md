@@ -153,4 +153,28 @@ for y = yMin to yMax do
                 drawpixel(x,y) with color c
 ```
 
+### 用Z-Buffer处理覆盖问题
+
+为了处理方便，假设$z$始终为正，且更小的$z$意味着更近，更大的$z$意味着更远。
+
+算法如下
+
+首先给$z-buffer$赋值无限大。
+
+在光栅化过程中，执行如下伪代码
+
+```
+for (each triangle T)
+    for (each sample (x,y,z) in T)
+        if(z<zbuffer[x,y])
+            framebuffer[x,y] = rgb;
+            zbuffer[x,y] = z;
+        else
+            ;
+```
+
+即为，对每个三角形的采样像素，如果他的深度坐标，即$z$更小，那么在缓冲区更新这个像素的颜色，并且更新最小的$z$。
+
+该算法的复杂度是$O(n)$，对于$n$个三角形。
+
 

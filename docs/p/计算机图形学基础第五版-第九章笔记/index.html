@@ -362,7 +362,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 2 分钟
+                    阅读时长: 3 分钟
                 </time>
             </div>
         
@@ -482,6 +482,26 @@ for y = yMin to yMax do
             (gamma&gt;0 or fGamma*f01(-1,-1)&gt;0) then
                 c=alpha*c0+beta*c1+gamma*c2
                 drawpixel(x,y) with color c</code></pre>
+<h3 id="用z-buffer处理覆盖问题">用Z-Buffer处理覆盖问题</h3>
+<p>为了处理方便，假设<span
+class="math inline">\(z\)</span>始终为正，且更小的<span
+class="math inline">\(z\)</span>意味着更近，更大的<span
+class="math inline">\(z\)</span>意味着更远。</p>
+<p>算法如下</p>
+<p>首先给<span class="math inline">\(z-buffer\)</span>赋值无限大。</p>
+<p>在光栅化过程中，执行如下伪代码</p>
+<pre><code>for (each triangle T)
+    for (each sample (x,y,z) in T)
+        if(z&lt;zbuffer[x,y])
+            framebuffer[x,y] = rgb;
+            zbuffer[x,y] = z;
+        else
+            ;</code></pre>
+<p>即为，对每个三角形的采样像素，如果他的深度坐标，即<span
+class="math inline">\(z\)</span>更小，那么在缓冲区更新这个像素的颜色，并且更新最小的<span
+class="math inline">\(z\)</span>。</p>
+<p>该算法的复杂度是<span class="math inline">\(O(n)\)</span>，对于<span
+class="math inline">\(n\)</span>个三角形。</p>
 
 </section>
 
@@ -545,6 +565,18 @@ for y = yMin to yMax do
                 
                     
 <article class="">
+    <a href="/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E7%AC%AC%E4%BA%94%E7%89%88-%E7%AC%AC%E4%BA%94%E7%AB%A0%E7%AC%94%E8%AE%B0/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">计算机图形学基础（第五版）-第五章笔记</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="">
     <a href="/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E7%AC%AC%E4%BA%94%E7%89%88-%E7%AC%AC%E4%B8%89%E7%AB%A0%E7%AC%94%E8%AE%B0/">
         
         
@@ -587,18 +619,6 @@ for y = yMin to yMax do
 
         <div class="article-details">
             <h2 class="article-title">计算机图形学基础（第五版）-第六章笔记</h2>
-        </div>
-    </a>
-</article>
-                
-                    
-<article class="">
-    <a href="/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E7%AC%AC%E4%BA%94%E7%89%88-%E7%AC%AC%E4%BA%8C%E7%AB%A0%E7%AC%94%E8%AE%B0/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">计算机图形学基础（第五版）-第二章笔记</h2>
         </div>
     </a>
 </article>

@@ -6,7 +6,72 @@
         <description>Recent content on KegalaS的个人博客</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Sun, 03 Jul 2022 15:21:12 +0800</lastBuildDate><atom:link href="https://kegalas.top/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Wed, 13 Jul 2022 21:49:11 +0800</lastBuildDate><atom:link href="https://kegalas.top/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>计算机图形学基础（第五版）-第五章笔记</title>
+        <link>https://kegalas.top/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E7%AC%AC%E4%BA%94%E7%89%88-%E7%AC%AC%E4%BA%94%E7%AB%A0%E7%AC%94%E8%AE%B0/</link>
+        <pubDate>Wed, 13 Jul 2022 21:49:11 +0800</pubDate>
+        
+        <guid>https://kegalas.top/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E7%AC%AC%E4%BA%94%E7%89%88-%E7%AC%AC%E4%BA%94%E7%AB%A0%E7%AC%94%E8%AE%B0/</guid>
+        <description>&lt;h2 id=&#34;点光源&#34;&gt;点光源&lt;/h2&gt;
+&lt;p&gt;假设点光源的光的强度（能流密度）是&lt;span
+class=&#34;math inline&#34;&gt;\(E=I\)&lt;/span&gt;，由于点光源向外发送能量是以球面波的形式发送。在距离光源&lt;span
+class=&#34;math inline&#34;&gt;\(r\)&lt;/span&gt;处的波面上，光的强度是&lt;span
+class=&#34;math inline&#34;&gt;\(E=\frac{I}{r^2}\)&lt;/span&gt;。这一点与大学物理相同。&lt;/p&gt;
+&lt;h2 id=&#34;blinn-phong反射模型&#34;&gt;Blinn-Phong反射模型&lt;/h2&gt;
+&lt;p&gt;首先给出以下定义：&lt;/p&gt;
+&lt;p&gt;对于某个物体上需要被着色的某一点。其单位法向量为&lt;span
+class=&#34;math inline&#34;&gt;\(\bm n\)&lt;/span&gt;，这一点指向相机的单位向量为&lt;span
+class=&#34;math inline&#34;&gt;\(\bm v\)&lt;/span&gt;，指向光源的向量为&lt;span
+class=&#34;math inline&#34;&gt;\(\bm l\)&lt;/span&gt;。&lt;/p&gt;
+&lt;h3 id=&#34;漫反射&#34;&gt;漫反射&lt;/h3&gt;
+&lt;p&gt;漫反射意味着，从四面八方看过来，这个位置的颜色是一致的。&lt;/p&gt;
+&lt;p&gt;我们主要关注，这个位置与光源的角度关系，从而得出这个点的颜色。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Lambert’s cosine law&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;假设光源到达这个点的强度是&lt;span
+class=&#34;math inline&#34;&gt;\(E=I\)&lt;/span&gt;，那么经过漫反射后，其强度变为&lt;span
+class=&#34;math inline&#34;&gt;\(E=Icos\theta\)&lt;/span&gt;，即&lt;span
+class=&#34;math inline&#34;&gt;\(E=I\cdot\bm l\cdot\bm n\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;结合点光源，以及漫反射系数，可得&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+L_d=k_d(\frac{I}{r^2})max(0,\bm n\cdot\bm l)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中，&lt;span
+class=&#34;math inline&#34;&gt;\(k_d\)&lt;/span&gt;是漫反射系数，与材质有关。&lt;span
+class=&#34;math inline&#34;&gt;\(I\)&lt;/span&gt;是点光源的强度，&lt;span
+class=&#34;math inline&#34;&gt;\(r\)&lt;/span&gt;是点光源到需要着色的点的距离。后面max的作用是，防止从“内部”或者“下面”射来的光线影响了“表面”的颜色。&lt;/p&gt;
+&lt;h3 id=&#34;镜面反射&#34;&gt;镜面反射&lt;/h3&gt;
+&lt;p&gt;即，某些材质中，反射角等于入射角，或者反射角很接近入射角时，出现的光强明显大于其他角度的情况。&lt;/p&gt;
+&lt;p&gt;此时&lt;span class=&#34;math inline&#34;&gt;\(\bm
+v\)&lt;/span&gt;非常接近反射角，或者有，半程向量非常接近于法向量&lt;span
+class=&#34;math inline&#34;&gt;\(\bm n\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;半程向量即是&lt;span class=&#34;math inline&#34;&gt;\(\bm l,\bm
+n\)&lt;/span&gt;的角平分线的单位向量。有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\bm h = \frac{\bm v+\bm l}{||\bm v+\bm l||}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;此时相机收到的光强为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+L_s = k_s(\frac{I}{r^2})max(0,\bm n\cdot\bm h)^p
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(k_s\)&lt;/span&gt;是镜面反射系数，&lt;span
+class=&#34;math inline&#34;&gt;\(p\)&lt;/span&gt;决定了&lt;span class=&#34;math inline&#34;&gt;\(\bm
+v\)&lt;/span&gt;和反射角有多接近才算能触发镜面反射。&lt;span
+class=&#34;math inline&#34;&gt;\(p\)&lt;/span&gt;越大触发镜面反射的角度范围越小。通常会取到&lt;span
+class=&#34;math inline&#34;&gt;\(100\)&lt;/span&gt;以上。&lt;/p&gt;
+&lt;h3 id=&#34;环境光反射&#34;&gt;环境光反射&lt;/h3&gt;
+&lt;p&gt;即通过整个环境其他物体的反射，再次射入该物体，给该物体提供亮度。&lt;/p&gt;
+&lt;p&gt;在Blinn-Phong模型中，我们选择添加常数的亮度。&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+L_a = k_aI_a
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(k_a\)&lt;/span&gt;是环境光反射常数。&lt;/p&gt;
+&lt;h3 id=&#34;三个反射混合&#34;&gt;三个反射混合&lt;/h3&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+L = L_a+L_d+L_s
+\]&lt;/span&gt;&lt;/p&gt;
+</description>
+        </item>
+        <item>
         <title>计算机图形学基础（第五版）-第九章笔记</title>
         <link>https://kegalas.top/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E7%AC%AC%E4%BA%94%E7%89%88-%E7%AC%AC%E4%B9%9D%E7%AB%A0%E7%AC%94%E8%AE%B0/</link>
         <pubDate>Sun, 03 Jul 2022 15:21:12 +0800</pubDate>
@@ -122,6 +187,26 @@ for y = yMin to yMax do
             (gamma&amp;gt;0 or fGamma*f01(-1,-1)&amp;gt;0) then
                 c=alpha*c0+beta*c1+gamma*c2
                 drawpixel(x,y) with color c&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;用z-buffer处理覆盖问题&#34;&gt;用Z-Buffer处理覆盖问题&lt;/h3&gt;
+&lt;p&gt;为了处理方便，假设&lt;span
+class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;始终为正，且更小的&lt;span
+class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;意味着更近，更大的&lt;span
+class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;意味着更远。&lt;/p&gt;
+&lt;p&gt;算法如下&lt;/p&gt;
+&lt;p&gt;首先给&lt;span class=&#34;math inline&#34;&gt;\(z-buffer\)&lt;/span&gt;赋值无限大。&lt;/p&gt;
+&lt;p&gt;在光栅化过程中，执行如下伪代码&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;for (each triangle T)
+    for (each sample (x,y,z) in T)
+        if(z&amp;lt;zbuffer[x,y])
+            framebuffer[x,y] = rgb;
+            zbuffer[x,y] = z;
+        else
+            ;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;即为，对每个三角形的采样像素，如果他的深度坐标，即&lt;span
+class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;更小，那么在缓冲区更新这个像素的颜色，并且更新最小的&lt;span
+class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;该算法的复杂度是&lt;span class=&#34;math inline&#34;&gt;\(O(n)\)&lt;/span&gt;，对于&lt;span
+class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;个三角形。&lt;/p&gt;
 </description>
         </item>
         <item>
