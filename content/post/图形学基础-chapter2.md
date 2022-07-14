@@ -82,6 +82,32 @@ $$
 
 同时成立。也可以用向量叉乘的办法判断是否在内部。
 
+对于三角形三个点$A,B,C$，平面中一点$(x,y)$可以表示为
+
+$$
+(x,y) = \alpha A+\beta B+\gamma C
+$$
+
+$$
+\alpha+\beta+\gamma=1
+$$
+
+其中有
+
+$$
+\alpha = \frac{-(x-x_B)(y_C-y_B)+(y-y_B)(x_C-x_B)}{-(x_A-x_B)(y_C-y_B)+(y_A-y_B)(x_C-x_B)}
+$$
+
+$$
+\beta = \frac{-(x-x_C)(y_A-y_C)+(y-y_C)(x_A-x_C)}{-(x_B-x_C)(y_A-y_C)+(y_B-y_C)(x_A-x_C)}
+$$
+
+$$
+\gamma = 1-\alpha-\beta
+$$
+
+运用重心坐标系进行颜色插值见第九章笔记。
+
 ## 向量
 
 同高中和线性代数
