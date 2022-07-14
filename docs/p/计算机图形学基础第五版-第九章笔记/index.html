@@ -502,6 +502,30 @@ class="math inline">\(z\)</span>更小，那么在缓冲区更新这个像素的
 class="math inline">\(z\)</span>。</p>
 <p>该算法的复杂度是<span class="math inline">\(O(n)\)</span>，对于<span
 class="math inline">\(n\)</span>个三角形。</p>
+<h2 id="着色频率的问题shading-frequencies">着色频率的问题（Shading
+Frequencies）</h2>
+<h3 id="对每个平面着色">对每个平面着色</h3>
+<p>又叫Flat着色。</p>
+<h3 id="对每个顶点着色">对每个顶点着色</h3>
+<p>又叫Gouraud着色。</p>
+<p>一个顶点的单位法向量，可以由以这个点为顶点的所有三角形的法向量求出。</p>
+<p><span class="math display">\[
+N_v=\frac{\sum_iN_i}{||\sum_iN_i||}
+\]</span></p>
+<p>然后这个单位法向量可以用于Blinn-Phong反射模型中。</p>
+<p>再之后，对于平面内的点的着色，需要使用插值算法。</p>
+<h3 id="对每个片元像素着色">对每个片元（像素）着色</h3>
+<p>又称Phong着色。</p>
+<p>对于每个像素的单位法向量，假设我们已经知道顶点的法向量，我们可以采用重心坐标插值的算法来计算出每个像素的单位法向量。</p>
+<h2 id="图形管线的工作流程">图形管线的工作流程</h2>
+<ol type="1">
+<li>程序输入顶点</li>
+<li>将顶点在屏幕中定位</li>
+<li>根据顶点在屏幕中定位三角形</li>
+<li>根据三角形进行光栅化</li>
+<li>对于光栅化后的片元进行着色</li>
+<li>输出到帧缓冲，最后输出到屏幕。</li>
+</ol>
 
 </section>
 
@@ -565,6 +589,18 @@ class="math inline">\(n\)</span>个三角形。</p>
                 
                     
 <article class="">
+    <a href="/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E7%AC%AC%E4%BA%94%E7%89%88-%E7%AC%AC%E5%8D%81%E4%B8%80%E7%AB%A0%E7%AC%94%E8%AE%B0/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">计算机图形学基础（第五版）-第十一章笔记</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="">
     <a href="/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E7%AC%AC%E4%BA%94%E7%89%88-%E7%AC%AC%E4%BA%94%E7%AB%A0%E7%AC%94%E8%AE%B0/">
         
         
@@ -607,18 +643,6 @@ class="math inline">\(n\)</span>个三角形。</p>
 
         <div class="article-details">
             <h2 class="article-title">计算机图形学基础（第五版）-第七章笔记</h2>
-        </div>
-    </a>
-</article>
-                
-                    
-<article class="">
-    <a href="/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E7%AC%AC%E4%BA%94%E7%89%88-%E7%AC%AC%E5%85%AD%E7%AB%A0%E7%AC%94%E8%AE%B0/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">计算机图形学基础（第五版）-第六章笔记</h2>
         </div>
     </a>
 </article>

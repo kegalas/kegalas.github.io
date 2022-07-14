@@ -6,7 +6,93 @@
         <description>Recent content on KegalaS的个人博客</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Wed, 13 Jul 2022 21:49:11 +0800</lastBuildDate><atom:link href="https://kegalas.top/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Thu, 14 Jul 2022 16:53:03 +0800</lastBuildDate><atom:link href="https://kegalas.top/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>计算机图形学基础（第五版）-第十一章笔记</title>
+        <link>https://kegalas.top/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E7%AC%AC%E4%BA%94%E7%89%88-%E7%AC%AC%E5%8D%81%E4%B8%80%E7%AB%A0%E7%AC%94%E8%AE%B0/</link>
+        <pubDate>Thu, 14 Jul 2022 16:53:03 +0800</pubDate>
+        
+        <guid>https://kegalas.top/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E7%AC%AC%E4%BA%94%E7%89%88-%E7%AC%AC%E5%8D%81%E4%B8%80%E7%AB%A0%E7%AC%94%E8%AE%B0/</guid>
+        <description>&lt;h2 id=&#34;纹理映射&#34;&gt;纹理映射&lt;/h2&gt;
+&lt;p&gt;纹理映射流程如下&lt;/p&gt;
+&lt;p&gt;对于每个光栅化的屏幕采样点&lt;span
+class=&#34;math inline&#34;&gt;\((x,y)\)&lt;/span&gt;（通常是像素的中心点）&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;令&lt;span class=&#34;math inline&#34;&gt;\((u,v)\)&lt;/span&gt;为纹理上对应于&lt;span
+class=&#34;math inline&#34;&gt;\((x,y)\)&lt;/span&gt;的坐标&lt;/li&gt;
+&lt;li&gt;对纹理上&lt;span class=&#34;math inline&#34;&gt;\((u,v)\)&lt;/span&gt;进行采样&lt;/li&gt;
+&lt;li&gt;将采样得到的颜色作为光栅化需要使用的颜色&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;纹理放大&#34;&gt;纹理放大&lt;/h2&gt;
+&lt;h3 id=&#34;双线性插值&#34;&gt;双线性插值&lt;/h3&gt;
+&lt;p&gt;现在假设纹理上需要采样的点的坐标为(x,y)，显然这个点会落在某个&lt;span
+class=&#34;math inline&#34;&gt;\(2\times2\)&lt;/span&gt;的像素矩形中。&lt;/p&gt;
+&lt;p&gt;设左下角的像素为&lt;span
+class=&#34;math inline&#34;&gt;\(u_{00}\)&lt;/span&gt;，左上&lt;span
+class=&#34;math inline&#34;&gt;\(u_{01}\)&lt;/span&gt;，右下&lt;span
+class=&#34;math inline&#34;&gt;\(u_{10}\)&lt;/span&gt;，右上&lt;span
+class=&#34;math inline&#34;&gt;\(u_{11}\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;设左下角像素中心点为原点建立坐标系。横轴记为s,纵轴记为t。则&lt;span
+class=&#34;math inline&#34;&gt;\(u_{00}=(0,0)\)&lt;/span&gt;,&lt;span
+class=&#34;math inline&#34;&gt;\(u_{10}=(1,0)\)&lt;/span&gt;,&lt;span
+class=&#34;math inline&#34;&gt;\(u_{01}=(0,1)\)&lt;/span&gt;,&lt;span
+class=&#34;math inline&#34;&gt;\(u_{11}=(1,1)\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;记采样点(x,y)在这个坐标系下的坐标为&lt;span
+class=&#34;math inline&#34;&gt;\((s,t)\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;设函数&lt;span
+class=&#34;math inline&#34;&gt;\(lerp(x,v_0,v_1)=v_0+x(v_1-v_0)\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;这个函数的意义是，假设直线上两个点的值为&lt;span
+class=&#34;math inline&#34;&gt;\(v_0,v_1\)&lt;/span&gt;，&lt;span
+class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;为这两个点间的坐标，&lt;span
+class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;在&lt;span
+class=&#34;math inline&#34;&gt;\(x_0\)&lt;/span&gt;处等于&lt;span
+class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt;，在&lt;span
+class=&#34;math inline&#34;&gt;\(x_1\)&lt;/span&gt;处等于&lt;span
+class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt;。此时所得的函数值为&lt;span
+class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;处的插值。&lt;/p&gt;
+&lt;p&gt;现在我们可以对&lt;span
+class=&#34;math inline&#34;&gt;\((s,t)\)&lt;/span&gt;这个点进行插值，首先定义&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+u_0 = lerp(s,u_{00},u_{10})
+u_1 = lerp(s,u_{01},u_{11})
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;得到这两个点后再进行一次插值得&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+f(x,y) = lerp(t,u_0,u_1)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;当然也可以先进行垂直的插值，再水平插值。&lt;/p&gt;
+&lt;h3 id=&#34;双立方插值&#34;&gt;双立方插值&lt;/h3&gt;
+&lt;p&gt;TODO&lt;/p&gt;
+&lt;h2 id=&#34;纹理缩小&#34;&gt;纹理缩小&lt;/h2&gt;
+&lt;h3 id=&#34;mipmap&#34;&gt;Mipmap&lt;/h3&gt;
+&lt;p&gt;当一个像素代表了纹理中的一大块时，需要进行纹理缩小。&lt;/p&gt;
+&lt;p&gt;之前介绍的超采样等是可以使用的，只不过这样会导致开销过大。&lt;/p&gt;
+&lt;p&gt;我们需要找到一种办法直接对区间求平均值。&lt;/p&gt;
+&lt;p&gt;引入Mipmap的概念。它允许快速的、近似的（而非准确的）、方形的范围均值查询。&lt;/p&gt;
+&lt;p&gt;假设第0层是原纹理图像（方形）。&lt;/p&gt;
+&lt;p&gt;则第1层是将长宽各缩小为一半，所所放出来的纹理。第2层则为第1层缩小一半，以此类推直到只有一个像素。&lt;/p&gt;
+&lt;p&gt;额外占用的存储空间只有原纹理的$1/3$0&lt;/p&gt;
+&lt;p&gt;我们要计算应该使用第几层，首先确定我们要光栅化的像素的坐标(x,y)，然后将其对应到纹理上的坐标记为&lt;span
+class=&#34;math inline&#34;&gt;\((u,v)\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;找到它的邻居像素，例如右边像素，然后如图进行计算。&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;1.jpg&#34; alt=&#34;1.jpg&#34; /&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;1.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;存在的一个问题就是，层数是不连续的，但我们的空间是连续的。所以每一层mipmap在纹理映射时会出现块状的、不连续的现象。&lt;/p&gt;
+&lt;h3 id=&#34;三线性插值&#34;&gt;三线性插值&lt;/h3&gt;
+&lt;p&gt;为了解决mipmap不连续的现象，引入三线性插值。&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;在&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;层进行双线性插值&lt;/li&gt;
+&lt;li&gt;在&lt;span class=&#34;math inline&#34;&gt;\(D+1\)&lt;/span&gt;层进行双线性插值&lt;/li&gt;
+&lt;li&gt;对&lt;span class=&#34;math inline&#34;&gt;\(D,D+1\)&lt;/span&gt;层进行一次线性插值&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;mipmap的缺陷&#34;&gt;Mipmap的缺陷&lt;/h3&gt;
+&lt;p&gt;相较于超采样，在远处会出现模糊现象。原因在于，只能查询一个方形取余、近似的、以及是插值得到的。&lt;/p&gt;
+&lt;p&gt;解决（部分的）办法：各向异性过滤。&lt;/p&gt;
+&lt;p&gt;比各向异性过滤更好的：EWA过滤。&lt;/p&gt;
+</description>
+        </item>
+        <item>
         <title>计算机图形学基础（第五版）-第五章笔记</title>
         <link>https://kegalas.top/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E7%AC%AC%E4%BA%94%E7%89%88-%E7%AC%AC%E4%BA%94%E7%AB%A0%E7%AC%94%E8%AE%B0/</link>
         <pubDate>Wed, 13 Jul 2022 21:49:11 +0800</pubDate>
@@ -207,6 +293,30 @@ class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;更小，那么在缓冲区更�
 class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;。&lt;/p&gt;
 &lt;p&gt;该算法的复杂度是&lt;span class=&#34;math inline&#34;&gt;\(O(n)\)&lt;/span&gt;，对于&lt;span
 class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;个三角形。&lt;/p&gt;
+&lt;h2 id=&#34;着色频率的问题shading-frequencies&#34;&gt;着色频率的问题（Shading
+Frequencies）&lt;/h2&gt;
+&lt;h3 id=&#34;对每个平面着色&#34;&gt;对每个平面着色&lt;/h3&gt;
+&lt;p&gt;又叫Flat着色。&lt;/p&gt;
+&lt;h3 id=&#34;对每个顶点着色&#34;&gt;对每个顶点着色&lt;/h3&gt;
+&lt;p&gt;又叫Gouraud着色。&lt;/p&gt;
+&lt;p&gt;一个顶点的单位法向量，可以由以这个点为顶点的所有三角形的法向量求出。&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+N_v=\frac{\sum_iN_i}{||\sum_iN_i||}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;然后这个单位法向量可以用于Blinn-Phong反射模型中。&lt;/p&gt;
+&lt;p&gt;再之后，对于平面内的点的着色，需要使用插值算法。&lt;/p&gt;
+&lt;h3 id=&#34;对每个片元像素着色&#34;&gt;对每个片元（像素）着色&lt;/h3&gt;
+&lt;p&gt;又称Phong着色。&lt;/p&gt;
+&lt;p&gt;对于每个像素的单位法向量，假设我们已经知道顶点的法向量，我们可以采用重心坐标插值的算法来计算出每个像素的单位法向量。&lt;/p&gt;
+&lt;h2 id=&#34;图形管线的工作流程&#34;&gt;图形管线的工作流程&lt;/h2&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;程序输入顶点&lt;/li&gt;
+&lt;li&gt;将顶点在屏幕中定位&lt;/li&gt;
+&lt;li&gt;根据顶点在屏幕中定位三角形&lt;/li&gt;
+&lt;li&gt;根据三角形进行光栅化&lt;/li&gt;
+&lt;li&gt;对于光栅化后的片元进行着色&lt;/li&gt;
+&lt;li&gt;输出到帧缓冲，最后输出到屏幕。&lt;/li&gt;
+&lt;/ol&gt;
 </description>
         </item>
         <item>
@@ -760,6 +870,28 @@ class=&#34;math inline&#34;&gt;\(\bm{c-a},\bm{b-a}\)&lt;/span&gt;线性无关，
 0&amp;lt;\alpha&amp;lt;1,0&amp;lt;\beta&amp;lt;1,0&amp;lt;\gamma&amp;lt;1
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;同时成立。也可以用向量叉乘的办法判断是否在内部。&lt;/p&gt;
+&lt;p&gt;对于三角形三个点&lt;span
+class=&#34;math inline&#34;&gt;\(A,B,C\)&lt;/span&gt;，平面中一点&lt;span
+class=&#34;math inline&#34;&gt;\((x,y)\)&lt;/span&gt;可以表示为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+(x,y) = \alpha A+\beta B+\gamma C
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\alpha+\beta+\gamma=1
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\alpha =
+\frac{-(x-x_B)(y_C-y_B)+(y-y_B)(x_C-x_B)}{-(x_A-x_B)(y_C-y_B)+(y_A-y_B)(x_C-x_B)}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\beta =
+\frac{-(x-x_C)(y_A-y_C)+(y-y_C)(x_A-x_C)}{-(x_B-x_C)(y_A-y_C)+(y_B-y_C)(x_A-x_C)}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\gamma = 1-\alpha-\beta
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;运用重心坐标系进行颜色插值见第九章笔记。&lt;/p&gt;
 &lt;h2 id=&#34;向量&#34;&gt;向量&lt;/h2&gt;
 &lt;p&gt;同高中和线性代数&lt;/p&gt;
 &lt;h2 id=&#34;积分&#34;&gt;积分&lt;/h2&gt;
