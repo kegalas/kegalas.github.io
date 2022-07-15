@@ -362,7 +362,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 2 分钟
+                    阅读时长: 3 分钟
                 </time>
             </div>
         
@@ -399,6 +399,14 @@ L_d=k_d(\frac{I}{r^2})max(0,\bm n\cdot\bm l)
 class="math inline">\(k_d\)</span>是漫反射系数，与材质有关。<span
 class="math inline">\(I\)</span>是点光源的强度，<span
 class="math inline">\(r\)</span>是点光源到需要着色的点的距离。后面max的作用是，防止从“内部”或者“下面”射来的光线影响了“表面”的颜色。</p>
+<p>通常，<span
+class="math inline">\(k_d\)</span>是一个三维向量，如果将纹理颜色赋值给<span
+class="math inline">\(k_d\)</span>，则会起到给模型贴纹理的效果。</p>
+<p><span class="math inline">\(L_d\)</span>和<span
+class="math inline">\(I\)</span>也是三维向量，<span
+class="math inline">\(I\)</span>不仅可以代表光的强度，也可以表示光的颜色。<span
+class="math inline">\(k_d\)</span>与<span
+class="math inline">\(I\)</span>的乘法是元素之间相乘。在Eigen中使用cwiseProduct函数。</p>
 <h3 id="镜面反射">镜面反射</h3>
 <p>即，某些材质中，反射角等于入射角，或者反射角很接近入射角时，出现的光强明显大于其他角度的情况。</p>
 <p>此时<span class="math inline">\(\bm
@@ -418,6 +426,9 @@ class="math inline">\(p\)</span>决定了<span class="math inline">\(\bm
 v\)</span>和反射角有多接近才算能触发镜面反射。<span
 class="math inline">\(p\)</span>越大触发镜面反射的角度范围越小。通常会取到<span
 class="math inline">\(100\)</span>以上。</p>
+<p><span
+class="math inline">\(k_s,L_s,I\)</span>仍然是三维向量，乘法规则同前，只不过这里的<span
+class="math inline">\(k_s\)</span>通常会采用比较亮的白色，而不会采用其他颜色。</p>
 <h3 id="环境光反射">环境光反射</h3>
 <p>即通过整个环境其他物体的反射，再次射入该物体，给该物体提供亮度。</p>
 <p>在Blinn-Phong模型中，我们选择添加常数的亮度。</p>
@@ -425,6 +436,10 @@ class="math inline">\(100\)</span>以上。</p>
 L_a = k_aI_a
 \]</span></p>
 <p><span class="math inline">\(k_a\)</span>是环境光反射常数。</p>
+<p><span
+class="math inline">\(k_a,L_s,I\)</span>仍然是三维向量，乘法规则同前，只不过这里的<span
+class="math inline">\(k_s\)</span>通常会采用比较暗的白色，而不会采用其他颜色。</p>
+<p>注意，有多个光源时，不要重复添加环境光反射。</p>
 <h3 id="三个反射混合">三个反射混合</h3>
 <p><span class="math display">\[
 L = L_a+L_d+L_s
