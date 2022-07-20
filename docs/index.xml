@@ -6,7 +6,160 @@
         <description>Recent content on KegalaS的个人博客</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Thu, 14 Jul 2022 16:53:03 +0800</lastBuildDate><atom:link href="https://kegalas.top/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Wed, 20 Jul 2022 15:08:04 +0800</lastBuildDate><atom:link href="https://kegalas.top/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>计算机图形学基础（第五版）-第十二章笔记</title>
+        <link>https://kegalas.top/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E7%AC%AC%E4%BA%94%E7%89%88-%E7%AC%AC%E5%8D%81%E4%BA%8C%E7%AB%A0%E7%AC%94%E8%AE%B0/</link>
+        <pubDate>Wed, 20 Jul 2022 15:08:04 +0800</pubDate>
+        
+        <guid>https://kegalas.top/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E7%AC%AC%E4%BA%94%E7%89%88-%E7%AC%AC%E5%8D%81%E4%BA%8C%E7%AB%A0%E7%AC%94%E8%AE%B0/</guid>
+        <description>&lt;h2 id=&#34;三角形网格的细分&#34;&gt;三角形网格的细分&lt;/h2&gt;
+&lt;h3 id=&#34;loop细分&#34;&gt;Loop细分&lt;/h3&gt;
+&lt;p&gt;Loop Subdivision分为两步&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;创建更多三角形（顶点）&lt;/li&gt;
+&lt;li&gt;改变三角形顶点的位置&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;创建更多的三角形非常简单，只用将三角形每条边的中点相连，我们就得到了四个三角形。&lt;/p&gt;
+&lt;p&gt;对于顶点的位置，新的顶点和老的顶点都需要更改。&lt;/p&gt;
+&lt;p&gt;对于新的顶点：&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;1.jpg&#34; alt=&#34;1.jpg&#34; /&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;1.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;对于老的顶点&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;2.jpg&#34; alt=&#34;2.jpg&#34; /&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;2.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;h2 id=&#34;更一般的网格的细分&#34;&gt;更一般的网格的细分&lt;/h2&gt;
+&lt;h3 id=&#34;catmull-clark细分&#34;&gt;Catmull-Clark细分&lt;/h3&gt;
+&lt;p&gt;对于不是方形的面和度数（所连边数）不等于4的点要进行细分&lt;/p&gt;
+&lt;p&gt;步骤如下：&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;在每个面的上添加顶点&lt;/li&gt;
+&lt;li&gt;在每条边的上添加顶点&lt;/li&gt;
+&lt;li&gt;连接新顶点&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;添加的规则如下&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;3.jpg&#34; alt=&#34;3.jpg&#34; /&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;3.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;h2 id=&#34;网格简化&#34;&gt;网格简化&lt;/h2&gt;
+&lt;h3 id=&#34;二次误差度量&#34;&gt;二次误差度量&lt;/h3&gt;
+&lt;figure&gt;
+&lt;img src=&#34;4.jpg&#34; alt=&#34;4.jpg&#34; /&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;4.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;对于如上图的情况，不应该对顶点求平均值，而应该使得新的顶点到原来顶点的平方距离之和最小&lt;/p&gt;
+&lt;h3 id=&#34;坍缩边的方法&#34;&gt;坍缩边的方法&lt;/h3&gt;
+&lt;p&gt;通过坍缩某些边，然后使边的端点重合在一起，使得三角形减少。&lt;/p&gt;
+&lt;p&gt;一个想法是将边的中点进行二次误差度量。&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;5.jpg&#34; alt=&#34;5.jpg&#34; /&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;5.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;一个更好地想法是选择那些拥有最小二次误差的点。可以用优先队列来维护。&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>计算机图形学基础（第五版）-第十五章笔记</title>
+        <link>https://kegalas.top/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E7%AC%AC%E4%BA%94%E7%89%88-%E7%AC%AC%E5%8D%81%E4%BA%94%E7%AB%A0%E7%AC%94%E8%AE%B0/</link>
+        <pubDate>Wed, 20 Jul 2022 13:47:39 +0800</pubDate>
+        
+        <guid>https://kegalas.top/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E7%AC%AC%E4%BA%94%E7%89%88-%E7%AC%AC%E5%8D%81%E4%BA%94%E7%AB%A0%E7%AC%94%E8%AE%B0/</guid>
+        <description>&lt;p&gt;有两种方法描述几何：隐式的、显式的。&lt;/p&gt;
+&lt;h2 id=&#34;几何的隐式表示&#34;&gt;几何的隐式表示&lt;/h2&gt;
+&lt;p&gt;取决于某些点是否符合表达式。&lt;/p&gt;
+&lt;p&gt;例如描述一个球面&lt;span
+class=&#34;math inline&#34;&gt;\(x^2+y^2+z^2=1\)&lt;/span&gt;，所有符合这个表达式的点就是一个球面。&lt;/p&gt;
+&lt;p&gt;更一般的情况：满足&lt;span
+class=&#34;math inline&#34;&gt;\(f(x,y,z)=0\)&lt;/span&gt;的所有点。&lt;/p&gt;
+&lt;p&gt;它的特点是，采样比较困难，但判断一个点在集合体内外或者在几何体上非常方便。&lt;/p&gt;
+&lt;p&gt;隐式表示包含：&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;代数方程表示(Algebraic Surfaces)&lt;/li&gt;
+&lt;li&gt;通过布尔表达式对几何体进行运算(Constructive Solid Geometry)&lt;/li&gt;
+&lt;li&gt;距离函数(Distance Functions)&lt;/li&gt;
+&lt;li&gt;Blending Distance Functions&lt;/li&gt;
+&lt;li&gt;水平集(Level Set)&lt;/li&gt;
+&lt;li&gt;分形(Fractals)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;几何的显式表示&#34;&gt;几何的显式表示&lt;/h2&gt;
+&lt;p&gt;所有的点直接给出，或者通过参数映射地给出。&lt;/p&gt;
+&lt;p&gt;比如从二维映射到三维&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+f:\mathbb{R^2\to R^3};(u,v)\to(x,y,z)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;特点是，采样简单，但是判断关系较为困难。&lt;/p&gt;
+&lt;p&gt;显式表示包含：&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;点云(Point Cloud)&lt;/li&gt;
+&lt;li&gt;多边形网格(Polygon Mesh)&lt;/li&gt;
+&lt;li&gt;贝赛尔曲线(Bezier Curves)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;贝塞尔曲线&#34;&gt;贝塞尔曲线&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;Casteljau算法&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;考虑平面上的三个点&lt;span
+class=&#34;math inline&#34;&gt;\(b_0,b_1,b_2\)&lt;/span&gt;，用线性差值的办法插入一个点到每一条边上。&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;1.jpg&#34; alt=&#34;1.jpg&#34; /&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;1.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;将新增的两个点再利用相同的办法插入一个点。&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;3.jpg&#34; alt=&#34;2.jpg&#34; /&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;2.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;然后对于插值的比例值&lt;span
+class=&#34;math inline&#34;&gt;\([0,1]\)&lt;/span&gt;上的所有点进行这个算法。&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;2.jpg&#34; alt=&#34;3.jpg&#34; /&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;3.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;对于更多点，因为每次在边上进行插值后，新的点比原来的点少一个，反复进行这个算法直到只有一个点。&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;4.jpg&#34; alt=&#34;4.jpg&#34; /&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;4.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;将这个过程公式化，对于三个点的情况，即为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+b_0^1(t)=(1-t)b_0+tb_1\\
+b_1^1(t)=(1-t)b_1+tb_2\\
+b_0^2(t)=(1-t)b_0^1+tb_1^1
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\therefore b_0^2(t) = (1-t)^2b_0+2t(1-t)b_1+t^2b_2
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;对于更多点的情况：&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+b^n(t) = b^n_0(t)=\sum^n_{j=0}b_jB^n_j(t)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+B^n_i(t)=\binom{n}{i}t^i(1-t)^{n-1}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;贝赛尔曲线的一些性质&lt;/strong&gt;&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(t=0\)&lt;/span&gt;是起点，&lt;span
+class=&#34;math inline&#34;&gt;\(t=1\)&lt;/span&gt;是终点。&lt;/li&gt;
+&lt;li&gt;曲线与端点段相切&lt;/li&gt;
+&lt;li&gt;仿射变换中，对控制点仿射变换再画曲线，和对已经画出来的曲线做仿射变换，得到的曲线是一样的。&lt;/li&gt;
+&lt;li&gt;曲线一定在控制点的凸包内&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;分段的贝赛尔曲线及其算法&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;四个顶点构成的贝赛尔曲线为一段，再将许多贝赛尔曲线接到一起。&lt;/p&gt;
+&lt;p&gt;这样的曲线一定是连续的，但光滑还有一个条件。即第一条曲线的第3、4个点的线段和第二条曲线的第1、2个点的线段长度、方向均相同。&lt;/p&gt;
+&lt;h3 id=&#34;样条spline&#34;&gt;样条(Spline)&lt;/h3&gt;
+&lt;p&gt;TODO&lt;/p&gt;
+&lt;h3 id=&#34;贝塞尔曲面&#34;&gt;贝塞尔曲面&lt;/h3&gt;
+&lt;p&gt;对于&lt;span class=&#34;math inline&#34;&gt;\(4\times
+4\)&lt;/span&gt;的控制点，首先在&lt;span
+class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt;方向上画出四条贝赛尔曲线，然后再在&lt;span
+class=&#34;math inline&#34;&gt;\(v\)&lt;/span&gt;方向上，根据四条贝塞尔曲线计算出四个控制点，再计算出曲面上的点。&lt;/p&gt;
+</description>
+        </item>
+        <item>
         <title>计算机图形学基础（第五版）-第十一章笔记</title>
         <link>https://kegalas.top/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E7%AC%AC%E4%BA%94%E7%89%88-%E7%AC%AC%E5%8D%81%E4%B8%80%E7%AB%A0%E7%AC%94%E8%AE%B0/</link>
         <pubDate>Thu, 14 Jul 2022 16:53:03 +0800</pubDate>
@@ -90,6 +243,80 @@ class=&#34;math inline&#34;&gt;\((u,v)\)&lt;/span&gt;。&lt;/p&gt;
 &lt;p&gt;相较于超采样，在远处会出现模糊现象。原因在于，只能查询一个方形取余、近似的、以及是插值得到的。&lt;/p&gt;
 &lt;p&gt;解决（部分的）办法：各向异性过滤。&lt;/p&gt;
 &lt;p&gt;比各向异性过滤更好的：EWA过滤。&lt;/p&gt;
+&lt;h2 id=&#34;纹理的应用&#34;&gt;纹理的应用&lt;/h2&gt;
+&lt;h3 id=&#34;环境光贴图&#34;&gt;环境光贴图&lt;/h3&gt;
+&lt;p&gt;将整个环境做成贴图，可以给比较镜面光滑的物体使用，使之反射出环境的样子。&lt;/p&gt;
+&lt;p&gt;除了保存成方形的贴图，还可以保存在球面上。&lt;/p&gt;
+&lt;p&gt;保存在球面上带来的问题是，越靠近上下的地方，越会出现变形。此时可以将球上的点映射到一个立方体上，来解决这种变形。&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;2.jpg&#34; alt=&#34;2.jpg&#34; /&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;2.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;h3 id=&#34;法线贴图&#34;&gt;法线贴图&lt;/h3&gt;
+&lt;p&gt;储存一个相对高度，从而改变某一点的法线，从而改变光照效果，从而实现凹凸不平的视觉效果。&lt;/p&gt;
+&lt;p&gt;新的法向量的计算方法：&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;二维情况：&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;假设原来&lt;span class=&#34;math inline&#34;&gt;\(p\)&lt;/span&gt;点的法向量&lt;span
+class=&#34;math inline&#34;&gt;\(n(p)=(0,1)\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;将&lt;span
+class=&#34;math inline&#34;&gt;\(p\)&lt;/span&gt;点通过法线贴图的相对高度移到对应位置，则&lt;span
+class=&#34;math inline&#34;&gt;\(p\)&lt;/span&gt;点此时的导数为&lt;span
+class=&#34;math inline&#34;&gt;\(dp=c[h(p+1)-h(p)]\)&lt;/span&gt;，其中&lt;span
+class=&#34;math inline&#34;&gt;\(c\)&lt;/span&gt;是常数，&lt;span
+class=&#34;math inline&#34;&gt;\(h(x)\)&lt;/span&gt;是高度函数。&lt;/p&gt;
+&lt;p&gt;则新的法向量为&lt;span
+class=&#34;math inline&#34;&gt;\(n(p)=(-dp,1).normalized()\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;三维情况&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;原始法向量为&lt;span class=&#34;math inline&#34;&gt;\(n(p)=(0,0,1)\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;导数为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\frac{dp}{du} = c_1[h(u+1)-h(u)]
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\frac{dp}{dv} = c_2[h(v+1)-h(v)]
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;新的法向量为&lt;span
+class=&#34;math inline&#34;&gt;\((-dp/du,-dp/dv,1)\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;法向量的一般情况&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;对于原法向量为&lt;span class=&#34;math inline&#34;&gt;\(\bm
+n=(x,y,z)\)&lt;/span&gt;的，首先令&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\bm t =
+\left(\frac{xy}{\sqrt{x^2+z^2}},\sqrt{x^2+z^2},\frac{zy}{\sqrt{x^2+z^2}}\right)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\bm b = \bm n\times\bm t
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+TBN = [\bm{t,b,n}]
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+dU = kh\cdot kn\cdot(h(u+1/w,v)-h(u,v))
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+dV = kh\cdot kn\cdot(h(u,v+1/h)-h(u,v))
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(kh,kn\)&lt;/span&gt;是常数，&lt;span
+class=&#34;math inline&#34;&gt;\(h(u,v)\)&lt;/span&gt;是高度函数,&lt;span
+class=&#34;math inline&#34;&gt;\(h,w\)&lt;/span&gt;是纹理的高度和宽度。&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\bm{ln} = (-dU,-dV,1)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;那么最终得到的法向量为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\bm n = normalize(TBN\cdot \bm{ln})
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;位移贴图&#34;&gt;位移贴图&lt;/h3&gt;
+&lt;p&gt;与法线贴图类似，但是位移贴图真正地移动了顶点的位置，很多时候比法线贴图真实。&lt;/p&gt;
+&lt;h3 id=&#34;噪声&#34;&gt;噪声&lt;/h3&gt;
+&lt;p&gt;TODO&lt;/p&gt;
+&lt;h3 id=&#34;对纹理进行环境光预处理&#34;&gt;对纹理进行环境光预处理&lt;/h3&gt;
+&lt;p&gt;TODO&lt;/p&gt;
+&lt;h3 id=&#34;d贴图和体积渲染&#34;&gt;3D贴图和体积渲染&lt;/h3&gt;
+&lt;p&gt;TODO&lt;/p&gt;
+&lt;h3 id=&#34;阴影贴图&#34;&gt;阴影贴图&lt;/h3&gt;
+&lt;p&gt;将光源也当作一个相机，进行光栅化，只计算zbuffer的信息。&lt;/p&gt;
+&lt;p&gt;然后在相机光栅化时，判断两个zbuffer是否相等，相等才能被相机和光源看见。不相等的则在阴影中。&lt;/p&gt;
 </description>
         </item>
         <item>
