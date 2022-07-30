@@ -362,7 +362,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 1 分钟
+                    阅读时长: 2 分钟
                 </time>
             </div>
         
@@ -420,6 +420,36 @@
 <figcaption aria-hidden="true">5.jpg</figcaption>
 </figure>
 <p>一个更好地想法是选择那些拥有最小二次误差的点。可以用优先队列来维护。</p>
+<h2 id="不均匀分割空间的数据结构">不均匀分割空间的数据结构</h2>
+<p>有Oct-Tree，KD-Tree，BSP-Tree。</p>
+<p>Oct-Tree是均匀地将一个正方体分为八个小正方体的结构。可以根据物体在某一部分的密度来决定是否往下分。</p>
+<p>KD-Tree是将空间分为两部分，可以是不均匀的。但是分的时候是轴对齐的。</p>
+<p>BSP-Tree也是分为两部分，但分的时候可以不轴对称。</p>
+<h3 id="kd-tree">KD-Tree</h3>
+<p>KD-Tree的要求如下</p>
+<p>对于中间节点，存储：</p>
+<ol type="1">
+<li>分割空间的平面垂直的坐标轴</li>
+<li>分割空间的平面在坐标轴上的坐标</li>
+<li>指向儿子节点的指针</li>
+<li>不存储任何物体的信息</li>
+</ol>
+<p>对于叶子节点，存储</p>
+<ol type="1">
+<li>包含的物体列表</li>
+</ol>
+<h3 id="层次包围盒bvh">层次包围盒(BVH)</h3>
+<p>这也是一种树，根节点是所有物体的包围盒。</p>
+<p>然后对节点进行分割，使得该节点划分为两个部分，每个部分都是一个包围盒，一个物体仅在一个包围盒中。</p>
+<p>如果一个节点被分割了，它就不再作为含有物体的包围盒。只有叶子节点含有包围盒。</p>
+<p>其中有几个注意事项：</p>
+<ol type="1">
+<li>选择节点中的最长轴，如果物体有沿<span
+class="math inline">\(x\)</span>轴分布的形状，则在<span
+class="math inline">\(x\)</span>轴上将物体分为两部分。</li>
+<li>分割节点选择在中间的物体。</li>
+<li>当一个节点只有很少物体时停止分割</li>
+</ol>
 
 </section>
 
@@ -483,6 +513,18 @@
                 
                     
 <article class="">
+    <a href="/p/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80-chapter4/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">图形学基础 Chapter4</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="">
     <a href="/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E7%AC%AC%E4%BA%94%E7%89%88-%E7%AC%AC%E5%8D%81%E4%BA%94%E7%AB%A0%E7%AC%94%E8%AE%B0/">
         
         
@@ -525,18 +567,6 @@
 
         <div class="article-details">
             <h2 class="article-title">计算机图形学基础（第五版）-第九章笔记</h2>
-        </div>
-    </a>
-</article>
-                
-                    
-<article class="">
-    <a href="/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E7%AC%AC%E4%BA%94%E7%89%88-%E7%AC%AC%E4%B8%89%E7%AB%A0%E7%AC%94%E8%AE%B0/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">计算机图形学基础（第五版）-第三章笔记</h2>
         </div>
     </a>
 </article>

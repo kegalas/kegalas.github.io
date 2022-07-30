@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="en-us">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='本章内容为线性代数，在线性代数整理中涵盖了大部分内容，不再重复，介绍一些那篇文章没有覆盖的内容。 SVD（奇异值分解） 与对角化不同的是，计算S'><title>计算机图形学基础（第五版）-第六章笔记</title>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='为什么需要光线追踪 光栅化不能很好地处理全局效果。例如软阴影，以及光照的多次反射。 虽然光栅化很快，但是质量不非常好、不真实。 相比之下光线追踪效'><title>图形学基础 Chapter4</title>
 
-<link rel='canonical' href='https://kegalas.top/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E7%AC%AC%E4%BA%94%E7%89%88-%E7%AC%AC%E5%85%AD%E7%AB%A0%E7%AC%94%E8%AE%B0/'>
+<link rel='canonical' href='https://kegalas.top/p/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80-chapter4/'>
 
-<link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='计算机图形学基础（第五版）-第六章笔记'>
-<meta property='og:description' content='本章内容为线性代数，在线性代数整理中涵盖了大部分内容，不再重复，介绍一些那篇文章没有覆盖的内容。 SVD（奇异值分解） 与对角化不同的是，计算S'>
-<meta property='og:url' content='https://kegalas.top/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E7%AC%AC%E4%BA%94%E7%89%88-%E7%AC%AC%E5%85%AD%E7%AB%A0%E7%AC%94%E8%AE%B0/'>
+<link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='图形学基础 Chapter4'>
+<meta property='og:description' content='为什么需要光线追踪 光栅化不能很好地处理全局效果。例如软阴影，以及光照的多次反射。 虽然光栅化很快，但是质量不非常好、不真实。 相比之下光线追踪效'>
+<meta property='og:url' content='https://kegalas.top/p/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80-chapter4/'>
 <meta property='og:site_name' content='KegalaS的个人博客'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='图形学' /><meta property='article:published_time' content='2022-06-27T15:29:29&#43;08:00'/><meta property='article:modified_time' content='2022-06-27T15:29:29&#43;08:00'/>
-<meta name="twitter:title" content="计算机图形学基础（第五版）-第六章笔记">
-<meta name="twitter:description" content="本章内容为线性代数，在线性代数整理中涵盖了大部分内容，不再重复，介绍一些那篇文章没有覆盖的内容。 SVD（奇异值分解） 与对角化不同的是，计算S">
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='图形学' /><meta property='article:published_time' content='2022-07-28T17:36:32&#43;08:00'/><meta property='article:modified_time' content='2022-07-28T17:36:32&#43;08:00'/>
+<meta name="twitter:title" content="图形学基础 Chapter4">
+<meta name="twitter:description" content="为什么需要光线追踪 光栅化不能很好地处理全局效果。例如软阴影，以及光照的多次反射。 虽然光栅化很快，但是质量不非常好、不真实。 相比之下光线追踪效">
     <link rel="shortcut icon" href="favicon-16x16.png" />
 
     </head>
@@ -329,7 +329,7 @@
     
 
     <h2 class="article-title">
-        <a href="/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E7%AC%AC%E4%BA%94%E7%89%88-%E7%AC%AC%E5%85%AD%E7%AB%A0%E7%AC%94%E8%AE%B0/">计算机图形学基础（第五版）-第六章笔记</a>
+        <a href="/p/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80-chapter4/">图形学基础 Chapter4</a>
     </h2>
 
     
@@ -347,7 +347,7 @@
   <path d="M3 11h16" />
   <path d="M18 16.496v1.504l1 1" />
 </svg>
-                <time class="article-time--published">Jun 27, 2022</time>
+                <time class="article-time--published">Jul 28, 2022</time>
             </div>
         
 
@@ -362,7 +362,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 1 分钟
+                    阅读时长: 4 分钟
                 </time>
             </div>
         
@@ -372,23 +372,183 @@
 </header>
 
     <section class="article-content">
-    <p>本章内容为线性代数，在线性代数整理中涵盖了大部分内容，不再重复，介绍一些那篇文章没有覆盖的内容。</p>
-<h2 id="svd奇异值分解">SVD（奇异值分解）</h2>
-<p>与对角化不同的是，计算SVD时，两边的正交矩阵不要求相同。例如：</p>
+    <h2 id="为什么需要光线追踪">为什么需要光线追踪</h2>
+<p>光栅化不能很好地处理全局效果。例如软阴影，以及光照的多次反射。</p>
+<p>虽然光栅化很快，但是质量不非常好、不真实。</p>
+<p>相比之下光线追踪效果会好很多，但是也非常慢。在过去算力不发达的时候，光栅化是一个实时的算法，而光线追踪是一个离线的算法。</p>
+<h2 id="基础的光线追踪算法">基础的光线追踪算法</h2>
+<h3 id="光线投射">光线投射</h3>
+<ol type="1">
+<li>对每一个像素投射一条光线来生成一张图</li>
+<li>对光源发射一条光线来检查阴影</li>
+</ol>
+<p><strong>Pinhole Camera Model</strong></p>
+<p>首先从眼睛，或者说相机发出一条光线，穿过图像平面上的一个像素。然后和空间中的一个物体边缘相交。当然可以和一个物体多次、或者和多个物体相交，我们需要的是最近的。</p>
+<p>然后对最近的这个交点进行着色计算。例如使用Blinn-Phong模型。</p>
+<p><strong>Recursive(Whitted-Style) Ray Tracing</strong></p>
+<p>仍然从相机发出一条光线，穿过图像平面上的一个像素。然后和空间中的一个物体边缘相交。当然，如果是较为镜面的物体，会继续反射光线的路径和下一个物体边缘相交。直到不出现镜面反射。如果是玻璃等透射物质，则要沿着折射光线继续，直到不透明物体。</p>
+<h3 id="光线的数学表示">光线的数学表示</h3>
+<p>光线由光源点和方向向量表示。</p>
 <p><span class="math display">\[
-\bm A=\bm{USV}^T
+\bm r(t) = \bm o+t\bm d\quad 0\leq t&lt;\infty
 \]</span></p>
-<p>其中<span class="math inline">\(\bm
-S\)</span>是一个对角阵，并且对角线上的元素就是奇异值。当<span
-class="math inline">\(\bm
-A\)</span>是对称的并且都是非负特征值，此时SVD和对角化相同。</p>
-<p>有一个特征值和奇异值之间的关系可以帮助我们计算奇异值</p>
+<p>其中<span class="math inline">\(t\)</span>是时间，<span
+class="math inline">\(\bm o\)</span>是光源向量，<span
+class="math inline">\(\bm d\)</span>是方向向量。</p>
+<h3 id="光线相交">光线相交</h3>
+<p><strong>对于隐式表示的物体</strong></p>
+<p>判断是否相交，例如一个球面：</p>
 <p><span class="math display">\[
-M = \bm{AA}^T=(\bm{USV}^T)(\bm{USV}^T)^T = \bm{US}(\bm V^T\bm
-V)\bm{SU}^T
+(\bm{p}-\bm{c})^2-R^2=0
+\]</span></p>
+<p>其中<span class="math inline">\(\bm p\)</span>是球面上的点，<span
+class="math inline">\(\bm c\)</span>是球心，和</p>
+<p><span class="math display">\[
+\bm r(t) = \bm o+t\bm d\quad 0\leq t&lt;\infty
+\]</span></p>
+<p>相交，则要满足</p>
+<p><span class="math display">\[
+(\bm o+t\bm d-\bm c)^2-R^2=0
+\]</span></p>
+<p>只有<span class="math inline">\(t\)</span>一个未知数，解即可。</p>
+<p>其他的隐式表示的，或者说用代数形式表示的物体都可以这么判断相交。</p>
+<p><strong>对于三角形网格</strong></p>
+<p>首先，三角形一定能够确定一个平面。所以先判断光线和平面的相交，以及计算交点。再计算交点是否在三角形内。</p>
+<p>一个平面可以表述为上面的一点和平面的法向量。</p>
+<p>所有在平面上的点满足如下等式</p>
+<p><span class="math display">\[
+(\bm p-\bm p&#39;)\cdot \bm N = 0
+\]</span></p>
+<p>其中，<span class="math inline">\(\bm
+p&#39;\)</span>是平面上已知一点，<span class="math inline">\(\bm
+N\)</span>是平面法向量。</p>
+<p>判断光线和平面的交点：</p>
+<p>和</p>
+<p><span class="math display">\[
+\bm r(t) = \bm o+t\bm d\quad 0\leq t&lt;\infty
+\]</span></p>
+<p>联立，得</p>
+<p><span class="math display">\[
+(\bm o+t\bm d-\bm p&#39;)\cdot \bm N = 0
+\]</span></p>
+<p>解得</p>
+<p><span class="math display">\[
+t = \frac{(\bm p&#39;-\bm o)\cdot \bm N}{\bm d\cdot\bm N}
+\]</span></p>
+<p>应确保<span class="math inline">\(0\leq t&lt;\infty\)</span></p>
+<p><em>直接计算出交点重心坐标的方法</em></p>
+<p>Moller Trumbore Algorithm:</p>
+<p><span class="math display">\[
+\bm O+t\bm D = (1-b_1-b_2)\bm P_0+b_1\bm P_1+b_2\bm P_2
 \]</span></p>
 <p><span class="math display">\[
-=\bm{US}^2\bm U^T
+\begin{bmatrix}
+t \\
+b_1 \\
+b_2
+\end{bmatrix}=
+\frac{1}{\bm S_1\cdot\bm E_1}
+\begin{bmatrix}
+\bm S_2\cdot\bm E_2 \\
+\bm S_1\cdot\bm S \\
+\bm S_2\cdot\bm D
+\end{bmatrix}
+\]</span></p>
+<p>其中：</p>
+<p><span class="math display">\[
+\bm E_1=\bm P_1 - \bm P_0
+\]</span></p>
+<p><span class="math display">\[
+\bm E_2=\bm P_2 - \bm P_0
+\]</span></p>
+<p><span class="math display">\[
+\bm S=\bm O - \bm P_0
+\]</span></p>
+<p><span class="math display">\[
+\bm S_1=\bm D \times \bm E
+_2
+\]</span></p>
+<p><span class="math display">\[
+\bm S_2=\bm S \times \bm E
+_1
+\]</span></p>
+<h2 id="光线追踪加速">光线追踪加速</h2>
+<h3 id="包围盒">包围盒</h3>
+<p>一个物体被完整地包含在一个长方体中，这个长方体称之为包围盒。有时有多个物体在内。</p>
+<p>显然如果光线没有击中包围盒，光线也就不会击中物体。</p>
+<p>由于长方体的六个面确定了六个平面，长方体又可以看作是三组平行平面的交叉。</p>
+<p>我们通常会使用轴对齐的包围盒。即三组平面都平行于坐标面。</p>
+<p>对每一组平面都求光线和其交点，都会求出一个近点和远点。将三组近点和远点比较，求出最远的近点和最近的远点，就是和包围盒的交点。当然同时注意<span
+class="math inline">\(t\geq 0\)</span></p>
+<p>使用轴对齐的包围盒可以减少算法常数</p>
+<p>例如对齐x轴时</p>
+<p><span class="math display">\[
+t = \frac{(\bm p&#39;-\bm o)\cdot \bm N}{\bm d\cdot\bm N}=\frac{\bm
+p&#39;_x-\bm o_x}{\bm d_x}
+\]</span></p>
+<h3 id="空间均匀分割">空间均匀分割</h3>
+<p>找到一块区域，均匀地划分成正方形（三维情况为正方体）网格。在每个网格记录物体边缘的重叠情况。</p>
+<p>对于光线穿过的每个网格中，枚举和网格有交集的所有物体，检测是否和光线相交。</p>
+<p>网格划分太少，则很难于无划分区分开来。划分太多，则会有很多和网格的计算。</p>
+<p>一个启发式的算法是，网格数等于C乘以物体数。在三维中C为27.</p>
+<p>处理较好的情况是，有很多物体的情况。而处理不好的情况是，一个体育馆中心有一个茶壶等类似情况时。</p>
+<h3 id="不均匀的分割">不均匀的分割</h3>
+<p>见12章笔记KD-Tree。</p>
+<p>下面讲解光线和KD-Tree中的小空间的相交处理。</p>
+<p>首先从根节点开始。光线首先会和根节点表述的空间有两个交点。</p>
+<p>然后判断和两个子节点是否有相交。如果没有则忽略。如果有，则持续往下分割。直到没有子节点，就判断小空间内的物体是否和光线相交。</p>
+<h3 id="层次包围盒bvh">层次包围盒(BVH)</h3>
+<p>见12章笔记。</p>
+<h2 id="辐射度量学">辐射度量学</h2>
+<h3 id="辐射能量">辐射能量</h3>
+<p>辐射能量是电磁辐射的能量。以焦耳（J）做单位，<span
+class="math inline">\(Q\)</span>为符号。</p>
+<h3 id="辐射通量">辐射通量</h3>
+<p>辐射通量是每单位时间接收、发射、反射、传输的能量。</p>
+<p><span class="math display">\[
+\Phi\equiv\frac{dQ}{dt}
+\]</span></p>
+<p>单位是瓦特（W），或流明（lm）。</p>
+<p>但流明和瓦特略有不同，流明作为光通量的单位，只考虑了可见光的通量，而瓦特作为辐射通量考虑了电磁波的全部通量。</p>
+<h3 id="辐射强度">辐射强度</h3>
+<p>辐射强度是每单位立体角所能从点光源接收到的辐射通量。</p>
+<p><span class="math display">\[
+I(\omega)\equiv\frac{d\Phi}{d\omega}
+\]</span></p>
+<p>对于可见光单位是坎德拉（cd），对于一般电磁波是<span
+class="math inline">\(W/sr\)</span>。</p>
+<h3 id="立体角">立体角</h3>
+<p>圆的角：</p>
+<p><span class="math display">\[
+\theta = \frac{l}{r}
+\]</span></p>
+<p>其中<span
+class="math inline">\(l\)</span>是弧长，以弧度制计算，总共有<span
+class="math inline">\(2\pi\)</span></p>
+<p>对于球体的立体角</p>
+<p><span class="math display">\[
+\Omega = \frac{A}{r^2}
+\]</span></p>
+<p>其中<span
+class="math inline">\(A\)</span>是球面上的面积，以弧度制计算，总共有<span
+class="math inline">\(4\pi\)</span></p>
+<p>其微分如下</p>
+<p><span class="math display">\[
+dA=(rd\theta)(rsin\theta d\phi)=r^2sin\theta d\theta d\phi
+\]</span></p>
+<p>其中<span class="math inline">\(\theta\)</span>是与<span
+class="math inline">\(z\)</span>轴的夹角，<span
+class="math inline">\(\theta\)</span>是与<span
+class="math inline">\(x\)</span>轴的夹角。</p>
+<p><span class="math display">\[
+d\omega=\frac{dA}{r^2}=sin\theta d\theta d\phi
+\]</span></p>
+<p>所以有</p>
+<p><span class="math display">\[
+\Phi = \int_{S^2}Id\omega=4\pi I
+\]</span></p>
+<p><span class="math display">\[
+I = \frac{\Phi}{4\pi}
 \]</span></p>
 
 </section>
@@ -453,18 +613,6 @@ V)\bm{SU}^T
                 
                     
 <article class="">
-    <a href="/p/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80-chapter4/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">图形学基础 Chapter4</h2>
-        </div>
-    </a>
-</article>
-                
-                    
-<article class="">
     <a href="/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E7%AC%AC%E4%BA%94%E7%89%88-%E7%AC%AC%E5%8D%81%E4%BA%8C%E7%AB%A0%E7%AC%94%E8%AE%B0/">
         
         
@@ -507,6 +655,18 @@ V)\bm{SU}^T
 
         <div class="article-details">
             <h2 class="article-title">计算机图形学基础（第五版）-第五章笔记</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="">
+    <a href="/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E7%AC%AC%E4%BA%94%E7%89%88-%E7%AC%AC%E4%B9%9D%E7%AB%A0%E7%AC%94%E8%AE%B0/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">计算机图形学基础（第五版）-第九章笔记</h2>
         </div>
     </a>
 </article>

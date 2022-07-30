@@ -6,7 +6,193 @@
         <description>Recent content on KegalaS的个人博客</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Sun, 24 Jul 2022 13:25:42 +0800</lastBuildDate><atom:link href="https://kegalas.top/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Thu, 28 Jul 2022 17:36:32 +0800</lastBuildDate><atom:link href="https://kegalas.top/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>图形学基础 Chapter4</title>
+        <link>https://kegalas.top/p/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80-chapter4/</link>
+        <pubDate>Thu, 28 Jul 2022 17:36:32 +0800</pubDate>
+        
+        <guid>https://kegalas.top/p/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80-chapter4/</guid>
+        <description>&lt;h2 id=&#34;为什么需要光线追踪&#34;&gt;为什么需要光线追踪&lt;/h2&gt;
+&lt;p&gt;光栅化不能很好地处理全局效果。例如软阴影，以及光照的多次反射。&lt;/p&gt;
+&lt;p&gt;虽然光栅化很快，但是质量不非常好、不真实。&lt;/p&gt;
+&lt;p&gt;相比之下光线追踪效果会好很多，但是也非常慢。在过去算力不发达的时候，光栅化是一个实时的算法，而光线追踪是一个离线的算法。&lt;/p&gt;
+&lt;h2 id=&#34;基础的光线追踪算法&#34;&gt;基础的光线追踪算法&lt;/h2&gt;
+&lt;h3 id=&#34;光线投射&#34;&gt;光线投射&lt;/h3&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;对每一个像素投射一条光线来生成一张图&lt;/li&gt;
+&lt;li&gt;对光源发射一条光线来检查阴影&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;Pinhole Camera Model&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;首先从眼睛，或者说相机发出一条光线，穿过图像平面上的一个像素。然后和空间中的一个物体边缘相交。当然可以和一个物体多次、或者和多个物体相交，我们需要的是最近的。&lt;/p&gt;
+&lt;p&gt;然后对最近的这个交点进行着色计算。例如使用Blinn-Phong模型。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Recursive(Whitted-Style) Ray Tracing&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;仍然从相机发出一条光线，穿过图像平面上的一个像素。然后和空间中的一个物体边缘相交。当然，如果是较为镜面的物体，会继续反射光线的路径和下一个物体边缘相交。直到不出现镜面反射。如果是玻璃等透射物质，则要沿着折射光线继续，直到不透明物体。&lt;/p&gt;
+&lt;h3 id=&#34;光线的数学表示&#34;&gt;光线的数学表示&lt;/h3&gt;
+&lt;p&gt;光线由光源点和方向向量表示。&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\bm r(t) = \bm o+t\bm d\quad 0\leq t&amp;lt;\infty
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(t\)&lt;/span&gt;是时间，&lt;span
+class=&#34;math inline&#34;&gt;\(\bm o\)&lt;/span&gt;是光源向量，&lt;span
+class=&#34;math inline&#34;&gt;\(\bm d\)&lt;/span&gt;是方向向量。&lt;/p&gt;
+&lt;h3 id=&#34;光线相交&#34;&gt;光线相交&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;对于隐式表示的物体&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;判断是否相交，例如一个球面：&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+(\bm{p}-\bm{c})^2-R^2=0
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(\bm p\)&lt;/span&gt;是球面上的点，&lt;span
+class=&#34;math inline&#34;&gt;\(\bm c\)&lt;/span&gt;是球心，和&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\bm r(t) = \bm o+t\bm d\quad 0\leq t&amp;lt;\infty
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;相交，则要满足&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+(\bm o+t\bm d-\bm c)^2-R^2=0
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;只有&lt;span class=&#34;math inline&#34;&gt;\(t\)&lt;/span&gt;一个未知数，解即可。&lt;/p&gt;
+&lt;p&gt;其他的隐式表示的，或者说用代数形式表示的物体都可以这么判断相交。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;对于三角形网格&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;首先，三角形一定能够确定一个平面。所以先判断光线和平面的相交，以及计算交点。再计算交点是否在三角形内。&lt;/p&gt;
+&lt;p&gt;一个平面可以表述为上面的一点和平面的法向量。&lt;/p&gt;
+&lt;p&gt;所有在平面上的点满足如下等式&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+(\bm p-\bm p&amp;#39;)\cdot \bm N = 0
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中，&lt;span class=&#34;math inline&#34;&gt;\(\bm
+p&amp;#39;\)&lt;/span&gt;是平面上已知一点，&lt;span class=&#34;math inline&#34;&gt;\(\bm
+N\)&lt;/span&gt;是平面法向量。&lt;/p&gt;
+&lt;p&gt;判断光线和平面的交点：&lt;/p&gt;
+&lt;p&gt;和&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\bm r(t) = \bm o+t\bm d\quad 0\leq t&amp;lt;\infty
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;联立，得&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+(\bm o+t\bm d-\bm p&amp;#39;)\cdot \bm N = 0
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;解得&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+t = \frac{(\bm p&amp;#39;-\bm o)\cdot \bm N}{\bm d\cdot\bm N}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;应确保&lt;span class=&#34;math inline&#34;&gt;\(0\leq t&amp;lt;\infty\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;直接计算出交点重心坐标的方法&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Moller Trumbore Algorithm:&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\bm O+t\bm D = (1-b_1-b_2)\bm P_0+b_1\bm P_1+b_2\bm P_2
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\begin{bmatrix}
+t \\
+b_1 \\
+b_2
+\end{bmatrix}=
+\frac{1}{\bm S_1\cdot\bm E_1}
+\begin{bmatrix}
+\bm S_2\cdot\bm E_2 \\
+\bm S_1\cdot\bm S \\
+\bm S_2\cdot\bm D
+\end{bmatrix}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中：&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\bm E_1=\bm P_1 - \bm P_0
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\bm E_2=\bm P_2 - \bm P_0
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\bm S=\bm O - \bm P_0
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\bm S_1=\bm D \times \bm E
+_2
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\bm S_2=\bm S \times \bm E
+_1
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h2 id=&#34;光线追踪加速&#34;&gt;光线追踪加速&lt;/h2&gt;
+&lt;h3 id=&#34;包围盒&#34;&gt;包围盒&lt;/h3&gt;
+&lt;p&gt;一个物体被完整地包含在一个长方体中，这个长方体称之为包围盒。有时有多个物体在内。&lt;/p&gt;
+&lt;p&gt;显然如果光线没有击中包围盒，光线也就不会击中物体。&lt;/p&gt;
+&lt;p&gt;由于长方体的六个面确定了六个平面，长方体又可以看作是三组平行平面的交叉。&lt;/p&gt;
+&lt;p&gt;我们通常会使用轴对齐的包围盒。即三组平面都平行于坐标面。&lt;/p&gt;
+&lt;p&gt;对每一组平面都求光线和其交点，都会求出一个近点和远点。将三组近点和远点比较，求出最远的近点和最近的远点，就是和包围盒的交点。当然同时注意&lt;span
+class=&#34;math inline&#34;&gt;\(t\geq 0\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;使用轴对齐的包围盒可以减少算法常数&lt;/p&gt;
+&lt;p&gt;例如对齐x轴时&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+t = \frac{(\bm p&amp;#39;-\bm o)\cdot \bm N}{\bm d\cdot\bm N}=\frac{\bm
+p&amp;#39;_x-\bm o_x}{\bm d_x}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;空间均匀分割&#34;&gt;空间均匀分割&lt;/h3&gt;
+&lt;p&gt;找到一块区域，均匀地划分成正方形（三维情况为正方体）网格。在每个网格记录物体边缘的重叠情况。&lt;/p&gt;
+&lt;p&gt;对于光线穿过的每个网格中，枚举和网格有交集的所有物体，检测是否和光线相交。&lt;/p&gt;
+&lt;p&gt;网格划分太少，则很难于无划分区分开来。划分太多，则会有很多和网格的计算。&lt;/p&gt;
+&lt;p&gt;一个启发式的算法是，网格数等于C乘以物体数。在三维中C为27.&lt;/p&gt;
+&lt;p&gt;处理较好的情况是，有很多物体的情况。而处理不好的情况是，一个体育馆中心有一个茶壶等类似情况时。&lt;/p&gt;
+&lt;h3 id=&#34;不均匀的分割&#34;&gt;不均匀的分割&lt;/h3&gt;
+&lt;p&gt;见12章笔记KD-Tree。&lt;/p&gt;
+&lt;p&gt;下面讲解光线和KD-Tree中的小空间的相交处理。&lt;/p&gt;
+&lt;p&gt;首先从根节点开始。光线首先会和根节点表述的空间有两个交点。&lt;/p&gt;
+&lt;p&gt;然后判断和两个子节点是否有相交。如果没有则忽略。如果有，则持续往下分割。直到没有子节点，就判断小空间内的物体是否和光线相交。&lt;/p&gt;
+&lt;h3 id=&#34;层次包围盒bvh&#34;&gt;层次包围盒(BVH)&lt;/h3&gt;
+&lt;p&gt;见12章笔记。&lt;/p&gt;
+&lt;h2 id=&#34;辐射度量学&#34;&gt;辐射度量学&lt;/h2&gt;
+&lt;h3 id=&#34;辐射能量&#34;&gt;辐射能量&lt;/h3&gt;
+&lt;p&gt;辐射能量是电磁辐射的能量。以焦耳（J）做单位，&lt;span
+class=&#34;math inline&#34;&gt;\(Q\)&lt;/span&gt;为符号。&lt;/p&gt;
+&lt;h3 id=&#34;辐射通量&#34;&gt;辐射通量&lt;/h3&gt;
+&lt;p&gt;辐射通量是每单位时间接收、发射、反射、传输的能量。&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\Phi\equiv\frac{dQ}{dt}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;单位是瓦特（W），或流明（lm）。&lt;/p&gt;
+&lt;p&gt;但流明和瓦特略有不同，流明作为光通量的单位，只考虑了可见光的通量，而瓦特作为辐射通量考虑了电磁波的全部通量。&lt;/p&gt;
+&lt;h3 id=&#34;辐射强度&#34;&gt;辐射强度&lt;/h3&gt;
+&lt;p&gt;辐射强度是每单位立体角所能从点光源接收到的辐射通量。&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+I(\omega)\equiv\frac{d\Phi}{d\omega}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;对于可见光单位是坎德拉（cd），对于一般电磁波是&lt;span
+class=&#34;math inline&#34;&gt;\(W/sr\)&lt;/span&gt;。&lt;/p&gt;
+&lt;h3 id=&#34;立体角&#34;&gt;立体角&lt;/h3&gt;
+&lt;p&gt;圆的角：&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\theta = \frac{l}{r}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span
+class=&#34;math inline&#34;&gt;\(l\)&lt;/span&gt;是弧长，以弧度制计算，总共有&lt;span
+class=&#34;math inline&#34;&gt;\(2\pi\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;对于球体的立体角&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\Omega = \frac{A}{r^2}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span
+class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;是球面上的面积，以弧度制计算，总共有&lt;span
+class=&#34;math inline&#34;&gt;\(4\pi\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其微分如下&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+dA=(rd\theta)(rsin\theta d\phi)=r^2sin\theta d\theta d\phi
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(\theta\)&lt;/span&gt;是与&lt;span
+class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;轴的夹角，&lt;span
+class=&#34;math inline&#34;&gt;\(\theta\)&lt;/span&gt;是与&lt;span
+class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;轴的夹角。&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+d\omega=\frac{dA}{r^2}=sin\theta d\theta d\phi
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;所以有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\Phi = \int_{S^2}Id\omega=4\pi I
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+I = \frac{\Phi}{4\pi}
+\]&lt;/span&gt;&lt;/p&gt;
+</description>
+        </item>
+        <item>
         <title>《完全音乐理论教程》读书笔记</title>
         <link>https://kegalas.top/p/%E5%AE%8C%E5%85%A8%E9%9F%B3%E4%B9%90%E7%90%86%E8%AE%BA%E6%95%99%E7%A8%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</link>
         <pubDate>Sun, 24 Jul 2022 13:25:42 +0800</pubDate>
@@ -1079,6 +1265,36 @@
 &lt;figcaption aria-hidden=&#34;true&#34;&gt;5.jpg&lt;/figcaption&gt;
 &lt;/figure&gt;
 &lt;p&gt;一个更好地想法是选择那些拥有最小二次误差的点。可以用优先队列来维护。&lt;/p&gt;
+&lt;h2 id=&#34;不均匀分割空间的数据结构&#34;&gt;不均匀分割空间的数据结构&lt;/h2&gt;
+&lt;p&gt;有Oct-Tree，KD-Tree，BSP-Tree。&lt;/p&gt;
+&lt;p&gt;Oct-Tree是均匀地将一个正方体分为八个小正方体的结构。可以根据物体在某一部分的密度来决定是否往下分。&lt;/p&gt;
+&lt;p&gt;KD-Tree是将空间分为两部分，可以是不均匀的。但是分的时候是轴对齐的。&lt;/p&gt;
+&lt;p&gt;BSP-Tree也是分为两部分，但分的时候可以不轴对称。&lt;/p&gt;
+&lt;h3 id=&#34;kd-tree&#34;&gt;KD-Tree&lt;/h3&gt;
+&lt;p&gt;KD-Tree的要求如下&lt;/p&gt;
+&lt;p&gt;对于中间节点，存储：&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;分割空间的平面垂直的坐标轴&lt;/li&gt;
+&lt;li&gt;分割空间的平面在坐标轴上的坐标&lt;/li&gt;
+&lt;li&gt;指向儿子节点的指针&lt;/li&gt;
+&lt;li&gt;不存储任何物体的信息&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;对于叶子节点，存储&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;包含的物体列表&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;层次包围盒bvh&#34;&gt;层次包围盒(BVH)&lt;/h3&gt;
+&lt;p&gt;这也是一种树，根节点是所有物体的包围盒。&lt;/p&gt;
+&lt;p&gt;然后对节点进行分割，使得该节点划分为两个部分，每个部分都是一个包围盒，一个物体仅在一个包围盒中。&lt;/p&gt;
+&lt;p&gt;如果一个节点被分割了，它就不再作为含有物体的包围盒。只有叶子节点含有包围盒。&lt;/p&gt;
+&lt;p&gt;其中有几个注意事项：&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;选择节点中的最长轴，如果物体有沿&lt;span
+class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;轴分布的形状，则在&lt;span
+class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;轴上将物体分为两部分。&lt;/li&gt;
+&lt;li&gt;分割节点选择在中间的物体。&lt;/li&gt;
+&lt;li&gt;当一个节点只有很少物体时停止分割&lt;/li&gt;
+&lt;/ol&gt;
 </description>
         </item>
         <item>
