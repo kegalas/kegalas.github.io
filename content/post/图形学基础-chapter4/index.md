@@ -1,5 +1,5 @@
 ---
-title: "图形学基础 Chapter4"
+title: "计算机图形学基础（第五版）-第四章笔记"
 date: 2022-07-28T17:36:32+08:00
 draft: false
 tags: [图形学]
