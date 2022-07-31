@@ -143,14 +143,14 @@ p&amp;#39;_x-\bm o_x}{\bm d_x}
 &lt;h3 id=&#34;辐射能量&#34;&gt;辐射能量&lt;/h3&gt;
 &lt;p&gt;辐射能量是电磁辐射的能量。以焦耳（J）做单位，&lt;span
 class=&#34;math inline&#34;&gt;\(Q\)&lt;/span&gt;为符号。&lt;/p&gt;
-&lt;h3 id=&#34;辐射通量&#34;&gt;辐射通量&lt;/h3&gt;
+&lt;h3 id=&#34;辐射通量radiant-flux&#34;&gt;辐射通量(Radiant Flux)&lt;/h3&gt;
 &lt;p&gt;辐射通量是每单位时间接收、发射、反射、传输的能量。&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 \Phi\equiv\frac{dQ}{dt}
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;单位是瓦特（W），或流明（lm）。&lt;/p&gt;
 &lt;p&gt;但流明和瓦特略有不同，流明作为光通量的单位，只考虑了可见光的通量，而瓦特作为辐射通量考虑了电磁波的全部通量。&lt;/p&gt;
-&lt;h3 id=&#34;辐射强度&#34;&gt;辐射强度&lt;/h3&gt;
+&lt;h3 id=&#34;辐射强度radiant-intensity&#34;&gt;辐射强度(Radiant Intensity)&lt;/h3&gt;
 &lt;p&gt;辐射强度是每单位立体角所能从点光源接收到的辐射通量。&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 I(\omega)\equiv\frac{d\Phi}{d\omega}
@@ -190,6 +190,106 @@ d\omega=\frac{dA}{r^2}=sin\theta d\theta d\phi
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 I = \frac{\Phi}{4\pi}
 \]&lt;/span&gt;&lt;/p&gt;
+&lt;h3
+id=&#34;辐射通量密度辐照度irradiance&#34;&gt;辐射通量密度、辐照度(Irradiance)&lt;/h3&gt;
+&lt;p&gt;指辐射通量对每单位面积的量，注意传播方向，或者分量传播方向与那个单位平面垂直。或者说每投影单位面积。&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+E(x)\equiv\frac{d\Phi(x)}{dA}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;对于可见光，单位为&lt;span
+class=&#34;math inline&#34;&gt;\(lm/m^2=lux\)&lt;/span&gt;，对于一般电磁波，单位为&lt;span
+class=&#34;math inline&#34;&gt;\(W/m^2\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;要求传播方向与平面垂直，和前面提到的Lambert’s Cosine
+Law是相应的。&lt;/p&gt;
+&lt;h3 id=&#34;辐射率radiance&#34;&gt;辐射率(Radiance)&lt;/h3&gt;
+&lt;p&gt;是辐射强度对于每投影单位面积的量。&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+L(p,\omega) = \frac{d^2\Phi(p,\omega)}{d\omega dAcso\theta}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span
+class=&#34;math inline&#34;&gt;\(\theta\)&lt;/span&gt;是传播方向与平面法线的夹角。&lt;/p&gt;
+&lt;p&gt;对于可见光，单位是&lt;span class=&#34;math inline&#34;&gt;\(cd/m^2=lm/(sr\cdot
+m^2)=nit\)&lt;/span&gt;。对于一般电磁波，单位是&lt;span
+class=&#34;math inline&#34;&gt;\(W/(sr\cdot m^2)\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;显然可以推断出，辐射率是辐射通量在每立体角和每投影面积的量，也是辐照度每立体角的量。&lt;/p&gt;
+&lt;h4 id=&#34;入射辐射率incident-radiance&#34;&gt;入射辐射率(Incident Radiance)&lt;/h4&gt;
+&lt;p&gt;是辐射度对每单位立体角的量，其中辐射是到达平面。&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+L(p,\omega)=\frac{dE(p)}{d\omega cos\theta}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h4 id=&#34;出射辐射率exiting-radiance&#34;&gt;出射辐射率(Exiting Radiance)&lt;/h4&gt;
+&lt;p&gt;是辐射强度对每单位投影面积的量，其中辐射是从平面发出&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+L(p,\omega) = \frac{dI(p,\omega)}{dAcos\theta}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;radiance和irradiance&#34;&gt;Radiance和Irradiance&lt;/h3&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+dE(p,\omega) = L_i(p,\omega)cos\theta d\omega
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span
+class=&#34;math inline&#34;&gt;\(dE(p,\omega)\)&lt;/span&gt;，指的就是每个立体角的Irradiance，也即&lt;span
+class=&#34;math inline&#34;&gt;\(dA\)&lt;/span&gt;接收到&lt;span
+class=&#34;math inline&#34;&gt;\(d\omega\)&lt;/span&gt;发来的能量。而计算各个方向上的&lt;span
+class=&#34;math inline&#34;&gt;\(dE\)&lt;/span&gt;之和，算出来的就是Radiance，也即&lt;span
+class=&#34;math inline&#34;&gt;\(dA\)&lt;/span&gt;从各个方向接收的能量。这个各个方向通常指的是单位半球的各个立体角。单位半球记作&lt;span
+class=&#34;math inline&#34;&gt;\(H^2\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+E(p)=\int_{H^2}L_i(p,\omega)cos\theta d\omega
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h3
+id=&#34;双向反射分布函数bidirectional-reflectance-distribution-function&#34;&gt;双向反射分布函数(Bidirectional
+Reflectance Distribution Function)&lt;/h3&gt;
+&lt;h4 id=&#34;在某一点的反射过程&#34;&gt;在某一点的反射过程&lt;/h4&gt;
+&lt;p&gt;首先，从某个立体角&lt;span
+class=&#34;math inline&#34;&gt;\(\omega_i\)&lt;/span&gt;射过来的Radiance，变为了某个面积&lt;span
+class=&#34;math inline&#34;&gt;\(dA\)&lt;/span&gt;的能量。&lt;/p&gt;
+&lt;p&gt;然后，这个能量从这个面积再辐射出Radiance到任意其他立体角&lt;span
+class=&#34;math inline&#34;&gt;\(\omega\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;入射的Radiance是&lt;span
+class=&#34;math inline&#34;&gt;\(dE(\omega_i)=L(\omega_i)cos\theta(i)d\omega_i\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;出射的Radiance，对于某个立体角是&lt;span
+class=&#34;math inline&#34;&gt;\(dL_r(\omega_r)\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;而BRDF就是描述了，会有多少光从每个入射光线，反射到某个立体角&lt;span
+class=&#34;math inline&#34;&gt;\(\omega_r\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+f_r(\omega_i\to\omega_r)=\frac{dL_r(\omega_r)}{dE_i(\omega_i)}=\frac{dL_r(\omega_r)}{L(\omega_i)cos\theta(i)d\omega_i}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;单位是&lt;span class=&#34;math inline&#34;&gt;\(1/sr\)&lt;/span&gt;&lt;/p&gt;
+&lt;h4 id=&#34;反射方程&#34;&gt;反射方程&lt;/h4&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+L_r(p,\omega_r)=\int_{H^2}f_r(p,\omega_i\to\omega_r)L_i(p,\omega_i)cos\theta_i
+d\omega_i
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;这个方程会遇到一些问题：如果入射光也有其他物体的反射光，会导致递归方程。&lt;/p&gt;
+&lt;h4 id=&#34;渲染方程&#34;&gt;渲染方程&lt;/h4&gt;
+&lt;p&gt;如果一个物体自己会发光，反射方程需要添加一项。&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+L_o(p,\omega_o)=L_e(p,\omega_o)\\
++\int_{\Omega^+}L_i(p,\omega_i)f_r(p,\omega_i,\omega_o)(n\cdot w_i)
+d\omega_i
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;简化的写法可以写作&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+L(u)=e(u)+\int L(v)K(u,v)dv
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;再进一步可以写作算子形式&lt;/p&gt;
+&lt;p&gt;L = E+KL&lt;/p&gt;
+&lt;p&gt;可以被离散化成一个简单的矩阵方程，&lt;span
+class=&#34;math inline&#34;&gt;\(L,E\)&lt;/span&gt;是向量，&lt;span
+class=&#34;math inline&#34;&gt;\(K\)&lt;/span&gt;是光传播矩阵。&lt;/p&gt;
+&lt;p&gt;如果考虑物体的反射作为新的入射光线，就会导致递归方程。将算子做如下运算&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+L=E+KL\\
+(I-K)L=E\\
+L=(I-K)^{-1}E
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;将中间的&lt;span
+class=&#34;math inline&#34;&gt;\((I-K)^{-1}\)&lt;/span&gt;展开成幂级数&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+L=(I+K+K^2+K^3+\cdots)E\\
+L=E+KE+K^2E+K^3E+\cdots
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中第一项代表光源直接射过来的光，第二项表示光源经过一次反射过来的光，第三项表示光源经过一次反射过来的光。以此类推。这也是全局光照的基础。&lt;/p&gt;
 </description>
         </item>
         <item>
@@ -2381,10 +2481,42 @@ Interpolation（线性内插）&lt;/h2&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 f(x)=y_i+\frac{x-x_i}{x_{i+1}-x_i}(y_{i+1}-y_i)
 \]&lt;/span&gt;&lt;/p&gt;
-&lt;h2 id=&#34;离散概率&#34;&gt;离散概率&lt;/h2&gt;
-&lt;p&gt;TODO&lt;/p&gt;
-&lt;h2 id=&#34;连续概率&#34;&gt;连续概率&lt;/h2&gt;
-&lt;p&gt;TODO&lt;/p&gt;
+&lt;h2 id=&#34;概率论&#34;&gt;概率论&lt;/h2&gt;
+&lt;h3 id=&#34;随机变量&#34;&gt;随机变量&lt;/h3&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;，表示任意一个可能取值。&lt;/p&gt;
+&lt;h3 id=&#34;概率密度函数&#34;&gt;概率密度函数&lt;/h3&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(X\sim
+p(x)\)&lt;/span&gt;，表示随机过程取值为&lt;span
+class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;的相对概率。&lt;/p&gt;
+&lt;h3 id=&#34;概率的一些属性&#34;&gt;概率的一些属性&lt;/h3&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(p_i\geq 0\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(\sum_{i=1}^np_i=1\)&lt;/span&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;期望&#34;&gt;期望&lt;/h3&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+E[X] = \sum_{i=1}^nx_ip_i
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;连续的情况&#34;&gt;连续的情况&lt;/h3&gt;
+&lt;p&gt;当随机变量&lt;span
+class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;可以取一个连续的区间上的值。&lt;/p&gt;
+&lt;p&gt;显然此时也会有连续的概率密度函数。&lt;/p&gt;
+&lt;p&gt;并且&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+p(x)\geq 0,\int p(x)dx=1
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+E[x]=\int xp(x)dx
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;随机变量的函数&#34;&gt;随机变量的函数&lt;/h3&gt;
+&lt;p&gt;随机变量的函数也是一个随机变量。&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+X\sim p(x)\\
+Y=f(X)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+E[Y]=E[f(X)]=\int f(x)p(x)dx
+\]&lt;/span&gt;&lt;/p&gt;
 &lt;h2 id=&#34;蒙特卡罗积分&#34;&gt;蒙特卡罗积分&lt;/h2&gt;
 &lt;p&gt;TODO&lt;/p&gt;
 </description>

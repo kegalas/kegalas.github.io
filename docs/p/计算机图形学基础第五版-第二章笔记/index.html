@@ -362,7 +362,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 1 分钟
+                    阅读时长: 2 分钟
                 </time>
             </div>
         
@@ -453,10 +453,42 @@ Interpolation（线性内插）</h2>
 <p><span class="math display">\[
 f(x)=y_i+\frac{x-x_i}{x_{i+1}-x_i}(y_{i+1}-y_i)
 \]</span></p>
-<h2 id="离散概率">离散概率</h2>
-<p>TODO</p>
-<h2 id="连续概率">连续概率</h2>
-<p>TODO</p>
+<h2 id="概率论">概率论</h2>
+<h3 id="随机变量">随机变量</h3>
+<p><span class="math inline">\(X\)</span>，表示任意一个可能取值。</p>
+<h3 id="概率密度函数">概率密度函数</h3>
+<p><span class="math inline">\(X\sim
+p(x)\)</span>，表示随机过程取值为<span
+class="math inline">\(x\)</span>的相对概率。</p>
+<h3 id="概率的一些属性">概率的一些属性</h3>
+<ol type="1">
+<li><span class="math inline">\(p_i\geq 0\)</span></li>
+<li><span class="math inline">\(\sum_{i=1}^np_i=1\)</span></li>
+</ol>
+<h3 id="期望">期望</h3>
+<p><span class="math display">\[
+E[X] = \sum_{i=1}^nx_ip_i
+\]</span></p>
+<h3 id="连续的情况">连续的情况</h3>
+<p>当随机变量<span
+class="math inline">\(X\)</span>可以取一个连续的区间上的值。</p>
+<p>显然此时也会有连续的概率密度函数。</p>
+<p>并且</p>
+<p><span class="math display">\[
+p(x)\geq 0,\int p(x)dx=1
+\]</span></p>
+<p><span class="math display">\[
+E[x]=\int xp(x)dx
+\]</span></p>
+<h3 id="随机变量的函数">随机变量的函数</h3>
+<p>随机变量的函数也是一个随机变量。</p>
+<p><span class="math display">\[
+X\sim p(x)\\
+Y=f(X)
+\]</span></p>
+<p><span class="math display">\[
+E[Y]=E[f(X)]=\int f(x)p(x)dx
+\]</span></p>
 <h2 id="蒙特卡罗积分">蒙特卡罗积分</h2>
 <p>TODO</p>
 

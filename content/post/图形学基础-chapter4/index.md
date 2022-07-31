@@ -205,7 +205,7 @@ $$
 
 辐射能量是电磁辐射的能量。以焦耳（J）做单位，$Q$为符号。
 
-### 辐射通量
+### 辐射通量(Radiant Flux)
 
 辐射通量是每单位时间接收、发射、反射、传输的能量。
 
@@ -217,7 +217,7 @@ $$
 
 但流明和瓦特略有不同，流明作为光通量的单位，只考虑了可见光的通量，而瓦特作为辐射通量考虑了电磁波的全部通量。
 
-### 辐射强度
+### 辐射强度(Radiant Intensity)
 
 辐射强度是每单位立体角所能从点光源接收到的辐射通量。
 
@@ -266,5 +266,125 @@ $$
 $$
 I = \frac{\Phi}{4\pi}
 $$
+
+### 辐射通量密度、辐照度(Irradiance)
+
+指辐射通量对每单位面积的量，注意传播方向，或者分量传播方向与那个单位平面垂直。或者说每投影单位面积。
+
+$$
+E(x)\equiv\frac{d\Phi(x)}{dA}
+$$
+
+对于可见光，单位为$lm/m^2=lux$，对于一般电磁波，单位为$W/m^2$
+
+要求传播方向与平面垂直，和前面提到的Lambert's Cosine Law是相应的。
+
+### 辐射率(Radiance)
+
+是辐射强度对于每投影单位面积的量。
+
+$$
+L(p,\omega) = \frac{d^2\Phi(p,\omega)}{d\omega dAcso\theta}
+$$
+
+其中$\theta$是传播方向与平面法线的夹角。
+
+对于可见光，单位是$cd/m^2=lm/(sr\cdot m^2)=nit$。对于一般电磁波，单位是$W/(sr\cdot m^2)$
+
+显然可以推断出，辐射率是辐射通量在每立体角和每投影面积的量，也是辐照度每立体角的量。
+
+#### 入射辐射率(Incident Radiance)
+
+是辐射度对每单位立体角的量，其中辐射是到达平面。
+
+$$
+L(p,\omega)=\frac{dE(p)}{d\omega cos\theta}
+$$
+
+#### 出射辐射率(Exiting Radiance)
+
+是辐射强度对每单位投影面积的量，其中辐射是从平面发出
+
+$$
+L(p,\omega) = \frac{dI(p,\omega)}{dAcos\theta}
+$$
+
+### Radiance和Irradiance
+
+$$
+dE(p,\omega) = L_i(p,\omega)cos\theta d\omega
+$$
+
+$dE(p,\omega)$，指的就是每个立体角的Irradiance，也即$dA$接收到$d\omega$发来的能量。而计算各个方向上的$dE$之和，算出来的就是Radiance，也即$dA$从各个方向接收的能量。这个各个方向通常指的是单位半球的各个立体角。单位半球记作$H^2$。
+
+$$
+E(p)=\int_{H^2}L_i(p,\omega)cos\theta d\omega
+$$
+
+### 双向反射分布函数(Bidirectional Reflectance Distribution Function)
+
+#### 在某一点的反射过程
+
+首先，从某个立体角$\omega_i$射过来的Radiance，变为了某个面积$dA$的能量。
+
+然后，这个能量从这个面积再辐射出Radiance到任意其他立体角$\omega$
+
+入射的Radiance是$dE(\omega_i)=L(\omega_i)cos\theta(i)d\omega_i$
+
+出射的Radiance，对于某个立体角是$dL_r(\omega_r)$
+
+而BRDF就是描述了，会有多少光从每个入射光线，反射到某个立体角$\omega_r$。
+
+$$
+f_r(\omega_i\to\omega_r)=\frac{dL_r(\omega_r)}{dE_i(\omega_i)}=\frac{dL_r(\omega_r)}{L(\omega_i)cos\theta(i)d\omega_i}
+$$
+
+单位是$1/sr$
+
+#### 反射方程
+
+$$
+L_r(p,\omega_r)=\int_{H^2}f_r(p,\omega_i\to\omega_r)L_i(p,\omega_i)cos\theta_i d\omega_i
+$$
+
+这个方程会遇到一些问题：如果入射光也有其他物体的反射光，会导致递归方程。
+
+#### 渲染方程
+
+如果一个物体自己会发光，反射方程需要添加一项。
+
+$$
+L_o(p,\omega_o)=L_e(p,\omega_o)\\
++\int_{\Omega^+}L_i(p,\omega_i)f_r(p,\omega_i,\omega_o)(n\cdot w_i) d\omega_i
+$$
+
+简化的写法可以写作
+
+$$
+L(u)=e(u)+\int L(v)K(u,v)dv
+$$
+
+再进一步可以写作算子形式
+
+L = E+KL
+
+可以被离散化成一个简单的矩阵方程，$L,E$是向量，$K$是光传播矩阵。
+
+如果考虑物体的反射作为新的入射光线，就会导致递归方程。将算子做如下运算
+
+$$
+L=E+KL\\
+(I-K)L=E\\
+L=(I-K)^{-1}E
+$$
+
+将中间的$(I-K)^{-1}$展开成幂级数
+
+$$
+L=(I+K+K^2+K^3+\cdots)E\\
+L=E+KE+K^2E+K^3E+\cdots
+$$
+
+其中第一项代表光源直接射过来的光，第二项表示光源经过一次反射过来的光，第三项表示光源经过一次反射过来的光。以此类推。这也是全局光照的基础。
 
 
