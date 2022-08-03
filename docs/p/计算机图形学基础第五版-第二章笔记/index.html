@@ -456,7 +456,7 @@ f(x)=y_i+\frac{x-x_i}{x_{i+1}-x_i}(y_{i+1}-y_i)
 <h2 id="概率论">概率论</h2>
 <h3 id="随机变量">随机变量</h3>
 <p><span class="math inline">\(X\)</span>，表示任意一个可能取值。</p>
-<h3 id="概率密度函数">概率密度函数</h3>
+<h3 id="概率密度函数pdf">概率密度函数(PDF)</h3>
 <p><span class="math inline">\(X\sim
 p(x)\)</span>，表示随机过程取值为<span
 class="math inline">\(x\)</span>的相对概率。</p>
@@ -490,7 +490,39 @@ Y=f(X)
 E[Y]=E[f(X)]=\int f(x)p(x)dx
 \]</span></p>
 <h2 id="蒙特卡罗积分">蒙特卡罗积分</h2>
-<p>TODO</p>
+<p>蒙特卡洛积分的目的：想计算一个定积分，但是难以从分析意义上解出，希望在数值上求解。</p>
+<p>方法：通过平均函数值的随机样本来估计函数的积分。</p>
+<p>定义定积分如下：</p>
+<p><span class="math display">\[
+\int_a^b f(x)dx
+\]</span></p>
+<p>随机变量如下</p>
+<p><span class="math display">\[
+X_i\sim p(x)
+\]</span></p>
+<p>则蒙特卡洛估计值是：</p>
+<p><span class="math display">\[
+F_N=\frac{1}{N}\sum_{i=1}^N\frac{f(X_i)}{p(X_i)}
+\]</span></p>
+<p>如果随机变量是均匀的，或者说</p>
+<p><span class="math display">\[
+X_i\sim p(x)=C
+\]</span></p>
+<p><span class="math inline">\(C\)</span>是一个常数</p>
+<p>那么，</p>
+<p><span class="math display">\[
+\int_a^b p(x)dx=1
+\]</span></p>
+<p><span class="math display">\[
+\int_a^b Cdx=1
+\]</span></p>
+<p><span class="math display">\[
+C=\frac{1}{b-a}
+\]</span></p>
+<p>此时基础蒙特卡洛估计值(Basic Monte Carlo Estimator)为</p>
+<p><span class="math display">\[
+F_N=\frac{b-a}{N}\sum_{i=1}^N f(X_i)
+\]</span></p>
 
 </section>
 

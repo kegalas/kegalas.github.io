@@ -387,4 +387,206 @@ $$
 
 其中第一项代表光源直接射过来的光，第二项表示光源经过一次反射过来的光，第三项表示光源经过一次反射过来的光。以此类推。这也是全局光照的基础。
 
+## 路径追踪
+
+Whitted-Style Ray Tracing的错误之处：无法正确处理略有磨砂感的金属表面，无法正确处理漫反射。
+
+但是渲染方程是正确的。但缺陷是，要在半球面上解定积分，以及有递归运算。
+
+### 一个简单情况下的蒙特卡罗积分
+
+假设我们要渲染一个像素(点)，只考虑直接照射的光线。假设这个点不发光。渲染方程如下：
+
+$$
+L_o(p,\omega_o)=\int_{\Omega^+}L_i(p,\omega_i)f_r(p,\omega_i,\omega_o)(n\cdot \omega_i) d\omega_i
+$$
+
+蒙特卡洛积分中的$f(x)$为：
+
+$$
+L_i(p,\omega_i)f_r(p,\omega_i,\omega_o)(n\cdot \omega_i) 
+$$
+
+蒙特卡洛积分中的pdf是（假设均匀采样）：
+
+$$
+p(\omega_i)=\frac{1}{2\pi}
+$$
+
+所以最终：
+
+$$
+L_o(p,\omega_o)=\int_{\Omega^+}L_i(p,\omega_i)f_r(p,\omega_i,\omega_o)(n\cdot \omega_i) d\omega_i
+$$
+
+$$
+\approx\frac{1}{N}\sum_{i=1}^N\frac{L_i(p,\omega_i)f_r(p,\omega_i,\omega_o)(n\cdot \omega_i)}{p(\omega_i)}
+$$
+
+这对于直接光照来说是一个正确的光栅化算法。
+
+伪代码如下
+
+```
+shade(p,wo)
+    Randomly choose N directions wi~pdf
+    Lo=0.0
+    For each wi
+        Trace a ray r(p,wi)
+        If ray r hit the light
+            Lo+=(1/N)*L_i*f_r*cosine/pdf(wi)
+    Return Lo
+```
+
+### 全局光照情况下
+
+#### 解决反射导致的光线数量爆炸
+
+间接光照也要考虑的情况下，我们很容易得到一个伪代码：
+
+```
+shade(p,wo)
+    Randomly choose N directions wi~pdf
+    Lo=0.0
+    For each wi
+        Trace a ray r(p,wi)
+        If ray r hit the light
+            Lo+=(1/N)*L_i*f_r*cosine/pdf(wi)
+        Else If ray r hit an object at q
+            Lo+=(1/N)*shade(q,-wi)*f_r*cosine/pdf(wi)
+    Return Lo
+```
+
+这会导致一个问题，如果是一个不太光滑的物体，第一次反射后有100个方向的漫反射，一直递归下去，就有$100^n$条光线，这是不能接受的。而且，显然只有在，反射后只有1个方向的光线时，才不会出现指数爆炸。此时叫做路径追踪。伪代码如下：
+
+```
+shade(p,wo)
+    Randomly choose ONE directions wi~pdf
+    Trace a ray r(p,wi)
+    If ray r hit the light
+        Return L_i*f_r*cosine/pdf(wi)
+    Else if ray r hit an object at q
+        Return shade(q,-wi)*f_r*cosine*pdf(wi)
+    
+```
+
+如果反射后的光线方向不止一个，那么称作分布式光线追踪，这已经是一个过时的想法了。
+
+虽然解决了指数爆炸问题，但是，这会导致很多的噪声。
+
+解决噪声的办法是，对于每一个像素，发出更多的光线，最后取Radiance的平均。伪代码如下
+
+```
+ray_generation(camPos, pixel)
+    Uniformly choose N sample position within the pixel
+    pixel_radiance = 0.0
+    For each sample in the pixel
+        Shoot a ray r(camPos, cam_to_sample)
+        If ray r hit the scene at p
+            pixel_radiance+=1/N*shade(p,sample_to_cam)
+    Return pixel_radiance
+```
+
+#### 解决光线反射次数无限的问题
+
+多次反射导致指数爆炸的问题解决了，还有一个问题是递归问题。
+
+shade函数并没有给出明确的函数停止的条件，这会导致无限递归。且粗暴的设定一个硬性条件则会导致能量的丢失。
+
+有一个俄罗斯转盘（RR）算法。
+
+之前，我们总是对一个像素射出光线来得到着色结果$Lo$。
+
+现在，假设我们手动设定了一个概率$P(0<P<1)$。
+
+当我们遇到概率为$P$的情况时，射出一个光线，并且返回着色结果，再讲这个结果除以$P$，得到$Lo/P$
+
+遇到概率为$1-P$的情况时，不射出光线，得到的结果为$0$。
+
+最后的能量为：
+
+$$
+E=P*(Lo/P)+(1-P)*0=Lo
+$$
+
+伪代码如下
+
+```
+shade(p,wo)
+    Manually specify a probability P_RR
+    Randomly select ksi in a uniform dist. in[0,1]
+    If (ksi>P_RR) Return 0.0
+
+    Randomly choose ONE directions wi~pdf
+    Trace a ray r(p,wi)
+    If ray r hit the light
+        Return L_i*f_r*cosine/pdf(wi)/P_RR
+    Else if ray r hit an object at q
+        Return shade(q,-wi)*f_r*cosine*pdf(wi)/P_RR    
+```
+
+#### 提升效率
+
+在着色点上反射光线，如果光源面积很大，则几根光线就可以打到光源。如果光源很小、接近点光源，则要很多光线才能打到。因为我们是均匀地往四周反射光线，或者说，我们的pdf是一个常数。
+
+可以考虑将在半球上的积分转化为在光源上的积分。
+
+需要找到$d\omega$（半球立体角）和$dA$（光源上的面积）的关系。
+
+显然，这是一个投影关系，又因为半球的半径是$1$，有如下关系
+
+$$
+d\omega = \frac{dAcos\theta'}{||x'-x||^2}
+$$
+
+其中$x'$是光源微平面的坐标，$x$是着色点的坐标，$\theta'$是光源微平面法向量和$x-x'$向量的夹角。
+
+渲染方程重写为
+
+$$
+L_o(x,\omega_o)=
+\int_{\Omega^+}L_i(x,\omega_i)f_r(x,\omega_i,\omega_o)cos\theta d\omega_i\\
+$$
+
+$$
+=\int_A L_i(x,\omega_i)f_r(x,\omega_i,\omega_o)\frac{cos\theta cos\theta'}{||x'-x||^2} dA
+$$
+
+$\theta$是着色点微平面的法向量和$x'-x$向量的夹角。
+
+蒙特卡洛积分的$f(x)$变为
+
+$$
+L_i(x,\omega_i)f_r(x,\omega_i,\omega_o)\frac{cos\theta cos\theta'}{||x'-x||^2}
+$$
+
+pdf变为$1/A$
+
+之后，我们对光源不使用RR，对其他反射使用RR。
+
+另外，转化为$dA$后，要考虑中间是否有物体挡住光源。
+
+最终伪代码如下
+
+```
+shade(p,wo)
+    # Contribution from the light source.
+    L_dir = 0.0
+    Uniformly sample the light at x' (pdf_light = 1/A)
+    Shoot a ray from p to x'
+    If the ray is not blocked in the middle
+        L_dir = L_i*f_r*cos1*cos2/|x'-p|^2/pdf_light
+
+    # Contribution from other reflectors
+    L_indir = 0.0
+    Test Russian Roulette with probability P_RR
+    Uniformly samplethe hemisphere toward wi(pdf_hemi = 1/2pi)
+    Trace a ray r(p,wi)
+    If ray r hit a non-emitting object at q
+      L_indir = shade(q,-wi)*f_r*cos1/pdf_hemi/P_RR
+    
+    Return L_dir+L_indir
+
+```
+
 
