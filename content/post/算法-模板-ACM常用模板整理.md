@@ -646,6 +646,72 @@ int main(){
 }
 ```
 
+### 用乘法逆元计算组合数
+
+根据
+
+$$
+(a/b)\%p=(a\times b^{-1})\%p=[(a\%p)\times(b^{-1}\%p)]\%p
+$$
+
+可以不用除法求出组合数。其中$b^{-1}$是$b$在模$p$意义下的逆元。
+
+注意阶乘和其逆元的预处理。
+
+```cpp
+#include <iostream>
+
+#define LL long long
+
+const int MAXN = 200005;
+const int MOD = 998244353;
+
+LL fac[MAXN];
+LL invFac[MAXN];
+
+LL qPowMod(LL a, LL n, LL b){
+    LL ans = 1;
+    while(n){
+        if(n&1){
+            ans = ans%b*a%b;
+        }
+        a = a%b*a%b;
+        n>>=1;
+    }
+    return ans;
+}
+
+LL fermat_inv(LL a, LL b){
+    return qPowMod(a,b-2,b);
+}
+
+void init(int n){
+    fac[0] = 1;
+    invFac[0] = 1;
+
+    for(int i=1;i<=n;i++){
+        fac[i] = (fac[i-1]*i)%MOD;
+        invFac[i] = fermat_inv(fac[i],MOD);
+    }
+}
+
+LL comb(LL n, LL m){
+    if(n<0||m<0||m>n) return 0;
+    return (((fac[n]*invFac[m])%MOD)*invFac[n-m])%MOD;
+}
+
+int main(){
+    int n,m;
+    std::cin>>n>>m;
+    
+    init(n);
+    
+    std::cout<<comb(n,m)<<"\n";
+
+    return 0;
+}
+```
+
 ## 图论
 
 ### 最短路
@@ -2054,7 +2120,7 @@ int main(){
         scanf("%d",&x);
         if(op==1){
             scanf("%d",&k);
-            //将单点修改为k
+            //将单点增加k，如果想要改成修改，则可以update(x,-arr[x]+k)
             update(x,k);
         }
         else{
@@ -2063,6 +2129,78 @@ int main(){
             cout<<query(y)-query(x-1)<<endl;
         }
     }
+    return 0;
+}
+```
+
+#### 树状数组求逆序对
+
+```cpp
+//Luogu P1908
+#include <iostream>
+#include <algorithm>
+
+#define LL long long
+
+const int MAXN = 500005;
+
+LL arr[MAXN];
+LL n;
+
+struct Par{
+    LL value,id;
+}par[MAXN];
+
+bool cmp(const Par& a,const Par& b){
+    if(a.value!=b.value) return a.value<b.value;
+    return a.id<b.id;
+}
+
+LL bit[MAXN];
+
+inline LL lowbit(LL n){
+    return n&(-n);
+}
+
+void update(LL p, LL k){
+    for(;p<=n;p+=lowbit(p)){
+        bit[p]+=k;
+    }
+}
+
+long long query(LL p){
+    LL ans=0;
+    for(;p;p-=lowbit(p)){
+        ans+=bit[p];
+    }
+    return ans;
+}
+
+int main(){
+    std::cin>>n;
+
+    for(int i=1;i<=n;i++){
+        std::cin>>par[i].value;
+        par[i].id = i;
+    }
+
+    std::sort(par+1,par+1+n,cmp);
+
+    for(int i=1;i<=n;i++){
+        arr[par[i].id] = i;
+    }//这一步其实是离散化
+
+    LL ans = 0;
+
+    for(int i=1;i<=n;i++){
+        ans += query(arr[i]);
+        update(arr[i],1);
+    }
+
+    ans = n*(n-1)/2-ans;//本来统计的是等于或顺序对，现在反过来计算逆序对
+
+    std::cout<<ans<<"\n";
+
     return 0;
 }
 ```
