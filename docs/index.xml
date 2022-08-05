@@ -10023,6 +10023,8 @@ $$&lt;/p&gt;
 &lt;p&gt;$$
 (a/b)%p=(a\times b^{-1})%p=[(a%p)\times(b^{-1}%p)]%p
 $$&lt;/p&gt;
+&lt;p&gt;（如果加载不全，见&lt;a class=&#34;link&#34; href=&#34;https://kegalas.top/p/%E5%8F%96%E4%BD%99%E8%BF%90%E7%AE%97%E7%9A%84%E5%88%86%E9%85%8D%E5%BE%8B/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;取余运算的分配律&lt;/a&gt;）&lt;/p&gt;
 &lt;p&gt;可以不用除法求出组合数。其中$b^{-1}$是$b$在模$p$意义下的逆元。&lt;/p&gt;
 &lt;p&gt;注意阶乘和其逆元的预处理。&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;cp&#34;&gt;#include&lt;/span&gt; &lt;span class=&#34;cpf&#34;&gt;&amp;lt;iostream&amp;gt;&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;
@@ -11219,8 +11221,26 @@ $$&lt;/p&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;组合数学&#34;&gt;组合数学&lt;/h2&gt;
 &lt;h3 id=&#34;卡特兰数&#34;&gt;卡特兰数&lt;/h3&gt;
+&lt;p&gt;第$n$个记作$C_n$&lt;/p&gt;
+&lt;p&gt;$n$对括号形成的字符串，合法的情况数是$C_n$&lt;/p&gt;
+&lt;p&gt;$n$个节点的二叉树，总共有$C_n$种&lt;/p&gt;
+&lt;p&gt;$2n+1$个节点组成的满二叉树，有$C_n$种&lt;/p&gt;
+&lt;p&gt;$n\times n$的格点网中，从左下角格点出发，到达右上角格点，不穿过对角线的单调路径个数有$C_n$个。&lt;/p&gt;
+&lt;p&gt;其计算公式为&lt;/p&gt;
+&lt;p&gt;$$
+C_n = \frac{1}{n+1}\binom{2n}{n}
+$$&lt;/p&gt;
+&lt;p&gt;$$
+C_n=\binom{2n}{n} - \binom{2n}{n-1}
+$$&lt;/p&gt;
+&lt;p&gt;$$
+C_0=1,C_{n+1}=\sum^n_{i=0}C_iC_{n-i}
+$$&lt;/p&gt;
+&lt;p&gt;$$
+C_0=1,C_{n+1}=\frac{2(2n+1)}{n+2}C_n
+$$&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;cp&#34;&gt;#include&lt;/span&gt; &lt;span class=&#34;cpf&#34;&gt;&amp;lt;iostream&amp;gt;&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;cp&#34;&gt;&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;//前几项：1, 1, 2, 5, 14, 42, 132, 429, 1430, 4862, 16796
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;cp&#34;&gt;&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;//前几项：1（第0项）, 1, 2, 5, 14, 42, 132, 429, 1430, 4862, 16796
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;using&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;namespace&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;std&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;typedef&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;long&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;long&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;ll&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;

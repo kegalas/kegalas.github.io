@@ -709,6 +709,8 @@ $$</p>
 <p>$$
 (a/b)%p=(a\times b^{-1})%p=[(a%p)\times(b^{-1}%p)]%p
 $$</p>
+<p>（如果加载不全，见<a class="link" href="https://kegalas.top/p/%E5%8F%96%E4%BD%99%E8%BF%90%E7%AE%97%E7%9A%84%E5%88%86%E9%85%8D%E5%BE%8B/"  target="_blank" rel="noopener"
+    >取余运算的分配律</a>）</p>
 <p>可以不用除法求出组合数。其中$b^{-1}$是$b$在模$p$意义下的逆元。</p>
 <p>注意阶乘和其逆元的预处理。</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
@@ -1905,8 +1907,26 @@ $$</p>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div><h2 id="组合数学">组合数学</h2>
 <h3 id="卡特兰数">卡特兰数</h3>
+<p>第$n$个记作$C_n$</p>
+<p>$n$对括号形成的字符串，合法的情况数是$C_n$</p>
+<p>$n$个节点的二叉树，总共有$C_n$种</p>
+<p>$2n+1$个节点组成的满二叉树，有$C_n$种</p>
+<p>$n\times n$的格点网中，从左下角格点出发，到达右上角格点，不穿过对角线的单调路径个数有$C_n$个。</p>
+<p>其计算公式为</p>
+<p>$$
+C_n = \frac{1}{n+1}\binom{2n}{n}
+$$</p>
+<p>$$
+C_n=\binom{2n}{n} - \binom{2n}{n-1}
+$$</p>
+<p>$$
+C_0=1,C_{n+1}=\sum^n_{i=0}C_iC_{n-i}
+$$</p>
+<p>$$
+C_0=1,C_{n+1}=\frac{2(2n+1)}{n+2}C_n
+$$</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
-</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="c1">//前几项：1, 1, 2, 5, 14, 42, 132, 429, 1430, 4862, 16796
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="c1">//前几项：1（第0项）, 1, 2, 5, 14, 42, 132, 429, 1430, 4862, 16796
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="k">typedef</span> <span class="kt">long</span> <span class="kt">long</span> <span class="n">ll</span><span class="p">;</span>
