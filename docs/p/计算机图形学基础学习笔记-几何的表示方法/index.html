@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='有两种方法描述几何：隐式的、显式的。 几何的隐式表示 取决于某些点是否符合表达式。 例如描述一个球面\(x^2&#43;y^2&#43;z^2=1\)，所有符合这'><title>计算机图形学基础学习笔记-几何的表示方法</title>
+
+<link rel='canonical' href='https://kegalas.top/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%87%A0%E4%BD%95%E7%9A%84%E8%A1%A8%E7%A4%BA%E6%96%B9%E6%B3%95/'>
+
+<link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='计算机图形学基础学习笔记-几何的表示方法'>
+<meta property='og:description' content='有两种方法描述几何：隐式的、显式的。 几何的隐式表示 取决于某些点是否符合表达式。 例如描述一个球面\(x^2&#43;y^2&#43;z^2=1\)，所有符合这'>
+<meta property='og:url' content='https://kegalas.top/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%87%A0%E4%BD%95%E7%9A%84%E8%A1%A8%E7%A4%BA%E6%96%B9%E6%B3%95/'>
+<meta property='og:site_name' content='KegalaS的个人博客'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='图形学' /><meta property='article:published_time' content='2022-07-20T13:47:39&#43;08:00'/><meta property='article:modified_time' content='2022-07-20T13:47:39&#43;08:00'/>
+<meta name="twitter:title" content="计算机图形学基础学习笔记-几何的表示方法">
+<meta name="twitter:description" content="有两种方法描述几何：隐式的、显式的。 几何的隐式表示 取决于某些点是否符合表达式。 例如描述一个球面\(x^2&#43;y^2&#43;z^2=1\)，所有符合这">
+    <link rel="shortcut icon" href="favicon-16x16.png" />
+
+    </head>
+    <body class="
+    article-page 
+">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex 
+    
+        on-phone--column extended
+    
+">
+    
+        <aside class="sidebar left-sidebar sticky">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header class="site-info">
+        
+            
+            <figure class="site-avatar">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hue338277dc5d37c7fe2e3b3f1c288220f_302064_300x0_resize_box_3.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+
+                
+                    <span class="emoji">🤣</span>
+                
+            </figure>
+            
+        
+        
+        <h1 class="site-name"><a href="/">KegalaS的个人博客</a></h1>
+        <h2 class="site-description">长夜伴浪破晓梦,梦晓破浪伴夜长</h2><ol class="social-menu">
+                
+                    <li>
+                        <a 
+                            href='https://space.bilibili.com/8906855'
+                            target="_blank"
+                            title="Bilibili"
+                        >
+                            
+                            
+                                <?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 26.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="图层_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 24 24" style="enable-background:new 0 0 24 24;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#BABABA;}
+</style>
+<path class="st0" d="M6.69,1.35l3.57,3.57h3.49l3.57-3.57c0.43-0.43,1.13-0.43,1.56,0c0.43,0.43,0.43,1.13,0,1.56l0,0l-2.01,2.01
+	h2.29c2.13,0,3.85,1.72,3.85,3.85c0,0,0,0,0,0v8.8c0,2.13-1.72,3.85-3.85,3.85H4.85C2.72,21.41,1,19.69,1,17.56l0,0v-8.8
+	c0-2.13,1.72-3.85,3.85-3.85l0,0h2.29L5.13,2.9c-0.43-0.43-0.43-1.13,0-1.56C5.56,0.92,6.26,0.92,6.69,1.35L6.69,1.35z M19.15,7.11
+	H4.85C4,7.11,3.29,7.76,3.21,8.61L3.2,8.76v8.8c0,0.85,0.65,1.56,1.49,1.64l0.16,0.01h14.3c0.85,0,1.56-0.65,1.64-1.49l0.01-0.16
+	v-8.8C20.8,7.85,20.06,7.11,19.15,7.11z M7.6,10.41c0.61,0,1.1,0.49,1.1,1.1v2.2c0,0.61-0.49,1.1-1.1,1.1s-1.1-0.49-1.1-1.1v-2.2
+	C6.5,10.91,6.99,10.41,7.6,10.41z M16.4,10.41c0.61,0,1.1,0.49,1.1,1.1l0,0v2.2c0,0.61-0.49,1.1-1.1,1.1c-0.61,0-1.1-0.49-1.1-1.1
+	v-2.2C15.3,10.91,15.79,10.41,16.4,10.41L16.4,10.41L16.4,10.41z"/>
+</svg>
+
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a 
+                            href='mailto:kaoshen@outlook.com'
+                            target="_blank"
+                            title="E-Mail"
+                        >
+                            
+                            
+                                <?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 26.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="图层_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 24 24" style="enable-background:new 0 0 24 24;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#BABABA;}
+</style>
+<path class="st0" d="M18.88,9.46V8.53l-6.99,4.19L4.9,8.53v0.93l6.99,4.19L18.88,9.46z"/>
+<path class="st0" d="M14.85,13.2l3.53,2.97l0.46-0.94l-3.13-2.51L14.85,13.2z"/>
+<path class="st0" d="M22.15,12.25C22.15,6.59,17.56,2,11.89,2S1.64,6.59,1.64,12.25s4.59,10.25,10.25,10.25S22.15,17.92,22.15,12.25
+	z M2.57,12.25c0-5.15,4.17-9.32,9.32-9.32s9.32,4.17,9.32,9.32s-4.17,9.32-9.32,9.32S2.57,17.4,2.57,12.25z"/>
+<path class="st0" d="M4.59,15.04l0.46,0.95l3.53-2.97l-0.86-0.48L4.59,15.04z"/>
+</svg>
+
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a 
+                            href='https://github.com/kegalas'
+                            target="_blank"
+                            title="GitHub"
+                        >
+                            
+                            
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a 
+                            href='https://vndb.org/u166447/ulist?votes=1'
+                            target="_blank"
+                            title="VNDB"
+                        >
+                            
+                            
+                                <?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 26.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="图层_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 24 24" style="enable-background:new 0 0 24 24;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:none;stroke:#BABABA;stroke-width:2;stroke-miterlimit:10;}
+	.st1{fill:none;stroke:#ECECEC;stroke-miterlimit:10;}
+	.st2{fill:#FFFFFF;stroke:#BABABA;stroke-miterlimit:10;}
+</style>
+<path class="st0" d="M1.5,2.5l8.6,15.9c0.8,1.5,3,1.5,3.8,0l8.6-15.9"/>
+<g>
+	<g>
+		<path class="st1" d="M1.4,2.5"/>
+	</g>
+</g>
+<g>
+	<g>
+		<path class="st1" d="M-2.8,2.7"/>
+	</g>
+</g>
+<g>
+	<g>
+		<path class="st1" d="M-2.8,2.7"/>
+	</g>
+</g>
+<g>
+	<g>
+		<path class="st1" d="M5.9,2.5"/>
+	</g>
+</g>
+<g>
+	<g>
+		<path class="st1" d="M5.9,2.5"/>
+	</g>
+</g>
+<path class="st2" d="M2.5,12.5"/>
+</svg>
+
+                            
+                        </a>
+                    </li>
+                
+            </ol></header>
+
+    <ol class="menu" id="main-menu">
+        
+        
+        
+
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+
+        
+            <li id="dark-mode-toggle">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                <span>暗色模式</span>
+            </li>
+        
+    </ol>
+</aside>
+
+    
+<main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" >
+                图形学
+            </a>
+        
+    </header>
+    
+
+    <h2 class="article-title">
+        <a href="/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%87%A0%E4%BD%95%E7%9A%84%E8%A1%A8%E7%A4%BA%E6%96%B9%E6%B3%95/">计算机图形学基础学习笔记-几何的表示方法</a>
+    </h2>
+
+    
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Jul 20, 2022</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 2 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+</div>
+</header>
+
+    <section class="article-content">
+    <p>有两种方法描述几何：隐式的、显式的。</p>
+<h2 id="几何的隐式表示">几何的隐式表示</h2>
+<p>取决于某些点是否符合表达式。</p>
+<p>例如描述一个球面<span
+class="math inline">\(x^2+y^2+z^2=1\)</span>，所有符合这个表达式的点就是一个球面。</p>
+<p>更一般的情况：满足<span
+class="math inline">\(f(x,y,z)=0\)</span>的所有点。</p>
+<p>它的特点是，采样比较困难，但判断一个点在集合体内外或者在几何体上非常方便。</p>
+<p>隐式表示包含：</p>
+<ol type="1">
+<li>代数方程表示(Algebraic Surfaces)</li>
+<li>通过布尔表达式对几何体进行运算(Constructive Solid Geometry)</li>
+<li>距离函数(Distance Functions)</li>
+<li>Blending Distance Functions</li>
+<li>水平集(Level Set)</li>
+<li>分形(Fractals)</li>
+</ol>
+<h2 id="几何的显式表示">几何的显式表示</h2>
+<p>所有的点直接给出，或者通过参数映射地给出。</p>
+<p>比如从二维映射到三维</p>
+<p><span class="math display">\[
+f:\mathbb{R^2\to R^3};(u,v)\to(x,y,z)
+\]</span></p>
+<p>特点是，采样简单，但是判断关系较为困难。</p>
+<p>显式表示包含：</p>
+<ol type="1">
+<li>点云(Point Cloud)</li>
+<li>多边形网格(Polygon Mesh)</li>
+<li>贝赛尔曲线(Bezier Curves)</li>
+</ol>
+<h3 id="贝塞尔曲线">贝塞尔曲线</h3>
+<p><strong>Casteljau算法</strong></p>
+<p>考虑平面上的三个点<span
+class="math inline">\(b_0,b_1,b_2\)</span>，用线性差值的办法插入一个点到每一条边上。</p>
+<figure>
+<img src="1.jpg" alt="1.jpg" />
+<figcaption aria-hidden="true">1.jpg</figcaption>
+</figure>
+<p>将新增的两个点再利用相同的办法插入一个点。</p>
+<figure>
+<img src="3.jpg" alt="2.jpg" />
+<figcaption aria-hidden="true">2.jpg</figcaption>
+</figure>
+<p>然后对于插值的比例值<span
+class="math inline">\([0,1]\)</span>上的所有点进行这个算法。</p>
+<figure>
+<img src="2.jpg" alt="3.jpg" />
+<figcaption aria-hidden="true">3.jpg</figcaption>
+</figure>
+<p>对于更多点，因为每次在边上进行插值后，新的点比原来的点少一个，反复进行这个算法直到只有一个点。</p>
+<figure>
+<img src="4.jpg" alt="4.jpg" />
+<figcaption aria-hidden="true">4.jpg</figcaption>
+</figure>
+<p>将这个过程公式化，对于三个点的情况，即为</p>
+<p><span class="math display">\[
+b_0^1(t)=(1-t)b_0+tb_1\\
+b_1^1(t)=(1-t)b_1+tb_2\\
+b_0^2(t)=(1-t)b_0^1+tb_1^1
+\]</span></p>
+<p><span class="math display">\[
+\therefore b_0^2(t) = (1-t)^2b_0+2t(1-t)b_1+t^2b_2
+\]</span></p>
+<p>对于更多点的情况：</p>
+<p><span class="math display">\[
+b^n(t) = b^n_0(t)=\sum^n_{j=0}b_jB^n_j(t)
+\]</span></p>
+<p>其中</p>
+<p><span class="math display">\[
+B^n_i(t)=\binom{n}{i}t^i(1-t)^{n-1}
+\]</span></p>
+<p>也可以用递归的方法计算，比较简便。</p>
+<p><strong>贝赛尔曲线的一些性质</strong></p>
+<ol type="1">
+<li><span class="math inline">\(t=0\)</span>是起点，<span
+class="math inline">\(t=1\)</span>是终点。</li>
+<li>曲线与端点段相切</li>
+<li>仿射变换中，对控制点仿射变换再画曲线，和对已经画出来的曲线做仿射变换，得到的曲线是一样的。</li>
+<li>曲线一定在控制点的凸包内</li>
+</ol>
+<p><strong>分段的贝赛尔曲线及其算法</strong></p>
+<p>四个顶点构成的贝赛尔曲线为一段，再将许多贝赛尔曲线接到一起。</p>
+<p>这样的曲线一定是连续的，但光滑还有一个条件。即第一条曲线的第3、4个点的线段和第二条曲线的第1、2个点的线段长度、方向均相同。</p>
+<h3 id="样条spline">样条(Spline)</h3>
+<p>TODO</p>
+<h3 id="贝塞尔曲面">贝塞尔曲面</h3>
+<p>对于<span class="math inline">\(4\times
+4\)</span>的控制点，首先在<span
+class="math inline">\(u\)</span>方向上画出四条贝赛尔曲线，然后再在<span
+class="math inline">\(v\)</span>方向上，根据四条贝塞尔曲线计算出四个控制点，再计算出曲面上的点。</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css"integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js"integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8"crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js"integrity="sha384-vZTG03m&#43;2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl"crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.querySelector(`.article-content`), {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ]
+        });})
+</script>
+    
+</article>
+
+    <aside class="related-contents--wrapper">
+    
+    
+        <h2 class="section-title">相关文章</h2>
+        <div class="related-contents">
+            <div class="flex article-list--tile">
+                
+                    
+<article class="">
+    <a href="/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%85%89%E7%BA%BF%E8%BF%BD%E8%B8%AA/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">计算机图形学基础学习笔记-光线追踪</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="">
+    <a href="/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">计算机图形学基础学习笔记-数据结构</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="">
+    <a href="/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E6%9B%B2%E9%9D%A2%E7%BB%86%E5%88%86/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">计算机图形学基础学习笔记-曲面细分</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="">
+    <a href="/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E8%B4%B4%E5%9B%BE/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">计算机图形学基础学习笔记-贴图</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="">
+    <a href="/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%85%89%E7%85%A7%E6%A8%A1%E5%9E%8B/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">计算机图形学基础学习笔记-光照模型</h2>
+        </div>
+    </a>
+</article>
+                
+            </div>
+        </div>
+    
+</aside>
+
+     
+    
+        
+    <script src="https://utteranc.es/client.js" 
+        repo="kegalas/blogComments"
+        issue-term="pathname"
+        
+        crossorigin="anonymous"
+        async
+        >
+</script>
+
+<style>
+    .utterances {
+        max-width: unset;
+    }
+</style>
+
+<script>
+    function setUtterancesTheme(theme) {
+        let utterances = document.querySelector('.utterances iframe');
+        if (utterances) {
+            utterances.contentWindow.postMessage(
+                {
+                    type: 'set-theme',
+                    theme: `github-${theme}`
+                },
+                'https://utteranc.es'
+            );
+        }
+    }
+
+    addEventListener('message', event => {
+        if (event.origin !== 'https://utteranc.es') return;
+        setUtterancesTheme(document.documentElement.dataset.scheme)
+    });
+
+    window.addEventListener('onColorSchemeChange', (e) => {
+        setUtterancesTheme(e.detail)
+    })
+</script>
+
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2022 KegalaS的个人博客
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.4.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                defer="false"
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

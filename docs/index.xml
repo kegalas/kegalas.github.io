@@ -7,11 +7,11 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
         <lastBuildDate>Thu, 28 Jul 2022 17:36:32 +0800</lastBuildDate><atom:link href="https://kegalas.top/index.xml" rel="self" type="application/rss+xml" /><item>
-        <title>计算机图形学基础（第五版）-第四章笔记</title>
-        <link>https://kegalas.top/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E7%AC%AC%E4%BA%94%E7%89%88-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E7%AC%94%E8%AE%B0/</link>
+        <title>计算机图形学基础学习笔记-光线追踪</title>
+        <link>https://kegalas.top/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%85%89%E7%BA%BF%E8%BF%BD%E8%B8%AA/</link>
         <pubDate>Thu, 28 Jul 2022 17:36:32 +0800</pubDate>
         
-        <guid>https://kegalas.top/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E7%AC%AC%E4%BA%94%E7%89%88-%E7%AC%AC%E5%9B%9B%E7%AB%A0%E7%AC%94%E8%AE%B0/</guid>
+        <guid>https://kegalas.top/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%85%89%E7%BA%BF%E8%BF%BD%E8%B8%AA/</guid>
         <description>&lt;h2 id=&#34;为什么需要光线追踪&#34;&gt;为什么需要光线追踪&lt;/h2&gt;
 &lt;p&gt;光栅化不能很好地处理全局效果。例如软阴影，以及光照的多次反射。&lt;/p&gt;
 &lt;p&gt;虽然光栅化很快，但是质量不非常好、不真实。&lt;/p&gt;
@@ -133,12 +133,12 @@ p&amp;#39;_x-\bm o_x}{\bm d_x}
 &lt;p&gt;一个启发式的算法是，网格数等于C乘以物体数。在三维中C为27.&lt;/p&gt;
 &lt;p&gt;处理较好的情况是，有很多物体的情况。而处理不好的情况是，一个体育馆中心有一个茶壶等类似情况时。&lt;/p&gt;
 &lt;h3 id=&#34;不均匀的分割&#34;&gt;不均匀的分割&lt;/h3&gt;
-&lt;p&gt;见12章笔记KD-Tree。&lt;/p&gt;
+&lt;p&gt;见数据结构笔记KD-Tree。&lt;/p&gt;
 &lt;p&gt;下面讲解光线和KD-Tree中的小空间的相交处理。&lt;/p&gt;
 &lt;p&gt;首先从根节点开始。光线首先会和根节点表述的空间有两个交点。&lt;/p&gt;
 &lt;p&gt;然后判断和两个子节点是否有相交。如果没有则忽略。如果有，则持续往下分割。直到没有子节点，就判断小空间内的物体是否和光线相交。&lt;/p&gt;
 &lt;h3 id=&#34;层次包围盒bvh&#34;&gt;层次包围盒(BVH)&lt;/h3&gt;
-&lt;p&gt;见12章笔记。&lt;/p&gt;
+&lt;p&gt;见数据结构笔记。&lt;/p&gt;
 &lt;h2 id=&#34;辐射度量学&#34;&gt;辐射度量学&lt;/h2&gt;
 &lt;h3 id=&#34;辐射能量&#34;&gt;辐射能量&lt;/h3&gt;
 &lt;p&gt;辐射能量是电磁辐射的能量。以焦耳（J）做单位，&lt;span
@@ -1471,11 +1471,49 @@ class=&#34;math inline&#34;&gt;\(dA\)&lt;/span&gt;后，要考虑中间是否有
 </description>
         </item>
         <item>
-        <title>计算机图形学基础（第五版）-第十二章笔记</title>
-        <link>https://kegalas.top/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E7%AC%AC%E4%BA%94%E7%89%88-%E7%AC%AC%E5%8D%81%E4%BA%8C%E7%AB%A0%E7%AC%94%E8%AE%B0/</link>
+        <title>计算机图形学基础学习笔记-数据结构</title>
+        <link>https://kegalas.top/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</link>
+        <pubDate>Wed, 20 Jul 2022 15:09:04 +0800</pubDate>
+        
+        <guid>https://kegalas.top/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</guid>
+        <description>&lt;h2 id=&#34;不均匀分割空间的数据结构&#34;&gt;不均匀分割空间的数据结构&lt;/h2&gt;
+&lt;p&gt;有Oct-Tree，KD-Tree，BSP-Tree。&lt;/p&gt;
+&lt;p&gt;Oct-Tree是均匀地将一个正方体分为八个小正方体的结构。可以根据物体在某一部分的密度来决定是否往下分。&lt;/p&gt;
+&lt;p&gt;KD-Tree是将空间分为两部分，可以是不均匀的。但是分的时候是轴对齐的。&lt;/p&gt;
+&lt;p&gt;BSP-Tree也是分为两部分，但分的时候可以不轴对称。&lt;/p&gt;
+&lt;h3 id=&#34;kd-tree&#34;&gt;KD-Tree&lt;/h3&gt;
+&lt;p&gt;KD-Tree的要求如下&lt;/p&gt;
+&lt;p&gt;对于中间节点，存储：&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;分割空间的平面垂直的坐标轴&lt;/li&gt;
+&lt;li&gt;分割空间的平面在坐标轴上的坐标&lt;/li&gt;
+&lt;li&gt;指向儿子节点的指针&lt;/li&gt;
+&lt;li&gt;不存储任何物体的信息&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;对于叶子节点，存储&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;包含的物体列表&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;层次包围盒bvh&#34;&gt;层次包围盒(BVH)&lt;/h3&gt;
+&lt;p&gt;这也是一种树，根节点是所有物体的包围盒。&lt;/p&gt;
+&lt;p&gt;然后对节点进行分割，使得该节点划分为两个部分，每个部分都是一个包围盒，一个物体仅在一个包围盒中。&lt;/p&gt;
+&lt;p&gt;如果一个节点被分割了，它就不再作为含有物体的包围盒。只有叶子节点含有包围盒。&lt;/p&gt;
+&lt;p&gt;其中有几个注意事项：&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;选择节点中的最长轴，如果物体有沿&lt;span
+class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;轴分布的形状，则在&lt;span
+class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;轴上将物体分为两部分。&lt;/li&gt;
+&lt;li&gt;分割节点选择在中间的物体。&lt;/li&gt;
+&lt;li&gt;当一个节点只有很少物体时停止分割&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+        </item>
+        <item>
+        <title>计算机图形学基础学习笔记-曲面细分</title>
+        <link>https://kegalas.top/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E6%9B%B2%E9%9D%A2%E7%BB%86%E5%88%86/</link>
         <pubDate>Wed, 20 Jul 2022 15:08:04 +0800</pubDate>
         
-        <guid>https://kegalas.top/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E7%AC%AC%E4%BA%94%E7%89%88-%E7%AC%AC%E5%8D%81%E4%BA%8C%E7%AB%A0%E7%AC%94%E8%AE%B0/</guid>
+        <guid>https://kegalas.top/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E6%9B%B2%E9%9D%A2%E7%BB%86%E5%88%86/</guid>
         <description>&lt;h2 id=&#34;三角形网格的细分&#34;&gt;三角形网格的细分&lt;/h2&gt;
 &lt;h3 id=&#34;loop细分&#34;&gt;Loop细分&lt;/h3&gt;
 &lt;p&gt;Loop Subdivision分为两步&lt;/p&gt;
@@ -1524,44 +1562,14 @@ class=&#34;math inline&#34;&gt;\(dA\)&lt;/span&gt;后，要考虑中间是否有
 &lt;figcaption aria-hidden=&#34;true&#34;&gt;5.jpg&lt;/figcaption&gt;
 &lt;/figure&gt;
 &lt;p&gt;一个更好地想法是选择那些拥有最小二次误差的点。可以用优先队列来维护。&lt;/p&gt;
-&lt;h2 id=&#34;不均匀分割空间的数据结构&#34;&gt;不均匀分割空间的数据结构&lt;/h2&gt;
-&lt;p&gt;有Oct-Tree，KD-Tree，BSP-Tree。&lt;/p&gt;
-&lt;p&gt;Oct-Tree是均匀地将一个正方体分为八个小正方体的结构。可以根据物体在某一部分的密度来决定是否往下分。&lt;/p&gt;
-&lt;p&gt;KD-Tree是将空间分为两部分，可以是不均匀的。但是分的时候是轴对齐的。&lt;/p&gt;
-&lt;p&gt;BSP-Tree也是分为两部分，但分的时候可以不轴对称。&lt;/p&gt;
-&lt;h3 id=&#34;kd-tree&#34;&gt;KD-Tree&lt;/h3&gt;
-&lt;p&gt;KD-Tree的要求如下&lt;/p&gt;
-&lt;p&gt;对于中间节点，存储：&lt;/p&gt;
-&lt;ol type=&#34;1&#34;&gt;
-&lt;li&gt;分割空间的平面垂直的坐标轴&lt;/li&gt;
-&lt;li&gt;分割空间的平面在坐标轴上的坐标&lt;/li&gt;
-&lt;li&gt;指向儿子节点的指针&lt;/li&gt;
-&lt;li&gt;不存储任何物体的信息&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;对于叶子节点，存储&lt;/p&gt;
-&lt;ol type=&#34;1&#34;&gt;
-&lt;li&gt;包含的物体列表&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h3 id=&#34;层次包围盒bvh&#34;&gt;层次包围盒(BVH)&lt;/h3&gt;
-&lt;p&gt;这也是一种树，根节点是所有物体的包围盒。&lt;/p&gt;
-&lt;p&gt;然后对节点进行分割，使得该节点划分为两个部分，每个部分都是一个包围盒，一个物体仅在一个包围盒中。&lt;/p&gt;
-&lt;p&gt;如果一个节点被分割了，它就不再作为含有物体的包围盒。只有叶子节点含有包围盒。&lt;/p&gt;
-&lt;p&gt;其中有几个注意事项：&lt;/p&gt;
-&lt;ol type=&#34;1&#34;&gt;
-&lt;li&gt;选择节点中的最长轴，如果物体有沿&lt;span
-class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;轴分布的形状，则在&lt;span
-class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;轴上将物体分为两部分。&lt;/li&gt;
-&lt;li&gt;分割节点选择在中间的物体。&lt;/li&gt;
-&lt;li&gt;当一个节点只有很少物体时停止分割&lt;/li&gt;
-&lt;/ol&gt;
 </description>
         </item>
         <item>
-        <title>计算机图形学基础（第五版）-第十五章笔记</title>
-        <link>https://kegalas.top/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E7%AC%AC%E4%BA%94%E7%89%88-%E7%AC%AC%E5%8D%81%E4%BA%94%E7%AB%A0%E7%AC%94%E8%AE%B0/</link>
+        <title>计算机图形学基础学习笔记-几何的表示方法</title>
+        <link>https://kegalas.top/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%87%A0%E4%BD%95%E7%9A%84%E8%A1%A8%E7%A4%BA%E6%96%B9%E6%B3%95/</link>
         <pubDate>Wed, 20 Jul 2022 13:47:39 +0800</pubDate>
         
-        <guid>https://kegalas.top/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E7%AC%AC%E4%BA%94%E7%89%88-%E7%AC%AC%E5%8D%81%E4%BA%94%E7%AB%A0%E7%AC%94%E8%AE%B0/</guid>
+        <guid>https://kegalas.top/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%87%A0%E4%BD%95%E7%9A%84%E8%A1%A8%E7%A4%BA%E6%96%B9%E6%B3%95/</guid>
         <description>&lt;p&gt;有两种方法描述几何：隐式的、显式的。&lt;/p&gt;
 &lt;h2 id=&#34;几何的隐式表示&#34;&gt;几何的隐式表示&lt;/h2&gt;
 &lt;p&gt;取决于某些点是否符合表达式。&lt;/p&gt;
@@ -1655,11 +1663,11 @@ class=&#34;math inline&#34;&gt;\(v\)&lt;/span&gt;方向上，根据四条贝塞�
 </description>
         </item>
         <item>
-        <title>计算机图形学基础（第五版）-第十一章笔记</title>
-        <link>https://kegalas.top/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E7%AC%AC%E4%BA%94%E7%89%88-%E7%AC%AC%E5%8D%81%E4%B8%80%E7%AB%A0%E7%AC%94%E8%AE%B0/</link>
+        <title>计算机图形学基础学习笔记-贴图</title>
+        <link>https://kegalas.top/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E8%B4%B4%E5%9B%BE/</link>
         <pubDate>Thu, 14 Jul 2022 16:53:03 +0800</pubDate>
         
-        <guid>https://kegalas.top/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E7%AC%AC%E4%BA%94%E7%89%88-%E7%AC%AC%E5%8D%81%E4%B8%80%E7%AB%A0%E7%AC%94%E8%AE%B0/</guid>
+        <guid>https://kegalas.top/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E8%B4%B4%E5%9B%BE/</guid>
         <description>&lt;h2 id=&#34;纹理映射&#34;&gt;纹理映射&lt;/h2&gt;
 &lt;p&gt;纹理映射流程如下&lt;/p&gt;
 &lt;p&gt;对于每个光栅化的屏幕采样点&lt;span
@@ -1815,11 +1823,11 @@ class=&#34;math inline&#34;&gt;\(h,w\)&lt;/span&gt;是纹理的高度和宽度�
 </description>
         </item>
         <item>
-        <title>计算机图形学基础（第五版）-第五章笔记</title>
-        <link>https://kegalas.top/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E7%AC%AC%E4%BA%94%E7%89%88-%E7%AC%AC%E4%BA%94%E7%AB%A0%E7%AC%94%E8%AE%B0/</link>
+        <title>计算机图形学基础学习笔记-光照模型</title>
+        <link>https://kegalas.top/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%85%89%E7%85%A7%E6%A8%A1%E5%9E%8B/</link>
         <pubDate>Wed, 13 Jul 2022 21:49:11 +0800</pubDate>
         
-        <guid>https://kegalas.top/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E7%AC%AC%E4%BA%94%E7%89%88-%E7%AC%AC%E4%BA%94%E7%AB%A0%E7%AC%94%E8%AE%B0/</guid>
+        <guid>https://kegalas.top/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%85%89%E7%85%A7%E6%A8%A1%E5%9E%8B/</guid>
         <description>&lt;h2 id=&#34;点光源&#34;&gt;点光源&lt;/h2&gt;
 &lt;p&gt;假设点光源的光的强度（能流密度）是&lt;span
 class=&#34;math inline&#34;&gt;\(E=I\)&lt;/span&gt;，由于点光源向外发送能量是以球面波的形式发送。在距离光源&lt;span
@@ -1895,11 +1903,11 @@ L = L_a+L_d+L_s
 </description>
         </item>
         <item>
-        <title>计算机图形学基础（第五版）-第九章笔记</title>
-        <link>https://kegalas.top/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E7%AC%AC%E4%BA%94%E7%89%88-%E7%AC%AC%E4%B9%9D%E7%AB%A0%E7%AC%94%E8%AE%B0/</link>
+        <title>计算机图形学基础学习笔记-光栅化与着色频率</title>
+        <link>https://kegalas.top/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%85%89%E6%A0%85%E5%8C%96%E4%B8%8E%E7%9D%80%E8%89%B2%E9%A2%91%E7%8E%87/</link>
         <pubDate>Sun, 03 Jul 2022 15:21:12 +0800</pubDate>
         
-        <guid>https://kegalas.top/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E7%AC%AC%E4%BA%94%E7%89%88-%E7%AC%AC%E4%B9%9D%E7%AB%A0%E7%AC%94%E8%AE%B0/</guid>
+        <guid>https://kegalas.top/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%85%89%E6%A0%85%E5%8C%96%E4%B8%8E%E7%9D%80%E8%89%B2%E9%A2%91%E7%8E%87/</guid>
         <description>&lt;h2 id=&#34;光栅化&#34;&gt;光栅化&lt;/h2&gt;
 &lt;h3 id=&#34;线段绘制&#34;&gt;线段绘制&lt;/h3&gt;
 &lt;p&gt;对于一条给定线段&lt;/p&gt;
@@ -2057,11 +2065,11 @@ N_v=\frac{\sum_iN_i}{||\sum_iN_i||}
 </description>
         </item>
         <item>
-        <title>计算机图形学基础（第五版）-第三章笔记</title>
-        <link>https://kegalas.top/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E7%AC%AC%E4%BA%94%E7%89%88-%E7%AC%AC%E4%B8%89%E7%AB%A0%E7%AC%94%E8%AE%B0/</link>
+        <title>计算机图形学基础学习笔记-光栅化图像的标准</title>
+        <link>https://kegalas.top/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%85%89%E6%A0%85%E5%8C%96%E5%9B%BE%E5%83%8F%E7%9A%84%E6%A0%87%E5%87%86/</link>
         <pubDate>Sun, 03 Jul 2022 15:05:15 +0800</pubDate>
         
-        <guid>https://kegalas.top/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E7%AC%AC%E4%BA%94%E7%89%88-%E7%AC%AC%E4%B8%89%E7%AB%A0%E7%AC%94%E8%AE%B0/</guid>
+        <guid>https://kegalas.top/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%85%89%E6%A0%85%E5%8C%96%E5%9B%BE%E5%83%8F%E7%9A%84%E6%A0%87%E5%87%86/</guid>
         <description>&lt;h2 id=&#34;分辨率与坐标&#34;&gt;分辨率与坐标&lt;/h2&gt;
 &lt;p&gt;假设屏幕分辨率是&lt;span class=&#34;math inline&#34;&gt;\(n_x\times
 n_y\)&lt;/span&gt;，则，按照本书的规则，左下角的像素的中心点定为原点，那么有坐标范围为&lt;span
@@ -2089,11 +2097,11 @@ class=&#34;math inline&#34;&gt;\(\cdots,254/255,1\)&lt;/span&gt;。&lt;/p&gt;
 </description>
         </item>
         <item>
-        <title>计算机图形学基础（第五版）-第八章笔记</title>
-        <link>https://kegalas.top/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E7%AC%AC%E4%BA%94%E7%89%88-%E7%AC%AC%E5%85%AB%E7%AB%A0%E7%AC%94%E8%AE%B0/</link>
+        <title>计算机图形学基础学习笔记-视角</title>
+        <link>https://kegalas.top/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E8%A7%86%E8%A7%92/</link>
         <pubDate>Tue, 28 Jun 2022 12:14:24 +0800</pubDate>
         
-        <guid>https://kegalas.top/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E7%AC%AC%E4%BA%94%E7%89%88-%E7%AC%AC%E5%85%AB%E7%AB%A0%E7%AC%94%E8%AE%B0/</guid>
+        <guid>https://kegalas.top/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E8%A7%86%E8%A7%92/</guid>
         <description>&lt;h2 id=&#34;viewing-transformations&#34;&gt;Viewing Transformations&lt;/h2&gt;
 &lt;h3 id=&#34;视口变换viewport-transformation&#34;&gt;视口变换（Viewport
 Transformation）&lt;/h3&gt;
@@ -2257,11 +2265,11 @@ aspect = \frac{r}{t}
 </description>
         </item>
         <item>
-        <title>计算机图形学基础（第五版）-第七章笔记</title>
-        <link>https://kegalas.top/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E7%AC%AC%E4%BA%94%E7%89%88-%E7%AC%AC%E4%B8%83%E7%AB%A0%E7%AC%94%E8%AE%B0/</link>
+        <title>计算机图形学基础学习笔记-变换矩阵</title>
+        <link>https://kegalas.top/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%8F%98%E6%8D%A2%E7%9F%A9%E9%98%B5/</link>
         <pubDate>Mon, 27 Jun 2022 16:25:19 +0800</pubDate>
         
-        <guid>https://kegalas.top/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E7%AC%AC%E4%BA%94%E7%89%88-%E7%AC%AC%E4%B8%83%E7%AB%A0%E7%AC%94%E8%AE%B0/</guid>
+        <guid>https://kegalas.top/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%8F%98%E6%8D%A2%E7%9F%A9%E9%98%B5/</guid>
         <description>&lt;h2 id=&#34;放缩&#34;&gt;放缩&lt;/h2&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 scale(s_x,s_y)=
@@ -2528,11 +2536,11 @@ class=&#34;math inline&#34;&gt;\(\bm M\)&lt;/span&gt;在矩阵和几何意义上
 </description>
         </item>
         <item>
-        <title>计算机图形学基础（第五版）-第六章笔记</title>
-        <link>https://kegalas.top/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E7%AC%AC%E4%BA%94%E7%89%88-%E7%AC%AC%E5%85%AD%E7%AB%A0%E7%AC%94%E8%AE%B0/</link>
+        <title>计算机图形学基础学习笔记-线性代数</title>
+        <link>https://kegalas.top/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/</link>
         <pubDate>Mon, 27 Jun 2022 15:29:29 +0800</pubDate>
         
-        <guid>https://kegalas.top/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E7%AC%AC%E4%BA%94%E7%89%88-%E7%AC%AC%E5%85%AD%E7%AB%A0%E7%AC%94%E8%AE%B0/</guid>
+        <guid>https://kegalas.top/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/</guid>
         <description>&lt;p&gt;本章内容为线性代数，在线性代数整理中涵盖了大部分内容，不再重复，介绍一些那篇文章没有覆盖的内容。&lt;/p&gt;
 &lt;h2 id=&#34;svd奇异值分解&#34;&gt;SVD（奇异值分解）&lt;/h2&gt;
 &lt;p&gt;与对角化不同的是，计算SVD时，两边的正交矩阵不要求相同。例如：&lt;/p&gt;
@@ -2554,11 +2562,11 @@ V)\bm{SU}^T
 </description>
         </item>
         <item>
-        <title>计算机图形学基础（第五版）-第二章笔记</title>
-        <link>https://kegalas.top/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E7%AC%AC%E4%BA%94%E7%89%88-%E7%AC%AC%E4%BA%8C%E7%AB%A0%E7%AC%94%E8%AE%B0/</link>
+        <title>计算机图形学基础学习笔记-数学基础</title>
+        <link>https://kegalas.top/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/</link>
         <pubDate>Mon, 27 Jun 2022 15:17:29 +0800</pubDate>
         
-        <guid>https://kegalas.top/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E7%AC%AC%E4%BA%94%E7%89%88-%E7%AC%AC%E4%BA%8C%E7%AB%A0%E7%AC%94%E8%AE%B0/</guid>
+        <guid>https://kegalas.top/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/</guid>
         <description>&lt;h2 id=&#34;cartesian-product笛卡尔积&#34;&gt;Cartesian Product（笛卡尔积）&lt;/h2&gt;
 &lt;p&gt;内容同离散数学。&lt;/p&gt;
 &lt;h2 id=&#34;几个特别的集合&#34;&gt;几个特别的集合&lt;/h2&gt;
