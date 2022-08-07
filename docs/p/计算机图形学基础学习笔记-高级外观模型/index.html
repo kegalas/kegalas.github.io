@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="en-us">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Viewing Transformations 视口变换（Viewport Transformation） 将\([-1,1]^2\)的正方形映射到屏幕上。这个屏幕宽\(n_x\)像素，高'><title>计算机图形学基础学习笔记-视角</title>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='非表面模型 参与介质(Participating Media) 例如云、雾等。 其中的小晶体、小分子等会吸收光、反射光等。 使用相位函数(Phase Functi'><title>计算机图形学基础学习笔记-高级外观模型</title>
 
-<link rel='canonical' href='https://kegalas.top/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E8%A7%86%E8%A7%92/'>
+<link rel='canonical' href='https://kegalas.top/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E9%AB%98%E7%BA%A7%E5%A4%96%E8%A7%82%E6%A8%A1%E5%9E%8B/'>
 
-<link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='计算机图形学基础学习笔记-视角'>
-<meta property='og:description' content='Viewing Transformations 视口变换（Viewport Transformation） 将\([-1,1]^2\)的正方形映射到屏幕上。这个屏幕宽\(n_x\)像素，高'>
-<meta property='og:url' content='https://kegalas.top/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E8%A7%86%E8%A7%92/'>
+<link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='计算机图形学基础学习笔记-高级外观模型'>
+<meta property='og:description' content='非表面模型 参与介质(Participating Media) 例如云、雾等。 其中的小晶体、小分子等会吸收光、反射光等。 使用相位函数(Phase Functi'>
+<meta property='og:url' content='https://kegalas.top/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E9%AB%98%E7%BA%A7%E5%A4%96%E8%A7%82%E6%A8%A1%E5%9E%8B/'>
 <meta property='og:site_name' content='KegalaS的个人博客'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='图形学' /><meta property='article:published_time' content='2022-06-28T12:14:24&#43;08:00'/><meta property='article:modified_time' content='2022-06-28T12:14:24&#43;08:00'/>
-<meta name="twitter:title" content="计算机图形学基础学习笔记-视角">
-<meta name="twitter:description" content="Viewing Transformations 视口变换（Viewport Transformation） 将\([-1,1]^2\)的正方形映射到屏幕上。这个屏幕宽\(n_x\)像素，高">
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='图形学' /><meta property='article:published_time' content='2022-08-07T15:46:35&#43;08:00'/><meta property='article:modified_time' content='2022-08-07T15:46:35&#43;08:00'/>
+<meta name="twitter:title" content="计算机图形学基础学习笔记-高级外观模型">
+<meta name="twitter:description" content="非表面模型 参与介质(Participating Media) 例如云、雾等。 其中的小晶体、小分子等会吸收光、反射光等。 使用相位函数(Phase Functi">
     <link rel="shortcut icon" href="favicon-16x16.png" />
 
     </head>
@@ -75,7 +75,7 @@
     
 
     <h2 class="article-title">
-        <a href="/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E8%A7%86%E8%A7%92/">计算机图形学基础学习笔记-视角</a>
+        <a href="/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E9%AB%98%E7%BA%A7%E5%A4%96%E8%A7%82%E6%A8%A1%E5%9E%8B/">计算机图形学基础学习笔记-高级外观模型</a>
     </h2>
 
     
@@ -93,7 +93,7 @@
   <path d="M3 11h16" />
   <path d="M18 16.496v1.504l1 1" />
 </svg>
-                <time class="article-time--published">Jun 28, 2022</time>
+                <time class="article-time--published">Aug 07, 2022</time>
             </div>
         
 
@@ -108,7 +108,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 3 分钟
+                    阅读时长: 2 分钟
                 </time>
             </div>
         
@@ -120,136 +120,49 @@
     <section class="article-content">
     
 
-<h2 id="viewing-transformations">Viewing Transformations</h2>
-<h3 id="视口变换viewport-transformation">视口变换（Viewport
-Transformation）</h3>
-<p>将<span class="math inline">\([-1,1]^2\)</span>的正方形映射到屏幕上。这个屏幕宽<span class="math inline">\(n_x\)</span>像素，高<span class="math inline">\(n_y\)</span>像素。并且由于左下角像素中心点位置为原点，我们要有负0.5个像素，即映射到<span class="math inline">\([-0.5,n_x-0.5]\times[-0.5,n_y-0.5]\)</span>。（注，在games101中映射到的是<span class="math inline">\([0,n_x]\times[0,n_y]\)</span>）</p>
-<p>需要如下变换</p>
-<p><span class="math display">\[
-\begin{bmatrix}
-x_{screen} \\
-y_{screen} \\
-1
-\end{bmatrix}=
-\begin{bmatrix}
-n_x/2  &amp; 0 &amp; (n_x-1)/2\\
-0  &amp; n_y/2 &amp; (n_y-1)/2\\
-0  &amp; 0 &amp; 1
-\end{bmatrix}
-\begin{bmatrix}
-x_{canonical}\\
-y_{canonical}\\
-1
-\end{bmatrix}
-\]</span></p>
-<p>三维形式有</p>
-<p><span class="math display">\[
-M_{vp}=
-\begin{bmatrix}
-n_x/2 &amp; 0 &amp; 0 &amp; (n_x-1)/2\\
-0  &amp; n_y/2  &amp; 0 &amp; (n_y-1)/2\\
-0  &amp; 0 &amp; 1 &amp;0\\
-0 &amp; 0 &amp; 0 &amp; 1
-\end{bmatrix}
-\]</span></p>
-<h3 id="正交投影变换orthographic-projection-transformation">正交投影变换（Orthographic
-Projection Transformation）</h3>
-<p>将一个<span class="math inline">\([l,r]\times[b,t]\times[f,n]\)</span>矩阵变换到<span class="math inline">\([-1,1]^3\)</span>。</p>
-<p>其中<span class="math inline">\(l\)</span>即left是<span class="math inline">\(x\)</span>坐标小的平面，<span class="math inline">\(r\)</span>即right是<span class="math inline">\(x\)</span>坐标大的平面。</p>
-<p>其中<span class="math inline">\(b\)</span>即bottom是<span class="math inline">\(y\)</span>坐标小的平面，<span class="math inline">\(t\)</span>即top是<span class="math inline">\(y\)</span>坐标大的平面。</p>
-<p>其中<span class="math inline">\(f\)</span>即far是<span class="math inline">\(z\)</span>坐标小的平面，<span class="math inline">\(n\)</span>即near是<span class="math inline">\(z\)</span>坐标大的平面。</p>
-<p>注意<span class="math inline">\(z\)</span>可能与常识不太相同，因为我们的相机所看的方向是<span class="math inline">\(-z\)</span>方向。</p>
-<p>这也导致了OpenGL使用左手坐标系。</p>
-<p>完成这个变换的矩阵是</p>
-<p><span class="math display">\[
-\begin{bmatrix}
-\frac{2}{r-l}  &amp; 0 &amp; 0 &amp; 0\\
-0  &amp; \frac{2}{t-b} &amp; 0 &amp; 0\\
-0  &amp; 0 &amp; \frac{2}{n-f} &amp; 0\\
-0  &amp; 0 &amp; 0 &amp; 1
-\end{bmatrix}
-\begin{bmatrix}
-1  &amp; 0 &amp; 0 &amp; -\frac{r+l}{2}\\
-0  &amp; 1 &amp; 0 &amp; -\frac{t+b}{2}\\
-0  &amp; 0 &amp; 1 &amp; -\frac{n+f}{2}\\
-0  &amp; 0 &amp; 0 &amp; 1
-\end{bmatrix}=
-\]</span></p>
-<p><span class="math display">\[
-\begin{bmatrix}
-\frac{2}{r-l}  &amp; 0 &amp; 0 &amp; -\frac{r+l}{r-l}\\
-0  &amp; \frac{2}{t-b} &amp; 0 &amp; -\frac{t+b}{t-b}\\
-0  &amp; 0 &amp; \frac{2}{n-f} &amp; -\frac{n+f}{n-f}\\
-0  &amp; 0 &amp; 0 &amp; 1
-\end{bmatrix}
-\]</span></p>
-<h3 id="相机变换camera-transformation">相机变换（Camera
-Transformation）</h3>
-<p>首先知道三个向量：</p>
+<h2 id="非表面模型">非表面模型</h2>
+<h3 id="参与介质participating-media">参与介质(Participating Media)</h3>
+<p>例如云、雾等。</p>
+<p>其中的小晶体、小分子等会吸收光、反射光等。</p>
+<p>使用相位函数(Phase Function)来描述如何反射等。</p>
+<p>渲染思路：</p>
 <ol type="1">
-<li><span class="math inline">\(\bm e\)</span>，相机位置（eye
-position）向量</li>
-<li><span class="math inline">\(\hat{\bm
-g}\)</span>，相机视线（gaze）方向。</li>
-<li><span class="math inline">\(\hat{\bm
-t}\)</span>，相机头顶方向。（和视线方向正交）</li>
+<li>随机选择一个方向来反射</li>
+<li>随机选择一个距离来传播</li>
+<li>在每个反射点来连接光源进行着色</li>
 </ol>
-<p>我们要将相机位置变换到原点，将视线方向定为<span class="math inline">\(-z\)</span>方向，头顶方向为<span class="math inline">\(y\)</span>方向。同时所有物体都跟随相机变换，最终结果相机看到的画面不变。</p>
-<p>首先，显然的，将相机位置变换到原点的矩阵是</p>
-<p><span class="math display">\[
-T_{view}
-\begin{bmatrix}
-1  &amp; 0 &amp; 0 &amp; -x_e\\
-0  &amp; 1 &amp; 0 &amp; -y_e\\
-0  &amp; 0 &amp; 1 &amp; -z_e\\
-0  &amp; 0 &amp; 0 &amp; 1
-\end{bmatrix}
-\]</span></p>
-<p>然后对两个另外两个向量进行旋转，直接想不太方便，可以反过来由<span class="math inline">\(z\)</span>和<span class="math inline">\(y\)</span>变换到<span class="math inline">\(-\hat
-g\)</span>和<span class="math inline">\(\hat t\)</span>，<span class="math inline">\(x\)</span>变换到<span class="math inline">\(\hat
-g\times \hat t\)</span></p>
-<p><span class="math display">\[
-R_{view}^{-1}=
-\begin{bmatrix}
-x_{\hat g\times \hat t}  &amp; x_{\hat t} &amp; x_{-\hat{g}} &amp; 0\\
-y_{\hat g\times \hat t}  &amp; y_{\hat t} &amp; y_{-\hat{g}} &amp; 0\\
-z_{\hat g\times \hat t}  &amp; z_{\hat t} &amp; z_{-\hat{g}} &amp; 0\\
-0  &amp; 0 &amp; 0 &amp; 1
-\end{bmatrix}
-\]</span></p>
-<p>然后再得到逆变换，由于这是个正交矩阵，逆矩阵就是转置矩阵</p>
-<p><span class="math display">\[
-R_{view}=
-\begin{bmatrix}
-x_{\hat g\times \hat t}  &amp; y_{\hat g\times \hat t} &amp; z_{\hat
-g\times \hat t} &amp; 0\\
-x_{\hat t}  &amp; y_{\hat t} &amp; z_{\hat t} &amp; 0\\
-x_{-\hat{g}}  &amp; y_{-\hat{g}} &amp; z_{-\hat{g}} &amp; 0\\
-0  &amp; 0 &amp; 0 &amp; 1
-\end{bmatrix}
-\]</span></p>
-<h2 id="透视投影perspective-projection">透视投影（Perspective
-Projection）</h2>
-<p>由透视投影变换到正交投影，矩阵如下</p>
-<p><span class="math display">\[
-P=
-\begin{bmatrix}
-n  &amp; 0 &amp; 0 &amp; 0\\
-0  &amp; n &amp; 0 &amp; 0\\
-0  &amp; 0 &amp; n+f &amp; -fn\\
-0  &amp; 0 &amp; 1 &amp; 0
-\end{bmatrix}
-\]</span></p>
-<p>直观上的理解就是，将视锥中远平面压小到等于近平面。</p>
-<h2 id="视野field-of-view">视野（Field-of-View）</h2>
-<p>通常，对于近平面，我们可以用<span class="math inline">\(l,r,b,t\)</span>描述（假设<span class="math inline">\(l=-r,b=-t\)</span>，即平面中心位于<span class="math inline">\(-z\)</span>轴上，且平面与<span class="math inline">\(-z\)</span>垂直），也可以用垂直视野<span class="math inline">\(fovY\)</span>和近平面的宽高比来表示。</p>
-<p>首先相机到近平面的距离为<span class="math inline">\(|n|\)</span>，则有如下关系</p>
-<p><span class="math display">\[
-tan\frac{fovY}{2} = \frac{t}{|n|}
-\]</span></p>
-<p><span class="math display">\[
-aspect = \frac{r}{t}
-\]</span></p>
+<h3 id="头发材质">头发材质</h3>
+<p><strong>Kajiya-Kay 模型</strong></p>
+<p>效果不是很好，只考虑了头发上的反射。</p>
+<p><strong>Marschner 模型</strong></p>
+<p>广泛应用，更进一步地考虑了光线透过头发。</p>
+<p>但是这个模型不能很好地表现动物毛发。</p>
+<p>这个模型将头发认为是有颜色的实心圆柱体。</p>
+<p>但实际上头发中不是均一的某种物质，其中还有一个更小的圆柱体含有髓质。头发的髓质较少，但是其他毛发的髓质较多。</p>
+<p><strong>双圆柱模型</strong></p>
+<p>同上文描述，即考虑了髓质的存在。</p>
+<h3 id="颗粒granular材质">颗粒(Granular)材质</h3>
+<p>例如盐、白砂糖、米、沙子等。</p>
+<h2 id="表面模型">表面模型</h2>
+<h3 id="半透明translucent材质">半透明(Translucent)材质</h3>
+<p>例如玉石、水母等。</p>
+<p><strong>次表面反射</strong></p>
+<p>也就是，在材质内部反射，然后从某个方向离开表面。</p>
+<p>BSSRDF：作为BRDF的延伸，决定了光从某个方向进来，某个点进来，某个方向出去，某个点出去时光照。也会改变渲染方程。</p>
+<p><strong>Dipole Approximation</strong></p>
+<p>通过在物体内部加一个虚拟光源来达到次表面反射的效果</p>
+<h3 id="布料">布料</h3>
+<p>可以当做表面来渲染，用BRDF进行。</p>
+<p>也可以当做参与介质来渲染，效果比当做平面要好，但是慢。</p>
+<p>也可以直接暴力地将每一根纤维渲染出来，类似头发，效果好，速度慢。</p>
+<h3 id="有细节的材质">有细节的材质</h3>
+<p>例如遍布金属表面的小划痕。</p>
+<p>可以用法线贴图，以及微表面模型来渲染，虽然效果很好，但是十分的慢。</p>
+<p>解决办法：在像素意义上使用BRDF。</p>
+<p>有时候，物体表面反射出来的是各种颜色。例如照射一块铝片，反射出来的宏观上是银色，但是细细的观察会发现有很多不同的颜色。这需要波动光学的帮助。</p>
+<h2 id="程序化生成表面">程序化生成表面</h2>
+<p>不用纹理而是用一个噪声函数定义表面。</p>
+<p>可以生成地形、木纹、铁锈等等。</p>
 
 
 
@@ -315,18 +228,6 @@ aspect = \frac{r}{t}
                 
                     
 <article class="">
-    <a href="/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E9%AB%98%E7%BA%A7%E5%A4%96%E8%A7%82%E6%A8%A1%E5%9E%8B/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">计算机图形学基础学习笔记-高级外观模型</h2>
-        </div>
-    </a>
-</article>
-                
-                    
-<article class="">
     <a href="/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E9%AB%98%E7%BA%A7%E5%85%89%E7%BA%BF%E4%BC%A0%E6%92%AD/">
         
         
@@ -369,6 +270,18 @@ aspect = \frac{r}{t}
 
         <div class="article-details">
             <h2 class="article-title">计算机图形学基础学习笔记-数据结构</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="">
+    <a href="/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E6%9B%B2%E9%9D%A2%E7%BB%86%E5%88%86/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">计算机图形学基础学习笔记-曲面细分</h2>
         </div>
     </a>
 </article>
@@ -538,19 +451,22 @@ aspect = \frac{r}{t}
                 <div class="widget--toc">
                     <nav id="TableOfContents">
   <ol>
-    <li><a href="#viewing-transformations">Viewing Transformations</a>
+    <li><a href="#非表面模型">非表面模型</a>
       <ol>
-        <li><a href="#视口变换viewport-transformation">视口变换（Viewport
-Transformation）</a></li>
-        <li><a href="#正交投影变换orthographic-projection-transformation">正交投影变换（Orthographic
-Projection Transformation）</a></li>
-        <li><a href="#相机变换camera-transformation">相机变换（Camera
-Transformation）</a></li>
+        <li><a href="#参与介质participating-media">参与介质(Participating
+Media)</a></li>
+        <li><a href="#头发材质">头发材质</a></li>
+        <li><a href="#颗粒granular材质">颗粒(Granular)材质</a></li>
       </ol>
     </li>
-    <li><a href="#透视投影perspective-projection">透视投影（Perspective
-Projection）</a></li>
-    <li><a href="#视野field-of-view">视野（Field-of-View）</a></li>
+    <li><a href="#表面模型">表面模型</a>
+      <ol>
+        <li><a href="#半透明translucent材质">半透明(Translucent)材质</a></li>
+        <li><a href="#布料">布料</a></li>
+        <li><a href="#有细节的材质">有细节的材质</a></li>
+      </ol>
+    </li>
+    <li><a href="#程序化生成表面">程序化生成表面</a></li>
   </ol>
 </nav>
                 </div>

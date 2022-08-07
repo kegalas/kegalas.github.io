@@ -6,7 +6,110 @@
         <description>Recent content on KegalaS的个人博客</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Sun, 07 Aug 2022 12:57:17 +0800</lastBuildDate><atom:link href="https://kegalas.top/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sun, 07 Aug 2022 15:46:35 +0800</lastBuildDate><atom:link href="https://kegalas.top/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>计算机图形学基础学习笔记-高级外观模型</title>
+        <link>https://kegalas.top/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E9%AB%98%E7%BA%A7%E5%A4%96%E8%A7%82%E6%A8%A1%E5%9E%8B/</link>
+        <pubDate>Sun, 07 Aug 2022 15:46:35 +0800</pubDate>
+        
+        <guid>https://kegalas.top/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E9%AB%98%E7%BA%A7%E5%A4%96%E8%A7%82%E6%A8%A1%E5%9E%8B/</guid>
+        <description>
+
+&lt;h2 id=&#34;非表面模型&#34;&gt;非表面模型&lt;/h2&gt;
+&lt;h3 id=&#34;参与介质participating-media&#34;&gt;参与介质(Participating Media)&lt;/h3&gt;
+&lt;p&gt;例如云、雾等。&lt;/p&gt;
+&lt;p&gt;其中的小晶体、小分子等会吸收光、反射光等。&lt;/p&gt;
+&lt;p&gt;使用相位函数(Phase Function)来描述如何反射等。&lt;/p&gt;
+&lt;p&gt;渲染思路：&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;随机选择一个方向来反射&lt;/li&gt;
+&lt;li&gt;随机选择一个距离来传播&lt;/li&gt;
+&lt;li&gt;在每个反射点来连接光源进行着色&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;头发材质&#34;&gt;头发材质&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;Kajiya-Kay 模型&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;效果不是很好，只考虑了头发上的反射。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Marschner 模型&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;广泛应用，更进一步地考虑了光线透过头发。&lt;/p&gt;
+&lt;p&gt;但是这个模型不能很好地表现动物毛发。&lt;/p&gt;
+&lt;p&gt;这个模型将头发认为是有颜色的实心圆柱体。&lt;/p&gt;
+&lt;p&gt;但实际上头发中不是均一的某种物质，其中还有一个更小的圆柱体含有髓质。头发的髓质较少，但是其他毛发的髓质较多。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;双圆柱模型&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;同上文描述，即考虑了髓质的存在。&lt;/p&gt;
+&lt;h3 id=&#34;颗粒granular材质&#34;&gt;颗粒(Granular)材质&lt;/h3&gt;
+&lt;p&gt;例如盐、白砂糖、米、沙子等。&lt;/p&gt;
+&lt;h2 id=&#34;表面模型&#34;&gt;表面模型&lt;/h2&gt;
+&lt;h3 id=&#34;半透明translucent材质&#34;&gt;半透明(Translucent)材质&lt;/h3&gt;
+&lt;p&gt;例如玉石、水母等。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;次表面反射&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;也就是，在材质内部反射，然后从某个方向离开表面。&lt;/p&gt;
+&lt;p&gt;BSSRDF：作为BRDF的延伸，决定了光从某个方向进来，某个点进来，某个方向出去，某个点出去时光照。也会改变渲染方程。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Dipole Approximation&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;通过在物体内部加一个虚拟光源来达到次表面反射的效果&lt;/p&gt;
+&lt;h3 id=&#34;布料&#34;&gt;布料&lt;/h3&gt;
+&lt;p&gt;可以当做表面来渲染，用BRDF进行。&lt;/p&gt;
+&lt;p&gt;也可以当做参与介质来渲染，效果比当做平面要好，但是慢。&lt;/p&gt;
+&lt;p&gt;也可以直接暴力地将每一根纤维渲染出来，类似头发，效果好，速度慢。&lt;/p&gt;
+&lt;h3 id=&#34;有细节的材质&#34;&gt;有细节的材质&lt;/h3&gt;
+&lt;p&gt;例如遍布金属表面的小划痕。&lt;/p&gt;
+&lt;p&gt;可以用法线贴图，以及微表面模型来渲染，虽然效果很好，但是十分的慢。&lt;/p&gt;
+&lt;p&gt;解决办法：在像素意义上使用BRDF。&lt;/p&gt;
+&lt;p&gt;有时候，物体表面反射出来的是各种颜色。例如照射一块铝片，反射出来的宏观上是银色，但是细细的观察会发现有很多不同的颜色。这需要波动光学的帮助。&lt;/p&gt;
+&lt;h2 id=&#34;程序化生成表面&#34;&gt;程序化生成表面&lt;/h2&gt;
+&lt;p&gt;不用纹理而是用一个噪声函数定义表面。&lt;/p&gt;
+&lt;p&gt;可以生成地形、木纹、铁锈等等。&lt;/p&gt;
+
+
+</description>
+        </item>
+        <item>
+        <title>计算机图形学基础学习笔记-高级光线传播</title>
+        <link>https://kegalas.top/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E9%AB%98%E7%BA%A7%E5%85%89%E7%BA%BF%E4%BC%A0%E6%92%AD/</link>
+        <pubDate>Sun, 07 Aug 2022 14:57:59 +0800</pubDate>
+        
+        <guid>https://kegalas.top/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E9%AB%98%E7%BA%A7%E5%85%89%E7%BA%BF%E4%BC%A0%E6%92%AD/</guid>
+        <description>
+
+&lt;h2 id=&#34;无偏差unbiased光传播方法&#34;&gt;无偏差(Unbiased)光传播方法&lt;/h2&gt;
+&lt;p&gt;无偏差的蒙特卡洛方法不会造成任何系统误差。其求出的期望值永远会是正确的值，无论有多少采样点。&lt;/p&gt;
+&lt;h3 id=&#34;双向路径追踪bidirectional-path-tracing-bdpt&#34;&gt;双向路径追踪(Bidirectional
+Path Tracing, BDPT)&lt;/h3&gt;
+&lt;p&gt;即通过从相机和光同时发出光线，然后让其在某一表面相遇的办法。&lt;/p&gt;
+&lt;p&gt;如果光源发出的光传播很复杂，比如一束光直接达到天花板来照亮整个环境。那么双向的效果会比单向的好。&lt;/p&gt;
+&lt;p&gt;问题在于实现困难和速度较慢。&lt;/p&gt;
+&lt;h3 id=&#34;metropolis光传播mlt&#34;&gt;Metropolis光传播(MLT)&lt;/h3&gt;
+&lt;p&gt;在蒙特卡洛积分中使用马尔科夫链。从当前样本估计周围的样本。&lt;/p&gt;
+&lt;p&gt;给一条路径可以生成很多相似的路径。以处理局部光路复杂的情况。例如镜面反射-漫反射-镜面反射的情况。&lt;/p&gt;
+&lt;p&gt;问题在于：难以估计收敛速度；每个像素的收敛速度不同，导致图面比较脏；不适合用于动画渲染。&lt;/p&gt;
+&lt;h2 id=&#34;有偏差biased光传播方法&#34;&gt;有偏差(Biased)光传播方法&lt;/h2&gt;
+&lt;p&gt;有偏差的蒙特卡洛方法，其期望值随着采样点的增加会趋向正确的值。&lt;/p&gt;
+&lt;h3 id=&#34;光子映射&#34;&gt;光子映射&lt;/h3&gt;
+&lt;p&gt;特别适合处理镜面反射-漫反射-镜面反射的情况，以及生成焦散线(Caustics)，或者说由于聚焦作用形成的各种图案。&lt;/p&gt;
+&lt;p&gt;有众多实现办法，其中一种：&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;从光源处射出光子，经过各种反射、折射，直到打到漫反射材料，并记录。&lt;/li&gt;
+&lt;li&gt;从摄像机射出路径，经过各种反射、折射，直到打到漫反射材料，并记录。&lt;/li&gt;
+&lt;li&gt;对第二次打到的点，取周围的最近的&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;个光子，算其密度，来计算亮度。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;其有偏的原因是&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\frac{dN}{dA}\neq\frac{\Delta N}{\Delta A}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;当光子趋近于无限时，上式趋于相等。&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(N\)&lt;/span&gt;比较小时，图片有很多噪声。&lt;span class=&#34;math inline&#34;&gt;\(N\)&lt;/span&gt;比较大时，图片比较模糊。如果足够多，就可以收敛到不模糊的结果。&lt;/p&gt;
+&lt;h3 id=&#34;vertex-connection-and-merging&#34;&gt;Vertex Connection and
+Merging&lt;/h3&gt;
+&lt;p&gt;其实就是双向路径追踪和光子映射的结合。&lt;/p&gt;
+&lt;h3 id=&#34;实时辐射度&#34;&gt;实时辐射度&lt;/h3&gt;
+&lt;p&gt;有时也叫做多光源方法。&lt;/p&gt;
+&lt;p&gt;光源发出来的光线，打到某些地方，则把这些地方看做新的光源。&lt;/p&gt;
+&lt;p&gt;渲染场景时将这些虚拟光源看作是光源。&lt;/p&gt;
+&lt;p&gt;好处是：速度快，并且对于漫反射处理比较好。&lt;/p&gt;
+&lt;p&gt;问题是：有些地方莫名的会发光；不 能做金属材质（Glossy）的渲染。&lt;/p&gt;
+
+
+</description>
+        </item>
+        <item>
         <title>Atcoder Beginner Conteset 263 E（概率DP）</title>
         <link>https://kegalas.top/p/atcoder-beginner-conteset-263-e%E6%A6%82%E7%8E%87dp/</link>
         <pubDate>Sun, 07 Aug 2022 12:57:17 +0800</pubDate>
