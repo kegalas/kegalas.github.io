@@ -6,7 +6,100 @@
         <description>Recent content on KegalaS的个人博客</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Sun, 07 Aug 2022 15:46:35 +0800</lastBuildDate><atom:link href="https://kegalas.top/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Mon, 08 Aug 2022 12:12:03 +0800</lastBuildDate><atom:link href="https://kegalas.top/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>计算机图形学基础学习笔记-相机与透镜</title>
+        <link>https://kegalas.top/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E7%9B%B8%E6%9C%BA%E4%B8%8E%E9%80%8F%E9%95%9C/</link>
+        <pubDate>Mon, 08 Aug 2022 12:12:03 +0800</pubDate>
+        
+        <guid>https://kegalas.top/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E7%9B%B8%E6%9C%BA%E4%B8%8E%E9%80%8F%E9%95%9C/</guid>
+        <description>
+
+&lt;h2 id=&#34;小孔成像&#34;&gt;小孔成像&lt;/h2&gt;
+&lt;p&gt;和初中介绍的一致。以此原理做成的相机叫做针孔相机。&lt;/p&gt;
+&lt;h2 id=&#34;透镜成像&#34;&gt;透镜成像&lt;/h2&gt;
+&lt;p&gt;通过透镜进行成像，和初中介绍的一致。现在大多数相机都是透镜成像的。&lt;/p&gt;
+&lt;h2 id=&#34;快门&#34;&gt;快门&lt;/h2&gt;
+&lt;p&gt;控制曝光时间。&lt;/p&gt;
+&lt;h3 id=&#34;运动模糊&#34;&gt;运动模糊&lt;/h3&gt;
+&lt;p&gt;在快门打开的时间内，物体已经发生了明显移动（或者相机动了），就会导致模糊。&lt;/p&gt;
+&lt;h3 id=&#34;果冻效应&#34;&gt;果冻效应&lt;/h3&gt;
+&lt;p&gt;如果某个物体的运动速度非常快，在快门时间内曝光就会产生扭曲效果。仅存在于卷帘快门相机中。&lt;/p&gt;
+&lt;h2 id=&#34;传感器&#34;&gt;传感器&lt;/h2&gt;
+&lt;p&gt;捕捉光，并记录的部件。记录的实际上是Irradiance。&lt;/p&gt;
+&lt;p&gt;为什么不能用传感器直接收集光，而非要加一个透镜？&lt;/p&gt;
+&lt;p&gt;因为传感器上的每一个点都会采集物体上每一个点发出的光，然后所有的像素就会因此变得相似。换言之因为传感器记录的是Irradiance&lt;/p&gt;
+&lt;h2 id=&#34;针孔相机&#34;&gt;针孔相机&lt;/h2&gt;
+&lt;p&gt;没有深度可言，换言之，每个区域都是清晰地。而不像透镜相机，会出现景深效果等等。而光线追踪是以针孔相机的模型来做的，也不会得到景深效果。&lt;/p&gt;
+&lt;h2 id=&#34;视场fovfield-of-view&#34;&gt;视场(FOV,Field of View)&lt;/h2&gt;
+&lt;p&gt;设传感器的垂直长度为&lt;span class=&#34;math inline&#34;&gt;\(h\)&lt;/span&gt;，透镜到传感器的距离为&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;，则&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+FOV=2arctan\left(\frac{h}{2f}\right)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;由此定义了垂直FOV。同理可以定义水平FOV。&lt;/p&gt;
+&lt;p&gt;通常，以35mm格式的胶片为传感器标准大小，通过焦距的不同得到不同的FOV。&lt;/p&gt;
+&lt;p&gt;例如17mm的胶片FOV是104°，50mm的是47°，200mm的是12°。&lt;/p&gt;
+&lt;p&gt;但是对于手机摄像机，传感器并不是35mm格式的，要经过等效来换算焦距。&lt;/p&gt;
+&lt;p&gt;当视场越窄，看到的东西越远。&lt;/p&gt;
+&lt;p&gt;当然传感器尺寸也会影响FOV。想要保持FOV而减小传感器尺寸，则焦距也要变小。&lt;/p&gt;
+&lt;h2 id=&#34;曝光&#34;&gt;曝光&lt;/h2&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+H=T\times E\\
+Exposure = time\times irradiance
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中time由快门控制，irradiance由物体自己和光圈控制。&lt;/p&gt;
+&lt;p&gt;总结，物体亮度，或者说曝光由以下东西控制：&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;光圈大小&lt;/li&gt;
+&lt;li&gt;快门速度&lt;/li&gt;
+&lt;li&gt;ISO增益，这是后期的处理，而不是原始的数据。有软件和硬件的实现。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;光圈&#34;&gt;光圈&lt;/h2&gt;
+&lt;h3 id=&#34;f-number&#34;&gt;F-Number&lt;/h3&gt;
+&lt;p&gt;描述光圈的大小。通常写作FN或F/N。&lt;/p&gt;
+&lt;p&gt;一个不太正式的理解，N是直径的倒数。N越大，光圈越小。&lt;/p&gt;
+&lt;h3 id=&#34;景深&#34;&gt;景深&lt;/h3&gt;
+&lt;p&gt;成像最锐利的点在像距平面上，但是传感器的平面并不总会在像距上，因此会导致模糊。&lt;/p&gt;
+&lt;p&gt;理论上，物距上一个点发出的光会在像距上形成一个点，但是如果传感器不在像距上，像就会在传感器上形成一个圈（CoC）。&lt;/p&gt;
+&lt;p&gt;设光圈直径为&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;，CoC直径为&lt;span class=&#34;math inline&#34;&gt;\(C\)&lt;/span&gt;，像距为&lt;span class=&#34;math inline&#34;&gt;\(z_i\)&lt;/span&gt;，透镜到传感器的距离为&lt;span class=&#34;math inline&#34;&gt;\(z_s\)&lt;/span&gt;，则有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\frac{C}{A}=\frac{|z_s-z_i|}{z_i}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;而通常我们改变的是光圈大小，也即，大光圈导致模糊，小光圈成像清晰。&lt;/p&gt;
+&lt;p&gt;F-Number的明确定义：焦距除以光圈直径。&lt;/p&gt;
+&lt;p&gt;所以有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+C=A\frac{|z_s-z_i|}{z_i}=\frac{f}{N}\frac{|z_s-z_i|}{z_i}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;如果CoC足够小，从相机中还是不容易看得出模糊。也就是说在CoC的一小个范围内，成像都是清晰的。这也对应了一个距离，称为Depth
+of focus。也可以知道物体能够清晰成像的距离范围，称为Depth of field。&lt;/p&gt;
+&lt;h2 id=&#34;高速摄影&#34;&gt;高速摄影&lt;/h2&gt;
+&lt;p&gt;非常快的快门时间。也会因此降低亮度。为了抵消这种影响，就需要用更大的光圈，或者用ISO。&lt;/p&gt;
+&lt;h2 id=&#34;低速摄影&#34;&gt;低速摄影&lt;/h2&gt;
+&lt;p&gt;非常慢的快门时间。可以出现“拉丝效果”。&lt;/p&gt;
+&lt;h2 id=&#34;透镜&#34;&gt;透镜&lt;/h2&gt;
+&lt;h3 id=&#34;理想薄凸透镜&#34;&gt;理想薄凸透镜&lt;/h3&gt;
+&lt;p&gt;物距&lt;span class=&#34;math inline&#34;&gt;\(z_o\)&lt;/span&gt;，像距&lt;span class=&#34;math inline&#34;&gt;\(z_i\)&lt;/span&gt;，焦距&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;有如下关系&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\frac{1}{f}=\frac{1}{z_i}+\frac{1}{z_o}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h2 id=&#34;模拟薄凸透镜的光线追踪&#34;&gt;模拟薄凸透镜的光线追踪&lt;/h2&gt;
+&lt;p&gt;初始化：&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;定义传感器大小，定义凸透镜的焦距、光圈大小。&lt;/li&gt;
+&lt;li&gt;设置物距，并计算像距。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;渲染：&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;对传感器上的每个像素x’&lt;/li&gt;
+&lt;li&gt;随机在透镜上选择点x’’&lt;/li&gt;
+&lt;li&gt;通过凸透镜定理得到物距平面上的点x’’’&lt;/li&gt;
+&lt;li&gt;计算x’‘-&amp;gt;x’’’上的Radiance&lt;/li&gt;
+&lt;/ol&gt;
+
+
+</description>
+        </item>
+        <item>
         <title>计算机图形学基础学习笔记-高级外观模型</title>
         <link>https://kegalas.top/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E9%AB%98%E7%BA%A7%E5%A4%96%E8%A7%82%E6%A8%A1%E5%9E%8B/</link>
         <pubDate>Sun, 07 Aug 2022 15:46:35 +0800</pubDate>
