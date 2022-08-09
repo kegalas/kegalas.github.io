@@ -6,7 +6,70 @@
         <description>Recent content on KegalaS的个人博客</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Mon, 08 Aug 2022 12:12:03 +0800</lastBuildDate><atom:link href="https://kegalas.top/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Tue, 09 Aug 2022 12:14:21 +0800</lastBuildDate><atom:link href="https://kegalas.top/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>计算机图形学基础学习笔记-光场、颜色和感知</title>
+        <link>https://kegalas.top/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%85%89%E5%9C%BA%E9%A2%9C%E8%89%B2%E5%92%8C%E6%84%9F%E7%9F%A5/</link>
+        <pubDate>Tue, 09 Aug 2022 12:14:21 +0800</pubDate>
+        
+        <guid>https://kegalas.top/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%85%89%E5%9C%BA%E9%A2%9C%E8%89%B2%E5%92%8C%E6%84%9F%E7%9F%A5/</guid>
+        <description>
+
+&lt;h2 id=&#34;全光函数&#34;&gt;全光函数&lt;/h2&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+P(\theta,\phi,\lambda,t,V_x,V_y,V_z)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;记录了在某个位置，往某个方向看，在某个时间，某种颜色的的光的强度&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(\theta,\phi\)&lt;/span&gt;决定了看的方向，&lt;span class=&#34;math inline&#34;&gt;\(\lambda\)&lt;/span&gt;决定光的频率，也即颜色，&lt;span class=&#34;math inline&#34;&gt;\(t\)&lt;/span&gt;决定时间，&lt;span class=&#34;math inline&#34;&gt;\(V_x,V_y,V_z\)&lt;/span&gt;决定了相机位置。&lt;/p&gt;
+&lt;h2 id=&#34;光线&#34;&gt;光线&lt;/h2&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+P(\theta,\phi,V_x,V_y,V_z)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;五个变量，了，两个描述了方向，三个描述了起点，这样就描述了一条射线。&lt;/p&gt;
+&lt;p&gt;在非色散介质中，一个二维的点和一个二维的方向能定义光线。见光场。&lt;/p&gt;
+&lt;h2 id=&#34;光场&#34;&gt;光场&lt;/h2&gt;
+&lt;p&gt;一个物体发出的光可以映射到包围盒上。对于摄影机来说，看到的样子是不会改变的。（实际上应该是映射到和摄像机方向垂直的平面上）&lt;/p&gt;
+&lt;p&gt;光场就是在任何一个位置，往任何一个方向去的光的强度。（实际上听上去和光线就是一个意思，只不过可能是将光线由物体表面发出换到了某个等效平面上发出）&lt;/p&gt;
+&lt;p&gt;由于三维物体的表面是一个二维的。所以可以从物体表面发出一个二维方向来定义光线。&lt;/p&gt;
+&lt;p&gt;好处在于，从任何位置看向这个物体，可以用四个变量得到光的信息。&lt;/p&gt;
+&lt;p&gt;另外，可以把包围盒当成一个发光的盒子，看向这个物体直接查询盒子的光场，而不用考虑物体本身。&lt;/p&gt;
+&lt;p&gt;如果只采用一个包围盒，则可以用平面上的一个点和其与法线的夹角定义光场。&lt;/p&gt;
+&lt;p&gt;如果采用两个包围盒(一大一小，大的包含小的)，可以用两个点来描述光场。对于里面的平面上有一个点&lt;span class=&#34;math inline&#34;&gt;\((u,v)\)&lt;/span&gt;，外面的平面上有一个点&lt;span class=&#34;math inline&#34;&gt;\((s,t)\)&lt;/span&gt;，连接两点就是光场。&lt;/p&gt;
+&lt;h2 id=&#34;光场相机&#34;&gt;光场相机&lt;/h2&gt;
+&lt;p&gt;普通的透镜相机记录的是Irradiance，而光场相机通过将传感器上的像素替换为透镜，对不同颜色的光进行分光记录，就能够达到记录光场的效果。也就是记录Radiance。&lt;/p&gt;
+&lt;p&gt;这样就可以先拍照，在后期处理的时候再聚焦。&lt;/p&gt;
+&lt;p&gt;缺点：分辨率不足、成本高。&lt;/p&gt;
+&lt;h2 id=&#34;可见光光谱&#34;&gt;可见光光谱&lt;/h2&gt;
+&lt;p&gt;可见光光谱分布在400nm到700nm之间。&lt;/p&gt;
+&lt;h2 id=&#34;谱功率密度spd&#34;&gt;谱功率密度（SPD）&lt;/h2&gt;
+&lt;p&gt;可以通过SPD，描述某种东西发出的光在各个波长上的能量。&lt;/p&gt;
+&lt;p&gt;其具有线性性质。可以直接相加。&lt;/p&gt;
+&lt;h2 id=&#34;颜色的生物学基础&#34;&gt;颜色的生物学基础&lt;/h2&gt;
+&lt;p&gt;颜色是人的感知，而不是某一波长光的属性。&lt;/p&gt;
+&lt;p&gt;视网膜上的感光细胞有两种，一种是棒状的视杆细胞，感觉光的强度。一种是锥形的视锥细胞，感觉光的颜色。视锥细胞要更少一点。&lt;/p&gt;
+&lt;p&gt;视锥细胞分为三类：S、M、L；S感知较短波长的光，M感知中间波长的，L感知较长波长的。&lt;/p&gt;
+&lt;p&gt;不同的人，三种细胞的分布会不一样，差异有时很大。&lt;/p&gt;
+&lt;p&gt;实际上感知到的光，是每个细胞所能感知的波长范围内，每个波长乘以其强度再相加得到的结果（亦或者积分）。总共得到&lt;span class=&#34;math inline&#34;&gt;\(S,M,L\)&lt;/span&gt;三个数传输给大脑。&lt;/p&gt;
+&lt;h3 id=&#34;同色异谱现象&#34;&gt;同色异谱现象&lt;/h3&gt;
+&lt;p&gt;不同的光谱，其进过积分后得到的三个数可能是相同的，也意味着在人看来是同一个颜色。&lt;/p&gt;
+&lt;h2 id=&#34;颜色混合&#34;&gt;颜色混合&lt;/h2&gt;
+&lt;p&gt;通过将RGB三种颜色加起来来获得其他颜色。&lt;/p&gt;
+&lt;h2 id=&#34;颜色空间&#34;&gt;颜色空间&lt;/h2&gt;
+&lt;h3 id=&#34;标准rgb&#34;&gt;标准RGB&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;先让一个机器做好，其他机器以此为标准&lt;/li&gt;
+&lt;li&gt;广泛采用&lt;/li&gt;
+&lt;li&gt;色域有限&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;gamut色域&#34;&gt;Gamut（色域）&lt;/h3&gt;
+&lt;p&gt;Gamut是一个原色集生成的所有色度。&lt;/p&gt;
+&lt;p&gt;不同的颜色空间表示不同范围的颜色，同时也就具有不同的色域。&lt;/p&gt;
+&lt;h3 id=&#34;hsv&#34;&gt;HSV&lt;/h3&gt;
+&lt;p&gt;由色调（各种颜色）、饱和度（决定接近白色还是接近某个特定颜色）和亮度组成&lt;/p&gt;
+
+
+</description>
+        </item>
+        <item>
         <title>计算机图形学基础学习笔记-相机与透镜</title>
         <link>https://kegalas.top/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E7%9B%B8%E6%9C%BA%E4%B8%8E%E9%80%8F%E9%95%9C/</link>
         <pubDate>Mon, 08 Aug 2022 12:12:03 +0800</pubDate>
