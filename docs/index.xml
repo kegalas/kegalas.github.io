@@ -6,7 +6,90 @@
         <description>Recent content on KegalaS的个人博客</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Tue, 09 Aug 2022 12:14:21 +0800</lastBuildDate><atom:link href="https://kegalas.top/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Wed, 10 Aug 2022 12:54:34 +0800</lastBuildDate><atom:link href="https://kegalas.top/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>计算机图形学基础学习笔记-动画与模拟</title>
+        <link>https://kegalas.top/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%8A%A8%E7%94%BB%E4%B8%8E%E6%A8%A1%E6%8B%9F/</link>
+        <pubDate>Wed, 10 Aug 2022 12:54:34 +0800</pubDate>
+        
+        <guid>https://kegalas.top/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%8A%A8%E7%94%BB%E4%B8%8E%E6%A8%A1%E6%8B%9F/</guid>
+        <description>
+
+&lt;h2 id=&#34;动画原理&#34;&gt;动画原理&lt;/h2&gt;
+&lt;p&gt;根据视觉暂留现象，只要离散的画面切换的足够快，在人眼看起来就是连续的。&lt;/p&gt;
+&lt;p&gt;一般电影是24fps，一般视频是30fps以上，VR是90fps以上。&lt;/p&gt;
+&lt;h2 id=&#34;关键帧动画&#34;&gt;关键帧动画&lt;/h2&gt;
+&lt;p&gt;重要的动作节点，会作为关键帧。而中间的帧会作为动作间的过渡。&lt;/p&gt;
+&lt;p&gt;关键帧一般是画出来的。过渡帧也可以画，现在也有不少的软件可以自动生成过渡帧。&lt;/p&gt;
+&lt;h3 id=&#34;关键帧插值&#34;&gt;关键帧插值&lt;/h3&gt;
+&lt;p&gt;自动生成过渡帧就用到了关键帧插值。&lt;/p&gt;
+&lt;p&gt;有线性插值，也有更光滑的插值。&lt;/p&gt;
+&lt;h2 id=&#34;物理模拟&#34;&gt;物理模拟&lt;/h2&gt;
+&lt;p&gt;将各种各样的物理公式用来计算物体的运动，称为物理模拟、物理仿真。&lt;/p&gt;
+&lt;h2 id=&#34;质点弹簧系统&#34;&gt;质点弹簧系统&lt;/h2&gt;
+&lt;p&gt;最简单的单位是：一个弹簧连接了两个质点。&lt;/p&gt;
+&lt;p&gt;假设两个点为&lt;span class=&#34;math inline&#34;&gt;\(a,b\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;则&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\bm f_{a\to b}=k_s(\bm{b}-\bm{a})\\
+\bm f_{b\to a}=-\bm f_{a\to b}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;上述情况的条件是弹簧长度为&lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt;,若弹簧原始长度为&lt;span class=&#34;math inline&#34;&gt;\(l\)&lt;/span&gt;，则&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\bm f_{a\to b}=k_s\frac{\bm b-\bm a}{||\bm b-\bm a||}(||\bm b-\bm a||-l)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;上述情况假设没有能量损失，如果假设存在阻力，如&lt;span class=&#34;math inline&#34;&gt;\(b\)&lt;/span&gt;物体的阻力是&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\bm f=-k_d\dot{\bm b}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(\dot{\bm b}\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(\bm b\)&lt;/span&gt;的一阶导数，即速度。&lt;/p&gt;
+&lt;p&gt;考虑整个物体，此时要考虑两个物体的相对速度，则施加在&lt;span class=&#34;math inline&#34;&gt;\(b\)&lt;/span&gt;上面的阻力为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\bm f_b=-k_d\frac{\bm b-\bm a}{||\bm b-\bm a||}\cdot(\dot{\bm
+b}-\dot{\bm a})\cdot\frac{\bm b-\bm a}{||\bm b-\bm a||}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;弹簧组成的结构&#34;&gt;弹簧组成的结构&lt;/h3&gt;
+&lt;p&gt;例如组成一个网状结构、立方体结构等等。&lt;/p&gt;
+&lt;p&gt;结构的行为更多的取决于弹簧的连接方式。&lt;/p&gt;
+&lt;h2 id=&#34;粒子系统&#34;&gt;粒子系统&lt;/h2&gt;
+&lt;p&gt;直接定义众多小粒子，来描述更宏观的运动现象。通常可能比物理意义上的粒子（如原子）要大得多。&lt;/p&gt;
+&lt;p&gt;它便于理解和实现，并且有较好的扩展性。&lt;/p&gt;
+&lt;p&gt;但是有时需要大量粒子，如模拟流体；还需要加速结构。&lt;/p&gt;
+&lt;p&gt;对于每一帧动画：&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;如果需要，创造新的粒子&lt;/li&gt;
+&lt;li&gt;计算每个粒子上收到的力&lt;/li&gt;
+&lt;li&gt;更新粒子的位置和速度&lt;/li&gt;
+&lt;li&gt;如果需要，移除一些粒子&lt;/li&gt;
+&lt;li&gt;渲染粒子&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;粒子系统中的力：引力、电磁力、摩擦力、空气阻力等等。粒子系统还有碰撞。&lt;/p&gt;
+&lt;h2 id=&#34;正向运动学&#34;&gt;正向运动学&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;关节骨骼模型&lt;/strong&gt;&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;拓扑的（什么连向了什么）&lt;/li&gt;
+&lt;li&gt;关节的几何关系&lt;/li&gt;
+&lt;li&gt;树状结构&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;关节的类型：&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;类似于钉子的关节（只有一维旋转）&lt;/li&gt;
+&lt;li&gt;类似于球的关节（可以在两个维度内旋转）&lt;/li&gt;
+&lt;li&gt;平移关节&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;只要提供骨骼的长度和关节旋转的角度，就能知道尖端处于什么位置。&lt;/p&gt;
+&lt;h2 id=&#34;逆向运动学&#34;&gt;逆向运动学&lt;/h2&gt;
+&lt;p&gt;控制尖端的位置，然后自动计算合理的关节、骨骼位置。&lt;/p&gt;
+&lt;p&gt;有时候解不唯一，并且解很难以求得。&lt;/p&gt;
+&lt;h2 id=&#34;rigging&#34;&gt;Rigging&lt;/h2&gt;
+&lt;p&gt;类似于提线木偶，也可以说是逆向运动学的一种应用。&lt;/p&gt;
+&lt;p&gt;主要是给角色的一些部分以更高级的控件（控制点），可以进行鼠标拖动位置等修改。像是贝赛尔曲线。&lt;/p&gt;
+&lt;h2 id=&#34;动作捕捉&#34;&gt;动作捕捉&lt;/h2&gt;
+&lt;p&gt;把现实中的数据应用到Rigging上的操作。&lt;/p&gt;
+
+
+</description>
+        </item>
+        <item>
         <title>计算机图形学基础学习笔记-光场、颜色和感知</title>
         <link>https://kegalas.top/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%85%89%E5%9C%BA%E9%A2%9C%E8%89%B2%E5%92%8C%E6%84%9F%E7%9F%A5/</link>
         <pubDate>Tue, 09 Aug 2022 12:14:21 +0800</pubDate>
