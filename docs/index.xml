@@ -63,6 +63,83 @@ b}-\dot{\bm a})\cdot\frac{\bm b-\bm a}{||\bm b-\bm a||}
 &lt;li&gt;渲染粒子&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;粒子系统中的力：引力、电磁力、摩擦力、空气阻力等等。粒子系统还有碰撞。&lt;/p&gt;
+&lt;h3 id=&#34;单粒子模拟&#34;&gt;单粒子模拟&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;速度场&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;描述了在某个位置，某个时间上的粒子的速度。（这里的x我推测是向量）&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+v(x,t)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;然后有常微分方程(ODE)&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\frac{dx}{dt}=\dot{x}=v(x,t)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;欧拉方法&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;用前一帧的量去估计下一帧的量&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+x_{t+\Delta t}=x_t+\Delta t\dot{x}_t\\
+\dot{x}_{t+\Delta t}=\dot{x}_t+\Delta t\ddot{x}_t
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;问题：非常不准确，非常不稳定。主要是步长&lt;span class=&#34;math inline&#34;&gt;\(\Delta
+t\)&lt;/span&gt;的存在导致的问题。这其实也是用数值方法来计算的共有问题。&lt;/p&gt;
+&lt;p&gt;解决（降低）不稳定性的方法有：中点法、自适应步长法、隐式欧拉方法、基于位置的方法等等。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;中点法&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+x_{mid}=x(t)+\Delta t/2\cdot v(x(t),t)\\
+x(t+\Delta t)=x(t)+\Delta t\cdot v(x_{mid},t)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;自适应步长法&lt;/strong&gt;&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;定义一个threshold&lt;/li&gt;
+&lt;li&gt;计算以&lt;span class=&#34;math inline&#34;&gt;\(T\)&lt;/span&gt;为步长，计算一次欧拉方法，得到&lt;span class=&#34;math inline&#34;&gt;\(x_T\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;以&lt;span class=&#34;math inline&#34;&gt;\(T/2\)&lt;/span&gt;为步长，计算两次欧拉方法，得到&lt;span class=&#34;math inline&#34;&gt;\(x_{T/2}\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;计算error，即&lt;span class=&#34;math inline&#34;&gt;\(x_T-x_{T/2}\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;如果error&amp;gt;threshold，则减小步长&lt;span class=&#34;math inline&#34;&gt;\(T\)&lt;/span&gt;，重试。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;隐式欧拉方法&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+x_{t+\Delta t}=x_t+\Delta t\dot{x}_{t+\Delta t}\\
+\dot{x}_{t+\Delta t}=\dot{x}_t+\Delta t\ddot{x}_{t+\Delta t}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;解这个非线性方程，求出&lt;span class=&#34;math inline&#34;&gt;\(x_{t+\Delta
+t},\dot{x}_{t+\Delta
+t}\)&lt;/span&gt;。用求根的算法，例如牛顿迭代法或者下述Runge-Kutta方法。隐式欧拉方法稳定性很好。&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Runge-Kutta 方法&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;非常擅长解非线性方程。其中RK4最常被使用。&lt;/p&gt;
+&lt;p&gt;首先，我们知道&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\frac{dy}{dt}=f(t,y),\quad y(t_0)=y_0
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;则&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+y_{n+1}=y_n+\frac{1}{6}h(k_1+2k_2+2k_3+k_4)\\
+t_{n+1}=t_n+h
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(h\)&lt;/span&gt;是步长&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+k_1=f(t_n,y_n)\\
+k_2=f(t_n+h/2,y_n+hk_1/2)\\
+k_3=f(t_n+h/2,y_n+hk_2/2)\\
+k_4=f(t_n+h,y_n+hk_3)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;基于位置的方法&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;在修正欧拉方法的步长后，约束粒子的位置以防止其不稳定&lt;/li&gt;
+&lt;li&gt;使用约束位置计算速度&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;但是这会导致能量损失。&lt;/p&gt;
+&lt;h2 id=&#34;刚体模拟&#34;&gt;刚体模拟&lt;/h2&gt;
+&lt;p&gt;和粒子的模拟相似。&lt;/p&gt;
+&lt;p&gt;需要考虑转角，角速度等。仍然可以使用欧拉方法。&lt;/p&gt;
+&lt;h2 id=&#34;流体模拟&#34;&gt;流体模拟&lt;/h2&gt;
+&lt;h3 id=&#34;基于位置的方法&#34;&gt;基于位置的方法&lt;/h3&gt;
+&lt;p&gt;假设水都是由很多刚体小球组成的。&lt;/p&gt;
+&lt;p&gt;假设水是不可压缩的。&lt;/p&gt;
+&lt;h3 id=&#34;拉格朗日方法和欧拉方法&#34;&gt;拉格朗日方法和欧拉方法&lt;/h3&gt;
+&lt;p&gt;对于处理大量的物体&lt;/p&gt;
+&lt;p&gt;拉格朗日方法是将每个物体看成质点去处理。&lt;/p&gt;
+&lt;p&gt;欧拉法发是将空间切分为网格，对格子进行处理。&lt;/p&gt;
+&lt;h3 id=&#34;material-point-method&#34;&gt;Material Point Method&lt;/h3&gt;
+&lt;p&gt;混合了欧拉方法和拉格朗日方法。&lt;/p&gt;
 &lt;h2 id=&#34;正向运动学&#34;&gt;正向运动学&lt;/h2&gt;
 &lt;p&gt;&lt;strong&gt;关节骨骼模型&lt;/strong&gt;&lt;/p&gt;
 &lt;ol type=&#34;1&#34;&gt;

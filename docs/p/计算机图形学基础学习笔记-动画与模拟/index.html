@@ -108,7 +108,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 2 分钟
+                    阅读时长: 4 分钟
                 </time>
             </div>
         
@@ -169,6 +169,83 @@ b}-\dot{\bm a})\cdot\frac{\bm b-\bm a}{||\bm b-\bm a||}
 <li>渲染粒子</li>
 </ol>
 <p>粒子系统中的力：引力、电磁力、摩擦力、空气阻力等等。粒子系统还有碰撞。</p>
+<h3 id="单粒子模拟">单粒子模拟</h3>
+<p><strong>速度场</strong></p>
+<p>描述了在某个位置，某个时间上的粒子的速度。（这里的x我推测是向量）</p>
+<p><span class="math display">\[
+v(x,t)
+\]</span></p>
+<p>然后有常微分方程(ODE)</p>
+<p><span class="math display">\[
+\frac{dx}{dt}=\dot{x}=v(x,t)
+\]</span></p>
+<p><strong>欧拉方法</strong></p>
+<p>用前一帧的量去估计下一帧的量</p>
+<p><span class="math display">\[
+x_{t+\Delta t}=x_t+\Delta t\dot{x}_t\\
+\dot{x}_{t+\Delta t}=\dot{x}_t+\Delta t\ddot{x}_t
+\]</span></p>
+<p>问题：非常不准确，非常不稳定。主要是步长<span class="math inline">\(\Delta
+t\)</span>的存在导致的问题。这其实也是用数值方法来计算的共有问题。</p>
+<p>解决（降低）不稳定性的方法有：中点法、自适应步长法、隐式欧拉方法、基于位置的方法等等。</p>
+<p><strong>中点法</strong></p>
+<p><span class="math display">\[
+x_{mid}=x(t)+\Delta t/2\cdot v(x(t),t)\\
+x(t+\Delta t)=x(t)+\Delta t\cdot v(x_{mid},t)
+\]</span></p>
+<p><strong>自适应步长法</strong></p>
+<ol type="1">
+<li>定义一个threshold</li>
+<li>计算以<span class="math inline">\(T\)</span>为步长，计算一次欧拉方法，得到<span class="math inline">\(x_T\)</span></li>
+<li>以<span class="math inline">\(T/2\)</span>为步长，计算两次欧拉方法，得到<span class="math inline">\(x_{T/2}\)</span></li>
+<li>计算error，即<span class="math inline">\(x_T-x_{T/2}\)</span></li>
+<li>如果error&gt;threshold，则减小步长<span class="math inline">\(T\)</span>，重试。</li>
+</ol>
+<p><strong>隐式欧拉方法</strong></p>
+<p><span class="math display">\[
+x_{t+\Delta t}=x_t+\Delta t\dot{x}_{t+\Delta t}\\
+\dot{x}_{t+\Delta t}=\dot{x}_t+\Delta t\ddot{x}_{t+\Delta t}
+\]</span></p>
+<p>解这个非线性方程，求出<span class="math inline">\(x_{t+\Delta
+t},\dot{x}_{t+\Delta
+t}\)</span>。用求根的算法，例如牛顿迭代法或者下述Runge-Kutta方法。隐式欧拉方法稳定性很好。</p>
+<p><em>Runge-Kutta 方法</em></p>
+<p>非常擅长解非线性方程。其中RK4最常被使用。</p>
+<p>首先，我们知道</p>
+<p><span class="math display">\[
+\frac{dy}{dt}=f(t,y),\quad y(t_0)=y_0
+\]</span></p>
+<p>则</p>
+<p><span class="math display">\[
+y_{n+1}=y_n+\frac{1}{6}h(k_1+2k_2+2k_3+k_4)\\
+t_{n+1}=t_n+h
+\]</span></p>
+<p>其中<span class="math inline">\(h\)</span>是步长</p>
+<p><span class="math display">\[
+k_1=f(t_n,y_n)\\
+k_2=f(t_n+h/2,y_n+hk_1/2)\\
+k_3=f(t_n+h/2,y_n+hk_2/2)\\
+k_4=f(t_n+h,y_n+hk_3)
+\]</span></p>
+<p><strong>基于位置的方法</strong></p>
+<ul>
+<li>在修正欧拉方法的步长后，约束粒子的位置以防止其不稳定</li>
+<li>使用约束位置计算速度</li>
+</ul>
+<p>但是这会导致能量损失。</p>
+<h2 id="刚体模拟">刚体模拟</h2>
+<p>和粒子的模拟相似。</p>
+<p>需要考虑转角，角速度等。仍然可以使用欧拉方法。</p>
+<h2 id="流体模拟">流体模拟</h2>
+<h3 id="基于位置的方法">基于位置的方法</h3>
+<p>假设水都是由很多刚体小球组成的。</p>
+<p>假设水是不可压缩的。</p>
+<h3 id="拉格朗日方法和欧拉方法">拉格朗日方法和欧拉方法</h3>
+<p>对于处理大量的物体</p>
+<p>拉格朗日方法是将每个物体看成质点去处理。</p>
+<p>欧拉法发是将空间切分为网格，对格子进行处理。</p>
+<h3 id="material-point-method">Material Point Method</h3>
+<p>混合了欧拉方法和拉格朗日方法。</p>
 <h2 id="正向运动学">正向运动学</h2>
 <p><strong>关节骨骼模型</strong></p>
 <ol type="1">
@@ -491,7 +568,19 @@ b}-\dot{\bm a})\cdot\frac{\bm b-\bm a}{||\bm b-\bm a||}
         <li><a href="#弹簧组成的结构">弹簧组成的结构</a></li>
       </ol>
     </li>
-    <li><a href="#粒子系统">粒子系统</a></li>
+    <li><a href="#粒子系统">粒子系统</a>
+      <ol>
+        <li><a href="#单粒子模拟">单粒子模拟</a></li>
+      </ol>
+    </li>
+    <li><a href="#刚体模拟">刚体模拟</a></li>
+    <li><a href="#流体模拟">流体模拟</a>
+      <ol>
+        <li><a href="#基于位置的方法">基于位置的方法</a></li>
+        <li><a href="#拉格朗日方法和欧拉方法">拉格朗日方法和欧拉方法</a></li>
+        <li><a href="#material-point-method">Material Point Method</a></li>
+      </ol>
+    </li>
     <li><a href="#正向运动学">正向运动学</a></li>
     <li><a href="#逆向运动学">逆向运动学</a></li>
     <li><a href="#rigging">Rigging</a></li>
