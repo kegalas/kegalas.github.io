@@ -2556,3 +2556,227 @@ R = (P\times Q^{-1})\%998244353
 $$
 
 $Q^{-1}$是$Q$在模$998244353$意义下的乘法逆元
+
+## C++ STL用法
+
+### std::swap
+
+交换两个元素的内容（也可以交换数组，不重要不介绍）。复杂度：常数。
+
+```cpp
+int a,b;
+std::swap(a,b);
+```
+
+注意其中的两个参数，类型要相同。不能一个是LL一个是int。
+
+### std::sort
+
+对数组、vector等进行排序。复杂度nlogn。
+
+```cpp
+int a[5];
+std::vector<int> vec(5);
+std::sort(a,a+5);
+std::sort(vec.begin(),vec.end());
+```
+
+注意排序范围是左闭右开区间。
+
+通常会按照类型的<操作符来进行比较。如果对结构体进行排序，可以重载运算符或者设定cmp函数。注意这两种方法一定不能是小于等于或者大于等于的运算，必须只使用小于号或者大于号（严格弱序）。
+
+```cpp
+bool cmp(const Type1& a, const Type2& b);
+//然后在sort中加入第三个参数
+std::sort(a,a+5,cmp);
+
+struct node{
+    bool operator<(const node& a);
+};
+//不用添加cmp参数
+```
+
+### std::lower_bound,std::upper_bound
+
+对某个已经排序好的数组，查找第一个大于等于（lower_bound）或者大于(upper_bound)某个给定值的元素。复杂度：logn。
+
+```cpp
+int a[5]={0,1,3,4,6};
+int first = std::lower_bound(a,a+5,3);
+```
+
+同样是左闭右开区间，第三个参数是指定的值。如果找到就会返回所查找元素的迭代器（或者指针）。找不到就会返回末尾元素的后一个指针（或者end迭代器）。
+
+如果需要自定义比较方法，同sort函数。
+
+### std::max,std::min
+
+对于两个元素返回最大值和最小值。复杂度：准确一次比较。
+
+```cpp
+int a=1,b=2;
+int maxv = std::max(a,b);
+int minv = std::min(a,b);
+```
+
+同样，两个参数类型相同。自定义比较方法同sort。
+
+### std::abs
+
+计算绝对值。复杂度：文档没写但应该是常数。
+
+```cpp
+int a = -1;
+int b = std::abs(a);
+```
+
+注意，函数只有float,double,long double的返回值类型。使用时如果给予整数参数会自动转换，这是否会导致精度问题有待观察。
+
+### std::string
+
+#### std::swap
+
+将两个字符串互换。复杂度：常数。
+
+```cpp
+std::string str = "123456";
+std::string str2 = "456789";
+str.swap(str2);
+```
+
+#### std::begin,std::end
+
+返回字符串的起始得带器和结尾迭代器。
+
+```cpp
+str.begin();str.end();
+```
+
+#### std::size
+
+返回字符串的大小。
+
+```cpp
+str.size();
+```
+
+#### std::push_back
+
+向字符串末尾添加一个字符，同时大小加一。复杂度：常数。
+
+```cpp
+str.push_back('a');
+```
+
+#### std::pop_back
+
+将字符串末尾的字符弹出，同时大小减一。如果字符串为空则未定义。复杂度：常数。
+
+```cpp
+str.pop_back();
+```
+
+#### std::find
+
+在字符串中寻找某个子串是否存在。复杂度：没有规定，编译器不一定都是使用的kmp算法。
+
+```cpp
+std::string::size_type n;
+std::string s = "this is a string";
+
+n = s.find("is");
+```
+
+如果找到则返回首个匹配的首字母位置。否则返回std::string::npos。如果是int n作为s.find的接收端，则会在找不到时接收到-1。
+
+### std::memset
+
+将值复制到dest所指对象的前count个字节中。复杂度：没有规定。
+
+```cpp
+int a[20];
+std::memset(a,0,sizeof(a));
+```
+
+注意，赋的值不能随便取，这个函数是一个字节一个字节地去赋值的。如果取1并不会得到全部赋值为1的效果，通常只会取0和-1。
+
+### std::map
+
+map是有序键值对容器，通常用红黑树实现。元素的键是唯一的。
+
+```cpp
+template<
+    class Key,
+    class T,
+    class Compare = std::less<Key>,
+    class Allocator = std::allocator<std::pair<const Key, T> >
+> class map;
+```
+
+可以通过迭代器来遍历
+
+```cpp
+for(std::map<int,int>::iterator it = mp.begin();it!=mp.end();it++);
+//访问元素用it->first和it->second
+//或者
+for(auto it:mp);
+//访问元素用it.first和it.second
+```
+
+#### 自定义比较函数
+
+map通常会按照key的大小关系进行升序排列。如果要自定义比较函数，则
+
+```cpp
+struct cmp{
+    bool operator()(const int& a, const int& b) const{
+        return a>b;
+    }
+};
+
+std::map<int,std::string,cmp> mp;
+```
+
+#### std::empty
+
+检测是否为空。
+
+#### std::size
+
+返回大小。
+
+#### std::clear
+
+清除所有内容。复杂度：线性。
+
+#### std::erase
+
+提供迭代器，删除迭代器所指的键值对。复杂度：常数。
+
+```cpp
+auto it = mp.begin();
+mp.erase(it);
+```
+
+#### std::find
+
+寻找key等于给定值的元素，返回迭代器。如果没有找到则返回end迭代器。复杂度：对数。
+
+```cpp
+auto it = mp.find(1);
+```
+
+#### std::lower_bound,std::upper_bound
+
+寻找首个大于等于(或大于，对upper_bound)给定值的key。复杂度：对数。
+
+```cpp
+auto it = mp.lower_bound(1);
+```
+
+### std::unordered_map
+
+可以看作是无序的map，通常由哈希表实现。这意味着map中和排序有关的函数都不能使用。
+
+### std::set
+

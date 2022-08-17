@@ -112,7 +112,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 15 分钟
+                    阅读时长: 18 分钟
                 </time>
             </div>
         
@@ -2474,6 +2474,119 @@ R\times Q\equiv P(mod\ 998244353)
 R = (P\times Q^{-1})\%998244353
 \]</span></p>
 <p><span class="math inline">\(Q^{-1}\)</span>是<span class="math inline">\(Q\)</span>在模<span class="math inline">\(998244353\)</span>意义下的乘法逆元</p>
+<h2 id="c-stl用法">C++ STL用法</h2>
+<h3 id="stdswap">std::swap</h3>
+<p>交换两个元素的内容（也可以交换数组，不重要不介绍）。复杂度：常数。</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> a<span class="op">,</span>b<span class="op">;</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="bu">std::</span>swap<span class="op">(</span>a<span class="op">,</span>b<span class="op">);</span></span></code></pre></div>
+<p>注意其中的两个参数，类型要相同。不能一个是LL一个是int。</p>
+<h3 id="stdsort">std::sort</h3>
+<p>对数组、vector等进行排序。复杂度nlogn。</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> a<span class="op">[</span><span class="dv">5</span><span class="op">];</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="bu">std::</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> vec<span class="op">(</span><span class="dv">5</span><span class="op">);</span></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="bu">std::</span>sort<span class="op">(</span>a<span class="op">,</span>a<span class="op">+</span><span class="dv">5</span><span class="op">);</span></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a><span class="bu">std::</span>sort<span class="op">(</span>vec<span class="op">.</span>begin<span class="op">(),</span>vec<span class="op">.</span>end<span class="op">());</span></span></code></pre></div>
+<p>注意排序范围是左闭右开区间。</p>
+<p>通常会按照类型的&lt;操作符来进行比较。如果对结构体进行排序，可以重载运算符或者设定cmp函数。注意这两种方法一定不能是小于等于或者大于等于的运算，必须只使用小于号或者大于号（严格弱序）。</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="dt">bool</span> cmp<span class="op">(</span><span class="at">const</span> Type1<span class="op">&amp;</span> a<span class="op">,</span> <span class="at">const</span> Type2<span class="op">&amp;</span> b<span class="op">);</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="co">//然后在sort中加入第三个参数</span></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="bu">std::</span>sort<span class="op">(</span>a<span class="op">,</span>a<span class="op">+</span><span class="dv">5</span><span class="op">,</span>cmp<span class="op">);</span></span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> node<span class="op">{</span></span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">bool</span> <span class="kw">operator</span><span class="op">&lt;(</span><span class="at">const</span> node<span class="op">&amp;</span> a<span class="op">);</span></span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span>
+<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a><span class="co">//不用添加cmp参数</span></span></code></pre></div>
+<h3 id="stdlower_boundstdupper_bound">std::lower_bound,std::upper_bound</h3>
+<p>对某个已经排序好的数组，查找第一个大于等于（lower_bound）或者大于(upper_bound)某个给定值的元素。复杂度：logn。</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> a<span class="op">[</span><span class="dv">5</span><span class="op">]={</span><span class="dv">0</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">3</span><span class="op">,</span><span class="dv">4</span><span class="op">,</span><span class="dv">6</span><span class="op">};</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> first <span class="op">=</span> <span class="bu">std::</span>lower_bound<span class="op">(</span>a<span class="op">,</span>a<span class="op">+</span><span class="dv">5</span><span class="op">,</span><span class="dv">3</span><span class="op">);</span></span></code></pre></div>
+<p>同样是左闭右开区间，第三个参数是指定的值。如果找到就会返回所查找元素的迭代器（或者指针）。找不到就会返回末尾元素的后一个指针（或者end迭代器）。</p>
+<p>如果需要自定义比较方法，同sort函数。</p>
+<h3 id="stdmaxstdmin">std::max,std::min</h3>
+<p>对于两个元素返回最大值和最小值。复杂度：准确一次比较。</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> a<span class="op">=</span><span class="dv">1</span><span class="op">,</span>b<span class="op">=</span><span class="dv">2</span><span class="op">;</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> maxv <span class="op">=</span> <span class="bu">std::</span>max<span class="op">(</span>a<span class="op">,</span>b<span class="op">);</span></span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> minv <span class="op">=</span> <span class="bu">std::</span>min<span class="op">(</span>a<span class="op">,</span>b<span class="op">);</span></span></code></pre></div>
+<p>同样，两个参数类型相同。自定义比较方法同sort。</p>
+<h3 id="stdabs">std::abs</h3>
+<p>计算绝对值。复杂度：文档没写但应该是常数。</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> a <span class="op">=</span> <span class="op">-</span><span class="dv">1</span><span class="op">;</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> b <span class="op">=</span> <span class="bu">std::</span>abs<span class="op">(</span>a<span class="op">);</span></span></code></pre></div>
+<p>注意，函数只有float,double,long
+double的返回值类型。使用时如果给予整数参数会自动转换，这是否会导致精度问题有待观察。</p>
+<h3 id="stdstring">std::string</h3>
+<h4 id="stdswap-1">std::swap</h4>
+<p>将两个字符串互换。复杂度：常数。</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="bu">std::</span>string<span class="op"> </span>str <span class="op">=</span> <span class="st">&#34;123456&#34;</span><span class="op">;</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="bu">std::</span>string<span class="op"> </span>str2 <span class="op">=</span> <span class="st">&#34;456789&#34;</span><span class="op">;</span></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>str<span class="op">.</span>swap<span class="op">(</span>str2<span class="op">);</span></span></code></pre></div>
+<h4 id="stdbeginstdend">std::begin,std::end</h4>
+<p>返回字符串的起始得带器和结尾迭代器。</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>str<span class="op">.</span>begin<span class="op">();</span>str<span class="op">.</span>end<span class="op">();</span></span></code></pre></div>
+<h4 id="stdsize">std::size</h4>
+<p>返回字符串的大小。</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>str<span class="op">.</span>size<span class="op">();</span></span></code></pre></div>
+<h4 id="stdpush_back">std::push_back</h4>
+<p>向字符串末尾添加一个字符，同时大小加一。复杂度：常数。</p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>str<span class="op">.</span>push_back<span class="op">(</span><span class="ch">&#39;a&#39;</span><span class="op">);</span></span></code></pre></div>
+<h4 id="stdpop_back">std::pop_back</h4>
+<p>将字符串末尾的字符弹出，同时大小减一。如果字符串为空则未定义。复杂度：常数。</p>
+<div class="sourceCode" id="cb48"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>str<span class="op">.</span>pop_back<span class="op">();</span></span></code></pre></div>
+<h4 id="stdfind">std::find</h4>
+<p>在字符串中寻找某个子串是否存在。复杂度：没有规定，编译器不一定都是使用的kmp算法。</p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="bu">std::</span>string<span class="bu">::</span>size_type<span class="op"> </span>n<span class="op">;</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a><span class="bu">std::</span>string<span class="op"> </span>s <span class="op">=</span> <span class="st">&#34;this is a string&#34;</span><span class="op">;</span></span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> s<span class="op">.</span>find<span class="op">(</span><span class="st">&#34;is&#34;</span><span class="op">);</span></span></code></pre></div>
+<p>如果找到则返回首个匹配的首字母位置。否则返回std::string::npos。如果是int
+n作为s.find的接收端，则会在找不到时接收到-1。</p>
+<h3 id="stdmemset">std::memset</h3>
+<p>将值复制到dest所指对象的前count个字节中。复杂度：没有规定。</p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> a<span class="op">[</span><span class="dv">20</span><span class="op">];</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="bu">std::</span>memset<span class="op">(</span>a<span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="kw">sizeof</span><span class="op">(</span>a<span class="op">));</span></span></code></pre></div>
+<p>注意，赋的值不能随便取，这个函数是一个字节一个字节地去赋值的。如果取1并不会得到全部赋值为1的效果，通常只会取0和-1。</p>
+<h3 id="stdmap">std::map</h3>
+<p>map是有序键值对容器，通常用红黑树实现。元素的键是唯一的。</p>
+<div class="sourceCode" id="cb51"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="kw">template</span><span class="op">&lt;</span></span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">class</span> Key<span class="op">,</span></span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">class</span> T<span class="op">,</span></span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">class</span> Compare <span class="op">=</span> <span class="bu">std::</span>less<span class="op">&lt;</span>Key<span class="op">&gt;,</span></span>
+<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">class</span> Allocator <span class="op">=</span> <span class="bu">std::</span>allocator<span class="op">&lt;</span><span class="bu">std::</span>pair<span class="op">&lt;</span><span class="at">const</span> Key<span class="op">,</span> T<span class="op">&gt;</span> <span class="op">&gt;</span></span>
+<span id="cb51-6"><a href="#cb51-6" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="kw">class</span> map<span class="op">;</span></span></code></pre></div>
+<p>可以通过迭代器来遍历</p>
+<div class="sourceCode" id="cb52"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span><span class="op">(</span><span class="bu">std::</span>map<span class="op">&lt;</span><span class="dt">int</span><span class="op">,</span><span class="dt">int</span><span class="op">&gt;::</span>iterator it <span class="op">=</span> mp<span class="op">.</span>begin<span class="op">();</span>it<span class="op">!=</span>mp<span class="op">.</span>end<span class="op">();</span>it<span class="op">++);</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="co">//访问元素用it-&gt;first和it-&gt;second</span></span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a><span class="co">//或者</span></span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span><span class="op">(</span><span class="kw">auto</span> it<span class="op">:</span>mp<span class="op">);</span></span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a><span class="co">//访问元素用it.first和it.second</span></span></code></pre></div>
+<h4 id="自定义比较函数">自定义比较函数</h4>
+<p>map通常会按照key的大小关系进行升序排列。如果要自定义比较函数，则</p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> cmp<span class="op">{</span></span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">bool</span> <span class="kw">operator</span><span class="op">()(</span><span class="at">const</span> <span class="dt">int</span><span class="op">&amp;</span> a<span class="op">,</span> <span class="at">const</span> <span class="dt">int</span><span class="op">&amp;</span> b<span class="op">)</span> <span class="at">const</span><span class="op">{</span></span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> a<span class="op">&gt;</span>b<span class="op">;</span></span>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span>
+<span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-7"><a href="#cb53-7" aria-hidden="true" tabindex="-1"></a><span class="bu">std::</span>map<span class="op">&lt;</span><span class="dt">int</span><span class="op">,</span><span class="bu">std::</span>string<span class="op">,</span>cmp<span class="op">&gt;</span> mp<span class="op">;</span></span></code></pre></div>
+<h4 id="stdempty">std::empty</h4>
+<p>检测是否为空。</p>
+<h4 id="stdsize-1">std::size</h4>
+<p>返回大小。</p>
+<h4 id="stdclear">std::clear</h4>
+<p>清除所有内容。复杂度：线性。</p>
+<h4 id="stderase">std::erase</h4>
+<p>提供迭代器，删除迭代器所指的键值对。复杂度：常数。</p>
+<div class="sourceCode" id="cb54"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> it <span class="op">=</span> mp<span class="op">.</span>begin<span class="op">();</span></span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>mp<span class="op">.</span>erase<span class="op">(</span>it<span class="op">);</span></span></code></pre></div>
+<h4 id="stdfind-1">std::find</h4>
+<p>寻找key等于给定值的元素，返回迭代器。如果没有找到则返回end迭代器。复杂度：对数。</p>
+<div class="sourceCode" id="cb55"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> it <span class="op">=</span> mp<span class="op">.</span>find<span class="op">(</span><span class="dv">1</span><span class="op">);</span></span></code></pre></div>
+<h4 id="stdlower_boundstdupper_bound-1">std::lower_bound,std::upper_bound</h4>
+<p>寻找首个大于等于(或大于，对upper_bound)给定值的key。复杂度：对数。</p>
+<div class="sourceCode" id="cb56"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> it <span class="op">=</span> mp<span class="op">.</span>lower_bound<span class="op">(</span><span class="dv">1</span><span class="op">);</span></span></code></pre></div>
+<h3 id="stdunordered_map">std::unordered_map</h3>
+<p>可以看作是无序的map，通常由哈希表实现。这意味着map中和排序有关的函数都不能使用。</p>
+<h3 id="stdset">std::set</h3>
 
 
 
@@ -2848,6 +2961,20 @@ R = (P\times Q^{-1})\%998244353
     <li><a href="#概率论">概率论</a>
       <ol>
         <li><a href="#处理分数期望概率">处理分数期望、概率</a></li>
+      </ol>
+    </li>
+    <li><a href="#c-stl用法">C++ STL用法</a>
+      <ol>
+        <li><a href="#stdswap">std::swap</a></li>
+        <li><a href="#stdsort">std::sort</a></li>
+        <li><a href="#stdlower_boundstdupper_bound">std::lower_bound,std::upper_bound</a></li>
+        <li><a href="#stdmaxstdmin">std::max,std::min</a></li>
+        <li><a href="#stdabs">std::abs</a></li>
+        <li><a href="#stdstring">std::string</a></li>
+        <li><a href="#stdmemset">std::memset</a></li>
+        <li><a href="#stdmap">std::map</a></li>
+        <li><a href="#stdunordered_map">std::unordered_map</a></li>
+        <li><a href="#stdset">std::set</a></li>
       </ol>
     </li>
   </ol>
