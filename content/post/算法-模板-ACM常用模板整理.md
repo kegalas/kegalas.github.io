@@ -2634,7 +2634,7 @@ int b = std::abs(a);
 
 ### std::string
 
-#### std::swap
+#### ::swap
 
 将两个字符串互换。复杂度：常数。
 
@@ -2644,7 +2644,7 @@ std::string str2 = "456789";
 str.swap(str2);
 ```
 
-#### std::begin,std::end
+#### ::begin,std::end
 
 返回字符串的起始得带器和结尾迭代器。
 
@@ -2652,7 +2652,7 @@ str.swap(str2);
 str.begin();str.end();
 ```
 
-#### std::size
+#### ::size
 
 返回字符串的大小。
 
@@ -2660,7 +2660,7 @@ str.begin();str.end();
 str.size();
 ```
 
-#### std::push_back
+#### ::push_back
 
 向字符串末尾添加一个字符，同时大小加一。复杂度：常数。
 
@@ -2668,7 +2668,7 @@ str.size();
 str.push_back('a');
 ```
 
-#### std::pop_back
+#### ::pop_back
 
 将字符串末尾的字符弹出，同时大小减一。如果字符串为空则未定义。复杂度：常数。
 
@@ -2676,7 +2676,7 @@ str.push_back('a');
 str.pop_back();
 ```
 
-#### std::find
+#### ::find
 
 在字符串中寻找某个子串是否存在。复杂度：没有规定，编译器不一定都是使用的kmp算法。
 
@@ -2737,19 +2737,19 @@ struct cmp{
 std::map<int,std::string,cmp> mp;
 ```
 
-#### std::empty
+#### ::empty
 
 检测是否为空。
 
-#### std::size
+#### ::size
 
 返回大小。
 
-#### std::clear
+#### ::clear
 
 清除所有内容。复杂度：线性。
 
-#### std::erase
+#### ::erase
 
 提供迭代器，删除迭代器所指的键值对。复杂度：常数。
 
@@ -2758,7 +2758,7 @@ auto it = mp.begin();
 mp.erase(it);
 ```
 
-#### std::find
+#### ::find
 
 寻找key等于给定值的元素，返回迭代器。如果没有找到则返回end迭代器。复杂度：对数。
 
@@ -2766,7 +2766,7 @@ mp.erase(it);
 auto it = mp.find(1);
 ```
 
-#### std::lower_bound,std::upper_bound
+#### ::lower_bound,::upper_bound
 
 寻找首个大于等于(或大于，对upper_bound)给定值的key。复杂度：对数。
 
@@ -2779,4 +2779,184 @@ auto it = mp.lower_bound(1);
 可以看作是无序的map，通常由哈希表实现。这意味着map中和排序有关的函数都不能使用。
 
 ### std::set 
+
+set是关联容器，含有Key类型对象的已排序集，通常用红黑树实现。
+
+```cpp
+template<
+
+    class Key,
+    class Compare = std::less<Key>,
+    class Allocator = std::allocator<Key>
+> class set;
+```
+
+遍历的方式与map相同。
+
+#### 使用方法
+
+自定义比较函数,empty,size,clear,erase,find,lower_bound,upper_bound都与map相同。
+
+### std::unordered_set
+
+用哈希实现，没有内部排序。
+
+### std::stack
+
+栈，有先入后出特性。
+
+#### ::top
+
+访问栈顶元素，复杂度：常数。
+
+#### ::empty
+
+检查是否为空，复杂度：常数
+
+#### ::size
+
+返回元素个数，复杂度：常数
+
+#### ::push
+
+将元素推入栈，复杂度：通常和deque的push_back相同，即常数
+
+#### ::pop
+
+将栈顶弹出，复杂度：通常和deque的pop_back相同，即常数
+
+#### ::emplace
+
+在顶部原位构造元素，通常会用在栈的元素是结构体的时候，复杂度：通常和deque的emplace_back相同，即常数
+
+### std::queue
+
+队列，拥有先入先出特性。
+
+#### ::front
+
+访问队首元素，复杂度：常数
+
+#### ::back
+
+访问队尾元素，复杂度：常数
+
+#### 其他方法
+
+同stack，不过push是推入队尾，pop是弹出队首。
+
+### std::priority_queue
+
+优先队列，提供常数时间的最大（或最小）元素查找，以及对数时间的插入与删除。
+
+#### 自定义比较方法
+
+通常我们会重载元素的运算符来自定义
+
+```cpp
+struct node {
+  int dis, u;
+  bool operator>(const node& a) const { return dis > a.dis; }
+};
+
+priority_queue<node, vector<node>, greater<node> > pq;
+```
+
+#### 方法
+
+其方法与stack相同，只不过没有先入后出特性，插入元素或弹出元素后会根据大小关系进行排序，保证栈顶是最大的（或最小的）元素。
+
+### std::deque
+
+双端队列，允许在队首和队尾进行插入和删除。另外，在 deque 任一端插入或删除不会非法化指向其余元素的指针或引用。通常也会用来实现单调队列。
+
+#### 方法
+
+size、empty与stack、queue相同。其pop_back、push_back、pop_front、push_front、emplace_front、emplace_back用法也类似。
+
+### std::vector
+
+通常可以理解为一个可以变化长度的数组。
+
+#### 声明方法
+
+```cpp
+std::vector<int> vec;//声明一个初始大小为0的vector
+std::vector<int> vec2(n);//声明一个初始大小为n的vector，每个元素都会初始化为0
+std::vector<int> vec3(n,1);//与上一个不同的是，每一个元素都会初始化为1
+```
+
+#### 元素访问
+
+```cpp
+vec[5];//像数组一样访问
+vec.at(5);//与上一个方法的差别在会进行越界检查
+vec.front();//访问第一个元素
+vec.back();//访问最后一个元素
+```
+
+#### ::size
+
+获取大小，复杂度：常数
+
+#### ::empty
+
+查看是否为空，复杂度：常数
+
+#### ::push_back
+
+向末尾添加元素，复杂度：常数
+
+#### ::pop_back
+
+把末尾元素弹出，复杂度：常数
+
+#### ::emplace_back
+
+在末尾原位构造元素，复杂度：常数
+
+#### std::vector<bool>
+
+这是一个特化的vector，它每一个元素所占的空间是一位，而不是sizeof(bool)（通常是一字节）。
+
+### std::bitset
+
+表示一串二进制位。
+
+#### 声明方法
+
+```cpp
+std::bitset<100> bs;//声明一个位数为100位的bitset
+std::bitset<4> bs2{0xA};//声明一个四位的bitset，其值等于0xA
+```
+
+#### 元素访问
+
+同数组的访问方式。同样也可以用数组的方式进行修改。
+
+#### ::all,::any,::none
+
+检查是否全部，存在、没有元素被设置为true。
+
+#### ::count
+
+返回设置为true的数量。
+
+#### 运算
+
+bitset和bitset之间能用所有的位运算符。也可以用等号和不等号比较。
+
+#### ::flip
+
+翻转某一位的值。
+
+#### ::to_string
+
+转化为二进制数的字符串。
+
+#### ::to_ulong,::to_ullong
+
+转化为unsigned long和unsigned long long。
+
+
 
