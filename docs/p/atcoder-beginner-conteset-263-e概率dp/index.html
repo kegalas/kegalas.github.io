@@ -372,9 +372,18 @@
 </header>
 
     <section class="article-content">
-    
-<p>题意：有<span class="math inline">\(N\)</span>个方块，初始时站在<span class="math inline">\(1\)</span>方块上。每个方块上有一个数<span class="math inline">\(a_i\)</span>，等概率地随机选一个<span class="math inline">\(0\sim a_i\)</span>的数，假设在<span class="math inline">\(x\)</span>方块上选到了<span class="math inline">\(y\)</span>，则跳到<span class="math inline">\(x+y\)</span>方块。求跳到<span class="math inline">\(N\)</span>上时，选取次数的期望值。</p>
-<p>设<span class="math inline">\(dp[i]\)</span>是从<span class="math inline">\(i\)</span>走到<span class="math inline">\(N\)</span>的期望，那么<span class="math inline">\(dp[N]=0\)</span>。</p>
+    <p>题意：有<span class="math inline">\(N\)</span>个方块，初始时站在<span
+class="math inline">\(1\)</span>方块上。每个方块上有一个数<span
+class="math inline">\(a_i\)</span>，等概率地随机选一个<span
+class="math inline">\(0\sim a_i\)</span>的数，假设在<span
+class="math inline">\(x\)</span>方块上选到了<span
+class="math inline">\(y\)</span>，则跳到<span
+class="math inline">\(x+y\)</span>方块。求跳到<span
+class="math inline">\(N\)</span>上时，选取次数的期望值。</p>
+<p>设<span class="math inline">\(dp[i]\)</span>是从<span
+class="math inline">\(i\)</span>走到<span
+class="math inline">\(N\)</span>的期望，那么<span
+class="math inline">\(dp[N]=0\)</span>。</p>
 <p>记</p>
 <p><span class="math display">\[
 s = dp[i+1]+dp[i+2]+\cdots+dp[i+a_i]
@@ -406,7 +415,8 @@ dp[i]=\frac{dp[i+1]+dp[i+2]+\cdots+dp[i+a_i]+1+a_i}{a_i}
 \]</span></p>
 <p>其实就是非常朴素的选择次数除以概率再相加。然后如果某一次选中了0就再往下算。</p>
 <p>最终的代码如下</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;algorithm&gt;</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;cmath&gt;</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;string&gt;</span></span>
@@ -424,7 +434,7 @@ dp[i]=\frac{dp[i+1]+dp[i+2]+\cdots+dp[i+a_i]+1+a_i}{a_i}
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="pp">#define LL </span><span class="dt">long</span><span class="pp"> </span><span class="dt">long</span></span>
 <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="pp">#define ULL </span><span class="dt">unsigned</span><span class="pp"> </span><span class="dt">long</span><span class="pp"> </span><span class="dt">long</span></span>
 <span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="pp">#define i128 </span><span class="dt">__int128</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="pp">#define debug</span><span class="op">(</span>a<span class="op">)</span><span class="pp"> </span><span class="bu">std::</span>cout<span class="op">&lt;&lt;</span><span class="pp">#</span>a<span class="op">&lt;&lt;</span><span class="st">&#34;=&#34;</span><span class="op">&lt;&lt;</span>a<span class="op">&lt;&lt;</span><span class="bu">std::</span>endl</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="pp">#define debug</span><span class="op">(</span>a<span class="op">)</span><span class="pp"> </span><span class="bu">std::</span>cout<span class="op">&lt;&lt;</span><span class="pp">#</span>a<span class="op">&lt;&lt;</span><span class="st">&quot;=&quot;</span><span class="op">&lt;&lt;</span>a<span class="op">&lt;&lt;</span><span class="bu">std::</span>endl</span>
 <span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="pp">#define lth</span><span class="op">(</span>i<span class="op">,</span>x<span class="op">,</span>y<span class="op">)</span><span class="pp"> </span><span class="cf">for</span><span class="op">(</span><span class="dt">int</span><span class="pp"> </span>i<span class="op">=</span>x<span class="op">;</span>i<span class="op">&lt;=</span>y<span class="op">;</span>i<span class="op">++)</span></span>
 <span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="pp">#define htl</span><span class="op">(</span>i<span class="op">,</span>x<span class="op">,</span>y<span class="op">)</span><span class="pp"> </span><span class="cf">for</span><span class="op">(</span><span class="dt">int</span><span class="pp"> </span>i<span class="op">=</span>x<span class="op">;</span>i<span class="op">&gt;=</span>y<span class="op">;</span>i<span class="op">--)</span></span>
 <span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="pp">#define mms</span><span class="op">(</span>x<span class="op">)</span><span class="pp"> </span>memset<span class="op">(</span>x<span class="op">,</span><span class="pp"> </span><span class="dv">0</span><span class="op">,</span><span class="pp"> </span><span class="kw">sizeof</span><span class="op">(</span>x<span class="op">))</span></span>
@@ -483,17 +493,17 @@ dp[i]=\frac{dp[i+1]+dp[i+2]+\cdots+dp[i+a_i]+1+a_i}{a_i}
 <span id="cb1-75"><a href="#cb1-75" aria-hidden="true" tabindex="-1"></a>        sum<span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> <span class="op">(</span>sum<span class="op">[</span>i<span class="op">+</span><span class="dv">1</span><span class="op">]+</span>dp<span class="op">[</span>i<span class="op">])%</span>MOD<span class="op">;</span></span>
 <span id="cb1-76"><a href="#cb1-76" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
 <span id="cb1-77"><a href="#cb1-77" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-78"><a href="#cb1-78" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>cout<span class="op">&lt;&lt;</span>dp<span class="op">[</span><span class="dv">1</span><span class="op">]&lt;&lt;</span><span class="st">&#34;</span><span class="sc">\n</span><span class="st">&#34;</span><span class="op">;</span></span>
+<span id="cb1-78"><a href="#cb1-78" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>cout<span class="op">&lt;&lt;</span>dp<span class="op">[</span><span class="dv">1</span><span class="op">]&lt;&lt;</span><span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">;</span></span>
 <span id="cb1-79"><a href="#cb1-79" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-80"><a href="#cb1-80" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb1-81"><a href="#cb1-81" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <p>其中第74行的</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>dp<span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> <span class="op">(((</span>sum<span class="op">[</span>i<span class="op">+</span><span class="dv">1</span><span class="op">]-</span>sum<span class="op">[</span>i<span class="op">+</span>arr<span class="op">[</span>i<span class="op">]+</span><span class="dv">1</span><span class="op">]+</span>arr<span class="op">[</span>i<span class="op">]+</span><span class="dv">1</span><span class="op">+</span>MOD<span class="op">)%</span>MOD<span class="op">)*(</span>inv<span class="op">[</span>arr<span class="op">[</span>i<span class="op">]]%</span>MOD<span class="op">))%</span>MOD<span class="op">;</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>dp<span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> <span class="op">(((</span>sum<span class="op">[</span>i<span class="op">+</span><span class="dv">1</span><span class="op">]-</span>sum<span class="op">[</span>i<span class="op">+</span>arr<span class="op">[</span>i<span class="op">]+</span><span class="dv">1</span><span class="op">]+</span>arr<span class="op">[</span>i<span class="op">]+</span><span class="dv">1</span><span class="op">+</span>MOD<span class="op">)%</span>MOD<span class="op">)*(</span>inv<span class="op">[</span>arr<span class="op">[</span>i<span class="op">]]%</span>MOD<span class="op">))%</span>MOD<span class="op">;</span></span></code></pre></div>
 <p>不能写为</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>dp<span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> <span class="op">(((</span>sum<span class="op">[</span>i<span class="op">+</span><span class="dv">1</span><span class="op">]-</span>sum<span class="op">[</span>i<span class="op">+</span>arr<span class="op">[</span>i<span class="op">]+</span><span class="dv">1</span><span class="op">]+</span>arr<span class="op">[</span>i<span class="op">]+</span><span class="dv">1</span><span class="op">)%</span>MOD<span class="op">)*(</span>inv<span class="op">[</span>arr<span class="op">[</span>i<span class="op">]]%</span>MOD<span class="op">))%</span>MOD<span class="op">;</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>dp<span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> <span class="op">(((</span>sum<span class="op">[</span>i<span class="op">+</span><span class="dv">1</span><span class="op">]-</span>sum<span class="op">[</span>i<span class="op">+</span>arr<span class="op">[</span>i<span class="op">]+</span><span class="dv">1</span><span class="op">]+</span>arr<span class="op">[</span>i<span class="op">]+</span><span class="dv">1</span><span class="op">)%</span>MOD<span class="op">)*(</span>inv<span class="op">[</span>arr<span class="op">[</span>i<span class="op">]]%</span>MOD<span class="op">))%</span>MOD<span class="op">;</span></span></code></pre></div>
 <p>原因应当是，会出现负数。虽然按照原本的想法，sum[i+1]肯定是大于等于sum[i+arr[i]]。但是sum本身也在进行取余运算，可能会导致小于的情况，导致负数的出现。此时要加一个998244353。</p>
-
-
 
 </section>
 
