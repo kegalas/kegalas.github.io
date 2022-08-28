@@ -6,7 +6,40 @@
         <description>Recent content on KegalaS的个人博客</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Wed, 10 Aug 2022 12:54:34 +0800</lastBuildDate><atom:link href="https://kegalas.top/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sun, 28 Aug 2022 16:18:50 +0800</lastBuildDate><atom:link href="https://kegalas.top/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Msys2中使用mingw64的G&#43;&#43;编译，运行报错无法找到入口</title>
+        <link>https://kegalas.top/p/msys2%E4%B8%AD%E4%BD%BF%E7%94%A8mingw64%E7%9A%84g-%E7%BC%96%E8%AF%91%E8%BF%90%E8%A1%8C%E6%8A%A5%E9%94%99%E6%97%A0%E6%B3%95%E6%89%BE%E5%88%B0%E5%85%A5%E5%8F%A3/</link>
+        <pubDate>Sun, 28 Aug 2022 16:18:50 +0800</pubDate>
+        
+        <guid>https://kegalas.top/p/msys2%E4%B8%AD%E4%BD%BF%E7%94%A8mingw64%E7%9A%84g-%E7%BC%96%E8%AF%91%E8%BF%90%E8%A1%8C%E6%8A%A5%E9%94%99%E6%97%A0%E6%B3%95%E6%89%BE%E5%88%B0%E5%85%A5%E5%8F%A3/</guid>
+        <description>&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 282; 
+			flex-basis: 678px&#34;
+	&gt;
+	&lt;a href=&#34;https://kegalas.top/p/msys2%E4%B8%AD%E4%BD%BF%E7%94%A8mingw64%E7%9A%84g-%E7%BC%96%E8%AF%91%E8%BF%90%E8%A1%8C%E6%8A%A5%E9%94%99%E6%97%A0%E6%B3%95%E6%89%BE%E5%88%B0%E5%85%A5%E5%8F%A3/1.jpg&#34; data-size=&#34;475x168&#34;&gt;
+		&lt;img src=&#34;https://kegalas.top/p/msys2%E4%B8%AD%E4%BD%BF%E7%94%A8mingw64%E7%9A%84g-%E7%BC%96%E8%AF%91%E8%BF%90%E8%A1%8C%E6%8A%A5%E9%94%99%E6%97%A0%E6%B3%95%E6%89%BE%E5%88%B0%E5%85%A5%E5%8F%A3/1.jpg&#34;
+			width=&#34;475&#34;
+			height=&#34;168&#34;
+			srcset=&#34;https://kegalas.top/p/msys2%E4%B8%AD%E4%BD%BF%E7%94%A8mingw64%E7%9A%84g-%E7%BC%96%E8%AF%91%E8%BF%90%E8%A1%8C%E6%8A%A5%E9%94%99%E6%97%A0%E6%B3%95%E6%89%BE%E5%88%B0%E5%85%A5%E5%8F%A3/1_hu8fe568a15a37a7bd8c510c832a970168_16486_480x0_resize_q75_box.jpg 480w, https://kegalas.top/p/msys2%E4%B8%AD%E4%BD%BF%E7%94%A8mingw64%E7%9A%84g-%E7%BC%96%E8%AF%91%E8%BF%90%E8%A1%8C%E6%8A%A5%E9%94%99%E6%97%A0%E6%B3%95%E6%89%BE%E5%88%B0%E5%85%A5%E5%8F%A3/1_hu8fe568a15a37a7bd8c510c832a970168_16486_1024x0_resize_q75_box.jpg 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;1.jpg&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;1.jpg&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;情况如图所示，_ZSt28__throw_bad_array_new_lengthv无法被定位。&lt;/p&gt;
+&lt;p&gt;经过检查，通过mingw64.exe运行的g++版本是12.1.0。这也是通过&lt;a class=&#34;link&#34; href=&#34;https://www.msys2.org/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;官网的教程&lt;/a&gt;安装的版本。并且我们通常会把msys2\mingw64\bin\作为环境变量。&lt;/p&gt;
+&lt;p&gt;而通过msys2.exe运行的g++版本是11.3.0。将环境变量换为msys2\usr\bin\，此时编译的程序可以正常运行不报错。&lt;/p&gt;
+&lt;p&gt;推测原因是版本问题，或者是msys2和mingw64有什么差别。&lt;/p&gt;
+&lt;p&gt;另外，通过mingw64打开的命令行来运行编译出来的exe文件不会报错。&lt;/p&gt;
+</description>
+        </item>
+        <item>
         <title>计算机图形学基础学习笔记-动画与模拟</title>
         <link>https://kegalas.top/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%8A%A8%E7%94%BB%E4%B8%8E%E6%A8%A1%E6%8B%9F/</link>
         <pubDate>Wed, 10 Aug 2022 12:54:34 +0800</pubDate>
