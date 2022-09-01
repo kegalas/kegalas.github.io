@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="en-us">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='概率论与数理统计的学习笔记'><title>概率论与数理统计整理</title>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='复变函数的学习笔记'><title>复变函数整理</title>
 
-<link rel='canonical' href='https://kegalas.top/p/%E6%A6%82%E7%8E%87%E8%AE%BA%E4%B8%8E%E6%95%B0%E7%90%86%E7%BB%9F%E8%AE%A1%E6%95%B4%E7%90%86/'>
+<link rel='canonical' href='https://kegalas.top/p/%E5%A4%8D%E5%8F%98%E5%87%BD%E6%95%B0%E6%95%B4%E7%90%86/'>
 
-<link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='概率论与数理统计整理'>
-<meta property='og:description' content='概率论与数理统计的学习笔记'>
-<meta property='og:url' content='https://kegalas.top/p/%E6%A6%82%E7%8E%87%E8%AE%BA%E4%B8%8E%E6%95%B0%E7%90%86%E7%BB%9F%E8%AE%A1%E6%95%B4%E7%90%86/'>
+<link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='复变函数整理'>
+<meta property='og:description' content='复变函数的学习笔记'>
+<meta property='og:url' content='https://kegalas.top/p/%E5%A4%8D%E5%8F%98%E5%87%BD%E6%95%B0%E6%95%B4%E7%90%86/'>
 <meta property='og:site_name' content='KegalaS的个人博客'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='数学' /><meta property='article:tag' content='大学' /><meta property='article:published_time' content='2022-08-30T10:41:24&#43;08:00'/><meta property='article:modified_time' content='2022-08-30T10:41:24&#43;08:00'/>
-<meta name="twitter:title" content="概率论与数理统计整理">
-<meta name="twitter:description" content="概率论与数理统计的学习笔记">
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='数学' /><meta property='article:tag' content='大学' /><meta property='article:published_time' content='2022-09-01T13:44:54&#43;08:00'/><meta property='article:modified_time' content='2022-09-01T13:44:54&#43;08:00'/>
+<meta name="twitter:title" content="复变函数整理">
+<meta name="twitter:description" content="复变函数的学习笔记">
     <link rel="shortcut icon" href="favicon-16x16.png" />
 
     </head>
@@ -75,12 +75,12 @@
     
 
     <h2 class="article-title">
-        <a href="/p/%E6%A6%82%E7%8E%87%E8%AE%BA%E4%B8%8E%E6%95%B0%E7%90%86%E7%BB%9F%E8%AE%A1%E6%95%B4%E7%90%86/">概率论与数理统计整理</a>
+        <a href="/p/%E5%A4%8D%E5%8F%98%E5%87%BD%E6%95%B0%E6%95%B4%E7%90%86/">复变函数整理</a>
     </h2>
 
     
     <h3 class="article-subtitle">
-        概率论与数理统计的学习笔记
+        复变函数的学习笔记
     </h3>
     
 
@@ -97,7 +97,7 @@
   <path d="M3 11h16" />
   <path d="M18 16.496v1.504l1 1" />
 </svg>
-                <time class="article-time--published">Aug 30, 2022</time>
+                <time class="article-time--published">Sep 01, 2022</time>
             </div>
         
 
@@ -112,7 +112,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 3 分钟
+                    阅读时长: 2 分钟
                 </time>
             </div>
         
@@ -124,49 +124,114 @@
     <section class="article-content">
     
 
-<h2 id="基本概念">基本概念</h2>
-<h3 id="随机试验e">随机试验E</h3>
-<p>针对随机现象的观察、记录、试验（广义）。</p>
-<p>特点：</p>
-<ol type="1">
-<li>可以在相同的条件下重复进行</li>
-<li>每次试验的可能结果不止一个，并且能事先明确试验的所有可能结果</li>
-<li>但一次试验前不能确定哪个结果会出现</li>
-</ol>
-<h3 id="样本空间omega">样本空间<span class="math inline">\(\Omega\)</span></h3>
-<p>随机试验<span class="math inline">\(E\)</span>的所有结果构成的集合为<span class="math inline">\(E\)</span>的样本空间<span class="math inline">\(\Omega\)</span>，记为<span class="math inline">\(\Omega\{\omega\}\)</span>，每个结果<span class="math inline">\(\omega\)</span>是<span class="math inline">\(\Omega\)</span>中的一个元素，称为样本点。</p>
-<h3 id="频率">频率</h3>
-<p>在相同的条件下，进行了<span class="math inline">\(n\)</span>次试验，其中事件<span class="math inline">\(A\)</span>发生的次数<span class="math inline">\(n_A\)</span>称为事件<span class="math inline">\(A\)</span>发生的频数，比值<span class="math inline">\(n_A/n\)</span>称为事件<span class="math inline">\(A\)</span>发生的频率，记为<span class="math inline">\(f_n(A)\)</span></p>
-<h3 id="概率">概率</h3>
-<p>定义1: 事件A发生频率的稳定值<span class="math inline">\(p\)</span>称为它的概率<span class="math inline">\(P(A)\)</span>，即<span class="math inline">\(P(A)=p\)</span></p>
-<p>定义2: 随机试验<span class="math inline">\(E\)</span>，样本空间<span class="math inline">\(\Omega\)</span>，对于<span class="math inline">\(E\)</span>的每一事件<span class="math inline">\(A\)</span>赋予一个实数，记为<span class="math inline">\(P(A)\)</span>，如果集合函数满足以下条件，P(A)称为事件A的概率
-1. 非负性: 对于每一个事件<span class="math inline">\(A\)</span>，有<span class="math inline">\(P(A)\geq0\)</span> 2. 规范性: 对于必然事件<span class="math inline">\(\Omega\)</span>，有<span class="math inline">\(P(\Omega)=1\)</span> 3. 可列可加性: 设<span class="math inline">\(A_1,A_2,\cdots\)</span>是两两不相容的事件，即对于<span class="math inline">\(A_iA_j=\empty,i\neq j(i,j=1,2,\cdots)\)</span></p>
+<h2 id="复数与复变函数">复数与复变函数</h2>
+<h3 id="复数的定义及其运算">复数的定义及其运算</h3>
+<p>把负数定义为一堆有序的实数<span class="math inline">\((a,b)\)</span>，如果用<span class="math inline">\(\bm R\)</span>作为实数集，<span class="math inline">\(\bm C\)</span>为复数集，则</p>
 <p><span class="math display">\[
-P(\bigcup^\infty_{i=1}A_i)=\sum^\infty_{i=1}P(A_i)
+\bm C = \{(a,b):a\in\bm R,b\in\bm R\}
 \]</span></p>
-<p><strong>性质</strong></p>
-<ol type="1">
-<li><span class="math inline">\(P(\empty)=0\)</span></li>
-<li>可列可加性（见上）</li>
-<li>若<span class="math inline">\(A\subset B\)</span>，则<span class="math inline">\(P(B-A)=P(B)-P(A)\)</span></li>
-<li>任意事件<span class="math inline">\(A\)</span>，<span class="math inline">\(P(A)\leq 1\)</span></li>
-<li>任意事件<span class="math inline">\(A\)</span>，<span class="math inline">\(P(\overline{A})=1-P(A)\)</span></li>
-<li>加法公式，对任意事件<span class="math inline">\(A,B\)</span>，<span class="math inline">\(P(A\cup
-B)=P(A)+P(B)-P(AB)\)</span>，扩展情况同容斥原理。</li>
-<li>极限性：设<span class="math inline">\(A_1\subset
-A_2\subset\cdots\)</span>，则<span class="math inline">\(\lim_{n\to\infty}P(A_n)=P(\bigcup^{\infty}_{i=1}A_i)\)</span>；设<span class="math inline">\(A_1\supset A_2\supset\cdots\)</span>，则<span class="math inline">\(\lim_{n\to\infty}P(A_n)=P(\bigcap^{\infty}_{i=1}A_i)\)</span></li>
-</ol>
-<p>注意，没有以下性质</p>
-<ol type="1">
-<li><span class="math inline">\(P(A)=0\)</span>不能推出<span class="math inline">\(A=\empty\)</span></li>
-<li><span class="math inline">\(P(A)=1\)</span>不能推出<span class="math inline">\(A=\Omega\)</span></li>
-<li><span class="math inline">\(P(A)=P(B)\)</span>不能推出<span class="math inline">\(A=B\)</span></li>
-</ol>
-<h2 id="古典概率">古典概率</h2>
-<h3 id="定义">定义</h3>
-<p>设一个试验有<span class="math inline">\(N\)</span>个等可能的结果，而事件<span class="math inline">\(E\)</span>恰包含其中的<span class="math inline">\(M\)</span>个结果，则事件<span class="math inline">\(E\)</span>的概率，记为<span class="math inline">\(P(E)\)</span>，定义为</p>
+<p>定义加法和乘法如下</p>
 <p><span class="math display">\[
-P(E)=\frac{M}{N}
+(a,b)+(c,d)=(a+c,b+d)
+\]</span></p>
+<p><span class="math display">\[
+(a,b)(c,d)=(ac-bd,ad+bc)
+\]</span></p>
+<p>易知，加法和乘法满足交换率和结合律。</p>
+<p><span class="math inline">\((0,0)\)</span>是零元素，<span class="math inline">\((-a,-b)\)</span>是<span class="math inline">\((a,b)\)</span>的负元素，<span class="math inline">\((1,0)\)</span>是乘法的单位元素。每个非零元素<span class="math inline">\((a,b)\)</span>的逆元素是<span class="math inline">\((\frac{a}{a^2+b^2},-\frac{b}{a^2+b^2})\)</span></p>
+<p>此外还满足分配律</p>
+<p><span class="math display">\[
+[(a,b)+(c,d)](e,f) = (a,b)(e,f)+(c,d)(e,f)
+\]</span></p>
+<p>可以直接记<span class="math inline">\((a,0)=a\)</span>。</p>
+<p>对于<span class="math inline">\((0,1)\)</span>有</p>
+<p><span class="math display">\[
+(0,1)^2=(-1,0)=-1
+\]</span></p>
+<p>记为<span class="math inline">\((0,1)=i\)</span></p>
+<p>同样有<span class="math inline">\((0,b)=(b,0)(0,1)=bi\)</span></p>
+<p>于是每一个复数都可以写成</p>
+<p><span class="math display">\[
+(a,b)=(a,0)+(0,b)=a+bi
+\]</span></p>
+<p><strong>定理1</strong></p>
+<p>复数域不是有序域，换句话说，不可以比较大小。</p>
+<p>出于方便和其他一些原因，用<span class="math inline">\(z=a+bi\)</span>来描述复数，<span class="math inline">\(a\)</span>称为<span class="math inline">\(z\)</span>的实部，<span class="math inline">\(b\)</span>称为<span class="math inline">\(z\)</span>的虚部。可以记为<span class="math inline">\(a=Rez,b=Imz\)</span>。</p>
+<p><strong>四则运算</strong></p>
+<p><em>加法</em></p>
+<p><span class="math display">\[
+(a+bi)+(c+di)=(a+c)+(b+d)i
+\]</span></p>
+<p><em>乘法</em></p>
+<p><span class="math display">\[
+(a+bi)(c+di)=(ac-bd)+(ad+bc)i
+\]</span></p>
+<p><em>减法</em></p>
+<p><span class="math display">\[
+(a+bi)-(c+di)=(a-c)+(b-d)i
+\]</span></p>
+<p><em>除法</em></p>
+<p><span class="math display">\[
+\frac{a+bi}{c+di}=(a+bi)\left(\frac{c-di}{c^2+d^2}\right)=\frac{ac+bd}{c^2+d^2}+\frac{bc-ad}{c^2+d^2}i
+\]</span></p>
+<p><strong>模</strong></p>
+<p><span class="math display">\[
+|z|=\sqrt{a^2+b^2}
+\]</span></p>
+<p><strong>共轭</strong></p>
+<p><span class="math display">\[
+\overline{z}=a-bi
+\]</span></p>
+<p><strong>定理2</strong></p>
+<ol type="1">
+<li><span class="math inline">\(Rez=(z+\overline{z})/2,Imz=(z-\overline
+z)/2i\)</span></li>
+<li><span class="math inline">\(z\overline z=|z|^2\)</span></li>
+<li><span class="math inline">\(\overline{z+w}=\overline z+\overline
+w,\overline{zw}=\overline z\cdot\overline w\)</span></li>
+<li><span class="math inline">\(|zw|=|z||w|,|z/w|=|z|/|w|\)</span></li>
+<li><span class="math inline">\(|z|=|\overline z|\)</span></li>
+<li><span class="math inline">\(|Rez|\leq |z|,|Imz|\leq|z|\)</span></li>
+<li><span class="math inline">\(|z+w|\leq|z|+|w|\)</span>当且仅当存在一个<span class="math inline">\(t\geq 0,z=tw\)</span>时取等。</li>
+<li><span class="math inline">\(|z-w|\geq||z|-|w||\)</span></li>
+</ol>
+<h3 id="复数的几何表示">复数的几何表示</h3>
+<p><strong>三角表示法</strong></p>
+<p>复数能用上一节提到的实数对<span class="math inline">\((a,b)\)</span>表示，同时就可以看成平面上的一个点。同样的，也可以用极坐标<span class="math inline">\((r,\theta)\)</span>表示，那么有，</p>
+<p><span class="math display">\[
+a=rcos\theta,b=rsin\theta
+\]</span></p>
+<p>所以复数也可以表示为</p>
+<p><span class="math display">\[
+z=r(cos\theta+isin\theta)
+\]</span></p>
+<p>其中<span class="math inline">\(r=|z|\)</span>，<span class="math inline">\(\theta\)</span>称为辐角，记为<span class="math inline">\(\theta=Argz\)</span>。显然若<span class="math inline">\(\theta\)</span>是辐角，那么<span class="math inline">\(\theta+2k\pi\)</span>也是辐角。但在<span class="math inline">\(Argz\)</span>中，只有一个辐角满足<span class="math inline">\(-\pi&lt;\theta\leq\pi\)</span>，称为辐角的主值，记为<span class="math inline">\(argz\)</span>，所以有</p>
+<p><span class="math display">\[
+Argz=argz+2k\pi,\quad k\in Z
+\]</span></p>
+<p>特别注意，模为0的复数的辐角没有意义。</p>
+<p><strong>指数表示法</strong></p>
+<p>由欧拉公式</p>
+<p><span class="math display">\[
+e^{i\theta}=cos\theta+isin\theta
+\]</span></p>
+<p>得到</p>
+<p><span class="math display">\[
+z=re^{i\theta}
+\]</span></p>
+<p><strong>de Moivre公式</strong></p>
+<p>设<span class="math inline">\(z_1=r_1(cos\theta_1+isin\theta_1),\cdots,z_n=r_n(cos\theta_n+isin\theta_n)\)</span>是给定的n个复数，数学归纳法可知</p>
+<p><span class="math display">\[
+z_1\cdots z_n=r_1\cdots
+r_n[cos(\theta_1+\cdots+\theta_n)+isin(\theta_1+\cdots+\theta_n)]
+\]</span></p>
+<p>作为特殊情况，有</p>
+<p><span class="math display">\[
+z^n=r^n(\cos n\theta+i\sin n\theta)
+\]</span></p>
+<p>同样对于负整数也是成立的</p>
+<p><span class="math display">\[
+z^{-n}=r^{-n}(\cos(-n\theta)+i\sin(-n\theta))
 \]</span></p>
 
 
@@ -235,12 +300,12 @@ P(E)=\frac{M}{N}
                 
                     
 <article class="">
-    <a href="/p/%E5%A4%8D%E5%8F%98%E5%87%BD%E6%95%B0%E6%95%B4%E7%90%86/">
+    <a href="/p/%E6%A6%82%E7%8E%87%E8%AE%BA%E4%B8%8E%E6%95%B0%E7%90%86%E7%BB%9F%E8%AE%A1%E6%95%B4%E7%90%86/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">复变函数整理</h2>
+            <h2 class="article-title">概率论与数理统计整理</h2>
         </div>
     </a>
 </article>
@@ -458,17 +523,10 @@ P(E)=\frac{M}{N}
                 <div class="widget--toc">
                     <nav id="TableOfContents">
   <ol>
-    <li><a href="#基本概念">基本概念</a>
+    <li><a href="#复数与复变函数">复数与复变函数</a>
       <ol>
-        <li><a href="#随机试验e">随机试验E</a></li>
-        <li><a href="#样本空间omega">样本空间<span class="math inline">\(\Omega\)</span></a></li>
-        <li><a href="#频率">频率</a></li>
-        <li><a href="#概率">概率</a></li>
-      </ol>
-    </li>
-    <li><a href="#古典概率">古典概率</a>
-      <ol>
-        <li><a href="#定义">定义</a></li>
+        <li><a href="#复数的定义及其运算">复数的定义及其运算</a></li>
+        <li><a href="#复数的几何表示">复数的几何表示</a></li>
       </ol>
     </li>
   </ol>
