@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='概率论与数理统计的学习笔记'><title>概率论与数理统计整理</title>
+
+<link rel='canonical' href='https://kegalas.top/p/%E6%A6%82%E7%8E%87%E8%AE%BA%E4%B8%8E%E6%95%B0%E7%90%86%E7%BB%9F%E8%AE%A1%E6%95%B4%E7%90%86/'>
+
+<link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='概率论与数理统计整理'>
+<meta property='og:description' content='概率论与数理统计的学习笔记'>
+<meta property='og:url' content='https://kegalas.top/p/%E6%A6%82%E7%8E%87%E8%AE%BA%E4%B8%8E%E6%95%B0%E7%90%86%E7%BB%9F%E8%AE%A1%E6%95%B4%E7%90%86/'>
+<meta property='og:site_name' content='KegalaS的个人博客'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='数学' /><meta property='article:tag' content='大学' /><meta property='article:published_time' content='2022-08-30T10:41:24&#43;08:00'/><meta property='article:modified_time' content='2022-08-30T10:41:24&#43;08:00'/>
+<meta name="twitter:title" content="概率论与数理统计整理">
+<meta name="twitter:description" content="概率论与数理统计的学习笔记">
+    <link rel="shortcut icon" href="favicon-16x16.png" />
+
+    </head>
+    <body class="
+    article-page has-toc
+">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex 
+    
+        extended
+    
+">
+    
+        <div id="article-toolbar">
+            <a href="/" class="back-home">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="15 6 9 12 15 18" />
+</svg>
+
+
+
+                <span>返回</span>
+            </a>
+        </div>
+    
+<main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/%E6%95%B0%E5%AD%A6/" >
+                数学
+            </a>
+        
+    </header>
+    
+
+    <h2 class="article-title">
+        <a href="/p/%E6%A6%82%E7%8E%87%E8%AE%BA%E4%B8%8E%E6%95%B0%E7%90%86%E7%BB%9F%E8%AE%A1%E6%95%B4%E7%90%86/">概率论与数理统计整理</a>
+    </h2>
+
+    
+    <h3 class="article-subtitle">
+        概率论与数理统计的学习笔记
+    </h3>
+    
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Aug 30, 2022</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 3 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+</div>
+</header>
+
+    <section class="article-content">
+    
+
+<h2 id="基本概念">基本概念</h2>
+<h3 id="随机试验e">随机试验E</h3>
+<p>针对随机现象的观察、记录、试验（广义）。</p>
+<p>特点：</p>
+<ol type="1">
+<li>可以在相同的条件下重复进行</li>
+<li>每次试验的可能结果不止一个，并且能事先明确试验的所有可能结果</li>
+<li>但一次试验前不能确定哪个结果会出现</li>
+</ol>
+<h3 id="样本空间omega">样本空间<span class="math inline">\(\Omega\)</span></h3>
+<p>随机试验<span class="math inline">\(E\)</span>的所有结果构成的集合为<span class="math inline">\(E\)</span>的样本空间<span class="math inline">\(\Omega\)</span>，记为<span class="math inline">\(\Omega\{\omega\}\)</span>，每个结果<span class="math inline">\(\omega\)</span>是<span class="math inline">\(\Omega\)</span>中的一个元素，称为样本点。</p>
+<h3 id="频率">频率</h3>
+<p>在相同的条件下，进行了<span class="math inline">\(n\)</span>次试验，其中事件<span class="math inline">\(A\)</span>发生的次数<span class="math inline">\(n_A\)</span>称为事件<span class="math inline">\(A\)</span>发生的频数，比值<span class="math inline">\(n_A/n\)</span>称为事件<span class="math inline">\(A\)</span>发生的频率，记为<span class="math inline">\(f_n(A)\)</span></p>
+<h3 id="概率">概率</h3>
+<p>定义1: 事件A发生频率的稳定值<span class="math inline">\(p\)</span>称为它的概率<span class="math inline">\(P(A)\)</span>，即<span class="math inline">\(P(A)=p\)</span></p>
+<p>定义2: 随机试验<span class="math inline">\(E\)</span>，样本空间<span class="math inline">\(\Omega\)</span>，对于<span class="math inline">\(E\)</span>的每一事件<span class="math inline">\(A\)</span>赋予一个实数，记为<span class="math inline">\(P(A)\)</span>，如果集合函数满足以下条件，P(A)称为事件A的概率
+1. 非负性: 对于每一个事件<span class="math inline">\(A\)</span>，有<span class="math inline">\(P(A)\geq0\)</span> 2. 规范性: 对于必然事件<span class="math inline">\(\Omega\)</span>，有<span class="math inline">\(P(\Omega)=1\)</span> 3. 可列可加性: 设<span class="math inline">\(A_1,A_2,\cdots\)</span>是两两不相容的事件，即对于<span class="math inline">\(A_iA_j=\empty,i\neq j(i,j=1,2,\cdots)\)</span></p>
+<p><span class="math display">\[
+P(\bigcup^\infty_{i=1}A_i)=\sum^\infty_{i=1}P(A_i)
+\]</span></p>
+<p><strong>性质</strong></p>
+<ol type="1">
+<li><span class="math inline">\(P(\empty)=0\)</span></li>
+<li>可列可加性（见上）</li>
+<li>若<span class="math inline">\(A\subset B\)</span>，则<span class="math inline">\(P(B-A)=P(B)-P(A)\)</span></li>
+<li>任意事件<span class="math inline">\(A\)</span>，<span class="math inline">\(P(A)\leq 1\)</span></li>
+<li>任意事件<span class="math inline">\(A\)</span>，<span class="math inline">\(P(\overline{A})=1-P(A)\)</span></li>
+<li>加法公式，对任意事件<span class="math inline">\(A,B\)</span>，<span class="math inline">\(P(A\cup
+B)=P(A)+P(B)-P(AB)\)</span>，扩展情况同容斥原理。</li>
+<li>极限性：设<span class="math inline">\(A_1\subset
+A_2\subset\cdots\)</span>，则<span class="math inline">\(\lim_{n\to\infty}P(A_n)=P(\bigcup^{\infty}_{i=1}A_i)\)</span>；设<span class="math inline">\(A_1\supset A_2\supset\cdots\)</span>，则<span class="math inline">\(\lim_{n\to\infty}P(A_n)=P(\bigcap^{\infty}_{i=1}A_i)\)</span></li>
+</ol>
+<p>注意，没有以下性质</p>
+<ol type="1">
+<li><span class="math inline">\(P(A)=0\)</span>不能推出<span class="math inline">\(A=\empty\)</span></li>
+<li><span class="math inline">\(P(A)=1\)</span>不能推出<span class="math inline">\(A=\Omega\)</span></li>
+<li><span class="math inline">\(P(A)=P(B)\)</span>不能推出<span class="math inline">\(A=B\)</span></li>
+</ol>
+<h2 id="古典概率">古典概率</h2>
+<h3 id="定义">定义</h3>
+<p>设一个试验有<span class="math inline">\(N\)</span>个等可能的结果，而事件<span class="math inline">\(E\)</span>恰包含其中的<span class="math inline">\(M\)</span>个结果，则事件<span class="math inline">\(E\)</span>的概率，记为<span class="math inline">\(P(E)\)</span>，定义为</p>
+<p><span class="math display">\[
+P(E)=\frac{M}{N}
+\]</span></p>
+
+
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/%E6%95%B0%E5%AD%A6/">数学</a>
+        
+            <a href="/tags/%E5%A4%A7%E5%AD%A6/">大学</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css"integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js"integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8"crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js"integrity="sha384-vZTG03m&#43;2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl"crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.querySelector(`.article-content`), {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ]
+        });})
+</script>
+    
+</article>
+
+    <aside class="related-contents--wrapper">
+    
+    
+        <h2 class="section-title">相关文章</h2>
+        <div class="related-contents">
+            <div class="flex article-list--tile">
+                
+                    
+<article class="">
+    <a href="/p/%E7%A6%BB%E6%95%A3%E6%95%B0%E5%AD%A6%E6%95%B4%E7%90%86/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">离散数学整理</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="">
+    <a href="/p/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0%E6%95%B4%E7%90%86/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">线性代数整理</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="">
+    <a href="/p/%E6%88%91%E7%9A%84%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E4%B8%8B%E5%86%8C%E8%B5%84%E6%96%99%E6%95%B4%E7%90%86/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">我的高等数学下册资料整理</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="">
+    <a href="/p/%E6%88%91%E7%9A%84%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E4%B8%8A%E5%86%8C%E8%B5%84%E6%96%99%E6%95%B4%E7%90%86/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">我的高等数学上册资料整理</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="">
+    <a href="/p/%E6%88%91%E7%9A%84%E9%AB%98%E4%B8%AD%E8%B5%84%E6%96%99%E6%95%B4%E7%90%86/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">我的高中资料整理</h2>
+        </div>
+    </a>
+</article>
+                
+            </div>
+        </div>
+    
+</aside>
+
+     
+    
+        
+    <script src="https://utteranc.es/client.js" 
+        repo="kegalas/blogComments"
+        issue-term="pathname"
+        
+        crossorigin="anonymous"
+        async
+        >
+</script>
+
+<style>
+    .utterances {
+        max-width: unset;
+    }
+</style>
+
+<script>
+    function setUtterancesTheme(theme) {
+        let utterances = document.querySelector('.utterances iframe');
+        if (utterances) {
+            utterances.contentWindow.postMessage(
+                {
+                    type: 'set-theme',
+                    theme: `github-${theme}`
+                },
+                'https://utteranc.es'
+            );
+        }
+    }
+
+    addEventListener('message', event => {
+        if (event.origin !== 'https://utteranc.es') return;
+        setUtterancesTheme(document.documentElement.dataset.scheme)
+    });
+
+    window.addEventListener('onColorSchemeChange', (e) => {
+        setUtterancesTheme(e.detail)
+    })
+</script>
+
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2022 KegalaS的个人博客
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.4.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    
+        <aside class="sidebar right-sidebar sticky">
+            <section class="widget archives">
+                <div class="widget-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+                </div>
+                <h2 class="widget-title section-title">目录</h2>
+                
+                <div class="widget--toc">
+                    <nav id="TableOfContents">
+  <ol>
+    <li><a href="#基本概念">基本概念</a>
+      <ol>
+        <li><a href="#随机试验e">随机试验E</a></li>
+        <li><a href="#样本空间omega">样本空间<span class="math inline">\(\Omega\)</span></a></li>
+        <li><a href="#频率">频率</a></li>
+        <li><a href="#概率">概率</a></li>
+      </ol>
+    </li>
+    <li><a href="#古典概率">古典概率</a>
+      <ol>
+        <li><a href="#定义">定义</a></li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+                </div>
+            </section>
+        </aside>
+    
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                defer="false"
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
