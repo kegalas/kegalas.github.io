@@ -6,7 +6,227 @@
         <description>Recent content on KegalaS的个人博客</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Sun, 28 Aug 2022 16:18:50 +0800</lastBuildDate><atom:link href="https://kegalas.top/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Fri, 02 Sep 2022 11:22:59 +0800</lastBuildDate><atom:link href="https://kegalas.top/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>电路基础整理</title>
+        <link>https://kegalas.top/p/%E7%94%B5%E8%B7%AF%E5%9F%BA%E7%A1%80%E6%95%B4%E7%90%86/</link>
+        <pubDate>Fri, 02 Sep 2022 11:22:59 +0800</pubDate>
+        
+        <guid>https://kegalas.top/p/%E7%94%B5%E8%B7%AF%E5%9F%BA%E7%A1%80%E6%95%B4%E7%90%86/</guid>
+        <description>
+
+&lt;h2 id=&#34;电路的基本规律&#34;&gt;电路的基本规律&lt;/h2&gt;
+&lt;h3 id=&#34;集中或集总参数电路&#34;&gt;集中（或集总）参数电路&lt;/h3&gt;
+&lt;p&gt;实际电路的几何尺寸远小于工作波长时，我们用能足够精确反映其电磁性质的一些理想电路元件或他们的组合来模拟实际元件，这种理想化的电路元件称为集中参数元件。由其连接组成的电路称为集中参数电路。&lt;/p&gt;
+&lt;p&gt;而一些远距离输电线就不能看做集中参数电路，称作分布参数电路，要用其他理论来研究。&lt;/p&gt;
+&lt;h3 id=&#34;电流&#34;&gt;电流&lt;/h3&gt;
+&lt;p&gt;单位时间内通过导体横截面的电荷量&lt;span class=&#34;math inline&#34;&gt;\(q\)&lt;/span&gt;定义为电流强度，简称电流，用&lt;span class=&#34;math inline&#34;&gt;\(i,i(t)\)&lt;/span&gt;表示，即&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+i(t)=\frac{dq(t)}{dt}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;电荷量的单位是库伦，时间的单位是秒，电流的单位是安培。&lt;/p&gt;
+&lt;p&gt;方向，一般把正电荷运动的方向定义为电流的实际方向。但在具体电路中，电流的实际方向常常随时间变化。通常在分析电路时会指定某一方向为电流方向，称为电流的参考方向。如果参考方向和实际方向一致，则电流&lt;span class=&#34;math inline&#34;&gt;\(i&amp;gt;0\)&lt;/span&gt;，否则&lt;span class=&#34;math inline&#34;&gt;\(i&amp;lt;0\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;电流的参考方向是任意指定的，一般用箭头和双下标表示，如&lt;span class=&#34;math inline&#34;&gt;\(i_{ab}\)&lt;/span&gt;指&lt;span class=&#34;math inline&#34;&gt;\(a\)&lt;/span&gt;到&lt;span class=&#34;math inline&#34;&gt;\(b\)&lt;/span&gt;的电流。&lt;/p&gt;
+&lt;h3 id=&#34;电压&#34;&gt;电压&lt;/h3&gt;
+&lt;p&gt;电路中，电场力将单位正电荷从某点移到另一点所作的功定义为该两点之间的电压，也称电位差，用&lt;span class=&#34;math inline&#34;&gt;\(u,u(t)\)&lt;/span&gt;表示，即&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+u(t)=\frac{dw(t)}{dq(t)}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;功的单位是焦耳，电压的单位是伏特。&lt;/p&gt;
+&lt;p&gt;通常，高电位为正极，低电位为负极。&lt;/p&gt;
+&lt;p&gt;和电路的参考方向一样，我们也可以为电压指定参考极性。在分析电路问题时，先指定电压的参考极性，&lt;span class=&#34;math inline&#34;&gt;\(+\)&lt;/span&gt;表示高电位，&lt;span class=&#34;math inline&#34;&gt;\(-\)&lt;/span&gt;表示低电位。如果电压的参考极性和实际极性一致，则&lt;span class=&#34;math inline&#34;&gt;\(u&amp;gt;0\)&lt;/span&gt;，否则&lt;span class=&#34;math inline&#34;&gt;\(u&amp;lt;0\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;电流参考方向给定，若电流流入的方向是电压的高电位，流出的方向是电压的低电位，则称此时电流、电压是关联参考方向。反之为非关联参考方向。&lt;/p&gt;
+&lt;h3 id=&#34;能量&#34;&gt;能量&lt;/h3&gt;
+&lt;p&gt;正电荷从电路元件上电压的正极经元件移动到负极是电场力对电荷做功的结果，此时元件吸收能量。反之发出能量。&lt;/p&gt;
+&lt;p&gt;若某元件两端的电压为&lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt;，在&lt;span class=&#34;math inline&#34;&gt;\(dt\)&lt;/span&gt;时间内流过该元件的电荷量为&lt;span class=&#34;math inline&#34;&gt;\(dq\)&lt;/span&gt;，那么，根据电压的定义式，电场力做的功&lt;span class=&#34;math inline&#34;&gt;\(dw(t)=u(t)dq(t)\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;在关联参考方向时，&lt;span class=&#34;math inline&#34;&gt;\(dw(t)=u(t)i(t)dt\)&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;功率&#34;&gt;功率&lt;/h3&gt;
+&lt;p&gt;能量对时间的变化率称为电功率。&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+p(t)=u(t)i(t)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;基尔霍夫定律&#34;&gt;基尔霍夫定律&lt;/h3&gt;
+
+
+</description>
+        </item>
+        <item>
+        <title>复变函数整理</title>
+        <link>https://kegalas.top/p/%E5%A4%8D%E5%8F%98%E5%87%BD%E6%95%B0%E6%95%B4%E7%90%86/</link>
+        <pubDate>Thu, 01 Sep 2022 13:44:54 +0800</pubDate>
+        
+        <guid>https://kegalas.top/p/%E5%A4%8D%E5%8F%98%E5%87%BD%E6%95%B0%E6%95%B4%E7%90%86/</guid>
+        <description>
+
+&lt;h2 id=&#34;复数与复变函数&#34;&gt;复数与复变函数&lt;/h2&gt;
+&lt;h3 id=&#34;复数的定义及其运算&#34;&gt;复数的定义及其运算&lt;/h3&gt;
+&lt;p&gt;把负数定义为一堆有序的实数&lt;span class=&#34;math inline&#34;&gt;\((a,b)\)&lt;/span&gt;，如果用&lt;span class=&#34;math inline&#34;&gt;\(\bm R\)&lt;/span&gt;作为实数集，&lt;span class=&#34;math inline&#34;&gt;\(\bm C\)&lt;/span&gt;为复数集，则&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\bm C = \{(a,b):a\in\bm R,b\in\bm R\}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;定义加法和乘法如下&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+(a,b)+(c,d)=(a+c,b+d)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+(a,b)(c,d)=(ac-bd,ad+bc)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;易知，加法和乘法满足交换率和结合律。&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\((0,0)\)&lt;/span&gt;是零元素，&lt;span class=&#34;math inline&#34;&gt;\((-a,-b)\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\((a,b)\)&lt;/span&gt;的负元素，&lt;span class=&#34;math inline&#34;&gt;\((1,0)\)&lt;/span&gt;是乘法的单位元素。每个非零元素&lt;span class=&#34;math inline&#34;&gt;\((a,b)\)&lt;/span&gt;的逆元素是&lt;span class=&#34;math inline&#34;&gt;\((\frac{a}{a^2+b^2},-\frac{b}{a^2+b^2})\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;此外还满足分配律&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+[(a,b)+(c,d)](e,f) = (a,b)(e,f)+(c,d)(e,f)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;可以直接记&lt;span class=&#34;math inline&#34;&gt;\((a,0)=a\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;对于&lt;span class=&#34;math inline&#34;&gt;\((0,1)\)&lt;/span&gt;有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+(0,1)^2=(-1,0)=-1
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;记为&lt;span class=&#34;math inline&#34;&gt;\((0,1)=i\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;同样有&lt;span class=&#34;math inline&#34;&gt;\((0,b)=(b,0)(0,1)=bi\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;于是每一个复数都可以写成&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+(a,b)=(a,0)+(0,b)=a+bi
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定理1&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;复数域不是有序域，换句话说，不可以比较大小。&lt;/p&gt;
+&lt;p&gt;出于方便和其他一些原因，用&lt;span class=&#34;math inline&#34;&gt;\(z=a+bi\)&lt;/span&gt;来描述复数，&lt;span class=&#34;math inline&#34;&gt;\(a\)&lt;/span&gt;称为&lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;的实部，&lt;span class=&#34;math inline&#34;&gt;\(b\)&lt;/span&gt;称为&lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;的虚部。可以记为&lt;span class=&#34;math inline&#34;&gt;\(a=Rez,b=Imz\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;四则运算&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;加法&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+(a+bi)+(c+di)=(a+c)+(b+d)i
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;乘法&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+(a+bi)(c+di)=(ac-bd)+(ad+bc)i
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;减法&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+(a+bi)-(c+di)=(a-c)+(b-d)i
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;除法&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\frac{a+bi}{c+di}=(a+bi)\left(\frac{c-di}{c^2+d^2}\right)=\frac{ac+bd}{c^2+d^2}+\frac{bc-ad}{c^2+d^2}i
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;模&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+|z|=\sqrt{a^2+b^2}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;共轭&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\overline{z}=a-bi
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定理2&lt;/strong&gt;&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(Rez=(z+\overline{z})/2,Imz=(z-\overline
+z)/2i\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(z\overline z=|z|^2\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(\overline{z+w}=\overline z+\overline
+w,\overline{zw}=\overline z\cdot\overline w\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(|zw|=|z||w|,|z/w|=|z|/|w|\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(|z|=|\overline z|\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(|Rez|\leq |z|,|Imz|\leq|z|\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(|z+w|\leq|z|+|w|\)&lt;/span&gt;当且仅当存在一个&lt;span class=&#34;math inline&#34;&gt;\(t\geq 0,z=tw\)&lt;/span&gt;时取等。&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(|z-w|\geq||z|-|w||\)&lt;/span&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;复数的几何表示&#34;&gt;复数的几何表示&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;三角表示法&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;复数能用上一节提到的实数对&lt;span class=&#34;math inline&#34;&gt;\((a,b)\)&lt;/span&gt;表示，同时就可以看成平面上的一个点。同样的，也可以用极坐标&lt;span class=&#34;math inline&#34;&gt;\((r,\theta)\)&lt;/span&gt;表示，那么有，&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+a=rcos\theta,b=rsin\theta
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;所以复数也可以表示为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+z=r(cos\theta+isin\theta)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(r=|z|\)&lt;/span&gt;，&lt;span class=&#34;math inline&#34;&gt;\(\theta\)&lt;/span&gt;称为辐角，记为&lt;span class=&#34;math inline&#34;&gt;\(\theta=Argz\)&lt;/span&gt;。显然若&lt;span class=&#34;math inline&#34;&gt;\(\theta\)&lt;/span&gt;是辐角，那么&lt;span class=&#34;math inline&#34;&gt;\(\theta+2k\pi\)&lt;/span&gt;也是辐角。但在&lt;span class=&#34;math inline&#34;&gt;\(Argz\)&lt;/span&gt;中，只有一个辐角满足&lt;span class=&#34;math inline&#34;&gt;\(-\pi&amp;lt;\theta\leq\pi\)&lt;/span&gt;，称为辐角的主值，记为&lt;span class=&#34;math inline&#34;&gt;\(argz\)&lt;/span&gt;，所以有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+Argz=argz+2k\pi,\quad k\in Z
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;特别注意，模为0的复数的辐角没有意义。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;指数表示法&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;由欧拉公式&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+e^{i\theta}=cos\theta+isin\theta
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;得到&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+z=re^{i\theta}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;de Moivre公式&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(z_1=r_1(cos\theta_1+isin\theta_1),\cdots,z_n=r_n(cos\theta_n+isin\theta_n)\)&lt;/span&gt;是给定的n个复数，数学归纳法可知&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+z_1\cdots z_n=r_1\cdots
+r_n[cos(\theta_1+\cdots+\theta_n)+isin(\theta_1+\cdots+\theta_n)]
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;作为特殊情况，有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+z^n=r^n(\cos n\theta+i\sin n\theta)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;同样对于负整数也是成立的&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+z^{-n}=r^{-n}(\cos(-n\theta)+i\sin(-n\theta))
+\]&lt;/span&gt;&lt;/p&gt;
+
+
+</description>
+        </item>
+        <item>
+        <title>概率论与数理统计整理</title>
+        <link>https://kegalas.top/p/%E6%A6%82%E7%8E%87%E8%AE%BA%E4%B8%8E%E6%95%B0%E7%90%86%E7%BB%9F%E8%AE%A1%E6%95%B4%E7%90%86/</link>
+        <pubDate>Tue, 30 Aug 2022 10:41:24 +0800</pubDate>
+        
+        <guid>https://kegalas.top/p/%E6%A6%82%E7%8E%87%E8%AE%BA%E4%B8%8E%E6%95%B0%E7%90%86%E7%BB%9F%E8%AE%A1%E6%95%B4%E7%90%86/</guid>
+        <description>
+
+&lt;h2 id=&#34;基本概念&#34;&gt;基本概念&lt;/h2&gt;
+&lt;h3 id=&#34;随机试验e&#34;&gt;随机试验E&lt;/h3&gt;
+&lt;p&gt;针对随机现象的观察、记录、试验（广义）。&lt;/p&gt;
+&lt;p&gt;特点：&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;可以在相同的条件下重复进行&lt;/li&gt;
+&lt;li&gt;每次试验的可能结果不止一个，并且能事先明确试验的所有可能结果&lt;/li&gt;
+&lt;li&gt;但一次试验前不能确定哪个结果会出现&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;样本空间omega&#34;&gt;样本空间&lt;span class=&#34;math inline&#34;&gt;\(\Omega\)&lt;/span&gt;&lt;/h3&gt;
+&lt;p&gt;随机试验&lt;span class=&#34;math inline&#34;&gt;\(E\)&lt;/span&gt;的所有结果构成的集合为&lt;span class=&#34;math inline&#34;&gt;\(E\)&lt;/span&gt;的样本空间&lt;span class=&#34;math inline&#34;&gt;\(\Omega\)&lt;/span&gt;，记为&lt;span class=&#34;math inline&#34;&gt;\(\Omega\{\omega\}\)&lt;/span&gt;，每个结果&lt;span class=&#34;math inline&#34;&gt;\(\omega\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(\Omega\)&lt;/span&gt;中的一个元素，称为样本点。&lt;/p&gt;
+&lt;h3 id=&#34;频率&#34;&gt;频率&lt;/h3&gt;
+&lt;p&gt;在相同的条件下，进行了&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;次试验，其中事件&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;发生的次数&lt;span class=&#34;math inline&#34;&gt;\(n_A\)&lt;/span&gt;称为事件&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;发生的频数，比值&lt;span class=&#34;math inline&#34;&gt;\(n_A/n\)&lt;/span&gt;称为事件&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;发生的频率，记为&lt;span class=&#34;math inline&#34;&gt;\(f_n(A)\)&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;概率&#34;&gt;概率&lt;/h3&gt;
+&lt;p&gt;定义1: 事件A发生频率的稳定值&lt;span class=&#34;math inline&#34;&gt;\(p\)&lt;/span&gt;称为它的概率&lt;span class=&#34;math inline&#34;&gt;\(P(A)\)&lt;/span&gt;，即&lt;span class=&#34;math inline&#34;&gt;\(P(A)=p\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;定义2: 随机试验&lt;span class=&#34;math inline&#34;&gt;\(E\)&lt;/span&gt;，样本空间&lt;span class=&#34;math inline&#34;&gt;\(\Omega\)&lt;/span&gt;，对于&lt;span class=&#34;math inline&#34;&gt;\(E\)&lt;/span&gt;的每一事件&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;赋予一个实数，记为&lt;span class=&#34;math inline&#34;&gt;\(P(A)\)&lt;/span&gt;，如果集合函数满足以下条件，P(A)称为事件A的概率
+1. 非负性: 对于每一个事件&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;，有&lt;span class=&#34;math inline&#34;&gt;\(P(A)\geq0\)&lt;/span&gt; 2. 规范性: 对于必然事件&lt;span class=&#34;math inline&#34;&gt;\(\Omega\)&lt;/span&gt;，有&lt;span class=&#34;math inline&#34;&gt;\(P(\Omega)=1\)&lt;/span&gt; 3. 可列可加性: 设&lt;span class=&#34;math inline&#34;&gt;\(A_1,A_2,\cdots\)&lt;/span&gt;是两两不相容的事件，即对于&lt;span class=&#34;math inline&#34;&gt;\(A_iA_j=\empty,i\neq j(i,j=1,2,\cdots)\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+P(\bigcup^\infty_{i=1}A_i)=\sum^\infty_{i=1}P(A_i)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;性质&lt;/strong&gt;&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(P(\empty)=0\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;可列可加性（见上）&lt;/li&gt;
+&lt;li&gt;若&lt;span class=&#34;math inline&#34;&gt;\(A\subset B\)&lt;/span&gt;，则&lt;span class=&#34;math inline&#34;&gt;\(P(B-A)=P(B)-P(A)\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;任意事件&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;，&lt;span class=&#34;math inline&#34;&gt;\(P(A)\leq 1\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;任意事件&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;，&lt;span class=&#34;math inline&#34;&gt;\(P(\overline{A})=1-P(A)\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;加法公式，对任意事件&lt;span class=&#34;math inline&#34;&gt;\(A,B\)&lt;/span&gt;，&lt;span class=&#34;math inline&#34;&gt;\(P(A\cup
+B)=P(A)+P(B)-P(AB)\)&lt;/span&gt;，扩展情况同容斥原理。&lt;/li&gt;
+&lt;li&gt;极限性：设&lt;span class=&#34;math inline&#34;&gt;\(A_1\subset
+A_2\subset\cdots\)&lt;/span&gt;，则&lt;span class=&#34;math inline&#34;&gt;\(\lim_{n\to\infty}P(A_n)=P(\bigcup^{\infty}_{i=1}A_i)\)&lt;/span&gt;；设&lt;span class=&#34;math inline&#34;&gt;\(A_1\supset A_2\supset\cdots\)&lt;/span&gt;，则&lt;span class=&#34;math inline&#34;&gt;\(\lim_{n\to\infty}P(A_n)=P(\bigcap^{\infty}_{i=1}A_i)\)&lt;/span&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;注意，没有以下性质&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(P(A)=0\)&lt;/span&gt;不能推出&lt;span class=&#34;math inline&#34;&gt;\(A=\empty\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(P(A)=1\)&lt;/span&gt;不能推出&lt;span class=&#34;math inline&#34;&gt;\(A=\Omega\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(P(A)=P(B)\)&lt;/span&gt;不能推出&lt;span class=&#34;math inline&#34;&gt;\(A=B\)&lt;/span&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;古典概率&#34;&gt;古典概率&lt;/h2&gt;
+&lt;h3 id=&#34;定义&#34;&gt;定义&lt;/h3&gt;
+&lt;p&gt;设一个试验有&lt;span class=&#34;math inline&#34;&gt;\(N\)&lt;/span&gt;个等可能的结果，而事件&lt;span class=&#34;math inline&#34;&gt;\(E\)&lt;/span&gt;恰包含其中的&lt;span class=&#34;math inline&#34;&gt;\(M\)&lt;/span&gt;个结果，则事件&lt;span class=&#34;math inline&#34;&gt;\(E\)&lt;/span&gt;的概率，记为&lt;span class=&#34;math inline&#34;&gt;\(P(E)\)&lt;/span&gt;，定义为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+P(E)=\frac{M}{N}
+\]&lt;/span&gt;&lt;/p&gt;
+
+
+</description>
+        </item>
+        <item>
         <title>Msys2中使用mingw64的G&#43;&#43;编译，运行报错无法找到入口</title>
         <link>https://kegalas.top/p/msys2%E4%B8%AD%E4%BD%BF%E7%94%A8mingw64%E7%9A%84g-%E7%BC%96%E8%AF%91%E8%BF%90%E8%A1%8C%E6%8A%A5%E9%94%99%E6%97%A0%E6%B3%95%E6%89%BE%E5%88%B0%E5%85%A5%E5%8F%A3/</link>
         <pubDate>Sun, 28 Aug 2022 16:18:50 +0800</pubDate>
@@ -4544,6 +4764,33 @@ F=\frac{1}{4\pi\varepsilon_0}\frac{q_1q_2}{r^2}
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;电场强度叠加原理&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;点电荷系在某点&lt;span class=&#34;math inline&#34;&gt;\(P\)&lt;/span&gt;产生的电场的电场强度等于各点电荷单独在该点产生的电场强度的矢量和。&lt;/p&gt;
+&lt;h3 id=&#34;电通量高斯定理&#34;&gt;电通量、高斯定理&lt;/h3&gt;
+&lt;h4 id=&#34;电场线&#34;&gt;电场线&lt;/h4&gt;
+&lt;p&gt;形象描述场强分布的空间曲线。&lt;/p&gt;
+&lt;p&gt;曲线上每一点的切斜方向为电场方向&lt;/p&gt;
+&lt;p&gt;通过垂直于电场方向单位面积电场线数为该点电场强度的大小。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;特点&lt;/strong&gt;&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;始于正电荷（或无穷远），终于负电荷（或无穷远），不会在没有电荷的地方中断&lt;/li&gt;
+&lt;li&gt;若体系正负电荷一样多，则正电荷发出的电场线全部终止与负电荷&lt;/li&gt;
+&lt;li&gt;电场线不是闭合曲线，电场线不会相交。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id=&#34;电通量&#34;&gt;电通量&lt;/h4&gt;
+&lt;p&gt;穿过某一有向曲面的电场线条数，称为通过该面的电通量，用&lt;span class=&#34;math inline&#34;&gt;\(\varPhi_e\)&lt;/span&gt;表示。&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+d\varPhi_e=E_ndS=Ecos\theta dS
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;直观上理解，就是将这个微小平面投影到垂直于电场线的平面上。用向量表示为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+d\varPhi_e = \bm E\cdot d\bm S
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;积分得&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\varPhi_e=\int d\varPhi_e  = \int_S\bm E\cdot d\bm S
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h4 id=&#34;高斯定理&#34;&gt;高斯定理&lt;/h4&gt;
+&lt;p&gt;真空中的任何静电场中，穿过任一闭合曲面的电通量，在数值上等于该闭合曲面内包围的电量的代数和
+乘以&lt;span class=&#34;math inline&#34;&gt;\(1/\varepsilon_0\)&lt;/span&gt;。&lt;/p&gt;
 
 
 </description>

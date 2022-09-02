@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='电路基础的学习笔记'><title>电路基础整理</title>
+
+<link rel='canonical' href='https://kegalas.top/p/%E7%94%B5%E8%B7%AF%E5%9F%BA%E7%A1%80%E6%95%B4%E7%90%86/'>
+
+<link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='电路基础整理'>
+<meta property='og:description' content='电路基础的学习笔记'>
+<meta property='og:url' content='https://kegalas.top/p/%E7%94%B5%E8%B7%AF%E5%9F%BA%E7%A1%80%E6%95%B4%E7%90%86/'>
+<meta property='og:site_name' content='KegalaS的个人博客'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='物理' /><meta property='article:tag' content='电路' /><meta property='article:tag' content='大学' /><meta property='article:published_time' content='2022-09-02T11:22:59&#43;08:00'/><meta property='article:modified_time' content='2022-09-02T11:22:59&#43;08:00'/>
+<meta name="twitter:title" content="电路基础整理">
+<meta name="twitter:description" content="电路基础的学习笔记">
+    <link rel="shortcut icon" href="favicon-16x16.png" />
+
+    </head>
+    <body class="
+    article-page has-toc
+">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex 
+    
+        extended
+    
+">
+    
+        <div id="article-toolbar">
+            <a href="/" class="back-home">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="15 6 9 12 15 18" />
+</svg>
+
+
+
+                <span>返回</span>
+            </a>
+        </div>
+    
+<main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/%E7%89%A9%E7%90%86/" >
+                物理
+            </a>
+        
+    </header>
+    
+
+    <h2 class="article-title">
+        <a href="/p/%E7%94%B5%E8%B7%AF%E5%9F%BA%E7%A1%80%E6%95%B4%E7%90%86/">电路基础整理</a>
+    </h2>
+
+    
+    <h3 class="article-subtitle">
+        电路基础的学习笔记
+    </h3>
+    
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Sep 02, 2022</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 2 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+</div>
+</header>
+
+    <section class="article-content">
+    
+
+<h2 id="电路的基本规律">电路的基本规律</h2>
+<h3 id="集中或集总参数电路">集中（或集总）参数电路</h3>
+<p>实际电路的几何尺寸远小于工作波长时，我们用能足够精确反映其电磁性质的一些理想电路元件或他们的组合来模拟实际元件，这种理想化的电路元件称为集中参数元件。由其连接组成的电路称为集中参数电路。</p>
+<p>而一些远距离输电线就不能看做集中参数电路，称作分布参数电路，要用其他理论来研究。</p>
+<h3 id="电流">电流</h3>
+<p>单位时间内通过导体横截面的电荷量<span class="math inline">\(q\)</span>定义为电流强度，简称电流，用<span class="math inline">\(i,i(t)\)</span>表示，即</p>
+<p><span class="math display">\[
+i(t)=\frac{dq(t)}{dt}
+\]</span></p>
+<p>电荷量的单位是库伦，时间的单位是秒，电流的单位是安培。</p>
+<p>方向，一般把正电荷运动的方向定义为电流的实际方向。但在具体电路中，电流的实际方向常常随时间变化。通常在分析电路时会指定某一方向为电流方向，称为电流的参考方向。如果参考方向和实际方向一致，则电流<span class="math inline">\(i&gt;0\)</span>，否则<span class="math inline">\(i&lt;0\)</span>。</p>
+<p>电流的参考方向是任意指定的，一般用箭头和双下标表示，如<span class="math inline">\(i_{ab}\)</span>指<span class="math inline">\(a\)</span>到<span class="math inline">\(b\)</span>的电流。</p>
+<h3 id="电压">电压</h3>
+<p>电路中，电场力将单位正电荷从某点移到另一点所作的功定义为该两点之间的电压，也称电位差，用<span class="math inline">\(u,u(t)\)</span>表示，即</p>
+<p><span class="math display">\[
+u(t)=\frac{dw(t)}{dq(t)}
+\]</span></p>
+<p>功的单位是焦耳，电压的单位是伏特。</p>
+<p>通常，高电位为正极，低电位为负极。</p>
+<p>和电路的参考方向一样，我们也可以为电压指定参考极性。在分析电路问题时，先指定电压的参考极性，<span class="math inline">\(+\)</span>表示高电位，<span class="math inline">\(-\)</span>表示低电位。如果电压的参考极性和实际极性一致，则<span class="math inline">\(u&gt;0\)</span>，否则<span class="math inline">\(u&lt;0\)</span>。</p>
+<p>电流参考方向给定，若电流流入的方向是电压的高电位，流出的方向是电压的低电位，则称此时电流、电压是关联参考方向。反之为非关联参考方向。</p>
+<h3 id="能量">能量</h3>
+<p>正电荷从电路元件上电压的正极经元件移动到负极是电场力对电荷做功的结果，此时元件吸收能量。反之发出能量。</p>
+<p>若某元件两端的电压为<span class="math inline">\(u\)</span>，在<span class="math inline">\(dt\)</span>时间内流过该元件的电荷量为<span class="math inline">\(dq\)</span>，那么，根据电压的定义式，电场力做的功<span class="math inline">\(dw(t)=u(t)dq(t)\)</span>。</p>
+<p>在关联参考方向时，<span class="math inline">\(dw(t)=u(t)i(t)dt\)</span></p>
+<h3 id="功率">功率</h3>
+<p>能量对时间的变化率称为电功率。</p>
+<p><span class="math display">\[
+p(t)=u(t)i(t)
+\]</span></p>
+<h3 id="基尔霍夫定律">基尔霍夫定律</h3>
+
+
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/%E7%89%A9%E7%90%86/">物理</a>
+        
+            <a href="/tags/%E7%94%B5%E8%B7%AF/">电路</a>
+        
+            <a href="/tags/%E5%A4%A7%E5%AD%A6/">大学</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css"integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js"integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8"crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js"integrity="sha384-vZTG03m&#43;2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl"crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.querySelector(`.article-content`), {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ]
+        });})
+</script>
+    
+</article>
+
+    <aside class="related-contents--wrapper">
+    
+    
+        <h2 class="section-title">相关文章</h2>
+        <div class="related-contents">
+            <div class="flex article-list--tile">
+                
+                    
+<article class="">
+    <a href="/p/%E5%A4%A7%E5%AD%A6%E7%89%A9%E7%90%86%E5%85%AC%E5%BC%8F%E6%95%B4%E7%90%86/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">大学物理公式整理</h2>
+        </div>
+    </a>
+</article>
+                
+            </div>
+        </div>
+    
+</aside>
+
+     
+    
+        
+    <script src="https://utteranc.es/client.js" 
+        repo="kegalas/blogComments"
+        issue-term="pathname"
+        
+        crossorigin="anonymous"
+        async
+        >
+</script>
+
+<style>
+    .utterances {
+        max-width: unset;
+    }
+</style>
+
+<script>
+    function setUtterancesTheme(theme) {
+        let utterances = document.querySelector('.utterances iframe');
+        if (utterances) {
+            utterances.contentWindow.postMessage(
+                {
+                    type: 'set-theme',
+                    theme: `github-${theme}`
+                },
+                'https://utteranc.es'
+            );
+        }
+    }
+
+    addEventListener('message', event => {
+        if (event.origin !== 'https://utteranc.es') return;
+        setUtterancesTheme(document.documentElement.dataset.scheme)
+    });
+
+    window.addEventListener('onColorSchemeChange', (e) => {
+        setUtterancesTheme(e.detail)
+    })
+</script>
+
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2022 KegalaS的个人博客
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.4.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    
+        <aside class="sidebar right-sidebar sticky">
+            <section class="widget archives">
+                <div class="widget-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+                </div>
+                <h2 class="widget-title section-title">目录</h2>
+                
+                <div class="widget--toc">
+                    <nav id="TableOfContents">
+  <ol>
+    <li><a href="#电路的基本规律">电路的基本规律</a>
+      <ol>
+        <li><a href="#集中或集总参数电路">集中（或集总）参数电路</a></li>
+        <li><a href="#电流">电流</a></li>
+        <li><a href="#电压">电压</a></li>
+        <li><a href="#能量">能量</a></li>
+        <li><a href="#功率">功率</a></li>
+        <li><a href="#基尔霍夫定律">基尔霍夫定律</a></li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+                </div>
+            </section>
+        </aside>
+    
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                defer="false"
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
