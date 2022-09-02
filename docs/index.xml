@@ -3341,6 +3341,7 @@ PA_y \\ AB_y \\ AC_y
 \end{bmatrix}=0
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;也就是说，向量&lt;span class=&#34;math inline&#34;&gt;\((1,\beta,\gamma)\)&lt;/span&gt;是向量&lt;span class=&#34;math inline&#34;&gt;\((PA_x,AB_x,AC_x)\)&lt;/span&gt;和&lt;span class=&#34;math inline&#34;&gt;\((PA_y,AB_y,AC_y)\)&lt;/span&gt;的叉积。根据向量第一位是1可以转变一下符号。&lt;/p&gt;
+&lt;p&gt;这个方法在数学上和上个方法显然是等价的，但是上一个方法用到了除法，而在计算机中除法的精度是要比乘法低的，而且也更慢。这就导致了，如果用第一个方法，三角形共边时，这条边上的点可能会因为精度问题而无法渲染，表现为中间有“洞”的样子。所以更加推荐这一个算法，或者使用光栅化一章中的代码。&lt;/p&gt;
 &lt;h2 id=&#34;向量&#34;&gt;向量&lt;/h2&gt;
 &lt;p&gt;同高中和线性代数&lt;/p&gt;
 &lt;h2 id=&#34;积分&#34;&gt;积分&lt;/h2&gt;
