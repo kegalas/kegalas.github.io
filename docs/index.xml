@@ -6,7 +6,50 @@
         <description>Recent content on KegalaS的个人博客</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Thu, 01 Sep 2022 13:44:54 +0800</lastBuildDate><atom:link href="https://kegalas.top/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Fri, 02 Sep 2022 11:22:59 +0800</lastBuildDate><atom:link href="https://kegalas.top/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>电路基础整理</title>
+        <link>https://kegalas.top/p/%E7%94%B5%E8%B7%AF%E5%9F%BA%E7%A1%80%E6%95%B4%E7%90%86/</link>
+        <pubDate>Fri, 02 Sep 2022 11:22:59 +0800</pubDate>
+        
+        <guid>https://kegalas.top/p/%E7%94%B5%E8%B7%AF%E5%9F%BA%E7%A1%80%E6%95%B4%E7%90%86/</guid>
+        <description>
+
+&lt;h2 id=&#34;电路的基本规律&#34;&gt;电路的基本规律&lt;/h2&gt;
+&lt;h3 id=&#34;集中或集总参数电路&#34;&gt;集中（或集总）参数电路&lt;/h3&gt;
+&lt;p&gt;实际电路的几何尺寸远小于工作波长时，我们用能足够精确反映其电磁性质的一些理想电路元件或他们的组合来模拟实际元件，这种理想化的电路元件称为集中参数元件。由其连接组成的电路称为集中参数电路。&lt;/p&gt;
+&lt;p&gt;而一些远距离输电线就不能看做集中参数电路，称作分布参数电路，要用其他理论来研究。&lt;/p&gt;
+&lt;h3 id=&#34;电流&#34;&gt;电流&lt;/h3&gt;
+&lt;p&gt;单位时间内通过导体横截面的电荷量&lt;span class=&#34;math inline&#34;&gt;\(q\)&lt;/span&gt;定义为电流强度，简称电流，用&lt;span class=&#34;math inline&#34;&gt;\(i,i(t)\)&lt;/span&gt;表示，即&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+i(t)=\frac{dq(t)}{dt}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;电荷量的单位是库伦，时间的单位是秒，电流的单位是安培。&lt;/p&gt;
+&lt;p&gt;方向，一般把正电荷运动的方向定义为电流的实际方向。但在具体电路中，电流的实际方向常常随时间变化。通常在分析电路时会指定某一方向为电流方向，称为电流的参考方向。如果参考方向和实际方向一致，则电流&lt;span class=&#34;math inline&#34;&gt;\(i&amp;gt;0\)&lt;/span&gt;，否则&lt;span class=&#34;math inline&#34;&gt;\(i&amp;lt;0\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;电流的参考方向是任意指定的，一般用箭头和双下标表示，如&lt;span class=&#34;math inline&#34;&gt;\(i_{ab}\)&lt;/span&gt;指&lt;span class=&#34;math inline&#34;&gt;\(a\)&lt;/span&gt;到&lt;span class=&#34;math inline&#34;&gt;\(b\)&lt;/span&gt;的电流。&lt;/p&gt;
+&lt;h3 id=&#34;电压&#34;&gt;电压&lt;/h3&gt;
+&lt;p&gt;电路中，电场力将单位正电荷从某点移到另一点所作的功定义为该两点之间的电压，也称电位差，用&lt;span class=&#34;math inline&#34;&gt;\(u,u(t)\)&lt;/span&gt;表示，即&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+u(t)=\frac{dw(t)}{dq(t)}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;功的单位是焦耳，电压的单位是伏特。&lt;/p&gt;
+&lt;p&gt;通常，高电位为正极，低电位为负极。&lt;/p&gt;
+&lt;p&gt;和电路的参考方向一样，我们也可以为电压指定参考极性。在分析电路问题时，先指定电压的参考极性，&lt;span class=&#34;math inline&#34;&gt;\(+\)&lt;/span&gt;表示高电位，&lt;span class=&#34;math inline&#34;&gt;\(-\)&lt;/span&gt;表示低电位。如果电压的参考极性和实际极性一致，则&lt;span class=&#34;math inline&#34;&gt;\(u&amp;gt;0\)&lt;/span&gt;，否则&lt;span class=&#34;math inline&#34;&gt;\(u&amp;lt;0\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;电流参考方向给定，若电流流入的方向是电压的高电位，流出的方向是电压的低电位，则称此时电流、电压是关联参考方向。反之为非关联参考方向。&lt;/p&gt;
+&lt;h3 id=&#34;能量&#34;&gt;能量&lt;/h3&gt;
+&lt;p&gt;正电荷从电路元件上电压的正极经元件移动到负极是电场力对电荷做功的结果，此时元件吸收能量。反之发出能量。&lt;/p&gt;
+&lt;p&gt;若某元件两端的电压为&lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt;，在&lt;span class=&#34;math inline&#34;&gt;\(dt\)&lt;/span&gt;时间内流过该元件的电荷量为&lt;span class=&#34;math inline&#34;&gt;\(dq\)&lt;/span&gt;，那么，根据电压的定义式，电场力做的功&lt;span class=&#34;math inline&#34;&gt;\(dw(t)=u(t)dq(t)\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;在关联参考方向时，&lt;span class=&#34;math inline&#34;&gt;\(dw(t)=u(t)i(t)dt\)&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;功率&#34;&gt;功率&lt;/h3&gt;
+&lt;p&gt;能量对时间的变化率称为电功率。&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+p(t)=u(t)i(t)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;基尔霍夫定律&#34;&gt;基尔霍夫定律&lt;/h3&gt;
+
+
+</description>
+        </item>
+        <item>
         <title>复变函数整理</title>
         <link>https://kegalas.top/p/%E5%A4%8D%E5%8F%98%E5%87%BD%E6%95%B0%E6%95%B4%E7%90%86/</link>
         <pubDate>Thu, 01 Sep 2022 13:44:54 +0800</pubDate>
