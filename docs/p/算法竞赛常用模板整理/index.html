@@ -2680,6 +2680,43 @@ n作为s.find的接收端，则会在找不到时接收到-1。</p>
 <p>转化为二进制数的字符串。</p>
 <h4 id="to_ulongto_ullong">::to_ulong,::to_ullong</h4>
 <p>转化为unsigned long和unsigned long long。</p>
+<h3 id="stdpair">std::pair</h3>
+<p>定义一个二元组，例如std::pair&lt;int,int&gt;,
+std::pair&lt;int,std::string&gt;等。</p>
+<h4 id="元素访问-2">元素访问</h4>
+<div class="sourceCode" id="cb62"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="bu">std::</span>pair<span class="op">&lt;</span><span class="dt">int</span><span class="op">,</span><span class="dt">int</span><span class="op">&gt;</span> p<span class="op">;</span></span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>p<span class="op">-&gt;</span>first<span class="op">;</span><span class="co">//访问第一个元素</span></span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a>p<span class="op">-&gt;</span>second<span class="op">;</span><span class="co">//访问第二个元素</span></span></code></pre></div>
+<h4 id="swap-1">::swap</h4>
+<p>交换两个元素的内容。复杂度：没有定义。</p>
+<h4 id="stdmake_pair">std::make_pair</h4>
+<div class="sourceCode" id="cb63"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> p <span class="op">=</span> <span class="bu">std::</span>make_pair<span class="op">(</span><span class="dv">1</span><span class="op">,</span><span class="dv">1</span><span class="op">);</span><span class="co">//自动推断类型为std::pair&lt;int,int&gt;</span></span></code></pre></div>
+<h3 id="stdtuple">std::tuple</h3>
+<p>定义一个多元组，可以说pair是tuple的特例。</p>
+<h4 id="元素访问-3">元素访问</h4>
+<p>根据下标可以如下访问</p>
+<div class="sourceCode" id="cb64"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> t <span class="op">=</span> <span class="bu">std::</span>make_tuple<span class="op">(</span><span class="dv">1</span><span class="op">,</span> <span class="st">&#34;Foo&#34;</span><span class="op">,</span> <span class="fl">3.14</span><span class="op">);</span></span>
+<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a><span class="bu">std::</span>get<span class="op">&lt;</span><span class="dv">0</span><span class="op">&gt;(</span>t<span class="op">);</span><span class="co">//1</span></span>
+<span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a><span class="bu">std::</span>get<span class="op">&lt;</span><span class="dv">1</span><span class="op">&gt;(</span>t<span class="op">);</span><span class="co">//Foo</span></span>
+<span id="cb64-4"><a href="#cb64-4" aria-hidden="true" tabindex="-1"></a><span class="bu">std::</span>get<span class="op">&lt;</span><span class="dv">2</span><span class="op">&gt;(</span>t<span class="op">);</span><span class="co">//3.14</span></span></code></pre></div>
+<h4 id="stdmake_tuple">std::make_tuple</h4>
+<p>同pair。</p>
+<p>如果一个函数要返回tuple</p>
+<div class="sourceCode" id="cb65"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="bu">std::</span>tuple<span class="op">&lt;</span><span class="dt">int</span><span class="op">,</span> <span class="dt">int</span><span class="op">&gt;</span> foo_tuple<span class="op">()</span> </span>
+<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="op">{</span><span class="dv">1</span><span class="op">,</span> <span class="op">-</span><span class="dv">1</span><span class="op">};</span>  <span class="co">// N4387 前错误</span></span>
+<span id="cb65-4"><a href="#cb65-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="bu">std::</span>tuple<span class="op">&lt;</span><span class="dt">int</span><span class="op">,</span> <span class="dt">int</span><span class="op">&gt;{</span><span class="dv">1</span><span class="op">,</span> <span class="op">-</span><span class="dv">1</span><span class="op">};</span>  <span class="co">// 始终有效</span></span>
+<span id="cb65-5"><a href="#cb65-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="bu">std::</span>make_tuple<span class="op">(</span><span class="dv">1</span><span class="op">,</span> <span class="op">-</span><span class="dv">1</span><span class="op">);</span> <span class="co">// 始终有效</span></span>
+<span id="cb65-6"><a href="#cb65-6" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>需要注意兼容性，有些编译器不支持第一种返回方式。</p>
+<h4 id="stdtie">std::tie</h4>
+<p>将tuple解包。</p>
+<div class="sourceCode" id="cb66"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> t <span class="op">=</span> <span class="bu">std::</span>make_tuple<span class="op">(</span><span class="dv">1</span><span class="op">,</span><span class="dv">2</span><span class="op">,</span><span class="st">&#34;Foo&#34;</span><span class="op">);</span></span>
+<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> a<span class="op">,</span>b<span class="op">;</span></span>
+<span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a><span class="bu">std::</span>string<span class="op"> </span>str<span class="op">;</span></span>
+<span id="cb66-4"><a href="#cb66-4" aria-hidden="true" tabindex="-1"></a><span class="bu">std::</span>tie<span class="op">(</span>a<span class="op">,</span>b<span class="op">,</span>str<span class="op">)</span> <span class="op">=</span> t<span class="op">;</span></span></code></pre></div>
+<p>当然也可以用auto，都不需要指定变量类型。</p>
+<div class="sourceCode" id="cb67"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span><span class="op">[</span>c<span class="op">,</span>d<span class="op">,</span>str2<span class="op">]</span> <span class="op">=</span> t<span class="op">;</span></span></code></pre></div>
 
 
 
@@ -3075,6 +3112,8 @@ n作为s.find的接收端，则会在找不到时接收到-1。</p>
         <li><a href="#stddeque">std::deque</a></li>
         <li><a href="#stdvector">std::vector</a></li>
         <li><a href="#stdbitset">std::bitset</a></li>
+        <li><a href="#stdpair">std::pair</a></li>
+        <li><a href="#stdtuple">std::tuple</a></li>
       </ol>
     </li>
   </ol>
