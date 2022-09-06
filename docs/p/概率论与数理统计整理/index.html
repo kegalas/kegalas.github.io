@@ -112,7 +112,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 3 分钟
+                    阅读时长: 5 分钟
                 </time>
             </div>
         
@@ -168,6 +168,126 @@ A_2\subset\cdots\)</span>，则<span class="math inline">\(\lim_{n\to\infty}P(A_
 <p><span class="math display">\[
 P(E)=\frac{M}{N}
 \]</span></p>
+<h3 id="一些有用的公式">一些有用的公式</h3>
+<ol type="1">
+<li>n个相异物件取<span class="math inline">\(r(1\leq r\leq
+n)\)</span>个的不同排列总数</li>
+</ol>
+<p><span class="math display">\[
+P^n_r=n(n-1)(n-2)\cdots(n-r+1)
+\]</span></p>
+<ol start="2" type="1">
+<li>n个相异物体取<span class="math inline">\(r(1\leq r\leq
+n)\)</span>个的不同组合总数</li>
+</ol>
+<p><span class="math display">\[
+C^n_r =
+\frac{P^n_r}{r!}=\frac{n!}{r!(n-r)!}=\frac{n(n-1)(n-2)\cdots(n-r+1)}{r!}=\binom{n}{r}
+\]</span></p>
+<p>另外，只要<span class="math inline">\(r\)</span>为非负整数，不论<span class="math inline">\(n\)</span>为任何实数，都有意义。例如</p>
+<p><span class="math display">\[
+\binom{-1}{r} = \frac{(-1)(-2)\cdots(-r)}{r!}=(-1)^r
+\]</span></p>
+<ol start="3" type="1">
+<li>二项式系数</li>
+</ol>
+<p><span class="math display">\[
+(a+b)^n=\sum_{i=0}^n\binom{n}{i}a^ib^{n-i}
+\]</span></p>
+<p>令<span class="math inline">\(a=b=1\)</span></p>
+<p><span class="math display">\[
+\binom{n}{0}+\binom{n}{1}+\cdots+\binom{n}{n}=2^n
+\]</span></p>
+<p>令<span class="math inline">\(a=-1,b=1\)</span></p>
+<p><span class="math display">\[
+\binom{n}{0}-\binom{n}{1}+\binom{n}{2}+\cdots+(-1)^n\binom{n}{n}=0
+\]</span></p>
+<p>还有</p>
+<p><span class="math display">\[
+\binom{m+n}{k}=\sum_{i=0}^k\binom{m}{i}\binom{n}{k-i}
+\]</span></p>
+<ol start="4" type="1">
+<li><span class="math inline">\(n\)</span>个相异物件分成<span class="math inline">\(k\)</span>堆，各堆物件数分别为<span class="math inline">\(r_1,\cdots,r_k\)</span>的分法是</li>
+</ol>
+<p><span class="math display">\[
+\frac{n!}{r_1!\cdots r_n!}
+\]</span></p>
+<p>以上是有序堆的情况，无序堆时</p>
+<p><span class="math display">\[
+\frac{n!}{P^k_k(r_1!\cdots r_n!)}
+\]</span></p>
+<h2 id="几何概率">几何概率</h2>
+<p>古典概率的样本空间为有限集，如果样本空间是无限集，就应该使用几何概率。</p>
+<ol type="1">
+<li>直线上的几何概率：设线段<span class="math inline">\(l\)</span>是<span class="math inline">\(L\)</span>的一部分，向<span class="math inline">\(L\)</span>上随机投一点，投中<span class="math inline">\(l\)</span>的概率为</li>
+</ol>
+<p><span class="math display">\[
+P=\frac{l的长度}{L的长度}
+\]</span></p>
+<ol start="2" type="1">
+<li>平面、体积上的概率：类似于直线上，通过总体的面积或体积，以及事件所代表的面积或体积来计算。</li>
+</ol>
+<h2 id="事件的运算">事件的运算</h2>
+<h3 id="蕴含包含和相等">蕴含、包含和相等</h3>
+<p>在同一试验下的两个事件<span class="math inline">\(A,B\)</span>，若<span class="math inline">\(A\)</span>发生时<span class="math inline">\(B\)</span>必发生，则称<span class="math inline">\(A\)</span>蕴含<span class="math inline">\(B\)</span>，或者说<span class="math inline">\(B\)</span>包含<span class="math inline">\(A\)</span>，记为<span class="math inline">\(A\subset
+B\)</span>，若它们互相蕴含，则称为相等，记为<span class="math inline">\(A=B\)</span></p>
+<h3 id="互斥和对立">互斥和对立</h3>
+<p>若<span class="math inline">\(A,B\)</span>不能在同一次试验中都发生（但可以都不发生），则称他们是互斥的（不相容的）。</p>
+<p>对立事件是互斥事件的一种特殊情况。若<span class="math inline">\(A\)</span>为一事件，则事件</p>
+<p><span class="math display">\[
+B=\{A不发生\}
+\]</span></p>
+<p>称为<span class="math inline">\(A\)</span>的对立事件，记为<span class="math inline">\(\bar{A}\)</span></p>
+<h3 id="事件的和">事件的和</h3>
+<p><span class="math display">\[
+C=\{A发生，或B发生\}=\{A，B至少发生一个\}=A+B=A\cup B
+\]</span></p>
+<h3 id="概率的加法定理">概率的加法定理</h3>
+<p>若干个互斥事件之和的概率，等于各事件的概率之和</p>
+<p><span class="math display">\[
+P(A_1+A_2+\cdots)=P(A_1)+P(A_2)+\cdots
+\]</span></p>
+<p>若不是两两互斥的事件，则要考虑用容斥原理来计算。</p>
+<p>上式能推出</p>
+<p><span class="math display">\[
+P(\bar A)=1-P(A)
+\]</span></p>
+<h3 id="事件的积">事件的积</h3>
+<p><span class="math display">\[
+C=\{A,B都发生\}=AB=A\cap B
+\]</span></p>
+<h3 id="事件的差">事件的差</h3>
+<p><span class="math display">\[
+C=\{A发生，B不发生\}=A-B
+\]</span></p>
+<p>显然有</p>
+<p><span class="math display">\[
+A-B = A\bar B
+\]</span></p>
+<h2 id="条件概率">条件概率</h2>
+<p>设有两个事件<span class="math inline">\(A,B\)</span>，而<span class="math inline">\(P(B)\neq0\)</span>。则“在给定<span class="math inline">\(B\)</span>发生的条件下<span class="math inline">\(A\)</span>的条件概率”，记为<span class="math inline">\(P(A|B)\)</span>，定义为</p>
+<p><span class="math display">\[
+P(A|B)=P(AB)/P(B)
+\]</span></p>
+<p>但并不一定要用这个公式去计算，有时直接用加入了条件的情况去算会更为方便。</p>
+<h2 id="事件的独立性概率乘法定理">事件的独立性、概率乘法定理</h2>
+<p>若<span class="math inline">\(P(A)=P(A|B)\)</span>，则<span class="math inline">\(B\)</span>的发生与否对<span class="math inline">\(A\)</span>发生的可能性毫无影响。这时，在概率论上称<span class="math inline">\(A,B\)</span>两事件独立。</p>
+<p>同时就有</p>
+<p><span class="math display">\[
+P(AB) = P(A)P(B)
+\]</span></p>
+<p>若两事件<span class="math inline">\(A,B\)</span>满足上式，则称<span class="math inline">\(A,B\)</span>独立。反过来说独立的两个事件就有上式，也称为概率的乘法定理。</p>
+<p>将其推广，设<span class="math inline">\(A_1,A_2,\cdots\)</span>为有限或无限个事件。如果从其中任意取出有限个<span class="math inline">\(A_{i_1},A_{i_2},\cdots,A_{i_m}\)</span>，都有</p>
+<p><span class="math display">\[
+P(A_{i_1}A_{i_2}\cdots A_{i_m})=P(A_{i_1})P(A_{i_2})\cdots P(A_{i_m})
+\]</span></p>
+<p>则称<span class="math inline">\(A_1,A_2,\cdots\)</span>互相独立。互相独立的几个事件则具有以上的乘积性质。</p>
+<p>等价的来说也有</p>
+<p><span class="math display">\[
+P(A_{i_1}|A_{i_2}\cdots A_{i_m})=P(A_{i_1})
+\]</span></p>
+<p>可以推出：独立事件的任一部分也独立。</p>
+<p>还有：若一列事件相互独立，则将其中任一部分改为对立事件时，所有事件仍然相互独立。</p>
 
 
 
@@ -469,8 +589,22 @@ P(E)=\frac{M}{N}
     <li><a href="#古典概率">古典概率</a>
       <ol>
         <li><a href="#定义">定义</a></li>
+        <li><a href="#一些有用的公式">一些有用的公式</a></li>
       </ol>
     </li>
+    <li><a href="#几何概率">几何概率</a></li>
+    <li><a href="#事件的运算">事件的运算</a>
+      <ol>
+        <li><a href="#蕴含包含和相等">蕴含、包含和相等</a></li>
+        <li><a href="#互斥和对立">互斥和对立</a></li>
+        <li><a href="#事件的和">事件的和</a></li>
+        <li><a href="#概率的加法定理">概率的加法定理</a></li>
+        <li><a href="#事件的积">事件的积</a></li>
+        <li><a href="#事件的差">事件的差</a></li>
+      </ol>
+    </li>
+    <li><a href="#条件概率">条件概率</a></li>
+    <li><a href="#事件的独立性概率乘法定理">事件的独立性、概率乘法定理</a></li>
   </ol>
 </nav>
                 </div>

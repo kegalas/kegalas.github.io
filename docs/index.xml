@@ -222,6 +222,126 @@ A_2\subset\cdots\)&lt;/span&gt;，则&lt;span class=&#34;math inline&#34;&gt;\(\
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 P(E)=\frac{M}{N}
 \]&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;一些有用的公式&#34;&gt;一些有用的公式&lt;/h3&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;n个相异物件取&lt;span class=&#34;math inline&#34;&gt;\(r(1\leq r\leq
+n)\)&lt;/span&gt;个的不同排列总数&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+P^n_r=n(n-1)(n-2)\cdots(n-r+1)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;ol start=&#34;2&#34; type=&#34;1&#34;&gt;
+&lt;li&gt;n个相异物体取&lt;span class=&#34;math inline&#34;&gt;\(r(1\leq r\leq
+n)\)&lt;/span&gt;个的不同组合总数&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+C^n_r =
+\frac{P^n_r}{r!}=\frac{n!}{r!(n-r)!}=\frac{n(n-1)(n-2)\cdots(n-r+1)}{r!}=\binom{n}{r}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;另外，只要&lt;span class=&#34;math inline&#34;&gt;\(r\)&lt;/span&gt;为非负整数，不论&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;为任何实数，都有意义。例如&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\binom{-1}{r} = \frac{(-1)(-2)\cdots(-r)}{r!}=(-1)^r
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;ol start=&#34;3&#34; type=&#34;1&#34;&gt;
+&lt;li&gt;二项式系数&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+(a+b)^n=\sum_{i=0}^n\binom{n}{i}a^ib^{n-i}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;令&lt;span class=&#34;math inline&#34;&gt;\(a=b=1\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\binom{n}{0}+\binom{n}{1}+\cdots+\binom{n}{n}=2^n
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;令&lt;span class=&#34;math inline&#34;&gt;\(a=-1,b=1\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\binom{n}{0}-\binom{n}{1}+\binom{n}{2}+\cdots+(-1)^n\binom{n}{n}=0
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;还有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\binom{m+n}{k}=\sum_{i=0}^k\binom{m}{i}\binom{n}{k-i}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;ol start=&#34;4&#34; type=&#34;1&#34;&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;个相异物件分成&lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt;堆，各堆物件数分别为&lt;span class=&#34;math inline&#34;&gt;\(r_1,\cdots,r_k\)&lt;/span&gt;的分法是&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\frac{n!}{r_1!\cdots r_n!}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;以上是有序堆的情况，无序堆时&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\frac{n!}{P^k_k(r_1!\cdots r_n!)}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h2 id=&#34;几何概率&#34;&gt;几何概率&lt;/h2&gt;
+&lt;p&gt;古典概率的样本空间为有限集，如果样本空间是无限集，就应该使用几何概率。&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;直线上的几何概率：设线段&lt;span class=&#34;math inline&#34;&gt;\(l\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(L\)&lt;/span&gt;的一部分，向&lt;span class=&#34;math inline&#34;&gt;\(L\)&lt;/span&gt;上随机投一点，投中&lt;span class=&#34;math inline&#34;&gt;\(l\)&lt;/span&gt;的概率为&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+P=\frac{l的长度}{L的长度}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;ol start=&#34;2&#34; type=&#34;1&#34;&gt;
+&lt;li&gt;平面、体积上的概率：类似于直线上，通过总体的面积或体积，以及事件所代表的面积或体积来计算。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;事件的运算&#34;&gt;事件的运算&lt;/h2&gt;
+&lt;h3 id=&#34;蕴含包含和相等&#34;&gt;蕴含、包含和相等&lt;/h3&gt;
+&lt;p&gt;在同一试验下的两个事件&lt;span class=&#34;math inline&#34;&gt;\(A,B\)&lt;/span&gt;，若&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;发生时&lt;span class=&#34;math inline&#34;&gt;\(B\)&lt;/span&gt;必发生，则称&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;蕴含&lt;span class=&#34;math inline&#34;&gt;\(B\)&lt;/span&gt;，或者说&lt;span class=&#34;math inline&#34;&gt;\(B\)&lt;/span&gt;包含&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;，记为&lt;span class=&#34;math inline&#34;&gt;\(A\subset
+B\)&lt;/span&gt;，若它们互相蕴含，则称为相等，记为&lt;span class=&#34;math inline&#34;&gt;\(A=B\)&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;互斥和对立&#34;&gt;互斥和对立&lt;/h3&gt;
+&lt;p&gt;若&lt;span class=&#34;math inline&#34;&gt;\(A,B\)&lt;/span&gt;不能在同一次试验中都发生（但可以都不发生），则称他们是互斥的（不相容的）。&lt;/p&gt;
+&lt;p&gt;对立事件是互斥事件的一种特殊情况。若&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;为一事件，则事件&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+B=\{A不发生\}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;称为&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;的对立事件，记为&lt;span class=&#34;math inline&#34;&gt;\(\bar{A}\)&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;事件的和&#34;&gt;事件的和&lt;/h3&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+C=\{A发生，或B发生\}=\{A，B至少发生一个\}=A+B=A\cup B
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;概率的加法定理&#34;&gt;概率的加法定理&lt;/h3&gt;
+&lt;p&gt;若干个互斥事件之和的概率，等于各事件的概率之和&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+P(A_1+A_2+\cdots)=P(A_1)+P(A_2)+\cdots
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;若不是两两互斥的事件，则要考虑用容斥原理来计算。&lt;/p&gt;
+&lt;p&gt;上式能推出&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+P(\bar A)=1-P(A)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;事件的积&#34;&gt;事件的积&lt;/h3&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+C=\{A,B都发生\}=AB=A\cap B
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;事件的差&#34;&gt;事件的差&lt;/h3&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+C=\{A发生，B不发生\}=A-B
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;显然有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+A-B = A\bar B
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h2 id=&#34;条件概率&#34;&gt;条件概率&lt;/h2&gt;
+&lt;p&gt;设有两个事件&lt;span class=&#34;math inline&#34;&gt;\(A,B\)&lt;/span&gt;，而&lt;span class=&#34;math inline&#34;&gt;\(P(B)\neq0\)&lt;/span&gt;。则“在给定&lt;span class=&#34;math inline&#34;&gt;\(B\)&lt;/span&gt;发生的条件下&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;的条件概率”，记为&lt;span class=&#34;math inline&#34;&gt;\(P(A|B)\)&lt;/span&gt;，定义为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+P(A|B)=P(AB)/P(B)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;但并不一定要用这个公式去计算，有时直接用加入了条件的情况去算会更为方便。&lt;/p&gt;
+&lt;h2 id=&#34;事件的独立性概率乘法定理&#34;&gt;事件的独立性、概率乘法定理&lt;/h2&gt;
+&lt;p&gt;若&lt;span class=&#34;math inline&#34;&gt;\(P(A)=P(A|B)\)&lt;/span&gt;，则&lt;span class=&#34;math inline&#34;&gt;\(B\)&lt;/span&gt;的发生与否对&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;发生的可能性毫无影响。这时，在概率论上称&lt;span class=&#34;math inline&#34;&gt;\(A,B\)&lt;/span&gt;两事件独立。&lt;/p&gt;
+&lt;p&gt;同时就有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+P(AB) = P(A)P(B)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;若两事件&lt;span class=&#34;math inline&#34;&gt;\(A,B\)&lt;/span&gt;满足上式，则称&lt;span class=&#34;math inline&#34;&gt;\(A,B\)&lt;/span&gt;独立。反过来说独立的两个事件就有上式，也称为概率的乘法定理。&lt;/p&gt;
+&lt;p&gt;将其推广，设&lt;span class=&#34;math inline&#34;&gt;\(A_1,A_2,\cdots\)&lt;/span&gt;为有限或无限个事件。如果从其中任意取出有限个&lt;span class=&#34;math inline&#34;&gt;\(A_{i_1},A_{i_2},\cdots,A_{i_m}\)&lt;/span&gt;，都有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+P(A_{i_1}A_{i_2}\cdots A_{i_m})=P(A_{i_1})P(A_{i_2})\cdots P(A_{i_m})
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;则称&lt;span class=&#34;math inline&#34;&gt;\(A_1,A_2,\cdots\)&lt;/span&gt;互相独立。互相独立的几个事件则具有以上的乘积性质。&lt;/p&gt;
+&lt;p&gt;等价的来说也有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+P(A_{i_1}|A_{i_2}\cdots A_{i_m})=P(A_{i_1})
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;可以推出：独立事件的任一部分也独立。&lt;/p&gt;
+&lt;p&gt;还有：若一列事件相互独立，则将其中任一部分改为对立事件时，所有事件仍然相互独立。&lt;/p&gt;
 
 
 </description>
@@ -4789,8 +4909,17 @@ d\varPhi_e = \bm E\cdot d\bm S
 \varPhi_e=\int d\varPhi_e  = \int_S\bm E\cdot d\bm S
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;h4 id=&#34;高斯定理&#34;&gt;高斯定理&lt;/h4&gt;
-&lt;p&gt;真空中的任何静电场中，穿过任一闭合曲面的电通量，在数值上等于该闭合曲面内包围的电量的代数和
-乘以&lt;span class=&#34;math inline&#34;&gt;\(1/\varepsilon_0\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;真空中的任何静电场中，穿过任一闭合曲面的电通量，在数值上等于该闭合曲面内包围的电量的代数和乘以&lt;span class=&#34;math inline&#34;&gt;\(1/\varepsilon_0\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;显然可以推知，如果高斯面内不包围电荷，电荷在它的外面，则电通量为0.&lt;/p&gt;
+&lt;p&gt;对于不连续分布的源电荷&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\varPhi_e=\oint_S\bm E\cdot d\bm S=\frac{1}{\varepsilon_0}\sum_{(内)}q_i
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;对于连续分布的源电荷&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\varPhi_e=\oint_S\bm E\cdot d\bm S=\int_V\frac{1}{\varepsilon_0}\rho dV
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;很容易联想到能否用这个公式反过来求电场强度。对于一般的电厂很难来求，但是对于一些对称的电荷分布来说，是可以使用的。具体案例见教材。&lt;/p&gt;
 
 
 </description>
