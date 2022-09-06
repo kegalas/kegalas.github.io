@@ -2958,5 +2958,74 @@ bitset和bitset之间能用所有的位运算符。也可以用等号和不等�
 
 转化为unsigned long和unsigned long long。
 
+### std::pair
 
+定义一个二元组，例如std::pair<int,int>, std::pair<int,std::string>等。
+
+#### 元素访问
+
+```cpp
+std::pair<int,int> p;
+p->first;//访问第一个元素
+p->second;//访问第二个元素
+```
+
+#### ::swap
+
+交换两个元素的内容。复杂度：没有定义。
+
+#### std::make_pair
+
+```cpp
+auto p = std::make_pair(1,1);//自动推断类型为std::pair<int,int>
+```
+
+### std::tuple
+
+定义一个多元组，可以说pair是tuple的特例。
+
+#### 元素访问
+
+根据下标可以如下访问
+
+```cpp
+auto t = std::make_tuple(1, "Foo", 3.14);
+std::get<0>(t);//1
+std::get<1>(t);//Foo
+std::get<2>(t);//3.14
+```
+
+#### std::make_tuple
+
+同pair。
+
+如果一个函数要返回tuple
+
+```cpp
+std::tuple<int, int> foo_tuple() 
+{
+  return {1, -1};  // N4387 前错误
+  return std::tuple<int, int>{1, -1};  // 始终有效
+  return std::make_tuple(1, -1); // 始终有效
+}
+```
+
+需要注意兼容性，有些编译器不支持第一种返回方式。
+
+#### std::tie
+
+将tuple解包。
+
+```cpp
+auto t = std::make_tuple(1,2,"Foo");
+int a,b;
+std::string str;
+std::tie(a,b,str) = t;
+```
+
+当然也可以用auto，都不需要指定变量类型。
+
+```cpp
+auto[c,d,str2] = t;
+```
 
