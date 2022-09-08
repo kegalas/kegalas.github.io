@@ -112,7 +112,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 21 分钟
+                    阅读时长: 22 分钟
                 </time>
             </div>
         
@@ -2682,7 +2682,8 @@ n作为s.find的接收端，则会在找不到时接收到-1。</p>
 <p>转化为unsigned long和unsigned long long。</p>
 <h3 id="stdpair">std::pair</h3>
 <p>定义一个二元组，例如std::pair&lt;int,int&gt;,
-std::pair&lt;int,std::string&gt;等。</p>
+std::pair&lt;int,std::string&gt;等。其定义是在&lt;utility&gt;中，但是也可以#include
+&lt;algorithm&gt;来使用</p>
 <h4 id="元素访问-2">元素访问</h4>
 <div class="sourceCode" id="cb62"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="bu">std::</span>pair<span class="op">&lt;</span><span class="dt">int</span><span class="op">,</span><span class="dt">int</span><span class="op">&gt;</span> p<span class="op">;</span></span>
 <span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>p<span class="op">-&gt;</span>first<span class="op">;</span><span class="co">//访问第一个元素</span></span>
@@ -2692,7 +2693,8 @@ std::pair&lt;int,std::string&gt;等。</p>
 <h4 id="stdmake_pair">std::make_pair</h4>
 <div class="sourceCode" id="cb63"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> p <span class="op">=</span> <span class="bu">std::</span>make_pair<span class="op">(</span><span class="dv">1</span><span class="op">,</span><span class="dv">1</span><span class="op">);</span><span class="co">//自动推断类型为std::pair&lt;int,int&gt;</span></span></code></pre></div>
 <h3 id="stdtuple">std::tuple</h3>
-<p>定义一个多元组，可以说pair是tuple的特例。</p>
+<p>定义一个多元组，可以说pair是tuple的特例。其定义是在&lt;utility&gt;中，但是也可以#include
+&lt;algorithm&gt;来使用</p>
 <h4 id="元素访问-3">元素访问</h4>
 <p>根据下标可以如下访问</p>
 <div class="sourceCode" id="cb64"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> t <span class="op">=</span> <span class="bu">std::</span>make_tuple<span class="op">(</span><span class="dv">1</span><span class="op">,</span> <span class="st">&#34;Foo&#34;</span><span class="op">,</span> <span class="fl">3.14</span><span class="op">);</span></span>
