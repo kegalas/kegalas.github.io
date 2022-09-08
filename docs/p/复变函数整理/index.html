@@ -112,7 +112,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 2 分钟
+                    阅读时长: 7 分钟
                 </time>
             </div>
         
@@ -233,6 +233,101 @@ z^n=r^n(\cos n\theta+i\sin n\theta)
 <p><span class="math display">\[
 z^{-n}=r^{-n}(\cos(-n\theta)+i\sin(-n\theta))
 \]</span></p>
+<p>现在设<span class="math inline">\(\omega=r(\cos\theta+i\sin\theta)\)</span>是给定的，要求的<span class="math inline">\(z=\rho(\cos\varphi+i\sin\varphi)\)</span>.由de
+Moivre公式，<span class="math inline">\(z^n=\)</span>$等价为</p>
+<p><span class="math display">\[
+\rho^n(\cos n\varphi+i\sin n\varphi)=r(\cos\theta+i\sin\theta)
+\]</span></p>
+<p>所以<span class="math inline">\(\rho=\sqrt[n]{r},n\varphi=\theta+2k\pi,k=0,1,\cdots,n-1\)</span>.共有<span class="math inline">\(n\)</span>个复数满足<span class="math inline">\(z^n=w\)</span>，即</p>
+<p><span class="math display">\[
+z=\sqrt[n]{|\omega
+|}\left(\cos\frac{\theta+2k\pi}{n}+i\sin\frac{\theta+2k\pi}{2}\right),k=0,1,\cdots,n-1
+\]</span></p>
+<p>这<span class="math inline">\(n\)</span>个复数恰好是以原点为中心，<span class="math inline">\(\sqrt[n]{|\omega
+|}\)</span>为半径的圆的内接正<span class="math inline">\(n\)</span>边形的顶点。</p>
+<p><span class="math inline">\(\omega=1\)</span>时，若记<span class="math inline">\(w=\cos\frac{2\pi}{n}+i\sin\frac{2\pi}{n}\)</span>，则<span class="math inline">\(\sqrt[n]{1}\)</span>的<span class="math inline">\(n\)</span>个值为</p>
+<p><span class="math display">\[
+1,w,w^2,\cdots,w^{n-1}
+\]</span></p>
+<p>称为<span class="math inline">\(n\)</span>个单位根，如果用<span class="math inline">\(\sqrt[n]{\omega}\)</span>的任一<span class="math inline">\(n\)</span>次根，那么<span class="math inline">\(\omega\)</span>的<span class="math inline">\(n\)</span>个<span class="math inline">\(n\)</span>次根又可以表示为</p>
+<p><span class="math display">\[
+\sqrt[n]{\omega}, \sqrt[n]{\omega}w,\cdots,\sqrt[n]{\omega}w^{n-1}
+\]</span></p>
+<h3 id="扩充平面和复数的球面表示">扩充平面和复数的球面表示</h3>
+<p>因为需要，在<span class="math inline">\(\bm
+C\)</span>中引入一个新的数<span class="math inline">\(\infty\)</span>，其模是<span class="math inline">\(\infty\)</span>，辐角没有意义，运算规则如下</p>
+<p><span class="math display">\[
+z\pm\infty = \infty, z\cdot \infty = \infty(z\neq 0)
+\]</span></p>
+<p><span class="math display">\[
+\frac{z}{\infty} = 0, \frac{z}{0} = \infty(z\neq 0)
+\]</span></p>
+<p>而<span class="math inline">\(0\cdot \infty\)</span>和<span class="math inline">\(\infty\pm\infty\)</span>不规定意义。引入之后的复数系记为<span class="math inline">\(\bm
+C_\infty\)</span>。在复平面上，没有一个点和<span class="math inline">\(\infty\)</span>对应，但是我们想象有一个无穷远点和<span class="math inline">\(\infty\)</span>对应，加上无穷远点的复平面称为扩充平面或闭平面。否则是开平面。</p>
+<p>在复平面上，无穷远点和普通点是不一样的。但在黎曼引入的球面表示中没有什么区别。</p>
+<p>设<span class="math inline">\(S\)</span>是<span class="math inline">\(\bm R^3\)</span>中的单位球面，即</p>
+<p><span class="math display">\[
+S = \{(x_1,x_2,x_3)\in \bm R^3:x_1^2+x_2^2+x_3^2=1\}
+\]</span></p>
+<p>把<span class="math inline">\(\bm C\)</span>等同于平面</p>
+<p><span class="math display">\[
+\bm C = \{(x_1,x_2,0):x_1,x_2\in \bm R\}
+\]</span></p>
+<p>称<span class="math inline">\(N=(0,0,1)\)</span>为北极点。在<span class="math inline">\(\bm C\)</span>上的任一一点<span class="math inline">\(z\)</span>，连接<span class="math inline">\(N,z\)</span>的直线必然和<span class="math inline">\(S\)</span>交于一点<span class="math inline">\(P\)</span>。若<span class="math inline">\(|z|&gt;1\)</span>，则<span class="math inline">\(P\)</span>在北半球；若<span class="math inline">\(|z|&lt;1\)</span>，则<span class="math inline">\(P\)</span>在南半球；若<span class="math inline">\(|z|=1\)</span>，则<span class="math inline">\(z\)</span>就是<span class="math inline">\(P\)</span>。</p>
+<p>当<span class="math inline">\(z\)</span>趋向<span class="math inline">\(\infty\)</span>时，球面上的点就会趋向于<span class="math inline">\(N\)</span>，所以就可以把<span class="math inline">\(\infty\)</span>对应于<span class="math inline">\(N\)</span>。这样一来<span class="math inline">\(\bm
+C_\infty\)</span>中的所有点都可以被移植到球面上去了，并且所有的点一视同仁。</p>
+<p>设<span class="math inline">\(z=x+iy\)</span>，则<span class="math inline">\(P\)</span>的坐标为</p>
+<p><span class="math display">\[
+x_1=\frac{2x}{x^2+y^2+1},x_2=\frac{2y}{x^2+y^2+1},x_3=\frac{x^2+y^2-1}{x^2+y^2+1}
+\]</span></p>
+<p>或者用复数表示为</p>
+<p><span class="math display">\[
+x_1=\frac{z+\bar z}{1+|z|^2},x_2=\frac{z-\bar
+z}{i(1+|z|^2)},x_3=\frac{|z|^2-1}{|z|^2+1}
+\]</span></p>
+<p>同样也就可以用球面上的点来表示复数</p>
+<p><span class="math display">\[
+z=\frac{x_1+ix_2}{1-x_3}
+\]</span></p>
+<h3 id="复数列的极限">复数列的极限</h3>
+<p><strong>极限</strong></p>
+<p>复数列<span class="math inline">\(\{z_n\}\)</span>收敛到点<span class="math inline">\(z_0\)</span>，指的是对于任给的<span class="math inline">\(\varepsilon&gt;0\)</span>，存在正整数<span class="math inline">\(N\)</span>，当<span class="math inline">\(n&gt;N\)</span>时，<span class="math inline">\(|z_n-z_0|&lt;\varepsilon\)</span>，记作<span class="math inline">\(\lim_{n\to \infty}z_n=z_0\)</span></p>
+<p>复数列<span class="math inline">\(\{z_n\}\)</span>收敛到<span class="math inline">\(\infty\)</span>，指的是对于任意正数<span class="math inline">\(M&gt;0\)</span>，存在正整数<span class="math inline">\(N\)</span>，当<span class="math inline">\(n&gt;N\)</span>时，<span class="math inline">\(|z_n|&gt;M\)</span>，记为<span class="math inline">\(\lim_{n\to\infty}z_n=\infty\)</span></p>
+<p><strong>邻域</strong></p>
+<p>对于<span class="math inline">\(a\in\bm C,r&gt;0\)</span>，称</p>
+<p><span class="math display">\[
+B(a,r)=\{z\in C:|z-a|&lt;r\}
+\]</span></p>
+<p>为以<span class="math inline">\(a\)</span>为中心、以<span class="math inline">\(r\)</span>为半径的圆盘，特别当<span class="math inline">\(a=0,r=1\)</span>时称为单位圆盘。<span class="math inline">\(B(a,r)\)</span>也称为<span class="math inline">\(a\)</span>点的一个<span class="math inline">\(r\)</span>邻域，或简称邻域。无穷远点的邻域是指集合<span class="math inline">\(\{z\in \bm C:|z|&gt;R\}\)</span>，记为<span class="math inline">\(B(\infty, R)\)</span></p>
+<p>此时极限有可以表示为：</p>
+<p><span class="math inline">\(\lim_{n\to
+\infty}z_n=z_0\)</span>可以说成对任意<span class="math inline">\(\varepsilon&gt;0\)</span>，当<span class="math inline">\(n\)</span>充分大时，<span class="math inline">\(z_n\in B(z_0,\varepsilon)\)</span></p>
+<p><span class="math inline">\(\lim_{n\to\infty}z_n=\infty\)</span>可以说成对任意<span class="math inline">\(M&gt;0\)</span>，当<span class="math inline">\(n\)</span>充分大时，<span class="math inline">\(z_n\in B(\infty, M)\)</span></p>
+<p>同时马上就可以得到，<span class="math inline">\(\lim_{n\to
+\infty}z_n=z_0\)</span>的充要条件是，其实部和虚部分别有<span class="math inline">\(\lim_{n\to \infty}x_n=x_0\)</span>和<span class="math inline">\(\lim_{n\to \infty}y_n=y_0\)</span>。</p>
+<h3 id="开集闭集和紧集">开集、闭集和紧集</h3>
+<p><strong>内点</strong></p>
+<p>如果存在<span class="math inline">\(r&gt;0\)</span>，使得<span class="math inline">\(B(a,r)\subset E\)</span>，就称<span class="math inline">\(a\)</span>为<span class="math inline">\(E\)</span>的内点</p>
+<p><strong>外点</strong></p>
+<p>如果存在<span class="math inline">\(r&gt;0\)</span>使得<span class="math inline">\(B(a,r)\subset E^c\)</span>，就称<span class="math inline">\(a\)</span>为<span class="math inline">\(E\)</span>的外点。其中<span class="math inline">\(E^c\)</span>是补集。</p>
+<p><strong>边界点</strong></p>
+<p>如果对于任意<span class="math inline">\(r&gt;0\)</span>,<span class="math inline">\(B(a,r)\)</span>中既有<span class="math inline">\(E\)</span>的点，也有<span class="math inline">\(E^c\)</span>的点，就称<span class="math inline">\(a\)</span>为<span class="math inline">\(E\)</span>的边界点。</p>
+<p><strong>内部</strong></p>
+<p><span class="math inline">\(E\)</span>的内点的全体称为<span class="math inline">\(E\)</span>的内部，记为<span class="math inline">\(E\degree\)</span></p>
+<p><strong>外部</strong></p>
+<p><span class="math inline">\(E\)</span>的外点的全体称为<span class="math inline">\(E\)</span>的外部，记为<span class="math inline">\((E^c)\degree\)</span></p>
+<p><strong>开集</strong></p>
+<p>如果<span class="math inline">\(E\)</span>的所有点都是他的内点，即<span class="math inline">\(E=E\degree\)</span>，就称<span class="math inline">\(E\)</span>是开集。</p>
+<p><strong>闭集</strong></p>
+<p>如果<span class="math inline">\(E^c\)</span>是开集，就称<span class="math inline">\(E\)</span>为闭集。</p>
+<p><strong>极限点、聚点</strong></p>
+<p>如果对任意<span class="math inline">\(r&gt;0\)</span>，<span class="math inline">\(B(a,r)\)</span>中除<span class="math inline">\(a\)</span>外总有<span class="math inline">\(E\)</span>中的点，则称<span class="math inline">\(a\)</span>为极限点或聚点。</p>
+<p><strong>导集</strong></p>
+<p>集<span class="math inline">\(E\)</span>的所有极限点构成的集称为<span class="math inline">\(E\)</span>的导集，记为<span class="math inline">\(E&#39;\)</span>。</p>
+<p><strong>孤立点</strong></p>
+<p><span class="math inline">\(E\)</span>中不属于<span class="math inline">\(E&#39;\)</span>的点称为孤立点。</p>
+<p><strong>闭包</strong></p>
+<p><span class="math inline">\(E\)</span>和它的导集的并称为<span class="math inline">\(E\)</span>的闭包，记为<span class="math inline">\(\bar E=E\cup E&#39;\)</span></p>
 
 
 
@@ -527,6 +622,9 @@ z^{-n}=r^{-n}(\cos(-n\theta)+i\sin(-n\theta))
       <ol>
         <li><a href="#复数的定义及其运算">复数的定义及其运算</a></li>
         <li><a href="#复数的几何表示">复数的几何表示</a></li>
+        <li><a href="#扩充平面和复数的球面表示">扩充平面和复数的球面表示</a></li>
+        <li><a href="#复数列的极限">复数列的极限</a></li>
+        <li><a href="#开集闭集和紧集">开集、闭集和紧集</a></li>
       </ol>
     </li>
   </ol>
