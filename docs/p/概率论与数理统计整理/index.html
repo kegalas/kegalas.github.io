@@ -112,7 +112,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 5 分钟
+                    阅读时长: 6 分钟
                 </time>
             </div>
         
@@ -264,6 +264,13 @@ C=\{A发生，B不发生\}=A-B
 <p><span class="math display">\[
 A-B = A\bar B
 \]</span></p>
+<h3 id="两个公式">两个公式</h3>
+<p><span class="math display">\[
+\overline{A_1A_2\cdots A_n}=\sum_{i=1}^n\bar{A_i}
+\]</span></p>
+<p><span class="math display">\[
+\overline{A_1+A_2+\cdots+A_n}=\prod_{i=1}^n\bar{A_i}
+\]</span></p>
 <h2 id="条件概率">条件概率</h2>
 <p>设有两个事件<span class="math inline">\(A,B\)</span>，而<span class="math inline">\(P(B)\neq0\)</span>。则“在给定<span class="math inline">\(B\)</span>发生的条件下<span class="math inline">\(A\)</span>的条件概率”，记为<span class="math inline">\(P(A|B)\)</span>，定义为</p>
 <p><span class="math display">\[
@@ -288,6 +295,29 @@ P(A_{i_1}|A_{i_2}\cdots A_{i_m})=P(A_{i_1})
 \]</span></p>
 <p>可以推出：独立事件的任一部分也独立。</p>
 <p>还有：若一列事件相互独立，则将其中任一部分改为对立事件时，所有事件仍然相互独立。</p>
+<h2 id="全概率公式">全概率公式</h2>
+<p>设<span class="math inline">\(B_1,B_2,\cdots\)</span>为有限或无限个事件，它们两两互斥且在每次试验中至少发生一个。即</p>
+<p><span class="math display">\[
+B_iB_j=\empty(i\neq j)
+\]</span></p>
+<p><span class="math display">\[
+B_1+B_2+\cdots = \Omega（必然事件）
+\]</span></p>
+<p>有时，这样的一组事件称为完备事件群。</p>
+<p>现有任一事件<span class="math inline">\(A\)</span>，有<span class="math inline">\(A=A\Omega=AB_1+AB_2+\cdots\)</span>。而<span class="math inline">\(B_1,B_2,\cdots\)</span>两两互斥，则<span class="math inline">\(AB_1,AB_2,\cdots\)</span>也两两互斥，固有</p>
+<p><span class="math display">\[
+P(A) = P(AB_1)+P(AB_2)+\cdots
+\]</span></p>
+<p>再由条件概率<span class="math inline">\(P(AB_i)=P(B_i)P(A|B_i)\)</span>，得</p>
+<p><span class="math display">\[
+P(A) = P(B_1)P(A|B_1) + P(B_2)P(A|B_2) + \cdots
+\]</span></p>
+<p>上式称为全概率公式。</p>
+<h2 id="贝叶斯公式">贝叶斯公式</h2>
+<p>由全概率公式，有</p>
+<p><span class="math display">\[
+P(B_i|A)=P(AB_i)/P(A)\\=P(B_i)P(A|B_i)/\sum_jP(B_j)P(A|B_j)
+\]</span></p>
 
 
 
@@ -601,10 +631,13 @@ P(A_{i_1}|A_{i_2}\cdots A_{i_m})=P(A_{i_1})
         <li><a href="#概率的加法定理">概率的加法定理</a></li>
         <li><a href="#事件的积">事件的积</a></li>
         <li><a href="#事件的差">事件的差</a></li>
+        <li><a href="#两个公式">两个公式</a></li>
       </ol>
     </li>
     <li><a href="#条件概率">条件概率</a></li>
     <li><a href="#事件的独立性概率乘法定理">事件的独立性、概率乘法定理</a></li>
+    <li><a href="#全概率公式">全概率公式</a></li>
+    <li><a href="#贝叶斯公式">贝叶斯公式</a></li>
   </ol>
 </nav>
                 </div>

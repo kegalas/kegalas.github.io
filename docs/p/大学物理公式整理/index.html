@@ -112,7 +112,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 12 分钟
+                    阅读时长: 13 分钟
                 </time>
             </div>
         
@@ -1214,7 +1214,51 @@ d\varPhi_e = \bm E\cdot d\bm S
 <p><span class="math display">\[
 \varPhi_e=\oint_S\bm E\cdot d\bm S=\int_V\frac{1}{\varepsilon_0}\rho dV
 \]</span></p>
-<p>很容易联想到能否用这个公式反过来求电场强度。对于一般的电厂很难来求，但是对于一些对称的电荷分布来说，是可以使用的。具体案例见教材。</p>
+<p>很容易联想到能否用这个公式反过来求电场强度。对于一般的电场很难来求，但是对于一些对称的电荷分布来说，是可以使用的。具体案例见教材。</p>
+<h4 id="静电场的环路定理电势能">静电场的环路定理、电势能</h4>
+<p><strong>静电力的功</strong></p>
+<p>设一正的实验电荷<span class="math inline">\(q_0\)</span>在静止的点电荷<span class="math inline">\(q\)</span>产生的电场中，由<span class="math inline">\(a\)</span>点经过某一路径<span class="math inline">\(L\)</span>移动到<span class="math inline">\(b\)</span>点，则静电力对<span class="math inline">\(q_0\)</span>做功为</p>
+<p><span class="math display">\[
+A_{ab}=\int^b_{a(L)}\bm F\cdot d\bm l=\int^b_{a(L)}q_0\bm E\cdot d\bm l
+\]</span></p>
+<p><span class="math display">\[
+=\frac{qq_0}{4\pi\varepsilon_0}\int^{r_b}_{r_a}\frac{1}{r^2}dr=\frac{qq_0}{4\pi\varepsilon_0}\left(\frac{1}{r_a}-\frac{1}{r_b}\right)
+\]</span></p>
+<p>显然可知，这个功只取决于初末位置，而与路径无关。</p>
+<p>可以扩展到任何静电场。</p>
+<p><strong>静电场的环路定理</strong></p>
+<p>从上文可以得知，在静电场中，电场强度沿任一闭合路径的线积分（或称电场强度的环流）恒为零。静电场是无旋有源场，静电场的电场线不可能是闭合的。静电场是保守场。</p>
+<p><strong>电势能</strong></p>
+<p>电荷在电场中某点的电势能，在量值上等于把电荷从该点移动到电势能零参考点时，静电力所做的功</p>
+<p><span class="math display">\[
+W_a=A_{a&#34;0&#34;}=\int^{&#34;0&#34;}_aq_0\bm E\cdot d\bm l
+\]</span></p>
+<h4 id="电势电势差">电势、电势差</h4>
+<p>电场中某点的电势，其量值等于单位正电荷在该点所具有的电势能。</p>
+<p><span class="math display">\[
+u_a=\frac{W_a}{q_0}
+\]</span></p>
+<p>电场中某点的电势，其量值等于把单位正电荷从该点沿任意路径移动到电势能零参考点时，静电力所做的功。</p>
+<p><span class="math display">\[
+u_a = \frac{A_{a&#34;0&#34;}}{q_0}=\int^{&#34;0&#34;}_a\bm E\cdot
+d\bm l
+\]</span></p>
+<p>由电势的定义可知，电势差可以表示为</p>
+<p><span class="math display">\[
+U_{ab}=\frac{W_a}{q_0}-\frac{W_b}{q_0}=\frac{A_{ab}}{q_0}=\int^b_a\bm
+E\cdot d\bm l
+\]</span></p>
+<p>电场中<span class="math inline">\(a,b\)</span>两点的电势差，在量值上等于把单位正电荷从<span class="math inline">\(a\)</span>移动到<span class="math inline">\(b\)</span>时，静电力所做的功。电势差与电势的零参考点的选择无关。</p>
+<p>可以计算电势能如下</p>
+<p><span class="math display">\[
+W_a=qu_a
+\]</span></p>
+<p>可以计算电场做功如下</p>
+<p><span class="math display">\[
+A_{ab}=q(u_a-u_b)
+\]</span></p>
+<p><strong>电势叠加原理</strong></p>
+<p>在点电荷系产生的电场中，某点的电势是各个点电荷单独存在时，在该点产生的电势的代数和。</p>
 
 
 
