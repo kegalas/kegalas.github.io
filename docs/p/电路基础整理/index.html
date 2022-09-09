@@ -112,7 +112,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 2 分钟
+                    阅读时长: 5 分钟
                 </time>
             </div>
         
@@ -155,6 +155,82 @@ u(t)=\frac{dw(t)}{dq(t)}
 p(t)=u(t)i(t)
 \]</span></p>
 <h3 id="基尔霍夫定律">基尔霍夫定律</h3>
+<p><strong>电路图</strong></p>
+<p>如果仅研究各元件的连接关系，暂不关心元件本身的特性，则可用一条线段来代表元件。</p>
+<p><strong>支路</strong></p>
+<p>电路图中的每一个元件，即图中的每一条线段，称为支路。</p>
+<p><strong>节点</strong></p>
+<p>支路的连接点称为节点。</p>
+<p><strong>路径</strong></p>
+<p>在图中，从某一节点出发。连续地经过一些支路和节点（只能各经过一次），到达另一节点，就构成路径。</p>
+<p><strong>回路</strong></p>
+<p>如果路径的最后到达点就是出发点，则这样的闭合路径称为回路。</p>
+<h4 id="基尔霍夫-电流定律">基尔霍夫 电流定律</h4>
+<p>对于集中参数电路中的任一节点，在任意时刻，流出该节点电流的和等于流入该节点电流的和。</p>
+<p><span class="math display">\[
+\sum_{流出} i(t) = \sum_{流入} i(t)\quad \forall t
+\]</span></p>
+<h4 id="基尔霍夫电压定律">基尔霍夫电压定律</h4>
+<p>在集中参数电路中，任意时刻沿任一回路绕行，回路中所有支路电压的代数和恒为零</p>
+<p><span class="math display">\[
+\sum u(t) = 0\quad\forall t
+\]</span></p>
+<p>注意，上式在计算时，需要任意指定一个回路的绕行方向，凡是之路电压的参考方向与回路的绕行方向一致者，该电压前面去+号；否则取-号。</p>
+<h3 id="电阻元件">电阻元件</h3>
+<h4 id="二端电阻">二端电阻</h4>
+<p>二端电阻元件可以定义为：一个二端元件，如果在任意时刻<span class="math inline">\(t\)</span>，其两端电压<span class="math inline">\(u\)</span>与流经它的电流<span class="math inline">\(i\)</span>之间的关系(VCR)能用<span class="math inline">\(u-i\)</span>平面上通过原点的曲线所确定，就称其为二端电阻元件，简称电阻元件。</p>
+<p>由于电压和电流的单位是V和A，因而电阻元件的特性称为伏安特性或伏安关系。</p>
+<p>如果电阻元件的伏安特性不随时间变化，则称其为非时变的。否则就是时变的。</p>
+<p>如果伏安特性是通过原点的直线，则称为线性的，否则是非线性的。</p>
+<p><strong>欧姆定律</strong></p>
+<p>在电压、电流参考方向相关联时，其电压与电流的关系就是熟知的欧姆定律</p>
+<p><span class="math display">\[
+u(t)=Ri(t)\quad\forall t
+\]</span></p>
+<p>或者</p>
+<p><span class="math display">\[
+i(t) = Gu(t)\quad\forall t
+\]</span></p>
+<p>其中电阻<span class="math inline">\(R\)</span>的单位是欧姆<span class="math inline">\(\Omega\)</span>，电导<span class="math inline">\(G\)</span>的单位是西<span class="math inline">\(S\)</span>。对于线性非时变电阻元件，<span class="math inline">\(R\)</span>和<span class="math inline">\(G\)</span>都是常实数，他们的关系是</p>
+<p><span class="math display">\[
+G=\frac{1}{R}
+\]</span></p>
+<h4 id="分立电阻与集成电阻">分立电阻与集成电阻</h4>
+<p>任何材料都有电阻。导体、半导体和绝缘体三者的区别是材料的电阻率<span class="math inline">\(\rho\)</span>。通常<span class="math inline">\(\rho&lt;10^{-4}\Omega\cdot
+m\)</span>的材料称为导体，<span class="math inline">\(\rho&gt;10^4\Omega\cdot
+m\)</span>的材料称为绝缘体，介于其中的称为半导体。</p>
+<p>一段长度为<span class="math inline">\(L\)</span>、截面积为<span class="math inline">\(S\)</span>、电阻率为<span class="math inline">\(\rho\)</span>的材料，其电阻值为</p>
+<p><span class="math display">\[
+R = \rho\frac{L}{S}
+\]</span></p>
+<p><strong>分立电阻器的主要参数</strong></p>
+<p>电子电路中单个使用的具有电阻特性的元件，称为分立电阻器。电阻元件是由实际电阻器抽象出来的理想化模型。</p>
+<p>电阻元件和电阻器不是一个概念。电阻元件的参数只有一个电阻值，而电阻器的元件参数包括标称值、容差、额定功率、温度系数等。</p>
+<p><strong>集成电阻</strong></p>
+<p>集成电阻又称扩散电阻、薄层电阻。</p>
+<p>通过复杂的扩散工艺在硅片上生成一定尺寸的薄层而制成的电阻，称为扩散电阻。</p>
+<p>无论是分离电阻器还是集成电阻，分析时都应该抽象为电阻元件。</p>
+<h3 id="电源">电源</h3>
+<h4 id="电压源">电压源</h4>
+<p>一个二端元件，如果其端口电压总能保持为给定的电压<span class="math inline">\(u_s(t)\)</span>，而与通过它的电流无关，则称其为电压源。</p>
+<p>如果<span class="math inline">\(u_s(t)\)</span>为恒定值，则称其为直流电压源或恒定电压源。</p>
+<p>电压源具有如下特点：</p>
+<ol type="1">
+<li>无论通过它的电流为何值，电压源的端口电压<span class="math inline">\(u\)</span>总保持<span class="math inline">\(u(t)=u_s(t)\)</span></li>
+<li>电压源的电流由电压源和与它相连的外电路共同决定。</li>
+</ol>
+<h4 id="电流源">电流源</h4>
+<p>一个二端元件，如其端口电流值总能保持为给定的电流<span class="math inline">\(i_s(t)\)</span>，而与其端口电压无关，则称其为电流源。</p>
+<p>如果<span class="math inline">\(i_s(t)\)</span>为恒定值，则称其为直流电流源或恒定电流源。</p>
+<p>电流源具有如下特点：</p>
+<ol type="1">
+<li>无论其端口电压<span class="math inline">\(u\)</span>为何值，电流源的电流<span class="math inline">\(i\)</span>总保持<span class="math inline">\(i(t)=i_s(t)\)</span></li>
+<li>电流源的端口电压源由电流源和与它相连的外电路共同决定。</li>
+</ol>
+<h4 id="电路中的参考点">电路中的参考点</h4>
+<p>在电路分析中，常常指定电路中的某点为参考点，计算或测量其它各节点对参考点的电位差，称其为各节点的电位，或各节点的电压。</p>
+<h4 id="受控源">受控源</h4>
+<p>非独立电源是指电压源的电压或电流源的电流不是给定的时间函数，而是受电路中某支路电压或电流控制的，因此常称为受控源。</p>
 
 
 
@@ -407,6 +483,8 @@ p(t)=u(t)i(t)
         <li><a href="#能量">能量</a></li>
         <li><a href="#功率">功率</a></li>
         <li><a href="#基尔霍夫定律">基尔霍夫定律</a></li>
+        <li><a href="#电阻元件">电阻元件</a></li>
+        <li><a href="#电源">电源</a></li>
       </ol>
     </li>
   </ol>

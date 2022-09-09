@@ -45,6 +45,82 @@ u(t)=\frac{dw(t)}{dq(t)}
 p(t)=u(t)i(t)
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;h3 id=&#34;基尔霍夫定律&#34;&gt;基尔霍夫定律&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;电路图&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;如果仅研究各元件的连接关系，暂不关心元件本身的特性，则可用一条线段来代表元件。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;支路&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;电路图中的每一个元件，即图中的每一条线段，称为支路。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;节点&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;支路的连接点称为节点。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;路径&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;在图中，从某一节点出发。连续地经过一些支路和节点（只能各经过一次），到达另一节点，就构成路径。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;回路&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;如果路径的最后到达点就是出发点，则这样的闭合路径称为回路。&lt;/p&gt;
+&lt;h4 id=&#34;基尔霍夫-电流定律&#34;&gt;基尔霍夫 电流定律&lt;/h4&gt;
+&lt;p&gt;对于集中参数电路中的任一节点，在任意时刻，流出该节点电流的和等于流入该节点电流的和。&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\sum_{流出} i(t) = \sum_{流入} i(t)\quad \forall t
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h4 id=&#34;基尔霍夫电压定律&#34;&gt;基尔霍夫电压定律&lt;/h4&gt;
+&lt;p&gt;在集中参数电路中，任意时刻沿任一回路绕行，回路中所有支路电压的代数和恒为零&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\sum u(t) = 0\quad\forall t
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;注意，上式在计算时，需要任意指定一个回路的绕行方向，凡是之路电压的参考方向与回路的绕行方向一致者，该电压前面去+号；否则取-号。&lt;/p&gt;
+&lt;h3 id=&#34;电阻元件&#34;&gt;电阻元件&lt;/h3&gt;
+&lt;h4 id=&#34;二端电阻&#34;&gt;二端电阻&lt;/h4&gt;
+&lt;p&gt;二端电阻元件可以定义为：一个二端元件，如果在任意时刻&lt;span class=&#34;math inline&#34;&gt;\(t\)&lt;/span&gt;，其两端电压&lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt;与流经它的电流&lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt;之间的关系(VCR)能用&lt;span class=&#34;math inline&#34;&gt;\(u-i\)&lt;/span&gt;平面上通过原点的曲线所确定，就称其为二端电阻元件，简称电阻元件。&lt;/p&gt;
+&lt;p&gt;由于电压和电流的单位是V和A，因而电阻元件的特性称为伏安特性或伏安关系。&lt;/p&gt;
+&lt;p&gt;如果电阻元件的伏安特性不随时间变化，则称其为非时变的。否则就是时变的。&lt;/p&gt;
+&lt;p&gt;如果伏安特性是通过原点的直线，则称为线性的，否则是非线性的。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;欧姆定律&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;在电压、电流参考方向相关联时，其电压与电流的关系就是熟知的欧姆定律&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+u(t)=Ri(t)\quad\forall t
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;或者&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+i(t) = Gu(t)\quad\forall t
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中电阻&lt;span class=&#34;math inline&#34;&gt;\(R\)&lt;/span&gt;的单位是欧姆&lt;span class=&#34;math inline&#34;&gt;\(\Omega\)&lt;/span&gt;，电导&lt;span class=&#34;math inline&#34;&gt;\(G\)&lt;/span&gt;的单位是西&lt;span class=&#34;math inline&#34;&gt;\(S\)&lt;/span&gt;。对于线性非时变电阻元件，&lt;span class=&#34;math inline&#34;&gt;\(R\)&lt;/span&gt;和&lt;span class=&#34;math inline&#34;&gt;\(G\)&lt;/span&gt;都是常实数，他们的关系是&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+G=\frac{1}{R}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h4 id=&#34;分立电阻与集成电阻&#34;&gt;分立电阻与集成电阻&lt;/h4&gt;
+&lt;p&gt;任何材料都有电阻。导体、半导体和绝缘体三者的区别是材料的电阻率&lt;span class=&#34;math inline&#34;&gt;\(\rho\)&lt;/span&gt;。通常&lt;span class=&#34;math inline&#34;&gt;\(\rho&amp;lt;10^{-4}\Omega\cdot
+m\)&lt;/span&gt;的材料称为导体，&lt;span class=&#34;math inline&#34;&gt;\(\rho&amp;gt;10^4\Omega\cdot
+m\)&lt;/span&gt;的材料称为绝缘体，介于其中的称为半导体。&lt;/p&gt;
+&lt;p&gt;一段长度为&lt;span class=&#34;math inline&#34;&gt;\(L\)&lt;/span&gt;、截面积为&lt;span class=&#34;math inline&#34;&gt;\(S\)&lt;/span&gt;、电阻率为&lt;span class=&#34;math inline&#34;&gt;\(\rho\)&lt;/span&gt;的材料，其电阻值为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+R = \rho\frac{L}{S}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;分立电阻器的主要参数&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;电子电路中单个使用的具有电阻特性的元件，称为分立电阻器。电阻元件是由实际电阻器抽象出来的理想化模型。&lt;/p&gt;
+&lt;p&gt;电阻元件和电阻器不是一个概念。电阻元件的参数只有一个电阻值，而电阻器的元件参数包括标称值、容差、额定功率、温度系数等。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;集成电阻&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;集成电阻又称扩散电阻、薄层电阻。&lt;/p&gt;
+&lt;p&gt;通过复杂的扩散工艺在硅片上生成一定尺寸的薄层而制成的电阻，称为扩散电阻。&lt;/p&gt;
+&lt;p&gt;无论是分离电阻器还是集成电阻，分析时都应该抽象为电阻元件。&lt;/p&gt;
+&lt;h3 id=&#34;电源&#34;&gt;电源&lt;/h3&gt;
+&lt;h4 id=&#34;电压源&#34;&gt;电压源&lt;/h4&gt;
+&lt;p&gt;一个二端元件，如果其端口电压总能保持为给定的电压&lt;span class=&#34;math inline&#34;&gt;\(u_s(t)\)&lt;/span&gt;，而与通过它的电流无关，则称其为电压源。&lt;/p&gt;
+&lt;p&gt;如果&lt;span class=&#34;math inline&#34;&gt;\(u_s(t)\)&lt;/span&gt;为恒定值，则称其为直流电压源或恒定电压源。&lt;/p&gt;
+&lt;p&gt;电压源具有如下特点：&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;无论通过它的电流为何值，电压源的端口电压&lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt;总保持&lt;span class=&#34;math inline&#34;&gt;\(u(t)=u_s(t)\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;电压源的电流由电压源和与它相连的外电路共同决定。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id=&#34;电流源&#34;&gt;电流源&lt;/h4&gt;
+&lt;p&gt;一个二端元件，如其端口电流值总能保持为给定的电流&lt;span class=&#34;math inline&#34;&gt;\(i_s(t)\)&lt;/span&gt;，而与其端口电压无关，则称其为电流源。&lt;/p&gt;
+&lt;p&gt;如果&lt;span class=&#34;math inline&#34;&gt;\(i_s(t)\)&lt;/span&gt;为恒定值，则称其为直流电流源或恒定电流源。&lt;/p&gt;
+&lt;p&gt;电流源具有如下特点：&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;无论其端口电压&lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt;为何值，电流源的电流&lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt;总保持&lt;span class=&#34;math inline&#34;&gt;\(i(t)=i_s(t)\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;电流源的端口电压源由电流源和与它相连的外电路共同决定。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id=&#34;电路中的参考点&#34;&gt;电路中的参考点&lt;/h4&gt;
+&lt;p&gt;在电路分析中，常常指定电路中的某点为参考点，计算或测量其它各节点对参考点的电位差，称其为各节点的电位，或各节点的电压。&lt;/p&gt;
+&lt;h4 id=&#34;受控源&#34;&gt;受控源&lt;/h4&gt;
+&lt;p&gt;非独立电源是指电压源的电压或电流源的电流不是给定的时间函数，而是受电路中某支路电压或电流控制的，因此常称为受控源。&lt;/p&gt;
 
 
 </description>
@@ -5045,7 +5121,7 @@ d\varPhi_e = \bm E\cdot d\bm S
 \varPhi_e=\oint_S\bm E\cdot d\bm S=\int_V\frac{1}{\varepsilon_0}\rho dV
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;很容易联想到能否用这个公式反过来求电场强度。对于一般的电场很难来求，但是对于一些对称的电荷分布来说，是可以使用的。具体案例见教材。&lt;/p&gt;
-&lt;h4 id=&#34;静电场的环路定理电势能&#34;&gt;静电场的环路定理、电势能&lt;/h4&gt;
+&lt;h3 id=&#34;静电场的环路定理电势能&#34;&gt;静电场的环路定理、电势能&lt;/h3&gt;
 &lt;p&gt;&lt;strong&gt;静电力的功&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;设一正的实验电荷&lt;span class=&#34;math inline&#34;&gt;\(q_0\)&lt;/span&gt;在静止的点电荷&lt;span class=&#34;math inline&#34;&gt;\(q\)&lt;/span&gt;产生的电场中，由&lt;span class=&#34;math inline&#34;&gt;\(a\)&lt;/span&gt;点经过某一路径&lt;span class=&#34;math inline&#34;&gt;\(L\)&lt;/span&gt;移动到&lt;span class=&#34;math inline&#34;&gt;\(b\)&lt;/span&gt;点，则静电力对&lt;span class=&#34;math inline&#34;&gt;\(q_0\)&lt;/span&gt;做功为&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
@@ -5063,7 +5139,7 @@ A_{ab}=\int^b_{a(L)}\bm F\cdot d\bm l=\int^b_{a(L)}q_0\bm E\cdot d\bm l
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 W_a=A_{a&amp;#34;0&amp;#34;}=\int^{&amp;#34;0&amp;#34;}_aq_0\bm E\cdot d\bm l
 \]&lt;/span&gt;&lt;/p&gt;
-&lt;h4 id=&#34;电势电势差&#34;&gt;电势、电势差&lt;/h4&gt;
+&lt;h3 id=&#34;电势电势差&#34;&gt;电势、电势差&lt;/h3&gt;
 &lt;p&gt;电场中某点的电势，其量值等于单位正电荷在该点所具有的电势能。&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 u_a=\frac{W_a}{q_0}
