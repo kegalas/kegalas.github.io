@@ -543,6 +543,107 @@ P(A) = P(B_1)P(A|B_1) + P(B_2)P(A|B_2) + \cdots
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 P(B_i|A)=P(AB_i)/P(A)\\=P(B_i)P(A|B_i)/\sum_jP(B_j)P(A|B_j)
 \]&lt;/span&gt;&lt;/p&gt;
+&lt;h2 id=&#34;随机变量的概念&#34;&gt;随机变量的概念&lt;/h2&gt;
+&lt;p&gt;随机变量就是其值随机会而定的变量。例如从一大批产品中随机抽出100个，其中所含的废品数为&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;。这个&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;就是一个随机变量。&lt;/p&gt;
+&lt;p&gt;随机变量区分为两大类&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;离散型随机变量。其特征是只能取有限个值，或者虽然能取无限个，但可以一个一个地排列出来（类似于可数无限）。&lt;/li&gt;
+&lt;li&gt;连续性随机变量。不仅是无穷多的，而且类似于不可数无限，充满一个区间。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;离散型随机变量&#34;&gt;离散型随机变量&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;定义1&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;为离散型随机变量，其全部可能值为&lt;span class=&#34;math inline&#34;&gt;\(\{a_1,a_2,\cdots\}\)&lt;/span&gt;，则&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+p_i=P(X=a_i)\quad(i=1,2,\cdots)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;称为&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;的概率函数&lt;/p&gt;
+&lt;p&gt;显然有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+p_i\geq 0,\quad p_1+p_2+\cdots = 1
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定义2&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;为一随机变量，则函数&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+P(X\leq x) = F(x)\quad(-\infty&amp;lt;x&amp;lt;\infty)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;称为&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;的分布函数。这里不限制&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;是离散型的。&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+F(x) = P(X\leq x) = \sum_{\{i|a_i\leq x\}}p_i
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;分布函数具有如下性质&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(F(x)\)&lt;/span&gt;是单调非降的：&lt;span class=&#34;math inline&#34;&gt;\(x_1\leq x_2\)&lt;/span&gt;时，有&lt;span class=&#34;math inline&#34;&gt;\(F(x_1)\leq F(x_2)\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(x\to \infty\)&lt;/span&gt;时，&lt;span class=&#34;math inline&#34;&gt;\(F(x)\to 1\)&lt;/span&gt;。&lt;span class=&#34;math inline&#34;&gt;\(x\to -\infty\)&lt;/span&gt;时，&lt;span class=&#34;math inline&#34;&gt;\(F(x)\to 0\)&lt;/span&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;二项分布&#34;&gt;二项分布&lt;/h2&gt;
+&lt;p&gt;设某个事件&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;在一次试验中发生的概率为&lt;span class=&#34;math inline&#34;&gt;\(p\)&lt;/span&gt;，重复试验&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;次，以&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;记&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;在&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;次试验中发生的次数，则&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+p_i=b(i;n,p)=\binom{n}{i}p^i(1-p)^{n-i}\quad (n=0,1,\cdots,n)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;服从有两个条件&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;各次试验的条件是稳定的&lt;/li&gt;
+&lt;li&gt;各次试验的独立性&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;如果抽检后放回，则每次抽出废品的概率是相等的。如果抽检后不放回，则废品率发生了变化，试验条件不稳定，不符合二项分布。但是如果总数远大于抽出的数量，则不放回也几乎不影响，可以近似地作为二项分布。&lt;/p&gt;
+&lt;h2 id=&#34;泊松分布&#34;&gt;泊松分布&lt;/h2&gt;
+&lt;p&gt;若随机变量&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;的可能取值为&lt;span class=&#34;math inline&#34;&gt;\(0,1,2,\cdots\)&lt;/span&gt;，且概率分布为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+P(X=i)=e^{-\lambda}\lambda^i/i!
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;则称&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;服从泊松分布。记为&lt;span class=&#34;math inline&#34;&gt;\(X\sim P(\lambda)\)&lt;/span&gt;。&lt;span class=&#34;math inline&#34;&gt;\(\lambda&amp;gt;0\)&lt;/span&gt;是某一常数。式子右边对&lt;span class=&#34;math inline&#34;&gt;\(i=0,1,\cdots\)&lt;/span&gt;求和的结果为&lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt;。可以从&lt;span class=&#34;math inline&#34;&gt;\(e^\lambda=\sum^\infty_{i=0}\lambda^i/i!\)&lt;/span&gt;得出。&lt;/p&gt;
+&lt;p&gt;这个分布多出现在当&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;表示在一定时间或空间内出现的事件个数的场合。比如一定时间内某交通路口所发生的事故个数。&lt;/p&gt;
+&lt;p&gt;泊松分布可以看做二项分布的极限。若&lt;span class=&#34;math inline&#34;&gt;\(X\sim
+B(n,p)\)&lt;/span&gt;中&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;很大，&lt;span class=&#34;math inline&#34;&gt;\(p\)&lt;/span&gt;很小，而&lt;span class=&#34;math inline&#34;&gt;\(np=\lambda\)&lt;/span&gt;不太大时，&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;的分布接近与泊松分布&lt;span class=&#34;math inline&#34;&gt;\(P(\lambda)\)&lt;/span&gt;。推导如下：&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+P(X=i)=\binom{n}{i}\left(\frac{\lambda}{n}\right)^i\left(1-\frac{\lambda}{n}\right)^{n-i}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;当&lt;span class=&#34;math inline&#34;&gt;\(n\to\infty\)&lt;/span&gt;时&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\binom{n}{i}/n^i\to 1/i!,\quad \left(1-\frac{\lambda}{n}\right)^{n-i}\to
+e^{-\lambda}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;则有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+P(X=i)=e^{-\lambda}\lambda^i/i!
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;显然通常我们不会遇到&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;无限的情况，只会遇到&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;较大的情况，所以只能说接近泊松分布。&lt;/p&gt;
+&lt;h2 id=&#34;超几何分布&#34;&gt;超几何分布&lt;/h2&gt;
+&lt;p&gt;以&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;记从含&lt;span class=&#34;math inline&#34;&gt;\(M\)&lt;/span&gt;个废品的&lt;span class=&#34;math inline&#34;&gt;\(N\)&lt;/span&gt;个产品中随机抽出&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;个里面所含有的废品数，&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;的分布为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+P(X=m)=\binom{M}{n}\binom{N-M}{n-m}/\binom{N}{n}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;这是一种抽检不放回的试验，如果&lt;span class=&#34;math inline&#34;&gt;\(N\)&lt;/span&gt;特别大，&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;不够大时，放回与不放回差别不大。可以当作二项分布来看。或者说，若&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;服从超几何分布，则当&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;固定时，&lt;span class=&#34;math inline&#34;&gt;\(M/N=p\)&lt;/span&gt;固定；&lt;span class=&#34;math inline&#34;&gt;\(N\to \infty\)&lt;/span&gt;时，&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;近似服从二项分布&lt;span class=&#34;math inline&#34;&gt;\(B(n,p)\)&lt;/span&gt;。&lt;/p&gt;
+&lt;h2 id=&#34;负二项分布&#34;&gt;负二项分布&lt;/h2&gt;
+&lt;p&gt;先指定一个自然数&lt;span class=&#34;math inline&#34;&gt;\(r\)&lt;/span&gt;，一个一个地从一批产品中抽样检查，直到发现第&lt;span class=&#34;math inline&#34;&gt;\(r\)&lt;/span&gt;个废品，以&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;记此时已经抽出的合格产品个数。&lt;/p&gt;
+&lt;p&gt;显然&lt;span class=&#34;math inline&#34;&gt;\(\{X=i\}\)&lt;/span&gt;这个事件发生时，需要满足&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;在前&lt;span class=&#34;math inline&#34;&gt;\(i+r-1\)&lt;/span&gt;次抽取中，正好有&lt;span class=&#34;math inline&#34;&gt;\(r-1\)&lt;/span&gt;个废品&lt;/li&gt;
+&lt;li&gt;第&lt;span class=&#34;math inline&#34;&gt;\(i+r\)&lt;/span&gt;次抽出废品&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;所以有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+P(X=i) = b(r-1;i+r-1,p)p
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+=\binom{i+r-1}{r-1}p^r(1-p)^i
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;负二项分布的名称来源于&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+(1-x)^{-r}=\sum_{i=0}^{\infty}\binom{-r}{i}(-x)^i=\sum_{i=0}^{\infty}\binom{i+r-1}{i}x^i
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+=\sum_{i=0}^{\infty}\binom{i+r-1}{r-1}x^i
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中令&lt;span class=&#34;math inline&#34;&gt;\(x=1-p\)&lt;/span&gt;，两边乘以&lt;span class=&#34;math inline&#34;&gt;\(p^r\)&lt;/span&gt;，得&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+1 = p^r[1-(1-p)]^{-r}=\sum_{i=0}^{\infty}\binom{i+r-1}{r-1}p^r(1-p)^i
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h2 id=&#34;几何分布&#34;&gt;几何分布&lt;/h2&gt;
+&lt;p&gt;当负二项分布中的&lt;span class=&#34;math inline&#34;&gt;\(r=1\)&lt;/span&gt;时，有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+P(X=i) = p(1-p)^i
+\]&lt;/span&gt;&lt;/p&gt;
 
 
 </description>
@@ -9398,76 +9499,50 @@ $$&lt;/p&gt;
 &lt;h3 id=&#34;kmp&#34;&gt;KMP&lt;/h3&gt;
 &lt;div class=&#34;sourceCode&#34; id=&#34;cb4&#34;&gt;&lt;pre class=&#34;sourceCode cpp&#34;&gt;&lt;code class=&#34;sourceCode cpp&#34;&gt;&lt;span id=&#34;cb4-1&#34;&gt;&lt;a href=&#34;#cb4-1&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;&lt;span class=&#34;co&#34;&gt;//kmp,luogu3375&lt;/span&gt;&lt;/span&gt;
 &lt;span id=&#34;cb4-2&#34;&gt;&lt;a href=&#34;#cb4-2&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;&lt;span class=&#34;pp&#34;&gt;#include &lt;/span&gt;&lt;span class=&#34;im&#34;&gt;&amp;lt;iostream&amp;gt;&lt;/span&gt;&lt;/span&gt;
-&lt;span id=&#34;cb4-3&#34;&gt;&lt;a href=&#34;#cb4-3&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;&lt;span class=&#34;pp&#34;&gt;#include &lt;/span&gt;&lt;span class=&#34;im&#34;&gt;&amp;lt;cstdio&amp;gt;&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&#34;cb4-3&#34;&gt;&lt;a href=&#34;#cb4-3&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;&lt;span class=&#34;pp&#34;&gt;#include &lt;/span&gt;&lt;span class=&#34;im&#34;&gt;&amp;lt;vector&amp;gt;&lt;/span&gt;&lt;/span&gt;
 &lt;span id=&#34;cb4-4&#34;&gt;&lt;a href=&#34;#cb4-4&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;&lt;span class=&#34;pp&#34;&gt;#include &lt;/span&gt;&lt;span class=&#34;im&#34;&gt;&amp;lt;string&amp;gt;&lt;/span&gt;&lt;/span&gt;
 &lt;span id=&#34;cb4-5&#34;&gt;&lt;a href=&#34;#cb4-5&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;&lt;/span&gt;
-&lt;span id=&#34;cb4-6&#34;&gt;&lt;a href=&#34;#cb4-6&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;&lt;span class=&#34;kw&#34;&gt;using&lt;/span&gt; &lt;span class=&#34;kw&#34;&gt;namespace&lt;/span&gt; std&lt;span class=&#34;op&#34;&gt;;&lt;/span&gt;&lt;/span&gt;
-&lt;span id=&#34;cb4-7&#34;&gt;&lt;a href=&#34;#cb4-7&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;&lt;/span&gt;
-&lt;span id=&#34;cb4-8&#34;&gt;&lt;a href=&#34;#cb4-8&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;&lt;span class=&#34;pp&#34;&gt;#define MAXN &lt;/span&gt;&lt;span class=&#34;dv&#34;&gt;1000005&lt;/span&gt;&lt;/span&gt;
-&lt;span id=&#34;cb4-9&#34;&gt;&lt;a href=&#34;#cb4-9&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;&lt;/span&gt;
-&lt;span id=&#34;cb4-10&#34;&gt;&lt;a href=&#34;#cb4-10&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;&lt;span class=&#34;dt&#34;&gt;int&lt;/span&gt; nxt&lt;span class=&#34;op&#34;&gt;[&lt;/span&gt;MAXN&lt;span class=&#34;op&#34;&gt;];&lt;/span&gt;&lt;/span&gt;
-&lt;span id=&#34;cb4-11&#34;&gt;&lt;a href=&#34;#cb4-11&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;&lt;/span&gt;
-&lt;span id=&#34;cb4-12&#34;&gt;&lt;a href=&#34;#cb4-12&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;string s1&lt;span class=&#34;op&#34;&gt;,&lt;/span&gt;s2&lt;span class=&#34;op&#34;&gt;;&lt;/span&gt;&lt;/span&gt;
-&lt;span id=&#34;cb4-13&#34;&gt;&lt;a href=&#34;#cb4-13&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;&lt;/span&gt;
-&lt;span id=&#34;cb4-14&#34;&gt;&lt;a href=&#34;#cb4-14&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;&lt;span class=&#34;dt&#34;&gt;int&lt;/span&gt; getNext&lt;span class=&#34;op&#34;&gt;(){&lt;/span&gt;&lt;/span&gt;
-&lt;span id=&#34;cb4-15&#34;&gt;&lt;a href=&#34;#cb4-15&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;    nxt&lt;span class=&#34;op&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;dv&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;op&#34;&gt;]=&lt;/span&gt;&lt;span class=&#34;dv&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;op&#34;&gt;;&lt;/span&gt;&lt;/span&gt;
-&lt;span id=&#34;cb4-16&#34;&gt;&lt;a href=&#34;#cb4-16&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;    &lt;span class=&#34;dt&#34;&gt;int&lt;/span&gt; r &lt;span class=&#34;op&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;dv&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;op&#34;&gt;;&lt;/span&gt;&lt;/span&gt;
-&lt;span id=&#34;cb4-17&#34;&gt;&lt;a href=&#34;#cb4-17&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;    &lt;span class=&#34;dt&#34;&gt;int&lt;/span&gt; l &lt;span class=&#34;op&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;dv&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;op&#34;&gt;;&lt;/span&gt;&lt;/span&gt;
-&lt;span id=&#34;cb4-18&#34;&gt;&lt;a href=&#34;#cb4-18&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;    &lt;span class=&#34;cf&#34;&gt;while&lt;/span&gt; &lt;span class=&#34;op&#34;&gt;(&lt;/span&gt;r&lt;span class=&#34;op&#34;&gt;&amp;lt;&lt;/span&gt;s2&lt;span class=&#34;op&#34;&gt;.&lt;/span&gt;length&lt;span class=&#34;op&#34;&gt;()){&lt;/span&gt;&lt;/span&gt;
-&lt;span id=&#34;cb4-19&#34;&gt;&lt;a href=&#34;#cb4-19&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;        &lt;span class=&#34;cf&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;op&#34;&gt;(&lt;/span&gt;s2&lt;span class=&#34;op&#34;&gt;[&lt;/span&gt;l&lt;span class=&#34;op&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;op&#34;&gt;==&lt;/span&gt; s2&lt;span class=&#34;op&#34;&gt;[&lt;/span&gt;r&lt;span class=&#34;op&#34;&gt;]){&lt;/span&gt;&lt;/span&gt;
-&lt;span id=&#34;cb4-20&#34;&gt;&lt;a href=&#34;#cb4-20&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;            nxt&lt;span class=&#34;op&#34;&gt;[&lt;/span&gt;r&lt;span class=&#34;op&#34;&gt;]=&lt;/span&gt;l&lt;span class=&#34;op&#34;&gt;+&lt;/span&gt;&lt;span class=&#34;dv&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;op&#34;&gt;;&lt;/span&gt;&lt;/span&gt;
-&lt;span id=&#34;cb4-21&#34;&gt;&lt;a href=&#34;#cb4-21&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;            r&lt;span class=&#34;op&#34;&gt;++;&lt;/span&gt;&lt;/span&gt;
-&lt;span id=&#34;cb4-22&#34;&gt;&lt;a href=&#34;#cb4-22&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;            l&lt;span class=&#34;op&#34;&gt;++;&lt;/span&gt;&lt;/span&gt;
-&lt;span id=&#34;cb4-23&#34;&gt;&lt;a href=&#34;#cb4-23&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;        &lt;span class=&#34;op&#34;&gt;}&lt;/span&gt;&lt;/span&gt;
-&lt;span id=&#34;cb4-24&#34;&gt;&lt;a href=&#34;#cb4-24&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;        &lt;span class=&#34;cf&#34;&gt;else&lt;/span&gt; &lt;span class=&#34;cf&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;op&#34;&gt;(&lt;/span&gt;l&lt;span class=&#34;op&#34;&gt;){&lt;/span&gt;&lt;/span&gt;
-&lt;span id=&#34;cb4-25&#34;&gt;&lt;a href=&#34;#cb4-25&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;            l &lt;span class=&#34;op&#34;&gt;=&lt;/span&gt; nxt&lt;span class=&#34;op&#34;&gt;[&lt;/span&gt;l&lt;span class=&#34;op&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;dv&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;op&#34;&gt;];&lt;/span&gt;&lt;/span&gt;
-&lt;span id=&#34;cb4-26&#34;&gt;&lt;a href=&#34;#cb4-26&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;        &lt;span class=&#34;op&#34;&gt;}&lt;/span&gt;&lt;/span&gt;
-&lt;span id=&#34;cb4-27&#34;&gt;&lt;a href=&#34;#cb4-27&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;        &lt;span class=&#34;cf&#34;&gt;else&lt;/span&gt;&lt;span class=&#34;op&#34;&gt;{&lt;/span&gt;&lt;/span&gt;
-&lt;span id=&#34;cb4-28&#34;&gt;&lt;a href=&#34;#cb4-28&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;            nxt&lt;span class=&#34;op&#34;&gt;[&lt;/span&gt;r&lt;span class=&#34;op&#34;&gt;]=&lt;/span&gt;&lt;span class=&#34;dv&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;op&#34;&gt;;&lt;/span&gt;&lt;/span&gt;
-&lt;span id=&#34;cb4-29&#34;&gt;&lt;a href=&#34;#cb4-29&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;            r&lt;span class=&#34;op&#34;&gt;++;&lt;/span&gt;&lt;/span&gt;
-&lt;span id=&#34;cb4-30&#34;&gt;&lt;a href=&#34;#cb4-30&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;        &lt;span class=&#34;op&#34;&gt;}&lt;/span&gt;&lt;/span&gt;
-&lt;span id=&#34;cb4-31&#34;&gt;&lt;a href=&#34;#cb4-31&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;    &lt;span class=&#34;op&#34;&gt;}&lt;/span&gt;&lt;/span&gt;
-&lt;span id=&#34;cb4-32&#34;&gt;&lt;a href=&#34;#cb4-32&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;    &lt;/span&gt;
-&lt;span id=&#34;cb4-33&#34;&gt;&lt;a href=&#34;#cb4-33&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;    &lt;span class=&#34;cf&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;dv&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;op&#34;&gt;;&lt;/span&gt;&lt;/span&gt;
-&lt;span id=&#34;cb4-34&#34;&gt;&lt;a href=&#34;#cb4-34&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;&lt;span class=&#34;op&#34;&gt;}&lt;/span&gt;&lt;/span&gt;
-&lt;span id=&#34;cb4-35&#34;&gt;&lt;a href=&#34;#cb4-35&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;&lt;/span&gt;
-&lt;span id=&#34;cb4-36&#34;&gt;&lt;a href=&#34;#cb4-36&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;&lt;span class=&#34;dt&#34;&gt;int&lt;/span&gt; main&lt;span class=&#34;op&#34;&gt;(){&lt;/span&gt;&lt;/span&gt;
-&lt;span id=&#34;cb4-37&#34;&gt;&lt;a href=&#34;#cb4-37&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;    cin&lt;span class=&#34;op&#34;&gt;&amp;gt;&amp;gt;&lt;/span&gt;s1&lt;span class=&#34;op&#34;&gt;&amp;gt;&amp;gt;&lt;/span&gt;s2&lt;span class=&#34;op&#34;&gt;;&lt;/span&gt;&lt;/span&gt;
-&lt;span id=&#34;cb4-38&#34;&gt;&lt;a href=&#34;#cb4-38&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;    &lt;span class=&#34;co&#34;&gt;//给定两个字符串&lt;/span&gt;&lt;/span&gt;
-&lt;span id=&#34;cb4-39&#34;&gt;&lt;a href=&#34;#cb4-39&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;    getNext&lt;span class=&#34;op&#34;&gt;();&lt;/span&gt;&lt;/span&gt;
-&lt;span id=&#34;cb4-40&#34;&gt;&lt;a href=&#34;#cb4-40&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;&lt;/span&gt;
-&lt;span id=&#34;cb4-41&#34;&gt;&lt;a href=&#34;#cb4-41&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;    &lt;span class=&#34;dt&#34;&gt;int&lt;/span&gt; pos&lt;span class=&#34;op&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;dv&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;op&#34;&gt;,&lt;/span&gt;tar&lt;span class=&#34;op&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;dv&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;op&#34;&gt;;&lt;/span&gt;&lt;/span&gt;
-&lt;span id=&#34;cb4-42&#34;&gt;&lt;a href=&#34;#cb4-42&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;&lt;/span&gt;
-&lt;span id=&#34;cb4-43&#34;&gt;&lt;a href=&#34;#cb4-43&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;    &lt;span class=&#34;cf&#34;&gt;while&lt;/span&gt; &lt;span class=&#34;op&#34;&gt;(&lt;/span&gt;tar&lt;span class=&#34;op&#34;&gt;&amp;lt;&lt;/span&gt;s1&lt;span class=&#34;op&#34;&gt;.&lt;/span&gt;length&lt;span class=&#34;op&#34;&gt;())&lt;/span&gt;&lt;/span&gt;
-&lt;span id=&#34;cb4-44&#34;&gt;&lt;a href=&#34;#cb4-44&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;    &lt;span class=&#34;op&#34;&gt;{&lt;/span&gt;&lt;/span&gt;
-&lt;span id=&#34;cb4-45&#34;&gt;&lt;a href=&#34;#cb4-45&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;        &lt;span class=&#34;cf&#34;&gt;if&lt;/span&gt;&lt;span class=&#34;op&#34;&gt;(&lt;/span&gt;s1&lt;span class=&#34;op&#34;&gt;[&lt;/span&gt;tar&lt;span class=&#34;op&#34;&gt;]==&lt;/span&gt;s2&lt;span class=&#34;op&#34;&gt;[&lt;/span&gt;pos&lt;span class=&#34;op&#34;&gt;]){&lt;/span&gt;&lt;/span&gt;
-&lt;span id=&#34;cb4-46&#34;&gt;&lt;a href=&#34;#cb4-46&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;            pos&lt;span class=&#34;op&#34;&gt;++;&lt;/span&gt;&lt;/span&gt;
-&lt;span id=&#34;cb4-47&#34;&gt;&lt;a href=&#34;#cb4-47&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;            tar&lt;span class=&#34;op&#34;&gt;++;&lt;/span&gt;&lt;/span&gt;
-&lt;span id=&#34;cb4-48&#34;&gt;&lt;a href=&#34;#cb4-48&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;        &lt;span class=&#34;op&#34;&gt;}&lt;/span&gt;&lt;/span&gt;
-&lt;span id=&#34;cb4-49&#34;&gt;&lt;a href=&#34;#cb4-49&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;        &lt;span class=&#34;cf&#34;&gt;else&lt;/span&gt; &lt;span class=&#34;cf&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;op&#34;&gt;(&lt;/span&gt;pos&lt;span class=&#34;op&#34;&gt;){&lt;/span&gt;&lt;/span&gt;
-&lt;span id=&#34;cb4-50&#34;&gt;&lt;a href=&#34;#cb4-50&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;            pos &lt;span class=&#34;op&#34;&gt;=&lt;/span&gt; nxt&lt;span class=&#34;op&#34;&gt;[&lt;/span&gt;pos&lt;span class=&#34;op&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;dv&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;op&#34;&gt;];&lt;/span&gt;&lt;/span&gt;
-&lt;span id=&#34;cb4-51&#34;&gt;&lt;a href=&#34;#cb4-51&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;        &lt;span class=&#34;op&#34;&gt;}&lt;/span&gt;&lt;/span&gt;
-&lt;span id=&#34;cb4-52&#34;&gt;&lt;a href=&#34;#cb4-52&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;        &lt;span class=&#34;cf&#34;&gt;else&lt;/span&gt;&lt;span class=&#34;op&#34;&gt;{&lt;/span&gt;&lt;/span&gt;
-&lt;span id=&#34;cb4-53&#34;&gt;&lt;a href=&#34;#cb4-53&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;            tar&lt;span class=&#34;op&#34;&gt;++;&lt;/span&gt;&lt;/span&gt;
-&lt;span id=&#34;cb4-54&#34;&gt;&lt;a href=&#34;#cb4-54&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;        &lt;span class=&#34;op&#34;&gt;}&lt;/span&gt;&lt;/span&gt;
-&lt;span id=&#34;cb4-55&#34;&gt;&lt;a href=&#34;#cb4-55&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;&lt;/span&gt;
-&lt;span id=&#34;cb4-56&#34;&gt;&lt;a href=&#34;#cb4-56&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;        &lt;span class=&#34;cf&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;op&#34;&gt;(&lt;/span&gt;pos&lt;span class=&#34;op&#34;&gt;==&lt;/span&gt;s2&lt;span class=&#34;op&#34;&gt;.&lt;/span&gt;length&lt;span class=&#34;op&#34;&gt;()){&lt;/span&gt;&lt;/span&gt;
-&lt;span id=&#34;cb4-57&#34;&gt;&lt;a href=&#34;#cb4-57&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;            cout&lt;span class=&#34;op&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt;tar&lt;span class=&#34;op&#34;&gt;-&lt;/span&gt;pos&lt;span class=&#34;op&#34;&gt;+&lt;/span&gt;&lt;span class=&#34;dv&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;op&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt;endl&lt;span class=&#34;op&#34;&gt;;&lt;/span&gt;&lt;/span&gt;
-&lt;span id=&#34;cb4-58&#34;&gt;&lt;a href=&#34;#cb4-58&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;            &lt;span class=&#34;co&#34;&gt;//输出s2在s1中出现的位置&lt;/span&gt;&lt;/span&gt;
-&lt;span id=&#34;cb4-59&#34;&gt;&lt;a href=&#34;#cb4-59&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;            pos &lt;span class=&#34;op&#34;&gt;=&lt;/span&gt; nxt&lt;span class=&#34;op&#34;&gt;[&lt;/span&gt;pos&lt;span class=&#34;op&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;dv&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;op&#34;&gt;];&lt;/span&gt;&lt;/span&gt;
-&lt;span id=&#34;cb4-60&#34;&gt;&lt;a href=&#34;#cb4-60&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;        &lt;span class=&#34;op&#34;&gt;}&lt;/span&gt;&lt;/span&gt;
-&lt;span id=&#34;cb4-61&#34;&gt;&lt;a href=&#34;#cb4-61&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;        &lt;/span&gt;
-&lt;span id=&#34;cb4-62&#34;&gt;&lt;a href=&#34;#cb4-62&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;    &lt;span class=&#34;op&#34;&gt;}&lt;/span&gt;&lt;/span&gt;
-&lt;span id=&#34;cb4-63&#34;&gt;&lt;a href=&#34;#cb4-63&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;&lt;/span&gt;
-&lt;span id=&#34;cb4-64&#34;&gt;&lt;a href=&#34;#cb4-64&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;    &lt;span class=&#34;cf&#34;&gt;for&lt;/span&gt;&lt;span class=&#34;op&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;dt&#34;&gt;int&lt;/span&gt; i&lt;span class=&#34;op&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;dv&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;op&#34;&gt;;&lt;/span&gt;i&lt;span class=&#34;op&#34;&gt;&amp;lt;&lt;/span&gt;s2&lt;span class=&#34;op&#34;&gt;.&lt;/span&gt;length&lt;span class=&#34;op&#34;&gt;();&lt;/span&gt;i&lt;span class=&#34;op&#34;&gt;++){&lt;/span&gt;&lt;/span&gt;
-&lt;span id=&#34;cb4-65&#34;&gt;&lt;a href=&#34;#cb4-65&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;        cout&lt;span class=&#34;op&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt;nxt&lt;span class=&#34;op&#34;&gt;[&lt;/span&gt;i&lt;span class=&#34;op&#34;&gt;]&amp;lt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;st&#34;&gt;&amp;#34; &amp;#34;&lt;/span&gt;&lt;span class=&#34;op&#34;&gt;;&lt;/span&gt;&lt;/span&gt;
-&lt;span id=&#34;cb4-66&#34;&gt;&lt;a href=&#34;#cb4-66&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;        &lt;span class=&#34;co&#34;&gt;//表示s2​的长度为i的前缀的最长border长度。&lt;/span&gt;&lt;/span&gt;
-&lt;span id=&#34;cb4-67&#34;&gt;&lt;a href=&#34;#cb4-67&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;    &lt;span class=&#34;op&#34;&gt;}&lt;/span&gt;&lt;/span&gt;
-&lt;span id=&#34;cb4-68&#34;&gt;&lt;a href=&#34;#cb4-68&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;&lt;/span&gt;
-&lt;span id=&#34;cb4-69&#34;&gt;&lt;a href=&#34;#cb4-69&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;    cout&lt;span class=&#34;op&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt;endl&lt;span class=&#34;op&#34;&gt;;&lt;/span&gt;&lt;/span&gt;
-&lt;span id=&#34;cb4-70&#34;&gt;&lt;a href=&#34;#cb4-70&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;&lt;/span&gt;
-&lt;span id=&#34;cb4-71&#34;&gt;&lt;a href=&#34;#cb4-71&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;    &lt;span class=&#34;cf&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;dv&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;op&#34;&gt;;&lt;/span&gt;&lt;/span&gt;
-&lt;span id=&#34;cb4-72&#34;&gt;&lt;a href=&#34;#cb4-72&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;&lt;span class=&#34;op&#34;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;span id=&#34;cb4-6&#34;&gt;&lt;a href=&#34;#cb4-6&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;&lt;span class=&#34;bu&#34;&gt;std::&lt;/span&gt;vector&lt;span class=&#34;op&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;dt&#34;&gt;int&lt;/span&gt;&lt;span class=&#34;op&#34;&gt;&amp;gt;&lt;/span&gt; prefixFunc&lt;span class=&#34;op&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;bu&#34;&gt;std::&lt;/span&gt;string&lt;span class=&#34;op&#34;&gt; &lt;/span&gt;str&lt;span class=&#34;op&#34;&gt;){&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&#34;cb4-7&#34;&gt;&lt;a href=&#34;#cb4-7&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;    &lt;span class=&#34;co&#34;&gt;//输入一个字符串，输出该字符串的前缀函数表&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&#34;cb4-8&#34;&gt;&lt;a href=&#34;#cb4-8&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;    &lt;span class=&#34;dt&#34;&gt;int&lt;/span&gt; n &lt;span class=&#34;op&#34;&gt;=&lt;/span&gt; str&lt;span class=&#34;op&#34;&gt;.&lt;/span&gt;length&lt;span class=&#34;op&#34;&gt;();&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&#34;cb4-9&#34;&gt;&lt;a href=&#34;#cb4-9&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;    &lt;span class=&#34;bu&#34;&gt;std::&lt;/span&gt;vector&lt;span class=&#34;op&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;dt&#34;&gt;int&lt;/span&gt;&lt;span class=&#34;op&#34;&gt;&amp;gt;&lt;/span&gt; ans&lt;span class=&#34;op&#34;&gt;(&lt;/span&gt;n&lt;span class=&#34;op&#34;&gt;);&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&#34;cb4-10&#34;&gt;&lt;a href=&#34;#cb4-10&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;&lt;/span&gt;
+&lt;span id=&#34;cb4-11&#34;&gt;&lt;a href=&#34;#cb4-11&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;    &lt;span class=&#34;cf&#34;&gt;for&lt;/span&gt;&lt;span class=&#34;op&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;dt&#34;&gt;int&lt;/span&gt; i&lt;span class=&#34;op&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;dv&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;op&#34;&gt;;&lt;/span&gt;i&lt;span class=&#34;op&#34;&gt;&amp;lt;&lt;/span&gt;n&lt;span class=&#34;op&#34;&gt;;&lt;/span&gt;i&lt;span class=&#34;op&#34;&gt;++){&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&#34;cb4-12&#34;&gt;&lt;a href=&#34;#cb4-12&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;        &lt;span class=&#34;dt&#34;&gt;int&lt;/span&gt; j &lt;span class=&#34;op&#34;&gt;=&lt;/span&gt; ans&lt;span class=&#34;op&#34;&gt;[&lt;/span&gt;i&lt;span class=&#34;op&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;dv&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;op&#34;&gt;];&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&#34;cb4-13&#34;&gt;&lt;a href=&#34;#cb4-13&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;        &lt;span class=&#34;cf&#34;&gt;while&lt;/span&gt;&lt;span class=&#34;op&#34;&gt;(&lt;/span&gt;j&lt;span class=&#34;op&#34;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&#34;dv&#34;&gt;0&lt;/span&gt; &lt;span class=&#34;op&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; str&lt;span class=&#34;op&#34;&gt;[&lt;/span&gt;i&lt;span class=&#34;op&#34;&gt;]!=&lt;/span&gt;str&lt;span class=&#34;op&#34;&gt;[&lt;/span&gt;j&lt;span class=&#34;op&#34;&gt;])&lt;/span&gt; j &lt;span class=&#34;op&#34;&gt;=&lt;/span&gt; ans&lt;span class=&#34;op&#34;&gt;[&lt;/span&gt;j&lt;span class=&#34;op&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;dv&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;op&#34;&gt;];&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&#34;cb4-14&#34;&gt;&lt;a href=&#34;#cb4-14&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;        &lt;span class=&#34;cf&#34;&gt;if&lt;/span&gt;&lt;span class=&#34;op&#34;&gt;(&lt;/span&gt;str&lt;span class=&#34;op&#34;&gt;[&lt;/span&gt;i&lt;span class=&#34;op&#34;&gt;]==&lt;/span&gt;str&lt;span class=&#34;op&#34;&gt;[&lt;/span&gt;j&lt;span class=&#34;op&#34;&gt;])&lt;/span&gt; j&lt;span class=&#34;op&#34;&gt;++;&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&#34;cb4-15&#34;&gt;&lt;a href=&#34;#cb4-15&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;        ans&lt;span class=&#34;op&#34;&gt;[&lt;/span&gt;i&lt;span class=&#34;op&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;op&#34;&gt;=&lt;/span&gt; j&lt;span class=&#34;op&#34;&gt;;&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&#34;cb4-16&#34;&gt;&lt;a href=&#34;#cb4-16&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;    &lt;span class=&#34;op&#34;&gt;}&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&#34;cb4-17&#34;&gt;&lt;a href=&#34;#cb4-17&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;&lt;/span&gt;
+&lt;span id=&#34;cb4-18&#34;&gt;&lt;a href=&#34;#cb4-18&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;    &lt;span class=&#34;cf&#34;&gt;return&lt;/span&gt; ans&lt;span class=&#34;op&#34;&gt;;&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&#34;cb4-19&#34;&gt;&lt;a href=&#34;#cb4-19&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;&lt;span class=&#34;op&#34;&gt;}&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&#34;cb4-20&#34;&gt;&lt;a href=&#34;#cb4-20&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;&lt;/span&gt;
+&lt;span id=&#34;cb4-21&#34;&gt;&lt;a href=&#34;#cb4-21&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;&lt;span class=&#34;dt&#34;&gt;int&lt;/span&gt; main&lt;span class=&#34;op&#34;&gt;(){&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&#34;cb4-22&#34;&gt;&lt;a href=&#34;#cb4-22&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;    &lt;span class=&#34;bu&#34;&gt;std::&lt;/span&gt;string&lt;span class=&#34;op&#34;&gt; &lt;/span&gt;str1&lt;span class=&#34;op&#34;&gt;,&lt;/span&gt;str2&lt;span class=&#34;op&#34;&gt;;&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&#34;cb4-23&#34;&gt;&lt;a href=&#34;#cb4-23&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;    &lt;span class=&#34;bu&#34;&gt;std::&lt;/span&gt;cin&lt;span class=&#34;op&#34;&gt;&amp;gt;&amp;gt;&lt;/span&gt;str1&lt;span class=&#34;op&#34;&gt;&amp;gt;&amp;gt;&lt;/span&gt;str2&lt;span class=&#34;op&#34;&gt;;&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&#34;cb4-24&#34;&gt;&lt;a href=&#34;#cb4-24&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;&lt;/span&gt;
+&lt;span id=&#34;cb4-25&#34;&gt;&lt;a href=&#34;#cb4-25&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;    &lt;span class=&#34;bu&#34;&gt;std::&lt;/span&gt;vector&lt;span class=&#34;op&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;dt&#34;&gt;int&lt;/span&gt;&lt;span class=&#34;op&#34;&gt;&amp;gt;&lt;/span&gt; pf &lt;span class=&#34;op&#34;&gt;=&lt;/span&gt; prefixFunc&lt;span class=&#34;op&#34;&gt;(&lt;/span&gt;str2&lt;span class=&#34;op&#34;&gt;+&lt;/span&gt;&lt;span class=&#34;st&#34;&gt;&amp;#34;#&amp;#34;&lt;/span&gt;&lt;span class=&#34;op&#34;&gt;+&lt;/span&gt;str1&lt;span class=&#34;op&#34;&gt;);&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&#34;cb4-26&#34;&gt;&lt;a href=&#34;#cb4-26&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;    &lt;span class=&#34;co&#34;&gt;//注意这个#号，代表的意思是不会在str2与str1中出现的字符，作为分隔符&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&#34;cb4-27&#34;&gt;&lt;a href=&#34;#cb4-27&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;    &lt;span class=&#34;dt&#34;&gt;int&lt;/span&gt; n &lt;span class=&#34;op&#34;&gt;=&lt;/span&gt; str2&lt;span class=&#34;op&#34;&gt;.&lt;/span&gt;length&lt;span class=&#34;op&#34;&gt;();&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&#34;cb4-28&#34;&gt;&lt;a href=&#34;#cb4-28&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;    &lt;span class=&#34;dt&#34;&gt;int&lt;/span&gt; m &lt;span class=&#34;op&#34;&gt;=&lt;/span&gt; str1&lt;span class=&#34;op&#34;&gt;.&lt;/span&gt;length&lt;span class=&#34;op&#34;&gt;();&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&#34;cb4-29&#34;&gt;&lt;a href=&#34;#cb4-29&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;    &lt;span class=&#34;cf&#34;&gt;for&lt;/span&gt;&lt;span class=&#34;op&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;dt&#34;&gt;int&lt;/span&gt; i&lt;span class=&#34;op&#34;&gt;=&lt;/span&gt;n&lt;span class=&#34;op&#34;&gt;+&lt;/span&gt;&lt;span class=&#34;dv&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;op&#34;&gt;;&lt;/span&gt;i&lt;span class=&#34;op&#34;&gt;&amp;lt;&lt;/span&gt;n&lt;span class=&#34;op&#34;&gt;+&lt;/span&gt;m&lt;span class=&#34;op&#34;&gt;+&lt;/span&gt;&lt;span class=&#34;dv&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;op&#34;&gt;;&lt;/span&gt;i&lt;span class=&#34;op&#34;&gt;++){&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&#34;cb4-30&#34;&gt;&lt;a href=&#34;#cb4-30&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;        &lt;span class=&#34;cf&#34;&gt;if&lt;/span&gt;&lt;span class=&#34;op&#34;&gt;(&lt;/span&gt;pf&lt;span class=&#34;op&#34;&gt;[&lt;/span&gt;i&lt;span class=&#34;op&#34;&gt;]==&lt;/span&gt;n&lt;span class=&#34;op&#34;&gt;){&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&#34;cb4-31&#34;&gt;&lt;a href=&#34;#cb4-31&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;            &lt;span class=&#34;bu&#34;&gt;std::&lt;/span&gt;cout&lt;span class=&#34;op&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt;i&lt;span class=&#34;op&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;dv&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;op&#34;&gt;*&lt;/span&gt;n&lt;span class=&#34;op&#34;&gt;+&lt;/span&gt;&lt;span class=&#34;dv&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;op&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;st&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;sc&#34;&gt;\n&lt;/span&gt;&lt;span class=&#34;st&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;op&#34;&gt;;&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&#34;cb4-32&#34;&gt;&lt;a href=&#34;#cb4-32&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;            &lt;span class=&#34;co&#34;&gt;//输出str2在str1中出现的位置&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&#34;cb4-33&#34;&gt;&lt;a href=&#34;#cb4-33&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;            &lt;span class=&#34;co&#34;&gt;//注意下标从0开始，计算在str1中出现的位置时要减去str2和分隔符&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&#34;cb4-34&#34;&gt;&lt;a href=&#34;#cb4-34&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;            &lt;span class=&#34;co&#34;&gt;//另外这个i是匹配到的子串的最右侧&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&#34;cb4-35&#34;&gt;&lt;a href=&#34;#cb4-35&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;        &lt;span class=&#34;op&#34;&gt;}&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&#34;cb4-36&#34;&gt;&lt;a href=&#34;#cb4-36&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;    &lt;span class=&#34;op&#34;&gt;}&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&#34;cb4-37&#34;&gt;&lt;a href=&#34;#cb4-37&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;&lt;/span&gt;
+&lt;span id=&#34;cb4-38&#34;&gt;&lt;a href=&#34;#cb4-38&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;    &lt;span class=&#34;co&#34;&gt;//下面不是kmp的一部分，是洛谷3375的要求&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&#34;cb4-39&#34;&gt;&lt;a href=&#34;#cb4-39&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;    pf &lt;span class=&#34;op&#34;&gt;=&lt;/span&gt; prefixFunc&lt;span class=&#34;op&#34;&gt;(&lt;/span&gt;str2&lt;span class=&#34;op&#34;&gt;);&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&#34;cb4-40&#34;&gt;&lt;a href=&#34;#cb4-40&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;    &lt;span class=&#34;cf&#34;&gt;for&lt;/span&gt;&lt;span class=&#34;op&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kw&#34;&gt;auto&lt;/span&gt; x&lt;span class=&#34;op&#34;&gt;:&lt;/span&gt;pf&lt;span class=&#34;op&#34;&gt;){&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&#34;cb4-41&#34;&gt;&lt;a href=&#34;#cb4-41&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;        &lt;span class=&#34;bu&#34;&gt;std::&lt;/span&gt;cout&lt;span class=&#34;op&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt;x&lt;span class=&#34;op&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;st&#34;&gt;&amp;#34; &amp;#34;&lt;/span&gt;&lt;span class=&#34;op&#34;&gt;;&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&#34;cb4-42&#34;&gt;&lt;a href=&#34;#cb4-42&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;    &lt;span class=&#34;op&#34;&gt;}&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&#34;cb4-43&#34;&gt;&lt;a href=&#34;#cb4-43&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;    &lt;span class=&#34;bu&#34;&gt;std::&lt;/span&gt;cout&lt;span class=&#34;op&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;st&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;sc&#34;&gt;\n&lt;/span&gt;&lt;span class=&#34;st&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;op&#34;&gt;;&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&#34;cb4-44&#34;&gt;&lt;a href=&#34;#cb4-44&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;&lt;/span&gt;
+&lt;span id=&#34;cb4-45&#34;&gt;&lt;a href=&#34;#cb4-45&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;    &lt;span class=&#34;cf&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;dv&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;op&#34;&gt;;&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&#34;cb4-46&#34;&gt;&lt;a href=&#34;#cb4-46&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;&lt;span class=&#34;op&#34;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;h3 id=&#34;字典树trie&#34;&gt;字典树(Trie)&lt;/h3&gt;
 &lt;div class=&#34;sourceCode&#34; id=&#34;cb5&#34;&gt;&lt;pre class=&#34;sourceCode cpp&#34;&gt;&lt;code class=&#34;sourceCode cpp&#34;&gt;&lt;span id=&#34;cb5-1&#34;&gt;&lt;a href=&#34;#cb5-1&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;&lt;span class=&#34;pp&#34;&gt;#include &lt;/span&gt;&lt;span class=&#34;im&#34;&gt;&amp;lt;iostream&amp;gt;&lt;/span&gt;&lt;/span&gt;
 &lt;span id=&#34;cb5-2&#34;&gt;&lt;a href=&#34;#cb5-2&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;&lt;span class=&#34;pp&#34;&gt;#include &lt;/span&gt;&lt;span class=&#34;im&#34;&gt;&amp;lt;cstdio&amp;gt;&lt;/span&gt;&lt;/span&gt;

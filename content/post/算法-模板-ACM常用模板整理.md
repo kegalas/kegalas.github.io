@@ -157,73 +157,47 @@ int main(){
 ```cpp
 //kmp,luogu3375
 #include <iostream>
-#include <cstdio>
+#include <vector>
 #include <string>
 
-using namespace std;
+std::vector<int> prefixFunc(std::string str){
+    //输入一个字符串，输出该字符串的前缀函数表
+    int n = str.length();
+    std::vector<int> ans(n);
 
-#define MAXN 1000005
-
-int nxt[MAXN];
-
-string s1,s2;
-
-int getNext(){
-    nxt[0]=0;
-    int r = 1;
-    int l = 0;
-    while (r<s2.length()){
-        if (s2[l] == s2[r]){
-            nxt[r]=l+1;
-            r++;
-            l++;
-        }
-        else if (l){
-            l = nxt[l-1];
-        }
-        else{
-            nxt[r]=0;
-            r++;
-        }
+    for(int i=1;i<n;i++){
+        int j = ans[i-1];
+        while(j>0 && str[i]!=str[j]) j = ans[j-1];
+        if(str[i]==str[j]) j++;
+        ans[i] = j;
     }
-    
-    return 0;
+
+    return ans;
 }
 
 int main(){
-    cin>>s1>>s2;
-    //给定两个字符串
-    getNext();
+    std::string str1,str2;
+    std::cin>>str1>>str2;
 
-    int pos=0,tar=0;
-
-    while (tar<s1.length())
-    {
-        if(s1[tar]==s2[pos]){
-            pos++;
-            tar++;
+    std::vector<int> pf = prefixFunc(str2+"#"+str1);
+    //注意这个#号，代表的意思是不会在str2与str1中出现的字符，作为分隔符
+    int n = str2.length();
+    int m = str1.length();
+    for(int i=n+1;i<n+m+1;i++){
+        if(pf[i]==n){
+            std::cout<<i-2*n+1<<"\n";
+            //输出str2在str1中出现的位置
+            //注意下标从0开始，计算在str1中出现的位置时要减去str2和分隔符
+            //另外这个i是匹配到的子串的最右侧
         }
-        else if (pos){
-            pos = nxt[pos-1];
-        }
-        else{
-            tar++;
-        }
-
-        if (pos==s2.length()){
-            cout<<tar-pos+1<<endl;
-            //输出s2在s1中出现的位置
-            pos = nxt[pos-1];
-        }
-        
     }
 
-    for(int i=0;i<s2.length();i++){
-        cout<<nxt[i]<<" ";
-        //表示s2​的长度为i的前缀的最长border长度。
+    //下面不是kmp的一部分，是洛谷3375的要求
+    pf = prefixFunc(str2);
+    for(auto x:pf){
+        std::cout<<x<<" ";
     }
-
-    cout<<endl;
+    std::cout<<"\n";
 
     return 0;
 }
