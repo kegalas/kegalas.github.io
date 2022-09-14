@@ -2,7 +2,7 @@
 title: "我的高等数学上册资料整理"
 date: 2021-12-27T16:45:49+08:00
 draft: false
-tags: [高等数学,大学]
+tags: [高等数学,大学,数学]
 description: 高等数学上册资料整理
 categories: 数学
 mathjax: true
