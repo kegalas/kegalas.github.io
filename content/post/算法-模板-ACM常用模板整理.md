@@ -2441,6 +2441,77 @@ int main(){
 }
 ```
 
+## 单调数据结构
+
+### 单调栈
+
+给出模板，以下是一个维护栈内单调不增的代码
+
+```cpp
+int arr[MAXN];
+int stk[MAXN];
+
+int top = 0;
+
+for(int i=1;i<=n;i++){
+    while(top&&arr[stk[top]]<arr[i]){
+        //在这里进行一些操作
+        top--;
+    }
+
+    stk[++top] = i;
+}
+```
+
+### 单调队列
+
+给出滑动窗口的模板，单调队列通常会使用双端队列。滑动窗口即给出一个长度为$n$的数组，以及一个长度为$k$的窗口，从左向右滑动，求出窗口中的最小值和最大值
+
+```cpp
+int arr[MAXN];
+
+int main(){
+    int n,k;
+    std::cin>>n>>k;
+
+    for(int i=1;i<=n;i++){
+        std::cin>>arr[i];
+    }
+
+    std::deque<int> dq;
+
+    for(int i=1;i<k;i++){
+        while(!dq.empty()&&arr[dq.back()]>=arr[i]) dq.pop_back();
+        dq.push_back(i);
+    }
+
+    for(int i=k;i<=n;i++){
+        while(!dq.empty()&&arr[dq.back()]>=arr[i]) dq.pop_back();
+        dq.push_back(i);
+        while(dq.front()<=i-k) dq.pop_front();
+        std::cout<<arr[dq.front()]<<" ";
+    }
+
+    std::cout<<"\n";
+
+    dq.clear();
+
+    for(int i=1;i<k;i++){
+        while(!dq.empty()&&arr[dq.back()]<=arr[i]) dq.pop_back();
+        dq.push_back(i);
+    }
+
+    for(int i=k;i<=n;i++){
+        while(!dq.empty()&&arr[dq.back()]<=arr[i]) dq.pop_back();
+        dq.push_back(i);
+        while(dq.front()<=i-k) dq.pop_front();
+        std::cout<<arr[dq.front()]<<" ";
+    }
+
+    return 0;
+}
+```
+
 ## 倍增
 
 ### ST表
