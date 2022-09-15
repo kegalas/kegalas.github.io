@@ -325,10 +325,14 @@ B(a,r)=\{z\in C:|z-a|&amp;lt;r\}
 &lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(E\)&lt;/span&gt;的内点的全体称为&lt;span class=&#34;math inline&#34;&gt;\(E\)&lt;/span&gt;的内部，记为&lt;span class=&#34;math inline&#34;&gt;\(E\degree\)&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;外部&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(E\)&lt;/span&gt;的外点的全体称为&lt;span class=&#34;math inline&#34;&gt;\(E\)&lt;/span&gt;的外部，记为&lt;span class=&#34;math inline&#34;&gt;\((E^c)\degree\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;边界&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(E\)&lt;/span&gt;的边界点的全体称为&lt;span class=&#34;math inline&#34;&gt;\(E\)&lt;/span&gt;的边界，记为&lt;span class=&#34;math inline&#34;&gt;\(\partial E\)&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;开集&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;如果&lt;span class=&#34;math inline&#34;&gt;\(E\)&lt;/span&gt;的所有点都是他的内点，即&lt;span class=&#34;math inline&#34;&gt;\(E=E\degree\)&lt;/span&gt;，就称&lt;span class=&#34;math inline&#34;&gt;\(E\)&lt;/span&gt;是开集。&lt;/p&gt;
+&lt;p&gt;另外，空集是开集。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;闭集&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;如果&lt;span class=&#34;math inline&#34;&gt;\(E^c\)&lt;/span&gt;是开集，就称&lt;span class=&#34;math inline&#34;&gt;\(E\)&lt;/span&gt;为闭集。&lt;/p&gt;
+&lt;p&gt;另外，无限集是闭集。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;极限点、聚点&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;如果对任意&lt;span class=&#34;math inline&#34;&gt;\(r&amp;gt;0\)&lt;/span&gt;，&lt;span class=&#34;math inline&#34;&gt;\(B(a,r)\)&lt;/span&gt;中除&lt;span class=&#34;math inline&#34;&gt;\(a\)&lt;/span&gt;外总有&lt;span class=&#34;math inline&#34;&gt;\(E\)&lt;/span&gt;中的点，则称&lt;span class=&#34;math inline&#34;&gt;\(a\)&lt;/span&gt;为极限点或聚点。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;导集&lt;/strong&gt;&lt;/p&gt;
@@ -337,6 +341,151 @@ B(a,r)=\{z\in C:|z-a|&amp;lt;r\}
 &lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(E\)&lt;/span&gt;中不属于&lt;span class=&#34;math inline&#34;&gt;\(E&amp;#39;\)&lt;/span&gt;的点称为孤立点。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;闭包&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(E\)&lt;/span&gt;和它的导集的并称为&lt;span class=&#34;math inline&#34;&gt;\(E\)&lt;/span&gt;的闭包，记为&lt;span class=&#34;math inline&#34;&gt;\(\bar E=E\cup E&amp;#39;\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;直径&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;点集&lt;span class=&#34;math inline&#34;&gt;\(E\)&lt;/span&gt;的直径定义为&lt;span class=&#34;math inline&#34;&gt;\(E\)&lt;/span&gt;中任意两点间距离的上确界，记为&lt;span class=&#34;math inline&#34;&gt;\(diamE\)&lt;/span&gt;，即&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+diamE=sup\{|z_1-z_2|:z_1,z_2\in E\}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Cantor定理&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;若非空闭集序列&lt;span class=&#34;math inline&#34;&gt;\(\{F_n\}\)&lt;/span&gt;满足&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(F_1\supset F_2\supset\cdots\supset
+F_n\supset\cdots\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(diamF_n\to 0\)&lt;/span&gt;（当&lt;span class=&#34;math inline&#34;&gt;\(n\to \infty\)&lt;/span&gt;时）&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;那么&lt;span class=&#34;math inline&#34;&gt;\(\bigcap^\infty_{n=1}F_n\)&lt;/span&gt;是一个独点集（只有一个点的集）。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;开集族、开覆盖&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(E\)&lt;/span&gt;是一个集，&lt;span class=&#34;math inline&#34;&gt;\(\mathscr{F}=\{G\}\)&lt;/span&gt;是一个开集族，即&lt;span class=&#34;math inline&#34;&gt;\(\mathscr{F}\)&lt;/span&gt;中的每一个元素都是开集。如果&lt;span class=&#34;math inline&#34;&gt;\(E\)&lt;/span&gt;中每一点至少属于&lt;span class=&#34;math inline&#34;&gt;\(\mathscr{F}\)&lt;/span&gt;中的一个开集，就说&lt;span class=&#34;math inline&#34;&gt;\(\mathscr{F}\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(E\)&lt;/span&gt;的一个开覆盖。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;有限覆盖性质&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;点集&lt;span class=&#34;math inline&#34;&gt;\(E\)&lt;/span&gt;具有有限覆盖性质，是指从&lt;span class=&#34;math inline&#34;&gt;\(E\)&lt;/span&gt;的任一个开覆盖中必能选出有限个开集&lt;span class=&#34;math inline&#34;&gt;\(G_1,\cdots,G_n\)&lt;/span&gt;，使得这有限个开集的并就能覆盖&lt;span class=&#34;math inline&#34;&gt;\(E\)&lt;/span&gt;，即&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+E\subset\bigcup^n_{j=1}G_j
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;紧集&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;具有有限覆盖性质的集称为紧集。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;有界&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;集&lt;span class=&#34;math inline&#34;&gt;\(E\)&lt;/span&gt;称为是有界的，如果存在&lt;span class=&#34;math inline&#34;&gt;\(R&amp;gt;0\)&lt;/span&gt;，使得&lt;span class=&#34;math inline&#34;&gt;\(E\subset B(0,R)\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Heine-Borel定理&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;在&lt;span class=&#34;math inline&#34;&gt;\(C\)&lt;/span&gt;中，&lt;span class=&#34;math inline&#34;&gt;\(E\)&lt;/span&gt;是紧集的充要条件为&lt;span class=&#34;math inline&#34;&gt;\(E\)&lt;/span&gt;是有界闭集；在&lt;span class=&#34;math inline&#34;&gt;\(C_\infty\)&lt;/span&gt;中，&lt;span class=&#34;math inline&#34;&gt;\(E\)&lt;/span&gt;是紧集的充要条件为&lt;span class=&#34;math inline&#34;&gt;\(E\)&lt;/span&gt;是闭集。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定理&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(E\)&lt;/span&gt;是紧集，&lt;span class=&#34;math inline&#34;&gt;\(F\)&lt;/span&gt;是闭集，且&lt;span class=&#34;math inline&#34;&gt;\(E\cap F=\empty\)&lt;/span&gt;，则&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+d(E,F) &amp;gt; 0
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+d(E,F) = \inf\{|z_1-z_2|:z_1\in E, z_2\in F\}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Bolzano-Weierstrass定理&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;任一无穷点集至少有一个极限点。&lt;/p&gt;
+&lt;h3 id=&#34;曲线和域&#34;&gt;曲线和域&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;连续曲线&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;定义在闭区间&lt;span class=&#34;math inline&#34;&gt;\([a,b]\)&lt;/span&gt;上的一个复值连续函数&lt;span class=&#34;math inline&#34;&gt;\(\gamma:[a,b]\to \bm C\)&lt;/span&gt;，写为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+z = \gamma(t)=x(t)+iy(t),\quad a\leq t\leq b
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;这里&lt;span class=&#34;math inline&#34;&gt;\(x(t),y(t)\)&lt;/span&gt;都是&lt;span class=&#34;math inline&#34;&gt;\([a,b]\)&lt;/span&gt;上的连续函数。&lt;/p&gt;
+&lt;p&gt;如果用&lt;span class=&#34;math inline&#34;&gt;\(\gamma^*\)&lt;/span&gt;记&lt;span class=&#34;math inline&#34;&gt;\(\gamma\)&lt;/span&gt;的像点所成的集合&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\gamma^* = \{\gamma(t):a\leq t\leq b\}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;那么&lt;span class=&#34;math inline&#34;&gt;\(\gamma^*\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(\bm C\)&lt;/span&gt;上的紧集。&lt;/p&gt;
+&lt;p&gt;曲线&lt;span class=&#34;math inline&#34;&gt;\(\gamma\)&lt;/span&gt;的方向就是&lt;span class=&#34;math inline&#34;&gt;\(t\)&lt;/span&gt;增加的方向。此时&lt;span class=&#34;math inline&#34;&gt;\(\gamma(a)\)&lt;/span&gt;为起点，&lt;span class=&#34;math inline&#34;&gt;\(\gamma(b)\)&lt;/span&gt;为终点。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;闭曲线&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;如果&lt;span class=&#34;math inline&#34;&gt;\(\gamma(a)=\gamma(b)\)&lt;/span&gt;，则称为闭曲线。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;简单曲线&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;如果当且仅当&lt;span class=&#34;math inline&#34;&gt;\(t_1=t_2\)&lt;/span&gt;时才有&lt;span class=&#34;math inline&#34;&gt;\(\gamma(t_1)=\gamma(t_2)\)&lt;/span&gt;，则称为简单曲线或Jordan曲线。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;简单闭曲线&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;如果当且仅当如果当且仅当&lt;span class=&#34;math inline&#34;&gt;\(t_1=a,t_2=b\)&lt;/span&gt;时才有&lt;span class=&#34;math inline&#34;&gt;\(\gamma(t_1)=\gamma(t_2)\)&lt;/span&gt;，则称为简单闭曲线或Jordan闭曲线，或简称围道。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;可求长的&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(z=\gamma(t)\)&lt;/span&gt;是一条曲线，对区间&lt;span class=&#34;math inline&#34;&gt;\([a,b]\)&lt;/span&gt;做分割&lt;span class=&#34;math inline&#34;&gt;\(a=t_0&amp;lt;t_1&amp;lt;\cdots&amp;lt;t_n=b\)&lt;/span&gt;，得到以&lt;span class=&#34;math inline&#34;&gt;\(z_k=\gamma(t_k)\)&lt;/span&gt;为顶点的折线&lt;span class=&#34;math inline&#34;&gt;\(P\)&lt;/span&gt;，那么&lt;span class=&#34;math inline&#34;&gt;\(P\)&lt;/span&gt;的长度为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+|P|=\sum_{k=1}^n|\gamma(t_k)-\gamma(t_{k-1})|
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;如果不论如何分割区间&lt;span class=&#34;math inline&#34;&gt;\([a,b]\)&lt;/span&gt;，所得折线的长度都是有界的，就称曲线&lt;span class=&#34;math inline&#34;&gt;\(\gamma\)&lt;/span&gt;是可求长的，其长度定义为&lt;span class=&#34;math inline&#34;&gt;\(\gamma\)&lt;/span&gt;的上确界。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;光滑曲线&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;如果&lt;span class=&#34;math inline&#34;&gt;\(\gamma&amp;#39;(t)=x&amp;#39;(t)+iy&amp;#39;(t)\)&lt;/span&gt;存在，且&lt;span class=&#34;math inline&#34;&gt;\(y&amp;#39;(t)\neq 0\)&lt;/span&gt;，那么&lt;span class=&#34;math inline&#34;&gt;\(\gamma\)&lt;/span&gt;在每一点都有切线，&lt;span class=&#34;math inline&#34;&gt;\(\gamma&amp;#39;(t)\)&lt;/span&gt;就是曲线&lt;span class=&#34;math inline&#34;&gt;\(\gamma\)&lt;/span&gt;在&lt;span class=&#34;math inline&#34;&gt;\(\gamma(t)\)&lt;/span&gt;处的切向量，它与正实轴的夹角为&lt;span class=&#34;math inline&#34;&gt;\(Arg\gamma&amp;#39;(t)\)&lt;/span&gt;，&lt;/p&gt;
+&lt;p&gt;如果&lt;span class=&#34;math inline&#34;&gt;\(\gamma&amp;#39;(t)\)&lt;/span&gt;是连续函数，那么&lt;span class=&#34;math inline&#34;&gt;\(\gamma\)&lt;/span&gt;的切线随&lt;span class=&#34;math inline&#34;&gt;\(t\)&lt;/span&gt;而连续变动，这时称&lt;span class=&#34;math inline&#34;&gt;\(\gamma\)&lt;/span&gt;为光滑曲线。&lt;/p&gt;
+&lt;p&gt;此时&lt;span class=&#34;math inline&#34;&gt;\(\gamma\)&lt;/span&gt;的长度为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\int^b_a \sqrt{(x&amp;#39;(t))^2+(y&amp;#39;(t))^2}dt =
+\int^b_a|\gamma&amp;#39;(t)|dt
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;曲线&lt;span class=&#34;math inline&#34;&gt;\(\gamma\)&lt;/span&gt;称为逐段光滑的。&lt;/p&gt;
+&lt;p&gt;如果存在&lt;span class=&#34;math inline&#34;&gt;\(t_0,t_1,\cdots,t_n\)&lt;/span&gt;，使得&lt;span class=&#34;math inline&#34;&gt;\(a=t_0&amp;lt;t_1&amp;lt;\cdots&amp;lt;t_n=b\)&lt;/span&gt;，&lt;span class=&#34;math inline&#34;&gt;\(\gamma\)&lt;/span&gt;在每个参数区间&lt;span class=&#34;math inline&#34;&gt;\([t_{j-1},t_j]\)&lt;/span&gt;上是光滑的，那么在每个分点&lt;span class=&#34;math inline&#34;&gt;\(t_1,\cdots,t_{n-1}\)&lt;/span&gt;处&lt;span class=&#34;math inline&#34;&gt;\(\gamma\)&lt;/span&gt;的左右导数存在。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;连通性&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;平面点集&lt;span class=&#34;math inline&#34;&gt;\(E\)&lt;/span&gt;称为是联通的，如果对任意两个不相交的非空集&lt;span class=&#34;math inline&#34;&gt;\(E_1\)&lt;/span&gt;和&lt;span class=&#34;math inline&#34;&gt;\(E_2\)&lt;/span&gt;满足&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+E = E_1\bigcup E_2
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;那么&lt;span class=&#34;math inline&#34;&gt;\(E_1\)&lt;/span&gt;必含有&lt;span class=&#34;math inline&#34;&gt;\(E_2\)&lt;/span&gt;的极限点，或者&lt;span class=&#34;math inline&#34;&gt;\(E_2\)&lt;/span&gt;必含有&lt;span class=&#34;math inline&#34;&gt;\(E_1\)&lt;/span&gt;的极限点，也就是说，&lt;span class=&#34;math inline&#34;&gt;\(E_1\cap\bar E_2\)&lt;/span&gt;和&lt;span class=&#34;math inline&#34;&gt;\(E_2\cap\bar E_1\)&lt;/span&gt;至少有一个非空。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定理1&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;平面上的非空开集&lt;span class=&#34;math inline&#34;&gt;\(E\)&lt;/span&gt;是连通的充分必要条件是：&lt;span class=&#34;math inline&#34;&gt;\(E\)&lt;/span&gt;中任意两点可用位于&lt;span class=&#34;math inline&#34;&gt;\(E\)&lt;/span&gt;中的折线连接起来。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;域&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;非空的连通开集称为域&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Jordan定理&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;一条简单闭曲线&lt;span class=&#34;math inline&#34;&gt;\(\gamma\)&lt;/span&gt;吧复平面分成两个域，其中一个是有界的，称为&lt;span class=&#34;math inline&#34;&gt;\(\gamma\)&lt;/span&gt;的内部；另一个是无界的，称为&lt;span class=&#34;math inline&#34;&gt;\(\gamma\)&lt;/span&gt;的外部，而&lt;span class=&#34;math inline&#34;&gt;\(\gamma\)&lt;/span&gt;是这两个域的共同的边界。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;单连通与多连通&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;域&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;称为是单连通的，如果&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;内任意简单闭曲线的内部仍在&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;内。&lt;/p&gt;
+&lt;p&gt;不是单连通的域称为多连通的。&lt;/p&gt;
+&lt;p&gt;如果域&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;是由&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;跳简单闭曲线围成的，就称&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;连通的，简单闭曲线中也可以有退化成一条简单曲线或一点的。&lt;/p&gt;
+&lt;h3 id=&#34;复变函数的极限和连续性&#34;&gt;复变函数的极限和连续性&lt;/h3&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(E\)&lt;/span&gt;是复平面上一点集，如果对每一个&lt;span class=&#34;math inline&#34;&gt;\(z\in E\)&lt;/span&gt;，按照某一规则有一确定复数&lt;span class=&#34;math inline&#34;&gt;\(\omega\)&lt;/span&gt;与之对应，我们就说在&lt;span class=&#34;math inline&#34;&gt;\(E\)&lt;/span&gt;上确定了一个单值复变函数，记为&lt;span class=&#34;math inline&#34;&gt;\(\omega=f(z)\)&lt;/span&gt;或&lt;span class=&#34;math inline&#34;&gt;\(f:E\to C\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(E\)&lt;/span&gt;称为&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;的定义域，点集&lt;span class=&#34;math inline&#34;&gt;\(\{f(z):z\in E\}\)&lt;/span&gt;称为&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;的值域。&lt;/p&gt;
+&lt;p&gt;如果对于&lt;span class=&#34;math inline&#34;&gt;\(z\in E\)&lt;/span&gt;，对应的&lt;span class=&#34;math inline&#34;&gt;\(\omega\)&lt;/span&gt;有几个或无穷多个，则称在&lt;span class=&#34;math inline&#34;&gt;\(E\)&lt;/span&gt;上确定了一个多值函数。&lt;/p&gt;
+&lt;p&gt;复变函数是定义在平面点集上的，而它的值域也是一个平面点集，因此复变函数也称为映射，它把一个平面点集映成另一个平面点集。&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(z=x+iy\)&lt;/span&gt;，用&lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt;和&lt;span class=&#34;math inline&#34;&gt;\(v\)&lt;/span&gt;记&lt;span class=&#34;math inline&#34;&gt;\(\omega=f(z)\)&lt;/span&gt;的实部和虚部，则有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\omega=f(z)=u(z)+iv(z)=u(x,y)+iv(x,y)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;这就是说，一个复变函数等价于两个二元的实变函数。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;极限&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;是定义在点集&lt;span class=&#34;math inline&#34;&gt;\(E\)&lt;/span&gt;上的一个复变函数，&lt;span class=&#34;math inline&#34;&gt;\(z_0\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(E\)&lt;/span&gt;的一个极限点，&lt;span class=&#34;math inline&#34;&gt;\(a\)&lt;/span&gt;是给定的一个复数。如果对任意的&lt;span class=&#34;math inline&#34;&gt;\(\varepsilon&amp;gt;0\)&lt;/span&gt;，存在于&lt;span class=&#34;math inline&#34;&gt;\(\varepsilon\)&lt;/span&gt;有关的&lt;span class=&#34;math inline&#34;&gt;\(\delta&amp;gt;0\)&lt;/span&gt;，使得当&lt;span class=&#34;math inline&#34;&gt;\(z\in E\)&lt;/span&gt;且&lt;span class=&#34;math inline&#34;&gt;\(0&amp;lt;|z-z_0|&amp;lt;\delta\)&lt;/span&gt;时有&lt;span class=&#34;math inline&#34;&gt;\(|f(z)-a|&amp;lt;\varepsilon\)&lt;/span&gt;，就说当&lt;span class=&#34;math inline&#34;&gt;\(z\to z_0\)&lt;/span&gt;时&lt;span class=&#34;math inline&#34;&gt;\(f(z)\)&lt;/span&gt;有极限&lt;span class=&#34;math inline&#34;&gt;\(a\)&lt;/span&gt;，记作&lt;span class=&#34;math inline&#34;&gt;\(\lim_{z\to z_0}f(z)=a\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(\lim_{z\to
+z_0}f(z)=a\)&lt;/span&gt;的充分必要条件是&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\lim_{x\to x_0,y\to y_0}u(x,y)=\alpha,\lim_{x\to x_0,y\to
+y_0}v(x,y)=\beta
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;连续&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;我们说&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;在点&lt;span class=&#34;math inline&#34;&gt;\(z_0\in E\)&lt;/span&gt;连续，如果&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\lim_{z\to z_0}f(z)=f(z_0)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;如果&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;在集&lt;span class=&#34;math inline&#34;&gt;\(E\)&lt;/span&gt;中每点都连续，就说&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;在集&lt;span class=&#34;math inline&#34;&gt;\(E\)&lt;/span&gt;上连续。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定理&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(E\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(\bm C\)&lt;/span&gt;中的紧集，&lt;span class=&#34;math inline&#34;&gt;\(f:E\to\bm C\)&lt;/span&gt;在&lt;span class=&#34;math inline&#34;&gt;\(E\)&lt;/span&gt;上连续，那么&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;在&lt;span class=&#34;math inline&#34;&gt;\(E\)&lt;/span&gt;上有界&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(|f|\)&lt;/span&gt;在&lt;span class=&#34;math inline&#34;&gt;\(E\)&lt;/span&gt;上能取得最大值和最小值，即存在&lt;span class=&#34;math inline&#34;&gt;\(a,b\in E\)&lt;/span&gt;使得对于每个&lt;span class=&#34;math inline&#34;&gt;\(z\in E\)&lt;/span&gt;都有&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+|f(z)|\leq |f(a)|，|f(z)|\geq|f(b)|
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;ol start=&#34;3&#34; type=&#34;1&#34;&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;在&lt;span class=&#34;math inline&#34;&gt;\(E\)&lt;/span&gt;上一致连续。即对任意&lt;span class=&#34;math inline&#34;&gt;\(\varepsilon&amp;gt;0\)&lt;/span&gt;，存在只与&lt;span class=&#34;math inline&#34;&gt;\(\varepsilon\)&lt;/span&gt;有关的&lt;span class=&#34;math inline&#34;&gt;\(\delta&amp;gt;0\)&lt;/span&gt;，对&lt;span class=&#34;math inline&#34;&gt;\(E\)&lt;/span&gt;上任意的&lt;span class=&#34;math inline&#34;&gt;\(z_1,z_2\)&lt;/span&gt;，只要&lt;span class=&#34;math inline&#34;&gt;\(|z_1-z_2|&amp;lt;\delta\)&lt;/span&gt;，就有&lt;span class=&#34;math inline&#34;&gt;\(|f(z_1)-f(z_2)|&amp;lt;\varepsilon\)&lt;/span&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;全纯函数解析函数&#34;&gt;全纯函数/解析函数&lt;/h2&gt;
+&lt;h3 id=&#34;复变函数的导数&#34;&gt;复变函数的导数&lt;/h3&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(f:D\to\bm C\)&lt;/span&gt;是定义在域&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;上的函数，&lt;span class=&#34;math inline&#34;&gt;\(z_0\in D\)&lt;/span&gt;，如果极限&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\lim_{z\to z_0}\frac{f(z)-f(z_0)}{z-z_0}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;存在，就说&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;在&lt;span class=&#34;math inline&#34;&gt;\(z_0\)&lt;/span&gt;处复可微或可微，这个极限称为在此处的导数或微商。&lt;/p&gt;
+&lt;p&gt;如果&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;在&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;中每点都可微，就称&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;是域&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;中的全纯函数或解析函数。&lt;/p&gt;
+&lt;p&gt;如果&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;在&lt;span class=&#34;math inline&#34;&gt;\(z_0\)&lt;/span&gt;的一个邻域中全纯，就称&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;在&lt;span class=&#34;math inline&#34;&gt;\(z_0\)&lt;/span&gt;处全纯。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定理1&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;如果&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;在&lt;span class=&#34;math inline&#34;&gt;\(z_0\)&lt;/span&gt;处可微，则必在&lt;span class=&#34;math inline&#34;&gt;\(z_0\)&lt;/span&gt;处连续。反过来说则不一定成立。&lt;/p&gt;
+&lt;p&gt;实变函数的四则运算的求导法则在全纯函数中也成立。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定理2&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(D_1,D_2\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(\bm C\)&lt;/span&gt;中的两个域，且&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+f:D_1\to D_2\\
+g:D_2\to\bm C
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;都是全纯函数，那么&lt;span class=&#34;math inline&#34;&gt;\(h=g\circ
+f\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(D_1\to \bm
+C\)&lt;/span&gt;的全纯函数，并且&lt;span class=&#34;math inline&#34;&gt;\(h&amp;#39;(z)=g&amp;#39;(f(z))f&amp;#39;(z)\)&lt;/span&gt;&lt;/p&gt;
 
 
 </description>
