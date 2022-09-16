@@ -3330,6 +3330,36 @@ dV = kh\cdot kn\cdot(h(u,v+1/h)-h(u,v))
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 \bm n = normalize(TBN\cdot \bm{ln})
 \]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;将法线的XYZ坐标以RGB的形式存储&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;有些法线贴图会将法线的xyz坐标以RGB的形式存储。要得到&lt;span class=&#34;math inline&#34;&gt;\([-1,1]\)&lt;/span&gt;上的法线方向坐标，要经过两次转换。首先将&lt;span class=&#34;math inline&#34;&gt;\(0\sim 255\)&lt;/span&gt;的&lt;span class=&#34;math inline&#34;&gt;\(RGB\)&lt;/span&gt;换到&lt;span class=&#34;math inline&#34;&gt;\([0,1]\)&lt;/span&gt;的形式，然后再转换到&lt;span class=&#34;math inline&#34;&gt;\([0,1]*2-1=[-1,1]\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;这在有些时候比从模型中顶点的法向量来插值计算内部点的法向量要更有细节。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;切线空间存储法向量&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;在切线空间存储法向量时，会直接存储某个值的值作为颜色（当然也要转化到&lt;span class=&#34;math inline&#34;&gt;\([-1,1]\)&lt;/span&gt;），我们要做的就是计算出切线空间的基，然后将其转化为世界坐标中的法向量。&lt;/p&gt;
+&lt;p&gt;对于一个三角形上的三个点&lt;span class=&#34;math inline&#34;&gt;\(p_0,p_1,p_2\)&lt;/span&gt;，以及这个三角形的法向量&lt;span class=&#34;math inline&#34;&gt;\(\bm n\)&lt;/span&gt;。设&lt;span class=&#34;math inline&#34;&gt;\(u_0,u_1,u_2\)&lt;/span&gt;分别为三个点的纹理上的&lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt;坐标，&lt;span class=&#34;math inline&#34;&gt;\(v_0,v_1,v_2\)&lt;/span&gt;为&lt;span class=&#34;math inline&#34;&gt;\(v\)&lt;/span&gt;坐标。那么就有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\bm i = A^{-1}\begin{pmatrix}
+u_1-u_0 \\
+u_2-u_0 \\
+0
+\end{pmatrix}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\bm j = A^{-1}\begin{pmatrix}
+v_1-v_0 \\
+v_2-v_0 \\
+0
+\end{pmatrix}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+A = \begin{pmatrix}
+\overrightarrow{p0p1} \\
+\overrightarrow{p0p2} \\
+\bm n
+\end{pmatrix}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;之后切线空间的基就是&lt;span class=&#34;math inline&#34;&gt;\((\bm i,\bm j,\bm
+n)\)&lt;/span&gt;，将其乘以纹理中提取到的值，就得到世界坐标中的法向量。&lt;/p&gt;
 &lt;h3 id=&#34;位移贴图&#34;&gt;位移贴图&lt;/h3&gt;
 &lt;p&gt;与法线贴图类似，但是位移贴图真正地移动了顶点的位置，很多时候比法线贴图真实。&lt;/p&gt;
 &lt;h3 id=&#34;噪声&#34;&gt;噪声&lt;/h3&gt;
@@ -3715,6 +3745,72 @@ n  &amp;amp; 0 &amp;amp; 0 &amp;amp; 0\\
 \end{bmatrix}
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;直观上的理解就是，将视锥中远平面压小到等于近平面。&lt;/p&gt;
+&lt;p&gt;以上的games101的解释。&lt;/p&gt;
+&lt;p&gt;在Real-Time
+Rendering的解释中，假设我们的相机在原点，我们想将任意一个点&lt;span class=&#34;math inline&#34;&gt;\(p\)&lt;/span&gt;，映射到平面&lt;span class=&#34;math inline&#34;&gt;\(z=-d(d&amp;gt;0)\)&lt;/span&gt;上，得到一个新点&lt;span class=&#34;math inline&#34;&gt;\(q=(q_x,q_y,-d)\)&lt;/span&gt;。显然根据相似三角形，我们有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\frac{q_x}{p_x}=\frac{-d}{p_z}\Rightarrow q_x = -d\frac{p_x}{p_z}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;对于&lt;span class=&#34;math inline&#34;&gt;\(y\)&lt;/span&gt;坐标也是同样的，所以能得到矩阵&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+P_p = \begin{bmatrix}
+1  &amp;amp; 0 &amp;amp; 0 &amp;amp; 0\\
+0  &amp;amp; 1 &amp;amp; 0 &amp;amp; 0\\
+0  &amp;amp; 0 &amp;amp; 1 &amp;amp; 0\\
+0  &amp;amp; 0 &amp;amp; -1/d &amp;amp; 0
+\end{bmatrix}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;因为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+q=P_pp=
+\begin{bmatrix}
+1  &amp;amp; 0 &amp;amp; 0 &amp;amp; 0\\
+0  &amp;amp; 1 &amp;amp; 0 &amp;amp; 0\\
+0  &amp;amp; 0 &amp;amp; 1 &amp;amp; 0\\
+0  &amp;amp; 0 &amp;amp; -1/d &amp;amp; 0
+\end{bmatrix}
+\begin{bmatrix}
+p_x  \\
+p_y  \\
+p_z  \\
+1     
+\end{bmatrix}=
+\begin{bmatrix}
+p_x  \\
+p_y  \\
+p_z  \\
+-p_z/d     
+\end{bmatrix}\Rightarrow
+\begin{bmatrix}
+-dp_x/p_z  \\
+-dp_y/p_z  \\
+-d  \\
+1     
+\end{bmatrix}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;但我们通常要做的不是把点都映射到一个平面上，而是要把视锥压缩到一个&lt;span class=&#34;math inline&#34;&gt;\([-1,1]^3\)&lt;/span&gt;的立方体上。&lt;/p&gt;
+&lt;p&gt;这个视锥体是一个四棱椎，相机在椎顶，近平面&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;，远平面&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;，有&lt;span class=&#34;math inline&#34;&gt;\(0&amp;gt;n&amp;gt;f\)&lt;/span&gt;。因此四棱锥被截成了四棱台。以相机的角度，上下侧面分别为&lt;span class=&#34;math inline&#34;&gt;\(t,b\)&lt;/span&gt;，左右侧面分别为&lt;span class=&#34;math inline&#34;&gt;\(l,r\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;对于近平面，左下角是&lt;span class=&#34;math inline&#34;&gt;\((l,b,n)\)&lt;/span&gt;，右上角是&lt;span class=&#34;math inline&#34;&gt;\((r,t,n)\)&lt;/span&gt;，决定了我们能看到的画面的大小，或称作视野范围。&lt;/p&gt;
+&lt;p&gt;将这样的视锥变为&lt;span class=&#34;math inline&#34;&gt;\([-1,1]^3\)&lt;/span&gt;的矩阵是&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+P_p=\begin{bmatrix}
+\frac{2n}{r-l}  &amp;amp; 0 &amp;amp; -\frac{r+l}{r-l} &amp;amp; 0\\
+0  &amp;amp; \frac{2n}{t-b} &amp;amp; -\frac{t+b}{t-b} &amp;amp; 0\\
+0  &amp;amp; 0 &amp;amp; \frac{f+n}{f-n} &amp;amp; -\frac{2fn}{f-n}\\
+0  &amp;amp; 0 &amp;amp; 1 &amp;amp; 0
+\end{bmatrix}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;也正好和上方games101的正交投影矩阵*透视投影矩阵相同。&lt;/p&gt;
+&lt;p&gt;然后，不在&lt;span class=&#34;math inline&#34;&gt;\(n,f\)&lt;/span&gt;平面之间的物体将会被剔除，不被渲染。&lt;/p&gt;
+&lt;p&gt;如果远平面是无穷远，那么有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+P_p=\begin{bmatrix}
+\frac{2n}{r-l}  &amp;amp; 0 &amp;amp; -\frac{r+l}{r-l} &amp;amp; 0\\
+0  &amp;amp; \frac{2n}{t-b} &amp;amp; -\frac{t+b}{t-b} &amp;amp; 0\\
+0  &amp;amp; 0 &amp;amp; 1 &amp;amp; -2n\\
+0  &amp;amp; 0 &amp;amp; 1 &amp;amp; 0
+\end{bmatrix}
+\]&lt;/span&gt;&lt;/p&gt;
 &lt;h2 id=&#34;视野field-of-view&#34;&gt;视野（Field-of-View）&lt;/h2&gt;
 &lt;p&gt;通常，对于近平面，我们可以用&lt;span class=&#34;math inline&#34;&gt;\(l,r,b,t\)&lt;/span&gt;描述（假设&lt;span class=&#34;math inline&#34;&gt;\(l=-r,b=-t\)&lt;/span&gt;，即平面中心位于&lt;span class=&#34;math inline&#34;&gt;\(-z\)&lt;/span&gt;轴上，且平面与&lt;span class=&#34;math inline&#34;&gt;\(-z\)&lt;/span&gt;垂直），也可以用垂直视野&lt;span class=&#34;math inline&#34;&gt;\(fovY\)&lt;/span&gt;和近平面的宽高比来表示。&lt;/p&gt;
 &lt;p&gt;首先相机到近平面的距离为&lt;span class=&#34;math inline&#34;&gt;\(|n|\)&lt;/span&gt;，则有如下关系&lt;/p&gt;

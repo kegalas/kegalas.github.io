@@ -108,7 +108,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 5 分钟
+                    阅读时长: 6 分钟
                 </time>
             </div>
         
@@ -288,6 +288,36 @@ dV = kh\cdot kn\cdot(h(u,v+1/h)-h(u,v))
 <p><span class="math display">\[
 \bm n = normalize(TBN\cdot \bm{ln})
 \]</span></p>
+<p><strong>将法线的XYZ坐标以RGB的形式存储</strong></p>
+<p>有些法线贴图会将法线的xyz坐标以RGB的形式存储。要得到<span class="math inline">\([-1,1]\)</span>上的法线方向坐标，要经过两次转换。首先将<span class="math inline">\(0\sim 255\)</span>的<span class="math inline">\(RGB\)</span>换到<span class="math inline">\([0,1]\)</span>的形式，然后再转换到<span class="math inline">\([0,1]*2-1=[-1,1]\)</span>。</p>
+<p>这在有些时候比从模型中顶点的法向量来插值计算内部点的法向量要更有细节。</p>
+<p><strong>切线空间存储法向量</strong></p>
+<p>在切线空间存储法向量时，会直接存储某个值的值作为颜色（当然也要转化到<span class="math inline">\([-1,1]\)</span>），我们要做的就是计算出切线空间的基，然后将其转化为世界坐标中的法向量。</p>
+<p>对于一个三角形上的三个点<span class="math inline">\(p_0,p_1,p_2\)</span>，以及这个三角形的法向量<span class="math inline">\(\bm n\)</span>。设<span class="math inline">\(u_0,u_1,u_2\)</span>分别为三个点的纹理上的<span class="math inline">\(u\)</span>坐标，<span class="math inline">\(v_0,v_1,v_2\)</span>为<span class="math inline">\(v\)</span>坐标。那么就有</p>
+<p><span class="math display">\[
+\bm i = A^{-1}\begin{pmatrix}
+u_1-u_0 \\
+u_2-u_0 \\
+0
+\end{pmatrix}
+\]</span></p>
+<p><span class="math display">\[
+\bm j = A^{-1}\begin{pmatrix}
+v_1-v_0 \\
+v_2-v_0 \\
+0
+\end{pmatrix}
+\]</span></p>
+<p>其中</p>
+<p><span class="math display">\[
+A = \begin{pmatrix}
+\overrightarrow{p0p1} \\
+\overrightarrow{p0p2} \\
+\bm n
+\end{pmatrix}
+\]</span></p>
+<p>之后切线空间的基就是<span class="math inline">\((\bm i,\bm j,\bm
+n)\)</span>，将其乘以纹理中提取到的值，就得到世界坐标中的法向量。</p>
 <h3 id="位移贴图">位移贴图</h3>
 <p>与法线贴图类似，但是位移贴图真正地移动了顶点的位置，很多时候比法线贴图真实。</p>
 <h3 id="噪声">噪声</h3>

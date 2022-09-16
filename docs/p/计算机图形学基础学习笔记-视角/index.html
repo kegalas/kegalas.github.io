@@ -108,7 +108,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 3 分钟
+                    阅读时长: 4 分钟
                 </time>
             </div>
         
@@ -241,6 +241,72 @@ n  &amp; 0 &amp; 0 &amp; 0\\
 \end{bmatrix}
 \]</span></p>
 <p>直观上的理解就是，将视锥中远平面压小到等于近平面。</p>
+<p>以上的games101的解释。</p>
+<p>在Real-Time
+Rendering的解释中，假设我们的相机在原点，我们想将任意一个点<span class="math inline">\(p\)</span>，映射到平面<span class="math inline">\(z=-d(d&gt;0)\)</span>上，得到一个新点<span class="math inline">\(q=(q_x,q_y,-d)\)</span>。显然根据相似三角形，我们有</p>
+<p><span class="math display">\[
+\frac{q_x}{p_x}=\frac{-d}{p_z}\Rightarrow q_x = -d\frac{p_x}{p_z}
+\]</span></p>
+<p>对于<span class="math inline">\(y\)</span>坐标也是同样的，所以能得到矩阵</p>
+<p><span class="math display">\[
+P_p = \begin{bmatrix}
+1  &amp; 0 &amp; 0 &amp; 0\\
+0  &amp; 1 &amp; 0 &amp; 0\\
+0  &amp; 0 &amp; 1 &amp; 0\\
+0  &amp; 0 &amp; -1/d &amp; 0
+\end{bmatrix}
+\]</span></p>
+<p>因为</p>
+<p><span class="math display">\[
+q=P_pp=
+\begin{bmatrix}
+1  &amp; 0 &amp; 0 &amp; 0\\
+0  &amp; 1 &amp; 0 &amp; 0\\
+0  &amp; 0 &amp; 1 &amp; 0\\
+0  &amp; 0 &amp; -1/d &amp; 0
+\end{bmatrix}
+\begin{bmatrix}
+p_x  \\
+p_y  \\
+p_z  \\
+1     
+\end{bmatrix}=
+\begin{bmatrix}
+p_x  \\
+p_y  \\
+p_z  \\
+-p_z/d     
+\end{bmatrix}\Rightarrow
+\begin{bmatrix}
+-dp_x/p_z  \\
+-dp_y/p_z  \\
+-d  \\
+1     
+\end{bmatrix}
+\]</span></p>
+<p>但我们通常要做的不是把点都映射到一个平面上，而是要把视锥压缩到一个<span class="math inline">\([-1,1]^3\)</span>的立方体上。</p>
+<p>这个视锥体是一个四棱椎，相机在椎顶，近平面<span class="math inline">\(n\)</span>，远平面<span class="math inline">\(f\)</span>，有<span class="math inline">\(0&gt;n&gt;f\)</span>。因此四棱锥被截成了四棱台。以相机的角度，上下侧面分别为<span class="math inline">\(t,b\)</span>，左右侧面分别为<span class="math inline">\(l,r\)</span>。</p>
+<p>对于近平面，左下角是<span class="math inline">\((l,b,n)\)</span>，右上角是<span class="math inline">\((r,t,n)\)</span>，决定了我们能看到的画面的大小，或称作视野范围。</p>
+<p>将这样的视锥变为<span class="math inline">\([-1,1]^3\)</span>的矩阵是</p>
+<p><span class="math display">\[
+P_p=\begin{bmatrix}
+\frac{2n}{r-l}  &amp; 0 &amp; -\frac{r+l}{r-l} &amp; 0\\
+0  &amp; \frac{2n}{t-b} &amp; -\frac{t+b}{t-b} &amp; 0\\
+0  &amp; 0 &amp; \frac{f+n}{f-n} &amp; -\frac{2fn}{f-n}\\
+0  &amp; 0 &amp; 1 &amp; 0
+\end{bmatrix}
+\]</span></p>
+<p>也正好和上方games101的正交投影矩阵*透视投影矩阵相同。</p>
+<p>然后，不在<span class="math inline">\(n,f\)</span>平面之间的物体将会被剔除，不被渲染。</p>
+<p>如果远平面是无穷远，那么有</p>
+<p><span class="math display">\[
+P_p=\begin{bmatrix}
+\frac{2n}{r-l}  &amp; 0 &amp; -\frac{r+l}{r-l} &amp; 0\\
+0  &amp; \frac{2n}{t-b} &amp; -\frac{t+b}{t-b} &amp; 0\\
+0  &amp; 0 &amp; 1 &amp; -2n\\
+0  &amp; 0 &amp; 1 &amp; 0
+\end{bmatrix}
+\]</span></p>
 <h2 id="视野field-of-view">视野（Field-of-View）</h2>
 <p>通常，对于近平面，我们可以用<span class="math inline">\(l,r,b,t\)</span>描述（假设<span class="math inline">\(l=-r,b=-t\)</span>，即平面中心位于<span class="math inline">\(-z\)</span>轴上，且平面与<span class="math inline">\(-z\)</span>垂直），也可以用垂直视野<span class="math inline">\(fovY\)</span>和近平面的宽高比来表示。</p>
 <p>首先相机到近平面的距离为<span class="math inline">\(|n|\)</span>，则有如下关系</p>
