@@ -112,7 +112,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 9 分钟
+                    阅读时长: 10 分钟
                 </time>
             </div>
         
@@ -418,6 +418,104 @@ P(X=i) = b(r-1;i+r-1,p)p
 <p>当负二项分布中的<span class="math inline">\(r=1\)</span>时，有</p>
 <p><span class="math display">\[
 P(X=i) = p(1-p)^i
+\]</span></p>
+<h2 id="连续型随机变量">连续型随机变量</h2>
+<p>与离散型的有限或可数无限不同，这是一种充满整个区间的随机变量，或者说不可数无限。</p>
+<p>刻画连续型随机变量可以用之前提到的概率分布函数，但是更常用概率密度函数。</p>
+<h3 id="概率密度函数">概率密度函数</h3>
+<p>设连续型随机变量<span class="math inline">\(X\)</span>有概率分布函数<span class="math inline">\(F(x)\)</span>，则<span class="math inline">\(F(x)\)</span>的导数<span class="math inline">\(f(x)=F&#39;(x)\)</span>称为<span class="math inline">\(X\)</span>的概率密度函数。</p>
+<p>具有如下性质</p>
+<ol type="1">
+<li><span class="math inline">\(f(x)\geq 0\)</span></li>
+<li><span class="math inline">\(\int^\infty_{-\infty}f(x)dx=1\)</span></li>
+<li>对于任何常数<span class="math inline">\(a&lt;b\)</span>，有</li>
+</ol>
+<p><span class="math display">\[
+P(a\leq X\leq b)=F(b)-F(a) = \int^b_af(x)dx
+\]</span></p>
+<h2 id="正态分布">正态分布</h2>
+<p>如果一个随机变量具有概率密度函数</p>
+<p><span class="math display">\[
+f(x)=(\sqrt{2\pi}\sigma)^{-1}e^{-\frac{(x-\mu)^2}{2\sigma^2}}\quad
+(-\infty&lt;x&lt;\infty)
+\]</span></p>
+<p>则称<span class="math inline">\(X\)</span>为正态随机变量，并记为<span class="math inline">\(X\sim N(\mu,\sigma^2)\)</span>。<span class="math inline">\(\mu,\sigma^2\)</span>是常数，<span class="math inline">\(\mu\in
+R,0&lt;\sigma^2&lt;\infty\)</span>，它们称为这个分布的参数。</p>
+<p>正态分布的概率密度函数的图像关于<span class="math inline">\(x=\mu\)</span>对称，中间高两边低。</p>
+<p>当<span class="math inline">\(\mu=0,\sigma^2=1\)</span>时，称为标准正态分布<span class="math inline">\(N(0,1)\)</span></p>
+<p><span class="math display">\[
+f(x)=e^{-x^2/2}/\sqrt{2\pi}
+\]</span></p>
+<p>通常<span class="math inline">\(N(0,1)\)</span>的密度函数和分布函数也会记为<span class="math inline">\(\varphi(x)\)</span>和<span class="math inline">\(\varPhi(x)\)</span>。</p>
+<p>任意一个正态分布都可以转化为标准正态分布，便于查表。</p>
+<p><span class="math display">\[
+if\quad X\sim N(\mu,\sigma^2),then\quad Y=(X-\mu)/\sigma\sim N(0,1)
+\]</span></p>
+<p>例如<span class="math inline">\(X\sim
+N(1.5,2^2)\)</span>，要计算<span class="math inline">\(P(-1\leq X\leq
+2)\)</span>，则因<span class="math inline">\((X-1.5)/2\sim
+N(0,1)\)</span>，有</p>
+<p><span class="math display">\[
+P(-1\leq X\leq 2) =
+P\left(\frac{-1-1.5}{2}\leq\frac{X-1.5}{2}\leq\frac{2-1.5}{2}\right)
+\]</span></p>
+<p><span class="math display">\[
+=P(-1.25\leq(X-1.5)/2\leq 0.25)
+\]</span></p>
+<p><span class="math display">\[
+=\varPhi(0.25)-\varPhi(-1.25)
+\]</span></p>
+<p>可以查表代入。但是通常只有非负数的值，对于负数，有</p>
+<p><span class="math display">\[
+\varPhi = 1-\varPhi(-x)
+\]</span></p>
+<h2 id="指数分布">指数分布</h2>
+<p>若随机变量<span class="math inline">\(X\)</span>有概率密度函数</p>
+<p><span class="math display">\[
+f(x)=\left\{\begin{matrix}
+\lambda e^{\lambda x},\quad x&gt;0\\
+0,\quad x\leq 0
+\end{matrix}\right.
+\]</span></p>
+<p>则<span class="math inline">\(X\)</span>服从指数分布，其中<span class="math inline">\(\lambda&gt;0\)</span>是参数。</p>
+<p>其概率分布函数为</p>
+<p><span class="math display">\[
+F(x)=\left\{\begin{matrix}
+1-e^{-\lambda x},\quad x&gt;0\\
+0,\quad x\leq 0
+\end{matrix}\right.
+\]</span></p>
+<h2 id="威布尔分布">威布尔分布</h2>
+<p>满足</p>
+<p><span class="math display">\[
+f(x)=\left\{\begin{matrix}
+\lambda\alpha x^{\alpha-1} e^{\lambda x^\alpha},\quad x&gt;0\\
+0,\quad x\leq 0
+\end{matrix}\right.
+\]</span></p>
+<p>其概率分布函数是</p>
+<p><span class="math display">\[
+F(x)=\left\{\begin{matrix}
+1-e^{-\lambda x^\alpha},\quad x&gt;0\\
+0,\quad x\leq 0
+\end{matrix}\right.
+\]</span></p>
+<p>可见，指数分布是威布尔分布的一个特例。</p>
+<h2 id="均匀分布">均匀分布</h2>
+<p>满足</p>
+<p><span class="math display">\[
+f(x)=\left\{\begin{matrix}
+1/(b-a),\quad a\leq x\leq b\\
+0,\quad else
+\end{matrix}\right.
+\]</span></p>
+<p>其概率分布函数是</p>
+<p><span class="math display">\[
+F(x)=\left\{\begin{matrix}
+0,\quad\quad\quad\quad\quad\quad\quad\quad x\leq a\\
+(x-a)/(b-a),\quad a&lt;x&lt;b\\
+1,\quad\quad\quad\quad\quad\quad\quad\quad x\geq b
+\end{matrix}\right.
 \]</span></p>
 
 
@@ -746,6 +844,15 @@ P(X=i) = p(1-p)^i
     <li><a href="#超几何分布">超几何分布</a></li>
     <li><a href="#负二项分布">负二项分布</a></li>
     <li><a href="#几何分布">几何分布</a></li>
+    <li><a href="#连续型随机变量">连续型随机变量</a>
+      <ol>
+        <li><a href="#概率密度函数">概率密度函数</a></li>
+      </ol>
+    </li>
+    <li><a href="#正态分布">正态分布</a></li>
+    <li><a href="#指数分布">指数分布</a></li>
+    <li><a href="#威布尔分布">威布尔分布</a></li>
+    <li><a href="#均匀分布">均匀分布</a></li>
   </ol>
 </nav>
                 </div>

@@ -112,7 +112,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 5 分钟
+                    阅读时长: 6 分钟
                 </time>
             </div>
         
@@ -231,6 +231,47 @@ R = \rho\frac{L}{S}
 <p>在电路分析中，常常指定电路中的某点为参考点，计算或测量其它各节点对参考点的电位差，称其为各节点的电位，或各节点的电压。</p>
 <h4 id="受控源">受控源</h4>
 <p>非独立电源是指电压源的电压或电流源的电流不是给定的时间函数，而是受电路中某支路电压或电流控制的，因此常称为受控源。</p>
+<p>受控源的符号通常用菱形，而不是圆形。</p>
+<h3 id="电路等效">电路等效</h3>
+<h4 id="概念">概念</h4>
+<p>对于两部分结构、元件参数完全不同的电路，若它们具有完全相同的端口电压电流关系，就称它们是等效的。</p>
+<h4 id="电阻的串联和并联">电阻的串联和并联</h4>
+<p><strong>串联</strong></p>
+<p><span class="math display">\[
+R_{eq}=R_1+R_2+\cdots
+\]</span></p>
+<p>串联时，电流相等；各电阻的电压如下</p>
+<p><span class="math display">\[
+u_k=R_k i =\frac{R_k}{R_{eq}}u
+\]</span></p>
+<p><strong>并联</strong></p>
+<p>电导有</p>
+<p><span class="math display">\[
+G_{eq}=G_1+G_2+\cdots
+\]</span></p>
+<p>电阻有</p>
+<p><span class="math display">\[
+\frac{1}{R_{eq}}=\frac{1}{R_{1}}+\frac{1}{R_{2}}+\cdots
+\]</span></p>
+<p>并联时，电压相同，各电阻的电流如下</p>
+<p><span class="math display">\[
+i_k=G_iu=\frac{G_k}{G_{eq}}i
+\]</span></p>
+<h4 id="电阻y型和三角形电路的等效变换">电阻Y型和三角形电路的等效变换</h4>
+<figure>
+<img src="1.jpg" alt="1.jpg"/>
+<figcaption aria-hidden="true">1.jpg</figcaption>
+</figure>
+<h3 id="含独立源电路的等效">含独立源电路的等效</h3>
+<h4 id="独立源的串联和并联">独立源的串联和并联</h4>
+<p><strong>电压源串联</strong></p>
+<p>电压源串联时，得到的净电压等于电压极性相同的各个电源电压总和，减去极性相反的各电源电压总和。净电压方向与大的那个相同。</p>
+<p><strong>电压源并联</strong></p>
+<p>只有两端电压是相同的电压源才可以并联。可以增加输出电流的能力。</p>
+<p><strong>电流源串联</strong></p>
+<p>只有电流大小相同的电流源能串联。</p>
+<p><strong>电流源并联</strong></p>
+<p>电流源并联时，得到的等效电流源电流大小等于极性相同的各个电源流总和，减去极性相反的各电源电流总和。净电流方向与大的那个相同。</p>
 
 
 
@@ -485,6 +526,8 @@ R = \rho\frac{L}{S}
         <li><a href="#基尔霍夫定律">基尔霍夫定律</a></li>
         <li><a href="#电阻元件">电阻元件</a></li>
         <li><a href="#电源">电源</a></li>
+        <li><a href="#电路等效">电路等效</a></li>
+        <li><a href="#含独立源电路的等效">含独立源电路的等效</a></li>
       </ol>
     </li>
   </ol>

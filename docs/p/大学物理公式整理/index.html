@@ -112,7 +112,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 17 分钟
+                    阅读时长: 18 分钟
                 </time>
             </div>
         
@@ -1343,7 +1343,7 @@ E = \frac{\sigma_0}{\varepsilon_0}-\frac{\sigma &#39;}{\varepsilon_0}
 \]</span></p>
 <p>如果电介质满足</p>
 <p><span class="math display">\[
-E=\frac{E_0}{\varepsilon_0}
+E=\frac{E_0}{\varepsilon_r}
 \]</span></p>
 <p>则一定要有该各向同性的均匀电介质要充满电场所在空集。进一步研究表明，各向同性均匀电介质虽未充满电场所在空间，但只要电介质的表面是等势面。</p>
 <p>另外上式和上上式可以得出</p>
@@ -1385,6 +1385,57 @@ E=\frac{E_0}{\varepsilon_0}
 \oiint_S\bm D\cdot d\bm S = q_0
 \]</span></p>
 <p>通过任意闭合曲面<span class="math inline">\(S\)</span>的总电位移通量，等于该比和曲面所包围的自由电荷量的代数和，与束缚电荷以及闭合曲面之外的自由电荷无关。</p>
+<h3 id="孤立导体的电容">孤立导体的电容</h3>
+<p>一个带电量为<span class="math inline">\(q\)</span>的孤立导体，在静电平衡时，具有一定的电势<span class="math inline">\(u\)</span>。当带电量增加时，电势也增加，且比值不变</p>
+<p><span class="math display">\[
+C=\frac{q}{u}
+\]</span></p>
+<p>其中<span class="math inline">\(C\)</span>是和<span class="math inline">\(u,q\)</span>无关的常量，值只取决于导体的大小形状等因素。</p>
+<h3 id="电容器的电容">电容器的电容</h3>
+<p>若电容器两极板上分别带电量为<span class="math inline">\(+q,-q\)</span>，两极板间的电势差为<span class="math inline">\(u_1-u_2\)</span>，则</p>
+<p><span class="math display">\[
+C=\frac{q}{u_1-u_2}
+\]</span></p>
+<p>并且可以推导出，若两极板相对面积为<span class="math inline">\(S\)</span>，相距<span class="math inline">\(d\)</span>，则有</p>
+<p><span class="math display">\[
+C=\frac{\varepsilon_0 S}{d}
+\]</span></p>
+<h3 id="电容器的串并联">电容器的串并联</h3>
+<p><strong>串联</strong></p>
+<p><span class="math display">\[
+\frac{1}{C} = \frac{1}{C_1}+\frac{1}{C_2}+\frac{1}{C_3}+\cdots
+\]</span></p>
+<p>电容越串越小，但是耐压值提高了</p>
+<p><strong>并联</strong></p>
+<p><span class="math display">\[
+C=C_1+C_2+C_3+\cdots
+\]</span></p>
+<p>电容越并越大，但是耐压值不会改变。</p>
+<h3 id="静电能">静电能</h3>
+<p>电极板上迁移电荷，需要做功</p>
+<p><span class="math display">\[
+dA=U(t)dq=\frac{q(t)}{C}dq
+\]</span></p>
+<p><span class="math display">\[
+A = \int dA = \int^Q_0\frac{q(t)}{C}dq=\frac{Q^2}{2C}
+\]</span></p>
+<p>另外因<span class="math inline">\(Q=CU\)</span>，上式也可以写作</p>
+<p><span class="math display">\[
+A=\frac{1}{2}CU^2=\frac{1}{2}QU
+\]</span></p>
+<p>也就是电容器中储存的能量</p>
+<p><span class="math display">\[
+W = \frac{Q^2}{2C} = \frac{1}{2}CU^2=\frac{1}{2}QU
+\]</span></p>
+<p>在平行板电容器中，如果忽略边缘效应，两极板间的电场是均匀的。因此，单位体积内储存的能量（能量密度）<span class="math inline">\(\omega\)</span>也应该是均匀的。因<span class="math inline">\(U=Ed,C=\varepsilon_0S/d\)</span>，有</p>
+<p><span class="math display">\[
+W = \frac{1}{2}\varepsilon_0E^2Sd=\frac{1}{2}\varepsilon_0E^2V
+\]</span></p>
+<p>而</p>
+<p><span class="math display">\[
+\omega=\frac{W}{V}=\frac{1}{2}\varepsilon_0E^2
+\]</span></p>
+<p>只要空间任一处存在着电场，电场强度为<span class="math inline">\(E\)</span>，该处单位体积中就储藏着<span class="math inline">\(\varepsilon_0E^2/2\)</span>的能量。</p>
 
 
 
@@ -1741,6 +1792,10 @@ E=\frac{E_0}{\varepsilon_0}
         <li><a href="#电介质的极化束缚电荷">电介质的极化、束缚电荷</a></li>
         <li><a href="#电介质内的电场强度">电介质内的电场强度</a></li>
         <li><a href="#电介质中的高斯定理电位移矢量d">电介质中的高斯定理、电位移矢量D</a></li>
+        <li><a href="#孤立导体的电容">孤立导体的电容</a></li>
+        <li><a href="#电容器的电容">电容器的电容</a></li>
+        <li><a href="#电容器的串并联">电容器的串并联</a></li>
+        <li><a href="#静电能">静电能</a></li>
       </ol>
     </li>
   </ol>

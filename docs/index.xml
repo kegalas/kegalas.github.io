@@ -121,6 +121,47 @@ R = \rho\frac{L}{S}
 &lt;p&gt;在电路分析中，常常指定电路中的某点为参考点，计算或测量其它各节点对参考点的电位差，称其为各节点的电位，或各节点的电压。&lt;/p&gt;
 &lt;h4 id=&#34;受控源&#34;&gt;受控源&lt;/h4&gt;
 &lt;p&gt;非独立电源是指电压源的电压或电流源的电流不是给定的时间函数，而是受电路中某支路电压或电流控制的，因此常称为受控源。&lt;/p&gt;
+&lt;p&gt;受控源的符号通常用菱形，而不是圆形。&lt;/p&gt;
+&lt;h3 id=&#34;电路等效&#34;&gt;电路等效&lt;/h3&gt;
+&lt;h4 id=&#34;概念&#34;&gt;概念&lt;/h4&gt;
+&lt;p&gt;对于两部分结构、元件参数完全不同的电路，若它们具有完全相同的端口电压电流关系，就称它们是等效的。&lt;/p&gt;
+&lt;h4 id=&#34;电阻的串联和并联&#34;&gt;电阻的串联和并联&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;串联&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+R_{eq}=R_1+R_2+\cdots
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;串联时，电流相等；各电阻的电压如下&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+u_k=R_k i =\frac{R_k}{R_{eq}}u
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;并联&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;电导有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+G_{eq}=G_1+G_2+\cdots
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;电阻有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\frac{1}{R_{eq}}=\frac{1}{R_{1}}+\frac{1}{R_{2}}+\cdots
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;并联时，电压相同，各电阻的电流如下&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+i_k=G_iu=\frac{G_k}{G_{eq}}i
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h4 id=&#34;电阻y型和三角形电路的等效变换&#34;&gt;电阻Y型和三角形电路的等效变换&lt;/h4&gt;
+&lt;figure&gt;
+&lt;img src=&#34;1.jpg&#34; alt=&#34;1.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;1.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;h3 id=&#34;含独立源电路的等效&#34;&gt;含独立源电路的等效&lt;/h3&gt;
+&lt;h4 id=&#34;独立源的串联和并联&#34;&gt;独立源的串联和并联&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;电压源串联&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;电压源串联时，得到的净电压等于电压极性相同的各个电源电压总和，减去极性相反的各电源电压总和。净电压方向与大的那个相同。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;电压源并联&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;只有两端电压是相同的电压源才可以并联。可以增加输出电流的能力。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;电流源串联&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;只有电流大小相同的电流源能串联。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;电流源并联&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;电流源并联时，得到的等效电流源电流大小等于极性相同的各个电源流总和，减去极性相反的各电源电流总和。净电流方向与大的那个相同。&lt;/p&gt;
 
 
 </description>
@@ -792,6 +833,104 @@ P(X=i) = b(r-1;i+r-1,p)p
 &lt;p&gt;当负二项分布中的&lt;span class=&#34;math inline&#34;&gt;\(r=1\)&lt;/span&gt;时，有&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 P(X=i) = p(1-p)^i
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h2 id=&#34;连续型随机变量&#34;&gt;连续型随机变量&lt;/h2&gt;
+&lt;p&gt;与离散型的有限或可数无限不同，这是一种充满整个区间的随机变量，或者说不可数无限。&lt;/p&gt;
+&lt;p&gt;刻画连续型随机变量可以用之前提到的概率分布函数，但是更常用概率密度函数。&lt;/p&gt;
+&lt;h3 id=&#34;概率密度函数&#34;&gt;概率密度函数&lt;/h3&gt;
+&lt;p&gt;设连续型随机变量&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;有概率分布函数&lt;span class=&#34;math inline&#34;&gt;\(F(x)\)&lt;/span&gt;，则&lt;span class=&#34;math inline&#34;&gt;\(F(x)\)&lt;/span&gt;的导数&lt;span class=&#34;math inline&#34;&gt;\(f(x)=F&amp;#39;(x)\)&lt;/span&gt;称为&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;的概率密度函数。&lt;/p&gt;
+&lt;p&gt;具有如下性质&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(f(x)\geq 0\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(\int^\infty_{-\infty}f(x)dx=1\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;对于任何常数&lt;span class=&#34;math inline&#34;&gt;\(a&amp;lt;b\)&lt;/span&gt;，有&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+P(a\leq X\leq b)=F(b)-F(a) = \int^b_af(x)dx
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h2 id=&#34;正态分布&#34;&gt;正态分布&lt;/h2&gt;
+&lt;p&gt;如果一个随机变量具有概率密度函数&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+f(x)=(\sqrt{2\pi}\sigma)^{-1}e^{-\frac{(x-\mu)^2}{2\sigma^2}}\quad
+(-\infty&amp;lt;x&amp;lt;\infty)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;则称&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;为正态随机变量，并记为&lt;span class=&#34;math inline&#34;&gt;\(X\sim N(\mu,\sigma^2)\)&lt;/span&gt;。&lt;span class=&#34;math inline&#34;&gt;\(\mu,\sigma^2\)&lt;/span&gt;是常数，&lt;span class=&#34;math inline&#34;&gt;\(\mu\in
+R,0&amp;lt;\sigma^2&amp;lt;\infty\)&lt;/span&gt;，它们称为这个分布的参数。&lt;/p&gt;
+&lt;p&gt;正态分布的概率密度函数的图像关于&lt;span class=&#34;math inline&#34;&gt;\(x=\mu\)&lt;/span&gt;对称，中间高两边低。&lt;/p&gt;
+&lt;p&gt;当&lt;span class=&#34;math inline&#34;&gt;\(\mu=0,\sigma^2=1\)&lt;/span&gt;时，称为标准正态分布&lt;span class=&#34;math inline&#34;&gt;\(N(0,1)\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+f(x)=e^{-x^2/2}/\sqrt{2\pi}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;通常&lt;span class=&#34;math inline&#34;&gt;\(N(0,1)\)&lt;/span&gt;的密度函数和分布函数也会记为&lt;span class=&#34;math inline&#34;&gt;\(\varphi(x)\)&lt;/span&gt;和&lt;span class=&#34;math inline&#34;&gt;\(\varPhi(x)\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;任意一个正态分布都可以转化为标准正态分布，便于查表。&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+if\quad X\sim N(\mu,\sigma^2),then\quad Y=(X-\mu)/\sigma\sim N(0,1)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;例如&lt;span class=&#34;math inline&#34;&gt;\(X\sim
+N(1.5,2^2)\)&lt;/span&gt;，要计算&lt;span class=&#34;math inline&#34;&gt;\(P(-1\leq X\leq
+2)\)&lt;/span&gt;，则因&lt;span class=&#34;math inline&#34;&gt;\((X-1.5)/2\sim
+N(0,1)\)&lt;/span&gt;，有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+P(-1\leq X\leq 2) =
+P\left(\frac{-1-1.5}{2}\leq\frac{X-1.5}{2}\leq\frac{2-1.5}{2}\right)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+=P(-1.25\leq(X-1.5)/2\leq 0.25)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+=\varPhi(0.25)-\varPhi(-1.25)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;可以查表代入。但是通常只有非负数的值，对于负数，有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\varPhi = 1-\varPhi(-x)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h2 id=&#34;指数分布&#34;&gt;指数分布&lt;/h2&gt;
+&lt;p&gt;若随机变量&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;有概率密度函数&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+f(x)=\left\{\begin{matrix}
+\lambda e^{\lambda x},\quad x&amp;gt;0\\
+0,\quad x\leq 0
+\end{matrix}\right.
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;则&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;服从指数分布，其中&lt;span class=&#34;math inline&#34;&gt;\(\lambda&amp;gt;0\)&lt;/span&gt;是参数。&lt;/p&gt;
+&lt;p&gt;其概率分布函数为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+F(x)=\left\{\begin{matrix}
+1-e^{-\lambda x},\quad x&amp;gt;0\\
+0,\quad x\leq 0
+\end{matrix}\right.
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h2 id=&#34;威布尔分布&#34;&gt;威布尔分布&lt;/h2&gt;
+&lt;p&gt;满足&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+f(x)=\left\{\begin{matrix}
+\lambda\alpha x^{\alpha-1} e^{\lambda x^\alpha},\quad x&amp;gt;0\\
+0,\quad x\leq 0
+\end{matrix}\right.
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其概率分布函数是&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+F(x)=\left\{\begin{matrix}
+1-e^{-\lambda x^\alpha},\quad x&amp;gt;0\\
+0,\quad x\leq 0
+\end{matrix}\right.
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;可见，指数分布是威布尔分布的一个特例。&lt;/p&gt;
+&lt;h2 id=&#34;均匀分布&#34;&gt;均匀分布&lt;/h2&gt;
+&lt;p&gt;满足&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+f(x)=\left\{\begin{matrix}
+1/(b-a),\quad a\leq x\leq b\\
+0,\quad else
+\end{matrix}\right.
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其概率分布函数是&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+F(x)=\left\{\begin{matrix}
+0,\quad\quad\quad\quad\quad\quad\quad\quad x\leq a\\
+(x-a)/(b-a),\quad a&amp;lt;x&amp;lt;b\\
+1,\quad\quad\quad\quad\quad\quad\quad\quad x\geq b
+\end{matrix}\right.
 \]&lt;/span&gt;&lt;/p&gt;
 
 
@@ -5595,7 +5734,7 @@ E = \frac{\sigma_0}{\varepsilon_0}-\frac{\sigma &amp;#39;}{\varepsilon_0}
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;如果电介质满足&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
-E=\frac{E_0}{\varepsilon_0}
+E=\frac{E_0}{\varepsilon_r}
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;则一定要有该各向同性的均匀电介质要充满电场所在空集。进一步研究表明，各向同性均匀电介质虽未充满电场所在空间，但只要电介质的表面是等势面。&lt;/p&gt;
 &lt;p&gt;另外上式和上上式可以得出&lt;/p&gt;
@@ -5637,6 +5776,57 @@ E=\frac{E_0}{\varepsilon_0}
 \oiint_S\bm D\cdot d\bm S = q_0
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;通过任意闭合曲面&lt;span class=&#34;math inline&#34;&gt;\(S\)&lt;/span&gt;的总电位移通量，等于该比和曲面所包围的自由电荷量的代数和，与束缚电荷以及闭合曲面之外的自由电荷无关。&lt;/p&gt;
+&lt;h3 id=&#34;孤立导体的电容&#34;&gt;孤立导体的电容&lt;/h3&gt;
+&lt;p&gt;一个带电量为&lt;span class=&#34;math inline&#34;&gt;\(q\)&lt;/span&gt;的孤立导体，在静电平衡时，具有一定的电势&lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt;。当带电量增加时，电势也增加，且比值不变&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+C=\frac{q}{u}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(C\)&lt;/span&gt;是和&lt;span class=&#34;math inline&#34;&gt;\(u,q\)&lt;/span&gt;无关的常量，值只取决于导体的大小形状等因素。&lt;/p&gt;
+&lt;h3 id=&#34;电容器的电容&#34;&gt;电容器的电容&lt;/h3&gt;
+&lt;p&gt;若电容器两极板上分别带电量为&lt;span class=&#34;math inline&#34;&gt;\(+q,-q\)&lt;/span&gt;，两极板间的电势差为&lt;span class=&#34;math inline&#34;&gt;\(u_1-u_2\)&lt;/span&gt;，则&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+C=\frac{q}{u_1-u_2}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;并且可以推导出，若两极板相对面积为&lt;span class=&#34;math inline&#34;&gt;\(S\)&lt;/span&gt;，相距&lt;span class=&#34;math inline&#34;&gt;\(d\)&lt;/span&gt;，则有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+C=\frac{\varepsilon_0 S}{d}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;电容器的串并联&#34;&gt;电容器的串并联&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;串联&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\frac{1}{C} = \frac{1}{C_1}+\frac{1}{C_2}+\frac{1}{C_3}+\cdots
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;电容越串越小，但是耐压值提高了&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;并联&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+C=C_1+C_2+C_3+\cdots
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;电容越并越大，但是耐压值不会改变。&lt;/p&gt;
+&lt;h3 id=&#34;静电能&#34;&gt;静电能&lt;/h3&gt;
+&lt;p&gt;电极板上迁移电荷，需要做功&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+dA=U(t)dq=\frac{q(t)}{C}dq
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+A = \int dA = \int^Q_0\frac{q(t)}{C}dq=\frac{Q^2}{2C}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;另外因&lt;span class=&#34;math inline&#34;&gt;\(Q=CU\)&lt;/span&gt;，上式也可以写作&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+A=\frac{1}{2}CU^2=\frac{1}{2}QU
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;也就是电容器中储存的能量&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+W = \frac{Q^2}{2C} = \frac{1}{2}CU^2=\frac{1}{2}QU
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;在平行板电容器中，如果忽略边缘效应，两极板间的电场是均匀的。因此，单位体积内储存的能量（能量密度）&lt;span class=&#34;math inline&#34;&gt;\(\omega\)&lt;/span&gt;也应该是均匀的。因&lt;span class=&#34;math inline&#34;&gt;\(U=Ed,C=\varepsilon_0S/d\)&lt;/span&gt;，有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+W = \frac{1}{2}\varepsilon_0E^2Sd=\frac{1}{2}\varepsilon_0E^2V
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;而&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\omega=\frac{W}{V}=\frac{1}{2}\varepsilon_0E^2
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;只要空间任一处存在着电场，电场强度为&lt;span class=&#34;math inline&#34;&gt;\(E\)&lt;/span&gt;，该处单位体积中就储藏着&lt;span class=&#34;math inline&#34;&gt;\(\varepsilon_0E^2/2\)&lt;/span&gt;的能量。&lt;/p&gt;
 
 
 </description>
