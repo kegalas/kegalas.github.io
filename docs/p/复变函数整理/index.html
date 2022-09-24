@@ -112,7 +112,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 14 分钟
+                    阅读时长: 16 分钟
                 </time>
             </div>
         
@@ -477,6 +477,72 @@ g:D_2\to\bm C
 <p>都是全纯函数，那么<span class="math inline">\(h=g\circ
 f\)</span>是<span class="math inline">\(D_1\to \bm
 C\)</span>的全纯函数，并且<span class="math inline">\(h&#39;(z)=g&#39;(f(z))f&#39;(z)\)</span></p>
+<h3 id="cauchy-riemann方程">Cauchy-Riemann方程</h3>
+<p><strong>实可微</strong></p>
+<p>设<span class="math inline">\(f(z)=u(x,y)+iv(x,y)\)</span>是定义在域<span class="math inline">\(D\)</span>上的函数，<span class="math inline">\(z_0=x_0+iy_0\in D\)</span>.我们说<span class="math inline">\(f\)</span>在<span class="math inline">\(z_0\)</span>处实可微，是指<span class="math inline">\(u,v\)</span>作为<span class="math inline">\(x,y\)</span>的二元函数在<span class="math inline">\((x_0,y_0)\)</span>处可微。</p>
+<p>设<span class="math inline">\(f:D\to C\)</span>是定义在域<span class="math inline">\(D\)</span>上的函数，<span class="math inline">\(z_0\in D\)</span>，那么<span class="math inline">\(f\)</span>在<span class="math inline">\(z_0\)</span>处实可微的充要条件是下式成立</p>
+<p><span class="math display">\[
+f(z_0+\Delta z)-f(z_0)=\frac{\partial f}{\partial z}(z_0)\Delta
+z+\frac{\partial f}{\partial \bar z}(z_0)\Delta z+o(|\Delta z|)
+\]</span></p>
+<p>其中算子定义如下</p>
+<p><span class="math display">\[
+\frac{\partial}{\partial z}=\frac{1}{2}\left(\frac{\partial}{\partial
+x}-i\frac{\partial}{\partial y}\right)
+\]</span></p>
+<p><span class="math display">\[
+\frac{\partial}{\partial \bar
+z}=\frac{1}{2}\left(\frac{\partial}{\partial
+x}+i\frac{\partial}{\partial y}\right)
+\]</span></p>
+<p>在进行微分运算时，可以把<span class="math inline">\(z,\bar
+z\)</span>看成独立的变量。</p>
+<p><strong>柯西-黎曼方程</strong></p>
+<p>设<span class="math inline">\(f\)</span>是定义在域<span class="math inline">\(D\)</span>上的函数，<span class="math inline">\(z_0\in D\)</span>，那么<span class="math inline">\(f\)</span>在<span class="math inline">\(z_0\)</span>处可微的充要条件是<span class="math inline">\(f\)</span>在<span class="math inline">\(z_0\)</span>处实可微且<span class="math inline">\(\frac{\partial f}{\partial \bar
+z}(z_0)=0\)</span>.</p>
+<p>在可微的情况下，<span class="math inline">\(f&#39;(z_0)=\frac{\partial f}{\partial
+z}(z_0)\)</span>.</p>
+<p>其中<span class="math inline">\(\frac{\partial f}{\partial \bar
+z}(z_0)=0\)</span>就称为柯西-黎曼方程。</p>
+<p>将<span class="math inline">\(u,v\)</span>代入以及算子展开，可以得到其等价于</p>
+<p><span class="math display">\[
+\left\{\begin{matrix}
+\frac{\partial u}{\partial x}=\frac{\partial v}{\partial y} \\
+\frac{\partial u}{\partial y}=-\frac{\partial v}{\partial x}
+\end{matrix}\right.
+\]</span></p>
+<p><strong>调和函数</strong></p>
+<p>设<span class="math inline">\(u\)</span>是域<span class="math inline">\(D\)</span>上的实值函数，如果<span class="math inline">\(u\in C^2(D)\)</span>，且对于任意<span class="math inline">\(z\in D\)</span>，有</p>
+<p><span class="math display">\[
+\Delta u(z)=\frac{\partial^2u(z)}{\partial
+x^2}+\frac{\partial^2u(z)}{\partial y^2}=0
+\]</span></p>
+<p>就称<span class="math inline">\(u\)</span>是<span class="math inline">\(D\)</span>中的调和函数。</p>
+<p><span class="math display">\[
+\Delta=\frac{\partial^2}{\partial x^2}+\frac{\partial^2}{\partial y^2}
+\]</span></p>
+<p>称为拉普拉斯算子。</p>
+<p>设<span class="math inline">\(D\)</span>是<span class="math inline">\(\bm C\)</span>中的域，用<span class="math inline">\(C(D)\)</span>表示<span class="math inline">\(D\)</span>上连续函数的全体，<span class="math inline">\(H(D)\)</span>表示<span class="math inline">\(D\)</span>上全纯函数的全体。</p>
+<p>用<span class="math inline">\(C^1(D)\)</span>记<span class="math inline">\(\frac{\partial f}{\partial x},\frac{\partial
+f}{\partial y}\)</span>载<span class="math inline">\(D\)</span>上连续的<span class="math inline">\(f\)</span>的全体。</p>
+<p>有</p>
+<p><span class="math display">\[
+H(D)\subset C^\infty(D)\subset C^k(D)\subset C^1(D)\subset C(D)
+\]</span></p>
+<p>即域<span class="math inline">\(D\)</span>上的全纯函数在<span class="math inline">\(D\)</span>上有任意阶的连续偏导数。</p>
+<p><em>定理1</em></p>
+<p>设<span class="math inline">\(f=u+iv\in H(D)\)</span>，那么<span class="math inline">\(u,v\)</span>都是<span class="math inline">\(D\)</span>上的调和函数。</p>
+<p><strong>共轭调和函数</strong></p>
+<p>设<span class="math inline">\(u,v\)</span>是<span class="math inline">\(D\)</span>上的一堆调和函数，如果它们还满足柯西-黎曼方程，</p>
+<p><span class="math display">\[
+\left\{\begin{matrix}
+\frac{\partial u}{\partial x}=\frac{\partial v}{\partial y} \\
+\frac{\partial u}{\partial y}=-\frac{\partial v}{\partial x}
+\end{matrix}\right.
+\]</span></p>
+<p>就称<span class="math inline">\(v\)</span>为<span class="math inline">\(u\)</span>的共轭调和函数。</p>
+<p><em>定理1</em></p>
+<p>设<span class="math inline">\(u\)</span>是单连通域<span class="math inline">\(D\)</span>上的调和函数，则必存在<span class="math inline">\(u\)</span>的共轭函数<span class="math inline">\(v\)</span>，使得<span class="math inline">\(u+iv\)</span>是<span class="math inline">\(D\)</span>上的全纯函数。</p>
 
 
 
@@ -556,6 +622,18 @@ C\)</span>的全纯函数，并且<span class="math inline">\(h&#39;(z)=g&#39;(f
                 
                     
 <article class="">
+    <a href="/p/%E7%A6%BB%E6%95%A3%E6%95%B0%E5%AD%A6%E6%95%B4%E7%90%86/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">离散数学整理</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="">
     <a href="/p/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0%E6%95%B4%E7%90%86/">
         
         
@@ -586,18 +664,6 @@ C\)</span>的全纯函数，并且<span class="math inline">\(h&#39;(z)=g&#39;(f
 
         <div class="article-details">
             <h2 class="article-title">我的高等数学上册资料整理</h2>
-        </div>
-    </a>
-</article>
-                
-                    
-<article class="">
-    <a href="/p/%E7%A6%BB%E6%95%A3%E6%95%B0%E5%AD%A6%E6%95%B4%E7%90%86/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">离散数学整理</h2>
         </div>
     </a>
 </article>
@@ -781,6 +847,7 @@ C\)</span>的全纯函数，并且<span class="math inline">\(h&#39;(z)=g&#39;(f
     <li><a href="#全纯函数解析函数">全纯函数/解析函数</a>
       <ol>
         <li><a href="#复变函数的导数">复变函数的导数</a></li>
+        <li><a href="#cauchy-riemann方程">Cauchy-Riemann方程</a></li>
       </ol>
     </li>
   </ol>

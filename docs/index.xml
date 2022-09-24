@@ -162,6 +162,25 @@ i_k=G_iu=\frac{G_k}{G_{eq}}i
 &lt;p&gt;只有电流大小相同的电流源能串联。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;电流源并联&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;电流源并联时，得到的等效电流源电流大小等于极性相同的各个电源流总和，减去极性相反的各电源电流总和。净电流方向与大的那个相同。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;实际电源的等效变换&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;实际电源，比如电池，我们在高中通常会说它含有一个内阻。也就是等价为一个理想电压源+一个电阻的串联。我们也可以将其等价为一个理想电流源+一个电阻的并联。如下图&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;2.jpg&#34; alt=&#34;2.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;2.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;&lt;strong&gt;电压源的等效转移&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;电流源可以转移到各并联支路上，如下图&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;3.jpg&#34; alt=&#34;3.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;3.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;可以证明，此时电路中的KVL仍然保持不变。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;电流源的等效转移&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;电流源可以转移成如下形式&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;4.jpg&#34; alt=&#34;4.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;4.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
 
 
 </description>
@@ -527,6 +546,72 @@ g:D_2\to\bm C
 &lt;p&gt;都是全纯函数，那么&lt;span class=&#34;math inline&#34;&gt;\(h=g\circ
 f\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(D_1\to \bm
 C\)&lt;/span&gt;的全纯函数，并且&lt;span class=&#34;math inline&#34;&gt;\(h&amp;#39;(z)=g&amp;#39;(f(z))f&amp;#39;(z)\)&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;cauchy-riemann方程&#34;&gt;Cauchy-Riemann方程&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;实可微&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(f(z)=u(x,y)+iv(x,y)\)&lt;/span&gt;是定义在域&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;上的函数，&lt;span class=&#34;math inline&#34;&gt;\(z_0=x_0+iy_0\in D\)&lt;/span&gt;.我们说&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;在&lt;span class=&#34;math inline&#34;&gt;\(z_0\)&lt;/span&gt;处实可微，是指&lt;span class=&#34;math inline&#34;&gt;\(u,v\)&lt;/span&gt;作为&lt;span class=&#34;math inline&#34;&gt;\(x,y\)&lt;/span&gt;的二元函数在&lt;span class=&#34;math inline&#34;&gt;\((x_0,y_0)\)&lt;/span&gt;处可微。&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(f:D\to C\)&lt;/span&gt;是定义在域&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;上的函数，&lt;span class=&#34;math inline&#34;&gt;\(z_0\in D\)&lt;/span&gt;，那么&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;在&lt;span class=&#34;math inline&#34;&gt;\(z_0\)&lt;/span&gt;处实可微的充要条件是下式成立&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+f(z_0+\Delta z)-f(z_0)=\frac{\partial f}{\partial z}(z_0)\Delta
+z+\frac{\partial f}{\partial \bar z}(z_0)\Delta z+o(|\Delta z|)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中算子定义如下&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\frac{\partial}{\partial z}=\frac{1}{2}\left(\frac{\partial}{\partial
+x}-i\frac{\partial}{\partial y}\right)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\frac{\partial}{\partial \bar
+z}=\frac{1}{2}\left(\frac{\partial}{\partial
+x}+i\frac{\partial}{\partial y}\right)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;在进行微分运算时，可以把&lt;span class=&#34;math inline&#34;&gt;\(z,\bar
+z\)&lt;/span&gt;看成独立的变量。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;柯西-黎曼方程&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;是定义在域&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;上的函数，&lt;span class=&#34;math inline&#34;&gt;\(z_0\in D\)&lt;/span&gt;，那么&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;在&lt;span class=&#34;math inline&#34;&gt;\(z_0\)&lt;/span&gt;处可微的充要条件是&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;在&lt;span class=&#34;math inline&#34;&gt;\(z_0\)&lt;/span&gt;处实可微且&lt;span class=&#34;math inline&#34;&gt;\(\frac{\partial f}{\partial \bar
+z}(z_0)=0\)&lt;/span&gt;.&lt;/p&gt;
+&lt;p&gt;在可微的情况下，&lt;span class=&#34;math inline&#34;&gt;\(f&amp;#39;(z_0)=\frac{\partial f}{\partial
+z}(z_0)\)&lt;/span&gt;.&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(\frac{\partial f}{\partial \bar
+z}(z_0)=0\)&lt;/span&gt;就称为柯西-黎曼方程。&lt;/p&gt;
+&lt;p&gt;将&lt;span class=&#34;math inline&#34;&gt;\(u,v\)&lt;/span&gt;代入以及算子展开，可以得到其等价于&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\left\{\begin{matrix}
+\frac{\partial u}{\partial x}=\frac{\partial v}{\partial y} \\
+\frac{\partial u}{\partial y}=-\frac{\partial v}{\partial x}
+\end{matrix}\right.
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;调和函数&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt;是域&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;上的实值函数，如果&lt;span class=&#34;math inline&#34;&gt;\(u\in C^2(D)\)&lt;/span&gt;，且对于任意&lt;span class=&#34;math inline&#34;&gt;\(z\in D\)&lt;/span&gt;，有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\Delta u(z)=\frac{\partial^2u(z)}{\partial
+x^2}+\frac{\partial^2u(z)}{\partial y^2}=0
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;就称&lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;中的调和函数。&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\Delta=\frac{\partial^2}{\partial x^2}+\frac{\partial^2}{\partial y^2}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;称为拉普拉斯算子。&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(\bm C\)&lt;/span&gt;中的域，用&lt;span class=&#34;math inline&#34;&gt;\(C(D)\)&lt;/span&gt;表示&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;上连续函数的全体，&lt;span class=&#34;math inline&#34;&gt;\(H(D)\)&lt;/span&gt;表示&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;上全纯函数的全体。&lt;/p&gt;
+&lt;p&gt;用&lt;span class=&#34;math inline&#34;&gt;\(C^1(D)\)&lt;/span&gt;记&lt;span class=&#34;math inline&#34;&gt;\(\frac{\partial f}{\partial x},\frac{\partial
+f}{\partial y}\)&lt;/span&gt;载&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;上连续的&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;的全体。&lt;/p&gt;
+&lt;p&gt;有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+H(D)\subset C^\infty(D)\subset C^k(D)\subset C^1(D)\subset C(D)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;即域&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;上的全纯函数在&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;上有任意阶的连续偏导数。&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;定理1&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(f=u+iv\in H(D)\)&lt;/span&gt;，那么&lt;span class=&#34;math inline&#34;&gt;\(u,v\)&lt;/span&gt;都是&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;上的调和函数。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;共轭调和函数&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(u,v\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;上的一堆调和函数，如果它们还满足柯西-黎曼方程，&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\left\{\begin{matrix}
+\frac{\partial u}{\partial x}=\frac{\partial v}{\partial y} \\
+\frac{\partial u}{\partial y}=-\frac{\partial v}{\partial x}
+\end{matrix}\right.
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;就称&lt;span class=&#34;math inline&#34;&gt;\(v\)&lt;/span&gt;为&lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt;的共轭调和函数。&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;定理1&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt;是单连通域&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;上的调和函数，则必存在&lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt;的共轭函数&lt;span class=&#34;math inline&#34;&gt;\(v\)&lt;/span&gt;，使得&lt;span class=&#34;math inline&#34;&gt;\(u+iv\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;上的全纯函数。&lt;/p&gt;
 
 
 </description>
