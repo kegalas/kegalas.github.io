@@ -2,7 +2,7 @@
 title: "离散数学整理"
 date: 2022-06-06T08:44:57+08:00
 draft: false
-tags: [离散数学,大学]
+tags: [离散数学,大学,数学]
 description: 离散数学有关定义定理整理
 categories: 数学
 mathjax: true
