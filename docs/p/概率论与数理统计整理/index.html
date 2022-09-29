@@ -112,7 +112,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 10 分钟
+                    阅读时长: 12 分钟
                 </time>
             </div>
         
@@ -517,6 +517,56 @@ F(x)=\left\{\begin{matrix}
 1,\quad\quad\quad\quad\quad\quad\quad\quad x\geq b
 \end{matrix}\right.
 \]</span></p>
+<h2 id="多维随机变量随机向量">多维随机变量（随机向量）</h2>
+<h3 id="离散型随机向量的分布">离散型随机向量的分布</h3>
+<p>一般的，设<span class="math inline">\(X=(X_1,X_2,\cdots,X_n)\)</span>为一个<span class="math inline">\(n\)</span>维向量，其每个分量，即<span class="math inline">\(X_1,\cdots,X_n\)</span>都是一维随机变量，则称<span class="math inline">\(X\)</span>是一个<span class="math inline">\(n\)</span>维随机向量或<span class="math inline">\(n\)</span>维随机变量。</p>
+<p>如果一个随机向量<span class="math inline">\(X\)</span>，其每一个分量<span class="math inline">\(X_i\)</span>都是一维离散型随机变量，则称<span class="math inline">\(X\)</span>是离散型的。</p>
+<p>以<span class="math inline">\(\{a_{i1},a_{i2},\cdots\}\)</span>记<span class="math inline">\(X_i\)</span>的全部可能值，则事件<span class="math inline">\(\{X_1=a_{1j_1},
+X_2=a_{2j_2},\cdots,X_n=a_{nj_n}\}\)</span>的概率</p>
+<p><span class="math display">\[
+p(j_1,j_2,\cdots,j_n)=P(X_1=a_{1j_1}, X_2=a_{2j_2},\cdots,X_n=a_{nj_n})
+\]</span></p>
+<p>称为随机向量<span class="math inline">\(X\)</span>的概率函数或概率分布，其应该满足</p>
+<p><span class="math display">\[
+p(j_1,j_2,\cdots,j_n)\geq
+0,\sum_{j_n}\cdots\sum_{j_2}\sum_{j_1}p(j_1,j_2,\cdots,j_n) = 1
+\]</span></p>
+<p><strong>多项分布</strong></p>
+<p>设<span class="math inline">\(A_1,A_2,\cdots,A_n\)</span>是某一试验之下的完备事件群，即事件<span class="math inline">\(A_1,\cdots,A_n\)</span>两两互斥，其和为必然事件。分别以<span class="math inline">\(p_1,p_2,\cdots,p_n\)</span>记每个事件对应的概率。</p>
+<p>现将试验独立重复<span class="math inline">\(N\)</span>次，而以<span class="math inline">\(X_i\)</span>记载着<span class="math inline">\(N\)</span>次试验中事件<span class="math inline">\(A_i\)</span>出现的次数。<span class="math inline">\(X\)</span>的概率分布就叫做多项分布，有时记为<span class="math inline">\(M(N;p_1,\cdots,p_n)\)</span>。其概率有</p>
+<p><span class="math display">\[
+P(X_1=k_1,X_2=k_2,\cdots,X_n=k_n)=\frac{N!}{k_1!k_2!\cdots
+k_n!}p_1^{k_1}p_2^{k_2}\cdots p_n^{k_n}
+\]</span></p>
+<h3 id="连续型随机向量的分布">连续型随机向量的分布</h3>
+<p>设<span class="math inline">\(X\)</span>是一个<span class="math inline">\(n\)</span>维随机向量，其取值可视为<span class="math inline">\(n\)</span>维欧式空间<span class="math inline">\(\mathbb{R} ^n\)</span>中的一个点。如果<span class="math inline">\(X\)</span>的全部取值能充满<span class="math inline">\(\mathbb{R}
+^n\)</span>中某一区域，则称它是连续型的。</p>
+<p>若<span class="math inline">\(f(x_1,\cdots,x_n)\)</span>是定义在<span class="math inline">\(\mathbb{R} ^n\)</span>上的非负函数，使对<span class="math inline">\(\mathbb{R} ^n\)</span>中的任何集合<span class="math inline">\(A\)</span>，有</p>
+<p><span class="math display">\[
+P(X\in A) = \int\cdots\int f(x_1,\cdots,x_n)dx_1\cdots dx_n
+\]</span></p>
+<p>则称<span class="math inline">\(f\)</span>是<span class="math inline">\(X\)</span>的概率密度函数</p>
+<p>如果把<span class="math inline">\(A\)</span>取成<span class="math inline">\(\mathbb{R} ^n\)</span>，则有</p>
+<p><span class="math display">\[
+\int^\infty_{-\infty}\cdots\int^\infty_{-\infty}
+f(x_1,\cdots,x_n)dx_1\cdots dx_n = 1
+\]</span></p>
+<p><strong>二维随机向量的均匀分布</strong></p>
+<p><span class="math display">\[
+f(x_1,x_2)=
+\left\{\begin{matrix}
+1/[(b-a)(d-c)],\quad a\leq x_1\leq b, c\leq x_2\leq d\\
+0,\quad\quad\quad\quad\quad\quad\quad\quad\quad
+other\quad\quad\quad\quad\quad\quad
+\end{matrix}\right.
+\]</span></p>
+<p><strong>二维正态分布</strong></p>
+<p><span class="math display">\[
+f(x_1,x_2)=(2\pi\sigma_1\sigma_2\sqrt{1-\rho^2})^{-1}\exp\left[-\frac{1}{2(1-\rho^2)}\left(\frac{(x_1-a)^2}{\sigma_1^2}-\frac{2\rho(x_1-a)(x_2-b)}{\sigma_1\sigma_2}+
+\\
+\frac{(x_2-a)^2}{\sigma_2^2}\right)\right]
+\]</span></p>
+<p>常把这个分布记为<span class="math inline">\(N(a,b,\sigma_1^2,\sigma_2^2,\rho)\)</span></p>
 
 
 
@@ -853,6 +903,12 @@ F(x)=\left\{\begin{matrix}
     <li><a href="#指数分布">指数分布</a></li>
     <li><a href="#威布尔分布">威布尔分布</a></li>
     <li><a href="#均匀分布">均匀分布</a></li>
+    <li><a href="#多维随机变量随机向量">多维随机变量（随机向量）</a>
+      <ol>
+        <li><a href="#离散型随机向量的分布">离散型随机向量的分布</a></li>
+        <li><a href="#连续型随机向量的分布">连续型随机向量的分布</a></li>
+      </ol>
+    </li>
   </ol>
 </nav>
                 </div>

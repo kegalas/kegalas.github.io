@@ -531,11 +531,13 @@ y_0}v(x,y)=\beta
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 \lim_{z\to z_0}\frac{f(z)-f(z_0)}{z-z_0}
 \]&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;存在，就说&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;在&lt;span class=&#34;math inline&#34;&gt;\(z_0\)&lt;/span&gt;处复可微或可微，这个极限称为在此处的导数或微商。&lt;/p&gt;
+&lt;p&gt;存在，就说&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;在&lt;span class=&#34;math inline&#34;&gt;\(z_0\)&lt;/span&gt;处复可导或可微，这个极限称为在此处的导数或微商。&lt;/p&gt;
 &lt;p&gt;如果&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;在&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;中每点都可微，就称&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;是域&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;中的全纯函数或解析函数。&lt;/p&gt;
 &lt;p&gt;如果&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;在&lt;span class=&#34;math inline&#34;&gt;\(z_0\)&lt;/span&gt;的一个邻域中全纯，就称&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;在&lt;span class=&#34;math inline&#34;&gt;\(z_0\)&lt;/span&gt;处全纯。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;定理1&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;如果&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;在&lt;span class=&#34;math inline&#34;&gt;\(z_0\)&lt;/span&gt;处可微，则必在&lt;span class=&#34;math inline&#34;&gt;\(z_0\)&lt;/span&gt;处连续。反过来说则不一定成立。&lt;/p&gt;
+&lt;p&gt;求复变函数的导数时，跟一元实变函数几乎没有什么区别，例如&lt;span class=&#34;math inline&#34;&gt;\(f(z)=z^3,
+f&amp;#39;(z)=3z^2\)&lt;/span&gt;。但是更加严格的一点时，在复平面上任何一个方向上的导数都要相等，而不是一元实变函数左右相等。&lt;/p&gt;
 &lt;p&gt;实变函数的四则运算的求导法则在全纯函数中也成立。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;定理2&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(D_1,D_2\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(\bm C\)&lt;/span&gt;中的两个域，且&lt;/p&gt;
@@ -1017,6 +1019,56 @@ F(x)=\left\{\begin{matrix}
 1,\quad\quad\quad\quad\quad\quad\quad\quad x\geq b
 \end{matrix}\right.
 \]&lt;/span&gt;&lt;/p&gt;
+&lt;h2 id=&#34;多维随机变量随机向量&#34;&gt;多维随机变量（随机向量）&lt;/h2&gt;
+&lt;h3 id=&#34;离散型随机向量的分布&#34;&gt;离散型随机向量的分布&lt;/h3&gt;
+&lt;p&gt;一般的，设&lt;span class=&#34;math inline&#34;&gt;\(X=(X_1,X_2,\cdots,X_n)\)&lt;/span&gt;为一个&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;维向量，其每个分量，即&lt;span class=&#34;math inline&#34;&gt;\(X_1,\cdots,X_n\)&lt;/span&gt;都是一维随机变量，则称&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;是一个&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;维随机向量或&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;维随机变量。&lt;/p&gt;
+&lt;p&gt;如果一个随机向量&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;，其每一个分量&lt;span class=&#34;math inline&#34;&gt;\(X_i\)&lt;/span&gt;都是一维离散型随机变量，则称&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;是离散型的。&lt;/p&gt;
+&lt;p&gt;以&lt;span class=&#34;math inline&#34;&gt;\(\{a_{i1},a_{i2},\cdots\}\)&lt;/span&gt;记&lt;span class=&#34;math inline&#34;&gt;\(X_i\)&lt;/span&gt;的全部可能值，则事件&lt;span class=&#34;math inline&#34;&gt;\(\{X_1=a_{1j_1},
+X_2=a_{2j_2},\cdots,X_n=a_{nj_n}\}\)&lt;/span&gt;的概率&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+p(j_1,j_2,\cdots,j_n)=P(X_1=a_{1j_1}, X_2=a_{2j_2},\cdots,X_n=a_{nj_n})
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;称为随机向量&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;的概率函数或概率分布，其应该满足&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+p(j_1,j_2,\cdots,j_n)\geq
+0,\sum_{j_n}\cdots\sum_{j_2}\sum_{j_1}p(j_1,j_2,\cdots,j_n) = 1
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;多项分布&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(A_1,A_2,\cdots,A_n\)&lt;/span&gt;是某一试验之下的完备事件群，即事件&lt;span class=&#34;math inline&#34;&gt;\(A_1,\cdots,A_n\)&lt;/span&gt;两两互斥，其和为必然事件。分别以&lt;span class=&#34;math inline&#34;&gt;\(p_1,p_2,\cdots,p_n\)&lt;/span&gt;记每个事件对应的概率。&lt;/p&gt;
+&lt;p&gt;现将试验独立重复&lt;span class=&#34;math inline&#34;&gt;\(N\)&lt;/span&gt;次，而以&lt;span class=&#34;math inline&#34;&gt;\(X_i\)&lt;/span&gt;记载着&lt;span class=&#34;math inline&#34;&gt;\(N\)&lt;/span&gt;次试验中事件&lt;span class=&#34;math inline&#34;&gt;\(A_i\)&lt;/span&gt;出现的次数。&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;的概率分布就叫做多项分布，有时记为&lt;span class=&#34;math inline&#34;&gt;\(M(N;p_1,\cdots,p_n)\)&lt;/span&gt;。其概率有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+P(X_1=k_1,X_2=k_2,\cdots,X_n=k_n)=\frac{N!}{k_1!k_2!\cdots
+k_n!}p_1^{k_1}p_2^{k_2}\cdots p_n^{k_n}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;连续型随机向量的分布&#34;&gt;连续型随机向量的分布&lt;/h3&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;是一个&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;维随机向量，其取值可视为&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;维欧式空间&lt;span class=&#34;math inline&#34;&gt;\(\mathbb{R} ^n\)&lt;/span&gt;中的一个点。如果&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;的全部取值能充满&lt;span class=&#34;math inline&#34;&gt;\(\mathbb{R}
+^n\)&lt;/span&gt;中某一区域，则称它是连续型的。&lt;/p&gt;
+&lt;p&gt;若&lt;span class=&#34;math inline&#34;&gt;\(f(x_1,\cdots,x_n)\)&lt;/span&gt;是定义在&lt;span class=&#34;math inline&#34;&gt;\(\mathbb{R} ^n\)&lt;/span&gt;上的非负函数，使对&lt;span class=&#34;math inline&#34;&gt;\(\mathbb{R} ^n\)&lt;/span&gt;中的任何集合&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;，有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+P(X\in A) = \int\cdots\int f(x_1,\cdots,x_n)dx_1\cdots dx_n
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;则称&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;的概率密度函数&lt;/p&gt;
+&lt;p&gt;如果把&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;取成&lt;span class=&#34;math inline&#34;&gt;\(\mathbb{R} ^n\)&lt;/span&gt;，则有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\int^\infty_{-\infty}\cdots\int^\infty_{-\infty}
+f(x_1,\cdots,x_n)dx_1\cdots dx_n = 1
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;二维随机向量的均匀分布&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+f(x_1,x_2)=
+\left\{\begin{matrix}
+1/[(b-a)(d-c)],\quad a\leq x_1\leq b, c\leq x_2\leq d\\
+0,\quad\quad\quad\quad\quad\quad\quad\quad\quad
+other\quad\quad\quad\quad\quad\quad
+\end{matrix}\right.
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;二维正态分布&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+f(x_1,x_2)=(2\pi\sigma_1\sigma_2\sqrt{1-\rho^2})^{-1}\exp\left[-\frac{1}{2(1-\rho^2)}\left(\frac{(x_1-a)^2}{\sigma_1^2}-\frac{2\rho(x_1-a)(x_2-b)}{\sigma_1\sigma_2}+
+\\
+\frac{(x_2-a)^2}{\sigma_2^2}\right)\right]
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;常把这个分布记为&lt;span class=&#34;math inline&#34;&gt;\(N(a,b,\sigma_1^2,\sigma_2^2,\rho)\)&lt;/span&gt;&lt;/p&gt;
 
 
 </description>
@@ -5912,6 +5964,47 @@ W = \frac{1}{2}\varepsilon_0E^2Sd=\frac{1}{2}\varepsilon_0E^2V
 \omega=\frac{W}{V}=\frac{1}{2}\varepsilon_0E^2
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;只要空间任一处存在着电场，电场强度为&lt;span class=&#34;math inline&#34;&gt;\(E\)&lt;/span&gt;，该处单位体积中就储藏着&lt;span class=&#34;math inline&#34;&gt;\(\varepsilon_0E^2/2\)&lt;/span&gt;的能量。&lt;/p&gt;
+&lt;h2 id=&#34;恒定电流的磁场&#34;&gt;恒定电流的磁场&lt;/h2&gt;
+&lt;h3 id=&#34;磁感应强度&#34;&gt;磁感应强度&lt;/h3&gt;
+&lt;p&gt;当&lt;span class=&#34;math inline&#34;&gt;\(Id\bm
+l\)&lt;/span&gt;与磁感应强度方向垂直时，所受的磁场力最大，&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+B = \frac{dF_{max}}{Idl}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;力的方向由右手定则确定。&lt;/p&gt;
+&lt;p&gt;电流元&lt;span class=&#34;math inline&#34;&gt;\(Id\bm
+l\)&lt;/span&gt;在磁场中受到的磁场力&lt;span class=&#34;math inline&#34;&gt;\(d\bm
+F\)&lt;/span&gt;如下&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+d\bm F = Id\bm l\times \bm B
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;毕奥-萨伐尔定律&#34;&gt;毕奥-萨伐尔定律&lt;/h3&gt;
+&lt;p&gt;电流元&lt;span class=&#34;math inline&#34;&gt;\(Id\bm l\)&lt;/span&gt;在空间某点&lt;span class=&#34;math inline&#34;&gt;\(P\)&lt;/span&gt;出产生的磁感应强度为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+dB = \frac{\mu_0}{4\pi}\frac{Idl\sin\theta}{r^2}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(r\)&lt;/span&gt;是距离，&lt;span class=&#34;math inline&#34;&gt;\(\theta\)&lt;/span&gt;是矢量&lt;span class=&#34;math inline&#34;&gt;\(\bm r\)&lt;/span&gt;和&lt;span class=&#34;math inline&#34;&gt;\(d\bm
+l\)&lt;/span&gt;的夹角。&lt;span class=&#34;math inline&#34;&gt;\(\mu_0=4\pi\times
+10^{-7}N/A^2\)&lt;/span&gt;，称为真空磁导率。&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(d\bm
+B\)&lt;/span&gt;的方向由右手定则确定。写成矢量形式如下&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+d\bm B = \frac{\mu_0}{4\pi}\frac{Id\bm l\times \bm r^0}{\bm r^2}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;运动电荷的磁场&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;因为&lt;span class=&#34;math inline&#34;&gt;\(I=nqvS\)&lt;/span&gt;，代入有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+d\bm B = \frac{\mu_0}{4\pi}\frac{nqvSd\bm l\times \bm r^0}{\bm r^2}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;因为&lt;span class=&#34;math inline&#34;&gt;\(\bm v\)&lt;/span&gt;和&lt;span class=&#34;math inline&#34;&gt;\(d\bm l\)&lt;/span&gt;方向相同，又令&lt;span class=&#34;math inline&#34;&gt;\(dN = nSdl\)&lt;/span&gt;，故有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+d\bm B = \frac{\mu_0}{4\pi}\frac{(dN)q\bm v\times \bm r^0}{\bm r^2}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;此时，对于单个带电&lt;span class=&#34;math inline&#34;&gt;\(q\)&lt;/span&gt;的粒子，有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\bm B = \frac{d\bm B}{dN} = \frac{\mu_0}{4\pi}\frac{q\bm v\times \bm
+r^0}{\bm r^2}
+\]&lt;/span&gt;&lt;/p&gt;
 
 
 </description>
