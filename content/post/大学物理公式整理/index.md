@@ -1752,3 +1752,56 @@ $$
 
 只要空间任一处存在着电场，电场强度为$E$，该处单位体积中就储藏着$\varepsilon_0E^2/2$的能量。
 
+## 恒定电流的磁场
+
+### 磁感应强度
+
+当$Id\bm l$与磁感应强度方向垂直时，所受的磁场力最大，
+
+$$
+B = \frac{dF_{max}}{Idl}
+$$
+
+力的方向由右手定则确定。
+
+电流元$Id\bm l$在磁场中受到的磁场力$d\bm F$如下
+
+$$
+d\bm F = Id\bm l\times \bm B
+$$
+
+### 毕奥-萨伐尔定律
+
+电流元$Id\bm l$在空间某点$P$出产生的磁感应强度为
+
+$$
+dB = \frac{\mu_0}{4\pi}\frac{Idl\sin\theta}{r^2}
+$$
+
+其中$r$是距离，$\theta$是矢量$\bm r$和$d\bm l$的夹角。$\mu_0=4\pi\times 10^{-7}N/A^2$，称为真空磁导率。
+
+$d\bm B$的方向由右手定则确定。写成矢量形式如下
+
+$$
+d\bm B = \frac{\mu_0}{4\pi}\frac{Id\bm l\times \bm r^0}{\bm r^2}
+$$
+
+**运动电荷的磁场**
+
+因为$I=nqvS$，代入有
+
+$$
+d\bm B = \frac{\mu_0}{4\pi}\frac{nqvSd\bm l\times \bm r^0}{\bm r^2}
+$$
+
+因为$\bm v$和$d\bm l$方向相同，又令$dN = nSdl$，故有
+
+$$
+d\bm B = \frac{\mu_0}{4\pi}\frac{(dN)q\bm v\times \bm r^0}{\bm r^2}
+$$
+
+此时，对于单个带电$q$的粒子，有
+
+$$
+\bm B = \frac{d\bm B}{dN} = \frac{\mu_0}{4\pi}\frac{q\bm v\times \bm r^0}{\bm r^2}
+$$
