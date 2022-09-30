@@ -108,7 +108,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 4 分钟
+                    阅读时长: 5 分钟
                 </time>
             </div>
         
@@ -228,6 +228,11 @@ x_{-\hat{g}}  &amp; y_{-\hat{g}} &amp; z_{-\hat{g}} &amp; 0\\
 0  &amp; 0 &amp; 0 &amp; 1
 \end{bmatrix}
 \]</span></p>
+<p><strong>另一种算法</strong></p>
+<p>假设我们初始时相机在<span class="math inline">\((0,0,0)\)</span>，相机视线方向为<span class="math inline">\((0,0,1)\)</span>，相机的上方向为<span class="math inline">\((0,1,0)\)</span>。</p>
+<p>此时相机变换到<span class="math inline">\(e\)</span>，我们保持相机上向量相对不变，而左向量<span class="math inline">\(x\)</span>轴方向就为<span class="math inline">\(\hat r=((\hat g-e)\times
+(0,1,0)).normalized\)</span>，从而新的上方向则变为<span class="math inline">\(\hat t=(\hat g-e)\times\hat r\)</span>。</p>
+<p>如果想改变上方向，则就把初始的上方向改变即可，整个变换矩阵同上。</p>
 <h2 id="透视投影perspective-projection">透视投影（Perspective
 Projection）</h2>
 <p>由正交投影变换到透视投影，矩阵如下</p>
@@ -241,7 +246,7 @@ n  &amp; 0 &amp; 0 &amp; 0\\
 \end{bmatrix}
 \]</span></p>
 <p>直观上的理解就是，将视锥中远平面压小到等于近平面。</p>
-<p>以上的games101的解释。</p>
+<p>以上是games101的解释。</p>
 <p>在Real-Time
 Rendering的解释中，假设我们的相机在原点，我们想将任意一个点<span class="math inline">\(p\)</span>，映射到平面<span class="math inline">\(z=-d(d&gt;0)\)</span>上，得到一个新点<span class="math inline">\(q=(q_x,q_y,-d)\)</span>。显然根据相似三角形，我们有</p>
 <p><span class="math display">\[
