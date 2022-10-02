@@ -312,6 +312,27 @@ P_p=\begin{bmatrix}
 0  &amp; 0 &amp; 1 &amp; 0
 \end{bmatrix}
 \]</span></p>
+<p><strong>OpenGL中的透视矩阵</strong></p>
+<p>虽然都是右手系，但是OpenGL中zNear和zFar都是正数，透视矩阵就变为</p>
+<p><span class="math display">\[
+P_p=\begin{bmatrix}
+\frac{2n}{r-l}  &amp; 0 &amp; \frac{r+l}{r-l} &amp; 0\\
+0  &amp; \frac{2n}{t-b} &amp; \frac{t+b}{t-b} &amp; 0\\
+0  &amp; 0 &amp; -\frac{f+n}{f-n} &amp; -\frac{2fn}{f-n}\\
+0  &amp; 0 &amp; -1 &amp; 0
+\end{bmatrix}
+\]</span></p>
+<p>另外，OpenGL默认（指glm库）有<span class="math inline">\(r=-l,t=-d\)</span>，就有</p>
+<p><span class="math display">\[
+P_p=\begin{bmatrix}
+c/a  &amp; 0 &amp; 0 &amp; 0\\
+0  &amp; c &amp; 0 &amp; 0\\
+0  &amp; 0 &amp; -\frac{f+n}{f-n} &amp; -\frac{2fn}{f-n}\\
+0  &amp; 0 &amp; -1 &amp; 0
+\end{bmatrix}
+\]</span></p>
+<p>其中<span class="math inline">\(a\)</span>是显示分辨率的宽高比，<span class="math inline">\(c\)</span>是<span class="math inline">\(1/tan(fovY/2)\)</span></p>
+<p>另外，将<span class="math inline">\(z\)</span>轴上的<span class="math inline">\([-0.1,-100]\)</span>映射到<span class="math inline">\([-1,1]\)</span>上，不是均匀的，不精确的说，可能<span class="math inline">\([-0.1+,1.0]\)</span>这一段映射到了<span class="math inline">\([-1,0.5]\)</span>上，剩下的<span class="math inline">\([1.0,100]\)</span>映射到了<span class="math inline">\([0.5,1]\)</span>上，这在zbuffer、深度值中可能是需要注意的事。</p>
 <h2 id="视野field-of-view">视野（Field-of-View）</h2>
 <p>通常，对于近平面，我们可以用<span class="math inline">\(l,r,b,t\)</span>描述（假设<span class="math inline">\(l=-r,b=-t\)</span>，即平面中心位于<span class="math inline">\(-z\)</span>轴上，且平面与<span class="math inline">\(-z\)</span>垂直），也可以用垂直视野<span class="math inline">\(fovY\)</span>和近平面的宽高比来表示。</p>
 <p>首先相机到近平面的距离为<span class="math inline">\(|n|\)</span>，则有如下关系</p>

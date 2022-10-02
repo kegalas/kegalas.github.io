@@ -6,7 +6,170 @@
         <description>Recent content on KegalaS的个人博客</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Fri, 02 Sep 2022 11:22:59 +0800</lastBuildDate><atom:link href="https://kegalas.top/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sun, 02 Oct 2022 16:42:53 +0800</lastBuildDate><atom:link href="https://kegalas.top/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>数值分析学记笔记</title>
+        <link>https://kegalas.top/p/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90%E5%AD%A6%E8%AE%B0%E7%AC%94%E8%AE%B0/</link>
+        <pubDate>Sun, 02 Oct 2022 16:42:53 +0800</pubDate>
+        
+        <guid>https://kegalas.top/p/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90%E5%AD%A6%E8%AE%B0%E7%AC%94%E8%AE%B0/</guid>
+        <description>
+
+&lt;h1 id=&#34;基础知识&#34;&gt;基础知识&lt;/h1&gt;
+&lt;h2 id=&#34;多项式求值&#34;&gt;多项式求值&lt;/h2&gt;
+&lt;p&gt;对于形如下式的多项式&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+P(x)=2x^4+3x^3-3x^2+5x-1
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;如果我们普通地代入计算，则会需要计算10次乘法，以及4次加法。这显然不是最优的，更优的方法例如秦九韶算法，将多项式重写为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+P(x)=-1+x*(5+x*(-3+x*(3+x*2)))
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;此时再代入值计算，则只用4次乘法和4次加法。一般来说&lt;span class=&#34;math inline&#34;&gt;\(d\)&lt;/span&gt;阶多项式可以通过&lt;span class=&#34;math inline&#34;&gt;\(d\)&lt;/span&gt;次乘法和&lt;span class=&#34;math inline&#34;&gt;\(d\)&lt;/span&gt;次加法求值。&lt;/p&gt;
+&lt;p&gt;标准形式的多项式&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+P(x) = c_1+c_2x+c_3x^2+c_4x^3+c_5x^4
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;可以写成&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+P(x)=c_1+x(c_2+x(c_3+x(c_4+x(c_5))))
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;或者也有更一般的形式，可以用于之后的插值计算&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+P(x)=c_1+(x-r_1)(c_2+(x-r_2)(c_3+(x-r_3)(c_4+(x-r_4)(c_5))))
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中称&lt;span class=&#34;math inline&#34;&gt;\(r1,r2,r3,r4\)&lt;/span&gt;为基点。&lt;/p&gt;
+&lt;h2 id=&#34;二进制数字&#34;&gt;二进制数字&lt;/h2&gt;
+&lt;p&gt;二进制数字可以表示为：&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\cdots b_2b_1b_0b_{-1}b_{-2}\cdots
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其等价于十进制下的&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\cdots b_22^2+b_12^1+b_02^0+b_{-1}2^{-1}+b_{-2}2^{-2}\cdots
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;十进制转化为二进制&#34;&gt;十进制转化为二进制&lt;/h3&gt;
+&lt;p&gt;例如&lt;span class=&#34;math inline&#34;&gt;\(53.7\)&lt;/span&gt;转化为二进制，可以拆分为整数部分和小数部分，分别转化，然后在拼接起来。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;整数部分&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;将整数连续除以&lt;span class=&#34;math inline&#34;&gt;\(2\)&lt;/span&gt;，记录余数，直到整数最后变为&lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt;，余数反过来排列在一起就是二进制表示。例如&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+53\div 2 = 26\cdots1
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+26\div 2 = 13\cdots0
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+13\div 2 = 6\cdots1
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+6\div 2 = 3\cdots0
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+3\div 2 = 1\cdots1
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+1\div 2 = 0\cdots1
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;那么二进制表示就是&lt;span class=&#34;math inline&#34;&gt;\(110101\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;小数部分&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;将小数部分不断乘以&lt;span class=&#34;math inline&#34;&gt;\(2\)&lt;/span&gt;，得到的结果保留整数部分，直到小数部分为&lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt;，整数部分顺序排列即为小数部分的二进制表示&lt;/p&gt;
+&lt;p&gt;例如&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+0.7*2 = 0.4+1
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+0.4*2 = 0.8+0
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+0.8*2 = 0.6+1
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+0.6*2 = 0.2+1
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+0.2*2 = 0.4+0
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+0.4*2 = 0.8+0
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\vdots
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;后面重复，代表在二进制中是无限循环小数。有&lt;span class=&#34;math inline&#34;&gt;\((0.7)_{10}=(0.1\overline{0110})_2\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;最后有&lt;span class=&#34;math inline&#34;&gt;\((53.7)_{10} =
+(110101.1\overline{0110})_2\)&lt;/span&gt;。&lt;/p&gt;
+&lt;h3 id=&#34;二进制转化为十进制&#34;&gt;二进制转化为十进制&lt;/h3&gt;
+&lt;p&gt;开头已经介绍过一般情况，对于有限小数是容易计算的。&lt;/p&gt;
+&lt;p&gt;无限小数时，例如&lt;span class=&#34;math inline&#34;&gt;\(x=(0.\overline{1011})_2\)&lt;/span&gt;，先左移&lt;span class=&#34;math inline&#34;&gt;\(4\)&lt;/span&gt;位，再减去原始的&lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;，有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+2^4x = 1011.\overline{1011}\\
+x=0000.\overline{1011}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;相减得&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+(2^4-1)x = (1101)_2 = (11)_{10}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;求解&lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;可得，&lt;span class=&#34;math inline&#34;&gt;\(x=(0.\overline{1011})_2=11/15\)&lt;/span&gt;。&lt;/p&gt;
+&lt;h2 id=&#34;实数的浮点表示&#34;&gt;实数的浮点表示&lt;/h2&gt;
+&lt;p&gt;本节按照IEEE754标准。&lt;/p&gt;
+&lt;p&gt;一个浮点数字包含三个部分：符号（正负）、尾数（包含一串有效数位）和一个指数，这些部分都在一个计算机字(WORD)里。&lt;/p&gt;
+&lt;p&gt;浮点数常用三种精度级别：单精度、双精度、扩展精度。它们分配的数位分别是32、64、80。具体如下&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr class=&#34;header&#34;&gt;
+&lt;th style=&#34;text-align: center;&#34;&gt;精度&lt;/th&gt;
+&lt;th style=&#34;text-align: center;&#34;&gt;符号&lt;/th&gt;
+&lt;th style=&#34;text-align: center;&#34;&gt;指数&lt;/th&gt;
+&lt;th style=&#34;text-align: center;&#34;&gt;尾数&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td style=&#34;text-align: center;&#34;&gt;单精度&lt;/td&gt;
+&lt;td style=&#34;text-align: center;&#34;&gt;1&lt;/td&gt;
+&lt;td style=&#34;text-align: center;&#34;&gt;8&lt;/td&gt;
+&lt;td style=&#34;text-align: center;&#34;&gt;23&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td style=&#34;text-align: center;&#34;&gt;双精度&lt;/td&gt;
+&lt;td style=&#34;text-align: center;&#34;&gt;1&lt;/td&gt;
+&lt;td style=&#34;text-align: center;&#34;&gt;11&lt;/td&gt;
+&lt;td style=&#34;text-align: center;&#34;&gt;52&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td style=&#34;text-align: center;&#34;&gt;扩展精度&lt;/td&gt;
+&lt;td style=&#34;text-align: center;&#34;&gt;1&lt;/td&gt;
+&lt;td style=&#34;text-align: center;&#34;&gt;15&lt;/td&gt;
+&lt;td style=&#34;text-align: center;&#34;&gt;64&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;三种精度以相同的方式运行。标准化的IEEE浮点数表示为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\pm 1.bbb\cdots b\times 2^p
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(N\)&lt;/span&gt;个&lt;span class=&#34;math inline&#34;&gt;\(b\)&lt;/span&gt;或0或1，&lt;span class=&#34;math inline&#34;&gt;\(p\)&lt;/span&gt;是一个&lt;span class=&#34;math inline&#34;&gt;\(M\)&lt;/span&gt;位的二进制数表示指数。最左边的一位（主导数位）必须是&lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;当一个二进制数用一个标准浮点数字表示的时候，它被称为“左对齐”，意味着其中最左边的一个数位&lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt;被平移到小数点的左边，平移通过指数的变化来补偿，例如，十进制数&lt;span class=&#34;math inline&#34;&gt;\(9\)&lt;/span&gt;，对应的二进制数&lt;span class=&#34;math inline&#34;&gt;\(1001\)&lt;/span&gt;保存为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
++1.001\times 2^3
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;以双精度（&lt;span class=&#34;math inline&#34;&gt;\(M=11,N=52\)&lt;/span&gt;）为例，1的双精度表示为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
++1.0000000000000000000000000000000000000000000000000000\times 2^0
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中有52位尾数，下一个比&lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt;大的浮点数是&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
++1.0000000000000000000000000000000000000000000000000001\times 2^0
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;或者说是&lt;span class=&#34;math inline&#34;&gt;\(1+2^{-52}\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定义1&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;机器精度对应的数字，记作&lt;span class=&#34;math inline&#34;&gt;\(\varepsilon_{math}\)&lt;/span&gt;，是&lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt;和比&lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt;大的最小浮点数之间的距离。对于双进度来说就是&lt;span class=&#34;math inline&#34;&gt;\(2^{-52}\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;如果一个小数是无限小数，或者是超过了52位的小数，IEEE规定，如果在第53位为0，则52位以后的全部社区，如果53位为1，则在52位上加1。特别的，如果第53位为1，其后所有已知位为0，那么当且仅当52位是1时在52位上加1。&lt;/p&gt;
+&lt;p&gt;上述方法称为IEEE舍入最近法则。&lt;/p&gt;
+
+
+</description>
+        </item>
+        <item>
         <title>电路基础整理</title>
         <link>https://kegalas.top/p/%E7%94%B5%E8%B7%AF%E5%9F%BA%E7%A1%80%E6%95%B4%E7%90%86/</link>
         <pubDate>Fri, 02 Sep 2022 11:22:59 +0800</pubDate>
@@ -4092,6 +4255,27 @@ P_p=\begin{bmatrix}
 0  &amp;amp; 0 &amp;amp; 1 &amp;amp; 0
 \end{bmatrix}
 \]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;OpenGL中的透视矩阵&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;虽然都是右手系，但是OpenGL中zNear和zFar都是正数，透视矩阵就变为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+P_p=\begin{bmatrix}
+\frac{2n}{r-l}  &amp;amp; 0 &amp;amp; \frac{r+l}{r-l} &amp;amp; 0\\
+0  &amp;amp; \frac{2n}{t-b} &amp;amp; \frac{t+b}{t-b} &amp;amp; 0\\
+0  &amp;amp; 0 &amp;amp; -\frac{f+n}{f-n} &amp;amp; -\frac{2fn}{f-n}\\
+0  &amp;amp; 0 &amp;amp; -1 &amp;amp; 0
+\end{bmatrix}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;另外，OpenGL默认（指glm库）有&lt;span class=&#34;math inline&#34;&gt;\(r=-l,t=-d\)&lt;/span&gt;，就有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+P_p=\begin{bmatrix}
+c/a  &amp;amp; 0 &amp;amp; 0 &amp;amp; 0\\
+0  &amp;amp; c &amp;amp; 0 &amp;amp; 0\\
+0  &amp;amp; 0 &amp;amp; -\frac{f+n}{f-n} &amp;amp; -\frac{2fn}{f-n}\\
+0  &amp;amp; 0 &amp;amp; -1 &amp;amp; 0
+\end{bmatrix}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(a\)&lt;/span&gt;是显示分辨率的宽高比，&lt;span class=&#34;math inline&#34;&gt;\(c\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(1/tan(fovY/2)\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;另外，将&lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;轴上的&lt;span class=&#34;math inline&#34;&gt;\([-0.1,-100]\)&lt;/span&gt;映射到&lt;span class=&#34;math inline&#34;&gt;\([-1,1]\)&lt;/span&gt;上，不是均匀的，不精确的说，可能&lt;span class=&#34;math inline&#34;&gt;\([-0.1+,1.0]\)&lt;/span&gt;这一段映射到了&lt;span class=&#34;math inline&#34;&gt;\([-1,0.5]\)&lt;/span&gt;上，剩下的&lt;span class=&#34;math inline&#34;&gt;\([1.0,100]\)&lt;/span&gt;映射到了&lt;span class=&#34;math inline&#34;&gt;\([0.5,1]\)&lt;/span&gt;上，这在zbuffer、深度值中可能是需要注意的事。&lt;/p&gt;
 &lt;h2 id=&#34;视野field-of-view&#34;&gt;视野（Field-of-View）&lt;/h2&gt;
 &lt;p&gt;通常，对于近平面，我们可以用&lt;span class=&#34;math inline&#34;&gt;\(l,r,b,t\)&lt;/span&gt;描述（假设&lt;span class=&#34;math inline&#34;&gt;\(l=-r,b=-t\)&lt;/span&gt;，即平面中心位于&lt;span class=&#34;math inline&#34;&gt;\(-z\)&lt;/span&gt;轴上，且平面与&lt;span class=&#34;math inline&#34;&gt;\(-z\)&lt;/span&gt;垂直），也可以用垂直视野&lt;span class=&#34;math inline&#34;&gt;\(fovY\)&lt;/span&gt;和近平面的宽高比来表示。&lt;/p&gt;
 &lt;p&gt;首先相机到近平面的距离为&lt;span class=&#34;math inline&#34;&gt;\(|n|\)&lt;/span&gt;，则有如下关系&lt;/p&gt;
