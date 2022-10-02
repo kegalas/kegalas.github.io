@@ -1232,6 +1232,99 @@ f(x_1,x_2)=(2\pi\sigma_1\sigma_2\sqrt{1-\rho^2})^{-1}\exp\left[-\frac{1}{2(1-\rh
 \frac{(x_2-a)^2}{\sigma_2^2}\right)\right]
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;常把这个分布记为&lt;span class=&#34;math inline&#34;&gt;\(N(a,b,\sigma_1^2,\sigma_2^2,\rho)\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;与一维的情况一样，也可以用概率分布函数去描述多维随机向量的概率分布，其定义为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+F(x_1,x_2,\cdots,x_n)=P(X_1\leq x_1, X_2\leq x_2,\cdots,X_n\leq x_n)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其基本性质，以二维为例，有&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(F(x,y)\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(x,y\)&lt;/span&gt;的不减函数&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(0\leq F(x,y)\leq 1,F(-\infty,-\infty) =
+0,F(\infty,\infty)=1\)&lt;/span&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;对于任意&lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;，&lt;span class=&#34;math inline&#34;&gt;\(F(x,-\infty)=0\)&lt;/span&gt;，对于任意&lt;span class=&#34;math inline&#34;&gt;\(y\)&lt;/span&gt;，&lt;span class=&#34;math inline&#34;&gt;\(F(-\infty,y)=0\)&lt;/span&gt;&lt;/p&gt;
+&lt;ol start=&#34;3&#34; type=&#34;1&#34;&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(F(x,y)\)&lt;/span&gt;关于&lt;span class=&#34;math inline&#34;&gt;\(x,y\)&lt;/span&gt;均为右连续，&lt;span class=&#34;math inline&#34;&gt;\(F(x+0,y) = F(x,y)\)&lt;/span&gt;，&lt;span class=&#34;math inline&#34;&gt;\(F(x,y+0) = F(x,y)\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;若&lt;span class=&#34;math inline&#34;&gt;\(x_1&amp;lt;x_2,y_1&amp;lt;y_2\)&lt;/span&gt;，则&lt;span class=&#34;math inline&#34;&gt;\(F(x_2,y_2)+F(x_1,y_1)-F(x_2,y_1)-F(x_1,y_2)\geq
+0\)&lt;/span&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;另外，有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+f(x,y) = \frac{\partial^2F(x,y)}{\partial x\partial y}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;边缘分布&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(X=(X_1,\cdots,X_n)\)&lt;/span&gt;为一个&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;维随机向量。&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;有一定的分布&lt;span class=&#34;math inline&#34;&gt;\(F\)&lt;/span&gt;，这是一个&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;味分布，因为&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;的每个分量&lt;span class=&#34;math inline&#34;&gt;\(X_i\)&lt;/span&gt;都是一维随机变量，故它们都有各自的分布&lt;span class=&#34;math inline&#34;&gt;\(F_i\)&lt;/span&gt;，这些都是一维分布，称为随机向量&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;或其分布&lt;span class=&#34;math inline&#34;&gt;\(F\)&lt;/span&gt;的边缘分布。边缘分布完全由原分布&lt;span class=&#34;math inline&#34;&gt;\(F\)&lt;/span&gt;确定。&lt;/p&gt;
+&lt;p&gt;例如&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+P(X_1=a_{1k})=\sum_{j_2,\cdots,j_n}p(k,j_2,\cdots,j_n)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h2 id=&#34;条件概率分布&#34;&gt;条件概率分布&lt;/h2&gt;
+&lt;p&gt;概念同前面提到的条件概率。&lt;/p&gt;
+&lt;h3 id=&#34;离散型&#34;&gt;离散型&lt;/h3&gt;
+&lt;p&gt;同之前计算条件概率相同，只不过通常此时要用到边缘分布等概念。&lt;/p&gt;
+&lt;p&gt;例如设&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+p_{ij}=P(X_1=a_i,X_2=b_j)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;则&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+P(X_1=a_i|X_2=b_j) = P(X_1=a_i,X_2=b_j)/P(X_2=b_j) = p_{ij}/P(X_2=b_j)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;连续型&#34;&gt;连续型&lt;/h3&gt;
+&lt;p&gt;以二维情况为例&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+P(X_1\leq x_1|a\leq X_2\leq b)=P(X_1\leq x_1,a\leq X_2\leq b)/P(a\leq
+X_2\leq b)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;写成积分形式&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+=\int^{x_1}_{-\infty}dt_1\int^b_af(t_1,t_2)dt_2\bigg/\int^b_af_2(t_2)dt_2
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(a=b\)&lt;/span&gt;的情况下，可以通过极限求出&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+f_1(x_1|x_2) = f(x_1,x_2)/f_2(x_2)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;可改写为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+f(x_1,x_2) = f_1(x_1|x_2)f_2(x_2)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;可以推广到&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+f(x_1,\cdots,x_n) =
+g(x_1,\cdots,x_k)h(x_{k+1},\cdots,x_n|x_1,\cdots,x_k)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h2 id=&#34;随机变量的独立性&#34;&gt;随机变量的独立性&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;定义1&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;维随机向量&lt;span class=&#34;math inline&#34;&gt;\((X_1,\cdots,X_n)\)&lt;/span&gt;的联合密度函数为&lt;span class=&#34;math inline&#34;&gt;\(f(x_1,x_2,\cdots,x_n)\)&lt;/span&gt;，而&lt;span class=&#34;math inline&#34;&gt;\(X_i\)&lt;/span&gt;的边缘密度函数为&lt;span class=&#34;math inline&#34;&gt;\(f_i(x_i)\)&lt;/span&gt;，如果&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+f(x_1,\cdots,x_n) = f_1(x_1)\cdots f_n(x_n)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;则称随机变量&lt;span class=&#34;math inline&#34;&gt;\(X_1,\cdots,X_n\)&lt;/span&gt;相互独立。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定理1&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;如果连续变量&lt;span class=&#34;math inline&#34;&gt;\(X_1,\cdots,X_n\)&lt;/span&gt;相互独立，则对任何&lt;span class=&#34;math inline&#34;&gt;\(a_i&amp;lt;b_i\)&lt;/span&gt;，则由下式定义的&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;个事件也独立&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+A_1=\{a_1\leq X_1\leq b_1\},\cdots,A_n=\{a_n\leq X_n\leq b_n\}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;反之，若对任何&lt;span class=&#34;math inline&#34;&gt;\(a_i&amp;lt;b_i\)&lt;/span&gt;，事件&lt;span class=&#34;math inline&#34;&gt;\(A_1,\cdots,A_n\)&lt;/span&gt;独立，则变量&lt;span class=&#34;math inline&#34;&gt;\(X_1,\cdots,X_n\)&lt;/span&gt;独立。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定理2&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;若随机向量&lt;span class=&#34;math inline&#34;&gt;\((X_1,\cdots,X_n)\)&lt;/span&gt;的概率密度函数&lt;span class=&#34;math inline&#34;&gt;\(f(x_1,x_2,\cdots,x_n)\)&lt;/span&gt;可表示为&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;个函数&lt;span class=&#34;math inline&#34;&gt;\(g_1,\cdots,g_n\)&lt;/span&gt;之积，其中&lt;span class=&#34;math inline&#34;&gt;\(g_i\)&lt;/span&gt;只依赖于&lt;span class=&#34;math inline&#34;&gt;\(x_i\)&lt;/span&gt;，即&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+f(x_1,x_2,\cdots,x_n) = g_1(x_1)\cdots g_n(x_n)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;则&lt;span class=&#34;math inline&#34;&gt;\(X_1,\cdots,X_n\)&lt;/span&gt;相互独立，且&lt;span class=&#34;math inline&#34;&gt;\(X_i\)&lt;/span&gt;的边缘密度函数&lt;span class=&#34;math inline&#34;&gt;\(f_i(x_i)\)&lt;/span&gt;与&lt;span class=&#34;math inline&#34;&gt;\(g_i(x_i)\)&lt;/span&gt;只相差一个常数因子。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定理3&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;若&lt;span class=&#34;math inline&#34;&gt;\(X_1,\cdots,X_n\)&lt;/span&gt;相互独立，而&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+Y_1=g_1(X_1,\cdots,X_m), Y_2 = g_2(X_{m+1},\cdots,X_n)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;则&lt;span class=&#34;math inline&#34;&gt;\(Y_1,Y_2\)&lt;/span&gt;独立。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定义2&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(X_1,\cdots,X_n\)&lt;/span&gt;是离散型随机变量，弱队任何常数&lt;span class=&#34;math inline&#34;&gt;\(a_1,\cdots,a_n\)&lt;/span&gt;都有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+P(X_1=a_1,\cdots,X_n=a_n) = P(X_1=a_1)\cdots P(X_n=a_n)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;则称&lt;span class=&#34;math inline&#34;&gt;\(X_1,\cdots,
+X_n\)&lt;/span&gt;相互独立。&lt;/p&gt;
 
 
 </description>

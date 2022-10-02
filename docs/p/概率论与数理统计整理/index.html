@@ -112,7 +112,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 12 分钟
+                    阅读时长: 14 分钟
                 </time>
             </div>
         
@@ -567,6 +567,99 @@ f(x_1,x_2)=(2\pi\sigma_1\sigma_2\sqrt{1-\rho^2})^{-1}\exp\left[-\frac{1}{2(1-\rh
 \frac{(x_2-a)^2}{\sigma_2^2}\right)\right]
 \]</span></p>
 <p>常把这个分布记为<span class="math inline">\(N(a,b,\sigma_1^2,\sigma_2^2,\rho)\)</span></p>
+<p>与一维的情况一样，也可以用概率分布函数去描述多维随机向量的概率分布，其定义为</p>
+<p><span class="math display">\[
+F(x_1,x_2,\cdots,x_n)=P(X_1\leq x_1, X_2\leq x_2,\cdots,X_n\leq x_n)
+\]</span></p>
+<p>其基本性质，以二维为例，有</p>
+<ol type="1">
+<li><span class="math inline">\(F(x,y)\)</span>是<span class="math inline">\(x,y\)</span>的不减函数</li>
+<li><span class="math inline">\(0\leq F(x,y)\leq 1,F(-\infty,-\infty) =
+0,F(\infty,\infty)=1\)</span></li>
+</ol>
+<p>对于任意<span class="math inline">\(x\)</span>，<span class="math inline">\(F(x,-\infty)=0\)</span>，对于任意<span class="math inline">\(y\)</span>，<span class="math inline">\(F(-\infty,y)=0\)</span></p>
+<ol start="3" type="1">
+<li><span class="math inline">\(F(x,y)\)</span>关于<span class="math inline">\(x,y\)</span>均为右连续，<span class="math inline">\(F(x+0,y) = F(x,y)\)</span>，<span class="math inline">\(F(x,y+0) = F(x,y)\)</span></li>
+<li>若<span class="math inline">\(x_1&lt;x_2,y_1&lt;y_2\)</span>，则<span class="math inline">\(F(x_2,y_2)+F(x_1,y_1)-F(x_2,y_1)-F(x_1,y_2)\geq
+0\)</span></li>
+</ol>
+<p>另外，有</p>
+<p><span class="math display">\[
+f(x,y) = \frac{\partial^2F(x,y)}{\partial x\partial y}
+\]</span></p>
+<p><strong>边缘分布</strong></p>
+<p>设<span class="math inline">\(X=(X_1,\cdots,X_n)\)</span>为一个<span class="math inline">\(n\)</span>维随机向量。<span class="math inline">\(X\)</span>有一定的分布<span class="math inline">\(F\)</span>，这是一个<span class="math inline">\(n\)</span>味分布，因为<span class="math inline">\(X\)</span>的每个分量<span class="math inline">\(X_i\)</span>都是一维随机变量，故它们都有各自的分布<span class="math inline">\(F_i\)</span>，这些都是一维分布，称为随机向量<span class="math inline">\(X\)</span>或其分布<span class="math inline">\(F\)</span>的边缘分布。边缘分布完全由原分布<span class="math inline">\(F\)</span>确定。</p>
+<p>例如</p>
+<p><span class="math display">\[
+P(X_1=a_{1k})=\sum_{j_2,\cdots,j_n}p(k,j_2,\cdots,j_n)
+\]</span></p>
+<h2 id="条件概率分布">条件概率分布</h2>
+<p>概念同前面提到的条件概率。</p>
+<h3 id="离散型">离散型</h3>
+<p>同之前计算条件概率相同，只不过通常此时要用到边缘分布等概念。</p>
+<p>例如设</p>
+<p><span class="math display">\[
+p_{ij}=P(X_1=a_i,X_2=b_j)
+\]</span></p>
+<p>则</p>
+<p><span class="math display">\[
+P(X_1=a_i|X_2=b_j) = P(X_1=a_i,X_2=b_j)/P(X_2=b_j) = p_{ij}/P(X_2=b_j)
+\]</span></p>
+<h3 id="连续型">连续型</h3>
+<p>以二维情况为例</p>
+<p><span class="math display">\[
+P(X_1\leq x_1|a\leq X_2\leq b)=P(X_1\leq x_1,a\leq X_2\leq b)/P(a\leq
+X_2\leq b)
+\]</span></p>
+<p>写成积分形式</p>
+<p><span class="math display">\[
+=\int^{x_1}_{-\infty}dt_1\int^b_af(t_1,t_2)dt_2\bigg/\int^b_af_2(t_2)dt_2
+\]</span></p>
+<p><span class="math inline">\(a=b\)</span>的情况下，可以通过极限求出</p>
+<p><span class="math display">\[
+f_1(x_1|x_2) = f(x_1,x_2)/f_2(x_2)
+\]</span></p>
+<p>可改写为</p>
+<p><span class="math display">\[
+f(x_1,x_2) = f_1(x_1|x_2)f_2(x_2)
+\]</span></p>
+<p>可以推广到</p>
+<p><span class="math display">\[
+f(x_1,\cdots,x_n) =
+g(x_1,\cdots,x_k)h(x_{k+1},\cdots,x_n|x_1,\cdots,x_k)
+\]</span></p>
+<h2 id="随机变量的独立性">随机变量的独立性</h2>
+<p><strong>定义1</strong></p>
+<p>设<span class="math inline">\(n\)</span>维随机向量<span class="math inline">\((X_1,\cdots,X_n)\)</span>的联合密度函数为<span class="math inline">\(f(x_1,x_2,\cdots,x_n)\)</span>，而<span class="math inline">\(X_i\)</span>的边缘密度函数为<span class="math inline">\(f_i(x_i)\)</span>，如果</p>
+<p><span class="math display">\[
+f(x_1,\cdots,x_n) = f_1(x_1)\cdots f_n(x_n)
+\]</span></p>
+<p>则称随机变量<span class="math inline">\(X_1,\cdots,X_n\)</span>相互独立。</p>
+<p><strong>定理1</strong></p>
+<p>如果连续变量<span class="math inline">\(X_1,\cdots,X_n\)</span>相互独立，则对任何<span class="math inline">\(a_i&lt;b_i\)</span>，则由下式定义的<span class="math inline">\(n\)</span>个事件也独立</p>
+<p><span class="math display">\[
+A_1=\{a_1\leq X_1\leq b_1\},\cdots,A_n=\{a_n\leq X_n\leq b_n\}
+\]</span></p>
+<p>反之，若对任何<span class="math inline">\(a_i&lt;b_i\)</span>，事件<span class="math inline">\(A_1,\cdots,A_n\)</span>独立，则变量<span class="math inline">\(X_1,\cdots,X_n\)</span>独立。</p>
+<p><strong>定理2</strong></p>
+<p>若随机向量<span class="math inline">\((X_1,\cdots,X_n)\)</span>的概率密度函数<span class="math inline">\(f(x_1,x_2,\cdots,x_n)\)</span>可表示为<span class="math inline">\(n\)</span>个函数<span class="math inline">\(g_1,\cdots,g_n\)</span>之积，其中<span class="math inline">\(g_i\)</span>只依赖于<span class="math inline">\(x_i\)</span>，即</p>
+<p><span class="math display">\[
+f(x_1,x_2,\cdots,x_n) = g_1(x_1)\cdots g_n(x_n)
+\]</span></p>
+<p>则<span class="math inline">\(X_1,\cdots,X_n\)</span>相互独立，且<span class="math inline">\(X_i\)</span>的边缘密度函数<span class="math inline">\(f_i(x_i)\)</span>与<span class="math inline">\(g_i(x_i)\)</span>只相差一个常数因子。</p>
+<p><strong>定理3</strong></p>
+<p>若<span class="math inline">\(X_1,\cdots,X_n\)</span>相互独立，而</p>
+<p><span class="math display">\[
+Y_1=g_1(X_1,\cdots,X_m), Y_2 = g_2(X_{m+1},\cdots,X_n)
+\]</span></p>
+<p>则<span class="math inline">\(Y_1,Y_2\)</span>独立。</p>
+<p><strong>定义2</strong></p>
+<p>设<span class="math inline">\(X_1,\cdots,X_n\)</span>是离散型随机变量，弱队任何常数<span class="math inline">\(a_1,\cdots,a_n\)</span>都有</p>
+<p><span class="math display">\[
+P(X_1=a_1,\cdots,X_n=a_n) = P(X_1=a_1)\cdots P(X_n=a_n)
+\]</span></p>
+<p>则称<span class="math inline">\(X_1,\cdots,
+X_n\)</span>相互独立。</p>
 
 
 
@@ -909,6 +1002,13 @@ f(x_1,x_2)=(2\pi\sigma_1\sigma_2\sqrt{1-\rho^2})^{-1}\exp\left[-\frac{1}{2(1-\rh
         <li><a href="#连续型随机向量的分布">连续型随机向量的分布</a></li>
       </ol>
     </li>
+    <li><a href="#条件概率分布">条件概率分布</a>
+      <ol>
+        <li><a href="#离散型">离散型</a></li>
+        <li><a href="#连续型">连续型</a></li>
+      </ol>
+    </li>
+    <li><a href="#随机变量的独立性">随机变量的独立性</a></li>
   </ol>
 </nav>
                 </div>
