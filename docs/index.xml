@@ -111,6 +111,7 @@ x=0000.\overline{1011}
 &lt;p&gt;求解&lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;可得，&lt;span class=&#34;math inline&#34;&gt;\(x=(0.\overline{1011})_2=11/15\)&lt;/span&gt;。&lt;/p&gt;
 &lt;h2 id=&#34;实数的浮点表示&#34;&gt;实数的浮点表示&lt;/h2&gt;
 &lt;p&gt;本节按照IEEE754标准。&lt;/p&gt;
+&lt;h3 id=&#34;浮点格式&#34;&gt;浮点格式&lt;/h3&gt;
 &lt;p&gt;一个浮点数字包含三个部分：符号（正负）、尾数（包含一串有效数位）和一个指数，这些部分都在一个计算机字(WORD)里。&lt;/p&gt;
 &lt;p&gt;浮点数常用三种精度级别：单精度、双精度、扩展精度。它们分配的数位分别是32、64、80。具体如下&lt;/p&gt;
 &lt;table&gt;
@@ -165,6 +166,100 @@ x=0000.\overline{1011}
 &lt;p&gt;机器精度对应的数字，记作&lt;span class=&#34;math inline&#34;&gt;\(\varepsilon_{math}\)&lt;/span&gt;，是&lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt;和比&lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt;大的最小浮点数之间的距离。对于双进度来说就是&lt;span class=&#34;math inline&#34;&gt;\(2^{-52}\)&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;如果一个小数是无限小数，或者是超过了52位的小数，IEEE规定，如果在第53位为0，则52位以后的全部社区，如果53位为1，则在52位上加1。特别的，如果第53位为1，其后所有已知位为0，那么当且仅当52位是1时在52位上加1。&lt;/p&gt;
 &lt;p&gt;上述方法称为IEEE舍入最近法则。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定义2&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;将IEEE双精度浮点数字记做&lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;，利用舍入最近法则记做&lt;span class=&#34;math inline&#34;&gt;\(fl(x)\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;在计算机算术中，实数&lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;用一串数位&lt;span class=&#34;math inline&#34;&gt;\(fl(x)\)&lt;/span&gt;替换。根据这个定义，&lt;span class=&#34;math inline&#34;&gt;\(9.4\)&lt;/span&gt;在二进制中表示如下&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
++1.0010110011001100110011001100110011001100110011001100|110\cdots\times
+2^3
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;则&lt;span class=&#34;math inline&#34;&gt;\(fl(9.4)\)&lt;/span&gt;表示为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
++1.0010110011001100110011001100110011001100110011001101\cdots\times 2^3
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;我们通过去掉最右边无穷长的数字尾巴&lt;span class=&#34;math inline&#34;&gt;\(0.\overline{1100}\times 2^{-52}\times
+2^3=\overline{0.0110}\times 2^{-51}\times 2^3=0.4\times
+2^{-48}\)&lt;/span&gt;得到浮点表达。并在舍入过程中加上&lt;span class=&#34;math inline&#34;&gt;\(2^{-52}\times 2^3=2^{-49}\)&lt;/span&gt;。因而&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+fl(9.4) = 9.4+2^{-49}-0.4\times 2^{-48}\\
+=9.4+(1-0.8)2^{-49}\\
+=9.4+0.2\times 2^{-49}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;换句话说，将&lt;span class=&#34;math inline&#34;&gt;\(9.4\)&lt;/span&gt;保存为双精度浮点数时可能产生了&lt;span class=&#34;math inline&#34;&gt;\(0.2\times
+2^{-49}\)&lt;/span&gt;的误差，我们把它称作舍入误差。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定义3&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;令&lt;span class=&#34;math inline&#34;&gt;\(x_c\)&lt;/span&gt;是计算版本&lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;的精确度量，则&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+绝对误差=|x_c-x|
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+相对误差=\frac{|x_c-x|}{|x|}(x\neq 0)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;相对舍入误差&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;在IEEE机器算术模型中，&lt;span class=&#34;math inline&#34;&gt;\(fl(x)\)&lt;/span&gt;的相对舍入误差不会比机器精度的一半大：&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\frac{|fl(x)-x|}{|x|}\leq \frac{1}{2}\varepsilon_{math}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;浮点数的机器表示&#34;&gt;浮点数的机器表示&lt;/h3&gt;
+&lt;p&gt;每个双精度浮点数字被分配了8字节，或者说64位，来存储对应的三个部分。每个字都有如下形式&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+se_1e_2\cdots e_{11}b_1b_2\cdots b_{52}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中第1位保存了符号位，后面11位用于保存指数，再后面小数点后的52位保存尾数。符号位0是正数，1是负数。11位指数表示的正二进制整数，这些正数通过往指数上叠加&lt;span class=&#34;math inline&#34;&gt;\(2^10-1=1023\)&lt;/span&gt;得到，指数范围在&lt;span class=&#34;math inline&#34;&gt;\(-1022\)&lt;/span&gt;和&lt;span class=&#34;math inline&#34;&gt;\(1023\)&lt;/span&gt;之间，&lt;span class=&#34;math inline&#34;&gt;\(e_1\cdots e_{11}\)&lt;/span&gt;覆盖了从&lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt;到&lt;span class=&#34;math inline&#34;&gt;\(2046\)&lt;/span&gt;之间对应的指数，由于特殊目的，没有使用&lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt;和&lt;span class=&#34;math inline&#34;&gt;\(2047\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;数字&lt;span class=&#34;math inline&#34;&gt;\(1023\)&lt;/span&gt;称为双精度格式的指数偏差。它被用于吧正和负指数转化为正的二进制数保存在指数位中，对于单精度和扩展精度，指数偏差位分别是127和16383.&lt;/p&gt;
+&lt;p&gt;也就是说，指数位上的数字，减去1023才是浮点数中所应该是的指数。&lt;/p&gt;
+&lt;p&gt;再来看特殊值&lt;span class=&#34;math inline&#34;&gt;\(2047\)&lt;/span&gt;。如果尾数位串都是0，则用于表示&lt;span class=&#34;math inline&#34;&gt;\(\infty\)&lt;/span&gt;（其符号取决于第一位），否则表示&lt;span class=&#34;math inline&#34;&gt;\(NaN\)&lt;/span&gt;，意为不是一个数字。&lt;/p&gt;
+&lt;p&gt;例如&lt;span class=&#34;math inline&#34;&gt;\(1/0\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(+\inf\)&lt;/span&gt;，前&lt;span class=&#34;math inline&#34;&gt;\(12\)&lt;/span&gt;位用十六进制表示为7FF，后面全是0.&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(-1/0\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(-\inf\)&lt;/span&gt;，前&lt;span class=&#34;math inline&#34;&gt;\(12\)&lt;/span&gt;位用十六进制表示为FFF，后面全是0.&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(0/0\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(NaN\)&lt;/span&gt;，前&lt;span class=&#34;math inline&#34;&gt;\(12\)&lt;/span&gt;位用十六进制表示为FFF，后面不全是0.&lt;/p&gt;
+&lt;p&gt;再来看特殊值&lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt;，意味着&lt;span class=&#34;math inline&#34;&gt;\(e_1e_2\cdots e_{11}=(000 0000
+0000)_2\)&lt;/span&gt;。其表示一个非标准浮点数&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\pm 0.b_1b_2\cdots b_{52}\times 2^{-1022}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;由上可见，第一位不再假设为1.这样的非标准化数字称作异常浮点数字。这样就扩展了数字的表示范围，因而，最小的可表达的双精度数字是&lt;span class=&#34;math inline&#34;&gt;\(2^{-52}\times 2^{-1022}\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;另外&lt;span class=&#34;math inline&#34;&gt;\(+0,-0\)&lt;/span&gt;也是一个异常数字。计算中它们被看作是相同的两个实数。&lt;/p&gt;
+&lt;h3 id=&#34;浮点数加法&#34;&gt;浮点数加法&lt;/h3&gt;
+&lt;p&gt;首先对齐进行加法的两个数字的小数点位，接着相加，然后把结果保存为浮点数字。&lt;/p&gt;
+&lt;p&gt;在加法寄存器中，可以进行超过52位的加法，但是在相加之后必须舍入变回52位。&lt;/p&gt;
+&lt;h2 id=&#34;有效数字缺失&#34;&gt;有效数字缺失&lt;/h2&gt;
+&lt;p&gt;有一个主要问题以多种形式出现，该问题是由于对近似相等的两个数字相减造成有效数字的位数减少。&lt;/p&gt;
+&lt;p&gt;例如&lt;span class=&#34;math inline&#34;&gt;\(123.4567-123.4566=0.0001\)&lt;/span&gt;，有效数字从原来的七位减少到一位。&lt;/p&gt;
+&lt;p&gt;很多情况下我们可以通过重新构造计算来解决这个问题。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;例1&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;在三位小数的计算机上计算&lt;span class=&#34;math inline&#34;&gt;\(\sqrt{9.01}-3\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;正确的结果接近&lt;span class=&#34;math inline&#34;&gt;\(1.6662\times
+10^{-3}\)&lt;/span&gt;，但当我们使用三位有效数字时，由于&lt;span class=&#34;math inline&#34;&gt;\(\sqrt{9.01}\approx
+3.0016662\)&lt;/span&gt;，保存三位有效数字时得到&lt;span class=&#34;math inline&#34;&gt;\(3.00\)&lt;/span&gt;。再减去&lt;span class=&#34;math inline&#34;&gt;\(3.00\)&lt;/span&gt;，得到&lt;span class=&#34;math inline&#34;&gt;\(0.00\)&lt;/span&gt;，没有一个有效数位是正确的。&lt;/p&gt;
+&lt;p&gt;但是我们可以用以下方法挽救&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\sqrt{9.01}-3 =
+\frac{(\sqrt{9.01}-3)(\sqrt{9.01}+3)}{\sqrt{9.01}+3}=\frac{9.01-9}{\sqrt{9.01}+3}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+=\frac{0.01}{3.00+3.00}=\frac{0.01}{6}=0.00167\approx 1.67\times 10^{-3}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;这种方法本质上是一个窍门。称作“共轭等式”。通常会使用一些特定的恒等式，例如三角恒等式。&lt;/p&gt;
+&lt;p&gt;例如&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+E_1=\frac{1-cosx}{sin^2x},E_2=\frac{1}{1+cosx}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;两个式子虽然等价，但是在数值计算上，输入一个较为靠近0的数，则第二个比第一个精度高。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;例2&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;解方程&lt;span class=&#34;math inline&#34;&gt;\(ax^2+bx+c=0\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;对于最基础的求根公式&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+x=\frac{-b\pm \sqrt{b^2-4ac}}{2a}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中间取负号问题可能不大，但是取正号时，如果&lt;span class=&#34;math inline&#34;&gt;\(ac\)&lt;/span&gt;相对于&lt;span class=&#34;math inline&#34;&gt;\(b^2\)&lt;/span&gt;非常小，则分式上面会直接舍入等于0，造成整个结果等于0.&lt;/p&gt;
+&lt;p&gt;为了解决这个问题，可以在&lt;span class=&#34;math inline&#34;&gt;\(b\)&lt;/span&gt;是正数时&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+x_1=-\frac{b+\sqrt{b^2-4ac}}{2a},x_1=-\frac{2c}{b+\sqrt{b^2-4ac}}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(b\)&lt;/span&gt;是负数时&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+x_1=\frac{-b+\sqrt{b^2-4ac}}{2a},x_1=\frac{2c}{-b+\sqrt{b^2-4ac}}
+\]&lt;/span&gt;&lt;/p&gt;
 
 
 </description>
@@ -4500,6 +4595,7 @@ y+t_y\\
 &lt;p&gt;并且这样定义点和向量有好处，向量加向量是向量，点减点是向量，点加向量是向量。&lt;/p&gt;
 &lt;p&gt;平移一个向量，对于自由向量来说，起点都是远点，所以平移向量不会改变向量的坐标表示。为此设置第三维为0是合理的。&lt;/p&gt;
 &lt;p&gt;同样地，在复合变换时，用矩阵乘法来复合。&lt;/p&gt;
+&lt;p&gt;如果一个向量仅仅代表方向，例如法向量、平行光方向向量，不希望平移变换影响到这些向量，那么可以把第三维（对于三维向量是第四维）设置为零。此时除了平移，其他变换仍然能正常工作。&lt;/p&gt;
 &lt;h2 id=&#34;三维平移&#34;&gt;三维平移&lt;/h2&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 \bm T(t_x,t_y,t_z)=\
