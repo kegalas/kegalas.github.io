@@ -9,9 +9,10 @@
 <meta property='og:description' content='概率论与数理统计的学习笔记'>
 <meta property='og:url' content='https://kegalas.top/p/%E6%A6%82%E7%8E%87%E8%AE%BA%E4%B8%8E%E6%95%B0%E7%90%86%E7%BB%9F%E8%AE%A1%E6%95%B4%E7%90%86/'>
 <meta property='og:site_name' content='KegalaS的个人博客'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='数学' /><meta property='article:tag' content='大学' /><meta property='article:published_time' content='2022-08-30T10:41:24&#43;08:00'/><meta property='article:modified_time' content='2022-08-30T10:41:24&#43;08:00'/>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='数学' /><meta property='article:tag' content='大学' /><meta property='article:published_time' content='2022-08-30T10:41:24&#43;08:00'/><meta property='article:modified_time' content='2022-08-30T10:41:24&#43;08:00'/><meta property='og:image' content='https://i.pixiv.re/img-original/img/2020/02/08/20/51/57/79358142_p0.png' />
 <meta name="twitter:title" content="概率论与数理统计整理">
-<meta name="twitter:description" content="概率论与数理统计的学习笔记">
+<meta name="twitter:description" content="概率论与数理统计的学习笔记"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://i.pixiv.re/img-original/img/2020/02/08/20/51/57/79358142_p0.png' />
     <link rel="shortcut icon" href="favicon-16x16.png" />
 
     </head>
@@ -60,8 +61,16 @@
         </div>
     
 <main class="main full-width">
-    <article class="main-article">
+    <article class="has-image main-article">
     <header class="article-header">
+        <div class="article-image">
+            <a href="/p/%E6%A6%82%E7%8E%87%E8%AE%BA%E4%B8%8E%E6%95%B0%E7%90%86%E7%BB%9F%E8%AE%A1%E6%95%B4%E7%90%86/">
+                
+                    <img src="https://i.pixiv.re/img-original/img/2020/02/08/20/51/57/79358142_p0.png" loading="lazy" alt="Featured image of post 概率论与数理统计整理" />
+                
+            </a>
+        </div>
+    
 
     <div class="article-details">
     
@@ -112,7 +121,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 14 分钟
+                    阅读时长: 16 分钟
                 </time>
             </div>
         
@@ -660,6 +669,46 @@ P(X_1=a_1,\cdots,X_n=a_n) = P(X_1=a_1)\cdots P(X_n=a_n)
 \]</span></p>
 <p>则称<span class="math inline">\(X_1,\cdots,
 X_n\)</span>相互独立。</p>
+<h2 id="随机变量的函数的概率分布">随机变量的函数的概率分布</h2>
+<p>在理论和应用上，经常碰到这种情况：已知某个或某些随机变量<span class="math inline">\(X_1,\cdots,X_n\)</span>的分布，现另有一些随机变量<span class="math inline">\(Y_1,\cdots,Y_m\)</span>，它们都是<span class="math inline">\(X_1,\cdots,X_n\)</span>的函数：</p>
+<p><span class="math display">\[
+Y_i=g_i(X_1,\cdots,X_n)
+\]</span></p>
+<p>要求<span class="math inline">\((Y_1,\cdots,Y_m)\)</span>的概率分布。</p>
+<h3 id="离散型分布的情况">离散型分布的情况</h3>
+<p>离散分布的情况比较简单，只需要列举<span class="math inline">\(Y_i=y_i\)</span>时的所有<span class="math inline">\(X\)</span>的可能就可以了。</p>
+<h3 id="连续型分布的情况的一般讨论">连续型分布的情况的一般讨论</h3>
+<p>先考虑一个变量的情况，设<span class="math inline">\(X\)</span>有密度函数<span class="math inline">\(f(x)\)</span>. 设<span class="math inline">\(Y=g(x)\)</span>。<span class="math inline">\(g\)</span>严格上升或下降。所以<span class="math inline">\(g&#39;\)</span>存在，反函数<span class="math inline">\(X=g^{-1}(Y)\)</span>存在，且<span class="math inline">\((g^{-1})&#39;\)</span>也存在。</p>
+<p>则<span class="math inline">\(Y\)</span>的密度函数为</p>
+<p><span class="math display">\[
+f_Y(y)=f(g^{-1}(y))|(g^{-1}(y))&#39;|
+\]</span></p>
+<p>现在考虑多个变量，以两个变量为例，设<span class="math inline">\((X_1,X_2)\)</span>的密度函数为<span class="math inline">\(f(x_1,x_2)\)</span>，以及</p>
+<p><span class="math display">\[
+Y_1=g_1(X_1,X_2),\quad Y_2=g_2(X_1,X_2)
+\]</span></p>
+<p>要求<span class="math inline">\(f_Y(y_1,y_2)\)</span>，假定上式是一一对应变换，则有逆变换</p>
+<p><span class="math display">\[
+X_1=g^{-1}_1(Y_1,Y_2),\quad X_2=g^{-1}_2(Y_1,Y_2)
+\]</span></p>
+<p>假设<span class="math inline">\(g_1,g_2\)</span>都有一阶连续偏导数，则其反函数也有一阶连续偏导数，且雅克比行列式</p>
+<p><span class="math display">\[
+J(y_1,y_2)=
+\begin{vmatrix}
+\partial g^{-1}_1/\partial y_1 &amp; \partial g^{-1}_1/\partial y_2\\
+\partial g^{-1}_2/\partial y_1 &amp; \partial g^{-1}_2/\partial y_2
+\end{vmatrix}
+\]</span></p>
+<p>不为<span class="math inline">\(0\)</span>. 有</p>
+<p><span class="math display">\[
+f_Y(y_1,y_2) = f(g^{-1}_1(y_1,y_2),g^{-1}_2(y_1,y_2))|J(y_1,y_2)|
+\]</span></p>
+<h3 id="随机变量和的密度函数">随机变量和的密度函数</h3>
+<p>设<span class="math inline">\((X_1,X_2)\)</span>的联合密度函数为<span class="math inline">\(f(x_1,x_2)\)</span>，要求</p>
+<p><span class="math display">\[
+Y=X_1+X_2
+\]</span></p>
+<p>的密度函数。</p>
 
 
 
@@ -1009,6 +1058,13 @@ X_n\)</span>相互独立。</p>
       </ol>
     </li>
     <li><a href="#随机变量的独立性">随机变量的独立性</a></li>
+    <li><a href="#随机变量的函数的概率分布">随机变量的函数的概率分布</a>
+      <ol>
+        <li><a href="#离散型分布的情况">离散型分布的情况</a></li>
+        <li><a href="#连续型分布的情况的一般讨论">连续型分布的情况的一般讨论</a></li>
+        <li><a href="#随机变量和的密度函数">随机变量和的密度函数</a></li>
+      </ol>
+    </li>
   </ol>
 </nav>
                 </div>

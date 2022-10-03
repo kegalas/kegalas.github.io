@@ -112,7 +112,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 16 分钟
+                    阅读时长: 18 分钟
                 </time>
             </div>
         
@@ -545,6 +545,75 @@ H(D)\subset C^\infty(D)\subset C^k(D)\subset C^1(D)\subset C(D)
 <p>就称<span class="math inline">\(v\)</span>为<span class="math inline">\(u\)</span>的共轭调和函数。</p>
 <p><em>定理1</em></p>
 <p>设<span class="math inline">\(u\)</span>是单连通域<span class="math inline">\(D\)</span>上的调和函数，则必存在<span class="math inline">\(u\)</span>的共轭函数<span class="math inline">\(v\)</span>，使得<span class="math inline">\(u+iv\)</span>是<span class="math inline">\(D\)</span>上的全纯函数。</p>
+<h3 id="导数的几何意义">导数的几何意义</h3>
+<p>过点<span class="math inline">\(z_0\)</span>作两条光滑曲线<span class="math inline">\(\gamma_1,\gamma_2\)</span>，它们的方程分别为</p>
+<p><span class="math display">\[
+z=\gamma_1(t),a\leq t\leq b
+\]</span></p>
+<p>和</p>
+<p><span class="math display">\[
+z=\gamma_2(t),a\leq t\leq b
+\]</span></p>
+<p>且<span class="math inline">\(\gamma_1(a)=\gamma_2(a)=z_0\)</span>。映射<span class="math inline">\(\omega=f(z)\)</span>把它们分别映为过<span class="math inline">\(\omega_0\)</span>点的两条光滑曲线<span class="math inline">\(\sigma_1\)</span>和<span class="math inline">\(\sigma_2\)</span>，他们的方程分别为</p>
+<p><span class="math display">\[
+\omega = \sigma_1(t)=f(\gamma_1(t)),a\leq t\leq b
+\]</span></p>
+<p><span class="math display">\[
+\omega = \sigma_2(t)=f(\gamma_2(t)),a\leq t\leq b
+\]</span></p>
+<p>因为<span class="math inline">\(\sigma&#39;(a)=f&#39;(\gamma(a))\gamma&#39;(a)=f&#39;(z_0)\gamma&#39;(a)\neq
+0\)</span>，所以有</p>
+<p><span class="math display">\[
+Arg\sigma&#39;(a) = Argf&#39;(z_0)+Arg\gamma&#39;(a)
+\]</span></p>
+<p>或者写为</p>
+<p><span class="math display">\[
+Arg\sigma&#39;(a)-Arg\gamma&#39;(a) = Argf&#39;(z_0)
+\]</span></p>
+<p>由此就有</p>
+<p><span class="math display">\[
+Arg\sigma_1&#39;(a)-Arg\gamma_1&#39;(a) = Argf&#39;(z_0) =
+Arg\sigma_2&#39;(a)-Arg\gamma_2&#39;(a)
+\]</span></p>
+<p>上式说明，如果<span class="math inline">\(f&#39;(z_0)\neq
+0\)</span>，那么在映射<span class="math inline">\(\omega=f(z)\)</span>的作用下，过<span class="math inline">\(z_0\)</span>点的任意两条光滑曲线的夹角的大小与旋转方向都是保持不变的。</p>
+<p>我们把这种性质的映射称为在<span class="math inline">\(z_0\)</span>点是保角的。</p>
+<p><strong>定理</strong></p>
+<p>全纯函数在其导数不为零的点处是保角的。</p>
+<p>导数的模的几何意义，即<span class="math inline">\(|f&#39;(z_0)|\)</span>为<span class="math inline">\(f\)</span>在<span class="math inline">\(z_0\)</span>处的伸缩率。</p>
+<h3 id="初等全纯函数">初等全纯函数</h3>
+<h4 id="指数函数">指数函数</h4>
+<p>设<span class="math inline">\(z=x+iy\)</span>，定义</p>
+<p><span class="math display">\[
+e^z = e^x(\cos y+i\sin y)
+\]</span></p>
+<p>具有如下性质</p>
+<ol type="1">
+<li><span class="math inline">\((e^z)&#39;=e^z\)</span></li>
+<li>复数的三角表示<span class="math inline">\(z=r(\cos\theta+i\sin\theta)\)</span>可以表示为<span class="math inline">\(z=re^{i\theta}\)</span></li>
+<li>对于任意<span class="math inline">\(z\in \bm C,e^z\neq
+0\)</span>，这是因为</li>
+</ol>
+<p><span class="math display">\[
+|e^z|=e^x&gt;0
+\]</span></p>
+<ol start="4" type="1">
+<li>对于任意<span class="math inline">\(z_1,z_2\)</span>，有</li>
+</ol>
+<p><span class="math display">\[
+e^{z_1}e^{z_2}=e^{z_1+z_2}
+\]</span></p>
+<ol start="5" type="1">
+<li><span class="math inline">\(e^z\)</span>是以<span class="math inline">\(2\pi i\)</span>为周期的周期函数。</li>
+</ol>
+<p><strong>单叶</strong></p>
+<p>设<span class="math inline">\(f:D\to \bm
+C\)</span>是一个复变函数，如果对于<span class="math inline">\(D\)</span>中的任意两点<span class="math inline">\(z_1,z_2(z_1\neq z_2)\)</span>，必有<span class="math inline">\(f(z_1)\neq f(z_2)\)</span>，就称<span class="math inline">\(f\)</span>在<span class="math inline">\(D\)</span>中是单叶的，<span class="math inline">\(D\)</span>称为<span class="math inline">\(f\)</span>的单叶性域。</p>
+<p><span class="math inline">\(\omega=e^z\)</span>的单叶性域有</p>
+<p><span class="math display">\[
+\{z=x+iy:2k\pi&lt;y&lt;2(k+1)\pi\},k=0,\pm1,\cdots
+\]</span></p>
+<h4 id="对数函数">对数函数</h4>
 
 
 
@@ -611,9 +680,15 @@ H(D)\subset C^\infty(D)\subset C^k(D)\subset C^1(D)\subset C(D)
             <div class="flex article-list--tile">
                 
                     
-<article class="">
+<article class="has-image">
     <a href="/p/%E6%A6%82%E7%8E%87%E8%AE%BA%E4%B8%8E%E6%95%B0%E7%90%86%E7%BB%9F%E8%AE%A1%E6%95%B4%E7%90%86/">
         
+        
+            <div class="article-image">
+                
+                    <img src="https://i.pixiv.re/img-original/img/2020/02/08/20/51/57/79358142_p0.png" loading="lazy" data-key="" data-hash="https://i.pixiv.re/img-original/img/2020/02/08/20/51/57/79358142_p0.png"/>
+                
+            </div>
         
 
         <div class="article-details">
@@ -850,6 +925,8 @@ H(D)\subset C^\infty(D)\subset C^k(D)\subset C^1(D)\subset C(D)
       <ol>
         <li><a href="#复变函数的导数">复变函数的导数</a></li>
         <li><a href="#cauchy-riemann方程">Cauchy-Riemann方程</a></li>
+        <li><a href="#导数的几何意义">导数的几何意义</a></li>
+        <li><a href="#初等全纯函数">初等全纯函数</a></li>
       </ol>
     </li>
   </ol>
