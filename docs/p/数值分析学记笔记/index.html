@@ -112,7 +112,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 3 分钟
+                    阅读时长: 7 分钟
                 </time>
             </div>
         
@@ -221,6 +221,7 @@ x=0000.\overline{1011}
 <p>求解<span class="math inline">\(x\)</span>可得，<span class="math inline">\(x=(0.\overline{1011})_2=11/15\)</span>。</p>
 <h2 id="实数的浮点表示">实数的浮点表示</h2>
 <p>本节按照IEEE754标准。</p>
+<h3 id="浮点格式">浮点格式</h3>
 <p>一个浮点数字包含三个部分：符号（正负）、尾数（包含一串有效数位）和一个指数，这些部分都在一个计算机字(WORD)里。</p>
 <p>浮点数常用三种精度级别：单精度、双精度、扩展精度。它们分配的数位分别是32、64、80。具体如下</p>
 <table>
@@ -275,6 +276,100 @@ x=0000.\overline{1011}
 <p>机器精度对应的数字，记作<span class="math inline">\(\varepsilon_{math}\)</span>，是<span class="math inline">\(1\)</span>和比<span class="math inline">\(1\)</span>大的最小浮点数之间的距离。对于双进度来说就是<span class="math inline">\(2^{-52}\)</span></p>
 <p>如果一个小数是无限小数，或者是超过了52位的小数，IEEE规定，如果在第53位为0，则52位以后的全部社区，如果53位为1，则在52位上加1。特别的，如果第53位为1，其后所有已知位为0，那么当且仅当52位是1时在52位上加1。</p>
 <p>上述方法称为IEEE舍入最近法则。</p>
+<p><strong>定义2</strong></p>
+<p>将IEEE双精度浮点数字记做<span class="math inline">\(x\)</span>，利用舍入最近法则记做<span class="math inline">\(fl(x)\)</span></p>
+<p>在计算机算术中，实数<span class="math inline">\(x\)</span>用一串数位<span class="math inline">\(fl(x)\)</span>替换。根据这个定义，<span class="math inline">\(9.4\)</span>在二进制中表示如下</p>
+<p><span class="math display">\[
++1.0010110011001100110011001100110011001100110011001100|110\cdots\times
+2^3
+\]</span></p>
+<p>则<span class="math inline">\(fl(9.4)\)</span>表示为</p>
+<p><span class="math display">\[
++1.0010110011001100110011001100110011001100110011001101\cdots\times 2^3
+\]</span></p>
+<p>我们通过去掉最右边无穷长的数字尾巴<span class="math inline">\(0.\overline{1100}\times 2^{-52}\times
+2^3=\overline{0.0110}\times 2^{-51}\times 2^3=0.4\times
+2^{-48}\)</span>得到浮点表达。并在舍入过程中加上<span class="math inline">\(2^{-52}\times 2^3=2^{-49}\)</span>。因而</p>
+<p><span class="math display">\[
+fl(9.4) = 9.4+2^{-49}-0.4\times 2^{-48}\\
+=9.4+(1-0.8)2^{-49}\\
+=9.4+0.2\times 2^{-49}
+\]</span></p>
+<p>换句话说，将<span class="math inline">\(9.4\)</span>保存为双精度浮点数时可能产生了<span class="math inline">\(0.2\times
+2^{-49}\)</span>的误差，我们把它称作舍入误差。</p>
+<p><strong>定义3</strong></p>
+<p>令<span class="math inline">\(x_c\)</span>是计算版本<span class="math inline">\(x\)</span>的精确度量，则</p>
+<p><span class="math display">\[
+绝对误差=|x_c-x|
+\]</span></p>
+<p><span class="math display">\[
+相对误差=\frac{|x_c-x|}{|x|}(x\neq 0)
+\]</span></p>
+<p><strong>相对舍入误差</strong></p>
+<p>在IEEE机器算术模型中，<span class="math inline">\(fl(x)\)</span>的相对舍入误差不会比机器精度的一半大：</p>
+<p><span class="math display">\[
+\frac{|fl(x)-x|}{|x|}\leq \frac{1}{2}\varepsilon_{math}
+\]</span></p>
+<h3 id="浮点数的机器表示">浮点数的机器表示</h3>
+<p>每个双精度浮点数字被分配了8字节，或者说64位，来存储对应的三个部分。每个字都有如下形式</p>
+<p><span class="math display">\[
+se_1e_2\cdots e_{11}b_1b_2\cdots b_{52}
+\]</span></p>
+<p>其中第1位保存了符号位，后面11位用于保存指数，再后面小数点后的52位保存尾数。符号位0是正数，1是负数。11位指数表示的正二进制整数，这些正数通过往指数上叠加<span class="math inline">\(2^10-1=1023\)</span>得到，指数范围在<span class="math inline">\(-1022\)</span>和<span class="math inline">\(1023\)</span>之间，<span class="math inline">\(e_1\cdots e_{11}\)</span>覆盖了从<span class="math inline">\(1\)</span>到<span class="math inline">\(2046\)</span>之间对应的指数，由于特殊目的，没有使用<span class="math inline">\(0\)</span>和<span class="math inline">\(2047\)</span>。</p>
+<p>数字<span class="math inline">\(1023\)</span>称为双精度格式的指数偏差。它被用于吧正和负指数转化为正的二进制数保存在指数位中，对于单精度和扩展精度，指数偏差位分别是127和16383.</p>
+<p>也就是说，指数位上的数字，减去1023才是浮点数中所应该是的指数。</p>
+<p>再来看特殊值<span class="math inline">\(2047\)</span>。如果尾数位串都是0，则用于表示<span class="math inline">\(\infty\)</span>（其符号取决于第一位），否则表示<span class="math inline">\(NaN\)</span>，意为不是一个数字。</p>
+<p>例如<span class="math inline">\(1/0\)</span>是<span class="math inline">\(+\inf\)</span>，前<span class="math inline">\(12\)</span>位用十六进制表示为7FF，后面全是0.</p>
+<p><span class="math inline">\(-1/0\)</span>是<span class="math inline">\(-\inf\)</span>，前<span class="math inline">\(12\)</span>位用十六进制表示为FFF，后面全是0.</p>
+<p><span class="math inline">\(0/0\)</span>是<span class="math inline">\(NaN\)</span>，前<span class="math inline">\(12\)</span>位用十六进制表示为FFF，后面不全是0.</p>
+<p>再来看特殊值<span class="math inline">\(0\)</span>，意味着<span class="math inline">\(e_1e_2\cdots e_{11}=(000 0000
+0000)_2\)</span>。其表示一个非标准浮点数</p>
+<p><span class="math display">\[
+\pm 0.b_1b_2\cdots b_{52}\times 2^{-1022}
+\]</span></p>
+<p>由上可见，第一位不再假设为1.这样的非标准化数字称作异常浮点数字。这样就扩展了数字的表示范围，因而，最小的可表达的双精度数字是<span class="math inline">\(2^{-52}\times 2^{-1022}\)</span>。</p>
+<p>另外<span class="math inline">\(+0,-0\)</span>也是一个异常数字。计算中它们被看作是相同的两个实数。</p>
+<h3 id="浮点数加法">浮点数加法</h3>
+<p>首先对齐进行加法的两个数字的小数点位，接着相加，然后把结果保存为浮点数字。</p>
+<p>在加法寄存器中，可以进行超过52位的加法，但是在相加之后必须舍入变回52位。</p>
+<h2 id="有效数字缺失">有效数字缺失</h2>
+<p>有一个主要问题以多种形式出现，该问题是由于对近似相等的两个数字相减造成有效数字的位数减少。</p>
+<p>例如<span class="math inline">\(123.4567-123.4566=0.0001\)</span>，有效数字从原来的七位减少到一位。</p>
+<p>很多情况下我们可以通过重新构造计算来解决这个问题。</p>
+<p><strong>例1</strong></p>
+<p>在三位小数的计算机上计算<span class="math inline">\(\sqrt{9.01}-3\)</span></p>
+<p>正确的结果接近<span class="math inline">\(1.6662\times
+10^{-3}\)</span>，但当我们使用三位有效数字时，由于<span class="math inline">\(\sqrt{9.01}\approx
+3.0016662\)</span>，保存三位有效数字时得到<span class="math inline">\(3.00\)</span>。再减去<span class="math inline">\(3.00\)</span>，得到<span class="math inline">\(0.00\)</span>，没有一个有效数位是正确的。</p>
+<p>但是我们可以用以下方法挽救</p>
+<p><span class="math display">\[
+\sqrt{9.01}-3 =
+\frac{(\sqrt{9.01}-3)(\sqrt{9.01}+3)}{\sqrt{9.01}+3}=\frac{9.01-9}{\sqrt{9.01}+3}
+\]</span></p>
+<p><span class="math display">\[
+=\frac{0.01}{3.00+3.00}=\frac{0.01}{6}=0.00167\approx 1.67\times 10^{-3}
+\]</span></p>
+<p>这种方法本质上是一个窍门。称作“共轭等式”。通常会使用一些特定的恒等式，例如三角恒等式。</p>
+<p>例如</p>
+<p><span class="math display">\[
+E_1=\frac{1-cosx}{sin^2x},E_2=\frac{1}{1+cosx}
+\]</span></p>
+<p>两个式子虽然等价，但是在数值计算上，输入一个较为靠近0的数，则第二个比第一个精度高。</p>
+<p><strong>例2</strong></p>
+<p>解方程<span class="math inline">\(ax^2+bx+c=0\)</span></p>
+<p>对于最基础的求根公式</p>
+<p><span class="math display">\[
+x=\frac{-b\pm \sqrt{b^2-4ac}}{2a}
+\]</span></p>
+<p>其中间取负号问题可能不大，但是取正号时，如果<span class="math inline">\(ac\)</span>相对于<span class="math inline">\(b^2\)</span>非常小，则分式上面会直接舍入等于0，造成整个结果等于0.</p>
+<p>为了解决这个问题，可以在<span class="math inline">\(b\)</span>是正数时</p>
+<p><span class="math display">\[
+x_1=-\frac{b+\sqrt{b^2-4ac}}{2a},x_1=-\frac{2c}{b+\sqrt{b^2-4ac}}
+\]</span></p>
+<p><span class="math inline">\(b\)</span>是负数时</p>
+<p><span class="math display">\[
+x_1=\frac{-b+\sqrt{b^2-4ac}}{2a},x_1=\frac{2c}{-b+\sqrt{b^2-4ac}}
+\]</span></p>
 
 
 
@@ -580,7 +675,14 @@ x=0000.\overline{1011}
             <li><a href="#二进制转化为十进制">二进制转化为十进制</a></li>
           </ol>
         </li>
-        <li><a href="#实数的浮点表示">实数的浮点表示</a></li>
+        <li><a href="#实数的浮点表示">实数的浮点表示</a>
+          <ol>
+            <li><a href="#浮点格式">浮点格式</a></li>
+            <li><a href="#浮点数的机器表示">浮点数的机器表示</a></li>
+            <li><a href="#浮点数加法">浮点数加法</a></li>
+          </ol>
+        </li>
+        <li><a href="#有效数字缺失">有效数字缺失</a></li>
       </ol>
     </li>
   </ol>
