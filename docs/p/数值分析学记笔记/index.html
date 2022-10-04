@@ -112,7 +112,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 7 分钟
+                    阅读时长: 11 分钟
                 </time>
             </div>
         
@@ -273,7 +273,7 @@ x=0000.\overline{1011}
 \]</span></p>
 <p>或者说是<span class="math inline">\(1+2^{-52}\)</span></p>
 <p><strong>定义1</strong></p>
-<p>机器精度对应的数字，记作<span class="math inline">\(\varepsilon_{math}\)</span>，是<span class="math inline">\(1\)</span>和比<span class="math inline">\(1\)</span>大的最小浮点数之间的距离。对于双进度来说就是<span class="math inline">\(2^{-52}\)</span></p>
+<p>机器精度对应的数字，记作<span class="math inline">\(\varepsilon_{math}\)</span>，是<span class="math inline">\(1\)</span>和比<span class="math inline">\(1\)</span>大的最小浮点数之间的距离。对于双精度来说就是<span class="math inline">\(2^{-52}\)</span></p>
 <p>如果一个小数是无限小数，或者是超过了52位的小数，IEEE规定，如果在第53位为0，则52位以后的全部社区，如果53位为1，则在52位上加1。特别的，如果第53位为1，其后所有已知位为0，那么当且仅当52位是1时在52位上加1。</p>
 <p>上述方法称为IEEE舍入最近法则。</p>
 <p><strong>定义2</strong></p>
@@ -370,6 +370,99 @@ x_1=-\frac{b+\sqrt{b^2-4ac}}{2a},x_1=-\frac{2c}{b+\sqrt{b^2-4ac}}
 <p><span class="math display">\[
 x_1=\frac{-b+\sqrt{b^2-4ac}}{2a},x_1=\frac{2c}{-b+\sqrt{b^2-4ac}}
 \]</span></p>
+<h2 id="微积分回顾">微积分回顾</h2>
+<p>书中回顾了函数的连续性、罗尔定理、拉格朗日中值定理、泰勒展开、积分中值定理等。</p>
+<h1 id="求解方程">求解方程</h1>
+<h2 id="二分法">二分法</h2>
+<h3 id="方法">方法</h3>
+<p><strong>定义1</strong></p>
+<p>如果<span class="math inline">\(f(r)=0\)</span>，函数<span class="math inline">\(f(x)\)</span>在<span class="math inline">\(x=r\)</span>时有一个根。</p>
+<p><strong>定理1</strong></p>
+<p>根据函数的连续性，我们知道，如果一个函数是连续的（在[a,b]上），并且在<span class="math inline">\(a&lt;b\)</span>时有<span class="math inline">\(f(a)f(b)&lt;0\)</span>，那么函数在<span class="math inline">\((a,b)\)</span>之间至少有一个根<span class="math inline">\(r\)</span>使得<span class="math inline">\(f(r)=0\)</span></p>
+<p>显然，我们可以判断<span class="math inline">\(c=(b+a)/2\)</span>时<span class="math inline">\(f(a)f(c)\)</span>的符号来判断根具体在<span class="math inline">\([a,c]\)</span>还是<span class="math inline">\([c,b]\)</span>之中</p>
+<p>由此我们就可以得到一个求出根的伪代码</p>
+<pre><code>二分法
+给定初始区间[a,b]使得f(a)f(b)&lt;0
+
+while (b-a)/2&gt;TOL
+    c = (a+b)/2
+    if f(c)=0,stop,end
+    if f(a)f(c)&lt;0
+        b = c
+    else
+        a = c
+    end
+end
+
+最终的区间[a,b]中包含一个根
+近似根为(a+b)/2</code></pre>
+<p>显然我们求出的是一个区间<span class="math inline">\([a,b]\)</span>，有一个根在其中，我们只能估计一个值。另外代码中的TOL指的是精度，即这个根在<span class="math inline">\((a+b)/2\pm TOL\)</span>这个范围内。</p>
+<h3 id="分析">分析</h3>
+<p>现在来分析二分法的精确度和收敛速度。</p>
+<p>假设<span class="math inline">\([a,b]\)</span>是初始区间，在<span class="math inline">\(n\)</span>次二分之后，得到的最终区间<span class="math inline">\([a_n,b_n]\)</span>的长度为<span class="math inline">\((b-a)/2^n\)</span>。选择中点<span class="math inline">\(x_c=(a_n+b_n)/2\)</span>为解的最优估计值，与真实值的误差不会超过区间长度的一般。总之，n步二分法之后，我们得到</p>
+<p><span class="math display">\[
+求解误差=|x_c-r|&lt;\frac{b-a}{2^{n+1}}
+\]</span></p>
+<p><span class="math display">\[
+函数计算次数=n+2
+\]</span></p>
+<p>对于其精度，每一次函数计算后，解的不确定性都会减少一半。</p>
+<p><strong>定义2</strong></p>
+<p>如果误差小于<span class="math inline">\(0.5\times
+10^{-p}\)</span>，解精确到小数点后<span class="math inline">\(p\)</span>位。</p>
+<h2 id="不动点迭代">不动点迭代</h2>
+<p>举一个例子，以弧度制计算<span class="math inline">\(\cos\)</span>。以任意值代入，比如我们代入<span class="math inline">\(1\)</span>.有<span class="math inline">\(cos1=0.5403\cdots\)</span>，再将结果代入，有<span class="math inline">\(cos(cos1)=0.85755\cdots\)</span>，以此类推，多次代入后，我们发现无论初始值是多少，最后都会收敛到<span class="math inline">\(0.7390851332\cdots\)</span></p>
+<h3 id="函数的不动点">函数的不动点</h3>
+<p><strong>定义1</strong></p>
+<p>当<span class="math inline">\(g(r)=r\)</span>，实数<span class="math inline">\(r\)</span>是函数<span class="math inline">\(g\)</span>的不动点。</p>
+<p>例如，我们求解<span class="math inline">\(\cos
+x-x=0\)</span>的方程，用不动点的视角来看，就是求解<span class="math inline">\(\cos x=x\)</span>，或者说求解<span class="math inline">\(\cos x\)</span>的不动点。</p>
+<p>一旦方程写做<span class="math inline">\(g(x)=x\)</span>，从一个初始估计<span class="math inline">\(x_0\)</span>开始进行不动点迭代过程，对函数<span class="math inline">\(g\)</span>进行迭代，</p>
+<p><span class="math display">\[
+x_1=g(x_0)\\
+x_2=g(x_1)\\
+x_3=g(x_2)\\
+\vdots
+\]</span></p>
+<p>依此下去。当进行无穷多步迭代后序列<span class="math inline">\(x_i\)</span>可能收敛，也可能不收敛。但是，如果函数<span class="math inline">\(g\)</span>是一个连续函数并且<span class="math inline">\(x_i\)</span>收敛，收敛到一个数字<span class="math inline">\(r\)</span>，那么<span class="math inline">\(r\)</span>就是对应的不动点。意味着</p>
+<p><span class="math display">\[
+g(r) = g(\lim_{i\to\infty}x_i)=\lim_{i\to\infty}g(x_i) =
+\lim_{i\to\infty}x_{i+1}=r
+\]</span></p>
+<p>所有方程<span class="math inline">\(f(x)=0\)</span>都能转化为<span class="math inline">\(g(x)=x\)</span>来不动点迭代吗？答案是肯定的。</p>
+<p>虽然都能迭代，但不总是能收敛的。</p>
+<p>例如<span class="math inline">\(x^3+x-1=0\)</span>换成<span class="math inline">\(x=1-x^3\)</span>来迭代，最后结果就会在<span class="math inline">\(1,0\)</span>之间摆动，这是因为<span class="math inline">\(g(0)=1,g(1)=0\)</span>。</p>
+<p>但是，如果使用<span class="math inline">\(x=\sqrt[3]{1-x}\)</span>来迭代，就可以求出正确的不动点<span class="math inline">\(x=0.6823\cdots\)</span>。迭代了大概25次。</p>
+<p>如果使用<span class="math inline">\(x=(1+2x^3)/(1+3x^2)\)</span>，也可以收敛，并且只需要迭代4次就可以得到<span class="math inline">\(x=0.6823\cdots\)</span>。</p>
+<h3 id="不动点迭代几何">不动点迭代几何</h3>
+<p>我们要解释出现上述差异的原因。</p>
+<p>如下图，将<span class="math inline">\(g(x),x\)</span>画在同一坐标系下，其中交点就是不动点，图中的箭头代表迭代过程。这种表示又被称作cobweb图。</p>
+<figure>
+<img src="1.jpg" alt="1.jpg"/>
+<figcaption aria-hidden="true">1.jpg</figcaption>
+</figure>
+<p>图<span class="math inline">\(a\)</span>中迭代逐渐远离了不动点，而<span class="math inline">\(b,c\)</span>两图，迭代都在不断靠近不动点。</p>
+<p>由图我们猜测迭代收敛与否和<span class="math inline">\(g(x)\)</span>在不动点附近的斜率有关。</p>
+<h3 id="不动点迭代的线性收敛">不动点迭代的线性收敛</h3>
+<p>以<span class="math inline">\(g_1(x)=-\frac{3}{2}x+\frac{5}{2},g_2(x)=-\frac{1}{2}x+\frac{3}{2}\)</span>为例。它们的不动点都是<span class="math inline">\(x=1\)</span>。</p>
+<p>我们把<span class="math inline">\(g(x)\)</span>写作<span class="math inline">\(x-r\)</span>的形式，其中<span class="math inline">\(r=1\)</span>：</p>
+<p><span class="math display">\[
+g_1(x)=-\frac{3}{2}(x-1)+1\\
+g_1(x)-1=-\frac{3}{2}(x-1)\\
+x_{i+1}-1=-\frac{3}{2}(x_i-1)
+\]</span></p>
+<p>如果我们把<span class="math inline">\(e_i=|r-x_i|\)</span>作为第<span class="math inline">\(i\)</span>步时的误差，可以看到上式的误差是<span class="math inline">\(e_{i+1}=3e_i/2\)</span>，意味着误差越来越大，也就是发散。</p>
+<p>对于<span class="math inline">\(g_2(x)\)</span>有</p>
+<p><span class="math display">\[
+x_{i+1}-1=-\frac{1}{2}(x_i-1)
+\]</span></p>
+<p><span class="math inline">\(e_{i+1}=1e_i/2\)</span>，误差越来越小，就是收敛。</p>
+<p><strong>定义2</strong></p>
+<p>令<span class="math inline">\(e_i\)</span>表示迭代过程中第<span class="math inline">\(i\)</span>步时的误差，如果</p>
+<p><span class="math display">\[
+\lim_{i\to\infty}\frac{e_{i+1}}{e_i}=S&lt;1
+\]</span></p>
+<p>该方法被称为满足线性收敛，收敛速度为<span class="math inline">\(S\)</span>。</p>
 
 
 
@@ -683,6 +776,24 @@ x_1=\frac{-b+\sqrt{b^2-4ac}}{2a},x_1=\frac{2c}{-b+\sqrt{b^2-4ac}}
           </ol>
         </li>
         <li><a href="#有效数字缺失">有效数字缺失</a></li>
+        <li><a href="#微积分回顾">微积分回顾</a></li>
+      </ol>
+    </li>
+    <li><a href="#求解方程">求解方程</a>
+      <ol>
+        <li><a href="#二分法">二分法</a>
+          <ol>
+            <li><a href="#方法">方法</a></li>
+            <li><a href="#分析">分析</a></li>
+          </ol>
+        </li>
+        <li><a href="#不动点迭代">不动点迭代</a>
+          <ol>
+            <li><a href="#函数的不动点">函数的不动点</a></li>
+            <li><a href="#不动点迭代几何">不动点迭代几何</a></li>
+            <li><a href="#不动点迭代的线性收敛">不动点迭代的线性收敛</a></li>
+          </ol>
+        </li>
       </ol>
     </li>
   </ol>

@@ -163,7 +163,7 @@ x=0000.\overline{1011}
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;或者说是&lt;span class=&#34;math inline&#34;&gt;\(1+2^{-52}\)&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;定义1&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;机器精度对应的数字，记作&lt;span class=&#34;math inline&#34;&gt;\(\varepsilon_{math}\)&lt;/span&gt;，是&lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt;和比&lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt;大的最小浮点数之间的距离。对于双进度来说就是&lt;span class=&#34;math inline&#34;&gt;\(2^{-52}\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;机器精度对应的数字，记作&lt;span class=&#34;math inline&#34;&gt;\(\varepsilon_{math}\)&lt;/span&gt;，是&lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt;和比&lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt;大的最小浮点数之间的距离。对于双精度来说就是&lt;span class=&#34;math inline&#34;&gt;\(2^{-52}\)&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;如果一个小数是无限小数，或者是超过了52位的小数，IEEE规定，如果在第53位为0，则52位以后的全部社区，如果53位为1，则在52位上加1。特别的，如果第53位为1，其后所有已知位为0，那么当且仅当52位是1时在52位上加1。&lt;/p&gt;
 &lt;p&gt;上述方法称为IEEE舍入最近法则。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;定义2&lt;/strong&gt;&lt;/p&gt;
@@ -260,6 +260,99 @@ x_1=-\frac{b+\sqrt{b^2-4ac}}{2a},x_1=-\frac{2c}{b+\sqrt{b^2-4ac}}
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 x_1=\frac{-b+\sqrt{b^2-4ac}}{2a},x_1=\frac{2c}{-b+\sqrt{b^2-4ac}}
 \]&lt;/span&gt;&lt;/p&gt;
+&lt;h2 id=&#34;微积分回顾&#34;&gt;微积分回顾&lt;/h2&gt;
+&lt;p&gt;书中回顾了函数的连续性、罗尔定理、拉格朗日中值定理、泰勒展开、积分中值定理等。&lt;/p&gt;
+&lt;h1 id=&#34;求解方程&#34;&gt;求解方程&lt;/h1&gt;
+&lt;h2 id=&#34;二分法&#34;&gt;二分法&lt;/h2&gt;
+&lt;h3 id=&#34;方法&#34;&gt;方法&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;定义1&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;如果&lt;span class=&#34;math inline&#34;&gt;\(f(r)=0\)&lt;/span&gt;，函数&lt;span class=&#34;math inline&#34;&gt;\(f(x)\)&lt;/span&gt;在&lt;span class=&#34;math inline&#34;&gt;\(x=r\)&lt;/span&gt;时有一个根。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定理1&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;根据函数的连续性，我们知道，如果一个函数是连续的（在[a,b]上），并且在&lt;span class=&#34;math inline&#34;&gt;\(a&amp;lt;b\)&lt;/span&gt;时有&lt;span class=&#34;math inline&#34;&gt;\(f(a)f(b)&amp;lt;0\)&lt;/span&gt;，那么函数在&lt;span class=&#34;math inline&#34;&gt;\((a,b)\)&lt;/span&gt;之间至少有一个根&lt;span class=&#34;math inline&#34;&gt;\(r\)&lt;/span&gt;使得&lt;span class=&#34;math inline&#34;&gt;\(f(r)=0\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;显然，我们可以判断&lt;span class=&#34;math inline&#34;&gt;\(c=(b+a)/2\)&lt;/span&gt;时&lt;span class=&#34;math inline&#34;&gt;\(f(a)f(c)\)&lt;/span&gt;的符号来判断根具体在&lt;span class=&#34;math inline&#34;&gt;\([a,c]\)&lt;/span&gt;还是&lt;span class=&#34;math inline&#34;&gt;\([c,b]\)&lt;/span&gt;之中&lt;/p&gt;
+&lt;p&gt;由此我们就可以得到一个求出根的伪代码&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;二分法
+给定初始区间[a,b]使得f(a)f(b)&amp;lt;0
+
+while (b-a)/2&amp;gt;TOL
+    c = (a+b)/2
+    if f(c)=0,stop,end
+    if f(a)f(c)&amp;lt;0
+        b = c
+    else
+        a = c
+    end
+end
+
+最终的区间[a,b]中包含一个根
+近似根为(a+b)/2&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;显然我们求出的是一个区间&lt;span class=&#34;math inline&#34;&gt;\([a,b]\)&lt;/span&gt;，有一个根在其中，我们只能估计一个值。另外代码中的TOL指的是精度，即这个根在&lt;span class=&#34;math inline&#34;&gt;\((a+b)/2\pm TOL\)&lt;/span&gt;这个范围内。&lt;/p&gt;
+&lt;h3 id=&#34;分析&#34;&gt;分析&lt;/h3&gt;
+&lt;p&gt;现在来分析二分法的精确度和收敛速度。&lt;/p&gt;
+&lt;p&gt;假设&lt;span class=&#34;math inline&#34;&gt;\([a,b]\)&lt;/span&gt;是初始区间，在&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;次二分之后，得到的最终区间&lt;span class=&#34;math inline&#34;&gt;\([a_n,b_n]\)&lt;/span&gt;的长度为&lt;span class=&#34;math inline&#34;&gt;\((b-a)/2^n\)&lt;/span&gt;。选择中点&lt;span class=&#34;math inline&#34;&gt;\(x_c=(a_n+b_n)/2\)&lt;/span&gt;为解的最优估计值，与真实值的误差不会超过区间长度的一般。总之，n步二分法之后，我们得到&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+求解误差=|x_c-r|&amp;lt;\frac{b-a}{2^{n+1}}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+函数计算次数=n+2
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;对于其精度，每一次函数计算后，解的不确定性都会减少一半。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定义2&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;如果误差小于&lt;span class=&#34;math inline&#34;&gt;\(0.5\times
+10^{-p}\)&lt;/span&gt;，解精确到小数点后&lt;span class=&#34;math inline&#34;&gt;\(p\)&lt;/span&gt;位。&lt;/p&gt;
+&lt;h2 id=&#34;不动点迭代&#34;&gt;不动点迭代&lt;/h2&gt;
+&lt;p&gt;举一个例子，以弧度制计算&lt;span class=&#34;math inline&#34;&gt;\(\cos\)&lt;/span&gt;。以任意值代入，比如我们代入&lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt;.有&lt;span class=&#34;math inline&#34;&gt;\(cos1=0.5403\cdots\)&lt;/span&gt;，再将结果代入，有&lt;span class=&#34;math inline&#34;&gt;\(cos(cos1)=0.85755\cdots\)&lt;/span&gt;，以此类推，多次代入后，我们发现无论初始值是多少，最后都会收敛到&lt;span class=&#34;math inline&#34;&gt;\(0.7390851332\cdots\)&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;函数的不动点&#34;&gt;函数的不动点&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;定义1&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;当&lt;span class=&#34;math inline&#34;&gt;\(g(r)=r\)&lt;/span&gt;，实数&lt;span class=&#34;math inline&#34;&gt;\(r\)&lt;/span&gt;是函数&lt;span class=&#34;math inline&#34;&gt;\(g\)&lt;/span&gt;的不动点。&lt;/p&gt;
+&lt;p&gt;例如，我们求解&lt;span class=&#34;math inline&#34;&gt;\(\cos
+x-x=0\)&lt;/span&gt;的方程，用不动点的视角来看，就是求解&lt;span class=&#34;math inline&#34;&gt;\(\cos x=x\)&lt;/span&gt;，或者说求解&lt;span class=&#34;math inline&#34;&gt;\(\cos x\)&lt;/span&gt;的不动点。&lt;/p&gt;
+&lt;p&gt;一旦方程写做&lt;span class=&#34;math inline&#34;&gt;\(g(x)=x\)&lt;/span&gt;，从一个初始估计&lt;span class=&#34;math inline&#34;&gt;\(x_0\)&lt;/span&gt;开始进行不动点迭代过程，对函数&lt;span class=&#34;math inline&#34;&gt;\(g\)&lt;/span&gt;进行迭代，&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+x_1=g(x_0)\\
+x_2=g(x_1)\\
+x_3=g(x_2)\\
+\vdots
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;依此下去。当进行无穷多步迭代后序列&lt;span class=&#34;math inline&#34;&gt;\(x_i\)&lt;/span&gt;可能收敛，也可能不收敛。但是，如果函数&lt;span class=&#34;math inline&#34;&gt;\(g\)&lt;/span&gt;是一个连续函数并且&lt;span class=&#34;math inline&#34;&gt;\(x_i\)&lt;/span&gt;收敛，收敛到一个数字&lt;span class=&#34;math inline&#34;&gt;\(r\)&lt;/span&gt;，那么&lt;span class=&#34;math inline&#34;&gt;\(r\)&lt;/span&gt;就是对应的不动点。意味着&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+g(r) = g(\lim_{i\to\infty}x_i)=\lim_{i\to\infty}g(x_i) =
+\lim_{i\to\infty}x_{i+1}=r
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;所有方程&lt;span class=&#34;math inline&#34;&gt;\(f(x)=0\)&lt;/span&gt;都能转化为&lt;span class=&#34;math inline&#34;&gt;\(g(x)=x\)&lt;/span&gt;来不动点迭代吗？答案是肯定的。&lt;/p&gt;
+&lt;p&gt;虽然都能迭代，但不总是能收敛的。&lt;/p&gt;
+&lt;p&gt;例如&lt;span class=&#34;math inline&#34;&gt;\(x^3+x-1=0\)&lt;/span&gt;换成&lt;span class=&#34;math inline&#34;&gt;\(x=1-x^3\)&lt;/span&gt;来迭代，最后结果就会在&lt;span class=&#34;math inline&#34;&gt;\(1,0\)&lt;/span&gt;之间摆动，这是因为&lt;span class=&#34;math inline&#34;&gt;\(g(0)=1,g(1)=0\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;但是，如果使用&lt;span class=&#34;math inline&#34;&gt;\(x=\sqrt[3]{1-x}\)&lt;/span&gt;来迭代，就可以求出正确的不动点&lt;span class=&#34;math inline&#34;&gt;\(x=0.6823\cdots\)&lt;/span&gt;。迭代了大概25次。&lt;/p&gt;
+&lt;p&gt;如果使用&lt;span class=&#34;math inline&#34;&gt;\(x=(1+2x^3)/(1+3x^2)\)&lt;/span&gt;，也可以收敛，并且只需要迭代4次就可以得到&lt;span class=&#34;math inline&#34;&gt;\(x=0.6823\cdots\)&lt;/span&gt;。&lt;/p&gt;
+&lt;h3 id=&#34;不动点迭代几何&#34;&gt;不动点迭代几何&lt;/h3&gt;
+&lt;p&gt;我们要解释出现上述差异的原因。&lt;/p&gt;
+&lt;p&gt;如下图，将&lt;span class=&#34;math inline&#34;&gt;\(g(x),x\)&lt;/span&gt;画在同一坐标系下，其中交点就是不动点，图中的箭头代表迭代过程。这种表示又被称作cobweb图。&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;1.jpg&#34; alt=&#34;1.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;1.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;图&lt;span class=&#34;math inline&#34;&gt;\(a\)&lt;/span&gt;中迭代逐渐远离了不动点，而&lt;span class=&#34;math inline&#34;&gt;\(b,c\)&lt;/span&gt;两图，迭代都在不断靠近不动点。&lt;/p&gt;
+&lt;p&gt;由图我们猜测迭代收敛与否和&lt;span class=&#34;math inline&#34;&gt;\(g(x)\)&lt;/span&gt;在不动点附近的斜率有关。&lt;/p&gt;
+&lt;h3 id=&#34;不动点迭代的线性收敛&#34;&gt;不动点迭代的线性收敛&lt;/h3&gt;
+&lt;p&gt;以&lt;span class=&#34;math inline&#34;&gt;\(g_1(x)=-\frac{3}{2}x+\frac{5}{2},g_2(x)=-\frac{1}{2}x+\frac{3}{2}\)&lt;/span&gt;为例。它们的不动点都是&lt;span class=&#34;math inline&#34;&gt;\(x=1\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;我们把&lt;span class=&#34;math inline&#34;&gt;\(g(x)\)&lt;/span&gt;写作&lt;span class=&#34;math inline&#34;&gt;\(x-r\)&lt;/span&gt;的形式，其中&lt;span class=&#34;math inline&#34;&gt;\(r=1\)&lt;/span&gt;：&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+g_1(x)=-\frac{3}{2}(x-1)+1\\
+g_1(x)-1=-\frac{3}{2}(x-1)\\
+x_{i+1}-1=-\frac{3}{2}(x_i-1)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;如果我们把&lt;span class=&#34;math inline&#34;&gt;\(e_i=|r-x_i|\)&lt;/span&gt;作为第&lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt;步时的误差，可以看到上式的误差是&lt;span class=&#34;math inline&#34;&gt;\(e_{i+1}=3e_i/2\)&lt;/span&gt;，意味着误差越来越大，也就是发散。&lt;/p&gt;
+&lt;p&gt;对于&lt;span class=&#34;math inline&#34;&gt;\(g_2(x)\)&lt;/span&gt;有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+x_{i+1}-1=-\frac{1}{2}(x_i-1)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(e_{i+1}=1e_i/2\)&lt;/span&gt;，误差越来越小，就是收敛。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定义2&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;令&lt;span class=&#34;math inline&#34;&gt;\(e_i\)&lt;/span&gt;表示迭代过程中第&lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt;步时的误差，如果&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\lim_{i\to\infty}\frac{e_{i+1}}{e_i}=S&amp;lt;1
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;该方法被称为满足线性收敛，收敛速度为&lt;span class=&#34;math inline&#34;&gt;\(S\)&lt;/span&gt;。&lt;/p&gt;
 
 
 </description>
