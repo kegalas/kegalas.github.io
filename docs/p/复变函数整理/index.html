@@ -112,7 +112,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 18 分钟
+                    阅读时长: 21 分钟
                 </time>
             </div>
         
@@ -614,6 +614,117 @@ C\)</span>是一个复变函数，如果对于<span class="math inline">\(D\)</s
 \{z=x+iy:2k\pi&lt;y&lt;2(k+1)\pi\},k=0,\pm1,\cdots
 \]</span></p>
 <h4 id="对数函数">对数函数</h4>
+<p>对于给定的<span class="math inline">\(z\in C\)</span>，满足方程<span class="math inline">\(e^\omega=z\)</span>的<span class="math inline">\(\omega\)</span>称为<span class="math inline">\(z\)</span>的对数，记为<span class="math inline">\(\omega=Logz\)</span>。</p>
+<p>设<span class="math inline">\(z=re^{i\theta}\)</span>，<span class="math inline">\(\omega=u+iv\)</span>，则<span class="math inline">\(e^{u+iv}=re^{i\theta}\)</span>，所以<span class="math inline">\(e^u=r,v=\theta+2k\pi\)</span>。所以有</p>
+<p><span class="math display">\[
+Logz=log|z|+iargz+2k\pi=log|z|+iArgz
+\]</span></p>
+<p>所以，<span class="math inline">\(Logz\)</span>是一个多值函数，它的多值性是由<span class="math inline">\(z\)</span>的辐角<span class="math inline">\(Argz\)</span>的多值性产生的。</p>
+<p><strong>定理1</strong></p>
+<p>如果<span class="math inline">\(D\)</span>是不包含原点和无穷远点的单连通域，则必在<span class="math inline">\(D\)</span>上存在无穷多个单值全纯函数<span class="math inline">\(\varphi_k,k=0,\pm1,\cdots\)</span>，使得在<span class="math inline">\(D\)</span>上成立</p>
+<p><span class="math display">\[
+e^{\varphi_k(z)}=z,k=0,\pm1,\cdots;
+\]</span></p>
+<p>而且对每一个<span class="math inline">\(k\)</span>，有<span class="math inline">\(\varphi_k&#39;(z)=\frac{1}{z}\)</span>.其中的每一个<span class="math inline">\(\varphi_k\)</span>都称为<span class="math inline">\(Logz\)</span>在<span class="math inline">\(D\)</span>上的单值全纯分支。</p>
+<p>至于为什么不包含原点和无穷远点：如果包含原点，那么<span class="math inline">\(D\)</span>中就包含绕原点<span class="math inline">\(z=0\)</span>的简单闭曲线<span class="math inline">\(\gamma\)</span>，当<span class="math inline">\(z\)</span>从<span class="math inline">\(\gamma\)</span>上的一点<span class="math inline">\(z_0\)</span>沿<span class="math inline">\(\gamma\)</span>的正方向（即逆时针）回到<span class="math inline">\(z_0\)</span>时，<span class="math inline">\(z\)</span>的辐角增加了<span class="math inline">\(2\pi\)</span>，<span class="math inline">\(\varphi_{k_0}(z_0)\)</span>的值连续地变为<span class="math inline">\(\varphi_{k_0+1}(z_0)\)</span>，而不再回到原来的<span class="math inline">\(\varphi_{k_0}(z_0)\)</span>。因此再这样的域中就不可能分出单值的全纯分支。无穷远点同理。</p>
+<p><strong>定义1</strong></p>
+<p>如果当<span class="math inline">\(z\)</span>沿着<span class="math inline">\(z_0\)</span>的充分小邻域中的任意简单闭曲线绕一圈时，多值函数的值就从一支变到另一支，那么称<span class="math inline">\(z_0\)</span>为该多值函数的一个支点。</p>
+<p>以对数函数为例，<span class="math inline">\(z=0,z=\infty\)</span>就是<span class="math inline">\(Logz\)</span>的支点。</p>
+<h4 id="幂函数">幂函数</h4>
+<p><span class="math inline">\(\omega=z^\mu\)</span>称为幂函数，这里<span class="math inline">\(\mu=a+bi\)</span>，分情况讨论</p>
+<p><strong>1. <span class="math inline">\(\mu=n\)</span>，是一个自然数</strong></p>
+<p>按照导数的定义，可以直接算出</p>
+<p><span class="math display">\[
+(z^n)&#39;=nz^{n-1}
+\]</span></p>
+<p>其在<span class="math inline">\(C\)</span>上每一点都是全纯的。这种函数也称作<strong>整函数</strong></p>
+<p>它的单叶性域是</p>
+<p><span class="math display">\[
+\bigg\{z:\alpha&lt;argz&lt;\beta,0&lt;\beta-\alpha\leq\frac{2\pi}{n}\bigg\}
+\]</span></p>
+<p><strong>2. <span class="math inline">\(\mu=\frac{1}{n}\)</span>，n是一个自然数</strong></p>
+<p>对于一个给定的<span class="math inline">\(z\)</span>，<span class="math inline">\(z^{1/n}\)</span>有<span class="math inline">\(n\)</span>个值，所以它是一个多值函数。多值性由<span class="math inline">\(Argz\)</span>产生，<span class="math inline">\(0,\infty\)</span>是其支点。<span class="math inline">\(C\)</span>去掉正实轴后所成的域上可以分出<span class="math inline">\(n\)</span>个单值的全纯分支，它们是</p>
+<p><span class="math display">\[
+\omega = \varphi_k(z) =
+\sqrt[n]{|z|}\bigg(\cos\frac{\theta+2k\pi}{n}+i\sin\frac{\theta+2k\pi}{n}\bigg)
+\]</span></p>
+<p><span class="math display">\[
+k=0,1,\cdots,n-1
+\]</span></p>
+<p>其中<span class="math inline">\(\theta=argz\)</span>，变化范围在<span class="math inline">\(0&lt;argz&lt;2\pi\)</span></p>
+<p><strong>3. <span class="math inline">\(\mu =
+a+bi\)</span>，是一个负数</strong></p>
+<p>一般的幂函数<span class="math inline">\(\omega=z^\mu\)</span>定义为</p>
+<p><span class="math display">\[
+\omega = z^\mu=e^{\mu Logz}
+\]</span></p>
+<p>显然这也是个多值函数</p>
+<p><span class="math display">\[
+\omega = exp(alog|z|-b(argz+2k\pi))exp(i[blog|z|+a(argz+2k\pi)])
+\]</span></p>
+<p><span class="math display">\[
+k=0,\pm1,\cdots
+\]</span></p>
+<ol type="1">
+<li>若<span class="math inline">\(b=0,a=n\)</span>是一个整数，则<span class="math inline">\(\omega=z^n\)</span>是一个单值函数</li>
+<li>若<span class="math inline">\(b=0,a=p/q\)</span>是一个有理数，不妨设<span class="math inline">\(p&lt;q\)</span>，这时</li>
+</ol>
+<p><span class="math display">\[
+\omega=z^\mu=z^{p/q}=|z|^{p/q}exp(i\frac{p}{q}(argz+2k\pi))
+\]</span></p>
+<p>当<span class="math inline">\(k=0,1,\cdots,q-1\)</span>时，<span class="math inline">\(\omega\)</span>有<span class="math inline">\(q\)</span>个不同的值</p>
+<ol start="3" type="1">
+<li>若<span class="math inline">\(b=0,a\)</span>是一个无理数，这时</li>
+</ol>
+<p><span class="math display">\[
+\omega = z^\mu = |z|^aexp(iaargz)exp(i2k\pi a)
+\]</span></p>
+<p>此时<span class="math inline">\(z^a\)</span>是一个无穷值函数</p>
+<ol start="4" type="1">
+<li>若<span class="math inline">\(b\neq 0\)</span>，则<span class="math inline">\(\omega=z^\mu\)</span>是一无穷值函数。</li>
+</ol>
+<h4 id="三角函数">三角函数</h4>
+<p>由欧拉公式知道</p>
+<p><span class="math display">\[
+e^{ix} = \cos x+i\sin x\\
+e^{-ix} = \cos x -i\sin x
+\]</span></p>
+<p>可以得到</p>
+<p><span class="math display">\[
+\cos z = \frac{1}{2}(e^{ix}+e^{-ix})\\
+\sin z = \frac{1}{2i}(e^{ix}-e^{-ix})
+\]</span></p>
+<p>有如下性质</p>
+<ol type="1">
+<li>正弦余弦都是整函数，并且</li>
+</ol>
+<p><span class="math display">\[
+(\cos z)&#39; = -\sin z\\
+(\sin z)&#39; = \cos z
+\]</span></p>
+<ol start="2" type="1">
+<li>以<span class="math inline">\(2\pi\)</span>为周期</li>
+<li><span class="math inline">\(\cos z\)</span>是偶函数，<span class="math inline">\(\sin z\)</span>是奇函数</li>
+<li>对任意<span class="math inline">\(z_1,z_2\)</span></li>
+</ol>
+<p><span class="math display">\[
+\cos (z_1+z_2) = \cos z_1\cos z_2 - \sin z_1\sin z_2\\
+\sin (z_1+z_2) = \sin z_1\cos z_2 + \cos z_1\sin z_2\\
+\]</span></p>
+<ol start="5" type="1">
+<li><span class="math inline">\(\cos^2 z+\sin^2 z=1,\quad \sin 2z =
+2\sin z\cos z\)</span></li>
+<li><span class="math inline">\(\sin z\)</span>仅在<span class="math inline">\(z=k\pi\)</span>处为零，<span class="math inline">\(\cos z\)</span>仅在<span class="math inline">\(k\pi+\pi/2\)</span>处为零，<span class="math inline">\(k=0,\pm1,\cdots\)</span></li>
+<li><span class="math inline">\(\cos z,\sin z\)</span>不是有界函数</li>
+</ol>
+<p>同样我们就能定义正切余切</p>
+<p><span class="math display">\[
+\tg z = \frac{\sin z}{\sin z}
+\]</span></p>
+<p><span class="math display">\[
+\ctg z = \frac{\cos z}{\sin z}
+\]</span></p>
+<p>前者在除掉<span class="math inline">\(z=\pi/2+k\pi\)</span>的开平面上全纯，后者在除掉<span class="math inline">\(z=k\pi\)</span>的开平面上全纯，<span class="math inline">\(k=0,\pm1,\cdots\)</span>。</p>
 
 
 

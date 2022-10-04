@@ -1034,6 +1034,117 @@ C\)&lt;/span&gt;是一个复变函数，如果对于&lt;span class=&#34;math inl
 \{z=x+iy:2k\pi&amp;lt;y&amp;lt;2(k+1)\pi\},k=0,\pm1,\cdots
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;h4 id=&#34;对数函数&#34;&gt;对数函数&lt;/h4&gt;
+&lt;p&gt;对于给定的&lt;span class=&#34;math inline&#34;&gt;\(z\in C\)&lt;/span&gt;，满足方程&lt;span class=&#34;math inline&#34;&gt;\(e^\omega=z\)&lt;/span&gt;的&lt;span class=&#34;math inline&#34;&gt;\(\omega\)&lt;/span&gt;称为&lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;的对数，记为&lt;span class=&#34;math inline&#34;&gt;\(\omega=Logz\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(z=re^{i\theta}\)&lt;/span&gt;，&lt;span class=&#34;math inline&#34;&gt;\(\omega=u+iv\)&lt;/span&gt;，则&lt;span class=&#34;math inline&#34;&gt;\(e^{u+iv}=re^{i\theta}\)&lt;/span&gt;，所以&lt;span class=&#34;math inline&#34;&gt;\(e^u=r,v=\theta+2k\pi\)&lt;/span&gt;。所以有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+Logz=log|z|+iargz+2k\pi=log|z|+iArgz
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;所以，&lt;span class=&#34;math inline&#34;&gt;\(Logz\)&lt;/span&gt;是一个多值函数，它的多值性是由&lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;的辐角&lt;span class=&#34;math inline&#34;&gt;\(Argz\)&lt;/span&gt;的多值性产生的。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定理1&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;如果&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;是不包含原点和无穷远点的单连通域，则必在&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;上存在无穷多个单值全纯函数&lt;span class=&#34;math inline&#34;&gt;\(\varphi_k,k=0,\pm1,\cdots\)&lt;/span&gt;，使得在&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;上成立&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+e^{\varphi_k(z)}=z,k=0,\pm1,\cdots;
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;而且对每一个&lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt;，有&lt;span class=&#34;math inline&#34;&gt;\(\varphi_k&amp;#39;(z)=\frac{1}{z}\)&lt;/span&gt;.其中的每一个&lt;span class=&#34;math inline&#34;&gt;\(\varphi_k\)&lt;/span&gt;都称为&lt;span class=&#34;math inline&#34;&gt;\(Logz\)&lt;/span&gt;在&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;上的单值全纯分支。&lt;/p&gt;
+&lt;p&gt;至于为什么不包含原点和无穷远点：如果包含原点，那么&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;中就包含绕原点&lt;span class=&#34;math inline&#34;&gt;\(z=0\)&lt;/span&gt;的简单闭曲线&lt;span class=&#34;math inline&#34;&gt;\(\gamma\)&lt;/span&gt;，当&lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;从&lt;span class=&#34;math inline&#34;&gt;\(\gamma\)&lt;/span&gt;上的一点&lt;span class=&#34;math inline&#34;&gt;\(z_0\)&lt;/span&gt;沿&lt;span class=&#34;math inline&#34;&gt;\(\gamma\)&lt;/span&gt;的正方向（即逆时针）回到&lt;span class=&#34;math inline&#34;&gt;\(z_0\)&lt;/span&gt;时，&lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;的辐角增加了&lt;span class=&#34;math inline&#34;&gt;\(2\pi\)&lt;/span&gt;，&lt;span class=&#34;math inline&#34;&gt;\(\varphi_{k_0}(z_0)\)&lt;/span&gt;的值连续地变为&lt;span class=&#34;math inline&#34;&gt;\(\varphi_{k_0+1}(z_0)\)&lt;/span&gt;，而不再回到原来的&lt;span class=&#34;math inline&#34;&gt;\(\varphi_{k_0}(z_0)\)&lt;/span&gt;。因此再这样的域中就不可能分出单值的全纯分支。无穷远点同理。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定义1&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;如果当&lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;沿着&lt;span class=&#34;math inline&#34;&gt;\(z_0\)&lt;/span&gt;的充分小邻域中的任意简单闭曲线绕一圈时，多值函数的值就从一支变到另一支，那么称&lt;span class=&#34;math inline&#34;&gt;\(z_0\)&lt;/span&gt;为该多值函数的一个支点。&lt;/p&gt;
+&lt;p&gt;以对数函数为例，&lt;span class=&#34;math inline&#34;&gt;\(z=0,z=\infty\)&lt;/span&gt;就是&lt;span class=&#34;math inline&#34;&gt;\(Logz\)&lt;/span&gt;的支点。&lt;/p&gt;
+&lt;h4 id=&#34;幂函数&#34;&gt;幂函数&lt;/h4&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(\omega=z^\mu\)&lt;/span&gt;称为幂函数，这里&lt;span class=&#34;math inline&#34;&gt;\(\mu=a+bi\)&lt;/span&gt;，分情况讨论&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;1. &lt;span class=&#34;math inline&#34;&gt;\(\mu=n\)&lt;/span&gt;，是一个自然数&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;按照导数的定义，可以直接算出&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+(z^n)&amp;#39;=nz^{n-1}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其在&lt;span class=&#34;math inline&#34;&gt;\(C\)&lt;/span&gt;上每一点都是全纯的。这种函数也称作&lt;strong&gt;整函数&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;它的单叶性域是&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\bigg\{z:\alpha&amp;lt;argz&amp;lt;\beta,0&amp;lt;\beta-\alpha\leq\frac{2\pi}{n}\bigg\}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;2. &lt;span class=&#34;math inline&#34;&gt;\(\mu=\frac{1}{n}\)&lt;/span&gt;，n是一个自然数&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;对于一个给定的&lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;，&lt;span class=&#34;math inline&#34;&gt;\(z^{1/n}\)&lt;/span&gt;有&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;个值，所以它是一个多值函数。多值性由&lt;span class=&#34;math inline&#34;&gt;\(Argz\)&lt;/span&gt;产生，&lt;span class=&#34;math inline&#34;&gt;\(0,\infty\)&lt;/span&gt;是其支点。&lt;span class=&#34;math inline&#34;&gt;\(C\)&lt;/span&gt;去掉正实轴后所成的域上可以分出&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;个单值的全纯分支，它们是&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\omega = \varphi_k(z) =
+\sqrt[n]{|z|}\bigg(\cos\frac{\theta+2k\pi}{n}+i\sin\frac{\theta+2k\pi}{n}\bigg)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+k=0,1,\cdots,n-1
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(\theta=argz\)&lt;/span&gt;，变化范围在&lt;span class=&#34;math inline&#34;&gt;\(0&amp;lt;argz&amp;lt;2\pi\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;3. &lt;span class=&#34;math inline&#34;&gt;\(\mu =
+a+bi\)&lt;/span&gt;，是一个负数&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;一般的幂函数&lt;span class=&#34;math inline&#34;&gt;\(\omega=z^\mu\)&lt;/span&gt;定义为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\omega = z^\mu=e^{\mu Logz}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;显然这也是个多值函数&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\omega = exp(alog|z|-b(argz+2k\pi))exp(i[blog|z|+a(argz+2k\pi)])
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+k=0,\pm1,\cdots
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;若&lt;span class=&#34;math inline&#34;&gt;\(b=0,a=n\)&lt;/span&gt;是一个整数，则&lt;span class=&#34;math inline&#34;&gt;\(\omega=z^n\)&lt;/span&gt;是一个单值函数&lt;/li&gt;
+&lt;li&gt;若&lt;span class=&#34;math inline&#34;&gt;\(b=0,a=p/q\)&lt;/span&gt;是一个有理数，不妨设&lt;span class=&#34;math inline&#34;&gt;\(p&amp;lt;q\)&lt;/span&gt;，这时&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\omega=z^\mu=z^{p/q}=|z|^{p/q}exp(i\frac{p}{q}(argz+2k\pi))
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;当&lt;span class=&#34;math inline&#34;&gt;\(k=0,1,\cdots,q-1\)&lt;/span&gt;时，&lt;span class=&#34;math inline&#34;&gt;\(\omega\)&lt;/span&gt;有&lt;span class=&#34;math inline&#34;&gt;\(q\)&lt;/span&gt;个不同的值&lt;/p&gt;
+&lt;ol start=&#34;3&#34; type=&#34;1&#34;&gt;
+&lt;li&gt;若&lt;span class=&#34;math inline&#34;&gt;\(b=0,a\)&lt;/span&gt;是一个无理数，这时&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\omega = z^\mu = |z|^aexp(iaargz)exp(i2k\pi a)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;此时&lt;span class=&#34;math inline&#34;&gt;\(z^a\)&lt;/span&gt;是一个无穷值函数&lt;/p&gt;
+&lt;ol start=&#34;4&#34; type=&#34;1&#34;&gt;
+&lt;li&gt;若&lt;span class=&#34;math inline&#34;&gt;\(b\neq 0\)&lt;/span&gt;，则&lt;span class=&#34;math inline&#34;&gt;\(\omega=z^\mu\)&lt;/span&gt;是一无穷值函数。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id=&#34;三角函数&#34;&gt;三角函数&lt;/h4&gt;
+&lt;p&gt;由欧拉公式知道&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+e^{ix} = \cos x+i\sin x\\
+e^{-ix} = \cos x -i\sin x
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;可以得到&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\cos z = \frac{1}{2}(e^{ix}+e^{-ix})\\
+\sin z = \frac{1}{2i}(e^{ix}-e^{-ix})
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;有如下性质&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;正弦余弦都是整函数，并且&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+(\cos z)&amp;#39; = -\sin z\\
+(\sin z)&amp;#39; = \cos z
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;ol start=&#34;2&#34; type=&#34;1&#34;&gt;
+&lt;li&gt;以&lt;span class=&#34;math inline&#34;&gt;\(2\pi\)&lt;/span&gt;为周期&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(\cos z\)&lt;/span&gt;是偶函数，&lt;span class=&#34;math inline&#34;&gt;\(\sin z\)&lt;/span&gt;是奇函数&lt;/li&gt;
+&lt;li&gt;对任意&lt;span class=&#34;math inline&#34;&gt;\(z_1,z_2\)&lt;/span&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\cos (z_1+z_2) = \cos z_1\cos z_2 - \sin z_1\sin z_2\\
+\sin (z_1+z_2) = \sin z_1\cos z_2 + \cos z_1\sin z_2\\
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;ol start=&#34;5&#34; type=&#34;1&#34;&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(\cos^2 z+\sin^2 z=1,\quad \sin 2z =
+2\sin z\cos z\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(\sin z\)&lt;/span&gt;仅在&lt;span class=&#34;math inline&#34;&gt;\(z=k\pi\)&lt;/span&gt;处为零，&lt;span class=&#34;math inline&#34;&gt;\(\cos z\)&lt;/span&gt;仅在&lt;span class=&#34;math inline&#34;&gt;\(k\pi+\pi/2\)&lt;/span&gt;处为零，&lt;span class=&#34;math inline&#34;&gt;\(k=0,\pm1,\cdots\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(\cos z,\sin z\)&lt;/span&gt;不是有界函数&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;同样我们就能定义正切余切&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\tg z = \frac{\sin z}{\sin z}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\ctg z = \frac{\cos z}{\sin z}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;前者在除掉&lt;span class=&#34;math inline&#34;&gt;\(z=\pi/2+k\pi\)&lt;/span&gt;的开平面上全纯，后者在除掉&lt;span class=&#34;math inline&#34;&gt;\(z=k\pi\)&lt;/span&gt;的开平面上全纯，&lt;span class=&#34;math inline&#34;&gt;\(k=0,\pm1,\cdots\)&lt;/span&gt;。&lt;/p&gt;
 
 
 </description>
