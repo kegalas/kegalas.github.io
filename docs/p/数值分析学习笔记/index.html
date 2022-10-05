@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Timothy Sauer所著《数值分析（第二版）》的学习笔记'><title>数值分析学习笔记</title>
+
+<link rel='canonical' href='https://kegalas.top/p/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/'>
+
+<link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='数值分析学习笔记'>
+<meta property='og:description' content='Timothy Sauer所著《数值分析（第二版）》的学习笔记'>
+<meta property='og:url' content='https://kegalas.top/p/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/'>
+<meta property='og:site_name' content='KegalaS的个人博客'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='数学' /><meta property='article:tag' content='数值分析' /><meta property='article:published_time' content='2022-10-02T16:42:53&#43;08:00'/><meta property='article:modified_time' content='2022-10-02T16:42:53&#43;08:00'/><meta property='og:image' content='https://kegalas.top/p/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/cover.jpg' />
+<meta name="twitter:title" content="数值分析学习笔记">
+<meta name="twitter:description" content="Timothy Sauer所著《数值分析（第二版）》的学习笔记"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://kegalas.top/p/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/cover.jpg' />
+    <link rel="shortcut icon" href="favicon-16x16.png" />
+
+    </head>
+    <body class="
+    article-page has-toc
+">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex 
+    
+        extended
+    
+">
+    
+        <div id="article-toolbar">
+            <a href="/" class="back-home">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="15 6 9 12 15 18" />
+</svg>
+
+
+
+                <span>返回</span>
+            </a>
+        </div>
+    
+<main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/p/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+                <img src="/p/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/cover_hu6778f7153b0100018882cd949f083bca_49831_800x0_resize_q75_box.jpg"
+                        srcset="/p/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/cover_hu6778f7153b0100018882cd949f083bca_49831_800x0_resize_q75_box.jpg 800w, /p/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/cover_hu6778f7153b0100018882cd949f083bca_49831_1600x0_resize_q75_box.jpg 1600w"
+                        width="800" 
+                        height="511" 
+                        loading="lazy"
+                        alt="Featured image of post 数值分析学习笔记" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/%E6%95%B0%E5%AD%A6/" >
+                数学
+            </a>
+        
+    </header>
+    
+
+    <h2 class="article-title">
+        <a href="/p/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">数值分析学习笔记</a>
+    </h2>
+
+    
+    <h3 class="article-subtitle">
+        Timothy Sauer所著《数值分析（第二版）》的学习笔记
+    </h3>
+    
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Oct 02, 2022</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 11 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+</div>
+</header>
+
+    <section class="article-content">
+    
+
+<h1 id="基础知识">基础知识</h1>
+<h2 id="多项式求值">多项式求值</h2>
+<p>对于形如下式的多项式</p>
+<p><span class="math display">\[
+P(x)=2x^4+3x^3-3x^2+5x-1
+\]</span></p>
+<p>如果我们普通地代入计算，则会需要计算10次乘法，以及4次加法。这显然不是最优的，更优的方法例如秦九韶算法，将多项式重写为</p>
+<p><span class="math display">\[
+P(x)=-1+x*(5+x*(-3+x*(3+x*2)))
+\]</span></p>
+<p>此时再代入值计算，则只用4次乘法和4次加法。一般来说<span class="math inline">\(d\)</span>阶多项式可以通过<span class="math inline">\(d\)</span>次乘法和<span class="math inline">\(d\)</span>次加法求值。</p>
+<p>标准形式的多项式</p>
+<p><span class="math display">\[
+P(x) = c_1+c_2x+c_3x^2+c_4x^3+c_5x^4
+\]</span></p>
+<p>可以写成</p>
+<p><span class="math display">\[
+P(x)=c_1+x(c_2+x(c_3+x(c_4+x(c_5))))
+\]</span></p>
+<p>或者也有更一般的形式，可以用于之后的插值计算</p>
+<p><span class="math display">\[
+P(x)=c_1+(x-r_1)(c_2+(x-r_2)(c_3+(x-r_3)(c_4+(x-r_4)(c_5))))
+\]</span></p>
+<p>其中称<span class="math inline">\(r1,r2,r3,r4\)</span>为基点。</p>
+<h2 id="二进制数字">二进制数字</h2>
+<p>二进制数字可以表示为：</p>
+<p><span class="math display">\[
+\cdots b_2b_1b_0b_{-1}b_{-2}\cdots
+\]</span></p>
+<p>其等价于十进制下的</p>
+<p><span class="math display">\[
+\cdots b_22^2+b_12^1+b_02^0+b_{-1}2^{-1}+b_{-2}2^{-2}\cdots
+\]</span></p>
+<h3 id="十进制转化为二进制">十进制转化为二进制</h3>
+<p>例如<span class="math inline">\(53.7\)</span>转化为二进制，可以拆分为整数部分和小数部分，分别转化，然后在拼接起来。</p>
+<p><strong>整数部分</strong></p>
+<p>将整数连续除以<span class="math inline">\(2\)</span>，记录余数，直到整数最后变为<span class="math inline">\(0\)</span>，余数反过来排列在一起就是二进制表示。例如</p>
+<p><span class="math display">\[
+53\div 2 = 26\cdots1
+\]</span></p>
+<p><span class="math display">\[
+26\div 2 = 13\cdots0
+\]</span></p>
+<p><span class="math display">\[
+13\div 2 = 6\cdots1
+\]</span></p>
+<p><span class="math display">\[
+6\div 2 = 3\cdots0
+\]</span></p>
+<p><span class="math display">\[
+3\div 2 = 1\cdots1
+\]</span></p>
+<p><span class="math display">\[
+1\div 2 = 0\cdots1
+\]</span></p>
+<p>那么二进制表示就是<span class="math inline">\(110101\)</span></p>
+<p><strong>小数部分</strong></p>
+<p>将小数部分不断乘以<span class="math inline">\(2\)</span>，得到的结果保留整数部分，直到小数部分为<span class="math inline">\(0\)</span>，整数部分顺序排列即为小数部分的二进制表示</p>
+<p>例如</p>
+<p><span class="math display">\[
+0.7*2 = 0.4+1
+\]</span></p>
+<p><span class="math display">\[
+0.4*2 = 0.8+0
+\]</span></p>
+<p><span class="math display">\[
+0.8*2 = 0.6+1
+\]</span></p>
+<p><span class="math display">\[
+0.6*2 = 0.2+1
+\]</span></p>
+<p><span class="math display">\[
+0.2*2 = 0.4+0
+\]</span></p>
+<p><span class="math display">\[
+0.4*2 = 0.8+0
+\]</span></p>
+<p><span class="math display">\[
+\vdots
+\]</span></p>
+<p>后面重复，代表在二进制中是无限循环小数。有<span class="math inline">\((0.7)_{10}=(0.1\overline{0110})_2\)</span></p>
+<p>最后有<span class="math inline">\((53.7)_{10} =
+(110101.1\overline{0110})_2\)</span>。</p>
+<h3 id="二进制转化为十进制">二进制转化为十进制</h3>
+<p>开头已经介绍过一般情况，对于有限小数是容易计算的。</p>
+<p>无限小数时，例如<span class="math inline">\(x=(0.\overline{1011})_2\)</span>，先左移<span class="math inline">\(4\)</span>位，再减去原始的<span class="math inline">\(x\)</span>，有</p>
+<p><span class="math display">\[
+2^4x = 1011.\overline{1011}\\
+x=0000.\overline{1011}
+\]</span></p>
+<p>相减得</p>
+<p><span class="math display">\[
+(2^4-1)x = (1101)_2 = (11)_{10}
+\]</span></p>
+<p>求解<span class="math inline">\(x\)</span>可得，<span class="math inline">\(x=(0.\overline{1011})_2=11/15\)</span>。</p>
+<h2 id="实数的浮点表示">实数的浮点表示</h2>
+<p>本节按照IEEE754标准。</p>
+<h3 id="浮点格式">浮点格式</h3>
+<p>一个浮点数字包含三个部分：符号（正负）、尾数（包含一串有效数位）和一个指数，这些部分都在一个计算机字(WORD)里。</p>
+<p>浮点数常用三种精度级别：单精度、双精度、扩展精度。它们分配的数位分别是32、64、80。具体如下</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">精度</th>
+<th style="text-align: center;">符号</th>
+<th style="text-align: center;">指数</th>
+<th style="text-align: center;">尾数</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">单精度</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">23</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">双精度</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">11</td>
+<td style="text-align: center;">52</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">扩展精度</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">15</td>
+<td style="text-align: center;">64</td>
+</tr>
+</tbody>
+</table>
+<p>三种精度以相同的方式运行。标准化的IEEE浮点数表示为</p>
+<p><span class="math display">\[
+\pm 1.bbb\cdots b\times 2^p
+\]</span></p>
+<p>其中<span class="math inline">\(N\)</span>个<span class="math inline">\(b\)</span>或0或1，<span class="math inline">\(p\)</span>是一个<span class="math inline">\(M\)</span>位的二进制数表示指数。最左边的一位（主导数位）必须是<span class="math inline">\(1\)</span>。</p>
+<p>当一个二进制数用一个标准浮点数字表示的时候，它被称为“左对齐”，意味着其中最左边的一个数位<span class="math inline">\(1\)</span>被平移到小数点的左边，平移通过指数的变化来补偿，例如，十进制数<span class="math inline">\(9\)</span>，对应的二进制数<span class="math inline">\(1001\)</span>保存为</p>
+<p><span class="math display">\[
++1.001\times 2^3
+\]</span></p>
+<p>以双精度（<span class="math inline">\(M=11,N=52\)</span>）为例，1的双精度表示为</p>
+<p><span class="math display">\[
++1.0000000000000000000000000000000000000000000000000000\times 2^0
+\]</span></p>
+<p>其中有52位尾数，下一个比<span class="math inline">\(1\)</span>大的浮点数是</p>
+<p><span class="math display">\[
++1.0000000000000000000000000000000000000000000000000001\times 2^0
+\]</span></p>
+<p>或者说是<span class="math inline">\(1+2^{-52}\)</span></p>
+<p><strong>定义1</strong></p>
+<p>机器精度对应的数字，记作<span class="math inline">\(\varepsilon_{math}\)</span>，是<span class="math inline">\(1\)</span>和比<span class="math inline">\(1\)</span>大的最小浮点数之间的距离。对于双精度来说就是<span class="math inline">\(2^{-52}\)</span></p>
+<p>如果一个小数是无限小数，或者是超过了52位的小数，IEEE规定，如果在第53位为0，则52位以后的全部社区，如果53位为1，则在52位上加1。特别的，如果第53位为1，其后所有已知位为0，那么当且仅当52位是1时在52位上加1。</p>
+<p>上述方法称为IEEE舍入最近法则。</p>
+<p><strong>定义2</strong></p>
+<p>将IEEE双精度浮点数字记做<span class="math inline">\(x\)</span>，利用舍入最近法则记做<span class="math inline">\(fl(x)\)</span></p>
+<p>在计算机算术中，实数<span class="math inline">\(x\)</span>用一串数位<span class="math inline">\(fl(x)\)</span>替换。根据这个定义，<span class="math inline">\(9.4\)</span>在二进制中表示如下</p>
+<p><span class="math display">\[
++1.0010110011001100110011001100110011001100110011001100|110\cdots\times
+2^3
+\]</span></p>
+<p>则<span class="math inline">\(fl(9.4)\)</span>表示为</p>
+<p><span class="math display">\[
++1.0010110011001100110011001100110011001100110011001101\cdots\times 2^3
+\]</span></p>
+<p>我们通过去掉最右边无穷长的数字尾巴<span class="math inline">\(0.\overline{1100}\times 2^{-52}\times
+2^3=\overline{0.0110}\times 2^{-51}\times 2^3=0.4\times
+2^{-48}\)</span>得到浮点表达。并在舍入过程中加上<span class="math inline">\(2^{-52}\times 2^3=2^{-49}\)</span>。因而</p>
+<p><span class="math display">\[
+fl(9.4) = 9.4+2^{-49}-0.4\times 2^{-48}\\
+=9.4+(1-0.8)2^{-49}\\
+=9.4+0.2\times 2^{-49}
+\]</span></p>
+<p>换句话说，将<span class="math inline">\(9.4\)</span>保存为双精度浮点数时可能产生了<span class="math inline">\(0.2\times
+2^{-49}\)</span>的误差，我们把它称作舍入误差。</p>
+<p><strong>定义3</strong></p>
+<p>令<span class="math inline">\(x_c\)</span>是计算版本<span class="math inline">\(x\)</span>的精确度量，则</p>
+<p><span class="math display">\[
+绝对误差=|x_c-x|
+\]</span></p>
+<p><span class="math display">\[
+相对误差=\frac{|x_c-x|}{|x|}(x\neq 0)
+\]</span></p>
+<p><strong>相对舍入误差</strong></p>
+<p>在IEEE机器算术模型中，<span class="math inline">\(fl(x)\)</span>的相对舍入误差不会比机器精度的一半大：</p>
+<p><span class="math display">\[
+\frac{|fl(x)-x|}{|x|}\leq \frac{1}{2}\varepsilon_{math}
+\]</span></p>
+<h3 id="浮点数的机器表示">浮点数的机器表示</h3>
+<p>每个双精度浮点数字被分配了8字节，或者说64位，来存储对应的三个部分。每个字都有如下形式</p>
+<p><span class="math display">\[
+se_1e_2\cdots e_{11}b_1b_2\cdots b_{52}
+\]</span></p>
+<p>其中第1位保存了符号位，后面11位用于保存指数，再后面小数点后的52位保存尾数。符号位0是正数，1是负数。11位指数表示的正二进制整数，这些正数通过往指数上叠加<span class="math inline">\(2^10-1=1023\)</span>得到，指数范围在<span class="math inline">\(-1022\)</span>和<span class="math inline">\(1023\)</span>之间，<span class="math inline">\(e_1\cdots e_{11}\)</span>覆盖了从<span class="math inline">\(1\)</span>到<span class="math inline">\(2046\)</span>之间对应的指数，由于特殊目的，没有使用<span class="math inline">\(0\)</span>和<span class="math inline">\(2047\)</span>。</p>
+<p>数字<span class="math inline">\(1023\)</span>称为双精度格式的指数偏差。它被用于吧正和负指数转化为正的二进制数保存在指数位中，对于单精度和扩展精度，指数偏差位分别是127和16383.</p>
+<p>也就是说，指数位上的数字，减去1023才是浮点数中所应该是的指数。</p>
+<p>再来看特殊值<span class="math inline">\(2047\)</span>。如果尾数位串都是0，则用于表示<span class="math inline">\(\infty\)</span>（其符号取决于第一位），否则表示<span class="math inline">\(NaN\)</span>，意为不是一个数字。</p>
+<p>例如<span class="math inline">\(1/0\)</span>是<span class="math inline">\(+\inf\)</span>，前<span class="math inline">\(12\)</span>位用十六进制表示为7FF，后面全是0.</p>
+<p><span class="math inline">\(-1/0\)</span>是<span class="math inline">\(-\inf\)</span>，前<span class="math inline">\(12\)</span>位用十六进制表示为FFF，后面全是0.</p>
+<p><span class="math inline">\(0/0\)</span>是<span class="math inline">\(NaN\)</span>，前<span class="math inline">\(12\)</span>位用十六进制表示为FFF，后面不全是0.</p>
+<p>再来看特殊值<span class="math inline">\(0\)</span>，意味着<span class="math inline">\(e_1e_2\cdots e_{11}=(000 0000
+0000)_2\)</span>。其表示一个非标准浮点数</p>
+<p><span class="math display">\[
+\pm 0.b_1b_2\cdots b_{52}\times 2^{-1022}
+\]</span></p>
+<p>由上可见，第一位不再假设为1.这样的非标准化数字称作异常浮点数字。这样就扩展了数字的表示范围，因而，最小的可表达的双精度数字是<span class="math inline">\(2^{-52}\times 2^{-1022}\)</span>。</p>
+<p>另外<span class="math inline">\(+0,-0\)</span>也是一个异常数字。计算中它们被看作是相同的两个实数。</p>
+<h3 id="浮点数加法">浮点数加法</h3>
+<p>首先对齐进行加法的两个数字的小数点位，接着相加，然后把结果保存为浮点数字。</p>
+<p>在加法寄存器中，可以进行超过52位的加法，但是在相加之后必须舍入变回52位。</p>
+<h2 id="有效数字缺失">有效数字缺失</h2>
+<p>有一个主要问题以多种形式出现，该问题是由于对近似相等的两个数字相减造成有效数字的位数减少。</p>
+<p>例如<span class="math inline">\(123.4567-123.4566=0.0001\)</span>，有效数字从原来的七位减少到一位。</p>
+<p>很多情况下我们可以通过重新构造计算来解决这个问题。</p>
+<p><strong>例1</strong></p>
+<p>在三位小数的计算机上计算<span class="math inline">\(\sqrt{9.01}-3\)</span></p>
+<p>正确的结果接近<span class="math inline">\(1.6662\times
+10^{-3}\)</span>，但当我们使用三位有效数字时，由于<span class="math inline">\(\sqrt{9.01}\approx
+3.0016662\)</span>，保存三位有效数字时得到<span class="math inline">\(3.00\)</span>。再减去<span class="math inline">\(3.00\)</span>，得到<span class="math inline">\(0.00\)</span>，没有一个有效数位是正确的。</p>
+<p>但是我们可以用以下方法挽救</p>
+<p><span class="math display">\[
+\sqrt{9.01}-3 =
+\frac{(\sqrt{9.01}-3)(\sqrt{9.01}+3)}{\sqrt{9.01}+3}=\frac{9.01-9}{\sqrt{9.01}+3}
+\]</span></p>
+<p><span class="math display">\[
+=\frac{0.01}{3.00+3.00}=\frac{0.01}{6}=0.00167\approx 1.67\times 10^{-3}
+\]</span></p>
+<p>这种方法本质上是一个窍门。称作“共轭等式”。通常会使用一些特定的恒等式，例如三角恒等式。</p>
+<p>例如</p>
+<p><span class="math display">\[
+E_1=\frac{1-cosx}{sin^2x},E_2=\frac{1}{1+cosx}
+\]</span></p>
+<p>两个式子虽然等价，但是在数值计算上，输入一个较为靠近0的数，则第二个比第一个精度高。</p>
+<p><strong>例2</strong></p>
+<p>解方程<span class="math inline">\(ax^2+bx+c=0\)</span></p>
+<p>对于最基础的求根公式</p>
+<p><span class="math display">\[
+x=\frac{-b\pm \sqrt{b^2-4ac}}{2a}
+\]</span></p>
+<p>其中间取负号问题可能不大，但是取正号时，如果<span class="math inline">\(ac\)</span>相对于<span class="math inline">\(b^2\)</span>非常小，则分式上面会直接舍入等于0，造成整个结果等于0.</p>
+<p>为了解决这个问题，可以在<span class="math inline">\(b\)</span>是正数时</p>
+<p><span class="math display">\[
+x_1=-\frac{b+\sqrt{b^2-4ac}}{2a},x_1=-\frac{2c}{b+\sqrt{b^2-4ac}}
+\]</span></p>
+<p><span class="math inline">\(b\)</span>是负数时</p>
+<p><span class="math display">\[
+x_1=\frac{-b+\sqrt{b^2-4ac}}{2a},x_1=\frac{2c}{-b+\sqrt{b^2-4ac}}
+\]</span></p>
+<h2 id="微积分回顾">微积分回顾</h2>
+<p>书中回顾了函数的连续性、罗尔定理、拉格朗日中值定理、泰勒展开、积分中值定理等。</p>
+<h1 id="求解方程">求解方程</h1>
+<h2 id="二分法">二分法</h2>
+<h3 id="方法">方法</h3>
+<p><strong>定义1</strong></p>
+<p>如果<span class="math inline">\(f(r)=0\)</span>，函数<span class="math inline">\(f(x)\)</span>在<span class="math inline">\(x=r\)</span>时有一个根。</p>
+<p><strong>定理1</strong></p>
+<p>根据函数的连续性，我们知道，如果一个函数是连续的（在[a,b]上），并且在<span class="math inline">\(a&lt;b\)</span>时有<span class="math inline">\(f(a)f(b)&lt;0\)</span>，那么函数在<span class="math inline">\((a,b)\)</span>之间至少有一个根<span class="math inline">\(r\)</span>使得<span class="math inline">\(f(r)=0\)</span></p>
+<p>显然，我们可以判断<span class="math inline">\(c=(b+a)/2\)</span>时<span class="math inline">\(f(a)f(c)\)</span>的符号来判断根具体在<span class="math inline">\([a,c]\)</span>还是<span class="math inline">\([c,b]\)</span>之中</p>
+<p>由此我们就可以得到一个求出根的伪代码</p>
+<pre><code>二分法
+给定初始区间[a,b]使得f(a)f(b)&lt;0
+
+while (b-a)/2&gt;TOL
+    c = (a+b)/2
+    if f(c)=0,stop,end
+    if f(a)f(c)&lt;0
+        b = c
+    else
+        a = c
+    end
+end
+
+最终的区间[a,b]中包含一个根
+近似根为(a+b)/2</code></pre>
+<p>显然我们求出的是一个区间<span class="math inline">\([a,b]\)</span>，有一个根在其中，我们只能估计一个值。另外代码中的TOL指的是精度，即这个根在<span class="math inline">\((a+b)/2\pm TOL\)</span>这个范围内。</p>
+<h3 id="分析">分析</h3>
+<p>现在来分析二分法的精确度和收敛速度。</p>
+<p>假设<span class="math inline">\([a,b]\)</span>是初始区间，在<span class="math inline">\(n\)</span>次二分之后，得到的最终区间<span class="math inline">\([a_n,b_n]\)</span>的长度为<span class="math inline">\((b-a)/2^n\)</span>。选择中点<span class="math inline">\(x_c=(a_n+b_n)/2\)</span>为解的最优估计值，与真实值的误差不会超过区间长度的一般。总之，n步二分法之后，我们得到</p>
+<p><span class="math display">\[
+求解误差=|x_c-r|&lt;\frac{b-a}{2^{n+1}}
+\]</span></p>
+<p><span class="math display">\[
+函数计算次数=n+2
+\]</span></p>
+<p>对于其精度，每一次函数计算后，解的不确定性都会减少一半。</p>
+<p><strong>定义2</strong></p>
+<p>如果误差小于<span class="math inline">\(0.5\times
+10^{-p}\)</span>，解精确到小数点后<span class="math inline">\(p\)</span>位。</p>
+<h2 id="不动点迭代">不动点迭代</h2>
+<p>举一个例子，以弧度制计算<span class="math inline">\(\cos\)</span>。以任意值代入，比如我们代入<span class="math inline">\(1\)</span>.有<span class="math inline">\(cos1=0.5403\cdots\)</span>，再将结果代入，有<span class="math inline">\(cos(cos1)=0.85755\cdots\)</span>，以此类推，多次代入后，我们发现无论初始值是多少，最后都会收敛到<span class="math inline">\(0.7390851332\cdots\)</span></p>
+<h3 id="函数的不动点">函数的不动点</h3>
+<p><strong>定义1</strong></p>
+<p>当<span class="math inline">\(g(r)=r\)</span>，实数<span class="math inline">\(r\)</span>是函数<span class="math inline">\(g\)</span>的不动点。</p>
+<p>例如，我们求解<span class="math inline">\(\cos
+x-x=0\)</span>的方程，用不动点的视角来看，就是求解<span class="math inline">\(\cos x=x\)</span>，或者说求解<span class="math inline">\(\cos x\)</span>的不动点。</p>
+<p>一旦方程写做<span class="math inline">\(g(x)=x\)</span>，从一个初始估计<span class="math inline">\(x_0\)</span>开始进行不动点迭代过程，对函数<span class="math inline">\(g\)</span>进行迭代，</p>
+<p><span class="math display">\[
+x_1=g(x_0)\\
+x_2=g(x_1)\\
+x_3=g(x_2)\\
+\vdots
+\]</span></p>
+<p>依此下去。当进行无穷多步迭代后序列<span class="math inline">\(x_i\)</span>可能收敛，也可能不收敛。但是，如果函数<span class="math inline">\(g\)</span>是一个连续函数并且<span class="math inline">\(x_i\)</span>收敛，收敛到一个数字<span class="math inline">\(r\)</span>，那么<span class="math inline">\(r\)</span>就是对应的不动点。意味着</p>
+<p><span class="math display">\[
+g(r) = g(\lim_{i\to\infty}x_i)=\lim_{i\to\infty}g(x_i) =
+\lim_{i\to\infty}x_{i+1}=r
+\]</span></p>
+<p>所有方程<span class="math inline">\(f(x)=0\)</span>都能转化为<span class="math inline">\(g(x)=x\)</span>来不动点迭代吗？答案是肯定的。</p>
+<p>虽然都能迭代，但不总是能收敛的。</p>
+<p>例如<span class="math inline">\(x^3+x-1=0\)</span>换成<span class="math inline">\(x=1-x^3\)</span>来迭代，最后结果就会在<span class="math inline">\(1,0\)</span>之间摆动，这是因为<span class="math inline">\(g(0)=1,g(1)=0\)</span>。</p>
+<p>但是，如果使用<span class="math inline">\(x=\sqrt[3]{1-x}\)</span>来迭代，就可以求出正确的不动点<span class="math inline">\(x=0.6823\cdots\)</span>。迭代了大概25次。</p>
+<p>如果使用<span class="math inline">\(x=(1+2x^3)/(1+3x^2)\)</span>，也可以收敛，并且只需要迭代4次就可以得到<span class="math inline">\(x=0.6823\cdots\)</span>。</p>
+<h3 id="不动点迭代几何">不动点迭代几何</h3>
+<p>我们要解释出现上述差异的原因。</p>
+<p>如下图，将<span class="math inline">\(g(x),x\)</span>画在同一坐标系下，其中交点就是不动点，图中的箭头代表迭代过程。这种表示又被称作cobweb图。</p>
+<figure>
+<img src="1.jpg" alt="1.jpg"/>
+<figcaption aria-hidden="true">1.jpg</figcaption>
+</figure>
+<p>图<span class="math inline">\(a\)</span>中迭代逐渐远离了不动点，而<span class="math inline">\(b,c\)</span>两图，迭代都在不断靠近不动点。</p>
+<p>由图我们猜测迭代收敛与否和<span class="math inline">\(g(x)\)</span>在不动点附近的斜率有关。</p>
+<h3 id="不动点迭代的线性收敛">不动点迭代的线性收敛</h3>
+<p>以<span class="math inline">\(g_1(x)=-\frac{3}{2}x+\frac{5}{2},g_2(x)=-\frac{1}{2}x+\frac{3}{2}\)</span>为例。它们的不动点都是<span class="math inline">\(x=1\)</span>。</p>
+<p>我们把<span class="math inline">\(g(x)\)</span>写作<span class="math inline">\(x-r\)</span>的形式，其中<span class="math inline">\(r=1\)</span>：</p>
+<p><span class="math display">\[
+g_1(x)=-\frac{3}{2}(x-1)+1\\
+g_1(x)-1=-\frac{3}{2}(x-1)\\
+x_{i+1}-1=-\frac{3}{2}(x_i-1)
+\]</span></p>
+<p>如果我们把<span class="math inline">\(e_i=|r-x_i|\)</span>作为第<span class="math inline">\(i\)</span>步时的误差，可以看到上式的误差是<span class="math inline">\(e_{i+1}=3e_i/2\)</span>，意味着误差越来越大，也就是发散。</p>
+<p>对于<span class="math inline">\(g_2(x)\)</span>有</p>
+<p><span class="math display">\[
+x_{i+1}-1=-\frac{1}{2}(x_i-1)
+\]</span></p>
+<p><span class="math inline">\(e_{i+1}=1e_i/2\)</span>，误差越来越小，就是收敛。</p>
+<p><strong>定义2</strong></p>
+<p>令<span class="math inline">\(e_i\)</span>表示迭代过程中第<span class="math inline">\(i\)</span>步时的误差，如果</p>
+<p><span class="math display">\[
+\lim_{i\to\infty}\frac{e_{i+1}}{e_i}=S&lt;1
+\]</span></p>
+<p>该方法被称为满足线性收敛，收敛速度为<span class="math inline">\(S\)</span>。</p>
+
+
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/%E6%95%B0%E5%AD%A6/">数学</a>
+        
+            <a href="/tags/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90/">数值分析</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css"integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js"integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8"crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js"integrity="sha384-vZTG03m&#43;2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl"crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.querySelector(`.article-content`), {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ]
+        });})
+</script>
+    
+</article>
+
+    <aside class="related-contents--wrapper">
+    
+    
+        <h2 class="section-title">相关文章</h2>
+        <div class="related-contents">
+            <div class="flex article-list--tile">
+                
+                    
+<article class="">
+    <a href="/p/%E5%A4%8D%E5%8F%98%E5%87%BD%E6%95%B0%E6%95%B4%E7%90%86/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">复变函数整理</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/p/%E6%A6%82%E7%8E%87%E8%AE%BA%E4%B8%8E%E6%95%B0%E7%90%86%E7%BB%9F%E8%AE%A1%E6%95%B4%E7%90%86/">
+        
+        
+            <div class="article-image">
+                <img src="/p/%E6%A6%82%E7%8E%87%E8%AE%BA%E4%B8%8E%E6%95%B0%E7%90%86%E7%BB%9F%E8%AE%A1%E6%95%B4%E7%90%86/cover.8fa55b693c3d793670200f41ff6f26bf_hu60f44b771e1522f4fa1d5246713b9a75_57927_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-j6VbaTw9eTZwIA9B/28mvw==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">概率论与数理统计整理</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/p/%E7%A6%BB%E6%95%A3%E6%95%B0%E5%AD%A6%E6%95%B4%E7%90%86/">
+        
+        
+            <div class="article-image">
+                <img src="/p/%E7%A6%BB%E6%95%A3%E6%95%B0%E5%AD%A6%E6%95%B4%E7%90%86/cover.8058b9da40e37eadf1c7ce2ecf305e93_huf80a3777f066c3f01437aeed10211fe1_29240_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-gFi52kDjfq3xx84uzzBekw==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">离散数学整理</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/p/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0%E6%95%B4%E7%90%86/">
+        
+        
+            <div class="article-image">
+                <img src="/p/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0%E6%95%B4%E7%90%86/cover.393667604ec380a7df6254826bbb2062_hu670730d9bdf70a44294ca8d2a00a2ced_185066_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-OTZnYE7DgKffYlSCa7sgYg==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">线性代数整理</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/p/%E6%88%91%E7%9A%84%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E4%B8%8B%E5%86%8C%E8%B5%84%E6%96%99%E6%95%B4%E7%90%86/">
+        
+        
+            <div class="article-image">
+                <img src="/p/%E6%88%91%E7%9A%84%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E4%B8%8B%E5%86%8C%E8%B5%84%E6%96%99%E6%95%B4%E7%90%86/8-51.eb2fd26757434998c74bb25f2a91edc6_hu1c49316b400cd781c785bbdbc8d18c16_11689_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-6y/SZ1dDSZjHS7JfKpHtxg==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">我的高等数学下册资料整理</h2>
+        </div>
+    </a>
+</article>
+                
+            </div>
+        </div>
+    
+</aside>
+
+     
+    
+        
+    <script src="https://utteranc.es/client.js" 
+        repo="kegalas/blogComments"
+        issue-term="pathname"
+        
+        crossorigin="anonymous"
+        async
+        >
+</script>
+
+<style>
+    .utterances {
+        max-width: unset;
+    }
+</style>
+
+<script>
+    function setUtterancesTheme(theme) {
+        let utterances = document.querySelector('.utterances iframe');
+        if (utterances) {
+            utterances.contentWindow.postMessage(
+                {
+                    type: 'set-theme',
+                    theme: `github-${theme}`
+                },
+                'https://utteranc.es'
+            );
+        }
+    }
+
+    addEventListener('message', event => {
+        if (event.origin !== 'https://utteranc.es') return;
+        setUtterancesTheme(document.documentElement.dataset.scheme)
+    });
+
+    window.addEventListener('onColorSchemeChange', (e) => {
+        setUtterancesTheme(e.detail)
+    })
+</script>
+
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2022 KegalaS的个人博客
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.4.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    
+        <aside class="sidebar right-sidebar sticky">
+            <section class="widget archives">
+                <div class="widget-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+                </div>
+                <h2 class="widget-title section-title">目录</h2>
+                
+                <div class="widget--toc">
+                    <nav id="TableOfContents">
+  <ol>
+    <li><a href="#基础知识">基础知识</a>
+      <ol>
+        <li><a href="#多项式求值">多项式求值</a></li>
+        <li><a href="#二进制数字">二进制数字</a>
+          <ol>
+            <li><a href="#十进制转化为二进制">十进制转化为二进制</a></li>
+            <li><a href="#二进制转化为十进制">二进制转化为十进制</a></li>
+          </ol>
+        </li>
+        <li><a href="#实数的浮点表示">实数的浮点表示</a>
+          <ol>
+            <li><a href="#浮点格式">浮点格式</a></li>
+            <li><a href="#浮点数的机器表示">浮点数的机器表示</a></li>
+            <li><a href="#浮点数加法">浮点数加法</a></li>
+          </ol>
+        </li>
+        <li><a href="#有效数字缺失">有效数字缺失</a></li>
+        <li><a href="#微积分回顾">微积分回顾</a></li>
+      </ol>
+    </li>
+    <li><a href="#求解方程">求解方程</a>
+      <ol>
+        <li><a href="#二分法">二分法</a>
+          <ol>
+            <li><a href="#方法">方法</a></li>
+            <li><a href="#分析">分析</a></li>
+          </ol>
+        </li>
+        <li><a href="#不动点迭代">不动点迭代</a>
+          <ol>
+            <li><a href="#函数的不动点">函数的不动点</a></li>
+            <li><a href="#不动点迭代几何">不动点迭代几何</a></li>
+            <li><a href="#不动点迭代的线性收敛">不动点迭代的线性收敛</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+                </div>
+            </section>
+        </aside>
+    
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                defer="false"
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

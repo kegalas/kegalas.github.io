@@ -7,6 +7,7 @@ description: 高等数学下册资料整理
 categories: 数学
 mathjax: true
 markup: pandoc
+image: "8-51.jpg"
 ---
 
 [TOC]

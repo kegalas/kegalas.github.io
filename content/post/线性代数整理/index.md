@@ -7,6 +7,7 @@ description: 线性代数有关定义定理整理
 categories: 数学
 mathjax: true
 markup: pandoc
+image: "cover.jpg"
 ---
 
 [TOC]

@@ -6,6 +6,7 @@ tags: [图形学]
 categories: 图形学
 mathjax: true
 markup: pandoc
+image: "cover.jpg"
 ---
 
 ## 纹理映射

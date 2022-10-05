@@ -5,7 +5,7 @@ draft: false
 tags: [数学,大学]
 description: 概率论与数理统计的学习笔记
 categories: 数学
-image: "https://i.pixiv.re/img-original/img/2020/02/08/20/51/57/79358142_p0.png"
+image: "cover.jpg"
 mathjax: true
 markup: pandoc
 ---

@@ -5,6 +5,7 @@ draft: false
 tags: [MSYS2]
 categories: 其他
 mathjax: false
+image: "1.jpg"
 ---
 
 ![1.jpg](1.jpg)
