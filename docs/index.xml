@@ -346,13 +346,51 @@ x_{i+1}-1=-\frac{3}{2}(x_i-1)
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 x_{i+1}-1=-\frac{1}{2}(x_i-1)
 \]&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(e_{i+1}=1e_i/2\)&lt;/span&gt;，误差越来越小，就是收敛。&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(e_{i+1}=e_i/2\)&lt;/span&gt;，误差越来越小，就是收敛。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;定义2&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;令&lt;span class=&#34;math inline&#34;&gt;\(e_i\)&lt;/span&gt;表示迭代过程中第&lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt;步时的误差，如果&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 \lim_{i\to\infty}\frac{e_{i+1}}{e_i}=S&amp;lt;1
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;该方法被称为满足线性收敛，收敛速度为&lt;span class=&#34;math inline&#34;&gt;\(S\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;这样的推理过程也可以适用于更加一般的连续可微函数&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定理1&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;假设函数&lt;span class=&#34;math inline&#34;&gt;\(g\)&lt;/span&gt;是连续可微函数，&lt;span class=&#34;math inline&#34;&gt;\(g(r)=r,S=|g&amp;#39;(r)|&amp;lt;1\)&lt;/span&gt;，则不动点迭代对于一个足够接近&lt;span class=&#34;math inline&#34;&gt;\(r\)&lt;/span&gt;的初始估计，以速度&lt;span class=&#34;math inline&#34;&gt;\(S\)&lt;/span&gt;线性收敛到不动点&lt;span class=&#34;math inline&#34;&gt;\(r\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定义3&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;如果迭代方法对于一个足够接近&lt;span class=&#34;math inline&#34;&gt;\(r\)&lt;/span&gt;的初值能收敛到&lt;span class=&#34;math inline&#34;&gt;\(r\)&lt;/span&gt;，该迭代方法称为局部收敛到&lt;span class=&#34;math inline&#34;&gt;\(r\)&lt;/span&gt;。&lt;/p&gt;
+&lt;h3 id=&#34;终止条件&#34;&gt;终止条件&lt;/h3&gt;
+&lt;p&gt;同二分法不同，FPI没有误差与迭代次数的关系公式，必须决定何时终止算法，这称为终止条件。&lt;/p&gt;
+&lt;p&gt;对于一组容差&lt;span class=&#34;math inline&#34;&gt;\(TOL\)&lt;/span&gt;，我们可能使用绝对终止条件&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+|x_{i+1}-x_i|&amp;lt;TOL
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;当解不在&lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt;附件时可以使用相对误差条件&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\frac{|x_{i+1}-x_i|}{|x_{i+1}|}&amp;lt;TOL
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;还有混合绝对/相对误差终止条件&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\frac{|x_{i+1}-x_i|}{max(|x_{i+1}|,\theta)}&amp;lt;TOL
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(\theta&amp;gt;0\)&lt;/span&gt;，常常用于&lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt;附近的解。此外，如果收敛失败，一个好的FPI也应该设置迭代次数上限。&lt;/p&gt;
+&lt;p&gt;二分法可以保证线性收敛，不动点迭代仅仅是局部收敛。不动点迭代收敛时，是线性收敛。二分法每次可以去掉&lt;span class=&#34;math inline&#34;&gt;\(1/2\)&lt;/span&gt;的不确定性，而FPI的不确定性每次会乘上&lt;span class=&#34;math inline&#34;&gt;\(S=|g&amp;#39;(r)|\)&lt;/span&gt;，因此可能比二分法更快或更慢，依赖于&lt;span class=&#34;math inline&#34;&gt;\(S\)&lt;/span&gt;比&lt;span class=&#34;math inline&#34;&gt;\(1/2\)&lt;/span&gt;更大还是更小。&lt;/p&gt;
+&lt;h2 id=&#34;精度的极限&#34;&gt;精度的极限&lt;/h2&gt;
+&lt;h3 id=&#34;前向与后向误差&#34;&gt;前向与后向误差&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;定义1&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;假设&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;是一个函数，&lt;span class=&#34;math inline&#34;&gt;\(r\)&lt;/span&gt;是一个根，意味着满足&lt;span class=&#34;math inline&#34;&gt;\(f(r)=0\)&lt;/span&gt;。假设&lt;span class=&#34;math inline&#34;&gt;\(x_a\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(r\)&lt;/span&gt;的近似值。对于根求解问题，近似&lt;span class=&#34;math inline&#34;&gt;\(x_a\)&lt;/span&gt;的后向误差是&lt;span class=&#34;math inline&#34;&gt;\(|f(x_a)|\)&lt;/span&gt;，前向误差是&lt;span class=&#34;math inline&#34;&gt;\(|r-x_a|\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;举个例子，求解以下函数的根&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+f(x) = x^3-2x^2+\frac{4}{3}x-\frac{8}{27}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;我们可以通过手算验证&lt;span class=&#34;math inline&#34;&gt;\(2/3\)&lt;/span&gt;是它的根。&lt;/p&gt;
+&lt;p&gt;当我们使用双精度浮点数去二分法求解时，最后可能解出&lt;span class=&#34;math inline&#34;&gt;\(r=0.6666641\)&lt;/span&gt;，并且到此结束，因为此时&lt;span class=&#34;math inline&#34;&gt;\(f(r)=0\)&lt;/span&gt;，意味着其等于机器&lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt;。在这&lt;span class=&#34;math inline&#34;&gt;\(2/3\pm
+10^{-5}\)&lt;/span&gt;的范围上，其函数值都等于机器&lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;事实上，&lt;span class=&#34;math inline&#34;&gt;\(r\)&lt;/span&gt;的后向误差接近&lt;span class=&#34;math inline&#34;&gt;\(\varepsilon_{math}=2.2\times
+10^{-16}\)&lt;/span&gt;，而前向误差在大约&lt;span class=&#34;math inline&#34;&gt;\(10^{-5}\)&lt;/span&gt;。双精度不能在机器精度的相对误差下可靠计算，从而导致了一个范围内的数最终都等于机器&lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;事实上&lt;span class=&#34;math inline&#34;&gt;\(2/3\)&lt;/span&gt;是这个函数的三重根&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定义2&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;假设&lt;span class=&#34;math inline&#34;&gt;\(r\)&lt;/span&gt;是可微函数&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;的根，如果&lt;span class=&#34;math inline&#34;&gt;\(0=f(r)=f&amp;#39;(r)=f&amp;#39;&amp;#39;(r)=\cdots=f^{(m-1)}(r)\)&lt;/span&gt;，但是&lt;span class=&#34;math inline&#34;&gt;\(f^{(m)}(r)\neq 0\)&lt;/span&gt;，就说&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;在&lt;span class=&#34;math inline&#34;&gt;\(r\)&lt;/span&gt;点具有&lt;span class=&#34;math inline&#34;&gt;\(m\)&lt;/span&gt;重根。多于一个根的叫重根，只有一个根的叫单根。&lt;/p&gt;
+&lt;p&gt;由于函数在多根附近十分平缓，前向和后向误差之间在近似解的附近存在很大的不一致。后向误差在垂直方向进行度量，通常比在水平方向度量的前向误差小得多。&lt;/p&gt;
 
 
 </description>
@@ -4822,6 +4860,8 @@ c/a  &amp;amp; 0 &amp;amp; 0 &amp;amp; 0\\
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(a\)&lt;/span&gt;是显示分辨率的宽高比，&lt;span class=&#34;math inline&#34;&gt;\(c\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(1/tan(fovY/2)\)&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;另外，将&lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;轴上的&lt;span class=&#34;math inline&#34;&gt;\([-0.1,-100]\)&lt;/span&gt;映射到&lt;span class=&#34;math inline&#34;&gt;\([-1,1]\)&lt;/span&gt;上，不是均匀的，不精确的说，可能&lt;span class=&#34;math inline&#34;&gt;\([-0.1+,1.0]\)&lt;/span&gt;这一段映射到了&lt;span class=&#34;math inline&#34;&gt;\([-1,0.5]\)&lt;/span&gt;上，剩下的&lt;span class=&#34;math inline&#34;&gt;\([1.0,100]\)&lt;/span&gt;映射到了&lt;span class=&#34;math inline&#34;&gt;\([0.5,1]\)&lt;/span&gt;上，这在zbuffer、深度值中可能是需要注意的事。&lt;/p&gt;
+&lt;p&gt;可以看&lt;a href=&#34;https://learnopengl-cn.github.io/04%20Advanced%20OpenGL/01%20Depth%20testing/#_3&#34;&gt;https://learnopengl-cn.github.io/04
+Advanced OpenGL/01 Depth testing/#_3&lt;/a&gt;了解具体的关系。&lt;/p&gt;
 &lt;h2 id=&#34;视野field-of-view&#34;&gt;视野（Field-of-View）&lt;/h2&gt;
 &lt;p&gt;通常，对于近平面，我们可以用&lt;span class=&#34;math inline&#34;&gt;\(l,r,b,t\)&lt;/span&gt;描述（假设&lt;span class=&#34;math inline&#34;&gt;\(l=-r,b=-t\)&lt;/span&gt;，即平面中心位于&lt;span class=&#34;math inline&#34;&gt;\(-z\)&lt;/span&gt;轴上，且平面与&lt;span class=&#34;math inline&#34;&gt;\(-z\)&lt;/span&gt;垂直），也可以用垂直视野&lt;span class=&#34;math inline&#34;&gt;\(fovY\)&lt;/span&gt;和近平面的宽高比来表示。&lt;/p&gt;
 &lt;p&gt;首先相机到近平面的距离为&lt;span class=&#34;math inline&#34;&gt;\(|n|\)&lt;/span&gt;，则有如下关系&lt;/p&gt;
