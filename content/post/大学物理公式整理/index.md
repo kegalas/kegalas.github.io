@@ -7,6 +7,7 @@ description: 大学物理相关的公式（可能还有一些概念）整理
 categories: 物理
 mathjax: true
 markup: pandoc
+image: "cover.jpg"
 ---
 
 [TOC]

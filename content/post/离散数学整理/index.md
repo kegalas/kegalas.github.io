@@ -7,6 +7,7 @@ description: 离散数学有关定义定理整理
 categories: 数学
 mathjax: true
 markup: pandoc
+image: "cover.jpg"
 ---
 
 ## 命题逻辑

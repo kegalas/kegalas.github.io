@@ -6,6 +6,7 @@ tags: [高等数学,大学,数学]
 description: 高等数学上册资料整理
 categories: 数学
 mathjax: true
+image: "sec.jpg"
 ---
 
 ## 函数与极限

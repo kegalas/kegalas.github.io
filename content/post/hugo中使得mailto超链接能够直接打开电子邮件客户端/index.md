@@ -6,6 +6,7 @@ tags: [Hugo]
 description: 通过修改Stack的配置文件，使得mailto超链接能够直接打开电子邮件客户端，而不是在浏览器中打开一个奇怪的链接。
 categories: 其他
 mathjax: true
+image: "cover.jpg"
 ---
 
 
