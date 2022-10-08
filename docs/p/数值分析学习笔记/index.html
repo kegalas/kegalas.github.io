@@ -125,7 +125,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 13 分钟
+                    阅读时长: 15 分钟
                 </time>
             </div>
         
@@ -514,6 +514,58 @@ f(x) = x^3-2x^2+\frac{4}{3}x-\frac{8}{27}
 <p><strong>定义2</strong></p>
 <p>假设<span class="math inline">\(r\)</span>是可微函数<span class="math inline">\(f\)</span>的根，如果<span class="math inline">\(0=f(r)=f&#39;(r)=f&#39;&#39;(r)=\cdots=f^{(m-1)}(r)\)</span>，但是<span class="math inline">\(f^{(m)}(r)\neq 0\)</span>，就说<span class="math inline">\(f\)</span>在<span class="math inline">\(r\)</span>点具有<span class="math inline">\(m\)</span>重根。多于一个根的叫重根，只有一个根的叫单根。</p>
 <p>由于函数在多根附近十分平缓，前向和后向误差之间在近似解的附近存在很大的不一致。后向误差在垂直方向进行度量，通常比在水平方向度量的前向误差小得多。</p>
+<p>前向和后向误差的讨论和方程求解器的终止条件有关。我们有两种方法更加接近方程的根</p>
+<ol type="1">
+<li>使得<span class="math inline">\(|x_a-r|\)</span>足够小</li>
+<li>使得<span class="math inline">\(|f(x_a)|\)</span>足够小</li>
+</ol>
+<p>具体选择使用哪一种，取决于问题所处的环境。对于二分法，两种误差都可以观察到。而FPI只能知道后向误差，而不可能知道前向误差。</p>
+<h3 id="威尔金森多项式">威尔金森多项式</h3>
+<p>一个难以进行数值求解的单根例子在威尔金森的论著中进行了讨论，威尔金森多项式是</p>
+<p><span class="math display">\[
+W(x) = (x-1)(x-2)\cdots(x-20)
+\]</span></p>
+<p>但当我们把它展开，并用二分法等方法却很难求出正确的解，精确度甚至不到第二个小数。</p>
+<p>这主要是因为其展开式的每一项的常数太大，例如常数项是<span class="math inline">\(2432902008176640000\)</span>，这导致在求值计算中会由于近似相等、大数字的消去而有损失。</p>
+<p>但是若不展开，代入求根器中却能算出精确根。当然如果已经分解好了，也就没有求解的必要了。</p>
+<h3 id="根搜索的敏感性">根搜索的敏感性</h3>
+<p>威尔金森多项式和多重根的问题，其本质都是方程中小的求解误差造成求解根中的大误差。</p>
+<p>如果在输入中是一个小误差，在这种情况下对问题进行求解，造成输出中的大问题，这样的问题被称作敏感性问题。</p>
+<p>假设问题是找到<span class="math inline">\(f(x)=0\)</span>的根<span class="math inline">\(r\)</span>，但是对输入做了一个小变化<span class="math inline">\(\varepsilon g(x)\)</span>，其中<span class="math inline">\(\varepsilon\)</span>很小。令<span class="math inline">\(\Delta r\)</span>是对应根中的变化，因而</p>
+<p><span class="math display">\[
+f(r+\Delta r)+\varepsilon g(r+\Delta r)=0
+\]</span></p>
+<p>将<span class="math inline">\(f\)</span>和<span class="math inline">\(g\)</span>一阶泰勒展开，有</p>
+<p><span class="math display">\[
+f(r)+(\Delta r)f&#39;(r)+\varepsilon g(r)+\varepsilon(\Delta
+r)g&#39;(r)+O((\Delta r)^2)
+\]</span></p>
+<p>对于小的<span class="math inline">\(\Delta
+r\)</span>，直接忽略掉<span class="math inline">\(O((\Delta
+r)^2)\)</span>，有</p>
+<p><span class="math display">\[
+(\Delta r)(f&#39;(r)+\varepsilon g&#39;(r))\approx-f(r)-\varepsilon
+g(r)=-\varepsilon g(r)
+\]</span></p>
+<p>假设和<span class="math inline">\(f&#39;(r)\)</span>相比，<span class="math inline">\(\varepsilon\)</span>很小，则又有</p>
+<p><span class="math display">\[
+\Delta r\approx\frac{-\varepsilon g(r)}{f&#39;(r)+\varepsilon
+g&#39;(r)}\approx -\varepsilon\frac{g(r)}{f&#39;(r)}
+\]</span></p>
+<p>上式就叫做根的敏感公式。（假设<span class="math inline">\(r\)</span>是<span class="math inline">\(f(x)\)</span>的根，并且<span class="math inline">\(r+\Delta r\)</span>是<span class="math inline">\(f(x)+\varepsilon g(x)\)</span>的根，则当<span class="math inline">\(\varepsilon
+&lt;&lt;f&#39;(r)\)</span>时有上式）</p>
+<p>对于一个一般算法生成的近似<span class="math inline">\(x_c\)</span>，我们定义</p>
+<p><span class="math display">\[
+误差放大因子=\frac{相对前向误差}{相对后向误差}
+\]</span></p>
+<h2 id="牛顿方法">牛顿方法</h2>
+<p>为了找到<span class="math inline">\(f(x)=0\)</span>的根，给定一个初始估计<span class="math inline">\(x_0\)</span>，画出函数<span class="math inline">\(f\)</span>在<span class="math inline">\(x_0\)</span>的切线。用切线来近似函数<span class="math inline">\(f\)</span>，求出其与<span class="math inline">\(x\)</span>轴的交点作为<span class="math inline">\(f\)</span>的根。由于函数<span class="math inline">\(f\)</span>的弯曲，该交点可能不是精确解，因而该步骤要迭代进行。</p>
+<p><span class="math display">\[
+x_0=初始估计
+\]</span></p>
+<p><span class="math display">\[
+x_{i+1}=x_i-\frac{f(x_i)}{f&#39;(x_i)},\quad i=0,1,2,\cdots
+\]</span></p>
 
 
 
@@ -883,8 +935,11 @@ f(x) = x^3-2x^2+\frac{4}{3}x-\frac{8}{27}
         <li><a href="#精度的极限">精度的极限</a>
           <ol>
             <li><a href="#前向与后向误差">前向与后向误差</a></li>
+            <li><a href="#威尔金森多项式">威尔金森多项式</a></li>
+            <li><a href="#根搜索的敏感性">根搜索的敏感性</a></li>
           </ol>
         </li>
+        <li><a href="#牛顿方法">牛顿方法</a></li>
       </ol>
     </li>
   </ol>

@@ -391,6 +391,58 @@ f(x) = x^3-2x^2+\frac{4}{3}x-\frac{8}{27}
 &lt;p&gt;&lt;strong&gt;定义2&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;假设&lt;span class=&#34;math inline&#34;&gt;\(r\)&lt;/span&gt;是可微函数&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;的根，如果&lt;span class=&#34;math inline&#34;&gt;\(0=f(r)=f&amp;#39;(r)=f&amp;#39;&amp;#39;(r)=\cdots=f^{(m-1)}(r)\)&lt;/span&gt;，但是&lt;span class=&#34;math inline&#34;&gt;\(f^{(m)}(r)\neq 0\)&lt;/span&gt;，就说&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;在&lt;span class=&#34;math inline&#34;&gt;\(r\)&lt;/span&gt;点具有&lt;span class=&#34;math inline&#34;&gt;\(m\)&lt;/span&gt;重根。多于一个根的叫重根，只有一个根的叫单根。&lt;/p&gt;
 &lt;p&gt;由于函数在多根附近十分平缓，前向和后向误差之间在近似解的附近存在很大的不一致。后向误差在垂直方向进行度量，通常比在水平方向度量的前向误差小得多。&lt;/p&gt;
+&lt;p&gt;前向和后向误差的讨论和方程求解器的终止条件有关。我们有两种方法更加接近方程的根&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;使得&lt;span class=&#34;math inline&#34;&gt;\(|x_a-r|\)&lt;/span&gt;足够小&lt;/li&gt;
+&lt;li&gt;使得&lt;span class=&#34;math inline&#34;&gt;\(|f(x_a)|\)&lt;/span&gt;足够小&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;具体选择使用哪一种，取决于问题所处的环境。对于二分法，两种误差都可以观察到。而FPI只能知道后向误差，而不可能知道前向误差。&lt;/p&gt;
+&lt;h3 id=&#34;威尔金森多项式&#34;&gt;威尔金森多项式&lt;/h3&gt;
+&lt;p&gt;一个难以进行数值求解的单根例子在威尔金森的论著中进行了讨论，威尔金森多项式是&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+W(x) = (x-1)(x-2)\cdots(x-20)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;但当我们把它展开，并用二分法等方法却很难求出正确的解，精确度甚至不到第二个小数。&lt;/p&gt;
+&lt;p&gt;这主要是因为其展开式的每一项的常数太大，例如常数项是&lt;span class=&#34;math inline&#34;&gt;\(2432902008176640000\)&lt;/span&gt;，这导致在求值计算中会由于近似相等、大数字的消去而有损失。&lt;/p&gt;
+&lt;p&gt;但是若不展开，代入求根器中却能算出精确根。当然如果已经分解好了，也就没有求解的必要了。&lt;/p&gt;
+&lt;h3 id=&#34;根搜索的敏感性&#34;&gt;根搜索的敏感性&lt;/h3&gt;
+&lt;p&gt;威尔金森多项式和多重根的问题，其本质都是方程中小的求解误差造成求解根中的大误差。&lt;/p&gt;
+&lt;p&gt;如果在输入中是一个小误差，在这种情况下对问题进行求解，造成输出中的大问题，这样的问题被称作敏感性问题。&lt;/p&gt;
+&lt;p&gt;假设问题是找到&lt;span class=&#34;math inline&#34;&gt;\(f(x)=0\)&lt;/span&gt;的根&lt;span class=&#34;math inline&#34;&gt;\(r\)&lt;/span&gt;，但是对输入做了一个小变化&lt;span class=&#34;math inline&#34;&gt;\(\varepsilon g(x)\)&lt;/span&gt;，其中&lt;span class=&#34;math inline&#34;&gt;\(\varepsilon\)&lt;/span&gt;很小。令&lt;span class=&#34;math inline&#34;&gt;\(\Delta r\)&lt;/span&gt;是对应根中的变化，因而&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+f(r+\Delta r)+\varepsilon g(r+\Delta r)=0
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;将&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;和&lt;span class=&#34;math inline&#34;&gt;\(g\)&lt;/span&gt;一阶泰勒展开，有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+f(r)+(\Delta r)f&amp;#39;(r)+\varepsilon g(r)+\varepsilon(\Delta
+r)g&amp;#39;(r)+O((\Delta r)^2)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;对于小的&lt;span class=&#34;math inline&#34;&gt;\(\Delta
+r\)&lt;/span&gt;，直接忽略掉&lt;span class=&#34;math inline&#34;&gt;\(O((\Delta
+r)^2)\)&lt;/span&gt;，有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+(\Delta r)(f&amp;#39;(r)+\varepsilon g&amp;#39;(r))\approx-f(r)-\varepsilon
+g(r)=-\varepsilon g(r)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;假设和&lt;span class=&#34;math inline&#34;&gt;\(f&amp;#39;(r)\)&lt;/span&gt;相比，&lt;span class=&#34;math inline&#34;&gt;\(\varepsilon\)&lt;/span&gt;很小，则又有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\Delta r\approx\frac{-\varepsilon g(r)}{f&amp;#39;(r)+\varepsilon
+g&amp;#39;(r)}\approx -\varepsilon\frac{g(r)}{f&amp;#39;(r)}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;上式就叫做根的敏感公式。（假设&lt;span class=&#34;math inline&#34;&gt;\(r\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(f(x)\)&lt;/span&gt;的根，并且&lt;span class=&#34;math inline&#34;&gt;\(r+\Delta r\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(f(x)+\varepsilon g(x)\)&lt;/span&gt;的根，则当&lt;span class=&#34;math inline&#34;&gt;\(\varepsilon
+&amp;lt;&amp;lt;f&amp;#39;(r)\)&lt;/span&gt;时有上式）&lt;/p&gt;
+&lt;p&gt;对于一个一般算法生成的近似&lt;span class=&#34;math inline&#34;&gt;\(x_c\)&lt;/span&gt;，我们定义&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+误差放大因子=\frac{相对前向误差}{相对后向误差}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h2 id=&#34;牛顿方法&#34;&gt;牛顿方法&lt;/h2&gt;
+&lt;p&gt;为了找到&lt;span class=&#34;math inline&#34;&gt;\(f(x)=0\)&lt;/span&gt;的根，给定一个初始估计&lt;span class=&#34;math inline&#34;&gt;\(x_0\)&lt;/span&gt;，画出函数&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;在&lt;span class=&#34;math inline&#34;&gt;\(x_0\)&lt;/span&gt;的切线。用切线来近似函数&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;，求出其与&lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;轴的交点作为&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;的根。由于函数&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;的弯曲，该交点可能不是精确解，因而该步骤要迭代进行。&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+x_0=初始估计
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+x_{i+1}=x_i-\frac{f(x_i)}{f&amp;#39;(x_i)},\quad i=0,1,2,\cdots
+\]&lt;/span&gt;&lt;/p&gt;
 
 
 </description>
