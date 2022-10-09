@@ -125,7 +125,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 15 分钟
+                    阅读时长: 19 分钟
                 </time>
             </div>
         
@@ -566,6 +566,118 @@ x_0=初始估计
 <p><span class="math display">\[
 x_{i+1}=x_i-\frac{f(x_i)}{f&#39;(x_i)},\quad i=0,1,2,\cdots
 \]</span></p>
+<h3 id="牛顿方法的二次收敛">牛顿方法的二次收敛</h3>
+<p><strong>定义1</strong></p>
+<p>令<span class="math inline">\(e_i\)</span>表示一个迭代方法第<span class="math inline">\(i\)</span>步后得到的误差。该迭代是二次收敛，如果满足下式</p>
+<p><span class="math display">\[
+M=\lim_{i\to\infty}\frac{e_{i+1}}{e^2_i}&lt;\infty
+\]</span></p>
+<p><strong>定理1</strong></p>
+<p>令<span class="math inline">\(f\)</span>是二阶连续可微函数，<span class="math inline">\(f(r)=0\)</span>。如果<span class="math inline">\(f&#39;(r)\neq
+0\)</span>，则牛顿方法局部二次收敛到<span class="math inline">\(r\)</span>。第<span class="math inline">\(i\)</span>步的误差<span class="math inline">\(e_i\)</span>满足</p>
+<p><span class="math display">\[
+\lim_{i\to\infty}\frac{e_i}{e_i^2}=M
+\]</span></p>
+<p>其中</p>
+<p><span class="math display">\[
+M=\frac{f&#39;&#39;(r)}{2f&#39;(r)}
+\]</span></p>
+<p>也可被看作</p>
+<p><span class="math display">\[
+e_{i+1}\approx M e_i^2
+\]</span></p>
+<p>对于线性收敛方法，这个误差公式应该和<span class="math inline">\(e_{i+1}\approx
+Se_i\)</span>进行比较，FPI方法中<span class="math inline">\(S=|g&#39;(r)|\)</span>，二分法中<span class="math inline">\(S=1/2\)</span></p>
+<p>尽管<span class="math inline">\(S\)</span>对线性收敛很关键，但是<span class="math inline">\(M\)</span>的值并不是很重要，这是由于其包含了平方，只要<span class="math inline">\(M\)</span>不太大，误差就会进一步下降。</p>
+<h3 id="牛顿方法的线性收敛">牛顿方法的线性收敛</h3>
+<p>上面的定理并不意味着牛顿方法总能二次收敛。</p>
+<p>例如求<span class="math inline">\(f(x)=x^2\)</span>的实根，牛顿法如下</p>
+<p><span class="math display">\[
+x_{i+1}=x_i-\frac{f(x_i)}{f&#39;(x_i)}=\frac{x_i}{2}
+\]</span></p>
+<p>仅仅每步除以<span class="math inline">\(2\)</span>.对于其他幂函数也有类似的结果。</p>
+<p><strong>定理1</strong></p>
+<p>假设在区间<span class="math inline">\([a,b]\)</span>上，<span class="math inline">\((m+1)\)</span>阶连续可微函数<span class="math inline">\(f\)</span>在<span class="math inline">\(r\)</span>点有一个<span class="math inline">\(m\)</span>阶多重根，则牛顿方法局部收敛到<span class="math inline">\(r\)</span>，第<span class="math inline">\(i\)</span>步误差<span class="math inline">\(e_i\)</span>满足</p>
+<p><span class="math display">\[
+\lim_{i\to \infty}\frac{e_{i+1}}{e_i}=S
+\]</span></p>
+<p>其中<span class="math inline">\(S=(m-1)/m\)</span></p>
+<p>事实上，牛顿法在单根位置上，<span class="math inline">\(f&#39;(r)\neq
+0\)</span>，具有二次收敛速度，在多根位置上<span class="math inline">\(f&#39;(r)=0\)</span>，收敛式线性的。</p>
+<p><strong>定理2</strong></p>
+<p>如果在<span class="math inline">\([a,b]\)</span>区间上<span class="math inline">\(f\)</span>是<span class="math inline">\((m+1)\)</span>阶连续函数，包含<span class="math inline">\(m&gt;1\)</span>的多重根，则改进的牛顿方法</p>
+<p><span class="math display">\[
+x_{i+1}=x_i-\frac{mf(x_i)}{f&#39;(x_i)}
+\]</span></p>
+<p>收敛到<span class="math inline">\(r\)</span>，并具有二次收敛速度。</p>
+<p>牛顿法如同FPI，也可能不会收敛到根。例如两个数循环出现、某一步<span class="math inline">\(f&#39;(x_i)=0\)</span>等。</p>
+<h2 id="不需要导数的根求解">不需要导数的根求解</h2>
+<p>虽然牛顿法在非重根时表现的比二分法和FPI更好，因为它获取了“导数”这个额外信息。但有时候我们可能难以计算导数。</p>
+<p>这种情况下，割线方法就是一个好的替代。它使用近似值割线替代了切线，并且收敛速度差不多快。</p>
+<h3 id="割线方法及其变体">割线方法及其变体</h3>
+<p>不难想到，直接用差商</p>
+<p><span class="math display">\[
+\frac{f(x_i)-f(x_{i-1})}{x_i-x_{i-1}}
+\]</span></p>
+<p>去近似替换牛顿法中的<span class="math inline">\(f&#39;(x_i)\)</span>，就得到了割线方法</p>
+<p><span class="math display">\[
+x_0,x_1=初始估计
+\]</span></p>
+<p><span class="math display">\[
+x_{i+1}=x_i-\frac{f(x_i)(x_i-x_{i-1})}{f(x_i)-f(x_{i-1})},i=1,2,3,\cdots
+\]</span></p>
+<p>假设割线方法收敛到函数<span class="math inline">\(f\)</span>的根<span class="math inline">\(r\)</span>，且<span class="math inline">\(f&#39;(r)\neq 0\)</span>，近似误差关系</p>
+<p><span class="math display">\[
+e_{i+1}\approx \bigg|\frac{f&#39;&#39;(r)}{2f&#39;(r)}\bigg|e_ie_{i-1}
+\]</span></p>
+<p>成立并且</p>
+<p><span class="math display">\[
+e_{i+1}\approx
+\bigg|\frac{f&#39;&#39;(r)}{2f&#39;(r)}\bigg|^{\alpha-1}e_i^\alpha
+\]</span></p>
+<p>其中<span class="math inline">\(\alpha = (1+\sqrt 5)/2\approx
+1.62\)</span>。割线方法1️以超线性的速度收敛到一个单根，意味着它在线性和二次收敛方法之间。</p>
+<p>割线方法有三种推广形式，它们也很重要。</p>
+<p><strong>试位方法（Regula Falsi）</strong></p>
+<p>和二分法相似，但是其中的中点被类似割线方法的近似所替换，给定区间<span class="math inline">\([a,b]\)</span>，该区间包含根（假设<span class="math inline">\(f(a)f(b)&lt;0\)</span>），使用割线方法定义下一个点为</p>
+<p><span class="math display">\[
+c = a-\frac{f(a)(a-b)}{f(a)-f(b)}=\frac{bf(a)-af(b)}{f(a)-f(b)}
+\]</span></p>
+<p>根据<span class="math inline">\(f(a)f(c)&lt;0\)</span>或者<span class="math inline">\(f(c)f(b)&lt;0\)</span>，分别选择新的区间<span class="math inline">\([a,c]\)</span>或<span class="math inline">\([c,b]\)</span>，新的区间仍然可以括住根。</p>
+<p>通常试位方法会表现地比二分法和割线方法都好，但是试位方法不能包子每一步都消除一半的不确定性，有时收敛会很慢。</p>
+<p><strong>Muller方法</strong></p>
+<p>该方法不是计算经过先前两个点的直线和<span class="math inline">\(x\)</span>轴的交点，而是使用桑耳前面生成的点<span class="math inline">\(x_0,x_1,x_2\)</span>，画出通过它们的抛物线<span class="math inline">\(y=p(x)\)</span>，并计算抛物线和<span class="math inline">\(x\)</span>轴的交点。</p>
+<p>书上并没有详细介绍这个方法。</p>
+<p><strong>逆二次插值（IQI）</strong></p>
+<p>是割线方法到抛物线的一种相近的泛化方法。但是使用形如<span class="math inline">\(x=p(y)\)</span>的抛物线，而不是Muller方法中的<span class="math inline">\(y=p(x)\)</span>。</p>
+<p>我们的问题可以立刻求解：这个抛物线和<span class="math inline">\(x\)</span>轴只有一个交点，所以从上一步中的三个估计<span class="math inline">\(x_i,x_{i+1},x_{i+2}\)</span>寻找<span class="math inline">\(x_{i+3}\)</span>，这个过程中没有混淆。</p>
+<p>经过三点<span class="math inline">\((a,A),(b,B),(c,C)\)</span>的二阶多项式<span class="math inline">\(x=P(y)\)</span>为</p>
+<p><span class="math display">\[
+P(y) =
+a\frac{(y-B)(y-C)}{(A-B)(A-C)}+b\frac{(y-A)(y-C)}{(B-A)(B-C)}+c\frac{(y-A)(y-B)}{(C-A)(C-B)}
+\]</span></p>
+<p>这是一个拉格朗日插值的例子，用<span class="math inline">\(y=0\)</span>代入，得到和<span class="math inline">\(x\)</span>轴的交点，经过重新组合与替代，我们得到</p>
+<p><span class="math display">\[
+P(0)=c-\frac{r(r-q)(c-b)+(1-r)s(c-a)}{(q-1)(r-1)(s-1)}
+\]</span></p>
+<p>其中<span class="math inline">\(q=f(a)/f(b),r=f(c)/f(b),s=f(c)/f(a)\)</span></p>
+<p>对于IQI，设置</p>
+<p><span class="math display">\[
+a=x_i,b=x_{i+1},c=x_{i+2},A=f(x_i),B=f(x_{i+1}),C=f(x_{i+2})
+\]</span></p>
+<p>下一步的估计<span class="math inline">\(x_{i+3}=P(0)\)</span>为</p>
+<p><span class="math display">\[
+x_{i+3}=x_{i+2}-\frac{r(r-q)(x_{i+2}-x_{i+1})+(1-r)s(x_{i+2}-x_{i})}{(q-1)(r-1)(s-1)}
+\]</span></p>
+<p>其中<span class="math inline">\(q=f(x_{i})/f(x_{i+1}),r=f(x_{i+2})/f(x_{i+1}),s=f(x_{i+2})/f(x_{i})\)</span></p>
+<h3 id="brent方法">Brent方法</h3>
+<p>这是一种混合方法，该方法使用前面介绍的迭代技术，推出一个新的方法。</p>
+<p>该方法用于连续函数<span class="math inline">\(f\)</span>，区间的边界是<span class="math inline">\(a\)</span>和<span class="math inline">\(b\)</span>，同时<span class="math inline">\(f(a)f(b)&lt;0\)</span>。Brent方法记录当前点<span class="math inline">\(x_i\)</span>，该点具有最优的后向误差，同时有包含根的区间<span class="math inline">\([a_i,b_i]\)</span>。简单来讲，尝试使用逆二次方法，并在下述情况下，使用结果来替代<span class="math inline">\(x_i,a_i,b_i\)</span>中的一个</p>
+<ol type="1">
+<li>后向误差得到改进</li>
+<li>包含根的区间至少减小一半</li>
+</ol>
+<p>否则，尝试使用割线方法以实现相同的目的，如果割线方法也失败了，则使用二分法，保证至少减少一半的不确定性。</p>
 
 
 
@@ -939,7 +1051,18 @@ x_{i+1}=x_i-\frac{f(x_i)}{f&#39;(x_i)},\quad i=0,1,2,\cdots
             <li><a href="#根搜索的敏感性">根搜索的敏感性</a></li>
           </ol>
         </li>
-        <li><a href="#牛顿方法">牛顿方法</a></li>
+        <li><a href="#牛顿方法">牛顿方法</a>
+          <ol>
+            <li><a href="#牛顿方法的二次收敛">牛顿方法的二次收敛</a></li>
+            <li><a href="#牛顿方法的线性收敛">牛顿方法的线性收敛</a></li>
+          </ol>
+        </li>
+        <li><a href="#不需要导数的根求解">不需要导数的根求解</a>
+          <ol>
+            <li><a href="#割线方法及其变体">割线方法及其变体</a></li>
+            <li><a href="#brent方法">Brent方法</a></li>
+          </ol>
+        </li>
       </ol>
     </li>
   </ol>

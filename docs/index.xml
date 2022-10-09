@@ -443,6 +443,118 @@ x_0=初始估计
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 x_{i+1}=x_i-\frac{f(x_i)}{f&amp;#39;(x_i)},\quad i=0,1,2,\cdots
 \]&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;牛顿方法的二次收敛&#34;&gt;牛顿方法的二次收敛&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;定义1&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;令&lt;span class=&#34;math inline&#34;&gt;\(e_i\)&lt;/span&gt;表示一个迭代方法第&lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt;步后得到的误差。该迭代是二次收敛，如果满足下式&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+M=\lim_{i\to\infty}\frac{e_{i+1}}{e^2_i}&amp;lt;\infty
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定理1&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;令&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;是二阶连续可微函数，&lt;span class=&#34;math inline&#34;&gt;\(f(r)=0\)&lt;/span&gt;。如果&lt;span class=&#34;math inline&#34;&gt;\(f&amp;#39;(r)\neq
+0\)&lt;/span&gt;，则牛顿方法局部二次收敛到&lt;span class=&#34;math inline&#34;&gt;\(r\)&lt;/span&gt;。第&lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt;步的误差&lt;span class=&#34;math inline&#34;&gt;\(e_i\)&lt;/span&gt;满足&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\lim_{i\to\infty}\frac{e_i}{e_i^2}=M
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+M=\frac{f&amp;#39;&amp;#39;(r)}{2f&amp;#39;(r)}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;也可被看作&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+e_{i+1}\approx M e_i^2
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;对于线性收敛方法，这个误差公式应该和&lt;span class=&#34;math inline&#34;&gt;\(e_{i+1}\approx
+Se_i\)&lt;/span&gt;进行比较，FPI方法中&lt;span class=&#34;math inline&#34;&gt;\(S=|g&amp;#39;(r)|\)&lt;/span&gt;，二分法中&lt;span class=&#34;math inline&#34;&gt;\(S=1/2\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;尽管&lt;span class=&#34;math inline&#34;&gt;\(S\)&lt;/span&gt;对线性收敛很关键，但是&lt;span class=&#34;math inline&#34;&gt;\(M\)&lt;/span&gt;的值并不是很重要，这是由于其包含了平方，只要&lt;span class=&#34;math inline&#34;&gt;\(M\)&lt;/span&gt;不太大，误差就会进一步下降。&lt;/p&gt;
+&lt;h3 id=&#34;牛顿方法的线性收敛&#34;&gt;牛顿方法的线性收敛&lt;/h3&gt;
+&lt;p&gt;上面的定理并不意味着牛顿方法总能二次收敛。&lt;/p&gt;
+&lt;p&gt;例如求&lt;span class=&#34;math inline&#34;&gt;\(f(x)=x^2\)&lt;/span&gt;的实根，牛顿法如下&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+x_{i+1}=x_i-\frac{f(x_i)}{f&amp;#39;(x_i)}=\frac{x_i}{2}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;仅仅每步除以&lt;span class=&#34;math inline&#34;&gt;\(2\)&lt;/span&gt;.对于其他幂函数也有类似的结果。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定理1&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;假设在区间&lt;span class=&#34;math inline&#34;&gt;\([a,b]\)&lt;/span&gt;上，&lt;span class=&#34;math inline&#34;&gt;\((m+1)\)&lt;/span&gt;阶连续可微函数&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;在&lt;span class=&#34;math inline&#34;&gt;\(r\)&lt;/span&gt;点有一个&lt;span class=&#34;math inline&#34;&gt;\(m\)&lt;/span&gt;阶多重根，则牛顿方法局部收敛到&lt;span class=&#34;math inline&#34;&gt;\(r\)&lt;/span&gt;，第&lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt;步误差&lt;span class=&#34;math inline&#34;&gt;\(e_i\)&lt;/span&gt;满足&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\lim_{i\to \infty}\frac{e_{i+1}}{e_i}=S
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(S=(m-1)/m\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;事实上，牛顿法在单根位置上，&lt;span class=&#34;math inline&#34;&gt;\(f&amp;#39;(r)\neq
+0\)&lt;/span&gt;，具有二次收敛速度，在多根位置上&lt;span class=&#34;math inline&#34;&gt;\(f&amp;#39;(r)=0\)&lt;/span&gt;，收敛式线性的。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定理2&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;如果在&lt;span class=&#34;math inline&#34;&gt;\([a,b]\)&lt;/span&gt;区间上&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\((m+1)\)&lt;/span&gt;阶连续函数，包含&lt;span class=&#34;math inline&#34;&gt;\(m&amp;gt;1\)&lt;/span&gt;的多重根，则改进的牛顿方法&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+x_{i+1}=x_i-\frac{mf(x_i)}{f&amp;#39;(x_i)}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;收敛到&lt;span class=&#34;math inline&#34;&gt;\(r\)&lt;/span&gt;，并具有二次收敛速度。&lt;/p&gt;
+&lt;p&gt;牛顿法如同FPI，也可能不会收敛到根。例如两个数循环出现、某一步&lt;span class=&#34;math inline&#34;&gt;\(f&amp;#39;(x_i)=0\)&lt;/span&gt;等。&lt;/p&gt;
+&lt;h2 id=&#34;不需要导数的根求解&#34;&gt;不需要导数的根求解&lt;/h2&gt;
+&lt;p&gt;虽然牛顿法在非重根时表现的比二分法和FPI更好，因为它获取了“导数”这个额外信息。但有时候我们可能难以计算导数。&lt;/p&gt;
+&lt;p&gt;这种情况下，割线方法就是一个好的替代。它使用近似值割线替代了切线，并且收敛速度差不多快。&lt;/p&gt;
+&lt;h3 id=&#34;割线方法及其变体&#34;&gt;割线方法及其变体&lt;/h3&gt;
+&lt;p&gt;不难想到，直接用差商&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\frac{f(x_i)-f(x_{i-1})}{x_i-x_{i-1}}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;去近似替换牛顿法中的&lt;span class=&#34;math inline&#34;&gt;\(f&amp;#39;(x_i)\)&lt;/span&gt;，就得到了割线方法&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+x_0,x_1=初始估计
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+x_{i+1}=x_i-\frac{f(x_i)(x_i-x_{i-1})}{f(x_i)-f(x_{i-1})},i=1,2,3,\cdots
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;假设割线方法收敛到函数&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;的根&lt;span class=&#34;math inline&#34;&gt;\(r\)&lt;/span&gt;，且&lt;span class=&#34;math inline&#34;&gt;\(f&amp;#39;(r)\neq 0\)&lt;/span&gt;，近似误差关系&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+e_{i+1}\approx \bigg|\frac{f&amp;#39;&amp;#39;(r)}{2f&amp;#39;(r)}\bigg|e_ie_{i-1}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;成立并且&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+e_{i+1}\approx
+\bigg|\frac{f&amp;#39;&amp;#39;(r)}{2f&amp;#39;(r)}\bigg|^{\alpha-1}e_i^\alpha
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(\alpha = (1+\sqrt 5)/2\approx
+1.62\)&lt;/span&gt;。割线方法1️以超线性的速度收敛到一个单根，意味着它在线性和二次收敛方法之间。&lt;/p&gt;
+&lt;p&gt;割线方法有三种推广形式，它们也很重要。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;试位方法（Regula Falsi）&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;和二分法相似，但是其中的中点被类似割线方法的近似所替换，给定区间&lt;span class=&#34;math inline&#34;&gt;\([a,b]\)&lt;/span&gt;，该区间包含根（假设&lt;span class=&#34;math inline&#34;&gt;\(f(a)f(b)&amp;lt;0\)&lt;/span&gt;），使用割线方法定义下一个点为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+c = a-\frac{f(a)(a-b)}{f(a)-f(b)}=\frac{bf(a)-af(b)}{f(a)-f(b)}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;根据&lt;span class=&#34;math inline&#34;&gt;\(f(a)f(c)&amp;lt;0\)&lt;/span&gt;或者&lt;span class=&#34;math inline&#34;&gt;\(f(c)f(b)&amp;lt;0\)&lt;/span&gt;，分别选择新的区间&lt;span class=&#34;math inline&#34;&gt;\([a,c]\)&lt;/span&gt;或&lt;span class=&#34;math inline&#34;&gt;\([c,b]\)&lt;/span&gt;，新的区间仍然可以括住根。&lt;/p&gt;
+&lt;p&gt;通常试位方法会表现地比二分法和割线方法都好，但是试位方法不能包子每一步都消除一半的不确定性，有时收敛会很慢。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Muller方法&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;该方法不是计算经过先前两个点的直线和&lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;轴的交点，而是使用桑耳前面生成的点&lt;span class=&#34;math inline&#34;&gt;\(x_0,x_1,x_2\)&lt;/span&gt;，画出通过它们的抛物线&lt;span class=&#34;math inline&#34;&gt;\(y=p(x)\)&lt;/span&gt;，并计算抛物线和&lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;轴的交点。&lt;/p&gt;
+&lt;p&gt;书上并没有详细介绍这个方法。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;逆二次插值（IQI）&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;是割线方法到抛物线的一种相近的泛化方法。但是使用形如&lt;span class=&#34;math inline&#34;&gt;\(x=p(y)\)&lt;/span&gt;的抛物线，而不是Muller方法中的&lt;span class=&#34;math inline&#34;&gt;\(y=p(x)\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;我们的问题可以立刻求解：这个抛物线和&lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;轴只有一个交点，所以从上一步中的三个估计&lt;span class=&#34;math inline&#34;&gt;\(x_i,x_{i+1},x_{i+2}\)&lt;/span&gt;寻找&lt;span class=&#34;math inline&#34;&gt;\(x_{i+3}\)&lt;/span&gt;，这个过程中没有混淆。&lt;/p&gt;
+&lt;p&gt;经过三点&lt;span class=&#34;math inline&#34;&gt;\((a,A),(b,B),(c,C)\)&lt;/span&gt;的二阶多项式&lt;span class=&#34;math inline&#34;&gt;\(x=P(y)\)&lt;/span&gt;为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+P(y) =
+a\frac{(y-B)(y-C)}{(A-B)(A-C)}+b\frac{(y-A)(y-C)}{(B-A)(B-C)}+c\frac{(y-A)(y-B)}{(C-A)(C-B)}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;这是一个拉格朗日插值的例子，用&lt;span class=&#34;math inline&#34;&gt;\(y=0\)&lt;/span&gt;代入，得到和&lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;轴的交点，经过重新组合与替代，我们得到&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+P(0)=c-\frac{r(r-q)(c-b)+(1-r)s(c-a)}{(q-1)(r-1)(s-1)}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(q=f(a)/f(b),r=f(c)/f(b),s=f(c)/f(a)\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;对于IQI，设置&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+a=x_i,b=x_{i+1},c=x_{i+2},A=f(x_i),B=f(x_{i+1}),C=f(x_{i+2})
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;下一步的估计&lt;span class=&#34;math inline&#34;&gt;\(x_{i+3}=P(0)\)&lt;/span&gt;为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+x_{i+3}=x_{i+2}-\frac{r(r-q)(x_{i+2}-x_{i+1})+(1-r)s(x_{i+2}-x_{i})}{(q-1)(r-1)(s-1)}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(q=f(x_{i})/f(x_{i+1}),r=f(x_{i+2})/f(x_{i+1}),s=f(x_{i+2})/f(x_{i})\)&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;brent方法&#34;&gt;Brent方法&lt;/h3&gt;
+&lt;p&gt;这是一种混合方法，该方法使用前面介绍的迭代技术，推出一个新的方法。&lt;/p&gt;
+&lt;p&gt;该方法用于连续函数&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;，区间的边界是&lt;span class=&#34;math inline&#34;&gt;\(a\)&lt;/span&gt;和&lt;span class=&#34;math inline&#34;&gt;\(b\)&lt;/span&gt;，同时&lt;span class=&#34;math inline&#34;&gt;\(f(a)f(b)&amp;lt;0\)&lt;/span&gt;。Brent方法记录当前点&lt;span class=&#34;math inline&#34;&gt;\(x_i\)&lt;/span&gt;，该点具有最优的后向误差，同时有包含根的区间&lt;span class=&#34;math inline&#34;&gt;\([a_i,b_i]\)&lt;/span&gt;。简单来讲，尝试使用逆二次方法，并在下述情况下，使用结果来替代&lt;span class=&#34;math inline&#34;&gt;\(x_i,a_i,b_i\)&lt;/span&gt;中的一个&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;后向误差得到改进&lt;/li&gt;
+&lt;li&gt;包含根的区间至少减小一半&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;否则，尝试使用割线方法以实现相同的目的，如果割线方法也失败了，则使用二分法，保证至少减少一半的不确定性。&lt;/p&gt;
 
 
 </description>
