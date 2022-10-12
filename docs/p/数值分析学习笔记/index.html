@@ -125,7 +125,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 19 分钟
+                    阅读时长: 22 分钟
                 </time>
             </div>
         
@@ -678,6 +678,141 @@ x_{i+3}=x_{i+2}-\frac{r(r-q)(x_{i+2}-x_{i+1})+(1-r)s(x_{i+2}-x_{i})}{(q-1)(r-1)(
 <li>包含根的区间至少减小一半</li>
 </ol>
 <p>否则，尝试使用割线方法以实现相同的目的，如果割线方法也失败了，则使用二分法，保证至少减少一半的不确定性。</p>
+<h1 id="方程组">方程组</h1>
+<h2 id="高斯消元法">高斯消元法</h2>
+<h3 id="朴素的高斯消元法">朴素的高斯消元法</h3>
+<p>和线性代数中介绍的一致</p>
+<p>对于一个线性方程组可以进行三种操作</p>
+<ol type="1">
+<li>两个方程彼此交换位置</li>
+<li>在一个方程上加上或减去另外一个方程的倍数</li>
+<li>对于一个方程乘以非零的常数</li>
+</ol>
+<p>通常我们也会使用增广矩阵来替代方程组。</p>
+<h3 id="操作次数">操作次数</h3>
+<p><strong>引理1</strong></p>
+<p>对于任何正整数<span class="math inline">\(n\)</span></p>
+<ol type="1">
+<li><span class="math inline">\(1+2+3+\cdots+n = n*(n+1)/2\)</span></li>
+<li><span class="math inline">\(1^2+2^2+\cdots+n^2 =
+n(n+1)(2n+1)/6\)</span></li>
+</ol>
+<p>消去某一列在主对角线下的元素，以第一列为例，将第二行变为如下形式</p>
+<p><span class="math display">\[
+\begin{matrix}
+a_{11}  &amp; a_{12} &amp; \cdots &amp; a_{1n} &amp; | &amp; b_1\\
+0  &amp; a_{22}-\frac{a_{21}}{a_{11}}a_{12} &amp; \cdots &amp;
+a_{2n}-\frac{a_{21}}{a_{11}}a_{1n} &amp; |
+&amp;b_2-\frac{a_{21}}{a_{11}}b_1
+\end{matrix}
+\]</span></p>
+<p>其他行同理，其中<span class="math inline">\(a_{11}\)</span>在操作中作为除数，这样的数字称为主元。不难得知，如果主元为<span class="math inline">\(0\)</span>，算法会终止，这是朴素办法的一个问题。</p>
+<p><em>高斯消元法中消去步骤的操作次数</em></p>
+<p><span class="math inline">\(n\)</span>个方程<span class="math inline">\(n\)</span>个未知数的消去计算（下三角除了对角线的部分转换为<span class="math inline">\(0\)</span>），可以在<span class="math inline">\(2n^3/3+n^2/2-7n/6\)</span>次操作后完成</p>
+<p>消去之后，矩阵变成上三角形式，之后从最后一个未知数往回带进行求解。</p>
+<p><em>高斯消元法中回代过程的操作次数</em></p>
+<p><span class="math inline">\(n\)</span>个方程<span class="math inline">\(n\)</span>个未知数的三角形系统的回代过程，可以在<span class="math inline">\(n^2\)</span>次操作后完成</p>
+<p>综上，消去的事件复杂度为<span class="math inline">\(O(n^3)\)</span>，回代是<span class="math inline">\(O(n^2)\)</span>，总的是<span class="math inline">\(O(n^3)\)</span></p>
+<h2 id="lu分解">LU分解</h2>
+<h3 id="高斯消元法的矩阵形式">高斯消元法的矩阵形式</h3>
+<p>继续同线性代数，我们可以把方程组写成一个矩阵和一个向量相乘的形式，即<span class="math inline">\(\bm A\bm x=\bm b\)</span></p>
+<p>吧方程组写成矩阵的形式的优势在于可以使用矩阵运算。LU分解是高斯消元法的矩阵形式。它包含把系数矩阵<span class="math inline">\(A\)</span>写做下三角矩阵<span class="math inline">\(L\)</span>和上三角矩阵<span class="math inline">\(U\)</span>的乘积</p>
+<p>我们有关于LU分解的三个事实</p>
+<ol type="1">
+<li>令<span class="math inline">\(L_{ij}(-c)\)</span>表示下三角矩阵，其主对角线上的元素为<span class="math inline">\(1\)</span>，在<span class="math inline">\((i,j)\)</span>位置上的元素为<span class="math inline">\(-c\)</span>。则<span class="math inline">\(A\to
+L_{ij}(-c)A\)</span>表示行运算“从第<span class="math inline">\(i\)</span>行中减去第<span class="math inline">\(j\)</span>行的<span class="math inline">\(c\)</span>倍”。</li>
+</ol>
+<p>例如<span class="math inline">\(L_{21}(-c)\)</span></p>
+<p><span class="math display">\[
+A=
+\begin{bmatrix}
+a_{11}  &amp; a_{12} &amp; a_{13}\\
+a_{21}  &amp; a_{22} &amp; a_{23}\\
+a_{31}  &amp; a_{32} &amp; a_{33}
+\end{bmatrix}\to
+\begin{bmatrix}
+1  &amp; 0 &amp; 0\\
+-c  &amp; 1 &amp; 0\\
+0  &amp; 0 &amp; 1
+\end{bmatrix}
+\begin{bmatrix}
+a_{11}  &amp; a_{12} &amp; a_{13}\\
+a_{21}  &amp; a_{22} &amp; a_{23}\\
+a_{31}  &amp; a_{32} &amp; a_{33}
+\end{bmatrix}
+\]</span></p>
+<p><span class="math display">\[
+=\begin{bmatrix}
+a_{11}  &amp; a_{12} &amp; a_{13}\\
+a_{21}-ca_{11}  &amp; a_{22}-ca_{12} &amp; a_{23}-ca_{13}\\
+a_{31}  &amp; a_{32} &amp; a_{33}
+\end{bmatrix}
+\]</span></p>
+<ol start="2" type="1">
+<li><span class="math inline">\(L_{ij}(-c)^{-1}=L_{ij}(c)\)</span></li>
+<li>下面的矩阵乘积成立</li>
+</ol>
+<p><span class="math display">\[
+\begin{bmatrix}
+1  &amp; &amp; 0\\
+c_1  &amp; 1 &amp; \\
+  &amp;  &amp; 1
+\end{bmatrix}
+\begin{bmatrix}
+1  &amp;  &amp; \\
+  &amp; 1 &amp; \\
+c_2  &amp;  &amp; 1
+\end{bmatrix}
+\begin{bmatrix}
+1  &amp;  &amp; \\
+  &amp; 1 &amp; \\
+  &amp; c_3 &amp; 1
+\end{bmatrix}
+\begin{bmatrix}
+1  &amp;  &amp; \\
+c_1  &amp; 1 &amp; \\
+c_2  &amp; c_3 &amp; 1
+\end{bmatrix}
+\]</span></p>
+<p>根据以上事实，我们可以把系数矩阵<span class="math inline">\(A\)</span>表示为<span class="math inline">\(A=LU\)</span>，其中<span class="math inline">\(U\)</span>和高斯消元得到的上三角矩阵相同，而<span class="math inline">\(L\)</span>矩阵就是所进行的操作乘起来的矩阵。</p>
+<h3 id="使用lu分解回代">使用LU分解回代</h3>
+<p>一旦知道<span class="math inline">\(L,U\)</span>，问题<span class="math inline">\(Ax=b\)</span>就可以转化为<span class="math inline">\(LUx=b\)</span>。定义<span class="math inline">\(c=Ux\)</span>，则回代有两个步骤</p>
+<ol type="1">
+<li>对于方程<span class="math inline">\(Lc=b\)</span>，求解<span class="math inline">\(c\)</span></li>
+<li>对于方程<span class="math inline">\(Ux=c\)</span>，求解<span class="math inline">\(x\)</span></li>
+</ol>
+<p>其中<span class="math inline">\(Lc=b\)</span>因为<span class="math inline">\(L\)</span>是下三角矩阵，从上往下回代，<span class="math inline">\(Ux=c\)</span>因为<span class="math inline">\(U\)</span>是上三角矩阵，从下往上回代。</p>
+<h3 id="lu分解的复杂度">LU分解的复杂度</h3>
+<p>如果只有一个方程组，那么和高斯消元法没有区别</p>
+<p>但是，如果我们遇到的问题是</p>
+<p><span class="math display">\[
+Ax=b_1\\
+Ax=b_2\\
+\cdots\\
+Ax=b_k
+\]</span></p>
+<p>这样的。那LU分解会比高斯消元一个一个去计算要来得快。</p>
+<p>但是，并不是所有的矩阵都可以进行<span class="math inline">\(LU\)</span>分解</p>
+<p>例如分解</p>
+<p><span class="math display">\[
+\begin{bmatrix}
+0  &amp; 1\\
+1  &amp; 1
+\end{bmatrix} =
+\begin{bmatrix}
+1 &amp; 0\\
+a &amp; 1
+\end{bmatrix}
+\begin{bmatrix}
+b &amp; c\\
+0 &amp; d
+\end{bmatrix}=
+\begin{bmatrix}
+b &amp; c\\
+ab &amp; ac+d
+\end{bmatrix}
+\]</span></p>
+<p>由于<span class="math inline">\(ab=1,b=0\)</span>不可能同时成立，所以反证法得知不能分解。</p>
 
 
 
@@ -1061,6 +1196,23 @@ x_{i+3}=x_{i+2}-\frac{r(r-q)(x_{i+2}-x_{i+1})+(1-r)s(x_{i+2}-x_{i})}{(q-1)(r-1)(
           <ol>
             <li><a href="#割线方法及其变体">割线方法及其变体</a></li>
             <li><a href="#brent方法">Brent方法</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+    <li><a href="#方程组">方程组</a>
+      <ol>
+        <li><a href="#高斯消元法">高斯消元法</a>
+          <ol>
+            <li><a href="#朴素的高斯消元法">朴素的高斯消元法</a></li>
+            <li><a href="#操作次数">操作次数</a></li>
+          </ol>
+        </li>
+        <li><a href="#lu分解">LU分解</a>
+          <ol>
+            <li><a href="#高斯消元法的矩阵形式">高斯消元法的矩阵形式</a></li>
+            <li><a href="#使用lu分解回代">使用LU分解回代</a></li>
+            <li><a href="#lu分解的复杂度">LU分解的复杂度</a></li>
           </ol>
         </li>
       </ol>

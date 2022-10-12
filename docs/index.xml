@@ -555,6 +555,141 @@ x_{i+3}=x_{i+2}-\frac{r(r-q)(x_{i+2}-x_{i+1})+(1-r)s(x_{i+2}-x_{i})}{(q-1)(r-1)(
 &lt;li&gt;包含根的区间至少减小一半&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;否则，尝试使用割线方法以实现相同的目的，如果割线方法也失败了，则使用二分法，保证至少减少一半的不确定性。&lt;/p&gt;
+&lt;h1 id=&#34;方程组&#34;&gt;方程组&lt;/h1&gt;
+&lt;h2 id=&#34;高斯消元法&#34;&gt;高斯消元法&lt;/h2&gt;
+&lt;h3 id=&#34;朴素的高斯消元法&#34;&gt;朴素的高斯消元法&lt;/h3&gt;
+&lt;p&gt;和线性代数中介绍的一致&lt;/p&gt;
+&lt;p&gt;对于一个线性方程组可以进行三种操作&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;两个方程彼此交换位置&lt;/li&gt;
+&lt;li&gt;在一个方程上加上或减去另外一个方程的倍数&lt;/li&gt;
+&lt;li&gt;对于一个方程乘以非零的常数&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;通常我们也会使用增广矩阵来替代方程组。&lt;/p&gt;
+&lt;h3 id=&#34;操作次数&#34;&gt;操作次数&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;引理1&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;对于任何正整数&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(1+2+3+\cdots+n = n*(n+1)/2\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(1^2+2^2+\cdots+n^2 =
+n(n+1)(2n+1)/6\)&lt;/span&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;消去某一列在主对角线下的元素，以第一列为例，将第二行变为如下形式&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\begin{matrix}
+a_{11}  &amp;amp; a_{12} &amp;amp; \cdots &amp;amp; a_{1n} &amp;amp; | &amp;amp; b_1\\
+0  &amp;amp; a_{22}-\frac{a_{21}}{a_{11}}a_{12} &amp;amp; \cdots &amp;amp;
+a_{2n}-\frac{a_{21}}{a_{11}}a_{1n} &amp;amp; |
+&amp;amp;b_2-\frac{a_{21}}{a_{11}}b_1
+\end{matrix}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其他行同理，其中&lt;span class=&#34;math inline&#34;&gt;\(a_{11}\)&lt;/span&gt;在操作中作为除数，这样的数字称为主元。不难得知，如果主元为&lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt;，算法会终止，这是朴素办法的一个问题。&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;高斯消元法中消去步骤的操作次数&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;个方程&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;个未知数的消去计算（下三角除了对角线的部分转换为&lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt;），可以在&lt;span class=&#34;math inline&#34;&gt;\(2n^3/3+n^2/2-7n/6\)&lt;/span&gt;次操作后完成&lt;/p&gt;
+&lt;p&gt;消去之后，矩阵变成上三角形式，之后从最后一个未知数往回带进行求解。&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;高斯消元法中回代过程的操作次数&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;个方程&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;个未知数的三角形系统的回代过程，可以在&lt;span class=&#34;math inline&#34;&gt;\(n^2\)&lt;/span&gt;次操作后完成&lt;/p&gt;
+&lt;p&gt;综上，消去的事件复杂度为&lt;span class=&#34;math inline&#34;&gt;\(O(n^3)\)&lt;/span&gt;，回代是&lt;span class=&#34;math inline&#34;&gt;\(O(n^2)\)&lt;/span&gt;，总的是&lt;span class=&#34;math inline&#34;&gt;\(O(n^3)\)&lt;/span&gt;&lt;/p&gt;
+&lt;h2 id=&#34;lu分解&#34;&gt;LU分解&lt;/h2&gt;
+&lt;h3 id=&#34;高斯消元法的矩阵形式&#34;&gt;高斯消元法的矩阵形式&lt;/h3&gt;
+&lt;p&gt;继续同线性代数，我们可以把方程组写成一个矩阵和一个向量相乘的形式，即&lt;span class=&#34;math inline&#34;&gt;\(\bm A\bm x=\bm b\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;吧方程组写成矩阵的形式的优势在于可以使用矩阵运算。LU分解是高斯消元法的矩阵形式。它包含把系数矩阵&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;写做下三角矩阵&lt;span class=&#34;math inline&#34;&gt;\(L\)&lt;/span&gt;和上三角矩阵&lt;span class=&#34;math inline&#34;&gt;\(U\)&lt;/span&gt;的乘积&lt;/p&gt;
+&lt;p&gt;我们有关于LU分解的三个事实&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;令&lt;span class=&#34;math inline&#34;&gt;\(L_{ij}(-c)\)&lt;/span&gt;表示下三角矩阵，其主对角线上的元素为&lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt;，在&lt;span class=&#34;math inline&#34;&gt;\((i,j)\)&lt;/span&gt;位置上的元素为&lt;span class=&#34;math inline&#34;&gt;\(-c\)&lt;/span&gt;。则&lt;span class=&#34;math inline&#34;&gt;\(A\to
+L_{ij}(-c)A\)&lt;/span&gt;表示行运算“从第&lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt;行中减去第&lt;span class=&#34;math inline&#34;&gt;\(j\)&lt;/span&gt;行的&lt;span class=&#34;math inline&#34;&gt;\(c\)&lt;/span&gt;倍”。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;例如&lt;span class=&#34;math inline&#34;&gt;\(L_{21}(-c)\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+A=
+\begin{bmatrix}
+a_{11}  &amp;amp; a_{12} &amp;amp; a_{13}\\
+a_{21}  &amp;amp; a_{22} &amp;amp; a_{23}\\
+a_{31}  &amp;amp; a_{32} &amp;amp; a_{33}
+\end{bmatrix}\to
+\begin{bmatrix}
+1  &amp;amp; 0 &amp;amp; 0\\
+-c  &amp;amp; 1 &amp;amp; 0\\
+0  &amp;amp; 0 &amp;amp; 1
+\end{bmatrix}
+\begin{bmatrix}
+a_{11}  &amp;amp; a_{12} &amp;amp; a_{13}\\
+a_{21}  &amp;amp; a_{22} &amp;amp; a_{23}\\
+a_{31}  &amp;amp; a_{32} &amp;amp; a_{33}
+\end{bmatrix}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+=\begin{bmatrix}
+a_{11}  &amp;amp; a_{12} &amp;amp; a_{13}\\
+a_{21}-ca_{11}  &amp;amp; a_{22}-ca_{12} &amp;amp; a_{23}-ca_{13}\\
+a_{31}  &amp;amp; a_{32} &amp;amp; a_{33}
+\end{bmatrix}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;ol start=&#34;2&#34; type=&#34;1&#34;&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(L_{ij}(-c)^{-1}=L_{ij}(c)\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;下面的矩阵乘积成立&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\begin{bmatrix}
+1  &amp;amp; &amp;amp; 0\\
+c_1  &amp;amp; 1 &amp;amp; \\
+  &amp;amp;  &amp;amp; 1
+\end{bmatrix}
+\begin{bmatrix}
+1  &amp;amp;  &amp;amp; \\
+  &amp;amp; 1 &amp;amp; \\
+c_2  &amp;amp;  &amp;amp; 1
+\end{bmatrix}
+\begin{bmatrix}
+1  &amp;amp;  &amp;amp; \\
+  &amp;amp; 1 &amp;amp; \\
+  &amp;amp; c_3 &amp;amp; 1
+\end{bmatrix}
+\begin{bmatrix}
+1  &amp;amp;  &amp;amp; \\
+c_1  &amp;amp; 1 &amp;amp; \\
+c_2  &amp;amp; c_3 &amp;amp; 1
+\end{bmatrix}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;根据以上事实，我们可以把系数矩阵&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;表示为&lt;span class=&#34;math inline&#34;&gt;\(A=LU\)&lt;/span&gt;，其中&lt;span class=&#34;math inline&#34;&gt;\(U\)&lt;/span&gt;和高斯消元得到的上三角矩阵相同，而&lt;span class=&#34;math inline&#34;&gt;\(L\)&lt;/span&gt;矩阵就是所进行的操作乘起来的矩阵。&lt;/p&gt;
+&lt;h3 id=&#34;使用lu分解回代&#34;&gt;使用LU分解回代&lt;/h3&gt;
+&lt;p&gt;一旦知道&lt;span class=&#34;math inline&#34;&gt;\(L,U\)&lt;/span&gt;，问题&lt;span class=&#34;math inline&#34;&gt;\(Ax=b\)&lt;/span&gt;就可以转化为&lt;span class=&#34;math inline&#34;&gt;\(LUx=b\)&lt;/span&gt;。定义&lt;span class=&#34;math inline&#34;&gt;\(c=Ux\)&lt;/span&gt;，则回代有两个步骤&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;对于方程&lt;span class=&#34;math inline&#34;&gt;\(Lc=b\)&lt;/span&gt;，求解&lt;span class=&#34;math inline&#34;&gt;\(c\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;对于方程&lt;span class=&#34;math inline&#34;&gt;\(Ux=c\)&lt;/span&gt;，求解&lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(Lc=b\)&lt;/span&gt;因为&lt;span class=&#34;math inline&#34;&gt;\(L\)&lt;/span&gt;是下三角矩阵，从上往下回代，&lt;span class=&#34;math inline&#34;&gt;\(Ux=c\)&lt;/span&gt;因为&lt;span class=&#34;math inline&#34;&gt;\(U\)&lt;/span&gt;是上三角矩阵，从下往上回代。&lt;/p&gt;
+&lt;h3 id=&#34;lu分解的复杂度&#34;&gt;LU分解的复杂度&lt;/h3&gt;
+&lt;p&gt;如果只有一个方程组，那么和高斯消元法没有区别&lt;/p&gt;
+&lt;p&gt;但是，如果我们遇到的问题是&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+Ax=b_1\\
+Ax=b_2\\
+\cdots\\
+Ax=b_k
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;这样的。那LU分解会比高斯消元一个一个去计算要来得快。&lt;/p&gt;
+&lt;p&gt;但是，并不是所有的矩阵都可以进行&lt;span class=&#34;math inline&#34;&gt;\(LU\)&lt;/span&gt;分解&lt;/p&gt;
+&lt;p&gt;例如分解&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\begin{bmatrix}
+0  &amp;amp; 1\\
+1  &amp;amp; 1
+\end{bmatrix} =
+\begin{bmatrix}
+1 &amp;amp; 0\\
+a &amp;amp; 1
+\end{bmatrix}
+\begin{bmatrix}
+b &amp;amp; c\\
+0 &amp;amp; d
+\end{bmatrix}=
+\begin{bmatrix}
+b &amp;amp; c\\
+ab &amp;amp; ac+d
+\end{bmatrix}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;由于&lt;span class=&#34;math inline&#34;&gt;\(ab=1,b=0\)&lt;/span&gt;不可能同时成立，所以反证法得知不能分解。&lt;/p&gt;
 
 
 </description>
