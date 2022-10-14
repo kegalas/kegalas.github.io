@@ -813,6 +813,12 @@ ab &amp; ac+d
 \end{bmatrix}
 \]</span></p>
 <p>由于<span class="math inline">\(ab=1,b=0\)</span>不可能同时成立，所以反证法得知不能分解。</p>
+<h2 id="误差来源">误差来源</h2>
+<h3 id="误差放大和条件数">误差放大和条件数</h3>
+<p><strong>定义1</strong></p>
+<p>向量<span class="math inline">\(x=(x_1,\cdots,x_n)\)</span>的无穷范数或者最大范数为<span class="math inline">\(||x||_\infty=max|x_i|\)</span>，即<span class="math inline">\(x\)</span>所有元素中的最大绝对值。</p>
+<p><strong>定义2</strong></p>
+<p>令<span class="math inline">\(x_a\)</span>是线性方程组<span class="math inline">\(Ax=b\)</span>的近似解。余项是向量<span class="math inline">\(r=b-Ax_a\)</span>，后向误差是余项的范数<span class="math inline">\(||b-Ax_a||_\infty\)</span>，前向误差是<span class="math inline">\(||x-x_a||_\infty\)</span></p>
 
 
 
@@ -1213,6 +1219,11 @@ ab &amp; ac+d
             <li><a href="#高斯消元法的矩阵形式">高斯消元法的矩阵形式</a></li>
             <li><a href="#使用lu分解回代">使用LU分解回代</a></li>
             <li><a href="#lu分解的复杂度">LU分解的复杂度</a></li>
+          </ol>
+        </li>
+        <li><a href="#误差来源">误差来源</a>
+          <ol>
+            <li><a href="#误差放大和条件数">误差放大和条件数</a></li>
           </ol>
         </li>
       </ol>
