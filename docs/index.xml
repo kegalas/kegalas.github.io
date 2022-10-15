@@ -435,6 +435,10 @@ g&amp;#39;(r)}\approx -\varepsilon\frac{g(r)}{f&amp;#39;(r)}
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 误差放大因子=\frac{相对前向误差}{相对后向误差}
 \]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;条件&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;条件数也是误差放大度量的一种方式。数值分析是对算法的研究，算法把定义问题的数据作为输入，对应的结果作为输出。条件数指的是理论问题本身所带来的的误差放大部分，和用于求解问题的特定算法无关。&lt;/p&gt;
+&lt;p&gt;问题的条件数定义为所有输入变化，或者至少规定类型的变化所造成的最大误差放大。&lt;/p&gt;
+&lt;p&gt;条件数高的问题称为病态问题，条件数在&lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt;附件的问题称为良态问题。&lt;/p&gt;
 &lt;h2 id=&#34;牛顿方法&#34;&gt;牛顿方法&lt;/h2&gt;
 &lt;p&gt;为了找到&lt;span class=&#34;math inline&#34;&gt;\(f(x)=0\)&lt;/span&gt;的根，给定一个初始估计&lt;span class=&#34;math inline&#34;&gt;\(x_0\)&lt;/span&gt;，画出函数&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;在&lt;span class=&#34;math inline&#34;&gt;\(x_0\)&lt;/span&gt;的切线。用切线来近似函数&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;，求出其与&lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;轴的交点作为&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;的根。由于函数&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;的弯曲，该交点可能不是精确解，因而该步骤要迭代进行。&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
@@ -696,6 +700,51 @@ ab &amp;amp; ac+d
 &lt;p&gt;向量&lt;span class=&#34;math inline&#34;&gt;\(x=(x_1,\cdots,x_n)\)&lt;/span&gt;的无穷范数或者最大范数为&lt;span class=&#34;math inline&#34;&gt;\(||x||_\infty=max|x_i|\)&lt;/span&gt;，即&lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;所有元素中的最大绝对值。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;定义2&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;令&lt;span class=&#34;math inline&#34;&gt;\(x_a\)&lt;/span&gt;是线性方程组&lt;span class=&#34;math inline&#34;&gt;\(Ax=b\)&lt;/span&gt;的近似解。余项是向量&lt;span class=&#34;math inline&#34;&gt;\(r=b-Ax_a\)&lt;/span&gt;，后向误差是余项的范数&lt;span class=&#34;math inline&#34;&gt;\(||b-Ax_a||_\infty\)&lt;/span&gt;，前向误差是&lt;span class=&#34;math inline&#34;&gt;\(||x-x_a||_\infty\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;同时也定义相对后向误差为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\frac{||r||_\infty}{||b||_\infty}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;相对前向误差定义为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\frac{||x-x_a||_\infty}{||x||_\infty}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;这个方程的误差放大因子是二者的比率，即&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+误差放大因子=\frac{相对前向误差}{相对后向误差}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定义3&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;方阵&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;的条件数&lt;span class=&#34;math inline&#34;&gt;\(cond(A)\)&lt;/span&gt;为求解&lt;span class=&#34;math inline&#34;&gt;\(Ax=b\)&lt;/span&gt;时，对于所有右侧向量&lt;span class=&#34;math inline&#34;&gt;\(b\)&lt;/span&gt;，可能出现的最大误差放大因子。&lt;/p&gt;
+&lt;p&gt;和向量范数类似，定义&lt;span class=&#34;math inline&#34;&gt;\(n\times
+n\)&lt;/span&gt;矩阵&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;的矩阵范数为（这里书上写的是范数，但是下面给出了无限符号，后面又没有无限符号，我猜测这个无限符号是多余的，或者矩阵的范数和无限范数是一样的）&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+||A||_\infty = 每行元素绝对值之和的最大值
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定理1&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(n\times n\)&lt;/span&gt;矩阵&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;的条件数是&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+cond(A) = ||A||\cdot||A^{-1}||
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;依据误差放大因子，在求解&lt;span class=&#34;math inline&#34;&gt;\(Ax=b\)&lt;/span&gt;可能出现的相关前向误差是&lt;span class=&#34;math inline&#34;&gt;\(\varepsilon_{math}\cdot
+cond(A)\)&lt;/span&gt;。换句话说，如果&lt;span class=&#34;math inline&#34;&gt;\(cond(A)\approx 10^k\)&lt;/span&gt;，我们在计算&lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;时，将丢掉&lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt;位数字精度。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;向量范数和矩阵范数的性质&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;对于向量范数（这里指的不是无穷范数，而是范数，即每个元素的绝对值之和）&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(||x||\geq 0\)&lt;/span&gt;，当且仅当&lt;span class=&#34;math inline&#34;&gt;\(x=[0,\cdots,0]\)&lt;/span&gt;时等号成立&lt;/li&gt;
+&lt;li&gt;对于每个标量&lt;span class=&#34;math inline&#34;&gt;\(\alpha\)&lt;/span&gt;和向量&lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;，&lt;span class=&#34;math inline&#34;&gt;\(||\alpha
+x||=|\alpha|\cdot ||x||\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;对于向量&lt;span class=&#34;math inline&#34;&gt;\(x,y\)&lt;/span&gt;有&lt;span class=&#34;math inline&#34;&gt;\(||x+y||\leq||x||+||y||\)&lt;/span&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;对于矩阵范数&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(||A||\geq 0\)&lt;/span&gt;，当且仅当&lt;span class=&#34;math inline&#34;&gt;\(A=0\)&lt;/span&gt;时等号成立&lt;/li&gt;
+&lt;li&gt;对于每个标量&lt;span class=&#34;math inline&#34;&gt;\(\alpha\)&lt;/span&gt;和向量&lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;，&lt;span class=&#34;math inline&#34;&gt;\(||\alpha
+A||=|\alpha|\cdot ||A||\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;对于矩阵&lt;span class=&#34;math inline&#34;&gt;\(A,B\)&lt;/span&gt;有&lt;span class=&#34;math inline&#34;&gt;\(||A+B||\leq||A||+||B||\)&lt;/span&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;算子范数的矩阵范数，也可以使用特定的向量范数进行定义&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+||A||=\max \frac{||Ax||}{||x||}
+\]&lt;/span&gt;&lt;/p&gt;
 
 
 </description>
