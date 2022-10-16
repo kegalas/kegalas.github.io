@@ -125,7 +125,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 9 分钟
+                    阅读时长: 10 分钟
                 </time>
             </div>
         
@@ -367,6 +367,39 @@ i_k=G_iu=\frac{G_k}{G_{eq}}i
 <li><span class="math inline">\(G_{ij}(i\neq j)\)</span>称为节点<span class="math inline">\(i,j\)</span>之间的互电导，等于两节点之间的电导之和，恒取<span class="math inline">\(-\)</span></li>
 <li><span class="math inline">\((\sum I_s)_i\)</span>称为节点<span class="math inline">\(i\)</span>的等效电流源，等于流入节点<span class="math inline">\(i\)</span>的所有电流源电流的代数和。流入为<span class="math inline">\(+\)</span>，流出为<span class="math inline">\(-\)</span></li>
 </ol>
+<h2 id="齐次定理和叠加定理">齐次定理和叠加定理</h2>
+<p>首先介绍齐次性和叠加性，对于线性映射<span class="math inline">\(f\)</span>，它满足</p>
+<ol type="1">
+<li>齐次性（比例性），即</li>
+</ol>
+<p><span class="math display">\[
+f(ax)=af(x)
+\]</span></p>
+<ol start="2" type="1">
+<li>可加性（叠加性）</li>
+</ol>
+<p><span class="math display">\[
+f(x_1+x_2) = f(x_1)+f(x_2)
+\]</span></p>
+<p>两者也可以结合使用。</p>
+<p>例如<span class="math inline">\(f(x)=ax\)</span>是线性的，但<span class="math inline">\(f(x)=ax+b\)</span>就不是线性的。</p>
+<h3 id="齐次定理">齐次定理</h3>
+<p>对于有唯一解的线性电路，当只有一个激励源（独立电压源或独立电流源，必须是独立的）x(t)作用时，其响应y(t)（电路任意处的电压或电流）与激励成齐次关系。例如</p>
+<figure>
+<img src="9.jpg" alt="9.jpg"/>
+<figcaption aria-hidden="true">9.jpg</figcaption>
+</figure>
+<p>注意：</p>
+<ol type="1">
+<li>只能用于有唯一解的线性电路，不能用于非线性电路</li>
+<li>响应也称为输出，指电路中任意处的电流或电压；功率与激励源之间不存在线性关系</li>
+<li>激励也称为输入，指电路中的独立源，受控源不是激励源</li>
+</ol>
+<h3 id="叠加定理">叠加定理</h3>
+<p>对于有唯一解的线性电路，多个激励源共同作用时引起的响应（电路中各处的电流、电压）等于各个激励源单独作用时（其他激励源置零）所引起的响应之和</p>
+<h2 id="替代定理">替代定理</h2>
+<p>对于有唯一解的线性或非线性电路，若某支路的电压<span class="math inline">\(u\)</span>或电流<span class="math inline">\(i\)</span>已知，则该支路可用方向和大小与<span class="math inline">\(u\)</span>相同的电压源替代，或用方向和大小与<span class="math inline">\(i\)</span>相同的电流源替代，而不会影响其他点的电流和电压。</p>
+<p>注意，替换成电流源后电压不变，替换成电压源后电流也不变。</p>
 
 
 
@@ -674,6 +707,13 @@ i_k=G_iu=\frac{G_k}{G_{eq}}i
         </li>
         <li><a href="#回路法和网孔法">回路法和网孔法</a></li>
         <li><a href="#节点法">节点法</a></li>
+        <li><a href="#齐次定理和叠加定理">齐次定理和叠加定理</a>
+          <ol>
+            <li><a href="#齐次定理">齐次定理</a></li>
+            <li><a href="#叠加定理">叠加定理</a></li>
+          </ol>
+        </li>
+        <li><a href="#替代定理">替代定理</a></li>
       </ol>
     </li>
   </ol>

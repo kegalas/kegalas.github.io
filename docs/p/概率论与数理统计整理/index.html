@@ -125,7 +125,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 16 分钟
+                    阅读时长: 19 分钟
                 </time>
             </div>
         
@@ -486,7 +486,7 @@ P\left(\frac{-1-1.5}{2}\leq\frac{X-1.5}{2}\leq\frac{2-1.5}{2}\right)
 <p>若随机变量<span class="math inline">\(X\)</span>有概率密度函数</p>
 <p><span class="math display">\[
 f(x)=\left\{\begin{matrix}
-\lambda e^{\lambda x},\quad x&gt;0\\
+\lambda e^{-\lambda x},\quad x&gt;0\\
 0,\quad x\leq 0
 \end{matrix}\right.
 \]</span></p>
@@ -502,7 +502,7 @@ F(x)=\left\{\begin{matrix}
 <p>满足</p>
 <p><span class="math display">\[
 f(x)=\left\{\begin{matrix}
-\lambda\alpha x^{\alpha-1} e^{\lambda x^\alpha},\quad x&gt;0\\
+\lambda\alpha x^{\alpha-1} e^{-\lambda x^\alpha},\quad x&gt;0\\
 0,\quad x\leq 0
 \end{matrix}\right.
 \]</span></p>
@@ -530,6 +530,7 @@ F(x)=\left\{\begin{matrix}
 1,\quad\quad\quad\quad\quad\quad\quad\quad x\geq b
 \end{matrix}\right.
 \]</span></p>
+<p>常记作<span class="math inline">\(R(a,b),U(a,b)\)</span></p>
 <h2 id="多维随机变量随机向量">多维随机变量（随机向量）</h2>
 <h3 id="离散型随机向量的分布">离散型随机向量的分布</h3>
 <p>一般的，设<span class="math inline">\(X=(X_1,X_2,\cdots,X_n)\)</span>为一个<span class="math inline">\(n\)</span>维向量，其每个分量，即<span class="math inline">\(X_1,\cdots,X_n\)</span>都是一维随机变量，则称<span class="math inline">\(X\)</span>是一个<span class="math inline">\(n\)</span>维随机向量或<span class="math inline">\(n\)</span>维随机变量。</p>
@@ -573,6 +574,8 @@ f(x_1,x_2)=
 other\quad\quad\quad\quad\quad\quad
 \end{matrix}\right.
 \]</span></p>
+<p>以上是矩形情况的密度函数</p>
+<p>如果扩展到任意形状的图形，只要求出来其面积，那么密度函数在图形内部就是<span class="math inline">\(1/S\)</span>，图形外部是<span class="math inline">\(0\)</span></p>
 <p><strong>二维正态分布</strong></p>
 <p><span class="math display">\[
 f(x_1,x_2)=(2\pi\sigma_1\sigma_2\sqrt{1-\rho^2})^{-1}\exp\left[-\frac{1}{2(1-\rho^2)}\left(\frac{(x_1-a)^2}{\sigma_1^2}-\frac{2\rho(x_1-a)(x_2-b)}{\sigma_1\sigma_2}+
@@ -600,12 +603,22 @@ F(x_1,x_2,\cdots,x_n)=P(X_1\leq x_1, X_2\leq x_2,\cdots,X_n\leq x_n)
 <p><span class="math display">\[
 f(x,y) = \frac{\partial^2F(x,y)}{\partial x\partial y}
 \]</span></p>
-<p><strong>边缘分布</strong></p>
-<p>设<span class="math inline">\(X=(X_1,\cdots,X_n)\)</span>为一个<span class="math inline">\(n\)</span>维随机向量。<span class="math inline">\(X\)</span>有一定的分布<span class="math inline">\(F\)</span>，这是一个<span class="math inline">\(n\)</span>味分布，因为<span class="math inline">\(X\)</span>的每个分量<span class="math inline">\(X_i\)</span>都是一维随机变量，故它们都有各自的分布<span class="math inline">\(F_i\)</span>，这些都是一维分布，称为随机向量<span class="math inline">\(X\)</span>或其分布<span class="math inline">\(F\)</span>的边缘分布。边缘分布完全由原分布<span class="math inline">\(F\)</span>确定。</p>
-<p>例如</p>
+<h3 id="边缘分布">边缘分布</h3>
+<p>设<span class="math inline">\(X=(X_1,\cdots,X_n)\)</span>为一个<span class="math inline">\(n\)</span>维随机向量。<span class="math inline">\(X\)</span>有一定的分布<span class="math inline">\(F\)</span>，这是一个<span class="math inline">\(n\)</span>维分布，因为<span class="math inline">\(X\)</span>的每个分量<span class="math inline">\(X_i\)</span>都是一维随机变量，故它们都有各自的分布<span class="math inline">\(F_i\)</span>，这些都是一维分布，称为随机向量<span class="math inline">\(X\)</span>或其分布<span class="math inline">\(F\)</span>的边缘分布。边缘分布完全由原分布<span class="math inline">\(F\)</span>确定。</p>
+<p>例如，在离散型的情况下，边缘分布<span class="math inline">\(P(X_1=a_{1k})\)</span>就等于</p>
 <p><span class="math display">\[
 P(X_1=a_{1k})=\sum_{j_2,\cdots,j_n}p(k,j_2,\cdots,j_n)
 \]</span></p>
+<p>对于连续型的情况，例如求<span class="math inline">\(f_1(x_1)\)</span></p>
+<p><span class="math display">\[
+f_1(x_1) = \int^\infty_{-\infty}\cdots
+\int^\infty_{-\infty}f(x_1,x_2,\cdots,x_n)dx_2\cdots dx_n
+\]</span></p>
+<p>当然，如果题目有要求变量的范围，则积分上下限要改成相应的值。</p>
+<h3 id="联合分布">联合分布</h3>
+<p>边缘分布指的是随机向量中的一个分量的分布。</p>
+<p>而相对应的联合分布，就是强调<span class="math inline">\((X_1,\cdots,X_n)\)</span>的分布是把<span class="math inline">\(X_1,\cdots,X_n\)</span>作为一个有联系的整体来考虑的。</p>
+<p>当然有些时候边缘分布也可以指众多分量中几个分量的分布。</p>
 <h2 id="条件概率分布">条件概率分布</h2>
 <p>概念同前面提到的条件概率。</p>
 <h3 id="离散型">离散型</h3>
@@ -713,6 +726,97 @@ f_Y(y_1,y_2) = f(g^{-1}_1(y_1,y_2),g^{-1}_2(y_1,y_2))|J(y_1,y_2)|
 Y=X_1+X_2
 \]</span></p>
 <p>的密度函数。</p>
+<p>有</p>
+<p><span class="math display">\[
+f_Y(y) =
+\int^\infty_{-\infty}f(x_1,y-x_1)dx_1=\int^\infty_{-\infty}f(x,y-x)dx
+\]</span></p>
+<p>或者作变量代换也有</p>
+<p><span class="math display">\[
+f_Y(y) = \int^\infty_{-\infty}f(y-x,x)dx
+\]</span></p>
+<p>如果<span class="math inline">\(X_1,X_2\)</span>独立，则<span class="math inline">\(f(x_1,x_2)=f_1(x_1)f_2(x_2)\)</span>，有</p>
+<p><span class="math display">\[
+f_Y(y) = \int^\infty_{-\infty}f_1(x)f_2(y-x)dx =
+\int^\infty_{-\infty}f_1(y-x)f_2(x)dx
+\]</span></p>
+<p>对于正态分布，设<span class="math inline">\(X_1,X_2\)</span>分别服从正态分布<span class="math inline">\(N(\mu_1,\sigma_1^2),N(\mu_2,\sigma_2^2)\)</span>，对于<span class="math inline">\(Y=X_1+X_2\)</span></p>
+<ol type="1">
+<li><span class="math inline">\(X_1,X_2\)</span>独立，则<span class="math inline">\(Y\sim N(\mu_1+\mu_2,
+\sigma_1^2+\sigma_2^2)\)</span>。并且反过来说<span class="math inline">\(Y\)</span>f䄦正态分布，而<span class="math inline">\(Y\)</span>可以表示为两个独立变量的和<span class="math inline">\(Y=X_1+X_2\)</span>，则<span class="math inline">\(X_1,X_2\)</span>必须服从正态分布。</li>
+<li><span class="math inline">\(X_1,X_2\)</span>不独立，但其联合分布为二维正态分布<span class="math inline">\(N(\mu_1,\mu_2,
+\sigma_1^2,\sigma_2^2,\rho)\)</span>，则<span class="math inline">\(Y\)</span>仍然服从正态分布<span class="math inline">\(Y\sim N(\mu_1+\mu_2,
+\sigma_1^2+\sigma_2^2+2\rho\sigma_1\sigma_2)\)</span></li>
+</ol>
+<p>同样可以推广到多维情况，<span class="math inline">\(X_1,\cdots,X_n\)</span>相互独立，分别服从<span class="math inline">\(N(\mu_1,\sigma_1^2),\cdots,N(\mu_n,\sigma_n^2)\)</span>，则<span class="math inline">\(X_1+\cdots+X_n\)</span>服从<span class="math inline">\(N(\mu_1+\cdots+\mu_n,\sigma_1^2+\cdots+\sigma_b^2)\)</span></p>
+<p><strong><span class="math inline">\(\Gamma\)</span>函数</strong></p>
+<p>通过积分</p>
+<p><span class="math display">\[
+\Gamma(x) = \int^\infty_0 e^{-t}t^{x-1}dt(x&gt;0)\]</span></p>
+<p>来定义</p>
+<p><strong><span class="math inline">\(\Beta\)</span>（Beta）函数</strong></p>
+<p>通过积分</p>
+<p><span class="math display">\[
+\Gamma(x) = \int^1_0 t^{x-1}(1-t)^{y-1}dt(x&gt;0
+,y&gt;0)\]</span></p>
+<p>来定义</p>
+<p><strong><span class="math inline">\(\Gamma\)</span>函数的性质</strong></p>
+<ol type="1">
+<li><span class="math inline">\(\Gamma(1)=1\)</span></li>
+<li><span class="math inline">\(\Gamma(1/2)=\sqrt{\pi}\)</span></li>
+<li><span class="math inline">\(\Gamma(x+1)=x\Gamma(x)\)</span></li>
+</ol>
+<p>因此可知，<span class="math inline">\(n\)</span>为正整数时</p>
+<p><span class="math display">\[
+\Gamma(n) = (n-1)!
+\]</span></p>
+<p><span class="math inline">\(n\)</span>为正奇数时</p>
+<p><span class="math display">\[
+\Gamma(n/2) = 1\cdot 3\cdot 5\cdots(n-2)2^{-(n-1)/2}\sqrt{\pi}
+\]</span></p>
+<p>其中<span class="math inline">\(\Gamma\)</span>与<span class="math inline">\(\Beta\)</span>函数之间有重要的关系式</p>
+<p><span class="math display">\[
+\Beta(x,y)=\Gamma(x)\Gamma(y)/\Gamma(x+y)
+\]</span></p>
+<p><strong>卡方分布</strong></p>
+<p>由<span class="math inline">\(\Gamma\)</span>函数的定义可知，若<span class="math inline">\(n&gt;0\)</span>，则函数</p>
+<p>$$ k_n(x)= {<span class="math display">\[\begin{align}
+
+&amp;\frac{1}{\Gamma(n/2)2^{n/2}}e^{-x/2}x^{(n-2)/2} &amp;,\quad
+x&gt;0\\
+&amp;0 &amp;,\quad x\leq 0
+
+\end{align}\]</span>. $$</p>
+<p>是概率密度函数。它称为“自由度为<span class="math inline">\(n\)</span>的皮尔逊卡方密度”，常记为<span class="math inline">\(\mathcal{X}{}_n^2\)</span></p>
+<p><strong>定理1</strong></p>
+<p>若<span class="math inline">\(X_1,\cdots,X_n\)</span>相互独立，都服从正态分布<span class="math inline">\(N(0,1)\)</span>，则<span class="math inline">\(Y=X_1^2+\cdots+X_N^2\)</span>服从自由度为<span class="math inline">\(n\)</span>的卡方分布<span class="math inline">\(\mathcal{X}{}_n^2\)</span></p>
+<p>卡方分布有如下性质</p>
+<ol type="1">
+<li>设<span class="math inline">\(X_1,X_2\)</span>独立，<span class="math inline">\(X_1\sim \mathcal{X}_m^2,X_2\sim
+\mathcal{X}_n^2\)</span>，则<span class="math inline">\(X_1+X_2\sim
+\mathcal{X}_{m+n}^2\)</span></li>
+<li>若<span class="math inline">\(X_1,\cdots,X_n\)</span>独立，且都服从指数分布，则</li>
+</ol>
+<p><span class="math display">\[
+X=2\lambda(X_1+\cdots+X_n)\sim \mathcal{X}_{2n}^2
+\]</span></p>
+<h3 id="随机变量商的密度函数">随机变量商的密度函数</h3>
+<p>设<span class="math inline">\((X_1,X_2)\)</span>有密度函数<span class="math inline">\(f(x_1,x_2)\)</span>，<span class="math inline">\(Y=X_2/X_1\)</span>，要求<span class="math inline">\(Y\)</span>的密度函数</p>
+<p><span class="math display">\[
+f_Y(y) = \int^\infty_0 x_1f(x_1,x_1y)dx_1
+\]</span></p>
+<p>若<span class="math inline">\(X_1,X_2\)</span>独立，则</p>
+<p><span class="math display">\[
+f_Y(y) = \int^\infty_0 x_1f_1(x_1)f_2(x_1y)dx_1
+\]</span></p>
+<p><strong>t分布</strong></p>
+<p><span class="math inline">\(Y=X_2/\sqrt{X_1/n}\)</span>的密度函数为</p>
+<p><span class="math display">\[
+t_n(y)=\frac{\Gamma((n+1)/2)}{\sqrt{n\pi}\Gamma(n/2)}\bigg(1+\frac{y^2}{n}\bigg)^{-\frac{n+1}{2}}
+\]</span></p>
+<p>这个密度函数称为“自由度为<span class="math inline">\(n\)</span>的<span class="math inline">\(t\)</span>分布”的密度函数，常简记为<span class="math inline">\(t_n\)</span></p>
+<p><strong>F分布</strong></p>
+<p>TODO</p>
 
 
 
@@ -1093,6 +1197,8 @@ Y=X_1+X_2
       <ol>
         <li><a href="#离散型随机向量的分布">离散型随机向量的分布</a></li>
         <li><a href="#连续型随机向量的分布">连续型随机向量的分布</a></li>
+        <li><a href="#边缘分布">边缘分布</a></li>
+        <li><a href="#联合分布">联合分布</a></li>
       </ol>
     </li>
     <li><a href="#条件概率分布">条件概率分布</a>
@@ -1107,6 +1213,7 @@ Y=X_1+X_2
         <li><a href="#离散型分布的情况">离散型分布的情况</a></li>
         <li><a href="#连续型分布的情况的一般讨论">连续型分布的情况的一般讨论</a></li>
         <li><a href="#随机变量和的密度函数">随机变量和的密度函数</a></li>
+        <li><a href="#随机变量商的密度函数">随机变量商的密度函数</a></li>
       </ol>
     </li>
   </ol>

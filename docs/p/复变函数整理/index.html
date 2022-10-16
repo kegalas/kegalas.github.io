@@ -112,7 +112,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 28 分钟
+                    阅读时长: 29 分钟
                 </time>
             </div>
         
@@ -879,6 +879,41 @@ f(z)dz|&lt;\varepsilon\)</span></li>
 <p><span class="math display">\[
 \int_\gamma f(z)dz = 0
 \]</span></p>
+<p><strong>定理1</strong></p>
+<p>设<span class="math inline">\(D\)</span>是可求长简单闭曲线<span class="math inline">\(\gamma\)</span>的内部，若<span class="math inline">\(f\in H(D)\bigcap C(\bar D)\)</span>（即在<span class="math inline">\(D\)</span>上全纯且在<span class="math inline">\(\bar D\)</span>上连续），则</p>
+<p><span class="math display">\[
+\int_\gamma f(z)dz = 0
+\]</span></p>
+<p><strong>定理2</strong></p>
+<p>设<span class="math inline">\(\gamma_0,\gamma_1,\cdots,\gamma_n\)</span>是<span class="math inline">\(n+1\)</span>条可求长简单闭曲线，<span class="math inline">\(\gamma_1,\cdots,\gamma_n\)</span>都在<span class="math inline">\(\gamma_0\)</span>内部，<span class="math inline">\(\gamma_1,\cdots,\gamma_n\)</span>中的每一条都在其他<span class="math inline">\(n-1\)</span>条的外部，<span class="math inline">\(D\)</span>是由这<span class="math inline">\(n+1\)</span>条曲线围成的域，用<span class="math inline">\(\gamma\)</span>记<span class="math inline">\(D\)</span>的边界，如果<span class="math inline">\(f\in H(D)\bigcap C(\bar D)\)</span>，那么</p>
+<p><span class="math display">\[
+\int_\gamma f(z)dz = 0
+\]</span></p>
+<p>或者也可以写作</p>
+<p><span class="math display">\[
+\int_{\gamma_0} f(z)dz = \int_{\gamma_1} f(z)dz+\cdots+\int_{\gamma_n}
+f(z)dz
+\]</span></p>
+<h2 id="全纯函数的原函数">全纯函数的原函数</h2>
+<p><strong>定义1</strong></p>
+<p>设<span class="math inline">\(f:D\to \bm C\)</span>是定义在域<span class="math inline">\(D\)</span>上的一个函数，如果存在<span class="math inline">\(F\in H(D)\)</span>，使得<span class="math inline">\(F&#39;(z)=f(z)\)</span>在<span class="math inline">\(D\)</span>上成立，就称<span class="math inline">\(F\)</span>是<span class="math inline">\(f\)</span>的一个原函数</p>
+<p><strong>定理1</strong></p>
+<p>设<span class="math inline">\(f\)</span>在<span class="math inline">\(D\)</span>中连续，且对<span class="math inline">\(D\)</span>中任意可求长闭曲线<span class="math inline">\(\gamma\)</span>均有</p>
+<p><span class="math display">\[
+\int_\gamma f(z)dz=0
+\]</span></p>
+<p>那么</p>
+<p><span class="math display">\[
+F(z) = \int^z_{z_0}f(\zeta)d\zeta
+\]</span></p>
+<p>是<span class="math inline">\(D\)</span>中的全纯函数，且在<span class="math inline">\(D\)</span>中有<span class="math inline">\(F&#39;(z)=f(z)\)</span>，这里<span class="math inline">\(z_0\)</span>是<span class="math inline">\(D\)</span>中一固定点。</p>
+<p><strong>定理2</strong></p>
+<p>设<span class="math inline">\(D\)</span>是<span class="math inline">\(\bm C\)</span>中的单连通域，<span class="math inline">\(f\in H(D)\)</span>，那么<span class="math inline">\(F(z)=\int^z_{z_0}f(\zeta)d\zeta\)</span>是<span class="math inline">\(f\)</span>在<span class="math inline">\(D\)</span>中的一个原函数。</p>
+<p><strong>定理3</strong></p>
+<p>设<span class="math inline">\(D\)</span>是<span class="math inline">\(\bm C\)</span>中的单连通域，<span class="math inline">\(f\in H(D)\)</span>，<span class="math inline">\(\varPhi\)</span>是<span class="math inline">\(f\)</span>的任一原函数，那么</p>
+<p><span class="math display">\[
+\int^z_{z_0}f(\zeta)d\zeta = \varPhi(z)-\varPhi(z_0)
+\]</span></p>
 
 
 
@@ -1250,6 +1285,7 @@ f(z)dz|&lt;\varepsilon\)</span></li>
       <ol>
         <li><a href="#复变函数的积分">复变函数的积分</a></li>
         <li><a href="#cauchy积分定理">Cauchy积分定理</a></li>
+        <li><a href="#全纯函数的原函数">全纯函数的原函数</a></li>
       </ol>
     </li>
   </ol>

@@ -125,7 +125,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 19 分钟
+                    阅读时长: 22 分钟
                 </time>
             </div>
         
@@ -1511,6 +1511,91 @@ d\varPhi_m=\bm B\cdot d\bm S=Bcos\theta dS
 <p><span class="math display">\[
 \oint_S\bm B\cdot d\bm S = 0
 \]</span></p>
+<h3 id="安培环路定理">安培环路定理</h3>
+<ol type="1">
+<li>磁场中<span class="math inline">\(B\)</span>矢量沿闭合路径的线积分和闭合路径的形状大小无关，只与闭合路径包围的电流有关</li>
+<li>当电流的方向与闭合路径绕行方向之间满足右螺旋法则时，I取正值；反之取负值</li>
+</ol>
+<p><span class="math display">\[
+\oint_L \bm B\cdot d\bm l=\mu_0\sum_{内}I_i
+\]</span></p>
+<h3 id="磁场对电流的作用">磁场对电流的作用</h3>
+<p><strong>磁场对载流导线的作用力</strong></p>
+<p><span class="math display">\[
+\bm F = \int_L Id\bm l\times \bm B
+\]</span></p>
+<p>如果导线上各电流源的受力方向不一致，就要沿坐标轴分解力来计算。</p>
+<p>另外闭合载流线圈在匀强磁场中受到的安培力矢量和为零</p>
+<p><strong>均匀磁场对载流线圈的作用</strong></p>
+<p>磁力矩为</p>
+<p><span class="math display">\[
+\bm M=\bm p_m\times B = IS\bm n\times B
+\]</span></p>
+<p>其中<span class="math inline">\(I\)</span>是线圈的电流，<span class="math inline">\(S\)</span>是线圈面积，<span class="math inline">\(\bm n\)</span>是线圈法向量。</p>
+<p><strong>磁力的功</strong></p>
+<p>当回路中电流不变时，磁力所作的供等于电流乘以通过回路所包围面积内的磁通量的增量</p>
+<p><span class="math display">\[
+A=I\Delta\varPhi
+\]</span></p>
+<h3 id="带电粒子在电场和磁场中的运动">带电粒子在电场和磁场中的运动</h3>
+<p><strong>在电场中</strong></p>
+<p><span class="math display">\[
+q\bm E = m\bm a=m\frac{d\bm v}{dt}
+\]</span></p>
+<p><strong>在磁场中</strong></p>
+<p><span class="math display">\[
+\bm F=q\bm v\times \bm B
+\]</span></p>
+<p>洛伦兹力<span class="math inline">\(F\)</span>的一个重要特点是它始终垂直于速度<span class="math inline">\(v\)</span>，因此洛伦兹力只改变带电运动粒子的运动方向，而不改变它的速度的大小。</p>
+<p><strong>霍尔效应</strong></p>
+<p>霍尔元件上下两面的电势差为</p>
+<p><span class="math display">\[
+U_{ab}=\frac{IB}{nqd}=K\frac{IB}{d}
+\]</span></p>
+<p>其中<span class="math inline">\(B\)</span>是与电流<span class="math inline">\(I\)</span>垂直的，如果把电流方向记为霍尔元件的长度方向，那么宽度记为<span class="math inline">\(d\)</span>,<span class="math inline">\(n\)</span>为单位体积内载流子的数量，<span class="math inline">\(q\)</span>为载流子的单位体积内的个数。</p>
+<p>如果载流子是电子，则称为<span class="math inline">\(n\)</span>型半导体。如果是空穴，则为<span class="math inline">\(p\)</span>型。</p>
+<h3 id="磁介质">磁介质</h3>
+<p><strong>磁介质的分类</strong></p>
+<p>磁介质是指放在磁场中经磁化后能反过来影响原来磁场的物质</p>
+<p>原来的磁场记作<span class="math inline">\(\bm
+B_0\)</span>，磁介质产生的记作<span class="math inline">\(\bm
+B&#39;\)</span>，则磁介质中的磁感应强度是其矢量和</p>
+<p><span class="math display">\[
+\bm B=\bm B_0+\bm B&#39;
+\]</span></p>
+<p>相对磁导率定义为</p>
+<p><span class="math display">\[
+\mu_r=\frac{B}{B_0}
+\]</span></p>
+<ol type="1">
+<li>顺磁质。顺磁质的<span class="math inline">\(\mu_r&gt;1\)</span>。产生的磁场和原来的磁场同方向</li>
+<li>抗磁质。抗磁质的<span class="math inline">\(\mu_r&lt;1\)</span>。产生的磁场和原来的磁场反方向</li>
+<li>铁磁质。铁磁质的<span class="math inline">\(\mu_r&gt;&gt;1\)</span>。产生的磁场和原来的磁场同方向</li>
+</ol>
+<p>铁磁质是强磁性物质，其他称为弱磁性物质（非磁性）物质</p>
+<p>对于非磁性物质，其相对磁导率接近<span class="math inline">\(1\)</span>，通常用磁化率来替代表示，即</p>
+<p><span class="math display">\[
+\mathcal{X}_m=\mu_r-1
+\]</span></p>
+<p><strong>磁介质中的环路定理</strong></p>
+<p>将安培环路定理应用到磁介质中，并取以<span class="math inline">\(r\)</span>为半径的闭合同心圆周为积分路径，则有</p>
+<p><span class="math display">\[
+\oint_L \bm B\cdot d\bm l = \mu_0(NI+I_s)
+\]</span></p>
+<p>其中<span class="math inline">\(I_s\)</span>是束缚电流，是线圈电流导致的在磁介质中产生的电流。顺磁质电流方向相同，抗磁质则相反。</p>
+<p>通常我们无法预先知道<span class="math inline">\(I_s\)</span>，所以我们代换得</p>
+<p><span class="math display">\[
+\oint_L \bm B\cdot d\bm l = \mu_0\mu_rNI
+\]</span></p>
+<p>令<span class="math inline">\(\mu=\mu_0\mu_r\)</span>称为磁导率,则</p>
+<p><span class="math display">\[
+\oint_L \frac{\bm B}{\mu}\cdot d\bm l = \sum_{内}I
+\]</span></p>
+<p>令<span class="math inline">\(\frac{\bm B}{\mu}=\bm
+H\)</span>称为磁场强度，则</p>
+<p><span class="math display">\[
+\oint_L \bm H\cdot d\bm l = \sum_{内}I
+\]</span></p>
 
 
 
@@ -1889,6 +1974,10 @@ d\varPhi_m=\bm B\cdot d\bm S=Bcos\theta dS
         <li><a href="#毕奥-萨伐尔定律">毕奥-萨伐尔定律</a></li>
         <li><a href="#磁通量">磁通量</a></li>
         <li><a href="#磁场的高斯定理">磁场的高斯定理</a></li>
+        <li><a href="#安培环路定理">安培环路定理</a></li>
+        <li><a href="#磁场对电流的作用">磁场对电流的作用</a></li>
+        <li><a href="#带电粒子在电场和磁场中的运动">带电粒子在电场和磁场中的运动</a></li>
+        <li><a href="#磁介质">磁介质</a></li>
       </ol>
     </li>
   </ol>

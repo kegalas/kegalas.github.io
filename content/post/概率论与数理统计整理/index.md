@@ -500,7 +500,7 @@ $$
 
 $$
 f(x)=\left\{\begin{matrix}
-\lambda e^{\lambda x},\quad x>0\\
+\lambda e^{-\lambda x},\quad x>0\\
 0,\quad x\leq 0
 \end{matrix}\right.
 $$
@@ -522,7 +522,7 @@ $$
 
 $$
 f(x)=\left\{\begin{matrix}
-\lambda\alpha x^{\alpha-1} e^{\lambda x^\alpha},\quad x>0\\
+\lambda\alpha x^{\alpha-1} e^{-\lambda x^\alpha},\quad x>0\\
 0,\quad x\leq 0
 \end{matrix}\right.
 $$
@@ -558,6 +558,8 @@ F(x)=\left\{\begin{matrix}
 1,\quad\quad\quad\quad\quad\quad\quad\quad x\geq b
 \end{matrix}\right.
 $$
+
+常记作$R(a,b),U(a,b)$
 
 ## 多维随机变量（随机向量）
 
@@ -617,6 +619,10 @@ f(x_1,x_2)=
 \end{matrix}\right.
 $$
 
+以上是矩形情况的密度函数
+
+如果扩展到任意形状的图形，只要求出来其面积，那么密度函数在图形内部就是$1/S$，图形外部是$0$
+
 **二维正态分布**
 
 $$
@@ -649,15 +655,31 @@ $$
 f(x,y) = \frac{\partial^2F(x,y)}{\partial x\partial y}
 $$
 
-**边缘分布**
+### 边缘分布
 
-设$X=(X_1,\cdots,X_n)$为一个$n$维随机向量。$X$有一定的分布$F$，这是一个$n$味分布，因为$X$的每个分量$X_i$都是一维随机变量，故它们都有各自的分布$F_i$，这些都是一维分布，称为随机向量$X$或其分布$F$的边缘分布。边缘分布完全由原分布$F$确定。
+设$X=(X_1,\cdots,X_n)$为一个$n$维随机向量。$X$有一定的分布$F$，这是一个$n$维分布，因为$X$的每个分量$X_i$都是一维随机变量，故它们都有各自的分布$F_i$，这些都是一维分布，称为随机向量$X$或其分布$F$的边缘分布。边缘分布完全由原分布$F$确定。
 
-例如
+例如，在离散型的情况下，边缘分布$P(X_1=a_{1k})$就等于
 
 $$
 P(X_1=a_{1k})=\sum_{j_2,\cdots,j_n}p(k,j_2,\cdots,j_n)
 $$
+
+对于连续型的情况，例如求$f_1(x_1)$
+
+$$
+f_1(x_1) = \int^\infty_{-\infty}\cdots \int^\infty_{-\infty}f(x_1,x_2,\cdots,x_n)dx_2\cdots dx_n
+$$
+
+当然，如果题目有要求变量的范围，则积分上下限要改成相应的值。
+
+### 联合分布
+
+边缘分布指的是随机向量中的一个分量的分布。
+
+而相对应的联合分布，就是强调$(X_1,\cdots,X_n)$的分布是把$X_1,\cdots,X_n$作为一个有联系的整体来考虑的。
+
+当然有些时候边缘分布也可以指众多分量中几个分量的分布。
 
 ## 条件概率分布
 
@@ -824,3 +846,128 @@ Y=X_1+X_2
 $$
 
 的密度函数。
+
+有
+
+$$
+f_Y(y) = \int^\infty_{-\infty}f(x_1,y-x_1)dx_1=\int^\infty_{-\infty}f(x,y-x)dx
+$$
+
+或者作变量代换也有
+
+$$
+f_Y(y) = \int^\infty_{-\infty}f(y-x,x)dx
+$$
+
+如果$X_1,X_2$独立，则$f(x_1,x_2)=f_1(x_1)f_2(x_2)$，有
+
+$$
+f_Y(y) = \int^\infty_{-\infty}f_1(x)f_2(y-x)dx = \int^\infty_{-\infty}f_1(y-x)f_2(x)dx
+$$
+
+对于正态分布，设$X_1,X_2$分别服从正态分布$N(\mu_1,\sigma_1^2),N(\mu_2,\sigma_2^2)$，对于$Y=X_1+X_2$
+
+1. $X_1,X_2$独立，则$Y\sim N(\mu_1+\mu_2, \sigma_1^2+\sigma_2^2)$。并且反过来说$Y$f䄦正态分布，而$Y$可以表示为两个独立变量的和$Y=X_1+X_2$，则$X_1,X_2$必须服从正态分布。
+2. $X_1,X_2$不独立，但其联合分布为二维正态分布$N(\mu_1,\mu_2, \sigma_1^2,\sigma_2^2,\rho)$，则$Y$仍然服从正态分布$Y\sim N(\mu_1+\mu_2, \sigma_1^2+\sigma_2^2+2\rho\sigma_1\sigma_2)$
+
+同样可以推广到多维情况，$X_1,\cdots,X_n$相互独立，分别服从$N(\mu_1,\sigma_1^2),\cdots,N(\mu_n,\sigma_n^2)$，则$X_1+\cdots+X_n$服从$N(\mu_1+\cdots+\mu_n,\sigma_1^2+\cdots+\sigma_b^2)$
+
+**$\Gamma$函数**
+
+通过积分
+
+$$
+\Gamma(x) = \int^\infty_0 e^{-t}t^{x-1}dt(x>0)$$
+
+来定义
+
+**$\Beta$（Beta）函数**
+
+通过积分
+
+$$
+\Gamma(x) = \int^1_0 t^{x-1}(1-t)^{y-1}dt(x>0
+,y>0)$$
+
+来定义
+
+**$\Gamma$函数的性质**
+
+1. $\Gamma(1)=1$
+2. $\Gamma(1/2)=\sqrt{\pi}$
+3. $\Gamma(x+1)=x\Gamma(x)$
+
+因此可知，$n$为正整数时
+
+$$
+\Gamma(n) = (n-1)!
+$$
+
+$n$为正奇数时
+
+$$
+\Gamma(n/2) = 1\cdot 3\cdot 5\cdots(n-2)2^{-(n-1)/2}\sqrt{\pi}
+$$
+
+其中$\Gamma$与$\Beta$函数之间有重要的关系式
+
+$$
+\Beta(x,y)=\Gamma(x)\Gamma(y)/\Gamma(x+y)
+$$
+
+**卡方分布**
+
+由$\Gamma$函数的定义可知，若$n>0$，则函数
+
+$$
+k_n(x)=
+\left\{\begin{align}
+
+&\frac{1}{\Gamma(n/2)2^{n/2}}e^{-x/2}x^{(n-2)/2} &,\quad x>0\\
+&0 &,\quad x\leq 0
+
+\end{align}\right.
+$$
+
+是概率密度函数。它称为“自由度为$n$的皮尔逊卡方密度”，常记为$\mathcal{X}{}_n^2$
+
+**定理1**
+
+若$X_1,\cdots,X_n$相互独立，都服从正态分布$N(0,1)$，则$Y=X_1^2+\cdots+X_N^2$服从自由度为$n$的卡方分布$\mathcal{X}{}_n^2$
+
+卡方分布有如下性质
+
+1. 设$X_1,X_2$独立，$X_1\sim \mathcal{X}_m^2,X_2\sim \mathcal{X}_n^2$，则$X_1+X_2\sim \mathcal{X}_{m+n}^2$
+2. 若$X_1,\cdots,X_n$独立，且都服从指数分布，则
+
+$$
+X=2\lambda(X_1+\cdots+X_n)\sim \mathcal{X}_{2n}^2
+$$
+
+### 随机变量商的密度函数
+
+设$(X_1,X_2)$有密度函数$f(x_1,x_2)$，$Y=X_2/X_1$，要求$Y$的密度函数
+
+$$
+f_Y(y) = \int^\infty_0 x_1f(x_1,x_1y)dx_1
+$$
+
+若$X_1,X_2$独立，则
+
+$$
+f_Y(y) = \int^\infty_0 x_1f_1(x_1)f_2(x_1y)dx_1
+$$
+
+**t分布**
+
+$Y=X_2/\sqrt{X_1/n}$的密度函数为
+
+$$
+t_n(y)=\frac{\Gamma((n+1)/2)}{\sqrt{n\pi}\Gamma(n/2)}\bigg(1+\frac{y^2}{n}\bigg)^{-\frac{n+1}{2}}
+$$
+
+这个密度函数称为“自由度为$n$的$t$分布”的密度函数，常简记为$t_n$
+
+**F分布**
+
+TODO

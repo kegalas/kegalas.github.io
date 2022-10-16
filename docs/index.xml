@@ -987,6 +987,39 @@ i_k=G_iu=\frac{G_k}{G_{eq}}i
 &lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(G_{ij}(i\neq j)\)&lt;/span&gt;称为节点&lt;span class=&#34;math inline&#34;&gt;\(i,j\)&lt;/span&gt;之间的互电导，等于两节点之间的电导之和，恒取&lt;span class=&#34;math inline&#34;&gt;\(-\)&lt;/span&gt;&lt;/li&gt;
 &lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\((\sum I_s)_i\)&lt;/span&gt;称为节点&lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt;的等效电流源，等于流入节点&lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt;的所有电流源电流的代数和。流入为&lt;span class=&#34;math inline&#34;&gt;\(+\)&lt;/span&gt;，流出为&lt;span class=&#34;math inline&#34;&gt;\(-\)&lt;/span&gt;&lt;/li&gt;
 &lt;/ol&gt;
+&lt;h2 id=&#34;齐次定理和叠加定理&#34;&gt;齐次定理和叠加定理&lt;/h2&gt;
+&lt;p&gt;首先介绍齐次性和叠加性，对于线性映射&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;，它满足&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;齐次性（比例性），即&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+f(ax)=af(x)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;ol start=&#34;2&#34; type=&#34;1&#34;&gt;
+&lt;li&gt;可加性（叠加性）&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+f(x_1+x_2) = f(x_1)+f(x_2)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;两者也可以结合使用。&lt;/p&gt;
+&lt;p&gt;例如&lt;span class=&#34;math inline&#34;&gt;\(f(x)=ax\)&lt;/span&gt;是线性的，但&lt;span class=&#34;math inline&#34;&gt;\(f(x)=ax+b\)&lt;/span&gt;就不是线性的。&lt;/p&gt;
+&lt;h3 id=&#34;齐次定理&#34;&gt;齐次定理&lt;/h3&gt;
+&lt;p&gt;对于有唯一解的线性电路，当只有一个激励源（独立电压源或独立电流源，必须是独立的）x(t)作用时，其响应y(t)（电路任意处的电压或电流）与激励成齐次关系。例如&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;9.jpg&#34; alt=&#34;9.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;9.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;注意：&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;只能用于有唯一解的线性电路，不能用于非线性电路&lt;/li&gt;
+&lt;li&gt;响应也称为输出，指电路中任意处的电流或电压；功率与激励源之间不存在线性关系&lt;/li&gt;
+&lt;li&gt;激励也称为输入，指电路中的独立源，受控源不是激励源&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;叠加定理&#34;&gt;叠加定理&lt;/h3&gt;
+&lt;p&gt;对于有唯一解的线性电路，多个激励源共同作用时引起的响应（电路中各处的电流、电压）等于各个激励源单独作用时（其他激励源置零）所引起的响应之和&lt;/p&gt;
+&lt;h2 id=&#34;替代定理&#34;&gt;替代定理&lt;/h2&gt;
+&lt;p&gt;对于有唯一解的线性或非线性电路，若某支路的电压&lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt;或电流&lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt;已知，则该支路可用方向和大小与&lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt;相同的电压源替代，或用方向和大小与&lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt;相同的电流源替代，而不会影响其他点的电流和电压。&lt;/p&gt;
+&lt;p&gt;注意，替换成电流源后电压不变，替换成电压源后电流也不变。&lt;/p&gt;
 
 
 </description>
@@ -1754,6 +1787,41 @@ f(z)dz|&amp;lt;\varepsilon\)&lt;/span&gt;&lt;/li&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 \int_\gamma f(z)dz = 0
 \]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定理1&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;是可求长简单闭曲线&lt;span class=&#34;math inline&#34;&gt;\(\gamma\)&lt;/span&gt;的内部，若&lt;span class=&#34;math inline&#34;&gt;\(f\in H(D)\bigcap C(\bar D)\)&lt;/span&gt;（即在&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;上全纯且在&lt;span class=&#34;math inline&#34;&gt;\(\bar D\)&lt;/span&gt;上连续），则&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\int_\gamma f(z)dz = 0
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定理2&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(\gamma_0,\gamma_1,\cdots,\gamma_n\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(n+1\)&lt;/span&gt;条可求长简单闭曲线，&lt;span class=&#34;math inline&#34;&gt;\(\gamma_1,\cdots,\gamma_n\)&lt;/span&gt;都在&lt;span class=&#34;math inline&#34;&gt;\(\gamma_0\)&lt;/span&gt;内部，&lt;span class=&#34;math inline&#34;&gt;\(\gamma_1,\cdots,\gamma_n\)&lt;/span&gt;中的每一条都在其他&lt;span class=&#34;math inline&#34;&gt;\(n-1\)&lt;/span&gt;条的外部，&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;是由这&lt;span class=&#34;math inline&#34;&gt;\(n+1\)&lt;/span&gt;条曲线围成的域，用&lt;span class=&#34;math inline&#34;&gt;\(\gamma\)&lt;/span&gt;记&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;的边界，如果&lt;span class=&#34;math inline&#34;&gt;\(f\in H(D)\bigcap C(\bar D)\)&lt;/span&gt;，那么&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\int_\gamma f(z)dz = 0
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;或者也可以写作&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\int_{\gamma_0} f(z)dz = \int_{\gamma_1} f(z)dz+\cdots+\int_{\gamma_n}
+f(z)dz
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h2 id=&#34;全纯函数的原函数&#34;&gt;全纯函数的原函数&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;定义1&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(f:D\to \bm C\)&lt;/span&gt;是定义在域&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;上的一个函数，如果存在&lt;span class=&#34;math inline&#34;&gt;\(F\in H(D)\)&lt;/span&gt;，使得&lt;span class=&#34;math inline&#34;&gt;\(F&amp;#39;(z)=f(z)\)&lt;/span&gt;在&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;上成立，就称&lt;span class=&#34;math inline&#34;&gt;\(F\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;的一个原函数&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定理1&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;在&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;中连续，且对&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;中任意可求长闭曲线&lt;span class=&#34;math inline&#34;&gt;\(\gamma\)&lt;/span&gt;均有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\int_\gamma f(z)dz=0
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;那么&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+F(z) = \int^z_{z_0}f(\zeta)d\zeta
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;是&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;中的全纯函数，且在&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;中有&lt;span class=&#34;math inline&#34;&gt;\(F&amp;#39;(z)=f(z)\)&lt;/span&gt;，这里&lt;span class=&#34;math inline&#34;&gt;\(z_0\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;中一固定点。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定理2&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(\bm C\)&lt;/span&gt;中的单连通域，&lt;span class=&#34;math inline&#34;&gt;\(f\in H(D)\)&lt;/span&gt;，那么&lt;span class=&#34;math inline&#34;&gt;\(F(z)=\int^z_{z_0}f(\zeta)d\zeta\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;在&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;中的一个原函数。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定理3&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(\bm C\)&lt;/span&gt;中的单连通域，&lt;span class=&#34;math inline&#34;&gt;\(f\in H(D)\)&lt;/span&gt;，&lt;span class=&#34;math inline&#34;&gt;\(\varPhi\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;的任一原函数，那么&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\int^z_{z_0}f(\zeta)d\zeta = \varPhi(z)-\varPhi(z_0)
+\]&lt;/span&gt;&lt;/p&gt;
 
 
 </description>
@@ -2115,7 +2183,7 @@ P\left(\frac{-1-1.5}{2}\leq\frac{X-1.5}{2}\leq\frac{2-1.5}{2}\right)
 &lt;p&gt;若随机变量&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;有概率密度函数&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 f(x)=\left\{\begin{matrix}
-\lambda e^{\lambda x},\quad x&amp;gt;0\\
+\lambda e^{-\lambda x},\quad x&amp;gt;0\\
 0,\quad x\leq 0
 \end{matrix}\right.
 \]&lt;/span&gt;&lt;/p&gt;
@@ -2131,7 +2199,7 @@ F(x)=\left\{\begin{matrix}
 &lt;p&gt;满足&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 f(x)=\left\{\begin{matrix}
-\lambda\alpha x^{\alpha-1} e^{\lambda x^\alpha},\quad x&amp;gt;0\\
+\lambda\alpha x^{\alpha-1} e^{-\lambda x^\alpha},\quad x&amp;gt;0\\
 0,\quad x\leq 0
 \end{matrix}\right.
 \]&lt;/span&gt;&lt;/p&gt;
@@ -2159,6 +2227,7 @@ F(x)=\left\{\begin{matrix}
 1,\quad\quad\quad\quad\quad\quad\quad\quad x\geq b
 \end{matrix}\right.
 \]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;常记作&lt;span class=&#34;math inline&#34;&gt;\(R(a,b),U(a,b)\)&lt;/span&gt;&lt;/p&gt;
 &lt;h2 id=&#34;多维随机变量随机向量&#34;&gt;多维随机变量（随机向量）&lt;/h2&gt;
 &lt;h3 id=&#34;离散型随机向量的分布&#34;&gt;离散型随机向量的分布&lt;/h3&gt;
 &lt;p&gt;一般的，设&lt;span class=&#34;math inline&#34;&gt;\(X=(X_1,X_2,\cdots,X_n)\)&lt;/span&gt;为一个&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;维向量，其每个分量，即&lt;span class=&#34;math inline&#34;&gt;\(X_1,\cdots,X_n\)&lt;/span&gt;都是一维随机变量，则称&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;是一个&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;维随机向量或&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;维随机变量。&lt;/p&gt;
@@ -2202,6 +2271,8 @@ f(x_1,x_2)=
 other\quad\quad\quad\quad\quad\quad
 \end{matrix}\right.
 \]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;以上是矩形情况的密度函数&lt;/p&gt;
+&lt;p&gt;如果扩展到任意形状的图形，只要求出来其面积，那么密度函数在图形内部就是&lt;span class=&#34;math inline&#34;&gt;\(1/S\)&lt;/span&gt;，图形外部是&lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;二维正态分布&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 f(x_1,x_2)=(2\pi\sigma_1\sigma_2\sqrt{1-\rho^2})^{-1}\exp\left[-\frac{1}{2(1-\rho^2)}\left(\frac{(x_1-a)^2}{\sigma_1^2}-\frac{2\rho(x_1-a)(x_2-b)}{\sigma_1\sigma_2}+
@@ -2229,12 +2300,22 @@ F(x_1,x_2,\cdots,x_n)=P(X_1\leq x_1, X_2\leq x_2,\cdots,X_n\leq x_n)
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 f(x,y) = \frac{\partial^2F(x,y)}{\partial x\partial y}
 \]&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;边缘分布&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(X=(X_1,\cdots,X_n)\)&lt;/span&gt;为一个&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;维随机向量。&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;有一定的分布&lt;span class=&#34;math inline&#34;&gt;\(F\)&lt;/span&gt;，这是一个&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;味分布，因为&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;的每个分量&lt;span class=&#34;math inline&#34;&gt;\(X_i\)&lt;/span&gt;都是一维随机变量，故它们都有各自的分布&lt;span class=&#34;math inline&#34;&gt;\(F_i\)&lt;/span&gt;，这些都是一维分布，称为随机向量&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;或其分布&lt;span class=&#34;math inline&#34;&gt;\(F\)&lt;/span&gt;的边缘分布。边缘分布完全由原分布&lt;span class=&#34;math inline&#34;&gt;\(F\)&lt;/span&gt;确定。&lt;/p&gt;
-&lt;p&gt;例如&lt;/p&gt;
+&lt;h3 id=&#34;边缘分布&#34;&gt;边缘分布&lt;/h3&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(X=(X_1,\cdots,X_n)\)&lt;/span&gt;为一个&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;维随机向量。&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;有一定的分布&lt;span class=&#34;math inline&#34;&gt;\(F\)&lt;/span&gt;，这是一个&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;维分布，因为&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;的每个分量&lt;span class=&#34;math inline&#34;&gt;\(X_i\)&lt;/span&gt;都是一维随机变量，故它们都有各自的分布&lt;span class=&#34;math inline&#34;&gt;\(F_i\)&lt;/span&gt;，这些都是一维分布，称为随机向量&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;或其分布&lt;span class=&#34;math inline&#34;&gt;\(F\)&lt;/span&gt;的边缘分布。边缘分布完全由原分布&lt;span class=&#34;math inline&#34;&gt;\(F\)&lt;/span&gt;确定。&lt;/p&gt;
+&lt;p&gt;例如，在离散型的情况下，边缘分布&lt;span class=&#34;math inline&#34;&gt;\(P(X_1=a_{1k})\)&lt;/span&gt;就等于&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 P(X_1=a_{1k})=\sum_{j_2,\cdots,j_n}p(k,j_2,\cdots,j_n)
 \]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;对于连续型的情况，例如求&lt;span class=&#34;math inline&#34;&gt;\(f_1(x_1)\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+f_1(x_1) = \int^\infty_{-\infty}\cdots
+\int^\infty_{-\infty}f(x_1,x_2,\cdots,x_n)dx_2\cdots dx_n
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;当然，如果题目有要求变量的范围，则积分上下限要改成相应的值。&lt;/p&gt;
+&lt;h3 id=&#34;联合分布&#34;&gt;联合分布&lt;/h3&gt;
+&lt;p&gt;边缘分布指的是随机向量中的一个分量的分布。&lt;/p&gt;
+&lt;p&gt;而相对应的联合分布，就是强调&lt;span class=&#34;math inline&#34;&gt;\((X_1,\cdots,X_n)\)&lt;/span&gt;的分布是把&lt;span class=&#34;math inline&#34;&gt;\(X_1,\cdots,X_n\)&lt;/span&gt;作为一个有联系的整体来考虑的。&lt;/p&gt;
+&lt;p&gt;当然有些时候边缘分布也可以指众多分量中几个分量的分布。&lt;/p&gt;
 &lt;h2 id=&#34;条件概率分布&#34;&gt;条件概率分布&lt;/h2&gt;
 &lt;p&gt;概念同前面提到的条件概率。&lt;/p&gt;
 &lt;h3 id=&#34;离散型&#34;&gt;离散型&lt;/h3&gt;
@@ -2342,6 +2423,97 @@ f_Y(y_1,y_2) = f(g^{-1}_1(y_1,y_2),g^{-1}_2(y_1,y_2))|J(y_1,y_2)|
 Y=X_1+X_2
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;的密度函数。&lt;/p&gt;
+&lt;p&gt;有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+f_Y(y) =
+\int^\infty_{-\infty}f(x_1,y-x_1)dx_1=\int^\infty_{-\infty}f(x,y-x)dx
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;或者作变量代换也有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+f_Y(y) = \int^\infty_{-\infty}f(y-x,x)dx
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;如果&lt;span class=&#34;math inline&#34;&gt;\(X_1,X_2\)&lt;/span&gt;独立，则&lt;span class=&#34;math inline&#34;&gt;\(f(x_1,x_2)=f_1(x_1)f_2(x_2)\)&lt;/span&gt;，有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+f_Y(y) = \int^\infty_{-\infty}f_1(x)f_2(y-x)dx =
+\int^\infty_{-\infty}f_1(y-x)f_2(x)dx
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;对于正态分布，设&lt;span class=&#34;math inline&#34;&gt;\(X_1,X_2\)&lt;/span&gt;分别服从正态分布&lt;span class=&#34;math inline&#34;&gt;\(N(\mu_1,\sigma_1^2),N(\mu_2,\sigma_2^2)\)&lt;/span&gt;，对于&lt;span class=&#34;math inline&#34;&gt;\(Y=X_1+X_2\)&lt;/span&gt;&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(X_1,X_2\)&lt;/span&gt;独立，则&lt;span class=&#34;math inline&#34;&gt;\(Y\sim N(\mu_1+\mu_2,
+\sigma_1^2+\sigma_2^2)\)&lt;/span&gt;。并且反过来说&lt;span class=&#34;math inline&#34;&gt;\(Y\)&lt;/span&gt;f䄦正态分布，而&lt;span class=&#34;math inline&#34;&gt;\(Y\)&lt;/span&gt;可以表示为两个独立变量的和&lt;span class=&#34;math inline&#34;&gt;\(Y=X_1+X_2\)&lt;/span&gt;，则&lt;span class=&#34;math inline&#34;&gt;\(X_1,X_2\)&lt;/span&gt;必须服从正态分布。&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(X_1,X_2\)&lt;/span&gt;不独立，但其联合分布为二维正态分布&lt;span class=&#34;math inline&#34;&gt;\(N(\mu_1,\mu_2,
+\sigma_1^2,\sigma_2^2,\rho)\)&lt;/span&gt;，则&lt;span class=&#34;math inline&#34;&gt;\(Y\)&lt;/span&gt;仍然服从正态分布&lt;span class=&#34;math inline&#34;&gt;\(Y\sim N(\mu_1+\mu_2,
+\sigma_1^2+\sigma_2^2+2\rho\sigma_1\sigma_2)\)&lt;/span&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;同样可以推广到多维情况，&lt;span class=&#34;math inline&#34;&gt;\(X_1,\cdots,X_n\)&lt;/span&gt;相互独立，分别服从&lt;span class=&#34;math inline&#34;&gt;\(N(\mu_1,\sigma_1^2),\cdots,N(\mu_n,\sigma_n^2)\)&lt;/span&gt;，则&lt;span class=&#34;math inline&#34;&gt;\(X_1+\cdots+X_n\)&lt;/span&gt;服从&lt;span class=&#34;math inline&#34;&gt;\(N(\mu_1+\cdots+\mu_n,\sigma_1^2+\cdots+\sigma_b^2)\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&lt;span class=&#34;math inline&#34;&gt;\(\Gamma\)&lt;/span&gt;函数&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;通过积分&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\Gamma(x) = \int^\infty_0 e^{-t}t^{x-1}dt(x&amp;gt;0)\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;来定义&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&lt;span class=&#34;math inline&#34;&gt;\(\Beta\)&lt;/span&gt;（Beta）函数&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;通过积分&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\Gamma(x) = \int^1_0 t^{x-1}(1-t)^{y-1}dt(x&amp;gt;0
+,y&amp;gt;0)\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;来定义&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&lt;span class=&#34;math inline&#34;&gt;\(\Gamma\)&lt;/span&gt;函数的性质&lt;/strong&gt;&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(\Gamma(1)=1\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(\Gamma(1/2)=\sqrt{\pi}\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(\Gamma(x+1)=x\Gamma(x)\)&lt;/span&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;因此可知，&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;为正整数时&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\Gamma(n) = (n-1)!
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;为正奇数时&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\Gamma(n/2) = 1\cdot 3\cdot 5\cdots(n-2)2^{-(n-1)/2}\sqrt{\pi}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(\Gamma\)&lt;/span&gt;与&lt;span class=&#34;math inline&#34;&gt;\(\Beta\)&lt;/span&gt;函数之间有重要的关系式&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\Beta(x,y)=\Gamma(x)\Gamma(y)/\Gamma(x+y)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;卡方分布&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;由&lt;span class=&#34;math inline&#34;&gt;\(\Gamma\)&lt;/span&gt;函数的定义可知，若&lt;span class=&#34;math inline&#34;&gt;\(n&amp;gt;0\)&lt;/span&gt;，则函数&lt;/p&gt;
+&lt;p&gt;$$ k_n(x)= {&lt;span class=&#34;math display&#34;&gt;\[\begin{align}
+
+&amp;amp;\frac{1}{\Gamma(n/2)2^{n/2}}e^{-x/2}x^{(n-2)/2} &amp;amp;,\quad
+x&amp;gt;0\\
+&amp;amp;0 &amp;amp;,\quad x\leq 0
+
+\end{align}\]&lt;/span&gt;. $$&lt;/p&gt;
+&lt;p&gt;是概率密度函数。它称为“自由度为&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;的皮尔逊卡方密度”，常记为&lt;span class=&#34;math inline&#34;&gt;\(\mathcal{X}{}_n^2\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定理1&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;若&lt;span class=&#34;math inline&#34;&gt;\(X_1,\cdots,X_n\)&lt;/span&gt;相互独立，都服从正态分布&lt;span class=&#34;math inline&#34;&gt;\(N(0,1)\)&lt;/span&gt;，则&lt;span class=&#34;math inline&#34;&gt;\(Y=X_1^2+\cdots+X_N^2\)&lt;/span&gt;服从自由度为&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;的卡方分布&lt;span class=&#34;math inline&#34;&gt;\(\mathcal{X}{}_n^2\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;卡方分布有如下性质&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;设&lt;span class=&#34;math inline&#34;&gt;\(X_1,X_2\)&lt;/span&gt;独立，&lt;span class=&#34;math inline&#34;&gt;\(X_1\sim \mathcal{X}_m^2,X_2\sim
+\mathcal{X}_n^2\)&lt;/span&gt;，则&lt;span class=&#34;math inline&#34;&gt;\(X_1+X_2\sim
+\mathcal{X}_{m+n}^2\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;若&lt;span class=&#34;math inline&#34;&gt;\(X_1,\cdots,X_n\)&lt;/span&gt;独立，且都服从指数分布，则&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+X=2\lambda(X_1+\cdots+X_n)\sim \mathcal{X}_{2n}^2
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;随机变量商的密度函数&#34;&gt;随机变量商的密度函数&lt;/h3&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\((X_1,X_2)\)&lt;/span&gt;有密度函数&lt;span class=&#34;math inline&#34;&gt;\(f(x_1,x_2)\)&lt;/span&gt;，&lt;span class=&#34;math inline&#34;&gt;\(Y=X_2/X_1\)&lt;/span&gt;，要求&lt;span class=&#34;math inline&#34;&gt;\(Y\)&lt;/span&gt;的密度函数&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+f_Y(y) = \int^\infty_0 x_1f(x_1,x_1y)dx_1
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;若&lt;span class=&#34;math inline&#34;&gt;\(X_1,X_2\)&lt;/span&gt;独立，则&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+f_Y(y) = \int^\infty_0 x_1f_1(x_1)f_2(x_1y)dx_1
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;t分布&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(Y=X_2/\sqrt{X_1/n}\)&lt;/span&gt;的密度函数为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+t_n(y)=\frac{\Gamma((n+1)/2)}{\sqrt{n\pi}\Gamma(n/2)}\bigg(1+\frac{y^2}{n}\bigg)^{-\frac{n+1}{2}}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;这个密度函数称为“自由度为&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;的&lt;span class=&#34;math inline&#34;&gt;\(t\)&lt;/span&gt;分布”的密度函数，常简记为&lt;span class=&#34;math inline&#34;&gt;\(t_n\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;F分布&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;TODO&lt;/p&gt;
 
 
 </description>
@@ -7327,6 +7499,91 @@ d\varPhi_m=\bm B\cdot d\bm S=Bcos\theta dS
 &lt;p&gt;穿过任一闭合曲面的总磁通量恒等于零，即&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 \oint_S\bm B\cdot d\bm S = 0
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;安培环路定理&#34;&gt;安培环路定理&lt;/h3&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;磁场中&lt;span class=&#34;math inline&#34;&gt;\(B\)&lt;/span&gt;矢量沿闭合路径的线积分和闭合路径的形状大小无关，只与闭合路径包围的电流有关&lt;/li&gt;
+&lt;li&gt;当电流的方向与闭合路径绕行方向之间满足右螺旋法则时，I取正值；反之取负值&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\oint_L \bm B\cdot d\bm l=\mu_0\sum_{内}I_i
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;磁场对电流的作用&#34;&gt;磁场对电流的作用&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;磁场对载流导线的作用力&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\bm F = \int_L Id\bm l\times \bm B
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;如果导线上各电流源的受力方向不一致，就要沿坐标轴分解力来计算。&lt;/p&gt;
+&lt;p&gt;另外闭合载流线圈在匀强磁场中受到的安培力矢量和为零&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;均匀磁场对载流线圈的作用&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;磁力矩为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\bm M=\bm p_m\times B = IS\bm n\times B
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(I\)&lt;/span&gt;是线圈的电流，&lt;span class=&#34;math inline&#34;&gt;\(S\)&lt;/span&gt;是线圈面积，&lt;span class=&#34;math inline&#34;&gt;\(\bm n\)&lt;/span&gt;是线圈法向量。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;磁力的功&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;当回路中电流不变时，磁力所作的供等于电流乘以通过回路所包围面积内的磁通量的增量&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+A=I\Delta\varPhi
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;带电粒子在电场和磁场中的运动&#34;&gt;带电粒子在电场和磁场中的运动&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;在电场中&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+q\bm E = m\bm a=m\frac{d\bm v}{dt}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;在磁场中&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\bm F=q\bm v\times \bm B
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;洛伦兹力&lt;span class=&#34;math inline&#34;&gt;\(F\)&lt;/span&gt;的一个重要特点是它始终垂直于速度&lt;span class=&#34;math inline&#34;&gt;\(v\)&lt;/span&gt;，因此洛伦兹力只改变带电运动粒子的运动方向，而不改变它的速度的大小。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;霍尔效应&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;霍尔元件上下两面的电势差为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+U_{ab}=\frac{IB}{nqd}=K\frac{IB}{d}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(B\)&lt;/span&gt;是与电流&lt;span class=&#34;math inline&#34;&gt;\(I\)&lt;/span&gt;垂直的，如果把电流方向记为霍尔元件的长度方向，那么宽度记为&lt;span class=&#34;math inline&#34;&gt;\(d\)&lt;/span&gt;,&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;为单位体积内载流子的数量，&lt;span class=&#34;math inline&#34;&gt;\(q\)&lt;/span&gt;为载流子的单位体积内的个数。&lt;/p&gt;
+&lt;p&gt;如果载流子是电子，则称为&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;型半导体。如果是空穴，则为&lt;span class=&#34;math inline&#34;&gt;\(p\)&lt;/span&gt;型。&lt;/p&gt;
+&lt;h3 id=&#34;磁介质&#34;&gt;磁介质&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;磁介质的分类&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;磁介质是指放在磁场中经磁化后能反过来影响原来磁场的物质&lt;/p&gt;
+&lt;p&gt;原来的磁场记作&lt;span class=&#34;math inline&#34;&gt;\(\bm
+B_0\)&lt;/span&gt;，磁介质产生的记作&lt;span class=&#34;math inline&#34;&gt;\(\bm
+B&amp;#39;\)&lt;/span&gt;，则磁介质中的磁感应强度是其矢量和&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\bm B=\bm B_0+\bm B&amp;#39;
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;相对磁导率定义为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\mu_r=\frac{B}{B_0}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;顺磁质。顺磁质的&lt;span class=&#34;math inline&#34;&gt;\(\mu_r&amp;gt;1\)&lt;/span&gt;。产生的磁场和原来的磁场同方向&lt;/li&gt;
+&lt;li&gt;抗磁质。抗磁质的&lt;span class=&#34;math inline&#34;&gt;\(\mu_r&amp;lt;1\)&lt;/span&gt;。产生的磁场和原来的磁场反方向&lt;/li&gt;
+&lt;li&gt;铁磁质。铁磁质的&lt;span class=&#34;math inline&#34;&gt;\(\mu_r&amp;gt;&amp;gt;1\)&lt;/span&gt;。产生的磁场和原来的磁场同方向&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;铁磁质是强磁性物质，其他称为弱磁性物质（非磁性）物质&lt;/p&gt;
+&lt;p&gt;对于非磁性物质，其相对磁导率接近&lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt;，通常用磁化率来替代表示，即&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\mathcal{X}_m=\mu_r-1
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;磁介质中的环路定理&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;将安培环路定理应用到磁介质中，并取以&lt;span class=&#34;math inline&#34;&gt;\(r\)&lt;/span&gt;为半径的闭合同心圆周为积分路径，则有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\oint_L \bm B\cdot d\bm l = \mu_0(NI+I_s)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(I_s\)&lt;/span&gt;是束缚电流，是线圈电流导致的在磁介质中产生的电流。顺磁质电流方向相同，抗磁质则相反。&lt;/p&gt;
+&lt;p&gt;通常我们无法预先知道&lt;span class=&#34;math inline&#34;&gt;\(I_s\)&lt;/span&gt;，所以我们代换得&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\oint_L \bm B\cdot d\bm l = \mu_0\mu_rNI
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;令&lt;span class=&#34;math inline&#34;&gt;\(\mu=\mu_0\mu_r\)&lt;/span&gt;称为磁导率,则&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\oint_L \frac{\bm B}{\mu}\cdot d\bm l = \sum_{内}I
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;令&lt;span class=&#34;math inline&#34;&gt;\(\frac{\bm B}{\mu}=\bm
+H\)&lt;/span&gt;称为磁场强度，则&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\oint_L \bm H\cdot d\bm l = \sum_{内}I
 \]&lt;/span&gt;&lt;/p&gt;
 
 
