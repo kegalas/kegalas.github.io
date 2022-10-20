@@ -125,7 +125,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 22 分钟
+                    阅读时长: 23 分钟
                 </time>
             </div>
         
@@ -1596,6 +1596,58 @@ H\)</span>称为磁场强度，则</p>
 <p><span class="math display">\[
 \oint_L \bm H\cdot d\bm l = \sum_{内}I
 \]</span></p>
+<h2 id="电磁感应与电磁场">电磁感应与电磁场</h2>
+<h3 id="电动势">电动势</h3>
+<p>法拉第通过研究发现，不论用什么办法，只要使穿过道题闭合回路的磁通量发生变化，此回路中就会产生电流。</p>
+<p>电动势的定义为：非静电力把单位正电荷从负极通过电荷内部搬移到正极所做的功，用<span class="math inline">\(\varepsilon\)</span>表示。如果用<span class="math inline">\(A_k\)</span>表示在电源内非静电力把正电荷<span class="math inline">\(q\)</span>从负极搬到正极所做的功，则</p>
+<p><span class="math display">\[
+\varepsilon = \frac{A_k}{q}
+\]</span></p>
+<p>同样的，我们定义单位正电荷所受的非静电力定义为非静电性电场强度。若用<span class="math inline">\(F_k\)</span>表示正电荷<span class="math inline">\(q\)</span>所受的非静电力，用符号<span class="math inline">\(E_k\)</span>表示非静电性电场强度，则</p>
+<p><span class="math display">\[
+\bm E_k=\frac{\bm F_k}{q}
+\]</span></p>
+<p>结合两式，有</p>
+<p><span class="math display">\[
+A_k = \int^+_- \bm F_k\cdot d\bm l = q\int^+_- \bm E_k\cdot d\bm l
+\]</span></p>
+<p><span class="math display">\[
+\varepsilon = \int^+_- \bm E_k\cdot d\bm l
+\]</span></p>
+<p>如果一个闭合回路<span class="math inline">\(L\)</span>上处处都有非静电力<span class="math inline">\(F_k\)</span>存在，这时整个闭合回路内的总电动势是</p>
+<p><span class="math display">\[
+\varepsilon = \oint \bm E_k\cdot d\bm l
+\]</span></p>
+<p>对于有非静电力<span class="math inline">\(F_k\)</span>存在的一段电路<span class="math inline">\(ab\)</span>上的电动势为</p>
+<p><span class="math display">\[
+\varepsilon = \int^b_a \bm E_k\cdot d\bm l
+\]</span></p>
+<h3 id="法拉第电磁感应定律">法拉第电磁感应定律</h3>
+<p>导体回路中产生的感应电动势<span class="math inline">\(\varepsilon_i\)</span>的大小与穿过回路的磁通量的变化率<span class="math inline">\(d\varPhi/dt\)</span>成正比</p>
+<p><span class="math display">\[
+\varepsilon_i =-\frac{d\varPhi}{dt}
+\]</span></p>
+<p>具体方向由右手螺旋定则确定。</p>
+<p>如果有多匝线圈，并且穿过各线圈的磁通量相同，则总磁通量<span class="math inline">\(\varPsi=N\varPhi\)</span></p>
+<p><strong>楞次定律</strong></p>
+<p>闭合回路中，感应电流的方向总是使得它自身所产生的磁通量反抗引起感应电流的磁通量的变化。</p>
+<h3 id="动生电动势">动生电动势</h3>
+<p>由于导体或导体回路在恒定磁场中运动，导体或导体回路内产生的感应电动势。</p>
+<p>若长为<span class="math inline">\(l\)</span>的导体棒<span class="math inline">\(ab\)</span>，在恒定的均匀磁场中以匀速<span class="math inline">\(\bm v\)</span>沿垂直于磁场<span class="math inline">\(\bm B\)</span>的方向运动。</p>
+<p>导体棒<span class="math inline">\(ab\)</span>上的动生电动势为</p>
+<p><span class="math display">\[
+\varepsilon_i = \int^b_a \bm E_k\cdot d\bm l = \int^b_a (\bm v\times \bm
+B)\cdot d\bm l
+\]</span></p>
+<p>可以根据左手定则判断电动势方向。</p>
+<h3 id="感生电动势">感生电动势</h3>
+<p>导体或导体回路不动，由于磁场随时间变化，导体或导体回路中产生的感应电动势。</p>
+<p>变化的磁场在周围空间激发出电场线为闭合曲线的电场，称其为感生电场或有旋电场。有旋电场的出现与是否存在导体没有关系。</p>
+<p>当回路固定不动，磁通量<span class="math inline">\(\varPsi\)</span>的变化仅来自磁场的变化时，电动势为</p>
+<p><span class="math display">\[
+\varepsilon_i = \oint_L \bm E_v\cdot \bm l=-\iint_S\frac{\partial\bm
+B}{\partial\bm t}\cdot d\bm S
+\]</span></p>
 
 
 
@@ -1978,6 +2030,14 @@ H\)</span>称为磁场强度，则</p>
         <li><a href="#磁场对电流的作用">磁场对电流的作用</a></li>
         <li><a href="#带电粒子在电场和磁场中的运动">带电粒子在电场和磁场中的运动</a></li>
         <li><a href="#磁介质">磁介质</a></li>
+      </ol>
+    </li>
+    <li><a href="#电磁感应与电磁场">电磁感应与电磁场</a>
+      <ol>
+        <li><a href="#电动势">电动势</a></li>
+        <li><a href="#法拉第电磁感应定律">法拉第电磁感应定律</a></li>
+        <li><a href="#动生电动势">动生电动势</a></li>
+        <li><a href="#感生电动势">感生电动势</a></li>
       </ol>
     </li>
   </ol>
