@@ -125,7 +125,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 24 分钟
+                    阅读时长: 25 分钟
                 </time>
             </div>
         
@@ -329,7 +329,7 @@ fl(9.4) = 9.4+2^{-49}-0.4\times 2^{-48}\\
 se_1e_2\cdots e_{11}b_1b_2\cdots b_{52}
 \]</span></p>
 <p>其中第1位保存了符号位，后面11位用于保存指数，再后面小数点后的52位保存尾数。符号位0是正数，1是负数。11位指数表示的正二进制整数，这些正数通过往指数上叠加<span class="math inline">\(2^10-1=1023\)</span>得到，指数范围在<span class="math inline">\(-1022\)</span>和<span class="math inline">\(1023\)</span>之间，<span class="math inline">\(e_1\cdots e_{11}\)</span>覆盖了从<span class="math inline">\(1\)</span>到<span class="math inline">\(2046\)</span>之间对应的指数，由于特殊目的，没有使用<span class="math inline">\(0\)</span>和<span class="math inline">\(2047\)</span>。</p>
-<p>数字<span class="math inline">\(1023\)</span>称为双精度格式的指数偏差。它被用于吧正和负指数转化为正的二进制数保存在指数位中，对于单精度和扩展精度，指数偏差位分别是127和16383.</p>
+<p>数字<span class="math inline">\(1023\)</span>称为双精度格式的指数偏差。它被用于把正和负指数转化为正的二进制数保存在指数位中，对于单精度和扩展精度，指数偏差位分别是127和16383.</p>
 <p>也就是说，指数位上的数字，减去1023才是浮点数中所应该是的指数。</p>
 <p>再来看特殊值<span class="math inline">\(2047\)</span>。如果尾数位串都是0，则用于表示<span class="math inline">\(\infty\)</span>（其符号取决于第一位），否则表示<span class="math inline">\(NaN\)</span>，意为不是一个数字。</p>
 <p>例如<span class="math inline">\(1/0\)</span>是<span class="math inline">\(+\inf\)</span>，前<span class="math inline">\(12\)</span>位用十六进制表示为7FF，后面全是0.</p>
@@ -838,7 +838,7 @@ ab &amp; ac+d
 <p><strong>定义3</strong></p>
 <p>方阵<span class="math inline">\(A\)</span>的条件数<span class="math inline">\(cond(A)\)</span>为求解<span class="math inline">\(Ax=b\)</span>时，对于所有右侧向量<span class="math inline">\(b\)</span>，可能出现的最大误差放大因子。</p>
 <p>和向量范数类似，定义<span class="math inline">\(n\times
-n\)</span>矩阵<span class="math inline">\(A\)</span>的矩阵范数为（这里书上写的是范数，但是下面给出了无限符号，后面又没有无限符号，我猜测这个无限符号是多余的，或者矩阵的范数和无限范数是一样的）</p>
+n\)</span>矩阵<span class="math inline">\(A\)</span>的矩阵（无穷）范数为</p>
 <p><span class="math display">\[
 ||A||_\infty = 每行元素绝对值之和的最大值
 \]</span></p>
@@ -850,24 +850,115 @@ cond(A) = ||A||\cdot||A^{-1}||
 <p>依据误差放大因子，在求解<span class="math inline">\(Ax=b\)</span>可能出现的相关前向误差是<span class="math inline">\(\varepsilon_{math}\cdot
 cond(A)\)</span>。换句话说，如果<span class="math inline">\(cond(A)\approx 10^k\)</span>，我们在计算<span class="math inline">\(x\)</span>时，将丢掉<span class="math inline">\(k\)</span>位数字精度。</p>
 <p><strong>向量范数和矩阵范数的性质</strong></p>
-<p>对于向量范数（这里指的不是无穷范数，而是范数，即每个元素的绝对值之和）</p>
+<p>对于向量无穷范数</p>
 <ol type="1">
 <li><span class="math inline">\(||x||\geq 0\)</span>，当且仅当<span class="math inline">\(x=[0,\cdots,0]\)</span>时等号成立</li>
 <li>对于每个标量<span class="math inline">\(\alpha\)</span>和向量<span class="math inline">\(x\)</span>，<span class="math inline">\(||\alpha
 x||=|\alpha|\cdot ||x||\)</span></li>
 <li>对于向量<span class="math inline">\(x,y\)</span>有<span class="math inline">\(||x+y||\leq||x||+||y||\)</span></li>
 </ol>
-<p>对于矩阵范数</p>
+<p>对于矩阵无穷范数</p>
 <ol type="1">
 <li><span class="math inline">\(||A||\geq 0\)</span>，当且仅当<span class="math inline">\(A=0\)</span>时等号成立</li>
 <li>对于每个标量<span class="math inline">\(\alpha\)</span>和向量<span class="math inline">\(x\)</span>，<span class="math inline">\(||\alpha
 A||=|\alpha|\cdot ||A||\)</span></li>
 <li>对于矩阵<span class="math inline">\(A,B\)</span>有<span class="math inline">\(||A+B||\leq||A||+||B||\)</span></li>
 </ol>
-<p>算子范数的矩阵范数，也可以使用特定的向量范数进行定义</p>
+<p>被称为算子范数的矩阵范数，也可以使用特定的向量范数进行定义</p>
 <p><span class="math display">\[
 ||A||=\max \frac{||Ax||}{||x||}
 \]</span></p>
+<p>对于任意矩阵<span class="math inline">\(A\)</span>和向量<span class="math inline">\(x\)</span>满足</p>
+<p><span class="math display">\[
+||Ax||\leq ||A||\cdot||x||
+\]</span></p>
+<h3 id="淹没">淹没</h3>
+<p>考虑如下方程组</p>
+<p><span class="math display">\[
+10^{-20}x_1+x_2=1\\
+x_1+2x_2=4
+\]</span></p>
+<p>高斯消元如下</p>
+<p><span class="math display">\[
+\begin{bmatrix}
+10^{-20} &amp; 1 &amp; | &amp; 1\\
+1 &amp; 2 &amp; | &amp; 4
+\end{bmatrix}\to
+\begin{bmatrix}
+10^{-20} &amp; 1 &amp; | &amp; 1\\
+0 &amp; 2-10^{20} &amp; | &amp; 4-10^{20}
+\end{bmatrix}
+\]</span></p>
+<p>然后解出</p>
+<p><span class="math display">\[
+[x_1,x_2]=\bigg [\frac{2\times
+10^{20}}{10^{20}-2},\frac{4-10^{20}}{2-10^{20}}\bigg]\approx[2,1]
+\]</span></p>
+<p>我们手算是可以这样的，但是当我们使用IEEE双精度的时候，</p>
+<p><span class="math display">\[
+\begin{bmatrix}
+10^{-20} &amp; 1 &amp; | &amp; 1\\
+0 &amp; 2-10^{20} &amp; | &amp; 4-10^{20}
+\end{bmatrix}
+\]</span></p>
+<p>舍入得</p>
+<p><span class="math display">\[
+\begin{bmatrix}
+10^{-20} &amp; 1 &amp; | &amp; 1\\
+0 &amp; -10^{20} &amp; | &amp; -10^{20}
+\end{bmatrix}
+\]</span></p>
+<p>然后首先解出<span class="math inline">\(x_2=1\)</span>，然后<span class="math inline">\(x_1=0\)</span>，与精确解相比相差巨大。</p>
+<p>我们的解决办法是，更换行顺序，</p>
+<p><span class="math display">\[
+\begin{bmatrix}
+1 &amp; 2 &amp; | &amp; 4\\
+10^{-20} &amp; 1 &amp; | &amp; 1
+\end{bmatrix}\to
+\begin{bmatrix}
+1 &amp; 2 &amp; | &amp; 4\\
+0 &amp; 1-2\times 10^{-20} &amp; | &amp; 1-4\times 10^{-20}
+\end{bmatrix}
+\]</span></p>
+<p>舍入后也可以得到<span class="math inline">\(x_2=1\)</span>，然后<span class="math inline">\(x_1=2\)</span>。</p>
+<p>上述例子告诉我们，高斯消去的过程中要尽可能保证乘子比较小。</p>
+<h2 id="palu分解">PA=LU分解</h2>
+<h3 id="部分主元">部分主元</h3>
+<p>部分主元要求，在每一次选择主元时，找到这一列中绝对值最大的一个元素，其对应行与主元行进行交换。交换之后作为新的主元。这样我们就能完全避免淹没问题。</p>
+<p>同样，这样可以避免<span class="math inline">\(0\)</span>主元问题。如果这一列没有非零元素，则矩阵是奇异矩阵，此时高斯消元怎样都不能得到正确解。</p>
+<h3 id="置换矩阵">置换矩阵</h3>
+<p><strong>定义1</strong></p>
+<p>置换矩阵是一个<span class="math inline">\(n\times
+n\)</span>矩阵，其在每一行、每一列仅有一个<span class="math inline">\(1\)</span>，其他全部为<span class="math inline">\(0\)</span></p>
+<p><strong>置换矩阵基础定理</strong></p>
+<p>令<span class="math inline">\(P\)</span>是通过对单位矩阵实施一组特定的行交换后得到的一个<span class="math inline">\(n\times n\)</span>的置换矩阵，则对于任意的<span class="math inline">\(n\times n\)</span>矩阵<span class="math inline">\(A\)</span>，<span class="math inline">\(PA\)</span>对应于对矩阵<span class="math inline">\(A\)</span>实施同样的行变换得到的结果。</p>
+<p>例如</p>
+<p><span class="math display">\[
+\begin{bmatrix}
+1 &amp; 0 &amp; 0\\
+0 &amp; 0 &amp; 1 \\
+0 &amp; 1 &amp; 0  
+\end{bmatrix}
+\]</span></p>
+<p>是由单位矩阵交换二三行得到的，则</p>
+<p><span class="math display">\[
+\begin{bmatrix}
+1 &amp; 0 &amp; 0\\
+0 &amp; 0 &amp; 1 \\
+0 &amp; 1 &amp; 0  
+\end{bmatrix}
+\begin{bmatrix}
+a &amp; b &amp; c\\
+d &amp; e &amp; f \\
+g &amp; h &amp; i  
+\end{bmatrix}=
+\begin{bmatrix}
+a &amp; b &amp; c  \\
+g &amp; h &amp; i  \\
+d &amp; e &amp; f
+\end{bmatrix}
+\]</span></p>
+<p>即把后面那个矩阵也交换了二三行。</p>
 
 
 
@@ -1273,6 +1364,13 @@ A||=|\alpha|\cdot ||A||\)</span></li>
         <li><a href="#误差来源">误差来源</a>
           <ol>
             <li><a href="#误差放大和条件数">误差放大和条件数</a></li>
+            <li><a href="#淹没">淹没</a></li>
+          </ol>
+        </li>
+        <li><a href="#palu分解">PA=LU分解</a>
+          <ol>
+            <li><a href="#部分主元">部分主元</a></li>
+            <li><a href="#置换矩阵">置换矩阵</a></li>
           </ol>
         </li>
       </ol>
