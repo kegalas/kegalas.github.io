@@ -1107,7 +1107,7 @@ f(x_1+x_2) = f(x_1)+f(x_2)
 &lt;li&gt;激励也称为输入，指电路中的独立源，受控源不是激励源&lt;/li&gt;
 &lt;/ol&gt;
 &lt;h3 id=&#34;叠加定理&#34;&gt;叠加定理&lt;/h3&gt;
-&lt;p&gt;对于有唯一解的线性电路，多个激励源共同作用时引起的响应（电路中各处的电流、电压）等于各个激励源单独作用时（其他激励源置零）所引起的响应之和&lt;/p&gt;
+&lt;p&gt;对于有唯一解的线性电路，多个激励源共同作用时引起的响应（电路中各处的电流、电压）等于各个激励源单独作用时（其他激励源置零，具体表现为电压源变成导线，电流源变成开路）所引起的响应之和&lt;/p&gt;
 &lt;h2 id=&#34;替代定理&#34;&gt;替代定理&lt;/h2&gt;
 &lt;p&gt;对于有唯一解的线性或非线性电路，若某支路的电压&lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt;或电流&lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt;已知，则该支路可用方向和大小与&lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt;相同的电压源替代，或用方向和大小与&lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt;相同的电流源替代，而不会影响其他点的电流和电压。&lt;/p&gt;
 &lt;p&gt;注意，替换成电流源后电压不变，替换成电压源后电流也不变。&lt;/p&gt;
@@ -1525,7 +1525,7 @@ x^2}+\frac{\partial^2u(z)}{\partial y^2}=0
 &lt;p&gt;称为拉普拉斯算子。&lt;/p&gt;
 &lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(\bm C\)&lt;/span&gt;中的域，用&lt;span class=&#34;math inline&#34;&gt;\(C(D)\)&lt;/span&gt;表示&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;上连续函数的全体，&lt;span class=&#34;math inline&#34;&gt;\(H(D)\)&lt;/span&gt;表示&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;上全纯函数的全体。&lt;/p&gt;
 &lt;p&gt;用&lt;span class=&#34;math inline&#34;&gt;\(C^1(D)\)&lt;/span&gt;记&lt;span class=&#34;math inline&#34;&gt;\(\frac{\partial f}{\partial x},\frac{\partial
-f}{\partial y}\)&lt;/span&gt;载&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;上连续的&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;的全体。&lt;/p&gt;
+f}{\partial y}\)&lt;/span&gt;在&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;上连续的&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;的全体。&lt;/p&gt;
 &lt;p&gt;有&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 H(D)\subset C^\infty(D)\subset C^k(D)\subset C^1(D)\subset C(D)
@@ -1866,6 +1866,7 @@ g(z))dz=\alpha\int_{\gamma}f(z)dz+\beta
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 \int_\gamma f(z)dz = 0
 \]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;注意，只要使得&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;的不全纯的点在&lt;span class=&#34;math inline&#34;&gt;\(\gamma\)&lt;/span&gt;包围的区域中，而不是必须在&lt;span class=&#34;math inline&#34;&gt;\(\gamma\)&lt;/span&gt;上，就不能使用这个定理。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;引理1&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;是域&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;中的连续函数，&lt;span class=&#34;math inline&#34;&gt;\(\gamma\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;内的可求长曲线，对于任给的&lt;span class=&#34;math inline&#34;&gt;\(\varepsilon&amp;gt;0\)&lt;/span&gt;，一定存在一条&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;中的折线&lt;span class=&#34;math inline&#34;&gt;\(P\)&lt;/span&gt;，使得&lt;/p&gt;
 &lt;ol type=&#34;1&#34;&gt;
@@ -1874,10 +1875,12 @@ g(z))dz=\alpha\int_{\gamma}f(z)dz+\beta
 f(z)dz|&amp;lt;\varepsilon\)&lt;/span&gt;&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;&lt;strong&gt;Cauchy-Goursat定理&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(\bm C\)&lt;/span&gt;中的单连通域，如果&lt;span class=&#34;math inline&#34;&gt;\(f\in H(D)\)&lt;/span&gt;，那么对&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;中任意的可求长曲线&lt;span class=&#34;math inline&#34;&gt;\(\gamma\)&lt;/span&gt;，均有&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(\bm C\)&lt;/span&gt;中的单连通域，如果&lt;span class=&#34;math inline&#34;&gt;\(f\in H(D)\)&lt;/span&gt;，那么对&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;中任意的可求长闭曲线&lt;span class=&#34;math inline&#34;&gt;\(\gamma\)&lt;/span&gt;，均有&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 \int_\gamma f(z)dz = 0
 \]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;注意点同上。&lt;/p&gt;
+&lt;p&gt;这个定理也意味着积分和路径无关，只与始末位置有关。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;定理1&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;是可求长简单闭曲线&lt;span class=&#34;math inline&#34;&gt;\(\gamma\)&lt;/span&gt;的内部，若&lt;span class=&#34;math inline&#34;&gt;\(f\in H(D)\bigcap C(\bar D)\)&lt;/span&gt;（即在&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;上全纯且在&lt;span class=&#34;math inline&#34;&gt;\(\bar D\)&lt;/span&gt;上连续），则&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
@@ -7780,6 +7783,57 @@ B)\cdot d\bm l
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 \varepsilon_i = \oint_L \bm E_v\cdot \bm l=-\iint_S\frac{\partial\bm
 B}{\partial\bm t}\cdot d\bm S
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;自感现象&#34;&gt;自感现象&lt;/h3&gt;
+&lt;p&gt;导体回路中由于自身电流的变化，而在自身回路中产生感应电动势的现象。产生的电动势称为自感电动势。&lt;/p&gt;
+&lt;p&gt;设一回路通有电流&lt;span class=&#34;math inline&#34;&gt;\(I\)&lt;/span&gt;，根据毕奥-萨伐尔定律，总磁通&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\varPsi = LI
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;式中比例系数&lt;span class=&#34;math inline&#34;&gt;\(L\)&lt;/span&gt;称为该回路的自感系数，简称自感。如果回路周围不存在铁磁质，自感&lt;span class=&#34;math inline&#34;&gt;\(L\)&lt;/span&gt;是衣蛾与电流&lt;span class=&#34;math inline&#34;&gt;\(I\)&lt;/span&gt;无关，仅由回路的匝数、几何形状、大小，以及周围介质的磁导率决定的物理量。&lt;/p&gt;
+&lt;p&gt;若回路的自感&lt;span class=&#34;math inline&#34;&gt;\(L\)&lt;/span&gt;保持不变，则通过回路的总磁通&lt;span class=&#34;math inline&#34;&gt;\(\varPsi\)&lt;/span&gt;仅随回路中电流的变化而变化，根据法拉第电磁感应定律，自感电动势为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\varepsilon_L = -\frac{d\varPsi}{dt} = -L\frac{dI}{dt}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;式中的负号表明自感电动势产生的感应电流的方向总是反抗回路中电流&lt;span class=&#34;math inline&#34;&gt;\(I\)&lt;/span&gt;的变化。&lt;/p&gt;
+&lt;h3 id=&#34;互感现象&#34;&gt;互感现象&lt;/h3&gt;
+&lt;p&gt;由于某一个导体回路中的电流发生变化，而在邻近导体回路内产生感应电动势的现象，称为互感现象。&lt;/p&gt;
+&lt;p&gt;类似于自感系数。设&lt;span class=&#34;math inline&#34;&gt;\(\varPsi_{21}\)&lt;/span&gt;表示回路&lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt;中通有电流&lt;span class=&#34;math inline&#34;&gt;\(I_1\)&lt;/span&gt;时，它激发的磁场在回路&lt;span class=&#34;math inline&#34;&gt;\(2\)&lt;/span&gt;中产生的总磁通。&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\varPsi_{21} = M_{21}I_1
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;同样也有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\varepsilon_M = -\frac{d\varPsi}{dt} = -M\frac{dI}{dt}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;磁能&#34;&gt;磁能&lt;/h3&gt;
+&lt;p&gt;一个自感为&lt;span class=&#34;math inline&#34;&gt;\(L\)&lt;/span&gt;通有电流&lt;span class=&#34;math inline&#34;&gt;\(I\)&lt;/span&gt;的线圈，其中所储存的磁能&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+W_m=\frac{1}{2}LI^2
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;称为自感磁能。&lt;/p&gt;
+&lt;p&gt;储存在线圈中的能量可以用描述磁场的物理量&lt;span class=&#34;math inline&#34;&gt;\(B\)&lt;/span&gt;或&lt;span class=&#34;math inline&#34;&gt;\(H\)&lt;/span&gt;来表示。长直螺线管的自感为&lt;span class=&#34;math inline&#34;&gt;\(L=\mu n^2 V\)&lt;/span&gt;，其磁能为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+W_m = \frac{1}{2}\mu n^2 I^2V
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;对于长直螺线管，有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+H = nI;B=\mu n I
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+W_m = \frac{1}{2}BHV=\frac{1}{2}\mu H^2V=\frac{1}{2}\frac{B^2}{\mu} V
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(\mu\)&lt;/span&gt;是其磁导率，&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;是每单位长度的匝数，&lt;span class=&#34;math inline&#34;&gt;\(V\)&lt;/span&gt;是螺线管的体积，所以能量密度为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+w_m = \frac{1}{2}BH
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;进一步的研究表明，某点磁场的能量密度只与该点的磁感应强度&lt;span class=&#34;math inline&#34;&gt;\(B\)&lt;/span&gt;和介质的性质有关。&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+dW_m = w_mdV = \frac{1}{2}BHdV
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+W_m = \int_V dW_m=\frac{1}{2}\int_V BHdV
 \]&lt;/span&gt;&lt;/p&gt;
 
 
