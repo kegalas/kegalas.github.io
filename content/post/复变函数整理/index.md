@@ -892,6 +892,46 @@ $$
 
 前者在除掉$z=\pi/2+k\pi$的开平面上全纯，后者在除掉$z=k\pi$的开平面上全纯，$k=0,\pm1,\cdots$。
 
+之后我们也能定义双曲函数
+
+$$
+chz=\frac{e^z+e^{-z}}{2},shz=\frac{e^z-e^{-z}}{2}
+$$
+
+并且有
+
+$$
+(chz)'=shz,(shz)'=chz
+$$
+
+反三角函数有
+
+$$
+Arcsinz=-iLn(iz+\sqrt{1-z^2})
+$$
+
+$$
+Arccosz=-iLn(z+\sqrt{z^2-1})
+$$
+
+$$
+Arctanz=-\frac{i}{2}Ln\frac{1+iz}{1-iz}
+$$
+
+反双曲函数有
+
+$$
+Arshz = Ln(z+\sqrt{z^2+1})
+$$
+
+$$
+Archz = Ln(z+\sqrt{z^2-1})
+$$
+
+$$
+Arthz = \frac{1}{2}Ln\frac{1+z}{1-z}
+$$
+
 ## 分式线性变换
 
 形如$\omega=T(z)=\frac{az+b}{cz+d}$的映射称为分式线性变换或Mobius变换，其中$a,b,c,d$是复常数，且满足$ad-bc\neq 0$，如果等于$0$原式就是常数或无意义，没有讨论价值。
@@ -1121,7 +1161,7 @@ $$
 
 **定理1**
 
-设$D$是可求长简单闭曲线$\gamma$的内部，若$f\in H(D)\bigcap C(\bar D)$（即在$D$上全纯且在$\bar D$上连续），则
+设$D$是可求长简单闭曲线$\gamma$的内部，若$f\in H(D)\bigcap C(\bar D)$（即在$D$上全纯且在$\bar D$（闭包）上连续），则
 
 $$
 \int_\gamma f(z)dz = 0
@@ -1252,3 +1292,233 @@ $$
 **Morera定理**
 
 如果$f$是域$D$上的连续函数，且沿$D$内任一可求长闭曲线的积分为零，那么$f$在$D$上全纯
+
+## 调和函数
+
+如果二元实变函数$\varphi(x,y)$在区域$D$内具有二阶连续偏导数并且满足拉普拉斯方程
+
+$$
+\frac{\partial^2 \varphi}{\partial x^2}+\frac{\partial^2 \varphi}{\partial y^2}=0
+$$
+
+那么称$\varphi(x,y)$为区域$D$内的调和函数。
+
+**定理**
+
+任何在区域$D$内全纯的函数，它的实部和虚部都是$D$内的调和函数
+
+在$D$内满足柯西-黎曼方程
+
+$$
+\frac{\partial u}{\partial x}=\frac{\partial v}{\partial y},
+\frac{\partial u}{\partial y}=-\frac{\partial v}{\partial x}
+$$
+
+的两个调和函数中，$v$称为$u$的共轭调和函数。也就是说，区域$D$内的全纯函数的虚部为实部的共轭调和函数。
+
+## 非齐次Cauchy积分公式
+
+TODO
+
+## 一维$\bar\partial$问题的解
+
+TODO
+
+# 全纯函数的Taylor展开及其应用
+
+## Weierstrass定理
+
+设$z_1,z_2,\cdots$是$\bm C$中的一列复数，称
+
+$$
+\sum^\infty_{n=1}z_n = z_1+z_2+\cdots
+$$
+
+为一个复数项级数。这个级数称为是收敛的，如果它的部分和数列$S_n=\sum^n_{k=1}z_k$收敛，如果$\{S_n\}$的极限为$S$，就说这个级数的和为$S$，记为$\sum^\infty_{n=1}z_n = S$
+
+从数列的Cauchy收敛准则马上可得级数的Cauchy收敛准则：
+
+级数收敛的充要条件是对任意$\varepsilon>0$，存在正整数$N$，使得当$n>N$时，不等式
+
+$$
+z_{n+1}+z_{n+2}+\cdots+z_{n+p}<\varepsilon
+$$
+
+对任意自然数$p$成立
+
+从收敛准则即得$\sum^\infty_{n=1}z_n$收敛的必要条件是$\lim_{n\to \infty}z_n=0$
+
+如果$\sum^\infty_{n=1}|z_n|$收敛，就说级数$\sum^\infty_{n=1}z_n$绝对收敛。同样，绝对收敛的级数一定收敛，反之不一定成立。并且有$\sum^\infty_{n=1}|z_n|\geq|\sum^\infty_{n=1}z_n|$
+
+另外，$\sum^\infty_{n=1}z_n$收敛的充要条件是其实部和虚部构成的数列分别都收敛。
+
+设$E$是$\bm C$中的一个点集，$f_n:E\to \bm C$是定义在$E$上的一个函数列，如果对于每一个$z\in E$，级数
+
+$$
+\sum^\infty_{n=1}f_n(z)=f_1(z)+f_2(z)+\cdots
+$$
+
+收敛到$f(z)$，就说其在$E$上收敛，其和函数为$f$，记为$\sum^\infty_{n=1}f_n(z)=f(z)$
+
+**一致连续**
+
+设$\sum^\infty_{n=1}f_n(z)$是定义在点集$E$上的级数，我们说$\sum^\infty_{n=1}f_n(z)$在$E$上一致收敛到$f(z)$，是指对任意$\varepsilon>0$，存在正整数$N$，当$n>N$时，不等式
+
+$$
+|S_n(z)-f(z)|<\varepsilon
+$$
+
+对所有的$z\in E$成立，这里，$S_n(z)=\sum^n_{k=1}f_k(z)$是级数的部分和。
+
+**Cauchy收敛准则**
+
+级数$\sum^\infty_{n=1}f_n(z)$在$E$上一致收敛的充要条件是对任意$\varepsilon>0$，存在正整数$N$，当$n>N$时，不等式
+
+$$
+|f_{n+1}(z)+f_{n+2}(z)+\cdots+f_{n+p}(z)|<\varepsilon
+$$
+
+对所有$z\in E$及任意自然数$p$成立。
+
+**Weierstrass一致收敛判别法**
+
+设$f_n:E\to \bm C$是定义在$E$上的函数列，且在$E$上满足$|f_n(z)|\leq a_n,n=1,2,\cdots$，如果$\sum^\infty_{n=1}a_n$收敛，那么$\sum^\infty_{n=1}f_n(z)$在$E$上一致收敛。
+
+**定理1**
+
+设级数$\sum^\infty_{n=1}f_n(z)$在点集$E$上一致收敛到$f(z)$，如果每个$f_n(n=1,2,\cdots)$都是$E$上的连续函数，那么$f$也是$E$上的连续函数。
+
+**定理2**
+
+设级数$\sum^\infty_{n=1}f_n(z)$在可求长曲线$\gamma$上一致收敛到$f(z)$，如果每个$f_n(n=1,2,\cdots)$都在$\gamma$上连续，那么
+
+$$
+\int_\gamma f(z)dz=\sum^\infty_{n=1}\int_\gamma f_n(z)dz
+$$
+
+**内闭一致收敛**
+
+如果级数$\sum^\infty_{n=1}f_n(z)$在域$D$的任意紧子集上一致收敛，就称$\sum^\infty_{n=1}f_n(z)$在$D$中内闭一致收敛。
+
+**定义1**
+
+如果$D$的子集$G$满足
+
+1. $\bar G\subset D$
+2. $\bar G$是紧的
+
+就说$G$相对于$D$是紧的，记为$G\subset\subset D$
+
+**引理1**
+
+设$D$是$\bm C$中的域，$K$是$D$中的紧子集，且包含在相对于$D$是紧的开集$G$中，即$K\subset G\subset\subset D$，那么对任意$f\in H(D)$，均有
+
+$$
+sup\{|f^{(k)}|:z\in K\}\leq Csup{|f(z)|:z\in G}
+$$
+
+这里，$k$是任意自然数，$C$是与$k,K,G$有关的常数。
+
+**Weierstrass定理**
+
+设$D$是$\bm C$中的域，如果
+
+1. $f_n\in H(D),n=1,2,\cdots$
+2. $\sum^\infty_{n=1} f_n(z)$在$D$中内闭一致收敛到$f(z)$
+
+那么
+
+1. $f\in H(D)$
+2. 对任意自然数$k$，$\sum^\infty_{n=1} f_n^{(k)}(z)$在$D$中内闭一致收敛到$f^{(k)}(z)$
+
+## 幂级数
+
+幂级数，是指形如
+
+$$
+\sum^\infty_{n=0}a_n(z-z_0)^n = a_0+a_1(z-z_0)+a_2(z-z_0)^2+\cdots
+$$
+
+的级数，其中$a_n,z_0$都是复常数。
+
+**定义1**
+
+如果存在常数$R$，使得当$|z|<R$时，级数$\sum^\infty_{n=0}a_nz^n$收敛；当$|z|>R$时，级数发散，就称$R$为该级数的收敛半径，$\{z:|z|<R\}$称为该级数的收敛圈。
+
+**定理1**
+
+$\sum^\infty_{n=0}a_nz^n$的收敛半径为
+
+$$
+R=1\bigg/\overline{\lim_{n\to\infty}}\sqrt[n]{|a_n|}
+$$
+
+其中$\overline\lim$是上极限
+
+**Abel定理**
+
+如果$\sum^\infty_{n=0}a_nz^n$在$z=z_0\neq 0$处收敛，则必在$\{z:|z|<|z_0|\}$中内闭绝对之一收敛。
+
+**定理2**
+
+幂级数在其收敛圆内确定一个全纯函数。
+
+**非切向极限**
+
+设$g$是定义在单位圆中的函数，$e^{i\theta_0}$是单位圆周上一点，$S_\alpha(e^{i\theta_0})$如下图所示，其中$\alpha<\frac{\pi}{2}$，如果当$z$在$S_\alpha(e^{i\theta_0})$中趋于$e^{i\theta_0}$时，$g(z)$有极限$l$，就称$g$在$e^{i\theta_0}$处有非切向极限$l$，记为
+
+$$
+\lim_{z\to e^{i\theta_0},z\in S_\alpha(e^{i\theta_0})}g(z)=l
+$$
+
+![1.jpg](1.jpg)
+
+**Abel第二定理**
+
+设$f(z)=\sum^\infty_{n=0}a_nz^n$的收敛半径$R=1$，且级数在$z=1$处收敛于$S$，那么$f$在$z=1$处有非切向极限$S$，即
+
+$$
+\lim_{z\to 1,z\in S_\alpha(1)}f(z)=S
+$$
+
+**其他一些求收敛半径的方法**
+
+总体上和高等数学差别不大
+
+*比值法*
+
+如果$\lim_{n\to \infty}|c_{n+1}/c_n|=\lambda\neq 0$，那么半径为$R=1/\lambda$
+
+*根值法*
+
+如果$\lim_{n\to \infty}\sqrt[n]{|c_n|}=\mu\neq 0$，那么半径为$R=1/\mu$
+
+**定理3**
+
+设幂级数$\sum^\infty_{n=0}c_n(z-z_0)^n$的收敛半径为$R$，那么
+
+1. 它的和函数$f(z)$，即
+
+$$
+f(z) = \sum^\infty_{n=0}c_n(z-a)^n
+$$
+
+是收敛圆：$|z-a|<R$内的解析函数
+
+2. $f(z)$在收敛圆内的导数可将其幂级数逐项求导得到，即
+
+$$
+f'(z) = \sum^\infty_{n=0}nc_n(z-a)^{n-1}
+$$
+
+3. $f(z)$在收敛圆内可以逐项积分，即
+
+$$
+\int_C f(z)dz = \sum^\infty_{n=0}c_n\int_C(z-a)^ndz, C\in|z-a|<R
+$$
+
+或
+
+$$
+\int_0^zf(z)dz = \sum^\infty_{n=0}\frac{c_n}{n+1}(z-a)^{n+1}
+$$
