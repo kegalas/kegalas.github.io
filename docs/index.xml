@@ -1724,6 +1724,34 @@ e^{-ix} = \cos x -i\sin x
 \ctg z = \frac{\cos z}{\sin z}
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;前者在除掉&lt;span class=&#34;math inline&#34;&gt;\(z=\pi/2+k\pi\)&lt;/span&gt;的开平面上全纯，后者在除掉&lt;span class=&#34;math inline&#34;&gt;\(z=k\pi\)&lt;/span&gt;的开平面上全纯，&lt;span class=&#34;math inline&#34;&gt;\(k=0,\pm1,\cdots\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;之后我们也能定义双曲函数&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+chz=\frac{e^z+e^{-z}}{2},shz=\frac{e^z-e^{-z}}{2}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;并且有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+(chz)&amp;#39;=shz,(shz)&amp;#39;=chz
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;反三角函数有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+Arcsinz=-iLn(iz+\sqrt{1-z^2})
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+Arccosz=-iLn(z+\sqrt{z^2-1})
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+Arctanz=-\frac{i}{2}Ln\frac{1+iz}{1-iz}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;反双曲函数有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+Arshz = Ln(z+\sqrt{z^2+1})
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+Archz = Ln(z+\sqrt{z^2-1})
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+Arthz = \frac{1}{2}Ln\frac{1+z}{1-z}
+\]&lt;/span&gt;&lt;/p&gt;
 &lt;h2 id=&#34;分式线性变换&#34;&gt;分式线性变换&lt;/h2&gt;
 &lt;p&gt;形如&lt;span class=&#34;math inline&#34;&gt;\(\omega=T(z)=\frac{az+b}{cz+d}\)&lt;/span&gt;的映射称为分式线性变换或Mobius变换，其中&lt;span class=&#34;math inline&#34;&gt;\(a,b,c,d\)&lt;/span&gt;是复常数，且满足&lt;span class=&#34;math inline&#34;&gt;\(ad-bc\neq 0\)&lt;/span&gt;，如果等于&lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt;原式就是常数或无意义，没有讨论价值。&lt;/p&gt;
 &lt;p&gt;如果&lt;span class=&#34;math inline&#34;&gt;\(c\neq 0\)&lt;/span&gt;，则除去点&lt;span class=&#34;math inline&#34;&gt;\(z=-\frac{d}{c}\)&lt;/span&gt;外，&lt;span class=&#34;math inline&#34;&gt;\(T(z)\)&lt;/span&gt;在&lt;span class=&#34;math inline&#34;&gt;\(\bm
@@ -1882,7 +1910,7 @@ f(z)dz|&amp;lt;\varepsilon\)&lt;/span&gt;&lt;/li&gt;
 &lt;p&gt;注意点同上。&lt;/p&gt;
 &lt;p&gt;这个定理也意味着积分和路径无关，只与始末位置有关。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;定理1&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;是可求长简单闭曲线&lt;span class=&#34;math inline&#34;&gt;\(\gamma\)&lt;/span&gt;的内部，若&lt;span class=&#34;math inline&#34;&gt;\(f\in H(D)\bigcap C(\bar D)\)&lt;/span&gt;（即在&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;上全纯且在&lt;span class=&#34;math inline&#34;&gt;\(\bar D\)&lt;/span&gt;上连续），则&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;是可求长简单闭曲线&lt;span class=&#34;math inline&#34;&gt;\(\gamma\)&lt;/span&gt;的内部，若&lt;span class=&#34;math inline&#34;&gt;\(f\in H(D)\bigcap C(\bar D)\)&lt;/span&gt;（即在&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;上全纯且在&lt;span class=&#34;math inline&#34;&gt;\(\bar D\)&lt;/span&gt;（闭包）上连续），则&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 \int_\gamma f(z)dz = 0
 \]&lt;/span&gt;&lt;/p&gt;
@@ -1969,6 +1997,160 @@ P(z)=a_0z^n+a_1z^{n-1}+\cdots+a_n,a_0\neq 0
 &lt;p&gt;在&lt;span class=&#34;math inline&#34;&gt;\(\bm C\)&lt;/span&gt;中必有零点&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Morera定理&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;如果&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;是域&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;上的连续函数，且沿&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;内任一可求长闭曲线的积分为零，那么&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;在&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;上全纯&lt;/p&gt;
+&lt;h2 id=&#34;调和函数&#34;&gt;调和函数&lt;/h2&gt;
+&lt;p&gt;如果二元实变函数&lt;span class=&#34;math inline&#34;&gt;\(\varphi(x,y)\)&lt;/span&gt;在区域&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;内具有二阶连续偏导数并且满足拉普拉斯方程&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\frac{\partial^2 \varphi}{\partial x^2}+\frac{\partial^2
+\varphi}{\partial y^2}=0
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;那么称&lt;span class=&#34;math inline&#34;&gt;\(\varphi(x,y)\)&lt;/span&gt;为区域&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;内的调和函数。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定理&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;任何在区域&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;内全纯的函数，它的实部和虚部都是&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;内的调和函数&lt;/p&gt;
+&lt;p&gt;在&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;内满足柯西-黎曼方程&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\frac{\partial u}{\partial x}=\frac{\partial v}{\partial y},
+\frac{\partial u}{\partial y}=-\frac{\partial v}{\partial x}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;的两个调和函数中，&lt;span class=&#34;math inline&#34;&gt;\(v\)&lt;/span&gt;称为&lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt;的共轭调和函数。也就是说，区域&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;内的全纯函数的虚部为实部的共轭调和函数。&lt;/p&gt;
+&lt;h2 id=&#34;非齐次cauchy积分公式&#34;&gt;非齐次Cauchy积分公式&lt;/h2&gt;
+&lt;p&gt;TODO&lt;/p&gt;
+&lt;h2 id=&#34;一维barpartial问题的解&#34;&gt;一维&lt;span class=&#34;math inline&#34;&gt;\(\bar\partial\)&lt;/span&gt;问题的解&lt;/h2&gt;
+&lt;p&gt;TODO&lt;/p&gt;
+&lt;h1 id=&#34;全纯函数的taylor展开及其应用&#34;&gt;全纯函数的Taylor展开及其应用&lt;/h1&gt;
+&lt;h2 id=&#34;weierstrass定理&#34;&gt;Weierstrass定理&lt;/h2&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(z_1,z_2,\cdots\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(\bm C\)&lt;/span&gt;中的一列复数，称&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\sum^\infty_{n=1}z_n = z_1+z_2+\cdots
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;为一个复数项级数。这个级数称为是收敛的，如果它的部分和数列&lt;span class=&#34;math inline&#34;&gt;\(S_n=\sum^n_{k=1}z_k\)&lt;/span&gt;收敛，如果&lt;span class=&#34;math inline&#34;&gt;\(\{S_n\}\)&lt;/span&gt;的极限为&lt;span class=&#34;math inline&#34;&gt;\(S\)&lt;/span&gt;，就说这个级数的和为&lt;span class=&#34;math inline&#34;&gt;\(S\)&lt;/span&gt;，记为&lt;span class=&#34;math inline&#34;&gt;\(\sum^\infty_{n=1}z_n = S\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;从数列的Cauchy收敛准则马上可得级数的Cauchy收敛准则：&lt;/p&gt;
+&lt;p&gt;级数收敛的充要条件是对任意&lt;span class=&#34;math inline&#34;&gt;\(\varepsilon&amp;gt;0\)&lt;/span&gt;，存在正整数&lt;span class=&#34;math inline&#34;&gt;\(N\)&lt;/span&gt;，使得当&lt;span class=&#34;math inline&#34;&gt;\(n&amp;gt;N\)&lt;/span&gt;时，不等式&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+z_{n+1}+z_{n+2}+\cdots+z_{n+p}&amp;lt;\varepsilon
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;对任意自然数&lt;span class=&#34;math inline&#34;&gt;\(p\)&lt;/span&gt;成立&lt;/p&gt;
+&lt;p&gt;从收敛准则即得&lt;span class=&#34;math inline&#34;&gt;\(\sum^\infty_{n=1}z_n\)&lt;/span&gt;收敛的必要条件是&lt;span class=&#34;math inline&#34;&gt;\(\lim_{n\to \infty}z_n=0\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;如果&lt;span class=&#34;math inline&#34;&gt;\(\sum^\infty_{n=1}|z_n|\)&lt;/span&gt;收敛，就说级数&lt;span class=&#34;math inline&#34;&gt;\(\sum^\infty_{n=1}z_n\)&lt;/span&gt;绝对收敛。同样，绝对收敛的级数一定收敛，反之不一定成立。并且有&lt;span class=&#34;math inline&#34;&gt;\(\sum^\infty_{n=1}|z_n|\geq|\sum^\infty_{n=1}z_n|\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;另外，&lt;span class=&#34;math inline&#34;&gt;\(\sum^\infty_{n=1}z_n\)&lt;/span&gt;收敛的充要条件是其实部和虚部构成的数列分别都收敛。&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(E\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(\bm C\)&lt;/span&gt;中的一个点集，&lt;span class=&#34;math inline&#34;&gt;\(f_n:E\to \bm C\)&lt;/span&gt;是定义在&lt;span class=&#34;math inline&#34;&gt;\(E\)&lt;/span&gt;上的一个函数列，如果对于每一个&lt;span class=&#34;math inline&#34;&gt;\(z\in E\)&lt;/span&gt;，级数&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\sum^\infty_{n=1}f_n(z)=f_1(z)+f_2(z)+\cdots
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;收敛到&lt;span class=&#34;math inline&#34;&gt;\(f(z)\)&lt;/span&gt;，就说其在&lt;span class=&#34;math inline&#34;&gt;\(E\)&lt;/span&gt;上收敛，其和函数为&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;，记为&lt;span class=&#34;math inline&#34;&gt;\(\sum^\infty_{n=1}f_n(z)=f(z)\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;一致连续&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(\sum^\infty_{n=1}f_n(z)\)&lt;/span&gt;是定义在点集&lt;span class=&#34;math inline&#34;&gt;\(E\)&lt;/span&gt;上的级数，我们说&lt;span class=&#34;math inline&#34;&gt;\(\sum^\infty_{n=1}f_n(z)\)&lt;/span&gt;在&lt;span class=&#34;math inline&#34;&gt;\(E\)&lt;/span&gt;上一致收敛到&lt;span class=&#34;math inline&#34;&gt;\(f(z)\)&lt;/span&gt;，是指对任意&lt;span class=&#34;math inline&#34;&gt;\(\varepsilon&amp;gt;0\)&lt;/span&gt;，存在正整数&lt;span class=&#34;math inline&#34;&gt;\(N\)&lt;/span&gt;，当&lt;span class=&#34;math inline&#34;&gt;\(n&amp;gt;N\)&lt;/span&gt;时，不等式&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+|S_n(z)-f(z)|&amp;lt;\varepsilon
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;对所有的&lt;span class=&#34;math inline&#34;&gt;\(z\in E\)&lt;/span&gt;成立，这里，&lt;span class=&#34;math inline&#34;&gt;\(S_n(z)=\sum^n_{k=1}f_k(z)\)&lt;/span&gt;是级数的部分和。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Cauchy收敛准则&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;级数&lt;span class=&#34;math inline&#34;&gt;\(\sum^\infty_{n=1}f_n(z)\)&lt;/span&gt;在&lt;span class=&#34;math inline&#34;&gt;\(E\)&lt;/span&gt;上一致收敛的充要条件是对任意&lt;span class=&#34;math inline&#34;&gt;\(\varepsilon&amp;gt;0\)&lt;/span&gt;，存在正整数&lt;span class=&#34;math inline&#34;&gt;\(N\)&lt;/span&gt;，当&lt;span class=&#34;math inline&#34;&gt;\(n&amp;gt;N\)&lt;/span&gt;时，不等式&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+|f_{n+1}(z)+f_{n+2}(z)+\cdots+f_{n+p}(z)|&amp;lt;\varepsilon
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;对所有&lt;span class=&#34;math inline&#34;&gt;\(z\in E\)&lt;/span&gt;及任意自然数&lt;span class=&#34;math inline&#34;&gt;\(p\)&lt;/span&gt;成立。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Weierstrass一致收敛判别法&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(f_n:E\to \bm C\)&lt;/span&gt;是定义在&lt;span class=&#34;math inline&#34;&gt;\(E\)&lt;/span&gt;上的函数列，且在&lt;span class=&#34;math inline&#34;&gt;\(E\)&lt;/span&gt;上满足&lt;span class=&#34;math inline&#34;&gt;\(|f_n(z)|\leq a_n,n=1,2,\cdots\)&lt;/span&gt;，如果&lt;span class=&#34;math inline&#34;&gt;\(\sum^\infty_{n=1}a_n\)&lt;/span&gt;收敛，那么&lt;span class=&#34;math inline&#34;&gt;\(\sum^\infty_{n=1}f_n(z)\)&lt;/span&gt;在&lt;span class=&#34;math inline&#34;&gt;\(E\)&lt;/span&gt;上一致收敛。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定理1&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设级数&lt;span class=&#34;math inline&#34;&gt;\(\sum^\infty_{n=1}f_n(z)\)&lt;/span&gt;在点集&lt;span class=&#34;math inline&#34;&gt;\(E\)&lt;/span&gt;上一致收敛到&lt;span class=&#34;math inline&#34;&gt;\(f(z)\)&lt;/span&gt;，如果每个&lt;span class=&#34;math inline&#34;&gt;\(f_n(n=1,2,\cdots)\)&lt;/span&gt;都是&lt;span class=&#34;math inline&#34;&gt;\(E\)&lt;/span&gt;上的连续函数，那么&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;也是&lt;span class=&#34;math inline&#34;&gt;\(E\)&lt;/span&gt;上的连续函数。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定理2&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设级数&lt;span class=&#34;math inline&#34;&gt;\(\sum^\infty_{n=1}f_n(z)\)&lt;/span&gt;在可求长曲线&lt;span class=&#34;math inline&#34;&gt;\(\gamma\)&lt;/span&gt;上一致收敛到&lt;span class=&#34;math inline&#34;&gt;\(f(z)\)&lt;/span&gt;，如果每个&lt;span class=&#34;math inline&#34;&gt;\(f_n(n=1,2,\cdots)\)&lt;/span&gt;都在&lt;span class=&#34;math inline&#34;&gt;\(\gamma\)&lt;/span&gt;上连续，那么&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\int_\gamma f(z)dz=\sum^\infty_{n=1}\int_\gamma f_n(z)dz
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;内闭一致收敛&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;如果级数&lt;span class=&#34;math inline&#34;&gt;\(\sum^\infty_{n=1}f_n(z)\)&lt;/span&gt;在域&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;的任意紧子集上一致收敛，就称&lt;span class=&#34;math inline&#34;&gt;\(\sum^\infty_{n=1}f_n(z)\)&lt;/span&gt;在&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;中内闭一致收敛。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定义1&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;如果&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;的子集&lt;span class=&#34;math inline&#34;&gt;\(G\)&lt;/span&gt;满足&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(\bar G\subset D\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(\bar G\)&lt;/span&gt;是紧的&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;就说&lt;span class=&#34;math inline&#34;&gt;\(G\)&lt;/span&gt;相对于&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;是紧的，记为&lt;span class=&#34;math inline&#34;&gt;\(G\subset\subset D\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;引理1&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(\bm C\)&lt;/span&gt;中的域，&lt;span class=&#34;math inline&#34;&gt;\(K\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;中的紧子集，且包含在相对于&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;是紧的开集&lt;span class=&#34;math inline&#34;&gt;\(G\)&lt;/span&gt;中，即&lt;span class=&#34;math inline&#34;&gt;\(K\subset G\subset\subset
+D\)&lt;/span&gt;，那么对任意&lt;span class=&#34;math inline&#34;&gt;\(f\in
+H(D)\)&lt;/span&gt;，均有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+sup\{|f^{(k)}|:z\in K\}\leq Csup{|f(z)|:z\in G}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;这里，&lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt;是任意自然数，&lt;span class=&#34;math inline&#34;&gt;\(C\)&lt;/span&gt;是与&lt;span class=&#34;math inline&#34;&gt;\(k,K,G\)&lt;/span&gt;有关的常数。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Weierstrass定理&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(\bm C\)&lt;/span&gt;中的域，如果&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(f_n\in H(D),n=1,2,\cdots\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(\sum^\infty_{n=1} f_n(z)\)&lt;/span&gt;在&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;中内闭一致收敛到&lt;span class=&#34;math inline&#34;&gt;\(f(z)\)&lt;/span&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;那么&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(f\in H(D)\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;对任意自然数&lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt;，&lt;span class=&#34;math inline&#34;&gt;\(\sum^\infty_{n=1} f_n^{(k)}(z)\)&lt;/span&gt;在&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;中内闭一致收敛到&lt;span class=&#34;math inline&#34;&gt;\(f^{(k)}(z)\)&lt;/span&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;幂级数&#34;&gt;幂级数&lt;/h2&gt;
+&lt;p&gt;幂级数，是指形如&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\sum^\infty_{n=0}a_n(z-z_0)^n = a_0+a_1(z-z_0)+a_2(z-z_0)^2+\cdots
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;的级数，其中&lt;span class=&#34;math inline&#34;&gt;\(a_n,z_0\)&lt;/span&gt;都是复常数。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定义1&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;如果存在常数&lt;span class=&#34;math inline&#34;&gt;\(R\)&lt;/span&gt;，使得当&lt;span class=&#34;math inline&#34;&gt;\(|z|&amp;lt;R\)&lt;/span&gt;时，级数&lt;span class=&#34;math inline&#34;&gt;\(\sum^\infty_{n=0}a_nz^n\)&lt;/span&gt;收敛；当&lt;span class=&#34;math inline&#34;&gt;\(|z|&amp;gt;R\)&lt;/span&gt;时，级数发散，就称&lt;span class=&#34;math inline&#34;&gt;\(R\)&lt;/span&gt;为该级数的收敛半径，&lt;span class=&#34;math inline&#34;&gt;\(\{z:|z|&amp;lt;R\}\)&lt;/span&gt;称为该级数的收敛圈。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定理1&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(\sum^\infty_{n=0}a_nz^n\)&lt;/span&gt;的收敛半径为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+R=1\bigg/\overline{\lim_{n\to\infty}}\sqrt[n]{|a_n|}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(\overline\lim\)&lt;/span&gt;是上极限&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Abel定理&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;如果&lt;span class=&#34;math inline&#34;&gt;\(\sum^\infty_{n=0}a_nz^n\)&lt;/span&gt;在&lt;span class=&#34;math inline&#34;&gt;\(z=z_0\neq 0\)&lt;/span&gt;处收敛，则必在&lt;span class=&#34;math inline&#34;&gt;\(\{z:|z|&amp;lt;|z_0|\}\)&lt;/span&gt;中内闭绝对之一收敛。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定理2&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;幂级数在其收敛圆内确定一个全纯函数。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;非切向极限&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(g\)&lt;/span&gt;是定义在单位圆中的函数，&lt;span class=&#34;math inline&#34;&gt;\(e^{i\theta_0}\)&lt;/span&gt;是单位圆周上一点，&lt;span class=&#34;math inline&#34;&gt;\(S_\alpha(e^{i\theta_0})\)&lt;/span&gt;如下图所示，其中&lt;span class=&#34;math inline&#34;&gt;\(\alpha&amp;lt;\frac{\pi}{2}\)&lt;/span&gt;，如果当&lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;在&lt;span class=&#34;math inline&#34;&gt;\(S_\alpha(e^{i\theta_0})\)&lt;/span&gt;中趋于&lt;span class=&#34;math inline&#34;&gt;\(e^{i\theta_0}\)&lt;/span&gt;时，&lt;span class=&#34;math inline&#34;&gt;\(g(z)\)&lt;/span&gt;有极限&lt;span class=&#34;math inline&#34;&gt;\(l\)&lt;/span&gt;，就称&lt;span class=&#34;math inline&#34;&gt;\(g\)&lt;/span&gt;在&lt;span class=&#34;math inline&#34;&gt;\(e^{i\theta_0}\)&lt;/span&gt;处有非切向极限&lt;span class=&#34;math inline&#34;&gt;\(l\)&lt;/span&gt;，记为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\lim_{z\to e^{i\theta_0},z\in S_\alpha(e^{i\theta_0})}g(z)=l
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;1.jpg&#34; alt=&#34;1.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;1.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;&lt;strong&gt;Abel第二定理&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(f(z)=\sum^\infty_{n=0}a_nz^n\)&lt;/span&gt;的收敛半径&lt;span class=&#34;math inline&#34;&gt;\(R=1\)&lt;/span&gt;，且级数在&lt;span class=&#34;math inline&#34;&gt;\(z=1\)&lt;/span&gt;处收敛于&lt;span class=&#34;math inline&#34;&gt;\(S\)&lt;/span&gt;，那么&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;在&lt;span class=&#34;math inline&#34;&gt;\(z=1\)&lt;/span&gt;处有非切向极限&lt;span class=&#34;math inline&#34;&gt;\(S\)&lt;/span&gt;，即&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\lim_{z\to 1,z\in S_\alpha(1)}f(z)=S
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;其他一些求收敛半径的方法&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;总体上和高等数学差别不大&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;比值法&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;如果&lt;span class=&#34;math inline&#34;&gt;\(\lim_{n\to
+\infty}|c_{n+1}/c_n|=\lambda\neq 0\)&lt;/span&gt;，那么半径为&lt;span class=&#34;math inline&#34;&gt;\(R=1/\lambda\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;根值法&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;如果&lt;span class=&#34;math inline&#34;&gt;\(\lim_{n\to
+\infty}\sqrt[n]{|c_n|}=\mu\neq 0\)&lt;/span&gt;，那么半径为&lt;span class=&#34;math inline&#34;&gt;\(R=1/\mu\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定理3&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设幂级数&lt;span class=&#34;math inline&#34;&gt;\(\sum^\infty_{n=0}c_n(z-z_0)^n\)&lt;/span&gt;的收敛半径为&lt;span class=&#34;math inline&#34;&gt;\(R\)&lt;/span&gt;，那么&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;它的和函数&lt;span class=&#34;math inline&#34;&gt;\(f(z)\)&lt;/span&gt;，即&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+f(z) = \sum^\infty_{n=0}c_n(z-a)^n
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;是收敛圆：&lt;span class=&#34;math inline&#34;&gt;\(|z-a|&amp;lt;R\)&lt;/span&gt;内的解析函数&lt;/p&gt;
+&lt;ol start=&#34;2&#34; type=&#34;1&#34;&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(f(z)\)&lt;/span&gt;在收敛圆内的导数可将其幂级数逐项求导得到，即&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+f&amp;#39;(z) = \sum^\infty_{n=0}nc_n(z-a)^{n-1}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;ol start=&#34;3&#34; type=&#34;1&#34;&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(f(z)\)&lt;/span&gt;在收敛圆内可以逐项积分，即&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\int_C f(z)dz = \sum^\infty_{n=0}c_n\int_C(z-a)^ndz, C\in|z-a|&amp;lt;R
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;或&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\int_0^zf(z)dz = \sum^\infty_{n=0}\frac{c_n}{n+1}(z-a)^{n+1}
+\]&lt;/span&gt;&lt;/p&gt;
 
 
 </description>

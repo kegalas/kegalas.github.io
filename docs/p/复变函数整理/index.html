@@ -112,7 +112,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 31 分钟
+                    阅读时长: 37 分钟
                 </time>
             </div>
         
@@ -725,6 +725,34 @@ e^{-ix} = \cos x -i\sin x
 \ctg z = \frac{\cos z}{\sin z}
 \]</span></p>
 <p>前者在除掉<span class="math inline">\(z=\pi/2+k\pi\)</span>的开平面上全纯，后者在除掉<span class="math inline">\(z=k\pi\)</span>的开平面上全纯，<span class="math inline">\(k=0,\pm1,\cdots\)</span>。</p>
+<p>之后我们也能定义双曲函数</p>
+<p><span class="math display">\[
+chz=\frac{e^z+e^{-z}}{2},shz=\frac{e^z-e^{-z}}{2}
+\]</span></p>
+<p>并且有</p>
+<p><span class="math display">\[
+(chz)&#39;=shz,(shz)&#39;=chz
+\]</span></p>
+<p>反三角函数有</p>
+<p><span class="math display">\[
+Arcsinz=-iLn(iz+\sqrt{1-z^2})
+\]</span></p>
+<p><span class="math display">\[
+Arccosz=-iLn(z+\sqrt{z^2-1})
+\]</span></p>
+<p><span class="math display">\[
+Arctanz=-\frac{i}{2}Ln\frac{1+iz}{1-iz}
+\]</span></p>
+<p>反双曲函数有</p>
+<p><span class="math display">\[
+Arshz = Ln(z+\sqrt{z^2+1})
+\]</span></p>
+<p><span class="math display">\[
+Archz = Ln(z+\sqrt{z^2-1})
+\]</span></p>
+<p><span class="math display">\[
+Arthz = \frac{1}{2}Ln\frac{1+z}{1-z}
+\]</span></p>
 <h2 id="分式线性变换">分式线性变换</h2>
 <p>形如<span class="math inline">\(\omega=T(z)=\frac{az+b}{cz+d}\)</span>的映射称为分式线性变换或Mobius变换，其中<span class="math inline">\(a,b,c,d\)</span>是复常数，且满足<span class="math inline">\(ad-bc\neq 0\)</span>，如果等于<span class="math inline">\(0\)</span>原式就是常数或无意义，没有讨论价值。</p>
 <p>如果<span class="math inline">\(c\neq 0\)</span>，则除去点<span class="math inline">\(z=-\frac{d}{c}\)</span>外，<span class="math inline">\(T(z)\)</span>在<span class="math inline">\(\bm
@@ -883,7 +911,7 @@ f(z)dz|&lt;\varepsilon\)</span></li>
 <p>注意点同上。</p>
 <p>这个定理也意味着积分和路径无关，只与始末位置有关。</p>
 <p><strong>定理1</strong></p>
-<p>设<span class="math inline">\(D\)</span>是可求长简单闭曲线<span class="math inline">\(\gamma\)</span>的内部，若<span class="math inline">\(f\in H(D)\bigcap C(\bar D)\)</span>（即在<span class="math inline">\(D\)</span>上全纯且在<span class="math inline">\(\bar D\)</span>上连续），则</p>
+<p>设<span class="math inline">\(D\)</span>是可求长简单闭曲线<span class="math inline">\(\gamma\)</span>的内部，若<span class="math inline">\(f\in H(D)\bigcap C(\bar D)\)</span>（即在<span class="math inline">\(D\)</span>上全纯且在<span class="math inline">\(\bar D\)</span>（闭包）上连续），则</p>
 <p><span class="math display">\[
 \int_\gamma f(z)dz = 0
 \]</span></p>
@@ -970,6 +998,160 @@ P(z)=a_0z^n+a_1z^{n-1}+\cdots+a_n,a_0\neq 0
 <p>在<span class="math inline">\(\bm C\)</span>中必有零点</p>
 <p><strong>Morera定理</strong></p>
 <p>如果<span class="math inline">\(f\)</span>是域<span class="math inline">\(D\)</span>上的连续函数，且沿<span class="math inline">\(D\)</span>内任一可求长闭曲线的积分为零，那么<span class="math inline">\(f\)</span>在<span class="math inline">\(D\)</span>上全纯</p>
+<h2 id="调和函数">调和函数</h2>
+<p>如果二元实变函数<span class="math inline">\(\varphi(x,y)\)</span>在区域<span class="math inline">\(D\)</span>内具有二阶连续偏导数并且满足拉普拉斯方程</p>
+<p><span class="math display">\[
+\frac{\partial^2 \varphi}{\partial x^2}+\frac{\partial^2
+\varphi}{\partial y^2}=0
+\]</span></p>
+<p>那么称<span class="math inline">\(\varphi(x,y)\)</span>为区域<span class="math inline">\(D\)</span>内的调和函数。</p>
+<p><strong>定理</strong></p>
+<p>任何在区域<span class="math inline">\(D\)</span>内全纯的函数，它的实部和虚部都是<span class="math inline">\(D\)</span>内的调和函数</p>
+<p>在<span class="math inline">\(D\)</span>内满足柯西-黎曼方程</p>
+<p><span class="math display">\[
+\frac{\partial u}{\partial x}=\frac{\partial v}{\partial y},
+\frac{\partial u}{\partial y}=-\frac{\partial v}{\partial x}
+\]</span></p>
+<p>的两个调和函数中，<span class="math inline">\(v\)</span>称为<span class="math inline">\(u\)</span>的共轭调和函数。也就是说，区域<span class="math inline">\(D\)</span>内的全纯函数的虚部为实部的共轭调和函数。</p>
+<h2 id="非齐次cauchy积分公式">非齐次Cauchy积分公式</h2>
+<p>TODO</p>
+<h2 id="一维barpartial问题的解">一维<span class="math inline">\(\bar\partial\)</span>问题的解</h2>
+<p>TODO</p>
+<h1 id="全纯函数的taylor展开及其应用">全纯函数的Taylor展开及其应用</h1>
+<h2 id="weierstrass定理">Weierstrass定理</h2>
+<p>设<span class="math inline">\(z_1,z_2,\cdots\)</span>是<span class="math inline">\(\bm C\)</span>中的一列复数，称</p>
+<p><span class="math display">\[
+\sum^\infty_{n=1}z_n = z_1+z_2+\cdots
+\]</span></p>
+<p>为一个复数项级数。这个级数称为是收敛的，如果它的部分和数列<span class="math inline">\(S_n=\sum^n_{k=1}z_k\)</span>收敛，如果<span class="math inline">\(\{S_n\}\)</span>的极限为<span class="math inline">\(S\)</span>，就说这个级数的和为<span class="math inline">\(S\)</span>，记为<span class="math inline">\(\sum^\infty_{n=1}z_n = S\)</span></p>
+<p>从数列的Cauchy收敛准则马上可得级数的Cauchy收敛准则：</p>
+<p>级数收敛的充要条件是对任意<span class="math inline">\(\varepsilon&gt;0\)</span>，存在正整数<span class="math inline">\(N\)</span>，使得当<span class="math inline">\(n&gt;N\)</span>时，不等式</p>
+<p><span class="math display">\[
+z_{n+1}+z_{n+2}+\cdots+z_{n+p}&lt;\varepsilon
+\]</span></p>
+<p>对任意自然数<span class="math inline">\(p\)</span>成立</p>
+<p>从收敛准则即得<span class="math inline">\(\sum^\infty_{n=1}z_n\)</span>收敛的必要条件是<span class="math inline">\(\lim_{n\to \infty}z_n=0\)</span></p>
+<p>如果<span class="math inline">\(\sum^\infty_{n=1}|z_n|\)</span>收敛，就说级数<span class="math inline">\(\sum^\infty_{n=1}z_n\)</span>绝对收敛。同样，绝对收敛的级数一定收敛，反之不一定成立。并且有<span class="math inline">\(\sum^\infty_{n=1}|z_n|\geq|\sum^\infty_{n=1}z_n|\)</span></p>
+<p>另外，<span class="math inline">\(\sum^\infty_{n=1}z_n\)</span>收敛的充要条件是其实部和虚部构成的数列分别都收敛。</p>
+<p>设<span class="math inline">\(E\)</span>是<span class="math inline">\(\bm C\)</span>中的一个点集，<span class="math inline">\(f_n:E\to \bm C\)</span>是定义在<span class="math inline">\(E\)</span>上的一个函数列，如果对于每一个<span class="math inline">\(z\in E\)</span>，级数</p>
+<p><span class="math display">\[
+\sum^\infty_{n=1}f_n(z)=f_1(z)+f_2(z)+\cdots
+\]</span></p>
+<p>收敛到<span class="math inline">\(f(z)\)</span>，就说其在<span class="math inline">\(E\)</span>上收敛，其和函数为<span class="math inline">\(f\)</span>，记为<span class="math inline">\(\sum^\infty_{n=1}f_n(z)=f(z)\)</span></p>
+<p><strong>一致连续</strong></p>
+<p>设<span class="math inline">\(\sum^\infty_{n=1}f_n(z)\)</span>是定义在点集<span class="math inline">\(E\)</span>上的级数，我们说<span class="math inline">\(\sum^\infty_{n=1}f_n(z)\)</span>在<span class="math inline">\(E\)</span>上一致收敛到<span class="math inline">\(f(z)\)</span>，是指对任意<span class="math inline">\(\varepsilon&gt;0\)</span>，存在正整数<span class="math inline">\(N\)</span>，当<span class="math inline">\(n&gt;N\)</span>时，不等式</p>
+<p><span class="math display">\[
+|S_n(z)-f(z)|&lt;\varepsilon
+\]</span></p>
+<p>对所有的<span class="math inline">\(z\in E\)</span>成立，这里，<span class="math inline">\(S_n(z)=\sum^n_{k=1}f_k(z)\)</span>是级数的部分和。</p>
+<p><strong>Cauchy收敛准则</strong></p>
+<p>级数<span class="math inline">\(\sum^\infty_{n=1}f_n(z)\)</span>在<span class="math inline">\(E\)</span>上一致收敛的充要条件是对任意<span class="math inline">\(\varepsilon&gt;0\)</span>，存在正整数<span class="math inline">\(N\)</span>，当<span class="math inline">\(n&gt;N\)</span>时，不等式</p>
+<p><span class="math display">\[
+|f_{n+1}(z)+f_{n+2}(z)+\cdots+f_{n+p}(z)|&lt;\varepsilon
+\]</span></p>
+<p>对所有<span class="math inline">\(z\in E\)</span>及任意自然数<span class="math inline">\(p\)</span>成立。</p>
+<p><strong>Weierstrass一致收敛判别法</strong></p>
+<p>设<span class="math inline">\(f_n:E\to \bm C\)</span>是定义在<span class="math inline">\(E\)</span>上的函数列，且在<span class="math inline">\(E\)</span>上满足<span class="math inline">\(|f_n(z)|\leq a_n,n=1,2,\cdots\)</span>，如果<span class="math inline">\(\sum^\infty_{n=1}a_n\)</span>收敛，那么<span class="math inline">\(\sum^\infty_{n=1}f_n(z)\)</span>在<span class="math inline">\(E\)</span>上一致收敛。</p>
+<p><strong>定理1</strong></p>
+<p>设级数<span class="math inline">\(\sum^\infty_{n=1}f_n(z)\)</span>在点集<span class="math inline">\(E\)</span>上一致收敛到<span class="math inline">\(f(z)\)</span>，如果每个<span class="math inline">\(f_n(n=1,2,\cdots)\)</span>都是<span class="math inline">\(E\)</span>上的连续函数，那么<span class="math inline">\(f\)</span>也是<span class="math inline">\(E\)</span>上的连续函数。</p>
+<p><strong>定理2</strong></p>
+<p>设级数<span class="math inline">\(\sum^\infty_{n=1}f_n(z)\)</span>在可求长曲线<span class="math inline">\(\gamma\)</span>上一致收敛到<span class="math inline">\(f(z)\)</span>，如果每个<span class="math inline">\(f_n(n=1,2,\cdots)\)</span>都在<span class="math inline">\(\gamma\)</span>上连续，那么</p>
+<p><span class="math display">\[
+\int_\gamma f(z)dz=\sum^\infty_{n=1}\int_\gamma f_n(z)dz
+\]</span></p>
+<p><strong>内闭一致收敛</strong></p>
+<p>如果级数<span class="math inline">\(\sum^\infty_{n=1}f_n(z)\)</span>在域<span class="math inline">\(D\)</span>的任意紧子集上一致收敛，就称<span class="math inline">\(\sum^\infty_{n=1}f_n(z)\)</span>在<span class="math inline">\(D\)</span>中内闭一致收敛。</p>
+<p><strong>定义1</strong></p>
+<p>如果<span class="math inline">\(D\)</span>的子集<span class="math inline">\(G\)</span>满足</p>
+<ol type="1">
+<li><span class="math inline">\(\bar G\subset D\)</span></li>
+<li><span class="math inline">\(\bar G\)</span>是紧的</li>
+</ol>
+<p>就说<span class="math inline">\(G\)</span>相对于<span class="math inline">\(D\)</span>是紧的，记为<span class="math inline">\(G\subset\subset D\)</span></p>
+<p><strong>引理1</strong></p>
+<p>设<span class="math inline">\(D\)</span>是<span class="math inline">\(\bm C\)</span>中的域，<span class="math inline">\(K\)</span>是<span class="math inline">\(D\)</span>中的紧子集，且包含在相对于<span class="math inline">\(D\)</span>是紧的开集<span class="math inline">\(G\)</span>中，即<span class="math inline">\(K\subset G\subset\subset
+D\)</span>，那么对任意<span class="math inline">\(f\in
+H(D)\)</span>，均有</p>
+<p><span class="math display">\[
+sup\{|f^{(k)}|:z\in K\}\leq Csup{|f(z)|:z\in G}
+\]</span></p>
+<p>这里，<span class="math inline">\(k\)</span>是任意自然数，<span class="math inline">\(C\)</span>是与<span class="math inline">\(k,K,G\)</span>有关的常数。</p>
+<p><strong>Weierstrass定理</strong></p>
+<p>设<span class="math inline">\(D\)</span>是<span class="math inline">\(\bm C\)</span>中的域，如果</p>
+<ol type="1">
+<li><span class="math inline">\(f_n\in H(D),n=1,2,\cdots\)</span></li>
+<li><span class="math inline">\(\sum^\infty_{n=1} f_n(z)\)</span>在<span class="math inline">\(D\)</span>中内闭一致收敛到<span class="math inline">\(f(z)\)</span></li>
+</ol>
+<p>那么</p>
+<ol type="1">
+<li><span class="math inline">\(f\in H(D)\)</span></li>
+<li>对任意自然数<span class="math inline">\(k\)</span>，<span class="math inline">\(\sum^\infty_{n=1} f_n^{(k)}(z)\)</span>在<span class="math inline">\(D\)</span>中内闭一致收敛到<span class="math inline">\(f^{(k)}(z)\)</span></li>
+</ol>
+<h2 id="幂级数">幂级数</h2>
+<p>幂级数，是指形如</p>
+<p><span class="math display">\[
+\sum^\infty_{n=0}a_n(z-z_0)^n = a_0+a_1(z-z_0)+a_2(z-z_0)^2+\cdots
+\]</span></p>
+<p>的级数，其中<span class="math inline">\(a_n,z_0\)</span>都是复常数。</p>
+<p><strong>定义1</strong></p>
+<p>如果存在常数<span class="math inline">\(R\)</span>，使得当<span class="math inline">\(|z|&lt;R\)</span>时，级数<span class="math inline">\(\sum^\infty_{n=0}a_nz^n\)</span>收敛；当<span class="math inline">\(|z|&gt;R\)</span>时，级数发散，就称<span class="math inline">\(R\)</span>为该级数的收敛半径，<span class="math inline">\(\{z:|z|&lt;R\}\)</span>称为该级数的收敛圈。</p>
+<p><strong>定理1</strong></p>
+<p><span class="math inline">\(\sum^\infty_{n=0}a_nz^n\)</span>的收敛半径为</p>
+<p><span class="math display">\[
+R=1\bigg/\overline{\lim_{n\to\infty}}\sqrt[n]{|a_n|}
+\]</span></p>
+<p>其中<span class="math inline">\(\overline\lim\)</span>是上极限</p>
+<p><strong>Abel定理</strong></p>
+<p>如果<span class="math inline">\(\sum^\infty_{n=0}a_nz^n\)</span>在<span class="math inline">\(z=z_0\neq 0\)</span>处收敛，则必在<span class="math inline">\(\{z:|z|&lt;|z_0|\}\)</span>中内闭绝对之一收敛。</p>
+<p><strong>定理2</strong></p>
+<p>幂级数在其收敛圆内确定一个全纯函数。</p>
+<p><strong>非切向极限</strong></p>
+<p>设<span class="math inline">\(g\)</span>是定义在单位圆中的函数，<span class="math inline">\(e^{i\theta_0}\)</span>是单位圆周上一点，<span class="math inline">\(S_\alpha(e^{i\theta_0})\)</span>如下图所示，其中<span class="math inline">\(\alpha&lt;\frac{\pi}{2}\)</span>，如果当<span class="math inline">\(z\)</span>在<span class="math inline">\(S_\alpha(e^{i\theta_0})\)</span>中趋于<span class="math inline">\(e^{i\theta_0}\)</span>时，<span class="math inline">\(g(z)\)</span>有极限<span class="math inline">\(l\)</span>，就称<span class="math inline">\(g\)</span>在<span class="math inline">\(e^{i\theta_0}\)</span>处有非切向极限<span class="math inline">\(l\)</span>，记为</p>
+<p><span class="math display">\[
+\lim_{z\to e^{i\theta_0},z\in S_\alpha(e^{i\theta_0})}g(z)=l
+\]</span></p>
+<figure>
+<img src="1.jpg" alt="1.jpg"/>
+<figcaption aria-hidden="true">1.jpg</figcaption>
+</figure>
+<p><strong>Abel第二定理</strong></p>
+<p>设<span class="math inline">\(f(z)=\sum^\infty_{n=0}a_nz^n\)</span>的收敛半径<span class="math inline">\(R=1\)</span>，且级数在<span class="math inline">\(z=1\)</span>处收敛于<span class="math inline">\(S\)</span>，那么<span class="math inline">\(f\)</span>在<span class="math inline">\(z=1\)</span>处有非切向极限<span class="math inline">\(S\)</span>，即</p>
+<p><span class="math display">\[
+\lim_{z\to 1,z\in S_\alpha(1)}f(z)=S
+\]</span></p>
+<p><strong>其他一些求收敛半径的方法</strong></p>
+<p>总体上和高等数学差别不大</p>
+<p><em>比值法</em></p>
+<p>如果<span class="math inline">\(\lim_{n\to
+\infty}|c_{n+1}/c_n|=\lambda\neq 0\)</span>，那么半径为<span class="math inline">\(R=1/\lambda\)</span></p>
+<p><em>根值法</em></p>
+<p>如果<span class="math inline">\(\lim_{n\to
+\infty}\sqrt[n]{|c_n|}=\mu\neq 0\)</span>，那么半径为<span class="math inline">\(R=1/\mu\)</span></p>
+<p><strong>定理3</strong></p>
+<p>设幂级数<span class="math inline">\(\sum^\infty_{n=0}c_n(z-z_0)^n\)</span>的收敛半径为<span class="math inline">\(R\)</span>，那么</p>
+<ol type="1">
+<li>它的和函数<span class="math inline">\(f(z)\)</span>，即</li>
+</ol>
+<p><span class="math display">\[
+f(z) = \sum^\infty_{n=0}c_n(z-a)^n
+\]</span></p>
+<p>是收敛圆：<span class="math inline">\(|z-a|&lt;R\)</span>内的解析函数</p>
+<ol start="2" type="1">
+<li><span class="math inline">\(f(z)\)</span>在收敛圆内的导数可将其幂级数逐项求导得到，即</li>
+</ol>
+<p><span class="math display">\[
+f&#39;(z) = \sum^\infty_{n=0}nc_n(z-a)^{n-1}
+\]</span></p>
+<ol start="3" type="1">
+<li><span class="math inline">\(f(z)\)</span>在收敛圆内可以逐项积分，即</li>
+</ol>
+<p><span class="math display">\[
+\int_C f(z)dz = \sum^\infty_{n=0}c_n\int_C(z-a)^ndz, C\in|z-a|&lt;R
+\]</span></p>
+<p>或</p>
+<p><span class="math display">\[
+\int_0^zf(z)dz = \sum^\infty_{n=0}\frac{c_n}{n+1}(z-a)^{n+1}
+\]</span></p>
 
 
 
@@ -1344,6 +1526,15 @@ P(z)=a_0z^n+a_1z^{n-1}+\cdots+a_n,a_0\neq 0
         <li><a href="#全纯函数的原函数">全纯函数的原函数</a></li>
         <li><a href="#cauchy积分公式">Cauchy积分公式</a></li>
         <li><a href="#cauchy积分公式的一些重要推论">Cauchy积分公式的一些重要推论</a></li>
+        <li><a href="#调和函数">调和函数</a></li>
+        <li><a href="#非齐次cauchy积分公式">非齐次Cauchy积分公式</a></li>
+        <li><a href="#一维barpartial问题的解">一维<span class="math inline">\(\bar\partial\)</span>问题的解</a></li>
+      </ol>
+    </li>
+    <li><a href="#全纯函数的taylor展开及其应用">全纯函数的Taylor展开及其应用</a>
+      <ol>
+        <li><a href="#weierstrass定理">Weierstrass定理</a></li>
+        <li><a href="#幂级数">幂级数</a></li>
       </ol>
     </li>
   </ol>
