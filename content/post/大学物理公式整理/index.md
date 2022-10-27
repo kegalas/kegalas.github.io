@@ -2041,7 +2041,7 @@ $$
 当回路固定不动，磁通量$\varPsi$的变化仅来自磁场的变化时，电动势为
 
 $$
-\varepsilon_i = \oint_L \bm E_v\cdot \bm l=-\iint_S\frac{\partial\bm B}{\partial\bm t}\cdot d\bm S
+\varepsilon_i = \oint_L \bm E_V\cdot \bm l=-\iint_S\frac{\partial\bm B}{\partial t}\cdot d\bm S
 $$
 
 ### 自感现象
@@ -2122,4 +2122,47 @@ $$
 
 $$
 W_m = \int_V dW_m=\frac{1}{2}\int_V BHdV
+$$
+
+### 位移电流
+
+对于非恒定电流，例如电路中加一个电容器，那么原始的安培环路定理则不再适用，因为将曲面穿过两极板之间得到的结果是0. 不符合事实。
+
+于是麦克斯韦提出了位移电流的概念，即在电容器的两个极板中也有电流。定义为
+
+$$
+I_D=\frac{d\varPhi_D}{dt}
+$$
+
+设极板的面积为$S$，某时刻极板上自由电荷面密度为$\sigma$，则电位移为$D=\sigma$，于是极板间的电位移通量$\varPhi_D=DS=\sigma S$。电位移通量的时间变化率为
+
+$$
+\frac{d\varPhi_D}{dt} = \frac{d}{dt}\sigma S=\frac{dq}{dt}
+$$
+
+其中$dq/dt$就是导线中的传到电流。
+
+
+于是可以把安培环路定理推广为
+
+$$
+\oint_L \bm H\cdot d\bm l=I+I_D
+$$
+
+### 麦克斯韦方程组的积分形式 电磁场
+
+$$
+\oint_S \bm D\cdot d\bm S = \sum_i q_i
+$$
+
+$$
+\oint_L \bm E\cdot d\bm l = -\iint_S\frac{\partial \bm B}{\partial t}\cdot d\bm S
+$$
+
+$$
+\oint_S \bm B\cdot d\bm S = 0
+$$
+
+$$
+\oint_L \bm H\cdot d\bm l = \sum(I_D+I)
 $$
