@@ -125,7 +125,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 19 分钟
+                    阅读时长: 21 分钟
                 </time>
             </div>
         
@@ -396,6 +396,10 @@ e^{-\lambda}
 P(X=i)=e^{-\lambda}\lambda^i/i!
 \]</span></p>
 <p>显然通常我们不会遇到<span class="math inline">\(n\)</span>无限的情况，只会遇到<span class="math inline">\(n\)</span>较大的情况，所以只能说接近泊松分布。</p>
+<p>在后面的期望一节，我们可以证明<span class="math inline">\(X\)</span>服从泊松分布时</p>
+<p><span class="math display">\[
+E(X) = \sum^\infty_{i=0}i\frac{\lambda^i}{i!}e^{-\lambda}=\lambda
+\]</span></p>
 <h2 id="超几何分布">超几何分布</h2>
 <p>以<span class="math inline">\(X\)</span>记从含<span class="math inline">\(M\)</span>个废品的<span class="math inline">\(N\)</span>个产品中随机抽出<span class="math inline">\(n\)</span>个里面所含有的废品数，<span class="math inline">\(X\)</span>的分布为</p>
 <p><span class="math display">\[
@@ -453,7 +457,7 @@ f(x)=(\sqrt{2\pi}\sigma)^{-1}e^{-\frac{(x-\mu)^2}{2\sigma^2}}\quad
 (-\infty&lt;x&lt;\infty)
 \]</span></p>
 <p>则称<span class="math inline">\(X\)</span>为正态随机变量，并记为<span class="math inline">\(X\sim N(\mu,\sigma^2)\)</span>。<span class="math inline">\(\mu,\sigma^2\)</span>是常数，<span class="math inline">\(\mu\in
-R,0&lt;\sigma^2&lt;\infty\)</span>，它们称为这个分布的参数。</p>
+R,0&lt;\sigma^2&lt;\infty\)</span>，它们称为这个分布的参数。由后续的方差一节，<span class="math inline">\(Var(X)=\sigma^2\)</span>，就是分布的方差。</p>
 <p>正态分布的概率密度函数的图像关于<span class="math inline">\(x=\mu\)</span>对称，中间高两边低。</p>
 <p>当<span class="math inline">\(\mu=0,\sigma^2=1\)</span>时，称为标准正态分布<span class="math inline">\(N(0,1)\)</span></p>
 <p><span class="math display">\[
@@ -817,6 +821,130 @@ t_n(y)=\frac{\Gamma((n+1)/2)}{\sqrt{n\pi}\Gamma(n/2)}\bigg(1+\frac{y^2}{n}\bigg)
 <p>这个密度函数称为“自由度为<span class="math inline">\(n\)</span>的<span class="math inline">\(t\)</span>分布”的密度函数，常简记为<span class="math inline">\(t_n\)</span></p>
 <p><strong>F分布</strong></p>
 <p>TODO</p>
+<h2 id="数学期望与中位数">数学期望与中位数</h2>
+<h3 id="定义-1">定义</h3>
+<p><strong>定义1</strong></p>
+<p>设随机变量<span class="math inline">\(X\)</span>只取有限个可能值<span class="math inline">\(a_1,\cdots,a_m\)</span>，其概率分布为<span class="math inline">\(P(X=a_i)=p_i(i=1,\cdots,m)\)</span>，则<span class="math inline">\(X\)</span>的数学期望，记为<span class="math inline">\(E(X)\)</span>或<span class="math inline">\(EX\)</span>，定义为</p>
+<p><span class="math display">\[
+E(X) = a_1p_1+a_2p_2+\cdots+a_mp_m
+\]</span></p>
+<p>如果取无穷个值<span class="math inline">\(a_1,a_2,\cdots\)</span>，而概率分布为<span class="math inline">\(P(X=a_i)=p_i(i=1,\cdots)\)</span>，则有其数学期望为</p>
+<p><span class="math display">\[
+E(X) = \sum^\infty_{i=1}a_ip_i（式1）
+\]</span></p>
+<p>这个期望存在，必须要求这个级数收敛，并且是绝对收敛。</p>
+<p><strong>定义2</strong></p>
+<p>如果</p>
+<p><span class="math display">\[
+\sum^\infty_{i=1}|a_i|p_i&lt;\infty
+\]</span></p>
+<p>则称式1的右边的级数之和为<span class="math inline">\(X\)</span>的数学期望</p>
+<p><strong>定义3</strong></p>
+<p>设<span class="math inline">\(X\)</span>有概率密度函数<span class="math inline">\(f(x)\)</span>，如果</p>
+<p><span class="math display">\[
+\int^\infty_{-\infty}|x|f(x)dx&lt;\infty
+\]</span></p>
+<p>则称</p>
+<p><span class="math display">\[
+E(X) = \int^\infty_{-\infty}xf(x)dx
+\]</span></p>
+<p>为<span class="math inline">\(X\)</span>的数学期望。</p>
+<h3 id="性质">性质</h3>
+<p><strong>定理1</strong></p>
+<p>若干个随机变量之和的期望等于各变量的期望之和</p>
+<p><span class="math display">\[
+E(X_1+X_2+\cdots+X_n) = E(X_1)+E(X_2)+\cdots+E(X_n)
+\]</span></p>
+<p><strong>定理2</strong></p>
+<p>若干个独立（注意独立）随机变量之积的期望等于各变量期望之积</p>
+<p><span class="math display">\[
+E(X_1X_2\cdots X_n) = E(X_1)E(X_2)\cdots E(X_n)
+\]</span></p>
+<p><strong>随机变量函数的期望</strong></p>
+<p>设随机变量<span class="math inline">\(X\)</span>为离散型，有分布<span class="math inline">\(P(X=a_i)=p_i(i=1,2,\cdots)\)</span>；或者为连续型，有概率密度函数<span class="math inline">\(f(x)\)</span>，则</p>
+<p><span class="math display">\[
+E(g(x)) = \sum_i g(a_i)p_i（要求绝对收敛）
+\]</span></p>
+<p>或</p>
+<p><span class="math display">\[
+E(g(x)) =
+\int^\infty_{-\infty}g(x)f(x)dx（要求\int^\infty_{-\infty}|g(x)|f(x)dx&lt;\infty）
+\]</span></p>
+<p>有一个特例是，若<span class="math inline">\(c\)</span>为常数，则</p>
+<p><span class="math display">\[
+E(cX) = cE(X)
+\]</span></p>
+<h3 id="条件数学期望">条件数学期望</h3>
+<p><span class="math display">\[
+E(Y|x) = \int^\infty_{-\infty}yf(y|x)dy
+\]</span></p>
+<p>类似于全概率公式，我们可以求得无条件的数学期望的一个重要公式</p>
+<p><span class="math display">\[
+E(Y) = \int^\infty_{-\infty}E(Y|x)f_1(x)dx
+\]</span></p>
+<p>其中</p>
+<p><span class="math display">\[
+f_1 = \int^\infty_{-\infty}f(x,y)dy
+\]</span></p>
+<p>如果将<span class="math inline">\(g(x)=E(Y|x)\)</span>，则</p>
+<p><span class="math display">\[
+E(Y) = \int^\infty_{-\infty}g(x)f_1(x)dx=E(g(X))=E(E(Y|X))
+\]</span></p>
+<p>整理得到</p>
+<p><span class="math display">\[
+E(Y) = E[E(Y|X)]
+\]</span></p>
+<p>如果是多维的，也有</p>
+<p><span class="math display">\[
+E(Y) =
+\int^\infty_{-\infty}\cdots\int^\infty_{-\infty}E(Y|x_1,\cdots,x_n)f(x_1,\cdots,x_n)dx_1\cdots
+dx_n
+\]</span></p>
+<p>如果是离散的，有<span class="math inline">\(P(X=a_i)=p_i\)</span>，则</p>
+<p><span class="math display">\[
+E(Y) = \sum^\infty_{i=1}p_iE(Y|a_i)
+\]</span></p>
+<h3 id="中位数">中位数</h3>
+<p><strong>定义1</strong></p>
+<p>设连续型随机变量<span class="math inline">\(X\)</span>的分布函数为<span class="math inline">\(F(x)\)</span>，则满足条件</p>
+<p><span class="math display">\[
+P(X\leq m)=F(m)=1/2
+\]</span></p>
+<p>的数<span class="math inline">\(m\)</span>称为<span class="math inline">\(X\)</span>或分布<span class="math inline">\(F\)</span>的中位数。</p>
+<p>而连续的时候，有</p>
+<p><span class="math display">\[
+P(X\leq m) = P(X&lt;m) = P(X&gt;m) = P(X\geq m) = 1/2   
+\]</span></p>
+<h2 id="方差与矩">方差与矩</h2>
+<h3 id="方差与标准差">方差与标准差</h3>
+<p><strong>定义1</strong></p>
+<p>设<span class="math inline">\(X\)</span>为随机变量，分布为<span class="math inline">\(F\)</span>，则</p>
+<p><span class="math display">\[
+Var(X) = E(X-EX)^2
+\]</span></p>
+<p>称为<span class="math inline">\(X\)</span>的方差，有时会记为<span class="math inline">\(DX\)</span>，其算术平方根称为标准差。</p>
+<p>将其展开得</p>
+<p><span class="math display">\[
+Var(X)=E(X^2)-(EX)^2
+\]</span></p>
+<p><strong>定理1</strong></p>
+<ol type="1">
+<li>常数的方差为<span class="math inline">\(0\)</span></li>
+<li>若<span class="math inline">\(c\)</span>为常数，则<span class="math inline">\(Var(X+c)=Var(X)\)</span></li>
+<li>若<span class="math inline">\(c\)</span>为常数，则<span class="math inline">\(Var(cX)=c^2Var(X)\)</span></li>
+</ol>
+<p><strong>定理2</strong></p>
+<p>独立（注意独立）随机变量之和的方差等于各变量的方差之和，即</p>
+<p><span class="math display">\[
+Var(X_1+X_2+\cdots+X_n) = Var(X_1)+Var(X_2)+\cdots+Var(X_n)
+\]</span></p>
+<h3 id="矩">矩</h3>
+<p><strong>定义1</strong></p>
+<p>设<span class="math inline">\(X\)</span>为随机变量，<span class="math inline">\(c\)</span>为常数，<span class="math inline">\(k\)</span>为正整数，则量<span class="math inline">\(E[(X-c)^k]\)</span>称为<span class="math inline">\(X\)</span>关于<span class="math inline">\(c\)</span>点的<span class="math inline">\(k\)</span>阶矩</p>
+<ol type="1">
+<li><span class="math inline">\(c=0\)</span>时称为<span class="math inline">\(X\)</span>的<span class="math inline">\(k\)</span>阶原点矩</li>
+<li><span class="math inline">\(c=E(X)\)</span>时称为<span class="math inline">\(X\)</span>的<span class="math inline">\(k\)</span>阶中心矩。</li>
+</ol>
 
 
 
@@ -1214,6 +1342,20 @@ t_n(y)=\frac{\Gamma((n+1)/2)}{\sqrt{n\pi}\Gamma(n/2)}\bigg(1+\frac{y^2}{n}\bigg)
         <li><a href="#连续型分布的情况的一般讨论">连续型分布的情况的一般讨论</a></li>
         <li><a href="#随机变量和的密度函数">随机变量和的密度函数</a></li>
         <li><a href="#随机变量商的密度函数">随机变量商的密度函数</a></li>
+      </ol>
+    </li>
+    <li><a href="#数学期望与中位数">数学期望与中位数</a>
+      <ol>
+        <li><a href="#定义-1">定义</a></li>
+        <li><a href="#性质">性质</a></li>
+        <li><a href="#条件数学期望">条件数学期望</a></li>
+        <li><a href="#中位数">中位数</a></li>
+      </ol>
+    </li>
+    <li><a href="#方差与矩">方差与矩</a>
+      <ol>
+        <li><a href="#方差与标准差">方差与标准差</a></li>
+        <li><a href="#矩">矩</a></li>
       </ol>
     </li>
   </ol>

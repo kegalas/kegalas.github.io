@@ -1645,8 +1645,8 @@ B)\cdot d\bm l
 <p>变化的磁场在周围空间激发出电场线为闭合曲线的电场，称其为感生电场或有旋电场。有旋电场的出现与是否存在导体没有关系。</p>
 <p>当回路固定不动，磁通量<span class="math inline">\(\varPsi\)</span>的变化仅来自磁场的变化时，电动势为</p>
 <p><span class="math display">\[
-\varepsilon_i = \oint_L \bm E_v\cdot \bm l=-\iint_S\frac{\partial\bm
-B}{\partial\bm t}\cdot d\bm S
+\varepsilon_i = \oint_L \bm E_V\cdot \bm l=-\iint_S\frac{\partial\bm
+B}{\partial t}\cdot d\bm S
 \]</span></p>
 <h3 id="自感现象">自感现象</h3>
 <p>导体回路中由于自身电流的变化，而在自身回路中产生感应电动势的现象。产生的电动势称为自感电动势。</p>
@@ -1698,6 +1698,38 @@ dW_m = w_mdV = \frac{1}{2}BHdV
 \]</span></p>
 <p><span class="math display">\[
 W_m = \int_V dW_m=\frac{1}{2}\int_V BHdV
+\]</span></p>
+<h3 id="位移电流">位移电流</h3>
+<p>对于非恒定电流，例如电路中加一个电容器，那么原始的安培环路定理则不再适用，因为将曲面穿过两极板之间得到的结果是0.
+不符合事实。</p>
+<p>于是麦克斯韦提出了位移电流的概念，即在电容器的两个极板中也有电流。定义为</p>
+<p><span class="math display">\[
+I_D=\frac{d\varPhi_D}{dt}
+\]</span></p>
+<p>设极板的面积为<span class="math inline">\(S\)</span>，某时刻极板上自由电荷面密度为<span class="math inline">\(\sigma\)</span>，则电位移为<span class="math inline">\(D=\sigma\)</span>，于是极板间的电位移通量<span class="math inline">\(\varPhi_D=DS=\sigma
+S\)</span>。电位移通量的时间变化率为</p>
+<p><span class="math display">\[
+\frac{d\varPhi_D}{dt} = \frac{d}{dt}\sigma S=\frac{dq}{dt}
+\]</span></p>
+<p>其中<span class="math inline">\(dq/dt\)</span>就是导线中的传到电流。</p>
+<p>于是可以把安培环路定理推广为</p>
+<p><span class="math display">\[
+\oint_L \bm H\cdot d\bm l=I+I_D
+\]</span></p>
+<h3 id="麦克斯韦方程组的积分形式-电磁场">麦克斯韦方程组的积分形式
+电磁场</h3>
+<p><span class="math display">\[
+\oint_S \bm D\cdot d\bm S = \sum_i q_i
+\]</span></p>
+<p><span class="math display">\[
+\oint_L \bm E\cdot d\bm l = -\iint_S\frac{\partial \bm B}{\partial
+t}\cdot d\bm S
+\]</span></p>
+<p><span class="math display">\[
+\oint_S \bm B\cdot d\bm S = 0
+\]</span></p>
+<p><span class="math display">\[
+\oint_L \bm H\cdot d\bm l = \sum(I_D+I)
 \]</span></p>
 
 
@@ -2092,6 +2124,9 @@ W_m = \int_V dW_m=\frac{1}{2}\int_V BHdV
         <li><a href="#自感现象">自感现象</a></li>
         <li><a href="#互感现象">互感现象</a></li>
         <li><a href="#磁能">磁能</a></li>
+        <li><a href="#位移电流">位移电流</a></li>
+        <li><a href="#麦克斯韦方程组的积分形式-电磁场">麦克斯韦方程组的积分形式
+电磁场</a></li>
       </ol>
     </li>
   </ol>

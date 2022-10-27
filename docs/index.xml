@@ -2240,6 +2240,10 @@ e^{-\lambda}
 P(X=i)=e^{-\lambda}\lambda^i/i!
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;显然通常我们不会遇到&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;无限的情况，只会遇到&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;较大的情况，所以只能说接近泊松分布。&lt;/p&gt;
+&lt;p&gt;在后面的期望一节，我们可以证明&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;服从泊松分布时&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+E(X) = \sum^\infty_{i=0}i\frac{\lambda^i}{i!}e^{-\lambda}=\lambda
+\]&lt;/span&gt;&lt;/p&gt;
 &lt;h2 id=&#34;超几何分布&#34;&gt;超几何分布&lt;/h2&gt;
 &lt;p&gt;以&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;记从含&lt;span class=&#34;math inline&#34;&gt;\(M\)&lt;/span&gt;个废品的&lt;span class=&#34;math inline&#34;&gt;\(N\)&lt;/span&gt;个产品中随机抽出&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;个里面所含有的废品数，&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;的分布为&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
@@ -2297,7 +2301,7 @@ f(x)=(\sqrt{2\pi}\sigma)^{-1}e^{-\frac{(x-\mu)^2}{2\sigma^2}}\quad
 (-\infty&amp;lt;x&amp;lt;\infty)
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;则称&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;为正态随机变量，并记为&lt;span class=&#34;math inline&#34;&gt;\(X\sim N(\mu,\sigma^2)\)&lt;/span&gt;。&lt;span class=&#34;math inline&#34;&gt;\(\mu,\sigma^2\)&lt;/span&gt;是常数，&lt;span class=&#34;math inline&#34;&gt;\(\mu\in
-R,0&amp;lt;\sigma^2&amp;lt;\infty\)&lt;/span&gt;，它们称为这个分布的参数。&lt;/p&gt;
+R,0&amp;lt;\sigma^2&amp;lt;\infty\)&lt;/span&gt;，它们称为这个分布的参数。由后续的方差一节，&lt;span class=&#34;math inline&#34;&gt;\(Var(X)=\sigma^2\)&lt;/span&gt;，就是分布的方差。&lt;/p&gt;
 &lt;p&gt;正态分布的概率密度函数的图像关于&lt;span class=&#34;math inline&#34;&gt;\(x=\mu\)&lt;/span&gt;对称，中间高两边低。&lt;/p&gt;
 &lt;p&gt;当&lt;span class=&#34;math inline&#34;&gt;\(\mu=0,\sigma^2=1\)&lt;/span&gt;时，称为标准正态分布&lt;span class=&#34;math inline&#34;&gt;\(N(0,1)\)&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
@@ -2661,6 +2665,130 @@ t_n(y)=\frac{\Gamma((n+1)/2)}{\sqrt{n\pi}\Gamma(n/2)}\bigg(1+\frac{y^2}{n}\bigg)
 &lt;p&gt;这个密度函数称为“自由度为&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;的&lt;span class=&#34;math inline&#34;&gt;\(t\)&lt;/span&gt;分布”的密度函数，常简记为&lt;span class=&#34;math inline&#34;&gt;\(t_n\)&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;F分布&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;TODO&lt;/p&gt;
+&lt;h2 id=&#34;数学期望与中位数&#34;&gt;数学期望与中位数&lt;/h2&gt;
+&lt;h3 id=&#34;定义-1&#34;&gt;定义&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;定义1&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设随机变量&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;只取有限个可能值&lt;span class=&#34;math inline&#34;&gt;\(a_1,\cdots,a_m\)&lt;/span&gt;，其概率分布为&lt;span class=&#34;math inline&#34;&gt;\(P(X=a_i)=p_i(i=1,\cdots,m)\)&lt;/span&gt;，则&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;的数学期望，记为&lt;span class=&#34;math inline&#34;&gt;\(E(X)\)&lt;/span&gt;或&lt;span class=&#34;math inline&#34;&gt;\(EX\)&lt;/span&gt;，定义为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+E(X) = a_1p_1+a_2p_2+\cdots+a_mp_m
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;如果取无穷个值&lt;span class=&#34;math inline&#34;&gt;\(a_1,a_2,\cdots\)&lt;/span&gt;，而概率分布为&lt;span class=&#34;math inline&#34;&gt;\(P(X=a_i)=p_i(i=1,\cdots)\)&lt;/span&gt;，则有其数学期望为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+E(X) = \sum^\infty_{i=1}a_ip_i（式1）
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;这个期望存在，必须要求这个级数收敛，并且是绝对收敛。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定义2&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;如果&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\sum^\infty_{i=1}|a_i|p_i&amp;lt;\infty
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;则称式1的右边的级数之和为&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;的数学期望&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定义3&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;有概率密度函数&lt;span class=&#34;math inline&#34;&gt;\(f(x)\)&lt;/span&gt;，如果&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\int^\infty_{-\infty}|x|f(x)dx&amp;lt;\infty
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;则称&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+E(X) = \int^\infty_{-\infty}xf(x)dx
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;为&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;的数学期望。&lt;/p&gt;
+&lt;h3 id=&#34;性质&#34;&gt;性质&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;定理1&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;若干个随机变量之和的期望等于各变量的期望之和&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+E(X_1+X_2+\cdots+X_n) = E(X_1)+E(X_2)+\cdots+E(X_n)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定理2&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;若干个独立（注意独立）随机变量之积的期望等于各变量期望之积&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+E(X_1X_2\cdots X_n) = E(X_1)E(X_2)\cdots E(X_n)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;随机变量函数的期望&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设随机变量&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;为离散型，有分布&lt;span class=&#34;math inline&#34;&gt;\(P(X=a_i)=p_i(i=1,2,\cdots)\)&lt;/span&gt;；或者为连续型，有概率密度函数&lt;span class=&#34;math inline&#34;&gt;\(f(x)\)&lt;/span&gt;，则&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+E(g(x)) = \sum_i g(a_i)p_i（要求绝对收敛）
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;或&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+E(g(x)) =
+\int^\infty_{-\infty}g(x)f(x)dx（要求\int^\infty_{-\infty}|g(x)|f(x)dx&amp;lt;\infty）
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;有一个特例是，若&lt;span class=&#34;math inline&#34;&gt;\(c\)&lt;/span&gt;为常数，则&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+E(cX) = cE(X)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;条件数学期望&#34;&gt;条件数学期望&lt;/h3&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+E(Y|x) = \int^\infty_{-\infty}yf(y|x)dy
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;类似于全概率公式，我们可以求得无条件的数学期望的一个重要公式&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+E(Y) = \int^\infty_{-\infty}E(Y|x)f_1(x)dx
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+f_1 = \int^\infty_{-\infty}f(x,y)dy
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;如果将&lt;span class=&#34;math inline&#34;&gt;\(g(x)=E(Y|x)\)&lt;/span&gt;，则&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+E(Y) = \int^\infty_{-\infty}g(x)f_1(x)dx=E(g(X))=E(E(Y|X))
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;整理得到&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+E(Y) = E[E(Y|X)]
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;如果是多维的，也有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+E(Y) =
+\int^\infty_{-\infty}\cdots\int^\infty_{-\infty}E(Y|x_1,\cdots,x_n)f(x_1,\cdots,x_n)dx_1\cdots
+dx_n
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;如果是离散的，有&lt;span class=&#34;math inline&#34;&gt;\(P(X=a_i)=p_i\)&lt;/span&gt;，则&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+E(Y) = \sum^\infty_{i=1}p_iE(Y|a_i)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;中位数&#34;&gt;中位数&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;定义1&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设连续型随机变量&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;的分布函数为&lt;span class=&#34;math inline&#34;&gt;\(F(x)\)&lt;/span&gt;，则满足条件&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+P(X\leq m)=F(m)=1/2
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;的数&lt;span class=&#34;math inline&#34;&gt;\(m\)&lt;/span&gt;称为&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;或分布&lt;span class=&#34;math inline&#34;&gt;\(F\)&lt;/span&gt;的中位数。&lt;/p&gt;
+&lt;p&gt;而连续的时候，有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+P(X\leq m) = P(X&amp;lt;m) = P(X&amp;gt;m) = P(X\geq m) = 1/2   
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h2 id=&#34;方差与矩&#34;&gt;方差与矩&lt;/h2&gt;
+&lt;h3 id=&#34;方差与标准差&#34;&gt;方差与标准差&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;定义1&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;为随机变量，分布为&lt;span class=&#34;math inline&#34;&gt;\(F\)&lt;/span&gt;，则&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+Var(X) = E(X-EX)^2
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;称为&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;的方差，有时会记为&lt;span class=&#34;math inline&#34;&gt;\(DX\)&lt;/span&gt;，其算术平方根称为标准差。&lt;/p&gt;
+&lt;p&gt;将其展开得&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+Var(X)=E(X^2)-(EX)^2
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定理1&lt;/strong&gt;&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;常数的方差为&lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;若&lt;span class=&#34;math inline&#34;&gt;\(c\)&lt;/span&gt;为常数，则&lt;span class=&#34;math inline&#34;&gt;\(Var(X+c)=Var(X)\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;若&lt;span class=&#34;math inline&#34;&gt;\(c\)&lt;/span&gt;为常数，则&lt;span class=&#34;math inline&#34;&gt;\(Var(cX)=c^2Var(X)\)&lt;/span&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;定理2&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;独立（注意独立）随机变量之和的方差等于各变量的方差之和，即&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+Var(X_1+X_2+\cdots+X_n) = Var(X_1)+Var(X_2)+\cdots+Var(X_n)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;矩&#34;&gt;矩&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;定义1&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;为随机变量，&lt;span class=&#34;math inline&#34;&gt;\(c\)&lt;/span&gt;为常数，&lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt;为正整数，则量&lt;span class=&#34;math inline&#34;&gt;\(E[(X-c)^k]\)&lt;/span&gt;称为&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;关于&lt;span class=&#34;math inline&#34;&gt;\(c\)&lt;/span&gt;点的&lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt;阶矩&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(c=0\)&lt;/span&gt;时称为&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;的&lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt;阶原点矩&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(c=E(X)\)&lt;/span&gt;时称为&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;的&lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt;阶中心矩。&lt;/li&gt;
+&lt;/ol&gt;
 
 
 </description>
@@ -7781,8 +7909,8 @@ B)\cdot d\bm l
 &lt;p&gt;变化的磁场在周围空间激发出电场线为闭合曲线的电场，称其为感生电场或有旋电场。有旋电场的出现与是否存在导体没有关系。&lt;/p&gt;
 &lt;p&gt;当回路固定不动，磁通量&lt;span class=&#34;math inline&#34;&gt;\(\varPsi\)&lt;/span&gt;的变化仅来自磁场的变化时，电动势为&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
-\varepsilon_i = \oint_L \bm E_v\cdot \bm l=-\iint_S\frac{\partial\bm
-B}{\partial\bm t}\cdot d\bm S
+\varepsilon_i = \oint_L \bm E_V\cdot \bm l=-\iint_S\frac{\partial\bm
+B}{\partial t}\cdot d\bm S
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;h3 id=&#34;自感现象&#34;&gt;自感现象&lt;/h3&gt;
 &lt;p&gt;导体回路中由于自身电流的变化，而在自身回路中产生感应电动势的现象。产生的电动势称为自感电动势。&lt;/p&gt;
@@ -7834,6 +7962,38 @@ dW_m = w_mdV = \frac{1}{2}BHdV
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 W_m = \int_V dW_m=\frac{1}{2}\int_V BHdV
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;位移电流&#34;&gt;位移电流&lt;/h3&gt;
+&lt;p&gt;对于非恒定电流，例如电路中加一个电容器，那么原始的安培环路定理则不再适用，因为将曲面穿过两极板之间得到的结果是0.
+不符合事实。&lt;/p&gt;
+&lt;p&gt;于是麦克斯韦提出了位移电流的概念，即在电容器的两个极板中也有电流。定义为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+I_D=\frac{d\varPhi_D}{dt}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;设极板的面积为&lt;span class=&#34;math inline&#34;&gt;\(S\)&lt;/span&gt;，某时刻极板上自由电荷面密度为&lt;span class=&#34;math inline&#34;&gt;\(\sigma\)&lt;/span&gt;，则电位移为&lt;span class=&#34;math inline&#34;&gt;\(D=\sigma\)&lt;/span&gt;，于是极板间的电位移通量&lt;span class=&#34;math inline&#34;&gt;\(\varPhi_D=DS=\sigma
+S\)&lt;/span&gt;。电位移通量的时间变化率为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\frac{d\varPhi_D}{dt} = \frac{d}{dt}\sigma S=\frac{dq}{dt}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(dq/dt\)&lt;/span&gt;就是导线中的传到电流。&lt;/p&gt;
+&lt;p&gt;于是可以把安培环路定理推广为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\oint_L \bm H\cdot d\bm l=I+I_D
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;麦克斯韦方程组的积分形式-电磁场&#34;&gt;麦克斯韦方程组的积分形式
+电磁场&lt;/h3&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\oint_S \bm D\cdot d\bm S = \sum_i q_i
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\oint_L \bm E\cdot d\bm l = -\iint_S\frac{\partial \bm B}{\partial
+t}\cdot d\bm S
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\oint_S \bm B\cdot d\bm S = 0
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\oint_L \bm H\cdot d\bm l = \sum(I_D+I)
 \]&lt;/span&gt;&lt;/p&gt;
 
 
