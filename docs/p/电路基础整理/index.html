@@ -125,7 +125,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 10 分钟
+                    阅读时长: 12 分钟
                 </time>
             </div>
         
@@ -400,6 +400,72 @@ f(x_1+x_2) = f(x_1)+f(x_2)
 <h2 id="替代定理">替代定理</h2>
 <p>对于有唯一解的线性或非线性电路，若某支路的电压<span class="math inline">\(u\)</span>或电流<span class="math inline">\(i\)</span>已知，则该支路可用方向和大小与<span class="math inline">\(u\)</span>相同的电压源替代，或用方向和大小与<span class="math inline">\(i\)</span>相同的电流源替代，而不会影响其他点的电流和电压。</p>
 <p>注意，替换成电流源后电压不变，替换成电压源后电流也不变。</p>
+<h2 id="等效电源定理">等效电源定理</h2>
+<h3 id="戴维南定理">戴维南定理</h3>
+<p>任意一个线性二端含源电路<span class="math inline">\(N\)</span>，对其外部而言，可以用一个电压源和电阻的串联组合来等效。该电压源的电压值<span class="math inline">\(U_{OC}\)</span>等于电路<span class="math inline">\(N\)</span>二端子间的开路电压，其串联电阻值<span class="math inline">\(R_0\)</span>等于电路N内部所有独立源置零时二端子的等效电阻。</p>
+<p>例如</p>
+<figure>
+<img src="10.jpg" alt="10.jpg"/>
+<figcaption aria-hidden="true">10.jpg</figcaption>
+</figure>
+<p>求其等效电源，先将<span class="math inline">\(ab\)</span>断开，计算等效电压</p>
+<p><span class="math display">\[
+U_{OC}=\frac{6}{6+3}\times 24-\frac{4}{4+4}\times 24 = 4V
+\]</span></p>
+<p>将电压源置零，得到一根导线，计算等效电阻为</p>
+<p><span class="math display">\[
+R_0=\frac{18}{9}+\frac{16}{8}=4\Omega
+\]</span></p>
+<p>得到的等效电源为</p>
+<figure>
+<img src="11.jpg" alt="11.jpg"/>
+<figcaption aria-hidden="true">11.jpg</figcaption>
+</figure>
+<h3 id="诺顿定理">诺顿定理</h3>
+<p>诺顿定理与戴维南不同的地方是，诺顿定理等效为一个电流源和一个电阻并联。本质上是等效的。</p>
+<p>我们可以选择先计算戴维南等效，再电源等效为电流源。</p>
+<p>也可以选择将两个端子短路来计算等效电流源，将独立源置零来计算等效并联电阻。</p>
+<h3 id="计算技巧">计算技巧</h3>
+<p>等效的电流源和电压源是容易计算的，电流源将两个端子短路，电压源将两个端子开路。</p>
+<p>没有受控源时，将独立源置零，根据串并联关系，等效电阻也是容易计算的。</p>
+<p>当有受控源时</p>
+<p><strong>外加电源法</strong></p>
+<p><img src="12.jpg" alt="12.jpg"/> <img src="13.jpg" alt="13.jpg"/></p>
+<p><strong>开路短路法</strong></p>
+<p>即计算开路电压<span class="math inline">\(u_{oc}\)</span>和短路电流<span class="math inline">\(i_{sc}\)</span>，得到<span class="math inline">\(R_0=u_{oc}/i_{sc}\)</span></p>
+<p><strong>伏安关系法</strong></p>
+<p>直接对二端线性电路<span class="math inline">\(N\)</span>，推导出两端子上的电压<span class="math inline">\(u\)</span>和电流<span class="math inline">\(i\)</span>之间的一次关系式，通常是以下形式</p>
+<p><span class="math display">\[
+u=u_{oc}+R_0i
+\]</span></p>
+<p>就可以得到开路电压和等效内阻。</p>
+<h2 id="最大传输功率电源定理">最大传输功率电源定理</h2>
+<p>在电子技术中，常要求负载从给定电源（或给定电路）获得最大功率，即最大功率传输问题。</p>
+<p>实际应用常遇到这样的问题：一个有源二端电路，向负载电阻<span class="math inline">\(R_L\)</span>供电。问<span class="math inline">\(R_L\)</span>为何值时其上获得最大功率？</p>
+<p>由于电路<span class="math inline">\(N\)</span>给定，可以将其等效为戴维南等效电路来分析。</p>
+<p>设等效电压为<span class="math inline">\(u_{oc}\)</span>，电源内阻为<span class="math inline">\(R_0\)</span>，则</p>
+<p><span class="math display">\[
+P_L = \bigg(\frac{u_{oc}}{R_0+R_L}\bigg)^2R_L
+\]</span></p>
+<p>可以用求导等方式证明，<span class="math inline">\(R_L=R_0\)</span>时，其<span class="math inline">\(P_L\)</span>最大。这称为最大功率匹配条件。</p>
+<h2 id="特勒根定理和互易定理">特勒根定理和互易定理</h2>
+<h3 id="特勒根定理">特勒根定理</h3>
+<p><strong>定理1</strong></p>
+<p>对于任意一个具有<span class="math inline">\(b\)</span>条支路<span class="math inline">\(n\)</span>个节点的集总参数电路，设支路电压、支路电流分别为<span class="math inline">\(u_k,i_k\)</span>，且各支路电压和电流取关联参考方向，对任何时间<span class="math inline">\(t\)</span>，有</p>
+<p><span class="math display">\[
+\sum^b_{k=1}u_ki_k=0
+\]</span></p>
+<p><strong>定理2</strong></p>
+<p>对于任意两个拓扑结构完全相同（即图完全相同，各支路组成元件性质任意）的集中参数电路<span class="math inline">\(N\)</span>和<span class="math inline">\(N&#39;\)</span>。设它们具有<span class="math inline">\(b\)</span>条支路<span class="math inline">\(n\)</span>个节点，其相对应的各支路和各节点的编号相同。设它们的支路电压分别为<span class="math inline">\(u_k\)</span>和<span class="math inline">\(u&#39;_k\)</span>，支路电流分别为<span class="math inline">\(i_k\)</span>和<span class="math inline">\(i&#39;_k\)</span><span class="math inline">\((k=1,2,\cdots,b)\)</span>，且各支路电压和电流取关联参考方向，则对任意时刻<span class="math inline">\(t\)</span>，有</p>
+<p><span class="math display">\[
+\sum^b_{k=1}u_ki&#39;_k=0
+\]</span> <span class="math display">\[
+\sum^b_{k=1}u&#39;_ki_k=0
+\]</span></p>
+<h3 id="互易定理">互易定理</h3>
+<p>互易定理表明: 对于一个仅含线性电阻的二端口电路<span class="math inline">\(N_R\)</span>，在只有一个激励源的情况下，当激励与响应互换位置时，同一激励所产生的响应相同。</p>
+<p>有三个形式</p>
+<p><img src="15.png" alt="15.png"/> <img src="16.png" alt="16.png"/></p>
 
 
 
@@ -714,6 +780,20 @@ f(x_1+x_2) = f(x_1)+f(x_2)
           </ol>
         </li>
         <li><a href="#替代定理">替代定理</a></li>
+        <li><a href="#等效电源定理">等效电源定理</a>
+          <ol>
+            <li><a href="#戴维南定理">戴维南定理</a></li>
+            <li><a href="#诺顿定理">诺顿定理</a></li>
+            <li><a href="#计算技巧">计算技巧</a></li>
+          </ol>
+        </li>
+        <li><a href="#最大传输功率电源定理">最大传输功率电源定理</a></li>
+        <li><a href="#特勒根定理和互易定理">特勒根定理和互易定理</a>
+          <ol>
+            <li><a href="#特勒根定理">特勒根定理</a></li>
+            <li><a href="#互易定理">互易定理</a></li>
+          </ol>
+        </li>
       </ol>
     </li>
   </ol>
