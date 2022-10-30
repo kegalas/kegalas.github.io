@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='导航页面 图形学中最基础的数学涉及到线性代数，我们需要自己先写一个能处理简单的向量、矩阵运算的库。 geometry.h 向量的定义 首先构造一个一般化的向量类 template&amp;lt;class T, size_t'><title>从零开始的软渲染器 数学工具库</title>
+
+<link rel='canonical' href='https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E6%95%B0%E5%AD%A6%E5%B7%A5%E5%85%B7%E5%BA%93/'>
+
+<link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='从零开始的软渲染器 数学工具库'>
+<meta property='og:description' content='导航页面 图形学中最基础的数学涉及到线性代数，我们需要自己先写一个能处理简单的向量、矩阵运算的库。 geometry.h 向量的定义 首先构造一个一般化的向量类 template&amp;lt;class T, size_t'>
+<meta property='og:url' content='https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E6%95%B0%E5%AD%A6%E5%B7%A5%E5%85%B7%E5%BA%93/'>
+<meta property='og:site_name' content='KegalaS的个人博客'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='图形学' /><meta property='article:tag' content='渲染' /><meta property='article:tag' content='数学' /><meta property='article:published_time' content='2022-10-28T15:34:04&#43;08:00'/><meta property='article:modified_time' content='2022-10-28T15:34:04&#43;08:00'/>
+<meta name="twitter:title" content="从零开始的软渲染器 数学工具库">
+<meta name="twitter:description" content="导航页面 图形学中最基础的数学涉及到线性代数，我们需要自己先写一个能处理简单的向量、矩阵运算的库。 geometry.h 向量的定义 首先构造一个一般化的向量类 template&amp;lt;class T, size_t">
+    <link rel="shortcut icon" href="favicon-16x16.png" />
+
+    </head>
+    <body class="
+    article-page has-toc
+">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex 
+    
+        extended
+    
+">
+    
+        <div id="article-toolbar">
+            <a href="/" class="back-home">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="15 6 9 12 15 18" />
+</svg>
+
+
+
+                <span>返回</span>
+            </a>
+        </div>
+    
+<main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" >
+                图形学
+            </a>
+        
+    </header>
+    
+
+    <h2 class="article-title">
+        <a href="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E6%95%B0%E5%AD%A6%E5%B7%A5%E5%85%B7%E5%BA%93/">从零开始的软渲染器 数学工具库</a>
+    </h2>
+
+    
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Oct 28, 2022</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 7 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+</div>
+</header>
+
+    <section class="article-content">
+    
+
+<p><u><strong><a href="../从零开始的软渲染器-导航/">导航页面</a></strong></u></p>
+<p>图形学中最基础的数学涉及到线性代数，我们需要自己先写一个能处理简单的向量、矩阵运算的库。</p>
+<h1 id="geometry.h">geometry.h</h1>
+<h2 id="向量的定义">向量的定义</h2>
+<p>首先构造一个一般化的向量类</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">template</span><span class="op">&lt;</span><span class="kw">class</span> T<span class="op">,</span> <span class="dt">size_t</span> dim<span class="op">&gt;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Vec<span class="op">{</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span><span class="op">:</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    Vec<span class="op">(){</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span><span class="op">(</span><span class="dt">size_t</span> i<span class="op">=</span><span class="dv">0</span><span class="op">;</span>i<span class="op">&lt;</span>dim<span class="op">;</span>i<span class="op">++){</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>            <span class="va">data_</span><span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> T<span class="op">();</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    Vec<span class="op">(</span>Vec<span class="op">&lt;</span>T<span class="op">,</span>dim<span class="op">&gt;</span> <span class="at">const</span> <span class="op">&amp;</span> v<span class="op">){</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span><span class="op">(</span><span class="dt">size_t</span> i<span class="op">=</span><span class="dv">0</span><span class="op">;</span>i<span class="op">&lt;</span>dim<span class="op">;</span>i<span class="op">++){</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>            <span class="va">data_</span><span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> v<span class="op">[</span>i<span class="op">];</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    T<span class="op">&amp;</span> <span class="kw">operator</span><span class="op">[](</span><span class="at">const</span> <span class="dt">size_t</span> i<span class="op">){</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>        <span class="ot">assert</span><span class="op">(</span>i<span class="op">&lt;</span>dim <span class="op">&amp;&amp;</span> i<span class="op">&gt;=</span><span class="dv">0</span><span class="op">);</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">data_</span><span class="op">[</span>i<span class="op">];</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">const</span> T<span class="op">&amp;</span> <span class="kw">operator</span><span class="op">[](</span><span class="at">const</span> <span class="dt">size_t</span> i<span class="op">)</span> <span class="at">const</span> <span class="op">{</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>        <span class="ot">assert</span><span class="op">(</span>i<span class="op">&lt;</span>dim <span class="op">&amp;&amp;</span> i<span class="op">&gt;=</span><span class="dv">0</span><span class="op">);</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">data_</span><span class="op">[</span>i<span class="op">];</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    Vec<span class="op">&lt;</span>T<span class="op">,</span> dim<span class="op">&gt;&amp;</span> <span class="kw">operator</span><span class="op">=(</span><span class="at">const</span> Vec<span class="op">&lt;</span>T<span class="op">,</span>dim<span class="op">&gt;</span> vec<span class="op">){</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span><span class="op">(</span><span class="kw">this</span><span class="op">==&amp;</span>vec<span class="op">){</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="op">*</span><span class="kw">this</span><span class="op">;</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span><span class="op">(</span><span class="dt">size_t</span> i<span class="op">=</span><span class="dv">0</span><span class="op">;</span>i<span class="op">&lt;</span>dim<span class="op">;</span>i<span class="op">++){</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>            <span class="kw">this</span><span class="op">-&gt;</span><span class="va">data_</span><span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> vec<span class="op">[</span>i<span class="op">];</span></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="op">*</span><span class="kw">this</span><span class="op">;</span></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a><span class="kw">private</span><span class="op">:</span></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>    T <span class="va">data_</span><span class="op">[</span>dim<span class="op">];</span></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div>
+<p>首先template&lt;class T, size_t
+dim&gt;指的是让它的向量元素的数据类型为T，然后有dim维</p>
+<p>Vec()这个默认构造函数不难理解，Vec(Vec&lt;T,dim&gt; const &amp;
+v)是一个复制构造函数，而相应的Vec&lt;T, dim&gt;&amp; operator=(const
+Vec&lt;T,dim&gt; vec)是一个复制赋值运算符。</p>
+<p>T&amp;
+operator[]是为了方便取向量的某一个元素，并且同时提供了const的版本，这是一个经常可以见到的设计。并且我们检查数组越界。</p>
+<p>下面对其进行模板特殊化</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">template</span><span class="op">&lt;</span><span class="kw">class</span> T<span class="op">&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Vec<span class="op">&lt;</span>T<span class="op">,</span><span class="dv">2</span><span class="op">&gt;{</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span><span class="op">:</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">union</span><span class="op">{</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>        <span class="kw">struct</span> <span class="op">{</span>T x<span class="op">,</span>y<span class="op">;};</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>        <span class="kw">struct</span> <span class="op">{</span>T s<span class="op">,</span>t<span class="op">;};</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>        <span class="kw">struct</span> <span class="op">{</span>T u<span class="op">,</span>v<span class="op">;};</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>        T raw<span class="op">[</span><span class="dv">2</span><span class="op">];</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="op">};</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    Vec<span class="op">&lt;</span>T<span class="op">,</span><span class="dv">2</span><span class="op">&gt;():</span>x<span class="op">(),</span>y<span class="op">(){}</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    Vec<span class="op">&lt;</span>T<span class="op">,</span><span class="dv">2</span><span class="op">&gt;(</span>T <span class="va">x_</span><span class="op">,</span> T <span class="va">y_</span><span class="op">):</span>x<span class="op">(</span><span class="va">x_</span><span class="op">),</span>y<span class="op">(</span><span class="va">y_</span><span class="op">){}</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    Vec<span class="op">&lt;</span>T<span class="op">,</span><span class="dv">2</span><span class="op">&gt;(</span>Vec<span class="op">&lt;</span>T<span class="op">,</span><span class="dv">2</span><span class="op">&gt;</span> <span class="at">const</span> <span class="op">&amp;</span> v<span class="op">):</span>x<span class="op">(</span>v<span class="op">.</span>x<span class="op">),</span>y<span class="op">(</span>v<span class="op">.</span>y<span class="op">){}</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    <span class="kw">template</span><span class="op">&lt;</span><span class="kw">class</span> U<span class="op">&gt;</span> Vec<span class="op">&lt;</span>T<span class="op">,</span><span class="dv">2</span><span class="op">&gt;(</span>Vec<span class="op">&lt;</span>U<span class="op">,</span><span class="dv">2</span><span class="op">&gt;</span> <span class="at">const</span> <span class="op">&amp;);</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    <span class="kw">template</span><span class="op">&lt;</span><span class="kw">class</span> U<span class="op">&gt;</span> Vec<span class="op">&lt;</span>T<span class="op">,</span><span class="dv">2</span><span class="op">&gt;(</span>Vec<span class="op">&lt;</span>U<span class="op">,</span><span class="dv">3</span><span class="op">&gt;</span> <span class="at">const</span> <span class="op">&amp;);</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    <span class="kw">template</span><span class="op">&lt;</span><span class="kw">class</span> U<span class="op">&gt;</span> Vec<span class="op">&lt;</span>T<span class="op">,</span><span class="dv">2</span><span class="op">&gt;(</span>Vec<span class="op">&lt;</span>U<span class="op">,</span><span class="dv">4</span><span class="op">&gt;</span> <span class="at">const</span> <span class="op">&amp;);</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    T<span class="op">&amp;</span> <span class="kw">operator</span><span class="op">[](</span><span class="at">const</span> <span class="dt">size_t</span> i<span class="op">){</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>        <span class="ot">assert</span><span class="op">(</span>i<span class="op">&lt;</span><span class="dv">2</span> <span class="op">&amp;&amp;</span> i<span class="op">&gt;=</span><span class="dv">0</span><span class="op">);</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> raw<span class="op">[</span>i<span class="op">];</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">const</span> T<span class="op">&amp;</span> <span class="kw">operator</span><span class="op">[](</span><span class="at">const</span> <span class="dt">size_t</span> i<span class="op">)</span> <span class="at">const</span><span class="op">{</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>        <span class="ot">assert</span><span class="op">(</span>i<span class="op">&lt;</span><span class="dv">2</span> <span class="op">&amp;&amp;</span> i<span class="op">&gt;=</span><span class="dv">0</span><span class="op">);</span></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> raw<span class="op">[</span>i<span class="op">];</span></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>    Vec<span class="op">&lt;</span>T<span class="op">,</span> <span class="dv">2</span><span class="op">&gt;&amp;</span> <span class="kw">operator</span><span class="op">=(</span><span class="at">const</span> Vec<span class="op">&lt;</span>T<span class="op">,</span><span class="dv">2</span><span class="op">&gt;&amp;</span> vec<span class="op">){</span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span><span class="op">(</span><span class="kw">this</span><span class="op">==&amp;</span>vec<span class="op">){</span></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="op">*</span><span class="kw">this</span><span class="op">;</span></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span><span class="op">(</span><span class="dt">size_t</span> i<span class="op">=</span><span class="dv">0</span><span class="op">;</span>i<span class="op">&lt;</span><span class="dv">2</span><span class="op">;</span>i<span class="op">++){</span></span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>            <span class="kw">this</span><span class="op">-&gt;</span>raw<span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> vec<span class="op">[</span>i<span class="op">];</span></span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="op">*</span><span class="kw">this</span><span class="op">;</span></span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div>
+<p>如上，我们定义了一个二维的向量，这个叫做模板特殊化，当我们声明Vec&lt;float,2&gt;时，会首先调用最特殊的那个，在此处会调用Vec&lt;T,2&gt;，而不是更一般的Vec&lt;T,dim&gt;</p>
+<p>另外需要注意的是，模板特殊化并不是继承，特殊的模板不会继承一般的模板的成员。所以我们需要重新地定义整个Vec&lt;T,2&gt;</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">union</span><span class="op">{</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">struct</span> <span class="op">{</span>T x<span class="op">,</span>y<span class="op">;};</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">struct</span> <span class="op">{</span>T s<span class="op">,</span>t<span class="op">;};</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">struct</span> <span class="op">{</span>T u<span class="op">,</span>v<span class="op">;};</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    T raw<span class="op">[</span><span class="dv">2</span><span class="op">];</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div>
+<p>这是一个联合，但实际上只用了两个sizeof(T)的内存，其中x、s、u和raw[0]表示的都是第一维，而y、t、v、raw[1]表示的是第二维</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>Vec<span class="op">&lt;</span>T<span class="op">,</span><span class="dv">2</span><span class="op">&gt;():</span>x<span class="op">(),</span>y<span class="op">(){}</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>Vec<span class="op">&lt;</span>T<span class="op">,</span><span class="dv">2</span><span class="op">&gt;(</span>T <span class="va">x_</span><span class="op">,</span> T <span class="va">y_</span><span class="op">):</span>x<span class="op">(</span><span class="va">x_</span><span class="op">),</span>y<span class="op">(</span><span class="va">y_</span><span class="op">){}</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>Vec<span class="op">&lt;</span>T<span class="op">,</span><span class="dv">2</span><span class="op">&gt;(</span>Vec<span class="op">&lt;</span>T<span class="op">,</span><span class="dv">2</span><span class="op">&gt;</span> <span class="at">const</span> <span class="op">&amp;</span> v<span class="op">):</span>x<span class="op">(</span>v<span class="op">.</span>x<span class="op">),</span>y<span class="op">(</span>v<span class="op">.</span>y<span class="op">){}</span></span></code></pre></div>
+<p>这是三个构造函数，有时我们可能会写成</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>Vec<span class="op">&lt;</span>T<span class="op">,</span><span class="dv">2</span><span class="op">&gt;(</span>T <span class="va">x_</span><span class="op">,</span> T <span class="va">y_</span><span class="op">){</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> <span class="va">x_</span><span class="op">;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    y <span class="op">=</span> <span class="va">y_</span><span class="op">;</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>这效果是相同的，但是如果T是一个类，而不是一个int、float这样的类型，那会导致性能问题。</p>
+<p>此时会先调用x的默认构造函数，然后再将x_赋值给x，调用复制赋值运算符，这是两步。而我们用成员初始化列表就直接调用了赋值构造函数，只有一步。</p>
+<p>虽然你可能会想为什么会有人给向量除了int和float之外的类型，我觉得你最好不要推断用户的想法。</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">template</span><span class="op">&lt;</span><span class="kw">class</span> U<span class="op">&gt;</span> Vec<span class="op">&lt;</span>T<span class="op">,</span><span class="dv">2</span><span class="op">&gt;(</span>Vec<span class="op">&lt;</span>U<span class="op">,</span><span class="dv">2</span><span class="op">&gt;</span> <span class="at">const</span> <span class="op">&amp;);</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="kw">template</span><span class="op">&lt;</span><span class="kw">class</span> U<span class="op">&gt;</span> Vec<span class="op">&lt;</span>T<span class="op">,</span><span class="dv">2</span><span class="op">&gt;(</span>Vec<span class="op">&lt;</span>U<span class="op">,</span><span class="dv">3</span><span class="op">&gt;</span> <span class="at">const</span> <span class="op">&amp;);</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="kw">template</span><span class="op">&lt;</span><span class="kw">class</span> U<span class="op">&gt;</span> Vec<span class="op">&lt;</span>T<span class="op">,</span><span class="dv">2</span><span class="op">&gt;(</span>Vec<span class="op">&lt;</span>U<span class="op">,</span><span class="dv">4</span><span class="op">&gt;</span> <span class="at">const</span> <span class="op">&amp;);</span></span></code></pre></div>
+<p>这是我们之后要让float类型和int类型互相转化而提前声明的模板。</p>
+<p>对三维和四维的向量基本相同，目前我们要学的图形学不会用到更高维的向量了。</p>
+<p>下面开始定义向量的各种运算</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">template</span><span class="op">&lt;</span><span class="kw">class</span> T<span class="op">,</span> <span class="dt">size_t</span> dim<span class="op">&gt;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>Vec<span class="op">&lt;</span>T<span class="op">,</span> dim<span class="op">&gt;</span> <span class="kw">operator</span><span class="op">+(</span>Vec<span class="op">&lt;</span>T<span class="op">,</span> dim<span class="op">&gt;</span> <span class="at">const</span> <span class="op">&amp;</span> lhs<span class="op">,</span> Vec<span class="op">&lt;</span>T<span class="op">,</span> dim<span class="op">&gt;</span> <span class="at">const</span> <span class="op">&amp;</span> rhs<span class="op">){</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    Vec<span class="op">&lt;</span>T<span class="op">,</span>dim<span class="op">&gt;</span> ret<span class="op">;</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span><span class="op">(</span><span class="dt">size_t</span> i<span class="op">=</span><span class="dv">0</span><span class="op">;</span>i<span class="op">&lt;</span>dim<span class="op">;</span>i<span class="op">++){</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>        ret<span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> lhs<span class="op">[</span>i<span class="op">]</span> <span class="op">+</span> rhs<span class="op">[</span>i<span class="op">];</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> ret<span class="op">;</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>代码不难理解，我们选择在全局定义这个运算符，而不是在类内部定义成员函数。这是为了更好的泛用性。以及缩短码量。</p>
+<p>其他的加减乘除类似，不过我们这里的乘法和除法指的是各个元素对应的乘除，并且我们还要定义向量和的数乘，数除。数除还应该注意左右操作数。</p>
+<p>然后再定义点乘和叉乘</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">template</span><span class="op">&lt;</span><span class="kw">class</span> T<span class="op">,</span> <span class="dt">size_t</span> dim<span class="op">&gt;</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>T dot<span class="op">(</span>Vec<span class="op">&lt;</span>T<span class="op">,</span> dim<span class="op">&gt;</span> <span class="at">const</span> <span class="op">&amp;</span> lhs<span class="op">,</span> Vec<span class="op">&lt;</span>T<span class="op">,</span> dim<span class="op">&gt;</span> <span class="at">const</span> <span class="op">&amp;</span> rhs<span class="op">){</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    T ret <span class="op">=</span> T<span class="op">();</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span><span class="op">(</span><span class="dt">int</span> i<span class="op">=</span><span class="dv">0</span><span class="op">;</span>i<span class="op">&lt;</span>dim<span class="op">;</span>i<span class="op">++){</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>        ret <span class="op">+=</span> lhs<span class="op">[</span>i<span class="op">]</span> <span class="op">*</span> rhs<span class="op">[</span>i<span class="op">];</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> ret<span class="op">;</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="kw">template</span><span class="op">&lt;</span><span class="kw">class</span> T<span class="op">&gt;</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>Vec<span class="op">&lt;</span>T<span class="op">,</span> <span class="dv">3</span><span class="op">&gt;</span> cross<span class="op">(</span>Vec<span class="op">&lt;</span>T<span class="op">,</span> <span class="dv">3</span><span class="op">&gt;</span> <span class="at">const</span> <span class="op">&amp;</span> lhs<span class="op">,</span> Vec<span class="op">&lt;</span>T<span class="op">,</span> <span class="dv">3</span><span class="op">&gt;</span> <span class="at">const</span> <span class="op">&amp;</span> rhs<span class="op">){</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    Vec<span class="op">&lt;</span>T<span class="op">,</span> <span class="dv">3</span><span class="op">&gt;</span> ret<span class="op">;</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>    ret<span class="op">.</span>x <span class="op">=</span> lhs<span class="op">.</span>y<span class="op">*</span>rhs<span class="op">.</span>z <span class="op">-</span> lhs<span class="op">.</span>z<span class="op">*</span>rhs<span class="op">.</span>y<span class="op">;</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>    ret<span class="op">.</span>y <span class="op">=</span> lhs<span class="op">.</span>z<span class="op">*</span>rhs<span class="op">.</span>x <span class="op">-</span> lhs<span class="op">.</span>x<span class="op">*</span>rhs<span class="op">.</span>z<span class="op">;</span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>    ret<span class="op">.</span>z <span class="op">=</span> lhs<span class="op">.</span>x<span class="op">*</span>rhs<span class="op">.</span>y <span class="op">-</span> lhs<span class="op">.</span>y<span class="op">*</span>rhs<span class="op">.</span>x<span class="op">;</span></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> ret<span class="op">;</span></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>不把*设计为点乘，主要是考虑到OpenGL也是用dot表示点乘，而*表示元素对应相乘。</p>
+<p>代码并不困难，数学也是高中知识，值得注意的是，叉乘只有三维向量才有定义。</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">template</span><span class="op">&lt;</span><span class="kw">class</span> T<span class="op">,</span> <span class="dt">size_t</span> dim<span class="op">&gt;</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>T norm<span class="op">(</span>Vec<span class="op">&lt;</span>T<span class="op">,</span> dim<span class="op">&gt;</span> <span class="at">const</span> <span class="op">&amp;</span> vec<span class="op">){</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    T ret <span class="op">=</span> dot<span class="op">(</span>vec<span class="op">,</span>vec<span class="op">);</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    ret <span class="op">=</span> <span class="bu">std::</span>sqrt<span class="op">(</span>ret<span class="op">);</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> ret<span class="op">;</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>定义向量的2-范数，也就是<span class="math inline">\(\sqrt{x_1^2+x_2^2+\cdots}\)</span>，这可以方便我们计算长度。1-范数和无穷范数暂时用不上。</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">template</span><span class="op">&lt;</span><span class="kw">class</span> T<span class="op">,</span> <span class="dt">size_t</span> dim<span class="op">&gt;</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> normalize<span class="op">(</span>Vec<span class="op">&lt;</span>T<span class="op">,</span> dim<span class="op">&gt;</span> <span class="op">&amp;</span> vec<span class="op">){</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    T vnorm <span class="op">=</span> <span class="op">(</span><span class="kw">static_cast</span><span class="op">&lt;</span>T<span class="op">&gt;</span> <span class="op">(</span><span class="dv">1</span><span class="op">))/</span>norm<span class="op">(</span>vec<span class="op">);</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span><span class="op">(</span><span class="dt">size_t</span> i<span class="op">=</span><span class="dv">0</span><span class="op">;</span>i<span class="op">&lt;</span>dim<span class="op">;</span>i<span class="op">++){</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>        vec<span class="op">[</span>i<span class="op">]</span> <span class="op">*=</span> vnorm<span class="op">;</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="kw">template</span><span class="op">&lt;</span><span class="kw">class</span> T<span class="op">,</span> <span class="dt">size_t</span> dim<span class="op">&gt;</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>Vec<span class="op">&lt;</span>T<span class="op">,</span> dim<span class="op">&gt;</span> normalized<span class="op">(</span>Vec<span class="op">&lt;</span>T<span class="op">,</span> dim<span class="op">&gt;</span> <span class="at">const</span> <span class="op">&amp;</span> vec<span class="op">){</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>    Vec<span class="op">&lt;</span>T<span class="op">,</span> dim<span class="op">&gt;</span> ret<span class="op">;</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>    T vnorm <span class="op">=</span> <span class="op">(</span><span class="kw">static_cast</span><span class="op">&lt;</span>T<span class="op">&gt;</span> <span class="op">(</span><span class="dv">1</span><span class="op">))/</span>norm<span class="op">(</span>vec<span class="op">);</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span><span class="op">(</span><span class="dt">size_t</span> i<span class="op">=</span><span class="dv">0</span><span class="op">;</span>i<span class="op">&lt;</span>dim<span class="op">;</span>i<span class="op">++){</span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>        ret<span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> vec<span class="op">[</span>i<span class="op">]</span> <span class="op">*</span> vnorm<span class="op">;</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> ret<span class="op">;</span></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>分别定义了，将一个向量标准化，和返回一个向量的标准化。后者是可以对const变量使用的。</p>
+<p>值得注意的一点是，我们使用vnorm这个变量，是因为除法比乘法慢，我们通过预先计算倒数，来加速这个过程。</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">template</span><span class="op">&lt;</span><span class="kw">class</span> T<span class="op">,</span> <span class="dt">size_t</span> dim<span class="op">&gt;</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="bu">std::</span>ostream<span class="op">&amp;</span> <span class="kw">operator</span><span class="op">&lt;&lt;(</span><span class="bu">std::</span>ostream<span class="op">&amp;</span> out<span class="op">,</span> <span class="at">const</span> Vec<span class="op">&lt;</span>T<span class="op">,</span> dim<span class="op">&gt;&amp;</span> vec<span class="op">){</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span><span class="op">(</span><span class="dt">size_t</span> i<span class="op">=</span><span class="dv">0</span><span class="op">;</span>i<span class="op">&lt;</span>dim<span class="op">;</span>i<span class="op">++){</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>        out<span class="op">&lt;&lt;</span>vec<span class="op">[</span>i<span class="op">]&lt;&lt;</span><span class="st">&#34; &#34;</span><span class="op">;</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> out<span class="op">;</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>我们重载了输出流，方便直接打印出来调试。</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>Vec<span class="op">&lt;</span><span class="dt">int</span><span class="op">,</span><span class="dv">3</span><span class="op">&gt;</span> toRGB<span class="op">(</span>Vec<span class="op">&lt;</span><span class="dt">int</span><span class="op">,</span><span class="dv">3</span><span class="op">&gt;</span> <span class="at">const</span> <span class="op">&amp;</span> v<span class="op">);</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>Vec<span class="op">&lt;</span><span class="dt">int</span><span class="op">,</span><span class="dv">3</span><span class="op">&gt;</span> toRGB<span class="op">(</span>Vec<span class="op">&lt;</span><span class="dt">float</span><span class="op">,</span><span class="dv">3</span><span class="op">&gt;</span> <span class="at">const</span> <span class="op">&amp;</span> v<span class="op">);</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>Vec<span class="op">&lt;</span><span class="dt">int</span><span class="op">,</span><span class="dv">4</span><span class="op">&gt;</span> toRGBA<span class="op">(</span>Vec<span class="op">&lt;</span><span class="dt">int</span><span class="op">,</span><span class="dv">4</span><span class="op">&gt;</span> <span class="at">const</span> <span class="op">&amp;</span> v<span class="op">);</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>Vec<span class="op">&lt;</span><span class="dt">int</span><span class="op">,</span><span class="dv">4</span><span class="op">&gt;</span> toRGBA<span class="op">(</span>Vec<span class="op">&lt;</span><span class="dt">float</span><span class="op">,</span><span class="dv">4</span><span class="op">&gt;</span> <span class="at">const</span> <span class="op">&amp;</span> v<span class="op">);</span></span></code></pre></div>
+<p>在计算机图形学中，颜色也可以表示为一个向量，为此我们声明几个函数将其他的向量转变为RGB或RGBA颜色值。</p>
+<h2 id="矩阵的定义">矩阵的定义</h2>
+<div class="sourceCode" id="cb13"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">template</span><span class="op">&lt;</span><span class="kw">class</span> T<span class="op">,</span> <span class="dt">size_t</span> nRow<span class="op">,</span> <span class="dt">size_t</span> nCol<span class="op">&gt;</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Mat<span class="op">{</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="kw">private</span><span class="op">:</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    Vec<span class="op">&lt;</span>T<span class="op">,</span> nCol<span class="op">&gt;</span> rowVec<span class="op">[</span>nRow<span class="op">];</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span><span class="op">:</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    Mat<span class="op">&lt;</span>T<span class="op">,</span> nRow<span class="op">,</span> nCol<span class="op">&gt;(){</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>        <span class="dt">size_t</span> minDim <span class="op">=</span> <span class="bu">std::</span>min<span class="op">(</span>nRow<span class="op">,</span> nCol<span class="op">);</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span><span class="op">(</span><span class="dt">size_t</span> i<span class="op">=</span><span class="dv">0</span> <span class="op">;</span> i<span class="op">&lt;</span>minDim <span class="op">;</span> i<span class="op">++){</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>            rowVec<span class="op">[</span>i<span class="op">][</span>i<span class="op">]</span> <span class="op">=</span> <span class="kw">static_cast</span><span class="op">&lt;</span>T<span class="op">&gt;</span> <span class="op">(</span><span class="dv">1</span><span class="op">);</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>    Mat<span class="op">&lt;</span>T<span class="op">,</span> nRow<span class="op">,</span> nCol<span class="op">&gt;(</span>T <span class="at">const</span> value<span class="op">){</span></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>        <span class="dt">size_t</span> minDim <span class="op">=</span> <span class="bu">std::</span>min<span class="op">(</span>nRow<span class="op">,</span> nCol<span class="op">);</span></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span><span class="op">(</span><span class="dt">size_t</span> i<span class="op">=</span><span class="dv">0</span> <span class="op">;</span> i<span class="op">&lt;</span>minDim <span class="op">;</span> i<span class="op">++){</span></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>            rowVec<span class="op">[</span>i<span class="op">][</span>i<span class="op">]</span> <span class="op">=</span> value<span class="op">;</span></span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>    Mat<span class="op">&lt;</span>T<span class="op">,</span> nRow<span class="op">,</span> nCol<span class="op">&gt;(</span>Mat<span class="op">&lt;</span>T<span class="op">,</span> nRow<span class="op">,</span> nCol<span class="op">&gt;</span> <span class="at">const</span> <span class="op">&amp;</span> m<span class="op">){</span></span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span><span class="op">(</span><span class="dt">size_t</span> i<span class="op">=</span><span class="dv">0</span> <span class="op">;</span> i<span class="op">&lt;</span>nRow <span class="op">;</span> i<span class="op">++){</span></span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>            rowVec<span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> m<span class="op">[</span>i<span class="op">];</span></span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>    Vec<span class="op">&lt;</span>T<span class="op">,</span> nCol<span class="op">&gt;&amp;</span> <span class="kw">operator</span><span class="op">[](</span><span class="dt">size_t</span> <span class="at">const</span> i<span class="op">){</span></span>
+<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a>        <span class="ot">assert</span><span class="op">(</span>i<span class="op">&gt;=</span><span class="dv">0</span> <span class="op">&amp;&amp;</span> i<span class="op">&lt;</span>nRow<span class="op">);</span></span>
+<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> rowVec<span class="op">[</span>i<span class="op">];</span></span>
+<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-32"><a href="#cb13-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">const</span> Vec<span class="op">&lt;</span>T<span class="op">,</span> nCol<span class="op">&gt;&amp;</span> <span class="kw">operator</span><span class="op">[](</span><span class="dt">size_t</span> <span class="at">const</span> i<span class="op">)</span> <span class="at">const</span> <span class="op">{</span></span>
+<span id="cb13-33"><a href="#cb13-33" aria-hidden="true" tabindex="-1"></a>        <span class="ot">assert</span><span class="op">(</span>i<span class="op">&gt;=</span><span class="dv">0</span> <span class="op">&amp;&amp;</span> i<span class="op">&lt;</span>nRow<span class="op">);</span></span>
+<span id="cb13-34"><a href="#cb13-34" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> rowVec<span class="op">[</span>i<span class="op">];</span></span>
+<span id="cb13-35"><a href="#cb13-35" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb13-36"><a href="#cb13-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-37"><a href="#cb13-37" aria-hidden="true" tabindex="-1"></a>    Mat<span class="op">&lt;</span>T<span class="op">,</span> nRow<span class="op">,</span> nCol<span class="op">&gt;&amp;</span> <span class="kw">operator</span><span class="op">=(</span>Mat<span class="op">&lt;</span>T<span class="op">,</span> nRow<span class="op">,</span> nCol<span class="op">&gt;</span> <span class="at">const</span> <span class="op">&amp;</span> mat<span class="op">){</span></span>
+<span id="cb13-38"><a href="#cb13-38" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span><span class="op">(</span><span class="kw">this</span><span class="op">==&amp;</span>mat<span class="op">){</span></span>
+<span id="cb13-39"><a href="#cb13-39" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="op">*</span><span class="kw">this</span><span class="op">;</span></span>
+<span id="cb13-40"><a href="#cb13-40" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb13-41"><a href="#cb13-41" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span><span class="op">(</span><span class="dt">size_t</span> i<span class="op">=</span><span class="dv">0</span> <span class="op">;</span> i<span class="op">&lt;</span>nRow <span class="op">;</span> i<span class="op">++){</span></span>
+<span id="cb13-42"><a href="#cb13-42" aria-hidden="true" tabindex="-1"></a>            <span class="kw">this</span><span class="op">-&gt;</span>rowVec<span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> mat<span class="op">[</span>i<span class="op">];</span></span>
+<span id="cb13-43"><a href="#cb13-43" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb13-44"><a href="#cb13-44" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="op">*</span><span class="kw">this</span><span class="op">;</span></span>
+<span id="cb13-45"><a href="#cb13-45" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb13-46"><a href="#cb13-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-47"><a href="#cb13-47" aria-hidden="true" tabindex="-1"></a>    Vec<span class="op">&lt;</span>T<span class="op">,</span> nRow<span class="op">&gt;</span> getColVec<span class="op">(</span><span class="dt">size_t</span> <span class="at">const</span> index<span class="op">)</span> <span class="at">const</span> <span class="op">{</span></span>
+<span id="cb13-48"><a href="#cb13-48" aria-hidden="true" tabindex="-1"></a>        <span class="ot">assert</span><span class="op">(</span>index<span class="op">&gt;=</span><span class="dv">0</span> <span class="op">&amp;&amp;</span> index<span class="op">&lt;</span>nCol<span class="op">);</span></span>
+<span id="cb13-49"><a href="#cb13-49" aria-hidden="true" tabindex="-1"></a>        Vec<span class="op">&lt;</span>T<span class="op">,</span> nRow<span class="op">&gt;</span> ret<span class="op">;</span></span>
+<span id="cb13-50"><a href="#cb13-50" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span><span class="op">(</span><span class="dt">size_t</span> i<span class="op">=</span><span class="dv">0</span> <span class="op">;</span> i<span class="op">&lt;</span>nRow <span class="op">;</span> i<span class="op">++){</span></span>
+<span id="cb13-51"><a href="#cb13-51" aria-hidden="true" tabindex="-1"></a>            ret<span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> rowVec<span class="op">[</span>i<span class="op">][</span>index<span class="op">];</span></span>
+<span id="cb13-52"><a href="#cb13-52" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb13-53"><a href="#cb13-53" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> ret<span class="op">;</span></span>
+<span id="cb13-54"><a href="#cb13-54" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb13-55"><a href="#cb13-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-56"><a href="#cb13-56" aria-hidden="true" tabindex="-1"></a>    <span class="dt">void</span> setColVec<span class="op">(</span><span class="dt">size_t</span> <span class="at">const</span> index<span class="op">,</span> Vec<span class="op">&lt;</span>T<span class="op">,</span> nRow<span class="op">&gt;</span> <span class="at">const</span> <span class="op">&amp;</span> vec<span class="op">){</span></span>
+<span id="cb13-57"><a href="#cb13-57" aria-hidden="true" tabindex="-1"></a>        <span class="ot">assert</span><span class="op">(</span>index<span class="op">&gt;=</span><span class="dv">0</span> <span class="op">&amp;&amp;</span> index<span class="op">&lt;</span>nCol<span class="op">);</span></span>
+<span id="cb13-58"><a href="#cb13-58" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span><span class="op">(</span><span class="dt">size_t</span> i<span class="op">=</span><span class="dv">0</span> <span class="op">;</span> i<span class="op">&lt;</span>nRow <span class="op">;</span> i<span class="op">++){</span></span>
+<span id="cb13-59"><a href="#cb13-59" aria-hidden="true" tabindex="-1"></a>            rowVec<span class="op">[</span>i<span class="op">][</span>index<span class="op">]</span> <span class="op">=</span> vec<span class="op">[</span>i<span class="op">];</span></span>
+<span id="cb13-60"><a href="#cb13-60" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb13-61"><a href="#cb13-61" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb13-62"><a href="#cb13-62" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>Vec<span class="op">&lt;</span>T<span class="op">,</span> nCol<span class="op">&gt;</span> rowVec<span class="op">[</span>nRow<span class="op">]</span></span></code></pre></div>
+<p>这一句，意味着我们采取了行先序，我们将一个矩阵看成了n个行向量。意味着mat[1][2]代表着第1行的第2个元素。行先序和matlab一致，也和glm库一致。</p>
+<p>我们的默认构造函数默认地构造了一个单位矩阵，即主对角线上的元素都是1，而Mat&lt;T,
+nRow, nCol&gt;(T const
+value)这个构造函数将主对角线上的元素设置为value。</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>Mat<span class="op">&lt;</span>T<span class="op">,</span> nRow<span class="op">,</span> nCol<span class="op">&gt;&amp;</span> <span class="kw">operator</span><span class="op">=(</span>Mat<span class="op">&lt;</span>T<span class="op">,</span> nRow<span class="op">,</span> nCol<span class="op">&gt;</span> <span class="at">const</span> <span class="op">&amp;</span> mat<span class="op">){</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span><span class="op">(</span><span class="kw">this</span><span class="op">==&amp;</span>mat<span class="op">){</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">*</span><span class="kw">this</span><span class="op">;</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span><span class="op">(</span><span class="dt">size_t</span> i<span class="op">=</span><span class="dv">0</span> <span class="op">;</span> i<span class="op">&lt;</span>nRow <span class="op">;</span> i<span class="op">++){</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">this</span><span class="op">-&gt;</span>rowVec<span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> mat<span class="op">[</span>i<span class="op">];</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="cf">return</span> <span class="op">*</span><span class="kw">this</span><span class="op">;</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>另外我们提供了复制构造函数以及复制赋值运算符，后者是很有必要的，否则默认的赋值运算，将会把rowVec这个指针指向右值中对应的地址，此时两个矩阵实际上用的是同一份数据，为了避免这个，我们有必要重新设计复制赋值运算符。</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>Vec<span class="op">&lt;</span>T<span class="op">,</span> nRow<span class="op">&gt;</span> getColVec<span class="op">(</span><span class="dt">size_t</span> <span class="at">const</span> index<span class="op">)</span> <span class="at">const</span> <span class="op">{</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    <span class="ot">assert</span><span class="op">(</span>index<span class="op">&gt;=</span><span class="dv">0</span> <span class="op">&amp;&amp;</span> index<span class="op">&lt;</span>nCol<span class="op">);</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    Vec<span class="op">&lt;</span>T<span class="op">,</span> nRow<span class="op">&gt;</span> ret<span class="op">;</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span><span class="op">(</span><span class="dt">size_t</span> i<span class="op">=</span><span class="dv">0</span> <span class="op">;</span> i<span class="op">&lt;</span>nRow <span class="op">;</span> i<span class="op">++){</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>        ret<span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> rowVec<span class="op">[</span>i<span class="op">][</span>index<span class="op">];</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> ret<span class="op">;</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> setColVec<span class="op">(</span><span class="dt">size_t</span> <span class="at">const</span> index<span class="op">,</span> Vec<span class="op">&lt;</span>T<span class="op">,</span> nRow<span class="op">&gt;</span> <span class="at">const</span> <span class="op">&amp;</span> vec<span class="op">){</span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>    <span class="ot">assert</span><span class="op">(</span>index<span class="op">&gt;=</span><span class="dv">0</span> <span class="op">&amp;&amp;</span> index<span class="op">&lt;</span>nCol<span class="op">);</span></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span><span class="op">(</span><span class="dt">size_t</span> i<span class="op">=</span><span class="dv">0</span> <span class="op">;</span> i<span class="op">&lt;</span>nRow <span class="op">;</span> i<span class="op">++){</span></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>        rowVec<span class="op">[</span>i<span class="op">][</span>index<span class="op">]</span> <span class="op">=</span> vec<span class="op">[</span>i<span class="op">];</span></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>我们也提供了获取和修改列向量的函数。</p>
+<p>接下来同样是提供全局的运算符重载。</p>
+<p>矩阵的相加、相减、数乘、数除和向量的代码基本一致。但同样为了和OpenGL着色器语言保持一致，我们矩阵乘以向量和向量相乘用的是*符号。</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="kw">template</span><span class="op">&lt;</span><span class="kw">class</span> T<span class="op">,</span> <span class="dt">size_t</span> nRow<span class="op">,</span> <span class="dt">size_t</span> nCol<span class="op">&gt;</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>Vec<span class="op">&lt;</span>T<span class="op">,</span> nRow<span class="op">&gt;</span> <span class="kw">operator</span><span class="op">*(</span>Mat<span class="op">&lt;</span>T<span class="op">,</span> nRow<span class="op">,</span> nCol<span class="op">&gt;</span> <span class="at">const</span> <span class="op">&amp;</span> lhs<span class="op">,</span> Vec<span class="op">&lt;</span>T<span class="op">,</span> nCol<span class="op">&gt;</span> <span class="at">const</span> <span class="op">&amp;</span> rhs<span class="op">){</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    Vec<span class="op">&lt;</span>T<span class="op">,</span> nRow<span class="op">&gt;</span> ret<span class="op">;</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span><span class="op">(</span><span class="dt">size_t</span> i<span class="op">=</span><span class="dv">0</span> <span class="op">;</span> i<span class="op">&lt;</span>nRow <span class="op">;</span> i<span class="op">++){</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>        ret<span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> dot<span class="op">(</span>lhs<span class="op">[</span>i<span class="op">]</span> <span class="op">,</span> rhs<span class="op">);</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> ret<span class="op">;</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="kw">template</span><span class="op">&lt;</span><span class="kw">class</span> T<span class="op">,</span> <span class="dt">size_t</span> nRow<span class="op">,</span> <span class="dt">size_t</span> nCol<span class="op">,</span> <span class="dt">size_t</span> sameDim<span class="op">&gt;</span></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>Mat<span class="op">&lt;</span>T<span class="op">,</span> nRow<span class="op">,</span> nCol<span class="op">&gt;</span> <span class="kw">operator</span><span class="op">*(</span>Mat<span class="op">&lt;</span>T<span class="op">,</span> nRow<span class="op">,</span> sameDim<span class="op">&gt;</span> <span class="at">const</span> <span class="op">&amp;</span> lhs<span class="op">,</span> Mat<span class="op">&lt;</span>T<span class="op">,</span> sameDim<span class="op">,</span> nCol<span class="op">&gt;</span> <span class="at">const</span> <span class="op">&amp;</span> rhs<span class="op">){</span></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>    Mat<span class="op">&lt;</span>T<span class="op">,</span> nRow<span class="op">,</span> nCol<span class="op">&gt;</span> ret<span class="op">;</span></span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span><span class="op">(</span><span class="dt">size_t</span> i<span class="op">=</span><span class="dv">0</span> <span class="op">;</span> i<span class="op">&lt;</span>nRow <span class="op">;</span> i<span class="op">++){</span></span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span><span class="op">(</span><span class="dt">size_t</span> j<span class="op">=</span><span class="dv">0</span> <span class="op">;</span> j<span class="op">&lt;</span>nCol <span class="op">;</span> j<span class="op">++){</span></span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>            ret<span class="op">[</span>i<span class="op">][</span>j<span class="op">]</span> <span class="op">=</span> dot<span class="op">(</span>lhs<span class="op">[</span>i<span class="op">]</span> <span class="op">,</span> rhs<span class="op">.</span>getColVec<span class="op">(</span>j<span class="op">));</span></span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> ret<span class="op">;</span></span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>这里我们默认向量都是列向量，所以矩阵*向量要求向量的维数和矩阵的列数相同。</p>
+<p>而矩阵乘以矩阵要求前者的列数等于后者的行数。</p>
+<p>用模板可以很好地实现上述内容。</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">template</span><span class="op">&lt;</span><span class="kw">class</span> T<span class="op">,</span> <span class="dt">size_t</span> nRow<span class="op">,</span> <span class="dt">size_t</span> nCol<span class="op">&gt;</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>Mat<span class="op">&lt;</span>T<span class="op">,</span> nCol<span class="op">,</span> nRow<span class="op">&gt;</span> transpose<span class="op">(</span>Mat<span class="op">&lt;</span>T<span class="op">,</span> nRow<span class="op">,</span> nCol<span class="op">&gt;</span> <span class="at">const</span> <span class="op">&amp;</span> mat<span class="op">){</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    Mat<span class="op">&lt;</span>T<span class="op">,</span> nCol<span class="op">,</span> nRow<span class="op">&gt;</span> ret<span class="op">;</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span><span class="op">(</span><span class="dt">size_t</span> i<span class="op">=</span><span class="dv">0</span> <span class="op">;</span> i<span class="op">&lt;</span>nRow <span class="op">;</span> i<span class="op">++){</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>        ret<span class="op">.</span>setColVec<span class="op">(</span>i<span class="op">,</span> mat<span class="op">[</span>i<span class="op">]);</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> ret<span class="op">;</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>矩阵转置很简单，将原来的行向量设置给新的列向量即可。</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="kw">template</span><span class="op">&lt;</span><span class="kw">class</span> T<span class="op">,</span> <span class="dt">size_t</span> dim<span class="op">&gt;</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>Mat<span class="op">&lt;</span>T<span class="op">,</span> dim<span class="op">-</span><span class="dv">1</span><span class="op">,</span> dim<span class="op">-</span><span class="dv">1</span><span class="op">&gt;</span> getMinor<span class="op">(</span>Mat<span class="op">&lt;</span>T<span class="op">,</span> dim<span class="op">,</span> dim<span class="op">&gt;</span> <span class="at">const</span> <span class="op">&amp;</span> mat<span class="op">,</span> <span class="dt">size_t</span> x<span class="op">,</span> <span class="dt">size_t</span> y<span class="op">){</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    <span class="ot">assert</span><span class="op">(</span>dim<span class="op">&gt;</span><span class="dv">0</span><span class="op">);</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    Mat<span class="op">&lt;</span>T<span class="op">,</span> dim<span class="op">-</span><span class="dv">1</span><span class="op">,</span> dim<span class="op">-</span><span class="dv">1</span><span class="op">&gt;</span> ret<span class="op">;</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span><span class="op">(</span><span class="dt">size_t</span> i<span class="op">=</span><span class="dv">0</span><span class="op">;</span>i<span class="op">&lt;</span>dim<span class="op">-</span><span class="dv">1</span><span class="op">;</span>i<span class="op">++){</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span><span class="op">(</span><span class="dt">size_t</span> j<span class="op">=</span><span class="dv">0</span><span class="op">;</span>j<span class="op">&lt;</span>dim<span class="op">-</span><span class="dv">1</span><span class="op">;</span>j<span class="op">++){</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>            ret<span class="op">[</span>i<span class="op">][</span>j<span class="op">]</span> <span class="op">=</span> mat<span class="op">[</span>i<span class="op">&lt;</span>x<span class="op">?</span>i<span class="op">:</span>i<span class="op">+</span><span class="dv">1</span><span class="op">][</span>j<span class="op">&lt;</span>y<span class="op">?</span>j<span class="op">:</span>j<span class="op">+</span><span class="dv">1</span><span class="op">];</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> ret<span class="op">;</span></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>这是在计算一个矩阵，去除某个元素的所在行和所在列得到的子矩阵。</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="kw">template</span><span class="op">&lt;</span><span class="kw">class</span> T<span class="op">,</span> <span class="dt">size_t</span> dim<span class="op">&gt;</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>T det<span class="op">(</span>Mat<span class="op">&lt;</span>T<span class="op">,</span> dim<span class="op">,</span> dim<span class="op">&gt;</span> <span class="at">const</span> <span class="op">&amp;</span> mat<span class="op">){</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    <span class="ot">assert</span><span class="op">(</span>dim<span class="op">&gt;</span><span class="dv">0</span><span class="op">);</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    T ret <span class="op">=</span> T<span class="op">();</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span><span class="op">(</span><span class="dt">size_t</span> i<span class="op">=</span><span class="dv">0</span><span class="op">;</span>i<span class="op">&lt;</span>dim<span class="op">;</span>i<span class="op">++){</span>  </span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>        ret <span class="op">+=</span> cofactor<span class="op">(</span>mat<span class="op">,</span> <span class="dv">0</span><span class="op">,</span> i<span class="op">)</span> <span class="op">*</span> mat<span class="op">[</span><span class="dv">0</span><span class="op">][</span>i<span class="op">];</span></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> ret<span class="op">;</span></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a><span class="kw">template</span><span class="op">&lt;</span><span class="kw">class</span> T<span class="op">&gt;</span></span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>T det<span class="op">(</span>Mat<span class="op">&lt;</span>T<span class="op">,</span><span class="dv">2</span><span class="op">,</span><span class="dv">2</span><span class="op">&gt;</span> <span class="at">const</span> <span class="op">&amp;</span> mat<span class="op">){</span></span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> mat<span class="op">[</span><span class="dv">0</span><span class="op">][</span><span class="dv">0</span><span class="op">]*</span>mat<span class="op">[</span><span class="dv">1</span><span class="op">][</span><span class="dv">1</span><span class="op">]</span> <span class="op">-</span> mat<span class="op">[</span><span class="dv">0</span><span class="op">][</span><span class="dv">1</span><span class="op">]*</span>mat<span class="op">[</span><span class="dv">1</span><span class="op">][</span><span class="dv">0</span><span class="op">];</span></span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a><span class="kw">template</span><span class="op">&lt;</span><span class="kw">class</span> T<span class="op">&gt;</span></span>
+<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a>T det<span class="op">(</span>Mat<span class="op">&lt;</span>T<span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">1</span><span class="op">&gt;</span> <span class="at">const</span> <span class="op">&amp;</span> mat<span class="op">){</span></span>
+<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> mat<span class="op">[</span><span class="dv">0</span><span class="op">][</span><span class="dv">0</span><span class="op">];</span></span>
+<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb20-23"><a href="#cb20-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-24"><a href="#cb20-24" aria-hidden="true" tabindex="-1"></a><span class="kw">template</span><span class="op">&lt;</span><span class="kw">class</span> T<span class="op">&gt;</span></span>
+<span id="cb20-25"><a href="#cb20-25" aria-hidden="true" tabindex="-1"></a>T det<span class="op">(</span>Mat<span class="op">&lt;</span>T<span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">&gt;</span> <span class="at">const</span> <span class="op">&amp;</span> mat<span class="op">){</span></span>
+<span id="cb20-26"><a href="#cb20-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="kw">static_cast</span><span class="op">&lt;</span>T<span class="op">&gt;(</span><span class="dv">0</span><span class="op">);</span></span>
+<span id="cb20-27"><a href="#cb20-27" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb20-28"><a href="#cb20-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-29"><a href="#cb20-29" aria-hidden="true" tabindex="-1"></a><span class="kw">template</span><span class="op">&lt;</span><span class="kw">class</span> T<span class="op">,</span> <span class="dt">size_t</span> dim<span class="op">&gt;</span></span>
+<span id="cb20-30"><a href="#cb20-30" aria-hidden="true" tabindex="-1"></a>T cofactor<span class="op">(</span>Mat<span class="op">&lt;</span>T<span class="op">,</span> dim<span class="op">,</span> dim<span class="op">&gt;</span> <span class="at">const</span> <span class="op">&amp;</span> mat<span class="op">,</span> <span class="dt">size_t</span> x<span class="op">,</span> <span class="dt">size_t</span> y<span class="op">){</span></span>
+<span id="cb20-31"><a href="#cb20-31" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> det<span class="op">(</span>getMinor<span class="op">(</span>mat<span class="op">,</span>x<span class="op">,</span>y<span class="op">))</span> <span class="op">*</span> <span class="kw">static_cast</span><span class="op">&lt;</span>T<span class="op">&gt;((</span>x<span class="op">+</span>y<span class="op">)%</span><span class="dv">2</span><span class="op">?-</span><span class="dv">1</span><span class="op">:</span><span class="dv">1</span><span class="op">);</span></span>
+<span id="cb20-32"><a href="#cb20-32" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>这是计算行列式与代数余子式的代码。</p>
+<p>计算大于2阶的行列式，需要用到代数余子式的方法，可以参考线性代数笔记。</p>
+<p>值得注意的是，det中我们每次计算都会减少dim一阶，但是你并不能使用if(dim==2);if(dim==1);if(dim&lt;=0)这样的语句来在模板内部定义特例，这是无法编译通过的。你需要做的是将模板特殊化，这样才能通过编译。</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="kw">template</span><span class="op">&lt;</span><span class="kw">class</span> T<span class="op">,</span> <span class="dt">size_t</span> dim<span class="op">&gt;</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>Mat<span class="op">&lt;</span>T<span class="op">,</span>dim<span class="op">,</span>dim<span class="op">&gt;</span> adjugate<span class="op">(</span>Mat<span class="op">&lt;</span>T<span class="op">,</span> dim<span class="op">,</span> dim<span class="op">&gt;</span> <span class="at">const</span> <span class="op">&amp;</span> mat<span class="op">){</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    Mat<span class="op">&lt;</span>T<span class="op">,</span> dim<span class="op">,</span> dim<span class="op">&gt;</span> ret<span class="op">;</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span><span class="op">(</span><span class="dt">size_t</span> i<span class="op">=</span><span class="dv">0</span><span class="op">;</span>i<span class="op">&lt;</span>dim<span class="op">;</span>i<span class="op">++){</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span><span class="op">(</span><span class="dt">size_t</span> j<span class="op">=</span><span class="dv">0</span><span class="op">;</span>j<span class="op">&lt;</span>dim<span class="op">;</span>j<span class="op">++){</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>            ret<span class="op">[</span>j<span class="op">][</span>i<span class="op">]</span> <span class="op">=</span> cofactor<span class="op">(</span>mat<span class="op">,</span>i<span class="op">,</span>j<span class="op">);</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> ret<span class="op">;</span></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a><span class="kw">template</span><span class="op">&lt;</span><span class="kw">class</span> T<span class="op">,</span> <span class="dt">size_t</span> dim<span class="op">&gt;</span></span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>Mat<span class="op">&lt;</span>T<span class="op">,</span>dim<span class="op">,</span>dim<span class="op">&gt;</span> inverse<span class="op">(</span>Mat<span class="op">&lt;</span>T<span class="op">,</span> dim<span class="op">,</span> dim<span class="op">&gt;</span> <span class="at">const</span> <span class="op">&amp;</span> mat<span class="op">){</span></span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>    Mat<span class="op">&lt;</span>T<span class="op">,</span> dim<span class="op">,</span> dim<span class="op">&gt;</span> ret<span class="op">;</span></span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>    ret <span class="op">=</span> adjugate<span class="op">(</span>mat<span class="op">)/</span>det<span class="op">(</span>mat<span class="op">);</span></span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> ret<span class="op">;</span></span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>这是计算伴随矩阵和逆矩阵的代码，有一点值得注意，就是伴随矩阵的下标相当于进行了转置。</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">typedef</span> Vec<span class="op">&lt;</span><span class="dt">float</span><span class="op">,</span><span class="dv">2</span><span class="op">&gt;</span> vec2f<span class="op">;</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="kw">typedef</span> Vec<span class="op">&lt;</span><span class="dt">float</span><span class="op">,</span><span class="dv">3</span><span class="op">&gt;</span> vec3f<span class="op">;</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="kw">typedef</span> Vec<span class="op">&lt;</span><span class="dt">float</span><span class="op">,</span><span class="dv">4</span><span class="op">&gt;</span> vec4f<span class="op">;</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="kw">typedef</span> Vec<span class="op">&lt;</span><span class="dt">int</span><span class="op">,</span><span class="dv">2</span><span class="op">&gt;</span> vec2i<span class="op">;</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="kw">typedef</span> Vec<span class="op">&lt;</span><span class="dt">int</span><span class="op">,</span><span class="dv">3</span><span class="op">&gt;</span> vec3i<span class="op">;</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="kw">typedef</span> Vec<span class="op">&lt;</span><span class="dt">int</span><span class="op">,</span><span class="dv">4</span><span class="op">&gt;</span> vec4i<span class="op">;</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a><span class="kw">typedef</span> Mat<span class="op">&lt;</span><span class="dt">float</span><span class="op">,</span> <span class="dv">4</span><span class="op">,</span> <span class="dv">4</span><span class="op">&gt;</span> mat4f<span class="op">;</span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="kw">typedef</span> Mat<span class="op">&lt;</span><span class="dt">int</span><span class="op">,</span> <span class="dv">4</span><span class="op">,</span> <span class="dv">4</span><span class="op">&gt;</span> mat3f<span class="op">;</span></span></code></pre></div>
+<p>最后声明一下变量的别名方便使用。</p>
+<p>另外这些全部都是在geo命名空间中，方便辨别。</p>
+<p>完整的代码在<u><strong><a href="https://github.com/kegalas/oar/blob/291ae08843c20a07f193fedf875928bf354e99ca/geometry.h">这里</a></strong></u></p>
+<h1 id="geometry.cpp">geometry.cpp</h1>
+<p>这个文件里大部分都是涉及向量类型转换的。唯一需要注意的是四舍五入。以三维为例</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="kw">template</span><span class="op">&lt;&gt;</span> <span class="kw">template</span><span class="op">&lt;&gt;</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>geo<span class="op">::</span>Vec<span class="op">&lt;</span><span class="dt">int</span><span class="op">,</span><span class="dv">3</span><span class="op">&gt;::</span>Vec<span class="op">(</span>geo<span class="op">::</span>Vec<span class="op">&lt;</span><span class="dt">float</span><span class="op">,</span> <span class="dv">2</span><span class="op">&gt;</span> <span class="at">const</span> <span class="op">&amp;</span> v<span class="op">,</span> <span class="dt">float</span> <span class="at">const</span> <span class="va">z_</span><span class="op">){</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> <span class="kw">static_cast</span><span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;(</span>v<span class="op">.</span>x <span class="op">+</span> <span class="fl">0.5</span><span class="bu">f</span><span class="op">);</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>    y <span class="op">=</span> <span class="kw">static_cast</span><span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;(</span>v<span class="op">.</span>y <span class="op">+</span> <span class="fl">0.5</span><span class="bu">f</span><span class="op">);</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>    z <span class="op">=</span> <span class="kw">static_cast</span><span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;(</span><span class="va">z_</span> <span class="op">+</span> <span class="fl">0.5</span><span class="bu">f</span><span class="op">);</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>这段代码将二维的float向量转为三维的int向量，+0.5f即是四舍五入。</p>
+<p>然后就是转化为RGB、RGBA格式，以将四维float向量转变为RGBA为例</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>geo<span class="op">::</span>Vec<span class="op">&lt;</span><span class="dt">int</span><span class="op">,</span><span class="dv">4</span><span class="op">&gt;</span> geo<span class="op">::</span>toRGBA<span class="op">(</span>geo<span class="op">::</span>Vec<span class="op">&lt;</span><span class="dt">float</span><span class="op">,</span><span class="dv">4</span><span class="op">&gt;</span> <span class="at">const</span> <span class="op">&amp;</span> v<span class="op">){</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>    Vec<span class="op">&lt;</span><span class="dt">int</span><span class="op">,</span><span class="dv">4</span><span class="op">&gt;</span> ret<span class="op">;</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span><span class="op">(</span><span class="dt">int</span> i<span class="op">=</span><span class="dv">0</span><span class="op">;</span>i<span class="op">&lt;</span><span class="dv">4</span><span class="op">;</span>i<span class="op">++){</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>        ret<span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> <span class="kw">static_cast</span><span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;(</span>v<span class="op">[</span>i<span class="op">]*</span><span class="fl">255.</span><span class="bu">f</span><span class="op">+</span><span class="fl">0.5</span><span class="bu">f</span><span class="op">);</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span>ret<span class="op">[</span>i<span class="op">]&lt;</span><span class="dv">0</span><span class="op">)</span> ret<span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span> <span class="cf">if</span><span class="op">(</span>ret<span class="op">[</span>i<span class="op">]&gt;</span><span class="dv">255</span><span class="op">)</span> ret<span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> <span class="dv">255</span><span class="op">;</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> ret<span class="op">;</span></span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>其将连续的[0,1]映射到离散的[0,255]，并且超出的部分映射到边界上，同时也计算了四舍五入。</p>
+<p>完整的代码在<u><strong><a href="https://github.com/kegalas/oar/blob/291ae08843c20a07f193fedf875928bf354e99ca/geometry.cpp">这里</a></strong></u></p>
+
+
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a>
+        
+            <a href="/tags/%E6%B8%B2%E6%9F%93/">渲染</a>
+        
+            <a href="/tags/%E6%95%B0%E5%AD%A6/">数学</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css"integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js"integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8"crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js"integrity="sha384-vZTG03m&#43;2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl"crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.querySelector(`.article-content`), {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ]
+        });})
+</script>
+    
+</article>
+
+    <aside class="related-contents--wrapper">
+    
+    
+        <h2 class="section-title">相关文章</h2>
+        <div class="related-contents">
+            <div class="flex article-list--tile">
+                
+                    
+<article class="">
+    <a href="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%AF%BC%E8%88%AA/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">从零开始的软渲染器 导航</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="">
+    <a href="/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%8A%A8%E7%94%BB%E4%B8%8E%E6%A8%A1%E6%8B%9F/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">计算机图形学基础学习笔记-动画与模拟</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="">
+    <a href="/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%85%89%E5%9C%BA%E9%A2%9C%E8%89%B2%E5%92%8C%E6%84%9F%E7%9F%A5/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">计算机图形学基础学习笔记-光场、颜色和感知</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="">
+    <a href="/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E7%9B%B8%E6%9C%BA%E4%B8%8E%E9%80%8F%E9%95%9C/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">计算机图形学基础学习笔记-相机与透镜</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="">
+    <a href="/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E9%AB%98%E7%BA%A7%E5%A4%96%E8%A7%82%E6%A8%A1%E5%9E%8B/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">计算机图形学基础学习笔记-高级外观模型</h2>
+        </div>
+    </a>
+</article>
+                
+            </div>
+        </div>
+    
+</aside>
+
+     
+    
+        
+    <script src="https://utteranc.es/client.js" 
+        repo="kegalas/blogComments"
+        issue-term="pathname"
+        
+        crossorigin="anonymous"
+        async
+        >
+</script>
+
+<style>
+    .utterances {
+        max-width: unset;
+    }
+</style>
+
+<script>
+    function setUtterancesTheme(theme) {
+        let utterances = document.querySelector('.utterances iframe');
+        if (utterances) {
+            utterances.contentWindow.postMessage(
+                {
+                    type: 'set-theme',
+                    theme: `github-${theme}`
+                },
+                'https://utteranc.es'
+            );
+        }
+    }
+
+    addEventListener('message', event => {
+        if (event.origin !== 'https://utteranc.es') return;
+        setUtterancesTheme(document.documentElement.dataset.scheme)
+    });
+
+    window.addEventListener('onColorSchemeChange', (e) => {
+        setUtterancesTheme(e.detail)
+    })
+</script>
+
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2022 KegalaS的个人博客
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.4.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    
+        <aside class="sidebar right-sidebar sticky">
+            <section class="widget archives">
+                <div class="widget-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+                </div>
+                <h2 class="widget-title section-title">目录</h2>
+                
+                <div class="widget--toc">
+                    <nav id="TableOfContents">
+  <ol>
+    <li><a href="#geometry.h">geometry.h</a>
+      <ol>
+        <li><a href="#向量的定义">向量的定义</a></li>
+        <li><a href="#矩阵的定义">矩阵的定义</a></li>
+      </ol>
+    </li>
+    <li><a href="#geometry.cpp">geometry.cpp</a></li>
+  </ol>
+</nav>
+                </div>
+            </section>
+        </aside>
+    
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                defer="false"
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
