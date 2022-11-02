@@ -10,9 +10,9 @@ mathjax: true
 markup: pandoc
 ---
 
-## 基本概念
+# 基本概念
 
-### 随机试验E
+## 随机试验E
 
 针对随机现象的观察、记录、试验（广义）。
 
@@ -22,15 +22,15 @@ markup: pandoc
 2. 每次试验的可能结果不止一个，并且能事先明确试验的所有可能结果
 3. 但一次试验前不能确定哪个结果会出现
 
-### 样本空间$\Omega$
+## 样本空间$\Omega$
 
 随机试验$E$的所有结果构成的集合为$E$的样本空间$\Omega$，记为$\Omega\{\omega\}$，每个结果$\omega$是$\Omega$中的一个元素，称为样本点。
 
-### 频率
+## 频率
 
 在相同的条件下，进行了$n$次试验，其中事件$A$发生的次数$n_A$称为事件$A$发生的频数，比值$n_A/n$称为事件$A$发生的频率，记为$f_n(A)$
 
-### 概率
+## 概率
 
 定义1: 事件A发生频率的稳定值$p$称为它的概率$P(A)$，即$P(A)=p$
 
@@ -196,7 +196,7 @@ $$
 A-B = A\bar B
 $$
 
-### 两个公式
+### 两个重要公式
 
 $$
 \overline{A_1A_2\cdots A_n}=\sum_{i=1}^n\bar{A_i}
@@ -282,6 +282,8 @@ $$
 P(B_i|A)=P(AB_i)/P(A)\\=P(B_i)P(A|B_i)/\sum_jP(B_j)P(A|B_j)
 $$
 
+# 随机变量及其分布
+
 ## 随机变量的概念
 
 随机变量就是其值随机会而定的变量。例如从一大批产品中随机抽出100个，其中所含的废品数为$X$。这个$X$就是一个随机变量。
@@ -328,112 +330,6 @@ $$
 1. $F(x)$是单调非降的：$x_1\leq x_2$时，有$F(x_1)\leq F(x_2)$
 2. $x\to \infty$时，$F(x)\to 1$。$x\to -\infty$时，$F(x)\to 0$
 
-## 二项分布
-
-设某个事件$A$在一次试验中发生的概率为$p$，重复试验$n$次，以$X$记$A$在$n$次试验中发生的次数，则
-
-$$
-p_i=b(i;n,p)=\binom{n}{i}p^i(1-p)^{n-i}\quad (n=0,1,\cdots,n)
-$$
-
-服从有两个条件
-
-1. 各次试验的条件是稳定的
-2. 各次试验的独立性
-
-如果抽检后放回，则每次抽出废品的概率是相等的。如果抽检后不放回，则废品率发生了变化，试验条件不稳定，不符合二项分布。但是如果总数远大于抽出的数量，则不放回也几乎不影响，可以近似地作为二项分布。
-
-## 泊松分布
-
-若随机变量$X$的可能取值为$0,1,2,\cdots$，且概率分布为
-
-$$
-P(X=i)=e^{-\lambda}\lambda^i/i!
-$$
-
-则称$X$服从泊松分布。记为$X\sim P(\lambda)$。$\lambda>0$是某一常数。式子右边对$i=0,1,\cdots$求和的结果为$1$。可以从$e^\lambda=\sum^\infty_{i=0}\lambda^i/i!$得出。
-
-这个分布多出现在当$X$表示在一定时间或空间内出现的事件个数的场合。比如一定时间内某交通路口所发生的事故个数。
-
-泊松分布可以看做二项分布的极限。若$X\sim B(n,p)$中$n$很大，$p$很小，而$np=\lambda$不太大时，$X$的分布接近与泊松分布$P(\lambda)$。推导如下：
-
-$$
-P(X=i)=\binom{n}{i}\left(\frac{\lambda}{n}\right)^i\left(1-\frac{\lambda}{n}\right)^{n-i}
-$$
-
-当$n\to\infty$时
-
-$$
-\binom{n}{i}/n^i\to 1/i!,\quad \left(1-\frac{\lambda}{n}\right)^{n-i}\to e^{-\lambda}
-$$
-
-则有
-
-$$
-P(X=i)=e^{-\lambda}\lambda^i/i!
-$$
-
-显然通常我们不会遇到$n$无限的情况，只会遇到$n$较大的情况，所以只能说接近泊松分布。
-
-在后面的期望一节，我们可以证明$X$服从泊松分布时
-
-$$
-E(X) = \sum^\infty_{i=0}i\frac{\lambda^i}{i!}e^{-\lambda}=\lambda
-$$
-
-## 超几何分布
-
-以$X$记从含$M$个废品的$N$个产品中随机抽出$n$个里面所含有的废品数，$X$的分布为
-
-$$
-P(X=m)=\binom{M}{n}\binom{N-M}{n-m}/\binom{N}{n}
-$$
-
-这是一种抽检不放回的试验，如果$N$特别大，$n$不够大时，放回与不放回差别不大。可以当作二项分布来看。或者说，若$X$服从超几何分布，则当$n$固定时，$M/N=p$固定；$N\to \infty$时，$X$近似服从二项分布$B(n,p)$。
-
-## 负二项分布
-
-先指定一个自然数$r$，一个一个地从一批产品中抽样检查，直到发现第$r$个废品，以$X$记此时已经抽出的合格产品个数。
-
-显然$\{X=i\}$这个事件发生时，需要满足
-
-1. 在前$i+r-1$次抽取中，正好有$r-1$个废品
-2. 第$i+r$次抽出废品
-
-所以有
-
-$$
-P(X=i) = b(r-1;i+r-1,p)p
-$$
-
-$$
-=\binom{i+r-1}{r-1}p^r(1-p)^i
-$$
-
-负二项分布的名称来源于
-
-$$
-(1-x)^{-r}=\sum_{i=0}^{\infty}\binom{-r}{i}(-x)^i=\sum_{i=0}^{\infty}\binom{i+r-1}{i}x^i
-$$
-
-$$
-=\sum_{i=0}^{\infty}\binom{i+r-1}{r-1}x^i
-$$
-
-其中令$x=1-p$，两边乘以$p^r$，得
-
-$$
-1 = p^r[1-(1-p)]^{-r}=\sum_{i=0}^{\infty}\binom{i+r-1}{r-1}p^r(1-p)^i
-$$
-
-## 几何分布
-
-当负二项分布中的$r=1$时，有
-
-$$
-P(X=i) = p(1-p)^i
-$$
-
 ## 连续型随机变量
 
 与离散型的有限或可数无限不同，这是一种充满整个区间的随机变量，或者说不可数无限。
@@ -453,119 +349,6 @@ $$
 $$
 P(a\leq X\leq b)=F(b)-F(a) = \int^b_af(x)dx
 $$
-
-## 正态分布
-
-如果一个随机变量具有概率密度函数
-
-$$
-f(x)=(\sqrt{2\pi}\sigma)^{-1}e^{-\frac{(x-\mu)^2}{2\sigma^2}}\quad (-\infty<x<\infty)
-$$
-
-则称$X$为正态随机变量，并记为$X\sim N(\mu,\sigma^2)$。$\mu,\sigma^2$是常数，$\mu\in R,0<\sigma^2<\infty$，它们称为这个分布的参数。由后续的方差一节，$Var(X)=\sigma^2$，就是分布的方差。
-
-正态分布的概率密度函数的图像关于$x=\mu$对称，中间高两边低。
-
-当$\mu=0,\sigma^2=1$时，称为标准正态分布$N(0,1)$
-
-$$
-f(x)=e^{-x^2/2}/\sqrt{2\pi}
-$$
-
-通常$N(0,1)$的密度函数和分布函数也会记为$\varphi(x)$和$\varPhi(x)$。
-
-任意一个正态分布都可以转化为标准正态分布，便于查表。
-
-$$
-if\quad X\sim N(\mu,\sigma^2),then\quad Y=(X-\mu)/\sigma\sim N(0,1)
-$$
-
-例如$X\sim N(1.5,2^2)$，要计算$P(-1\leq X\leq 2)$，则因$(X-1.5)/2\sim N(0,1)$，有
-
-$$
-P(-1\leq X\leq 2) = P\left(\frac{-1-1.5}{2}\leq\frac{X-1.5}{2}\leq\frac{2-1.5}{2}\right)
-$$
-
-$$
-=P(-1.25\leq(X-1.5)/2\leq 0.25)
-$$
-
-$$
-=\varPhi(0.25)-\varPhi(-1.25)
-$$
-
-可以查表代入。但是通常只有非负数的值，对于负数，有
-
-$$
-\varPhi = 1-\varPhi(-x)
-$$
-
-## 指数分布
-
-若随机变量$X$有概率密度函数
-
-$$
-f(x)=\left\{\begin{matrix}
-\lambda e^{-\lambda x},\quad x>0\\
-0,\quad x\leq 0
-\end{matrix}\right.
-$$
-
-则$X$服从指数分布，其中$\lambda>0$是参数。
-
-其概率分布函数为
-
-$$
-F(x)=\left\{\begin{matrix}
-1-e^{-\lambda x},\quad x>0\\
-0,\quad x\leq 0
-\end{matrix}\right.
-$$
-
-## 威布尔分布
-
-满足
-
-$$
-f(x)=\left\{\begin{matrix}
-\lambda\alpha x^{\alpha-1} e^{-\lambda x^\alpha},\quad x>0\\
-0,\quad x\leq 0
-\end{matrix}\right.
-$$
-
-其概率分布函数是
-
-$$
-F(x)=\left\{\begin{matrix}
-1-e^{-\lambda x^\alpha},\quad x>0\\
-0,\quad x\leq 0
-\end{matrix}\right.
-$$
-
-可见，指数分布是威布尔分布的一个特例。
-
-## 均匀分布
-
-满足
-
-$$
-f(x)=\left\{\begin{matrix}
-1/(b-a),\quad a\leq x\leq b\\
-0,\quad else
-\end{matrix}\right.
-$$
-
-其概率分布函数是
-
-$$
-F(x)=\left\{\begin{matrix}
-0,\quad\quad\quad\quad\quad\quad\quad\quad x\leq a\\
-(x-a)/(b-a),\quad a<x<b\\
-1,\quad\quad\quad\quad\quad\quad\quad\quad x\geq b
-\end{matrix}\right.
-$$
-
-常记作$R(a,b),U(a,b)$
 
 ## 多维随机变量（随机向量）
 
@@ -587,16 +370,6 @@ $$
 p(j_1,j_2,\cdots,j_n)\geq 0,\sum_{j_n}\cdots\sum_{j_2}\sum_{j_1}p(j_1,j_2,\cdots,j_n) = 1
 $$
 
-**多项分布**
-
-设$A_1,A_2,\cdots,A_n$是某一试验之下的完备事件群，即事件$A_1,\cdots,A_n$两两互斥，其和为必然事件。分别以$p_1,p_2,\cdots,p_n$记每个事件对应的概率。
-
-现将试验独立重复$N$次，而以$X_i$记载着$N$次试验中事件$A_i$出现的次数。$X$的概率分布就叫做多项分布，有时记为$M(N;p_1,\cdots,p_n)$。其概率有
-
-$$
-P(X_1=k_1,X_2=k_2,\cdots,X_n=k_n)=\frac{N!}{k_1!k_2!\cdots k_n!}p_1^{k_1}p_2^{k_2}\cdots p_n^{k_n}
-$$
-
 ### 连续型随机向量的分布
 
 设$X$是一个$n$维随机向量，其取值可视为$n$维欧式空间$\mathbb{R} ^n$中的一个点。如果$X$的全部取值能充满$\mathbb{R} ^n$中某一区域，则称它是连续型的。
@@ -615,29 +388,23 @@ $$
 \int^\infty_{-\infty}\cdots\int^\infty_{-\infty} f(x_1,\cdots,x_n)dx_1\cdots dx_n = 1
 $$
 
-**二维随机向量的均匀分布**
+对于二维情况
 
 $$
-f(x_1,x_2)=
-\left\{\begin{matrix}
-1/[(b-a)(d-c)],\quad a\leq x_1\leq b, c\leq x_2\leq d\\
-0,\quad\quad\quad\quad\quad\quad\quad\quad\quad other\quad\quad\quad\quad\quad\quad
-\end{matrix}\right.
+F(x,y) = \int^y_{-\infty}\int^x_{-\infty}f(u,v)dudv
 $$
 
-以上是矩形情况的密度函数
-
-如果扩展到任意形状的图形，只要求出来其面积，那么密度函数在图形内部就是$1/S$，图形外部是$0$
-
-**二维正态分布**
-
 $$
-f(x_1,x_2)=(2\pi\sigma_1\sigma_2\sqrt{1-\rho^2})^{-1}\exp\left[-\frac{1}{2(1-\rho^2)}\left(\frac{(x_1-a)^2}{\sigma_1^2}-\frac{2\rho(x_1-a)(x_2-b)}{\sigma_1\sigma_2}+
-\\
-\frac{(x_2-a)^2}{\sigma_2^2}\right)\right]
+\frac{\partial^2 F(x,y)}{\partial x\partial y}=f(x,y)
 $$
 
-常把这个分布记为$N(a,b,\sigma_1^2,\sigma_2^2,\rho)$
+在$\Delta x,\Delta y$很小时，有$P(x<X<x+\Delta x,y<Y<y+\Delta y)\approx f(x,y)\Delta x\Delta y$
+
+若$G$为$xOy$内的任意区域，点$(x,y)$落在$G$内的概率为
+
+$$
+P\{(X,Y)\in G\}=\iint_G f(x,y)dxdy
+$$
 
 与一维的情况一样，也可以用概率分布函数去描述多维随机向量的概率分布，其定义为
 
@@ -678,6 +445,8 @@ f_1(x_1) = \int^\infty_{-\infty}\cdots \int^\infty_{-\infty}f(x_1,x_2,\cdots,x_n
 $$
 
 当然，如果题目有要求变量的范围，则积分上下限要改成相应的值。
+
+直观上的理解，就是将其他变量的所有情况的概率全部加起来。
 
 ### 联合分布
 
@@ -871,112 +640,33 @@ $$
 f_Y(y) = \int^\infty_{-\infty}f_1(x)f_2(y-x)dx = \int^\infty_{-\infty}f_1(y-x)f_2(x)dx
 $$
 
-对于正态分布，设$X_1,X_2$分别服从正态分布$N(\mu_1,\sigma_1^2),N(\mu_2,\sigma_2^2)$，对于$Y=X_1+X_2$
-
-1. $X_1,X_2$独立，则$Y\sim N(\mu_1+\mu_2, \sigma_1^2+\sigma_2^2)$。并且反过来说$Y$f䄦正态分布，而$Y$可以表示为两个独立变量的和$Y=X_1+X_2$，则$X_1,X_2$必须服从正态分布。
-2. $X_1,X_2$不独立，但其联合分布为二维正态分布$N(\mu_1,\mu_2, \sigma_1^2,\sigma_2^2,\rho)$，则$Y$仍然服从正态分布$Y\sim N(\mu_1+\mu_2, \sigma_1^2+\sigma_2^2+2\rho\sigma_1\sigma_2)$
-
-同样可以推广到多维情况，$X_1,\cdots,X_n$相互独立，分别服从$N(\mu_1,\sigma_1^2),\cdots,N(\mu_n,\sigma_n^2)$，则$X_1+\cdots+X_n$服从$N(\mu_1+\cdots+\mu_n,\sigma_1^2+\cdots+\sigma_b^2)$
-
-**$\Gamma$函数**
-
-通过积分
-
-$$
-\Gamma(x) = \int^\infty_0 e^{-t}t^{x-1}dt(x>0)$$
-
-来定义
-
-**$\Beta$（Beta）函数**
-
-通过积分
-
-$$
-\Gamma(x) = \int^1_0 t^{x-1}(1-t)^{y-1}dt(x>0
-,y>0)$$
-
-来定义
-
-**$\Gamma$函数的性质**
-
-1. $\Gamma(1)=1$
-2. $\Gamma(1/2)=\sqrt{\pi}$
-3. $\Gamma(x+1)=x\Gamma(x)$
-
-因此可知，$n$为正整数时
-
-$$
-\Gamma(n) = (n-1)!
-$$
-
-$n$为正奇数时
-
-$$
-\Gamma(n/2) = 1\cdot 3\cdot 5\cdots(n-2)2^{-(n-1)/2}\sqrt{\pi}
-$$
-
-其中$\Gamma$与$\Beta$函数之间有重要的关系式
-
-$$
-\Beta(x,y)=\Gamma(x)\Gamma(y)/\Gamma(x+y)
-$$
-
-**卡方分布**
-
-由$\Gamma$函数的定义可知，若$n>0$，则函数
-
-$$
-k_n(x)=
-\left\{\begin{align}
-
-&\frac{1}{\Gamma(n/2)2^{n/2}}e^{-x/2}x^{(n-2)/2} &,\quad x>0\\
-&0 &,\quad x\leq 0
-
-\end{align}\right.
-$$
-
-是概率密度函数。它称为“自由度为$n$的皮尔逊卡方密度”，常记为$\mathcal{X}{}_n^2$
-
-**定理1**
-
-若$X_1,\cdots,X_n$相互独立，都服从正态分布$N(0,1)$，则$Y=X_1^2+\cdots+X_N^2$服从自由度为$n$的卡方分布$\mathcal{X}{}_n^2$
-
-卡方分布有如下性质
-
-1. 设$X_1,X_2$独立，$X_1\sim \mathcal{X}_m^2,X_2\sim \mathcal{X}_n^2$，则$X_1+X_2\sim \mathcal{X}_{m+n}^2$
-2. 若$X_1,\cdots,X_n$独立，且都服从指数分布，则
-
-$$
-X=2\lambda(X_1+\cdots+X_n)\sim \mathcal{X}_{2n}^2
-$$
-
 ### 随机变量商的密度函数
 
 设$(X_1,X_2)$有密度函数$f(x_1,x_2)$，$Y=X_2/X_1$，要求$Y$的密度函数
 
 $$
-f_Y(y) = \int^\infty_0 x_1f(x_1,x_1y)dx_1
+f_Y(y) = \int^\infty_0 |x_1|f(x_1,x_1y)dx_1
 $$
 
 若$X_1,X_2$独立，则
 
 $$
-f_Y(y) = \int^\infty_0 x_1f_1(x_1)f_2(x_1y)dx_1
+f_Y(y) = \int^\infty_0 |x_1|f_1(x_1)f_2(x_1y)dx_1
 $$
 
-**t分布**
+### 随机变量积的密度函数
 
-$Y=X_2/\sqrt{X_1/n}$的密度函数为
+设$(X_1,X_2)$有密度函数$f(x_1,x_2)$，$Y=X_1X_2$，要求$Y$的密度函数
 
 $$
-t_n(y)=\frac{\Gamma((n+1)/2)}{\sqrt{n\pi}\Gamma(n/2)}\bigg(1+\frac{y^2}{n}\bigg)^{-\frac{n+1}{2}}
+f_Y(y) = \int^\infty_0 \frac{1}{|x_1|}f(x_1,\frac{y}{x_1})dx_1
 $$
 
-这个密度函数称为“自由度为$n$的$t$分布”的密度函数，常简记为$t_n$
+若$X_1,X_2$独立，则
 
-**F分布**
-
-TODO
+$$
+f_Y(y) = \int^\infty_0 \frac{1}{|x_1|}f_1(x_1)f_2(\frac{y}{x_1})dx_1
+$$
 
 ## 数学期望与中位数
 
@@ -1061,6 +751,30 @@ $$
 $$
 E(cX) = cE(X)
 $$
+
+### 多维情况
+
+以二维为例
+
+设$Z$是随机变量$X,Y$的函数，$Z=g(X,Y)$，$g$是连续函数，$Z$是一维随机变量
+
+*离散情况*
+
+设$(X,Y)$的分布律为$P(X=x_i,Y=y_j)=p_{ij}$
+
+$$
+E(Z) = E[g(X,Y)] = \sum_j\sum_i g(x_i,y_j)p_{ij}
+$$
+
+*连续情况*
+
+设$(X,Y)$的概率密度是$f(x,y)$，则有
+
+$$
+E(Z)=E[g(X,Y)]=\int^{+\infty}_{-\infty}\int^{+\infty}_{-\infty}g(x,y)f(x,y)dxdy
+$$
+
+更高维可以同理推出。
 
 ### 条件数学期望
 
@@ -1147,6 +861,7 @@ $$
 1. 常数的方差为$0$
 2. 若$c$为常数，则$Var(X+c)=Var(X)$
 3. 若$c$为常数，则$Var(cX)=c^2Var(X)$
+4. $Var(X)=0$的充要条件为，$P(X=E(X))=1$
 
 **定理2**
 
@@ -1156,11 +871,626 @@ $$
 Var(X_1+X_2+\cdots+X_n) = Var(X_1)+Var(X_2)+\cdots+Var(X_n)
 $$
 
+如果不要求独立，二维有
+
+$$
+Var(X+Y)=Var(X)+Var(Y)+2E\{[X-E(X)][Y-E(Y)]\}
+$$
+
+
+
 ### 矩
 
 **定义1**
 
 设$X$为随机变量，$c$为常数，$k$为正整数，则量$E[(X-c)^k]$称为$X$关于$c$点的$k$阶矩
 
-1. $c=0$时称为$X$的$k$阶原点矩
-2. $c=E(X)$时称为$X$的$k$阶中心矩。
+1. $c=0$时称为$X$的$k$阶原点矩，记作$\mu_k$
+2. $c=E(X)$时称为$X$的$k$阶中心矩，记作$v_k$。
+
+另外
+
+1. $\mu_{kl}=E(X^kY^l)$称为$X,Y$的$k+l$阶混合原点矩，简称$k+l$混合矩
+2. $v_{kl}=E[(X-E(X))^k(Y-E(Y))^l]$称为$X,Y$的$k+l$阶混合中心矩
+
+## 协方差与相关系数
+
+对于二维随机向量$(X,Y)$，$X,Y$本身都是一维随机变量，可以定义其均值、方差，我们记为
+
+$$
+E(X)=m_1,E(Y)=m_2,Var(X)=\sigma_1^2,Var(Y)=\sigma_2^2
+$$
+
+**定义1**
+
+称$E[(X-m_1)(Y-m_2)]$为$X,Y$的协方差，并记为$Cov(X,Y)$
+
+显然有$Cov(X,Y)=Cov(Y,X)$
+
+也有
+
+1. 对常数$c_1,c_2,c_3,c_4$，有
+
+$$
+Cov(c_1X+c_2,c_3Y+c_4)=c_1c_3Cov(X,Y)
+$$
+
+2. $Cov(X,Y)=E(XY)-m_1m_2=E(XY)-E(X)E(Y)$
+3. $Cov(X,X)=Var(X)$
+4. $Cov(X_1+X_2,Y)=Cov(X_1,Y)+Cov(X_2,Y)$
+5. $Var(X\pm Y)=Var(X)+Var(Y)\pm 2Cov(X,Y)$
+
+**定理1**
+
+1. 若$X,Y$独立，则$Cov(X,Y)=0$
+2. $[Cov(X,Y)]^2\leq\sigma_1^2\sigma_2^2$，等号当且仅当$X,Y$之间有严格线性关系（即存在常数$a,b$使$Y=a+bX$）时成立。
+
+**定义2**
+
+称$Cov(X,Y)/(\sigma_1\sigma_2)$为$X,Y$的相关系数，并记为$Corr(X,Y)$，有时也记为$\rho_{XY}$
+
+可以将相关系数看做标准尺度下的协方差。
+
+**定理2**
+
+1. 若$X,Y$独立，则$Corr(X,Y)=0$，当然也要求方差大于$0$才有定义。
+2. $-1\leq Corr(X,Y)\leq 1$，等号当且仅当$X,Y$之间有严格线性关系时达到。
+
+需要注意几点：
+
+1. 当$Corr(X,Y)=0$（或$Cov(X,Y)=0$）时，称$X,Y$不相关，通常我们只能由“独立”推出“不相关”，而不能反过来。但是对于服从二维正态分布的$X,Y$，“独立”和“不相关”是一回事。
+2. 相关系数也常称为“线性相关系数”，相关系数并不是刻画$X,Y$之间一般关系的程度，而只刻画了“线性”关系的程度。上述定理的第二条提供了一个依据。
+3. 如果$0< |Corr(X,Y)|< 1$，则解释为$X,Y$之间有一定程度的线性关系。
+4. 线性相关的意义还可以从最小二乘法的角度去解释。
+
+## 常见的分布
+
+### 0-1分布
+
+设某个事件$A$在一次试验中发生的概率为$p$，重复试验$1$次，以$X$记$A$在$1$次试验中发生的次数，则
+
+$$
+P(X=i)=p^i(1-p)^{1-i}\quad (i=0,1)
+$$
+
+#### 数学期望
+
+$$p$$
+
+#### 方差
+
+$$p(1-p)$$
+
+### 二项分布
+
+设某个事件$A$在一次试验中发生的概率为$p$，重复试验$n$次，以$X$记$A$在$n$次试验中发生的次数，则
+
+$$
+p_i=b(i;n,p)=\binom{n}{i}p^i(1-p)^{n-i}\quad (n=0,1,\cdots,n)
+$$
+
+服从有两个条件
+
+1. 各次试验的条件是稳定的
+2. 各次试验的独立性
+
+如果抽检后放回，则每次抽出废品的概率是相等的。如果抽检后不放回，则废品率发生了变化，试验条件不稳定，不符合二项分布。但是如果总数远大于抽出的数量，则不放回也几乎不影响，可以近似地作为二项分布。
+
+通常也会记作，$B(n,p)$
+
+#### 数学期望
+
+$$np$$
+
+#### 方差
+
+$$np(1-p)$$
+
+### 泊松分布
+
+若随机变量$X$的可能取值为$0,1,2,\cdots$，且概率分布为
+
+$$
+P(X=i)=e^{-\lambda}\lambda^i/i!
+$$
+
+则称$X$服从泊松分布。记为$X\sim P(\lambda)$。$\lambda>0$是某一常数。式子右边对$i=0,1,\cdots$求和的结果为$1$。可以从$e^\lambda=\sum^\infty_{i=0}\lambda^i/i!$得出。
+
+这个分布多出现在当$X$表示在一定时间或空间内出现的事件个数的场合。比如一定时间内某交通路口所发生的事故个数。
+
+泊松分布可以看做二项分布的极限。若$X\sim B(n,p)$中$n$很大，$p$很小，而$np=\lambda$不太大时，$X$的分布接近与泊松分布$P(\lambda)$。推导如下：
+
+$$
+P(X=i)=\binom{n}{i}\left(\frac{\lambda}{n}\right)^i\left(1-\frac{\lambda}{n}\right)^{n-i}
+$$
+
+当$n\to\infty$时
+
+$$
+\binom{n}{i}/n^i\to 1/i!,\quad \left(1-\frac{\lambda}{n}\right)^{n-i}\to e^{-\lambda}
+$$
+
+则有
+
+$$
+P(X=i)=e^{-\lambda}\lambda^i/i!
+$$
+
+显然通常我们不会遇到$n$无限的情况，只会遇到$n$较大的情况，所以只能说接近泊松分布。
+
+#### 数学期望
+
+$$\lambda$$
+
+我们可以证明$X$服从泊松分布时
+
+$$
+E(X) = \sum^\infty_{i=0}i\frac{\lambda^i}{i!}e^{-\lambda}=\lambda
+$$
+
+#### 方差
+
+$$\lambda$$
+
+### 超几何分布
+
+以$X$记从含$M$个废品的$N$个产品中随机抽出$n$个里面所含有的废品数，$X$的分布为
+
+$$
+P(X=m)=\binom{M}{n}\binom{N-M}{n-m}\bigg/\binom{N}{n}
+$$
+
+这是一种抽检不放回的试验，如果$N$特别大，$n$不够大时，放回与不放回差别不大。可以当作二项分布来看。或者说，若$X$服从超几何分布，则当$n$固定时，$M/N=p$固定；$N\to \infty$时，$X$近似服从二项分布$B(n,p)$。
+
+#### 数学期望
+
+$$\frac{nM}{N}$$
+
+#### 方差
+
+$$\frac{nM(N-M)(N-n)}{N^2(N-1)}$$
+
+### 负二项分布
+
+先指定一个自然数$r$，一个一个地从一批产品中抽样检查，直到发现第$r$个废品，以$X$记此时已经抽出的合格产品个数。
+
+显然$\{X=i\}$这个事件发生时，需要满足
+
+1. 在前$i+r-1$次抽取中，正好有$r-1$个废品
+2. 第$i+r$次抽出废品
+
+所以有
+
+$$
+P(X=i) = b(r-1;i+r-1,p)p
+$$
+
+$$
+=\binom{i+r-1}{r-1}p^r(1-p)^i
+$$
+
+负二项分布的名称来源于
+
+$$
+(1-x)^{-r}=\sum_{i=0}^{\infty}\binom{-r}{i}(-x)^i=\sum_{i=0}^{\infty}\binom{i+r-1}{i}x^i
+$$
+
+$$
+=\sum_{i=0}^{\infty}\binom{i+r-1}{r-1}x^i
+$$
+
+其中令$x=1-p$，两边乘以$p^r$，得
+
+$$
+1 = p^r[1-(1-p)]^{-r}=\sum_{i=0}^{\infty}\binom{i+r-1}{r-1}p^r(1-p)^i
+$$
+
+### 几何分布
+
+当负二项分布中的$r=1$时，有
+
+$$
+P(X=i) = p(1-p)^i
+$$
+
+
+#### 数学期望
+
+$$\frac{1}{p}$$
+
+#### 方差
+
+$$\frac{1-p}{p^2}$$
+
+### 多项分布
+
+设$A_1,A_2,\cdots,A_n$是某一试验之下的完备事件群，即事件$A_1,\cdots,A_n$两两互斥，其和为必然事件。分别以$p_1,p_2,\cdots,p_n$记每个事件对应的概率。
+
+现将试验独立重复$N$次，而以$X_i$记载着$N$次试验中事件$A_i$出现的次数。$X$的概率分布就叫做多项分布，有时记为$M(N;p_1,\cdots,p_n)$。其概率有
+
+$$
+P(X_1=k_1,X_2=k_2,\cdots,X_n=k_n)=\frac{N!}{k_1!k_2!\cdots k_n!}p_1^{k_1}p_2^{k_2}\cdots p_n^{k_n}
+$$
+
+### 正态分布
+
+如果一个随机变量具有概率密度函数
+
+$$
+f(x)=(\sqrt{2\pi}\sigma)^{-1}e^{-\frac{(x-\mu)^2}{2\sigma^2}}\quad (-\infty<x<+\infty)
+$$
+
+则称$X$为正态随机变量，并记为$X\sim N(\mu,\sigma^2)$。$\mu,\sigma^2$是常数，$\mu\in R,0<\sigma^2<\infty$，它们称为这个分布的参数。由后续的方差一节，$Var(X)=\sigma^2$，就是分布的方差。
+
+正态分布的概率密度函数的图像关于$x=\mu$对称，中间高两边低。
+
+当$\mu=0,\sigma^2=1$时，称为标准正态分布$N(0,1)$
+
+$$
+f(x)=e^{-x^2/2}/\sqrt{2\pi}
+$$
+
+通常$N(0,1)$的密度函数和分布函数也会记为$\varphi(x)$和$\varPhi(x)$。
+
+任意一个正态分布都可以转化为标准正态分布，便于查表。
+
+$$
+if\quad X\sim N(\mu,\sigma^2),then\quad Y=(X-\mu)/\sigma\sim N(0,1)
+$$
+
+例如$X\sim N(1.5,2^2)$，要计算$P(-1\leq X\leq 2)$，则因$(X-1.5)/2\sim N(0,1)$，有
+
+$$
+P(-1\leq X\leq 2) = P\left(\frac{-1-1.5}{2}\leq\frac{X-1.5}{2}\leq\frac{2-1.5}{2}\right)
+$$
+
+$$
+=P(-1.25\leq(X-1.5)/2\leq 0.25)
+$$
+
+$$
+=\varPhi(0.25)-\varPhi(-1.25)
+$$
+
+可以查表代入。但是通常只有非负数的值，对于负数，有
+
+$$
+\varPhi = 1-\varPhi(-x)
+$$
+
+#### 正态分布的线性组合性质
+
+对于正态分布，设$X_1,X_2$分别服从正态分布$N(\mu_1,\sigma_1^2),N(\mu_2,\sigma_2^2)$，对于$Y=X_1+X_2$
+
+1. $X_1,X_2$独立，则$Y\sim N(\mu_1+\mu_2, \sigma_1^2+\sigma_2^2)$。并且反过来说$Y$符合正态分布，而$Y$可以表示为两个独立变量的和$Y=X_1+X_2$，则$X_1,X_2$必须服从正态分布。
+2. $X_1,X_2$不独立，但其联合分布为二维正态分布$N(\mu_1,\mu_2, \sigma_1^2,\sigma_2^2,\rho)$，则$Y$仍然服从正态分布$Y\sim N(\mu_1+\mu_2, \sigma_1^2+\sigma_2^2+2\rho\sigma_1\sigma_2)$
+
+同样可以推广到多维情况，$X_1,\cdots,X_n$相互独立，分别服从$N(\mu_1,\sigma_1^2),\cdots,N(\mu_n,\sigma_n^2)$，则$X_1+\cdots+X_n$服从$N(\mu_1+\cdots+\mu_n,\sigma_1^2+\cdots+\sigma_n^2)$
+
+对于不全为$0$的常数$C_0,C_1,\cdots,C_n$，线性组合
+
+$$
+C_0+C_1X_1+\cdots+C_nX_n\sim N(C_0+C_1\mu_1+\cdots+C_n\mu_n,C_1^2\sigma_1^2+\cdots+C_n^2\sigma_n^2)
+$$
+
+
+#### 数学期望
+
+$$\mu$$
+
+#### 方差
+
+$$\sigma^2$$
+
+### 二维正态分布
+
+$$
+f(x_1,x_2)=(2\pi\sigma_1\sigma_2\sqrt{1-\rho^2})^{-1}\exp\left[-\frac{1}{2(1-\rho^2)}\left(\frac{(x_1-a)^2}{\sigma_1^2}-\frac{2\rho(x_1-a)(x_2-b)}{\sigma_1\sigma_2}+
+\\
+\frac{(x_2-b)^2}{\sigma_2^2}\right)\right]
+$$
+
+常把这个分布记为$N(a,b,\sigma_1^2,\sigma_2^2,\rho)$
+
+### n维正态随机变量
+
+**定义1**
+
+设$(X_1,X_2)$的四个二阶中心矩都存在，把
+
+$$
+\begin{bmatrix}
+ Cov(X_1) & Corr(X_1,X_2) \\
+ Corr(X_2,X_1) & Cov(X_2)
+\end{bmatrix}
+$$
+
+称为随机变量$(X_1,X_2)$的协方差矩阵。
+
+扩展到$n$维就是
+
+$$
+\begin{bmatrix}
+ Cov(X_1) & Corr(X_1,X_2) & \cdots & Corr(X_1,X_n)\\
+ Corr(X_2,X_1) & Cov(X_2) & \cdots & Corr(X_2,X_n)\\
+ \vdots & \vdots &  & \vdots\\
+ Corr(X_n,X_1) & Corr(X_n,X_2) & \cdots & Cov(X_n)
+\end{bmatrix}
+$$
+
+当然所有的协方差必须存在。
+
+对于二维正态分布
+
+$$
+f(x_1,x_2)=(2\pi\sigma_1\sigma_2\sqrt{1-\rho^2})^{-1}\exp\left[-\frac{1}{2(1-\rho^2)}\left(\frac{(x_1-\mu_1)^2}{\sigma_1^2}-\frac{2\rho(x_1-\mu_1)(x_2-\mu_2)}{\sigma_1\sigma_2}+
+\\
+\frac{(x_2-\mu_2)^2}{\sigma_2^2}\right)\right]
+$$
+
+其中$\rho$是$X,Y$的相关系数
+
+所以$(X_1,X_2)$的协方差矩阵是
+
+$$
+B = \begin{bmatrix}
+ \sigma_1^2 & \rho\sigma_1\sigma_2 \\
+ \rho\sigma_1\sigma_2 & \sigma_2^2
+\end{bmatrix}
+$$
+
+定义
+
+$$
+X=\begin{bmatrix}
+ X_1 \\
+ X_2 
+\end{bmatrix},
+\mu = \begin{bmatrix}
+ \mu_1 \\
+ \mu_2 
+\end{bmatrix}
+$$
+
+则$f(x_1,x_2)$也可以写为
+
+$$
+f(x_1,x_2)=(2\pi|B|^{1/2})exp\bigg[-\frac{1}{2}(X-\mu)^TB^{-1}(X-\mu)\bigg]
+$$
+
+扩展到$n$维，则有
+
+$$
+f(x_1,x_2,\cdots,x_n)=[(2\pi)^{n/2}|B|^{1/2}]exp\bigg[-\frac{1}{2}(X-\mu)^TB^{-1}(X-\mu)\bigg]
+$$
+
+**n维正态变量的性质**
+
+1. $n$维正态随机变量$(X_1,X_2,\cdots,X_n)$的每一个分量$X_i$都是正态随机变量；反之若$X_1,X_2,\cdots,X_n$都是正态随机变量且相互独立，则$(X_1,X_2,\cdots,X_n)$是$n$维正态随机变量
+2. $(X_1,X_2,\cdots,X_n)$是$n$维正态随机变量的充要条件是$X_1,X_2,\cdots,X_n$的任意线性组合$l_1X_1,l_2X_2,\cdots,l_nX_n$服从一维正态分布（其中$l_1,l_2,\cdots,l_n$不全为$0$）
+3. 若$(X_1,X_2,\cdots,X_n)$服从$n$维正态分布，设$Y_1,Y_2,\cdots,Y_k$是$X_i$的线性变换，则$(Y_1,Y_2,\cdots,Y_k)$也服从$k$维正态分布
+4. 若$(X_1,X_2,\cdots,X_n)$是$n$维正态随机变量，$m<n$，则$(X_1,X_2,\cdots,X_n)$的任意$m$个分量是$m$维正态随机变量
+5. 设$(X_1,X_2,\cdots,X_n)$是$n$维正态随机变量，则“$X_1,X_2,\cdots,X_n$相互独立”与“$X_1,X_2,\cdots,X_n$两两不相关”等价。
+
+
+### 指数分布
+
+若随机变量$X$有概率密度函数
+
+$$
+f(x)=\left\{\begin{matrix}
+\lambda e^{-\lambda x},\quad x>0\\
+0,\quad x\leq 0
+\end{matrix}\right.
+$$
+
+则$X$服从指数分布，其中$\lambda>0$是参数。
+
+其概率分布函数为
+
+$$
+F(x)=\left\{\begin{matrix}
+1-e^{-\lambda x},\quad x>0\\
+0,\quad x\leq 0
+\end{matrix}\right.
+$$
+
+#### 数学期望
+
+$$\frac{1}{\lambda}$$
+
+#### 方差
+
+$$\frac{1}{\lambda^2}$$
+
+### 威布尔分布
+
+满足
+
+$$
+f(x)=\left\{\begin{matrix}
+\lambda\alpha x^{\alpha-1} e^{-\lambda x^\alpha},\quad x>0\\
+0,\quad x\leq 0
+\end{matrix}\right.
+$$
+
+其概率分布函数是
+
+$$
+F(x)=\left\{\begin{matrix}
+1-e^{-\lambda x^\alpha},\quad x>0\\
+0,\quad x\leq 0
+\end{matrix}\right.
+$$
+
+可见，指数分布是威布尔分布的一个特例。
+
+### 均匀分布
+
+满足
+
+$$
+f(x)=\left\{\begin{matrix}
+1/(b-a),\quad a\leq x\leq b\\
+0,\quad else
+\end{matrix}\right.
+$$
+
+其概率分布函数是
+
+$$
+F(x)=\left\{\begin{matrix}
+0,\quad\quad\quad\quad\quad\quad\quad\quad x\leq a\\
+(x-a)/(b-a),\quad a<x<b\\
+1,\quad\quad\quad\quad\quad\quad\quad\quad x\geq b
+\end{matrix}\right.
+$$
+
+常记作$R(a,b),U(a,b)$
+
+#### 数学期望
+
+$$\frac{a+b}{2}$$
+
+#### 方差
+
+$$\frac{(b-a)^2}{12}$$
+
+### 二维随机向量的均匀分布
+
+$$
+f(x_1,x_2)=
+\left\{\begin{matrix}
+1/[(b-a)(d-c)],\quad a\leq x_1\leq b, c\leq x_2\leq d\\
+0,\quad\quad\quad\quad\quad\quad\quad\quad\quad other\quad\quad\quad\quad\quad\quad
+\end{matrix}\right.
+$$
+
+以上是矩形情况的密度函数
+
+如果扩展到任意形状的图形，只要求出来其面积，那么密度函数在图形内部就是$1/S$，图形外部是$0$
+
+### 最大值分布
+
+设$M=max\{X,Y\}$，$X,Y$相互独立，则
+
+$$
+F_{max}(z)=P(M\leq z)=P(X\leq z, Y\leq z)=P(X\leq z)P(Y\leq z)
+$$
+
+$$
+F_{max}(z) = F_X(z)F_Y(z)
+$$
+
+扩展到多维情况
+
+$$
+F_{max}(z) = F_{X_1}(z)F_{X_2}(z)\cdots F_{X_n}(z)
+$$
+
+### 最小值分布
+
+设$N=min\{X,Y\}$，$X,Y$相互独立，则
+
+$$
+F_{min}(z)=P(N\leq z)=1-P(N>z)=1-P(X>z, Y>z)=1-P(X>z)P(Y>z)
+$$
+
+$$
+F_{min}(z) = 1-[1-F_X(z)][1-F_Y(z)]
+$$
+
+扩展到多维情况
+
+$$
+F_{min}(z) = 1-[1-F_{X_1}(z)][1-F_{X_2}(z)]\cdots [1-F_{X_n}(z)]
+$$
+
+### 卡方分布
+
+**$\Gamma$函数**
+
+通过积分
+
+$$
+\Gamma(x) = \int^\infty_0 e^{-t}t^{x-1}dt(x>0)$$
+
+来定义
+
+**$\Beta$（Beta）函数**
+
+通过积分
+
+$$
+\Gamma(x) = \int^1_0 t^{x-1}(1-t)^{y-1}dt(x>0
+,y>0)$$
+
+来定义
+
+**$\Gamma$函数的性质**
+
+1. $\Gamma(1)=1$
+2. $\Gamma(1/2)=\sqrt{\pi}$
+3. $\Gamma(x+1)=x\Gamma(x)$
+
+因此可知，$n$为正整数时
+
+$$
+\Gamma(n) = (n-1)!
+$$
+
+$n$为正奇数时
+
+$$
+\Gamma(n/2) = 1\cdot 3\cdot 5\cdots(n-2)2^{-(n-1)/2}\sqrt{\pi}
+$$
+
+其中$\Gamma$与$\Beta$函数之间有重要的关系式
+
+$$
+\Beta(x,y)=\Gamma(x)\Gamma(y)/\Gamma(x+y)
+$$
+
+**卡方分布**
+
+由$\Gamma$函数的定义可知，若$n>0$，则函数
+
+$$
+k_n(x)=
+\left\{\begin{align}
+
+&\frac{1}{\Gamma(n/2)2^{n/2}}e^{-x/2}x^{(n-2)/2} &,\quad x>0\\
+&0 &,\quad x\leq 0
+
+\end{align}\right.
+$$
+
+是概率密度函数。它称为“自由度为$n$的皮尔逊卡方密度”，常记为$\mathcal{X}{}_n^2$
+
+**定理1**
+
+若$X_1,\cdots,X_n$相互独立，都服从正态分布$N(0,1)$，则$Y=X_1^2+\cdots+X_N^2$服从自由度为$n$的卡方分布$\mathcal{X}{}_n^2$
+
+卡方分布有如下性质
+
+1. 设$X_1,X_2$独立，$X_1\sim \mathcal{X}_m^2,X_2\sim \mathcal{X}_n^2$，则$X_1+X_2\sim \mathcal{X}_{m+n}^2$
+2. 若$X_1,\cdots,X_n$独立，且都服从指数分布，则
+
+$$
+X=2\lambda(X_1+\cdots+X_n)\sim \mathcal{X}_{2n}^2
+$$
+
+### t分布
+
+$Y=X_2/\sqrt{X_1/n}$的密度函数为
+
+$$
+t_n(y)=\frac{\Gamma((n+1)/2)}{\sqrt{n\pi}\Gamma(n/2)}\bigg(1+\frac{y^2}{n}\bigg)^{-\frac{n+1}{2}}
+$$
+
+这个密度函数称为“自由度为$n$的$t$分布”的密度函数，常简记为$t_n$
+
+### F分布
+
+TODO
+
