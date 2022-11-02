@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='人工智能概论的学习笔记'><title>人工智能概论笔记</title>
+
+<link rel='canonical' href='https://kegalas.top/p/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E6%A6%82%E8%AE%BA%E7%AC%94%E8%AE%B0/'>
+
+<link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='人工智能概论笔记'>
+<meta property='og:description' content='人工智能概论的学习笔记'>
+<meta property='og:url' content='https://kegalas.top/p/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E6%A6%82%E8%AE%BA%E7%AC%94%E8%AE%B0/'>
+<meta property='og:site_name' content='KegalaS的个人博客'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='人工智能' /><meta property='article:tag' content='大学' /><meta property='article:published_time' content='2022-10-31T09:56:28&#43;08:00'/><meta property='article:modified_time' content='2022-10-31T09:56:28&#43;08:00'/><meta property='og:image' content='https://kegalas.top/p/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E6%A6%82%E8%AE%BA%E7%AC%94%E8%AE%B0/cover.jpg' />
+<meta name="twitter:title" content="人工智能概论笔记">
+<meta name="twitter:description" content="人工智能概论的学习笔记"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://kegalas.top/p/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E6%A6%82%E8%AE%BA%E7%AC%94%E8%AE%B0/cover.jpg' />
+    <link rel="shortcut icon" href="favicon-16x16.png" />
+
+    </head>
+    <body class="
+    article-page has-toc
+">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex 
+    
+        extended
+    
+">
+    
+        <div id="article-toolbar">
+            <a href="/" class="back-home">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="15 6 9 12 15 18" />
+</svg>
+
+
+
+                <span>返回</span>
+            </a>
+        </div>
+    
+<main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/p/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E6%A6%82%E8%AE%BA%E7%AC%94%E8%AE%B0/">
+                <img src="/p/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E6%A6%82%E8%AE%BA%E7%AC%94%E8%AE%B0/cover_hu729735102c3c060f4a29b2f0df39e169_86954_800x0_resize_q75_box.jpg"
+                        srcset="/p/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E6%A6%82%E8%AE%BA%E7%AC%94%E8%AE%B0/cover_hu729735102c3c060f4a29b2f0df39e169_86954_800x0_resize_q75_box.jpg 800w, /p/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E6%A6%82%E8%AE%BA%E7%AC%94%E8%AE%B0/cover_hu729735102c3c060f4a29b2f0df39e169_86954_1600x0_resize_q75_box.jpg 1600w"
+                        width="800" 
+                        height="454" 
+                        loading="lazy"
+                        alt="Featured image of post 人工智能概论笔记" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" >
+                人工智能
+            </a>
+        
+    </header>
+    
+
+    <h2 class="article-title">
+        <a href="/p/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E6%A6%82%E8%AE%BA%E7%AC%94%E8%AE%B0/">人工智能概论笔记</a>
+    </h2>
+
+    
+    <h3 class="article-subtitle">
+        人工智能概论的学习笔记
+    </h3>
+    
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Oct 31, 2022</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 9 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+</div>
+</header>
+
+    <section class="article-content">
+    
+
+<h1 id="一些概念解释">一些概念解释</h1>
+<h2 id="弱人工智能与强人工智能">弱人工智能与强人工智能</h2>
+<p>弱人工智能是指不能真正实现推理和解决问题的智能机器，这些机器表面看像是智能的，但是并不真正拥有智能，也不会有自主意识。</p>
+<p>强人工智能是指真正能思维的智能机器，并且认为这样的机器是有知觉的和自我意识的，这类机器可分为类人（机器的思考和推理类似人的思维）与非类人（机器产生了和人完全不一样的知觉和意识，使用和人完全不一样的推理方式）两大类。</p>
+<h2 id="符号处理系统">符号处理系统</h2>
+<h3 id="六种功能">六种功能</h3>
+<ol type="1">
+<li>输入符号</li>
+<li>输出符号</li>
+<li>存储符号</li>
+<li>复制符号</li>
+<li>建立符号结构：在符号系统中形成符号结构</li>
+<li>条件性迁移：根据已有符号，继续完成活动的过程</li>
+</ol>
+<p>可以把人看作是一个物理符号系统。如果一个物理符号系统具有上述全部6种功能，能够完成这个全过程，那么它就是一个完整的物理符号系统。人具有上述6种功能；现代计算机也具备物理符号系统的这6种功能。</p>
+<p>有一个假设：任何一个系统，如果它能表现出智能，那么它就必定能够执行上述6种功能。反之，任何系统如果具有这6种功能，那么它就能够表现出智能；这种智能指的是人类所具有的那种智能。把这个假设称为物理符号系统的假设。</p>
+<p>这个假设有很多局限性，许多乐观预言都成了泡影。90年代之后人工智能领域形成了很多新的研究模式</p>
+<h2 id="人工智能的学派">人工智能的学派</h2>
+<h3 id="符号主义">符号主义</h3>
+<p>又称：逻辑主义、心理学派或计算机学派</p>
+<p>原理：物理符号系统（即符号操作系统）假设和有限合理性原理</p>
+<p>符号主义认为人的认知基元是符号，认知过程即符号操作过程。认为人是一个物理符号系统，计算机也是一个物理符号系统，因此能够用计算机来模拟人的智能行为。人工智能的核心问题是知识表示、知识推理和知识运用。</p>
+<h3 id="连接主义">连接主义</h3>
+<p>又称：仿生学派或生理学派</p>
+<p>原理：神经网络及神经网络间的连接机制与学习算法。</p>
+<p>连接主义认为思维基元是神经元，而不是符号处理过程。认为人脑不同于电脑，并提出连接主义的大脑工作模式，用于取代符号操作的电脑工作模式。</p>
+<h3 id="行为主义">行为主义</h3>
+<p>又称：进化主义或控制论学派</p>
+<p>原理：控制论及感知—动作型控制系统</p>
+<p>行为主义认为智能取决于感知和行动（所以被称为行为主义），提出智能行为的“感知—动作”模式。认为智能不需要知识、不需要表示、不需要推理；人工智能可以象人类智能一样逐步进化(所以称为进化主义)；智能行为只能在现实世界中与周围环境交互作用而表现出来。</p>
+<h2 id="研究领域">研究领域</h2>
+<h3 id="自然语言理解">自然语言理解</h3>
+<p>是计算机对人类的书面和口头形式的自然语言信息进行处理加工的技术,涉及语言学,数学和计算机科学等多学科知识领域.其主要任务是建立各种自然语言处理系统,如:文字(语音)自动识别系统,电子词典,机器翻译,自动索引系统等.</p>
+<h3 id="模式识别">模式识别</h3>
+<p>模式识别是指用计算机代替人类或帮助人类感知模式，是对人类感知外界功能的模拟，研究的是计算机模式识别系统，也就是使一个计算机系统具有模拟人类通过感官接受外界信息、识别和理解周围环境的感知能力。</p>
+<p>其已在医学图象,指纹识别,天气预报,汽车牌照识别中广泛应用。</p>
+<h3 id="计算机视觉">计算机视觉</h3>
+<p>机器视觉或计算机视觉是一种用计算机实现(或模拟)人的视觉功能，对客观外界进行感知和理解的技术。它是在图像处理和模式识别技术基础上发展起来的一门新兴的学科分支，其主要目的就是用机器识别客观外界景物，即从外界获得二维图像，抽取其特征(如形状、位置、大小、灰度、颜色、纹理等)构成本征描述，然后与已知物体的描述相匹配，从而辨认出所描述的物体。</p>
+<h3 id="专家系统">专家系统</h3>
+<p>专家系统是一个具有大量专门知识和经验的程序系统，它应用于人工智能技术，根据某个领域中一个或多个人类专家提供的知识和经验进行推理和判断，模拟人类专家的决策过程，以解决那些需要专家决定的复杂问题。</p>
+<h3 id="机器学习">机器学习</h3>
+<p>所谓机器学习，就是要使计算机能模拟人的学习行为，自动地通过学习获取知识和技能，不断改善性能，实现自我完善。机器学习就是计算机自动获取知识，它是知识工程的三个分支（使用知识、知识表示、获取知识）之一
+。</p>
+<h3 id="神经网络">神经网络</h3>
+<p>也称神经计算,是指一类计算模型,其工作原理模仿了人类大脑的某些工作机制,其利用大量人工神经元组成一个大网络,来实现大规模并行运算。</p>
+<h1 id="状态空间知识表示及其搜索技术">状态空间知识表示及其搜索技术</h1>
+<h2 id="知识">知识</h2>
+<p><strong>知识</strong>是人们在改造客观世界的实践中积累起来的认识和经验。</p>
+<p>一般来说，我们把有关信息关联在一起所形成的信息结构称为知识。</p>
+<p><strong>知识表示</strong>就是对知识的一种描述，一种计算机可以
+接受的用于描述知识的数据结构。</p>
+<p><strong>知识的要素</strong>，一般而言，人工智能系统的知识包含事实、规则、控制和元知识。</p>
+<p><strong>事实</strong>：事物的分类、属性、事物间关系、科学事实、客观事实等。</p>
+<p><strong>规则</strong>：事物的行动、动作和联系的因果关系知识。</p>
+<p><strong>控制</strong>：是有关问题的求解步骤、规划、求解策略等技巧性知识，告诉怎么做一件事。</p>
+<p><strong>元知识</strong>：怎样使用规则、解释规则、校验规则、解释程序结构等知识。是有关知识的知识，是知识库中的高层知识。</p>
+<h2 id="知识表示的一般方法">知识表示的一般方法</h2>
+<p>一般有：状态空间法、问题归约法、谓词逻辑法、语义网络、框架表示、剧本表示、过程表示等。</p>
+<h3 id="状态空间法">状态空间法</h3>
+<p>问题求解(problem
+solving)是个大课题，它涉及归约、推断、决策、规划、常识推理、定理证明和相关过程的核心概念。在分析了人工智能研究中运用的问题求解方法之后，就会发现许多问题求解方法是采用试探搜索方法的。也就是说，这些方法是通过在某个可能的解空间内寻找一个解来求解问题的。这种基于解答空间的问题表示和求解方法就是状态空间法，它是以状态和算符(operator)为基础来表示和求解问题的。</p>
+<p><strong>状态</strong></p>
+<p>为描述某类不同事物间的差别而引入的一组最少变量<span class="math inline">\(q_0,q_1,\cdots,q_n\)</span>的有序集合</p>
+<p>可用矢量来表示：<span class="math inline">\(Q=[q_0,q_1,\cdots,q_n]^T\)</span></p>
+<p>其中的每一个元素为集合的分量，称为状态变量。</p>
+<p>给定每个分量的一组值就得到一个具体的状态。</p>
+<p><strong>算符</strong></p>
+<p>把问题从一种状态变换为另一种状态的手段。</p>
+<p><strong>问题的状态空间</strong></p>
+<p>是一个表示该问题全部可能状态及其关系的图。</p>
+<p>它包含三种说明的集合,即三元状态（S，F，G），S-初始状态集合，F-操作符集合，G-目标状态集合。</p>
+<p><strong>状态图示法</strong></p>
+<p>用有向带权图来表示，图上的节点代表状态，边代表状态转移的路径以及转移的代价。这个路径通常也和算符有关。</p>
+<p><strong>搜索推理技术</strong></p>
+<p>知识表示是问题求解所必须的，从问题表示到问题的解决，有一个求解过程，也就是搜索推理过程。</p>
+<p><strong>搜索</strong></p>
+<p>根据问题的实际情况不断寻找可利用的知识,构造出一条代价较少的推理路线,使问题得到圆满解决的过程称为搜索</p>
+<p>要求，找到一条从初始事实到问题的最终答案的一条推理路径、找到的这条路在时间和空间复杂度上最优。</p>
+<p>在状态空间中搜索时，我们通常会用：图搜索策略、盲目搜索、启发式搜索等方法。</p>
+<p><strong>图搜索策略</strong></p>
+<p>这是一种在图中寻找路径的方法。</p>
+<p>图中每个节点对应一个状态，每条连线对应一个操作符。</p>
+<p>搜索方法有很多，例如深度优先搜索等，可以看算法竞赛整理。</p>
+<p>在这里我们通常需要</p>
+<ol type="1">
+<li>必须记住下一步可以走哪些点。OPEN表，记录还没有扩展的节点，用于存放刚生成的节点。</li>
+<li>必须记住哪些点走过了。CLOSED表，记录已经扩展过的节点，用于存放已经扩展或将要扩展的节点</li>
+<li>必须记住从目标返回的路径</li>
+</ol>
+<p>其基本思想是，先把问题的初始状态作为当前扩展节点对其进行扩展，生成一组子节点，然后检查问题的目标状态是否出现在这些子节点中。</p>
+<p>若出现，则找到问题的解。</p>
+<p>若没有出现，则按照某种策略继续扩展。</p>
+<p>重复上述过程，直到找到解或者没有可以操作的节点为止。</p>
+<p>总结如下</p>
+<figure>
+<img src="1.jpg" alt="1.jpg"/>
+<figcaption aria-hidden="true">1.jpg</figcaption>
+</figure>
+<p>其中第七步的排序可以是任意的即盲目的（属于盲目搜索），也可以用之后讨论的各种启发性思想或其他准则为依据（属于启发式搜索）。</p>
+<p><strong>盲目搜索</strong></p>
+<p>这是没有启发信息的一种搜索形式，搜索过程中获得的信息不会用来改进策略。</p>
+<p>一般只适用于求解比较简单的问题。</p>
+<p>不需要重排OPEN表。</p>
+<p>种类主要分为：宽度优先、深度优先、等代价搜索。</p>
+<p>DFS和BFS不再介绍，介绍一个有界深度优先搜索。</p>
+<p><strong>有界深度优先搜索</strong></p>
+<p>对深度优先搜索引入搜索深度的界限（设为<span class="math inline">\(d_m\)</span>），当搜索深度达到了深度界限，而仍未出现目标节点时，就换一个分支进行搜索。</p>
+<p><strong>等代价搜索</strong></p>
+<p>它宽度优先搜索的一种推广。不是沿着等长度路径断层进行扩展，而是沿着等代价路径断层进行扩展。</p>
+<p><strong>代价树的广度优先搜索</strong></p>
+<p>每次从OPEN表中选择节点往CLOSED表传送时，总是选择其中代价最小的节点。</p>
+<p>换句话说就是用二叉堆去维护OPEN表的节点。</p>
+<p><strong>启发式搜索</strong></p>
+<p>特点是重排OPEN表,选择最有希望的节点加以扩展。种类有：有序搜索、<span class="math inline">\(A^*\)</span>算法等等。</p>
+<p><strong>启发式搜索的估价函数</strong></p>
+<p>估价函数(evaluation function)，是估算节点希望程度的量度，用<span class="math inline">\(f(n)\)</span>表示节点<span class="math inline">\(n\)</span>的估价函数值。</p>
+<p>建立估价函数的一般方法是：提出任意节点与目标集之间的距离量度或差别量度</p>
+<p><strong>有序搜索</strong></p>
+<p>有序搜索，也称最好优先搜索，选择OPEN表上具有最小<span class="math inline">\(f\)</span>值的节点作为下一个要扩展的节点。</p>
+<p><strong><span class="math inline">\(A^*\)</span>算法</strong></p>
+<p>它是有序搜索的一种，其特点在于对估价函数的定义上。</p>
+<p>用<span class="math inline">\(k(n_i,n_j)\)</span>表示任意两个节点<span class="math inline">\(n_i\)</span>和<span class="math inline">\(n_j\)</span>之间最小代价路径的实际代价。</p>
+<p>如果两个节点没有通路，则<span class="math inline">\(k\)</span>没有定义。</p>
+<p>对于一个具体的目标节点<span class="math inline">\(t_i\)</span>，用<span class="math inline">\(h^*(n)\)</span>表示整个目标节点集合<span class="math inline">\(\{t_i\}\)</span>上所有<span class="math inline">\(k(n,t_i)\)</span>中最小的一个，此时<span class="math inline">\(h^*(n)\)</span>就是从<span class="math inline">\(n\)</span>到目标节点最小代价路径的代价，从<span class="math inline">\(n\)</span>到目标节点的代价为<span class="math inline">\(h^*(n)\)</span>的任一路径就是一条最佳路径。</p>
+<p>估价函数设计如下(S是初始状态)</p>
+<p><span class="math display">\[
+g^*(n) = k(S,n)
+\]</span></p>
+<p><span class="math display">\[
+f^*(n) = g^*(n)+h^*(n)
+\]</span></p>
+<p><span class="math inline">\(f^*(n)\)</span>就是从<span class="math inline">\(S\)</span>开始约束通过节点<span class="math inline">\(n\)</span>的一条最佳路径的代价。</p>
+<p>希望估价函数<span class="math inline">\(f\)</span>是<span class="math inline">\(f^*\)</span>的一个估计，<span class="math inline">\(g\)</span>是<span class="math inline">\(g^*\)</span>的一个估计，<span class="math inline">\(h\)</span>是<span class="math inline">\(h^*\)</span>的一个估计，<span class="math inline">\(h\)</span>叫做启发函数</p>
+<p><span class="math display">\[
+f(n) = g(n)+h(n)
+\]</span></p>
+<p>在图搜索中，如果OPEN表的重排是根据<span class="math inline">\(f(n) =
+g(n)+h(n)\)</span>来进行的，那么称为<span class="math inline">\(A\)</span>算法。</p>
+<p>在<span class="math inline">\(A\)</span>算法中,如果对所有的<span class="math inline">\(n\)</span>存在<span class="math inline">\(h(n)\leq
+h^*(n)\)</span> ,则称<span class="math inline">\(h(n)\)</span>为<span class="math inline">\(h^*(n)\)</span>的下界,它表示某种偏于保守的估计;</p>
+<p>采用<span class="math inline">\(h^*(n)\)</span>的下界<span class="math inline">\(h(n)\)</span>为启发函数的<span class="math inline">\(A\)</span>算法，称为<span class="math inline">\(A^*\)</span>算法。</p>
+<h1 id="问题归约知识表示及其搜索技术">问题归约知识表示及其搜索技术</h1>
+
+
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">人工智能</a>
+        
+            <a href="/tags/%E5%A4%A7%E5%AD%A6/">大学</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css"integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js"integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8"crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js"integrity="sha384-vZTG03m&#43;2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl"crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.querySelector(`.article-content`), {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ]
+        });})
+</script>
+    
+</article>
+
+    <aside class="related-contents--wrapper">
+    
+    
+</aside>
+
+     
+    
+        
+    <script src="https://utteranc.es/client.js" 
+        repo="kegalas/blogComments"
+        issue-term="pathname"
+        
+        crossorigin="anonymous"
+        async
+        >
+</script>
+
+<style>
+    .utterances {
+        max-width: unset;
+    }
+</style>
+
+<script>
+    function setUtterancesTheme(theme) {
+        let utterances = document.querySelector('.utterances iframe');
+        if (utterances) {
+            utterances.contentWindow.postMessage(
+                {
+                    type: 'set-theme',
+                    theme: `github-${theme}`
+                },
+                'https://utteranc.es'
+            );
+        }
+    }
+
+    addEventListener('message', event => {
+        if (event.origin !== 'https://utteranc.es') return;
+        setUtterancesTheme(document.documentElement.dataset.scheme)
+    });
+
+    window.addEventListener('onColorSchemeChange', (e) => {
+        setUtterancesTheme(e.detail)
+    })
+</script>
+
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2022 KegalaS的个人博客
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.4.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    
+        <aside class="sidebar right-sidebar sticky">
+            <section class="widget archives">
+                <div class="widget-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+                </div>
+                <h2 class="widget-title section-title">目录</h2>
+                
+                <div class="widget--toc">
+                    <nav id="TableOfContents">
+  <ol>
+    <li><a href="#一些概念解释">一些概念解释</a>
+      <ol>
+        <li><a href="#弱人工智能与强人工智能">弱人工智能与强人工智能</a></li>
+        <li><a href="#符号处理系统">符号处理系统</a>
+          <ol>
+            <li><a href="#六种功能">六种功能</a></li>
+          </ol>
+        </li>
+        <li><a href="#人工智能的学派">人工智能的学派</a>
+          <ol>
+            <li><a href="#符号主义">符号主义</a></li>
+            <li><a href="#连接主义">连接主义</a></li>
+            <li><a href="#行为主义">行为主义</a></li>
+          </ol>
+        </li>
+        <li><a href="#研究领域">研究领域</a>
+          <ol>
+            <li><a href="#自然语言理解">自然语言理解</a></li>
+            <li><a href="#模式识别">模式识别</a></li>
+            <li><a href="#计算机视觉">计算机视觉</a></li>
+            <li><a href="#专家系统">专家系统</a></li>
+            <li><a href="#机器学习">机器学习</a></li>
+            <li><a href="#神经网络">神经网络</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+    <li><a href="#状态空间知识表示及其搜索技术">状态空间知识表示及其搜索技术</a>
+      <ol>
+        <li><a href="#知识">知识</a></li>
+        <li><a href="#知识表示的一般方法">知识表示的一般方法</a>
+          <ol>
+            <li><a href="#状态空间法">状态空间法</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+    <li><a href="#问题归约知识表示及其搜索技术">问题归约知识表示及其搜索技术</a></li>
+  </ol>
+</nav>
+                </div>
+            </section>
+        </aside>
+    
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                defer="false"
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
