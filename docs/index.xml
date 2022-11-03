@@ -471,13 +471,13 @@ solving)是个大课题，它涉及归约、推断、决策、规划、常识推
 &lt;p&gt;它包含三种说明的集合,即三元状态（S，F，G），S-初始状态集合，F-操作符集合，G-目标状态集合。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;状态图示法&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;用有向带权图来表示，图上的节点代表状态，边代表状态转移的路径以及转移的代价。这个路径通常也和算符有关。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;搜索推理技术&lt;/strong&gt;&lt;/p&gt;
+&lt;h2 id=&#34;搜索推理技术&#34;&gt;搜索推理技术&lt;/h2&gt;
 &lt;p&gt;知识表示是问题求解所必须的，从问题表示到问题的解决，有一个求解过程，也就是搜索推理过程。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;搜索&lt;/strong&gt;&lt;/p&gt;
+&lt;h3 id=&#34;搜索&#34;&gt;搜索&lt;/h3&gt;
 &lt;p&gt;根据问题的实际情况不断寻找可利用的知识,构造出一条代价较少的推理路线,使问题得到圆满解决的过程称为搜索&lt;/p&gt;
 &lt;p&gt;要求，找到一条从初始事实到问题的最终答案的一条推理路径、找到的这条路在时间和空间复杂度上最优。&lt;/p&gt;
 &lt;p&gt;在状态空间中搜索时，我们通常会用：图搜索策略、盲目搜索、启发式搜索等方法。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;图搜索策略&lt;/strong&gt;&lt;/p&gt;
+&lt;h3 id=&#34;图搜索策略&#34;&gt;图搜索策略&lt;/h3&gt;
 &lt;p&gt;这是一种在图中寻找路径的方法。&lt;/p&gt;
 &lt;p&gt;图中每个节点对应一个状态，每条连线对应一个操作符。&lt;/p&gt;
 &lt;p&gt;搜索方法有很多，例如深度优先搜索等，可以看算法竞赛整理。&lt;/p&gt;
@@ -497,7 +497,7 @@ solving)是个大课题，它涉及归约、推断、决策、规划、常识推
 &lt;figcaption aria-hidden=&#34;true&#34;&gt;1.jpg&lt;/figcaption&gt;
 &lt;/figure&gt;
 &lt;p&gt;其中第七步的排序可以是任意的即盲目的（属于盲目搜索），也可以用之后讨论的各种启发性思想或其他准则为依据（属于启发式搜索）。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;盲目搜索&lt;/strong&gt;&lt;/p&gt;
+&lt;h3 id=&#34;盲目搜索&#34;&gt;盲目搜索&lt;/h3&gt;
 &lt;p&gt;这是没有启发信息的一种搜索形式，搜索过程中获得的信息不会用来改进策略。&lt;/p&gt;
 &lt;p&gt;一般只适用于求解比较简单的问题。&lt;/p&gt;
 &lt;p&gt;不需要重排OPEN表。&lt;/p&gt;
@@ -510,7 +510,7 @@ solving)是个大课题，它涉及归约、推断、决策、规划、常识推
 &lt;p&gt;&lt;strong&gt;代价树的广度优先搜索&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;每次从OPEN表中选择节点往CLOSED表传送时，总是选择其中代价最小的节点。&lt;/p&gt;
 &lt;p&gt;换句话说就是用二叉堆去维护OPEN表的节点。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;启发式搜索&lt;/strong&gt;&lt;/p&gt;
+&lt;h3 id=&#34;启发式搜索&#34;&gt;启发式搜索&lt;/h3&gt;
 &lt;p&gt;特点是重排OPEN表,选择最有希望的节点加以扩展。种类有：有序搜索、&lt;span class=&#34;math inline&#34;&gt;\(A^*\)&lt;/span&gt;算法等等。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;启发式搜索的估价函数&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;估价函数(evaluation function)，是估算节点希望程度的量度，用&lt;span class=&#34;math inline&#34;&gt;\(f(n)\)&lt;/span&gt;表示节点&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;的估价函数值。&lt;/p&gt;
@@ -540,6 +540,66 @@ g(n)+h(n)\)&lt;/span&gt;来进行的，那么称为&lt;span class=&#34;math inli
 h^*(n)\)&lt;/span&gt; ,则称&lt;span class=&#34;math inline&#34;&gt;\(h(n)\)&lt;/span&gt;为&lt;span class=&#34;math inline&#34;&gt;\(h^*(n)\)&lt;/span&gt;的下界,它表示某种偏于保守的估计;&lt;/p&gt;
 &lt;p&gt;采用&lt;span class=&#34;math inline&#34;&gt;\(h^*(n)\)&lt;/span&gt;的下界&lt;span class=&#34;math inline&#34;&gt;\(h(n)\)&lt;/span&gt;为启发函数的&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;算法，称为&lt;span class=&#34;math inline&#34;&gt;\(A^*\)&lt;/span&gt;算法。&lt;/p&gt;
 &lt;h1 id=&#34;问题归约知识表示及其搜索技术&#34;&gt;问题归约知识表示及其搜索技术&lt;/h1&gt;
+&lt;p&gt;已知问题的描述，通过一系列变换把此问题最终变为一个子问题集合；这些子问题的解可以直接得到，从而解决了初始问题。&lt;/p&gt;
+&lt;p&gt;该方法也就是从目标(要解决的问题)出发逆向推理，建立子问题以及子问题的子问题，直至最后把初始问题归约为一个平凡的本原问题集合。这就是问题归约的实质。&lt;/p&gt;
+&lt;p&gt;问题归约法的组成部分：&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;一个初始问题描述&lt;/li&gt;
+&lt;li&gt;一套把问题变为子问题的操作符&lt;/li&gt;
+&lt;li&gt;一套本原问题描述&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;举个例子&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;2.jpg&#34; alt=&#34;2.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;2.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;h2 id=&#34;与或图表示&#34;&gt;与或图表示&lt;/h2&gt;
+&lt;figure&gt;
+&lt;img src=&#34;3.jpg&#34; alt=&#34;3.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;3.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;&lt;strong&gt;或节点&lt;/strong&gt;：只要解决某个问题就可以解决其父节点的问题&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;与节点&lt;/strong&gt;：只有解决所有子问题才可以解决其父节点的问题&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;终叶节点&lt;/strong&gt;：对应本原问题的节点&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;可解节点&lt;/strong&gt;：如下定义&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;终叶节点是可解节点&lt;/li&gt;
+&lt;li&gt;如果某个非终叶节点含有&lt;strong&gt;或&lt;/strong&gt;后继节点，那么只有当其后继节点至少有一个是可解的时，此非终叶节点才是可解的。&lt;/li&gt;
+&lt;li&gt;如果某个非终叶节点含有&lt;strong&gt;与&lt;/strong&gt;后继节点，那么只要当其后继节点全部为可解时，此非终叶节点才是可解的&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;不可解节点&lt;/strong&gt;：如下定义&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;没有后裔的非终叶节点为不可解节点&lt;/li&gt;
+&lt;li&gt;如果某个非终叶节点含有&lt;strong&gt;或&lt;/strong&gt;后继节点，那么只有当其全部后裔为不可解时，此非终叶节点才是不可解的。&lt;/li&gt;
+&lt;li&gt;如果某个非终叶节点含有&lt;strong&gt;与&lt;/strong&gt;后继节点，那么只要当其后裔至少有一个为不可解时，此非终叶节点才是不可解的。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;与或图搜索&#34;&gt;与或图搜索&lt;/h2&gt;
+&lt;p&gt;整体与之前提到的图搜索基础没有差别，只是要去记录节点的可解性。如果最终初始节点可解，原问题就有解，否则就无解。&lt;/p&gt;
+&lt;h2 id=&#34;max-min搜索&#34;&gt;Max-Min搜索&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;目的是为博弈的双方中的一方寻找一个最优行动方案&lt;/li&gt;
+&lt;li&gt;要寻找这个最优方案，就要通过计算当前所有可能的方案来进行比较；&lt;/li&gt;
+&lt;li&gt;方案的比较是根据问题的特征来定义一个估价函数，用来估算当前博弈树端节点的得分；&lt;/li&gt;
+&lt;li&gt;当计算出端节点的估值后，再推算出父节点的得分（即计算倒推值）；&lt;/li&gt;
+&lt;li&gt;&lt;ul&gt;
+&lt;li&gt;对或节点，选其子节点中一个最大得分作为父节点的得分&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;ul&gt;
+&lt;li&gt;对与节点，选其子节点中一个最小得分作为父节点的得分&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;如果一个行动方案能获得较大的倒推值，则它就是当前最好的行动方案。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;假设Max是机器人下棋，Min是人类对手下棋，搜索的步骤是&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;以&lt;span class=&#34;math inline&#34;&gt;\(c(o)\)&lt;/span&gt;为根，生成&lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt;-步博弈树；&lt;/li&gt;
+&lt;li&gt;评估博弈树叶节点对应的博弈状态(棋局)；&lt;/li&gt;
+&lt;li&gt;进行极大极小运算 (Max-Min 运算)；&lt;/li&gt;
+&lt;li&gt;等待 Min 行棋，产生新的 c(o)，返回 step1.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;其实和人类思考差不多，往下多想&lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt;步可能的局面，选择自己最优，对方最差的局面。但是机器暴力地枚举了所有可能。&lt;/p&gt;
+&lt;h2 id=&#34;alpha-beta剪枝&#34;&gt;&lt;span class=&#34;math inline&#34;&gt;\(\alpha-\beta\)&lt;/span&gt;剪枝&lt;/h2&gt;
+&lt;p&gt;之前说的暴力算法，先生成一棵博弈树，然后再计算其倒推值，效率非常低。&lt;/p&gt;
+&lt;p&gt;而&lt;span class=&#34;math inline&#34;&gt;\(\alpha-\beta\)&lt;/span&gt;剪枝技术的基本思想是，边生成博弈树边计算评估各节点的倒推值并且根据评估出的倒推值范围，及时停止扩展那些已无必要再扩展的子节点，即相当于剪去了博弈树上的一些分枝，从而节约了机器开销，提高了搜索效率。&lt;/p&gt;
 
 
 </description>
@@ -3203,6 +3263,54 @@ f&amp;#39;(z) = \sum^\infty_{n=0}nc_n(z-a)^{n-1}
 &lt;p&gt;或&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 \int_0^zf(z)dz = \sum^\infty_{n=0}\frac{c_n}{n+1}(z-a)^{n+1}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h2 id=&#34;全纯函数的taylor展开&#34;&gt;全纯函数的Taylor展开&lt;/h2&gt;
+&lt;p&gt;前面已经证明，幂级数在它的收敛圆内表示一个全纯函数，而在一个圆内全纯的函数爷一定可以展开成幂级数。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定理1&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;若&lt;span class=&#34;math inline&#34;&gt;\(f\in H(B(z_0,R))\)&lt;/span&gt;，则&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;可以在&lt;span class=&#34;math inline&#34;&gt;\(B(z_0,R)\)&lt;/span&gt;中展开成幂级数&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+f(z)=\sum_{n=0}^\infty\frac{f^{(n)}(z_0)}{n!}(z-z_0)^n,z\in B(z_0,R)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;右端的级数称为&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;的Taylor级数&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定理2&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;在点&lt;span class=&#34;math inline&#34;&gt;\(z_0\)&lt;/span&gt;处全纯的充要条件是&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;在&lt;span class=&#34;math inline&#34;&gt;\(z_0\)&lt;/span&gt;的邻域内可以展开成幂级数&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+f(z)=\sum_{n=0}^\infty a_n(z-z_0)^n
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定义1&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;在&lt;span class=&#34;math inline&#34;&gt;\(z_0\)&lt;/span&gt;点全纯且不恒为零，如果&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+f(z_0)=0,f&amp;#39;(z_0)=0,\cdots,f^{(m-1)}(z_0)=0,f^{(m)}(z_0)\neq 0
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;则称&lt;span class=&#34;math inline&#34;&gt;\(z_0\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;的&lt;span class=&#34;math inline&#34;&gt;\(m\)&lt;/span&gt;阶零点。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;命题1&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(z_0\)&lt;/span&gt;为&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;的&lt;span class=&#34;math inline&#34;&gt;\(m\)&lt;/span&gt;阶零点的充要条件是&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;在&lt;span class=&#34;math inline&#34;&gt;\(z_0\)&lt;/span&gt;的邻域内可以表示为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+f(z)=(z-z_0)^mg(z)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;这里，&lt;span class=&#34;math inline&#34;&gt;\(g\)&lt;/span&gt;在&lt;span class=&#34;math inline&#34;&gt;\(z_0\)&lt;/span&gt;点全纯，且&lt;span class=&#34;math inline&#34;&gt;\(g(z_0)\neq 0\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;命题2&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(\bm C\)&lt;/span&gt;中的域，&lt;span class=&#34;math inline&#34;&gt;\(f\in H(D)\)&lt;/span&gt;，如果&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;在&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;中的小圆盘&lt;span class=&#34;math inline&#34;&gt;\(B(z_0,\varepsilon)\)&lt;/span&gt;上恒等于零，那么&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;在&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;上恒等于&lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;命题3&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(\bm C\)&lt;/span&gt;中的域，&lt;span class=&#34;math inline&#34;&gt;\(f\in H(D), f(z)\not\equiv 0\)&lt;/span&gt;，那么&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;在&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;中的零点是孤立的。即若&lt;span class=&#34;math inline&#34;&gt;\(z_0\)&lt;/span&gt;为&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;的零点，则必存在&lt;span class=&#34;math inline&#34;&gt;\(z_0\)&lt;/span&gt;的领域&lt;span class=&#34;math inline&#34;&gt;\(B(z_0,\varepsilon)\)&lt;/span&gt;，使得&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;在&lt;span class=&#34;math inline&#34;&gt;\(B(z_0,\varepsilon)\)&lt;/span&gt;中除了&lt;span class=&#34;math inline&#34;&gt;\(z_0\)&lt;/span&gt;外不再有其他的零点。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;唯一性定理&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(\bm C\)&lt;/span&gt;中的域，&lt;span class=&#34;math inline&#34;&gt;\(f_1,f_2\in H(D)\)&lt;/span&gt;，如果存在&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;中的点列&lt;span class=&#34;math inline&#34;&gt;\(\{z_n\}\)&lt;/span&gt;，使得&lt;span class=&#34;math inline&#34;&gt;\(f_1(z_n)=f_2(z_n),n=1,2,\cdots\)&lt;/span&gt;，且&lt;span class=&#34;math inline&#34;&gt;\(\lim_{n\to\infty}z_n=a\in D\)&lt;/span&gt;，那么在&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;中有&lt;span class=&#34;math inline&#34;&gt;\(f_1(z)=\equiv f_2(z)\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;常见的泰勒展开&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;以下都是在&lt;span class=&#34;math inline&#34;&gt;\(z=0\)&lt;/span&gt;处的展开式&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+e^z = \sum^\infty_{n=0} \frac{z^n}{n!},z\in\bm C
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+cosz = \sum^\infty_{n=0} (-1)^n\frac{z^{2n}}{(2n)!},z\in\bm C
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+cosz = \sum^\infty_{n=0} (-1)^n\frac{z^{2n+1}}{(2n+1)!},z\in\bm C
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\log(1+z) = \sum^\infty_{n=1} (-1)^{n-1}\frac{z^n}{n},|z|&amp;lt;1
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+exp[a\log(1+z)] = \sum^\infty_{n=0}\binom{a}{n}z^n,|z|&amp;lt;1
 \]&lt;/span&gt;&lt;/p&gt;
 
 

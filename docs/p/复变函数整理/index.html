@@ -112,7 +112,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 37 分钟
+                    阅读时长: 39 分钟
                 </time>
             </div>
         
@@ -1152,6 +1152,54 @@ f&#39;(z) = \sum^\infty_{n=0}nc_n(z-a)^{n-1}
 <p><span class="math display">\[
 \int_0^zf(z)dz = \sum^\infty_{n=0}\frac{c_n}{n+1}(z-a)^{n+1}
 \]</span></p>
+<h2 id="全纯函数的taylor展开">全纯函数的Taylor展开</h2>
+<p>前面已经证明，幂级数在它的收敛圆内表示一个全纯函数，而在一个圆内全纯的函数爷一定可以展开成幂级数。</p>
+<p><strong>定理1</strong></p>
+<p>若<span class="math inline">\(f\in H(B(z_0,R))\)</span>，则<span class="math inline">\(f\)</span>可以在<span class="math inline">\(B(z_0,R)\)</span>中展开成幂级数</p>
+<p><span class="math display">\[
+f(z)=\sum_{n=0}^\infty\frac{f^{(n)}(z_0)}{n!}(z-z_0)^n,z\in B(z_0,R)
+\]</span></p>
+<p>右端的级数称为<span class="math inline">\(f\)</span>的Taylor级数</p>
+<p><strong>定理2</strong></p>
+<p><span class="math inline">\(f\)</span>在点<span class="math inline">\(z_0\)</span>处全纯的充要条件是<span class="math inline">\(f\)</span>在<span class="math inline">\(z_0\)</span>的邻域内可以展开成幂级数</p>
+<p><span class="math display">\[
+f(z)=\sum_{n=0}^\infty a_n(z-z_0)^n
+\]</span></p>
+<p><strong>定义1</strong></p>
+<p>设<span class="math inline">\(f\)</span>在<span class="math inline">\(z_0\)</span>点全纯且不恒为零，如果</p>
+<p><span class="math display">\[
+f(z_0)=0,f&#39;(z_0)=0,\cdots,f^{(m-1)}(z_0)=0,f^{(m)}(z_0)\neq 0
+\]</span></p>
+<p>则称<span class="math inline">\(z_0\)</span>是<span class="math inline">\(f\)</span>的<span class="math inline">\(m\)</span>阶零点。</p>
+<p><strong>命题1</strong></p>
+<p><span class="math inline">\(z_0\)</span>为<span class="math inline">\(f\)</span>的<span class="math inline">\(m\)</span>阶零点的充要条件是<span class="math inline">\(f\)</span>在<span class="math inline">\(z_0\)</span>的邻域内可以表示为</p>
+<p><span class="math display">\[
+f(z)=(z-z_0)^mg(z)
+\]</span></p>
+<p>这里，<span class="math inline">\(g\)</span>在<span class="math inline">\(z_0\)</span>点全纯，且<span class="math inline">\(g(z_0)\neq 0\)</span></p>
+<p><strong>命题2</strong></p>
+<p>设<span class="math inline">\(D\)</span>是<span class="math inline">\(\bm C\)</span>中的域，<span class="math inline">\(f\in H(D)\)</span>，如果<span class="math inline">\(f\)</span>在<span class="math inline">\(D\)</span>中的小圆盘<span class="math inline">\(B(z_0,\varepsilon)\)</span>上恒等于零，那么<span class="math inline">\(f\)</span>在<span class="math inline">\(D\)</span>上恒等于<span class="math inline">\(0\)</span>。</p>
+<p><strong>命题3</strong></p>
+<p>设<span class="math inline">\(D\)</span>是<span class="math inline">\(\bm C\)</span>中的域，<span class="math inline">\(f\in H(D), f(z)\not\equiv 0\)</span>，那么<span class="math inline">\(f\)</span>在<span class="math inline">\(D\)</span>中的零点是孤立的。即若<span class="math inline">\(z_0\)</span>为<span class="math inline">\(f\)</span>的零点，则必存在<span class="math inline">\(z_0\)</span>的领域<span class="math inline">\(B(z_0,\varepsilon)\)</span>，使得<span class="math inline">\(f\)</span>在<span class="math inline">\(B(z_0,\varepsilon)\)</span>中除了<span class="math inline">\(z_0\)</span>外不再有其他的零点。</p>
+<p><strong>唯一性定理</strong></p>
+<p>设<span class="math inline">\(D\)</span>是<span class="math inline">\(\bm C\)</span>中的域，<span class="math inline">\(f_1,f_2\in H(D)\)</span>，如果存在<span class="math inline">\(D\)</span>中的点列<span class="math inline">\(\{z_n\}\)</span>，使得<span class="math inline">\(f_1(z_n)=f_2(z_n),n=1,2,\cdots\)</span>，且<span class="math inline">\(\lim_{n\to\infty}z_n=a\in D\)</span>，那么在<span class="math inline">\(D\)</span>中有<span class="math inline">\(f_1(z)=\equiv f_2(z)\)</span></p>
+<p><strong>常见的泰勒展开</strong></p>
+<p>以下都是在<span class="math inline">\(z=0\)</span>处的展开式</p>
+<p><span class="math display">\[
+e^z = \sum^\infty_{n=0} \frac{z^n}{n!},z\in\bm C
+\]</span></p>
+<p><span class="math display">\[
+cosz = \sum^\infty_{n=0} (-1)^n\frac{z^{2n}}{(2n)!},z\in\bm C
+\]</span></p>
+<p><span class="math display">\[
+cosz = \sum^\infty_{n=0} (-1)^n\frac{z^{2n+1}}{(2n+1)!},z\in\bm C
+\]</span></p>
+<p><span class="math display">\[
+\log(1+z) = \sum^\infty_{n=1} (-1)^{n-1}\frac{z^n}{n},|z|&lt;1
+\]</span></p>
+<p><span class="math display">\[
+exp[a\log(1+z)] = \sum^\infty_{n=0}\binom{a}{n}z^n,|z|&lt;1
+\]</span></p>
 
 
 
@@ -1535,6 +1583,7 @@ f&#39;(z) = \sum^\infty_{n=0}nc_n(z-a)^{n-1}
       <ol>
         <li><a href="#weierstrass定理">Weierstrass定理</a></li>
         <li><a href="#幂级数">幂级数</a></li>
+        <li><a href="#全纯函数的taylor展开">全纯函数的Taylor展开</a></li>
       </ol>
     </li>
   </ol>
