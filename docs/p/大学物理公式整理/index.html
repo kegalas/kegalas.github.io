@@ -125,7 +125,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 29 分钟
+                    阅读时长: 30 分钟
                 </time>
             </div>
         
@@ -1178,7 +1178,7 @@ d^2n}=\frac{kT}{\sqrt{2}\pi d^2p}
 F=\frac{1}{4\pi\varepsilon_0}\frac{q_1q_2}{r^2}
 \]</span></p>
 <p>作用力的方向沿着两个点电荷的连线。</p>
-<p>其中<span class="math inline">\(q_1,q_2\)</span>是两个点电荷的电量，<span class="math inline">\(r\)</span>是它们之间的距离。<span class="math inline">\(\varepsilon_0\)</span>是真空电容率。</p>
+<p>其中<span class="math inline">\(q_1,q_2\)</span>是两个点电荷的电量，<span class="math inline">\(r\)</span>是它们之间的距离。<span class="math inline">\(\varepsilon_0\)</span>是真空电容率，或者叫真空介电常数。其值为<span class="math inline">\(8.854187817\times 10^{-12} F/m\)</span></p>
 <p>用向量来表示，则有</p>
 <p><span class="math display">\[
 \bm F = \frac{1}{4\pi\varepsilon_0}\frac{q_1q_2}{r^2} \bm r^0
@@ -1283,7 +1283,7 @@ E=-\frac{du}{dn}
 <p>此式说明在任意一场点<span class="math inline">\(P\)</span>处，电场强度的大小等于沿过该点等势面法线方向上电势的变化率。</p>
 <p>而</p>
 <p><span class="math display">\[
-E_l=\frac{du}{dl}
+E_l=-\frac{du}{dl}
 \]</span></p>
 <p>表明，电场强度在<span class="math inline">\(d\bm
 l\)</span>方向的投影等于电势沿该方向变化率的负值。</p>
@@ -1302,7 +1302,7 @@ k\right)
 <p>当导体内部的电场强度处处为零，导体上的电势处处相等时，导体达到静电平衡状态。</p>
 <p>静电平衡的导体有以下性质</p>
 <ol type="1">
-<li>其表面上任意一点的电场强度方向与该点处导体表面垂直。并且设该出导体表面上电荷面密度为<span class="math inline">\(\sigma\)</span>，则</li>
+<li>其表面上任意一点的电场强度方向与该点处导体表面垂直。并且设该处导体表面上电荷面密度为<span class="math inline">\(\sigma\)</span>，则</li>
 </ol>
 <p><span class="math display">\[
 \bm E = \frac{\sigma}{\varepsilon_0}\bm n
@@ -1328,7 +1328,7 @@ C = \frac{Q_0}{U} = \frac{\varepsilon_rQ_0}{U_0}=\varepsilon_rC_0
 \]</span></p>
 <p>其中<span class="math inline">\(\varepsilon_r\)</span>对于各向同性的均匀电介质为一常数，称为该介质的相对介电常数，是无量纲量。</p>
 <h3 id="电解质分子的电结构">电解质分子的电结构</h3>
-<p>根据分子电结构的不同，可吧电介质分为两类：</p>
+<p>根据分子电结构的不同，可把电介质分为两类：</p>
 <ol type="1">
 <li>无极分子。指分子中负电荷对称地分布在正电荷周围，以致在无外电场作用时，分子的正负电荷中心重合，分子无电偶极矩。无外电场作用时，对外呈现电中性。</li>
 <li>有极分子。在无外电场作用时，分子的正负电荷中心不重合。这时，等量的分子正负电荷形成电偶极子，具有电偶极矩<span class="math inline">\(\bm
@@ -1358,7 +1358,7 @@ E = \frac{\sigma_0}{\varepsilon_0}-\frac{\sigma &#39;}{\varepsilon_0}
 <p><span class="math display">\[
 E=\frac{E_0}{\varepsilon_r}
 \]</span></p>
-<p>则一定要有该各向同性的均匀电介质要充满电场所在空集。进一步研究表明，各向同性均匀电介质虽未充满电场所在空间，但只要电介质的表面是等势面。</p>
+<p>则一定要有该各向同性的均匀电介质要充满电场所在空集。进一步研究表明，各向同性均匀电介质虽未充满电场所在空间，但只要电介质的表面是等势面，上式就成立。</p>
 <p>另外上式和上上式可以得出</p>
 <p><span class="math display">\[
 \sigma&#39;=(1-\frac{1}{\varepsilon_r})\sigma_0
@@ -1412,6 +1412,10 @@ C=\frac{q}{u_1-u_2}
 <p>并且可以推导出，若两极板相对面积为<span class="math inline">\(S\)</span>，相距<span class="math inline">\(d\)</span>，则有</p>
 <p><span class="math display">\[
 C=\frac{\varepsilon_0 S}{d}
+\]</span></p>
+<p>如果充入电介质，其相对介电常数为<span class="math inline">\(\varepsilon_r\)</span></p>
+<p><span class="math display">\[
+C=\frac{\varepsilon_0\varepsilon_r S}{d}
 \]</span></p>
 <h3 id="电容器的串并联">电容器的串并联</h3>
 <p><strong>串联</strong></p>
@@ -1552,7 +1556,7 @@ q\bm E = m\bm a=m\frac{d\bm v}{dt}
 <p><span class="math display">\[
 U_{ab}=\frac{IB}{nqd}=K\frac{IB}{d}
 \]</span></p>
-<p>其中<span class="math inline">\(B\)</span>是与电流<span class="math inline">\(I\)</span>垂直的，如果把电流方向记为霍尔元件的长度方向，那么宽度记为<span class="math inline">\(d\)</span>,<span class="math inline">\(n\)</span>为单位体积内载流子的数量，<span class="math inline">\(q\)</span>为载流子的单位体积内的个数。</p>
+<p>其中<span class="math inline">\(B\)</span>是与电流<span class="math inline">\(I\)</span>垂直的，如果把电流方向记为霍尔元件的长度方向，那么宽度记为<span class="math inline">\(d\)</span>（也就是<span class="math inline">\(B\)</span>方向的长度），<span class="math inline">\(n\)</span>为单位体积内载流子的数量，<span class="math inline">\(q\)</span>为载流子的电荷量。</p>
 <p>如果载流子是电子，则称为<span class="math inline">\(n\)</span>型半导体。如果是空穴，则为<span class="math inline">\(p\)</span>型。</p>
 <h3 id="磁介质">磁介质</h3>
 <p><strong>磁介质的分类</strong></p>
@@ -1716,8 +1720,7 @@ S\)</span>。电位移通量的时间变化率为</p>
 <p><span class="math display">\[
 \oint_L \bm H\cdot d\bm l=I+I_D
 \]</span></p>
-<h3 id="麦克斯韦方程组的积分形式-电磁场">麦克斯韦方程组的积分形式
-电磁场</h3>
+<h3 id="麦克斯韦方程组的积分形式电磁场">麦克斯韦方程组的积分形式，电磁场</h3>
 <p><span class="math display">\[
 \oint_S \bm D\cdot d\bm S = \sum_i q_i
 \]</span></p>
@@ -2240,8 +2243,7 @@ v_z&#39; = \frac{v_z\sqrt{1-\beta^2}}{1-\frac{u}{c^2}v_x}
         <li><a href="#互感现象">互感现象</a></li>
         <li><a href="#磁能">磁能</a></li>
         <li><a href="#位移电流">位移电流</a></li>
-        <li><a href="#麦克斯韦方程组的积分形式-电磁场">麦克斯韦方程组的积分形式
-电磁场</a></li>
+        <li><a href="#麦克斯韦方程组的积分形式电磁场">麦克斯韦方程组的积分形式，电磁场</a></li>
       </ol>
     </li>
     <li><a href="#狭义相对论基础">狭义相对论基础</a>

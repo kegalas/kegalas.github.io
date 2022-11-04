@@ -1284,7 +1284,7 @@ f(x)=\left\{\begin{matrix}
 \end{matrix}\right.
 $$
 
-则$X$服从指数分布，其中$\lambda>0$是参数。
+则$X$服从指数分布，其中$\lambda>0$是参数。通常记作$E(\lambda)$
 
 其概率分布函数为
 
