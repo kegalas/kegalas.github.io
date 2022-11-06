@@ -125,7 +125,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 12 分钟
+                    阅读时长: 16 分钟
                 </time>
             </div>
         
@@ -456,7 +456,7 @@ P_L = \bigg(\frac{u_{oc}}{R_0+R_L}\bigg)^2R_L
 \sum^b_{k=1}u_ki_k=0
 \]</span></p>
 <p><strong>定理2</strong></p>
-<p>对于任意两个拓扑结构完全相同（即图完全相同，各支路组成元件性质任意）的集中参数电路<span class="math inline">\(N\)</span>和<span class="math inline">\(N&#39;\)</span>。设它们具有<span class="math inline">\(b\)</span>条支路<span class="math inline">\(n\)</span>个节点，其相对应的各支路和各节点的编号相同。设它们的支路电压分别为<span class="math inline">\(u_k\)</span>和<span class="math inline">\(u&#39;_k\)</span>，支路电流分别为<span class="math inline">\(i_k\)</span>和<span class="math inline">\(i&#39;_k\)</span><span class="math inline">\((k=1,2,\cdots,b)\)</span>，且各支路电压和电流取关联参考方向，则对任意时刻<span class="math inline">\(t\)</span>，有</p>
+<p>对于任意两个拓扑结构完全相同（即图完全相同，各支路组成元件性质任意）的集中参数电路<span class="math inline">\(N\)</span>和<span class="math inline">\(N&#39;\)</span>。设它们具有<span class="math inline">\(b\)</span>条支路<span class="math inline">\(n\)</span>个节点，其相对应的各支路和各节点的编号相同。设它们的支路电压分别为<span class="math inline">\(u_k\)</span>和<span class="math inline">\(u&#39;_k\)</span>，支路电流分别为<span class="math inline">\(i_k\)</span>和<span class="math inline">\(i&#39;_k(k=1,2,\cdots,b)\)</span>，且各支路电压和电流取关联参考方向，则对任意时刻<span class="math inline">\(t\)</span>，有</p>
 <p><span class="math display">\[
 \sum^b_{k=1}u_ki&#39;_k=0
 \]</span> <span class="math display">\[
@@ -466,6 +466,144 @@ P_L = \bigg(\frac{u_{oc}}{R_0+R_L}\bigg)^2R_L
 <p>互易定理表明: 对于一个仅含线性电阻的二端口电路<span class="math inline">\(N_R\)</span>，在只有一个激励源的情况下，当激励与响应互换位置时，同一激励所产生的响应相同。</p>
 <p>有三个形式</p>
 <p><img src="15.png" alt="15.png"/> <img src="16.png" alt="16.png"/></p>
+<h1 id="动态电路">动态电路</h1>
+<h2 id="动态元件">动态元件</h2>
+<h3 id="电容">电容</h3>
+<p>一个二端元件，若在任一时刻<span class="math inline">\(t\)</span>，其电荷<span class="math inline">\(q(t)\)</span>与电压<span class="math inline">\(u(t)\)</span>之间的关系能用<span class="math inline">\(q\sim
+u\)</span>平面上的曲线表征，即具有代数关系<span class="math inline">\(f(u,q)=0\)</span>，则称该元件为电容元件，简称电容。</p>
+<p>电容分为时变的和非时变的、线性的和非线性的，我们主要讨论线性非时变电容。</p>
+<p>此时电容的库伏特性是</p>
+<p><span class="math display">\[
+q(t) = Cu(t)
+\]</span></p>
+<p>其中<span class="math inline">\(C\)</span>与时间无关，是电容的大小，单位为法拉（电量单位为库伦时）。</p>
+<p><strong>电容的VAR</strong></p>
+<p>当电容两端的电压变化时，聚集在电容上的电荷也相应发生变化，表明连接电容的导线上电荷移动，即电流流过；若电容上电压不变化，电荷也不变化，即电流为零。</p>
+<p><em>微分关系</em></p>
+<p>若电容上电压与电流参考方向关联，则有</p>
+<p><span class="math display">\[
+i(t) = C\frac{du(t)}{dt}
+\]</span></p>
+<p><em>积分关系</em></p>
+<p><span class="math display">\[
+u(t) = \frac{1}{C}\int^t_{-\infty}i(\xi)d\xi
+\]</span></p>
+<p>设<span class="math inline">\(t=t_0\)</span>为初始观察时刻，上式可改写为</p>
+<p><span class="math display">\[
+u(t) =
+\frac{1}{C}\int^{t_0}_{-\infty}i(\xi)d\xi+\frac{1}{C}\int^{t}_{t_0}i(\xi)d\xi=u(t_0)+\frac{1}{C}\int^{t}_{t_0}i(\xi)d\xi,t\geq
+t_0
+\]</span></p>
+<p>其中</p>
+<p><span class="math display">\[
+u(t_0)=\frac{1}{C}\int^{t_0}_{-\infty}i(\xi)d\xi
+\]</span></p>
+<p>称电容电压在<span class="math inline">\(t_0\)</span>时刻的初始值，或初始状态，它包含了在<span class="math inline">\(t_0\)</span>以前电流的“全部历史”信息。一般取<span class="math inline">\(t_0=0\)</span>。</p>
+<p>注意</p>
+<ol type="1">
+<li>电容的伏安关系是微积分关系，因此电容元件是动态元件。而电阻元件的伏安关系是代数关系，电阻是一个即时(瞬时)元件。</li>
+<li><ol type="1">
+<li>任意时刻，通过电容的电流与该时刻电压的变化率成正比。当电容电流<span class="math inline">\(i\)</span>为有限值时，其<span class="math inline">\(du/dt\)</span>也为有限值，则电压<span class="math inline">\(u\)</span>必定是连续函数，此时电容电压不会跃变。</li>
+<li>当电容电压为直流电压时，则电流<span class="math inline">\(i =
+0\)</span>，此时电容相当于开路，故电容有隔直流的作用。</li>
+</ol></li>
+<li>由电容VAR的积分形式可知:在任意时刻t，电容电压u是此时刻以前的电流作用的结果，它“记载”了以前电流的“全部历史”。即电容电压具有“记忆”电流的作用，故电容是一个记忆元件，而电阻是无记忆元件。</li>
+</ol>
+<p><strong>电容的功率和储能</strong></p>
+<p><em>功率</em></p>
+<p>当电压和电流为关联方向时，电容吸收的瞬时功率为</p>
+<p><span class="math display">\[
+p(t) = u(t)i(t) = Cu(t)\frac{du(t)}{dt}
+\]</span></p>
+<p>电容是储能元件，它不消耗能量。释放的能量不会超过吸收的能量。电容不能产生能量，因此为无源元件。</p>
+<p><em>储能</em></p>
+<p>对功率从<span class="math inline">\(-\infty\)</span>到<span class="math inline">\(t\)</span>进行积分，即得<span class="math inline">\(t\)</span>时刻电容上的储能：</p>
+<p><span class="math display">\[
+w_c(t)=\int^t_{-\infty}p(\xi)d\xi=\int^{u(t)}_{u(-\infty)}Cu(\xi)du(\xi)=\frac{1}{2}Cu^2(t)-\frac{1}{2}Cu^2(-\infty)
+\]</span></p>
+<p>而未充电时应有<span class="math inline">\(u(-\infty)=0\)</span>，所以</p>
+<p><span class="math display">\[
+w_c(t) = \frac{1}{2}Cu^2(t)
+\]</span></p>
+<p>电容在某一时刻<span class="math inline">\(t\)</span>的储能<strong>仅</strong>取决于此时刻的电压，而与电流无关，并且大于等于零。</p>
+<h3 id="电感">电感</h3>
+<p>一个二端元件，若在任一时刻<span class="math inline">\(t\)</span>，其磁链<span class="math inline">\(\varPsi(t)\)</span>与电流<span class="math inline">\(i(t)\)</span>之间的关系能用<span class="math inline">\(\varPsi\sim
+i\)</span>平面上的曲线表征，即具有代数关系<span class="math inline">\(f
+(\varPsi, i ) = 0\)</span>，则称该元件为电感元件，简称电感。</p>
+<p>电感也分为时变的和非时变的、线性的和非线性的。</p>
+<p>主要讨论的是线性非时变电感。</p>
+<p>线性时不变电感的外特性（韦安特性）是<span class="math inline">\(\varPsi\sim
+i\)</span>平面上一条过原点的直线，且其斜率<span class="math inline">\(L\)</span>不随时间变化，</p>
+<p><span class="math display">\[
+\varPsi(t) = Li(t)
+\]</span></p>
+<p>磁链单位是韦伯，电感单位是亨利。</p>
+<p><strong>电感的VAR</strong></p>
+<p>电感中，当电流变化时，磁链也发生变化，从而产生感应电压。在电流与电压参考方向关联时，若电压参考方向与磁通的方向符合右手法则，根据法拉第电磁感应定律，感应电压<span class="math inline">\(u_L(t)\)</span>与磁链的变化率成正比，即：</p>
+<p><em>微分关系</em></p>
+<p><span class="math display">\[
+u_L(t)=\frac{d\varPsi(t)}{dt}=L\frac{di(t)}{dt}
+\]</span></p>
+<p><em>积分关系</em></p>
+<p><span class="math display">\[
+i(t) = \frac{1}{L}\int^t_{-\infty}u(\xi)d\xi
+\]</span></p>
+<p>设<span class="math inline">\(t=t_0\)</span>为初始观察时刻，上式可改写为</p>
+<p><span class="math display">\[
+i(t) =
+\frac{1}{L}\int^{t_0}_{-\infty}u(\xi)d\xi+\frac{1}{L}\int^{t}_{t_0}u(\xi)d\xi=i(t_0)+\frac{1}{L}\int^{t}_{t_0}u(\xi)d\xi,t\geq
+t_0
+\]</span></p>
+<p>其中</p>
+<p><span class="math display">\[
+i(t_0)=\frac{1}{L}\int^{t_0}_{-\infty}u(\xi)d\xi
+\]</span></p>
+<p>称电感电流在<span class="math inline">\(t_0\)</span>时刻的初始值，或初始状态，它包含了在<span class="math inline">\(t_0\)</span>以前电压的“全部历史”信息。一般取<span class="math inline">\(t_0=0\)</span>。</p>
+<p>注意</p>
+<ol type="1">
+<li>电感元件是动态元件。</li>
+<li>电感的电压与该时刻电流的变化率成正比</li>
+<li>电流<span class="math inline">\(i\)</span>是连续函数，电感电流不会跃变</li>
+<li>电感对直流相当于短路。</li>
+<li>电感电流<span class="math inline">\(i\)</span>是此时刻以前的电压作用的结果，它“记载”
+了以前电压的“全部历史”。即电感也是一个记忆元件。</li>
+<li>电感是一个储能元件，它从外部电路吸收的能量，以磁场能量的形式储存于自身的磁场中。电感<span class="math inline">\(L\)</span>在某一时刻的储能只与该时刻<span class="math inline">\(t\)</span>电感电流有关。</li>
+</ol>
+<p><strong>电感的功率与储能</strong></p>
+<p><em>功率</em></p>
+<p>当电压和电流为关联方向时，电感吸收的瞬时功率为</p>
+<p><span class="math display">\[
+p(t) = u(t)i(t) = Li(t)\frac{di(t)}{dt}
+\]</span></p>
+<p>电感是储能元件，它不消耗能量。释放的能量不会超过吸收的能量。电感不能产生能量，因此为无源元件。</p>
+<p><em>储能</em></p>
+<p>对功率从<span class="math inline">\(-\infty\)</span>到<span class="math inline">\(t\)</span>进行积分，即得<span class="math inline">\(t\)</span>时刻电感上的储能：</p>
+<p><span class="math display">\[
+w_c(t)=\int^t_{-\infty}p(\xi)d\xi=\int^{i(t)}_{i(-\infty)}Li(\xi)di(\xi)=\frac{1}{2}Li^2(t)-\frac{1}{2}Li^2(-\infty)
+\]</span></p>
+<p>而未充电时应有<span class="math inline">\(i(-\infty)=0\)</span>，所以</p>
+<p><span class="math display">\[
+w_c(t) = \frac{1}{2}Li^2(t)
+\]</span></p>
+<p>电感在某一时刻<span class="math inline">\(t\)</span>的储能<strong>仅</strong>取决于此时刻的电流，而与电压无关，并且大于等于零。</p>
+<h3 id="电容的串并联">电容的串并联</h3>
+<p><strong>串联</strong></p>
+<p><span class="math display">\[
+\frac{1}{C_{eq}}=\frac{1}{C_1}+\frac{1}{C_2}+\cdots+\frac{1}{C_n}
+\]</span></p>
+<p><strong>并联</strong></p>
+<p><span class="math display">\[
+C_{eq}=C_1+C_2+\cdots+C_n
+\]</span></p>
+<h3 id="电感的串并联">电感的串并联</h3>
+<p><strong>串联</strong></p>
+<p><span class="math display">\[
+L_{eq}=L_1+L_2+\cdots+L_n
+\]</span></p>
+<p><strong>并联</strong></p>
+<p><span class="math display">\[
+\frac{1}{L_{eq}}=\frac{1}{L_1}+\frac{1}{L_2}+\cdots+\frac{1}{L_n}
+\]</span></p>
 
 
 
@@ -792,6 +930,18 @@ P_L = \bigg(\frac{u_{oc}}{R_0+R_L}\bigg)^2R_L
           <ol>
             <li><a href="#特勒根定理">特勒根定理</a></li>
             <li><a href="#互易定理">互易定理</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+    <li><a href="#动态电路">动态电路</a>
+      <ol>
+        <li><a href="#动态元件">动态元件</a>
+          <ol>
+            <li><a href="#电容">电容</a></li>
+            <li><a href="#电感">电感</a></li>
+            <li><a href="#电容的串并联">电容的串并联</a></li>
+            <li><a href="#电感的串并联">电感的串并联</a></li>
           </ol>
         </li>
       </ol>

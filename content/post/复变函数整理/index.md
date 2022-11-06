@@ -170,7 +170,7 @@ $$
 z^{-n}=r^{-n}(\cos(-n\theta)+i\sin(-n\theta))
 $$
 
-现在设$\omega=r(\cos\theta+i\sin\theta)$是给定的，要求的$z=\rho(\cos\varphi+i\sin\varphi)$.由de Moivre公式，$z^n=$\omega$等价为
+现在设$\omega=r(\cos\theta+i\sin\theta)$是给定的，要求的$z=\rho(\cos\varphi+i\sin\varphi)$.由de Moivre公式，$z^n=\omega$等价为
 
 $$
 \rho^n(\cos n\varphi+i\sin n\varphi)=r(\cos\theta+i\sin\theta)

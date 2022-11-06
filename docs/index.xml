@@ -1049,6 +1049,8 @@ value)这个构造函数将主对角线上的元素设置为value。&lt;/p&gt;
 &lt;h1 id=&#34;目录&#34;&gt;目录&lt;/h1&gt;
 &lt;p&gt;&lt;u&gt;&lt;strong&gt;&lt;a href=&#34;../从零开始的软渲染器-数学工具库&#34;&gt;1.
 从零开始的软渲染器-数学工具库&lt;/a&gt;&lt;/strong&gt;&lt;/u&gt;&lt;/p&gt;
+&lt;p&gt;&lt;u&gt;&lt;strong&gt;&lt;a href=&#34;../从零开始的软渲染器-图片处理库&#34;&gt;2.
+从零开始的软渲染器-图片处理库&lt;/a&gt;&lt;/strong&gt;&lt;/u&gt;&lt;/p&gt;
 
 
 </description>
@@ -2214,7 +2216,7 @@ P_L = \bigg(\frac{u_{oc}}{R_0+R_L}\bigg)^2R_L
 \sum^b_{k=1}u_ki_k=0
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;定理2&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;对于任意两个拓扑结构完全相同（即图完全相同，各支路组成元件性质任意）的集中参数电路&lt;span class=&#34;math inline&#34;&gt;\(N\)&lt;/span&gt;和&lt;span class=&#34;math inline&#34;&gt;\(N&amp;#39;\)&lt;/span&gt;。设它们具有&lt;span class=&#34;math inline&#34;&gt;\(b\)&lt;/span&gt;条支路&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;个节点，其相对应的各支路和各节点的编号相同。设它们的支路电压分别为&lt;span class=&#34;math inline&#34;&gt;\(u_k\)&lt;/span&gt;和&lt;span class=&#34;math inline&#34;&gt;\(u&amp;#39;_k\)&lt;/span&gt;，支路电流分别为&lt;span class=&#34;math inline&#34;&gt;\(i_k\)&lt;/span&gt;和&lt;span class=&#34;math inline&#34;&gt;\(i&amp;#39;_k\)&lt;/span&gt;&lt;span class=&#34;math inline&#34;&gt;\((k=1,2,\cdots,b)\)&lt;/span&gt;，且各支路电压和电流取关联参考方向，则对任意时刻&lt;span class=&#34;math inline&#34;&gt;\(t\)&lt;/span&gt;，有&lt;/p&gt;
+&lt;p&gt;对于任意两个拓扑结构完全相同（即图完全相同，各支路组成元件性质任意）的集中参数电路&lt;span class=&#34;math inline&#34;&gt;\(N\)&lt;/span&gt;和&lt;span class=&#34;math inline&#34;&gt;\(N&amp;#39;\)&lt;/span&gt;。设它们具有&lt;span class=&#34;math inline&#34;&gt;\(b\)&lt;/span&gt;条支路&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;个节点，其相对应的各支路和各节点的编号相同。设它们的支路电压分别为&lt;span class=&#34;math inline&#34;&gt;\(u_k\)&lt;/span&gt;和&lt;span class=&#34;math inline&#34;&gt;\(u&amp;#39;_k\)&lt;/span&gt;，支路电流分别为&lt;span class=&#34;math inline&#34;&gt;\(i_k\)&lt;/span&gt;和&lt;span class=&#34;math inline&#34;&gt;\(i&amp;#39;_k(k=1,2,\cdots,b)\)&lt;/span&gt;，且各支路电压和电流取关联参考方向，则对任意时刻&lt;span class=&#34;math inline&#34;&gt;\(t\)&lt;/span&gt;，有&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 \sum^b_{k=1}u_ki&amp;#39;_k=0
 \]&lt;/span&gt; &lt;span class=&#34;math display&#34;&gt;\[
@@ -2224,6 +2226,144 @@ P_L = \bigg(\frac{u_{oc}}{R_0+R_L}\bigg)^2R_L
 &lt;p&gt;互易定理表明: 对于一个仅含线性电阻的二端口电路&lt;span class=&#34;math inline&#34;&gt;\(N_R\)&lt;/span&gt;，在只有一个激励源的情况下，当激励与响应互换位置时，同一激励所产生的响应相同。&lt;/p&gt;
 &lt;p&gt;有三个形式&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;15.png&#34; alt=&#34;15.png&#34;/&gt; &lt;img src=&#34;16.png&#34; alt=&#34;16.png&#34;/&gt;&lt;/p&gt;
+&lt;h1 id=&#34;动态电路&#34;&gt;动态电路&lt;/h1&gt;
+&lt;h2 id=&#34;动态元件&#34;&gt;动态元件&lt;/h2&gt;
+&lt;h3 id=&#34;电容&#34;&gt;电容&lt;/h3&gt;
+&lt;p&gt;一个二端元件，若在任一时刻&lt;span class=&#34;math inline&#34;&gt;\(t\)&lt;/span&gt;，其电荷&lt;span class=&#34;math inline&#34;&gt;\(q(t)\)&lt;/span&gt;与电压&lt;span class=&#34;math inline&#34;&gt;\(u(t)\)&lt;/span&gt;之间的关系能用&lt;span class=&#34;math inline&#34;&gt;\(q\sim
+u\)&lt;/span&gt;平面上的曲线表征，即具有代数关系&lt;span class=&#34;math inline&#34;&gt;\(f(u,q)=0\)&lt;/span&gt;，则称该元件为电容元件，简称电容。&lt;/p&gt;
+&lt;p&gt;电容分为时变的和非时变的、线性的和非线性的，我们主要讨论线性非时变电容。&lt;/p&gt;
+&lt;p&gt;此时电容的库伏特性是&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+q(t) = Cu(t)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(C\)&lt;/span&gt;与时间无关，是电容的大小，单位为法拉（电量单位为库伦时）。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;电容的VAR&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;当电容两端的电压变化时，聚集在电容上的电荷也相应发生变化，表明连接电容的导线上电荷移动，即电流流过；若电容上电压不变化，电荷也不变化，即电流为零。&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;微分关系&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;若电容上电压与电流参考方向关联，则有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+i(t) = C\frac{du(t)}{dt}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;积分关系&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+u(t) = \frac{1}{C}\int^t_{-\infty}i(\xi)d\xi
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(t=t_0\)&lt;/span&gt;为初始观察时刻，上式可改写为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+u(t) =
+\frac{1}{C}\int^{t_0}_{-\infty}i(\xi)d\xi+\frac{1}{C}\int^{t}_{t_0}i(\xi)d\xi=u(t_0)+\frac{1}{C}\int^{t}_{t_0}i(\xi)d\xi,t\geq
+t_0
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+u(t_0)=\frac{1}{C}\int^{t_0}_{-\infty}i(\xi)d\xi
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;称电容电压在&lt;span class=&#34;math inline&#34;&gt;\(t_0\)&lt;/span&gt;时刻的初始值，或初始状态，它包含了在&lt;span class=&#34;math inline&#34;&gt;\(t_0\)&lt;/span&gt;以前电流的“全部历史”信息。一般取&lt;span class=&#34;math inline&#34;&gt;\(t_0=0\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;注意&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;电容的伏安关系是微积分关系，因此电容元件是动态元件。而电阻元件的伏安关系是代数关系，电阻是一个即时(瞬时)元件。&lt;/li&gt;
+&lt;li&gt;&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;任意时刻，通过电容的电流与该时刻电压的变化率成正比。当电容电流&lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt;为有限值时，其&lt;span class=&#34;math inline&#34;&gt;\(du/dt\)&lt;/span&gt;也为有限值，则电压&lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt;必定是连续函数，此时电容电压不会跃变。&lt;/li&gt;
+&lt;li&gt;当电容电压为直流电压时，则电流&lt;span class=&#34;math inline&#34;&gt;\(i =
+0\)&lt;/span&gt;，此时电容相当于开路，故电容有隔直流的作用。&lt;/li&gt;
+&lt;/ol&gt;&lt;/li&gt;
+&lt;li&gt;由电容VAR的积分形式可知:在任意时刻t，电容电压u是此时刻以前的电流作用的结果，它“记载”了以前电流的“全部历史”。即电容电压具有“记忆”电流的作用，故电容是一个记忆元件，而电阻是无记忆元件。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;电容的功率和储能&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;功率&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;当电压和电流为关联方向时，电容吸收的瞬时功率为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+p(t) = u(t)i(t) = Cu(t)\frac{du(t)}{dt}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;电容是储能元件，它不消耗能量。释放的能量不会超过吸收的能量。电容不能产生能量，因此为无源元件。&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;储能&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;对功率从&lt;span class=&#34;math inline&#34;&gt;\(-\infty\)&lt;/span&gt;到&lt;span class=&#34;math inline&#34;&gt;\(t\)&lt;/span&gt;进行积分，即得&lt;span class=&#34;math inline&#34;&gt;\(t\)&lt;/span&gt;时刻电容上的储能：&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+w_c(t)=\int^t_{-\infty}p(\xi)d\xi=\int^{u(t)}_{u(-\infty)}Cu(\xi)du(\xi)=\frac{1}{2}Cu^2(t)-\frac{1}{2}Cu^2(-\infty)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;而未充电时应有&lt;span class=&#34;math inline&#34;&gt;\(u(-\infty)=0\)&lt;/span&gt;，所以&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+w_c(t) = \frac{1}{2}Cu^2(t)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;电容在某一时刻&lt;span class=&#34;math inline&#34;&gt;\(t\)&lt;/span&gt;的储能&lt;strong&gt;仅&lt;/strong&gt;取决于此时刻的电压，而与电流无关，并且大于等于零。&lt;/p&gt;
+&lt;h3 id=&#34;电感&#34;&gt;电感&lt;/h3&gt;
+&lt;p&gt;一个二端元件，若在任一时刻&lt;span class=&#34;math inline&#34;&gt;\(t\)&lt;/span&gt;，其磁链&lt;span class=&#34;math inline&#34;&gt;\(\varPsi(t)\)&lt;/span&gt;与电流&lt;span class=&#34;math inline&#34;&gt;\(i(t)\)&lt;/span&gt;之间的关系能用&lt;span class=&#34;math inline&#34;&gt;\(\varPsi\sim
+i\)&lt;/span&gt;平面上的曲线表征，即具有代数关系&lt;span class=&#34;math inline&#34;&gt;\(f
+(\varPsi, i ) = 0\)&lt;/span&gt;，则称该元件为电感元件，简称电感。&lt;/p&gt;
+&lt;p&gt;电感也分为时变的和非时变的、线性的和非线性的。&lt;/p&gt;
+&lt;p&gt;主要讨论的是线性非时变电感。&lt;/p&gt;
+&lt;p&gt;线性时不变电感的外特性（韦安特性）是&lt;span class=&#34;math inline&#34;&gt;\(\varPsi\sim
+i\)&lt;/span&gt;平面上一条过原点的直线，且其斜率&lt;span class=&#34;math inline&#34;&gt;\(L\)&lt;/span&gt;不随时间变化，&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\varPsi(t) = Li(t)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;磁链单位是韦伯，电感单位是亨利。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;电感的VAR&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;电感中，当电流变化时，磁链也发生变化，从而产生感应电压。在电流与电压参考方向关联时，若电压参考方向与磁通的方向符合右手法则，根据法拉第电磁感应定律，感应电压&lt;span class=&#34;math inline&#34;&gt;\(u_L(t)\)&lt;/span&gt;与磁链的变化率成正比，即：&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;微分关系&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+u_L(t)=\frac{d\varPsi(t)}{dt}=L\frac{di(t)}{dt}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;积分关系&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+i(t) = \frac{1}{L}\int^t_{-\infty}u(\xi)d\xi
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(t=t_0\)&lt;/span&gt;为初始观察时刻，上式可改写为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+i(t) =
+\frac{1}{L}\int^{t_0}_{-\infty}u(\xi)d\xi+\frac{1}{L}\int^{t}_{t_0}u(\xi)d\xi=i(t_0)+\frac{1}{L}\int^{t}_{t_0}u(\xi)d\xi,t\geq
+t_0
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+i(t_0)=\frac{1}{L}\int^{t_0}_{-\infty}u(\xi)d\xi
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;称电感电流在&lt;span class=&#34;math inline&#34;&gt;\(t_0\)&lt;/span&gt;时刻的初始值，或初始状态，它包含了在&lt;span class=&#34;math inline&#34;&gt;\(t_0\)&lt;/span&gt;以前电压的“全部历史”信息。一般取&lt;span class=&#34;math inline&#34;&gt;\(t_0=0\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;注意&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;电感元件是动态元件。&lt;/li&gt;
+&lt;li&gt;电感的电压与该时刻电流的变化率成正比&lt;/li&gt;
+&lt;li&gt;电流&lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt;是连续函数，电感电流不会跃变&lt;/li&gt;
+&lt;li&gt;电感对直流相当于短路。&lt;/li&gt;
+&lt;li&gt;电感电流&lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt;是此时刻以前的电压作用的结果，它“记载”
+了以前电压的“全部历史”。即电感也是一个记忆元件。&lt;/li&gt;
+&lt;li&gt;电感是一个储能元件，它从外部电路吸收的能量，以磁场能量的形式储存于自身的磁场中。电感&lt;span class=&#34;math inline&#34;&gt;\(L\)&lt;/span&gt;在某一时刻的储能只与该时刻&lt;span class=&#34;math inline&#34;&gt;\(t\)&lt;/span&gt;电感电流有关。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;电感的功率与储能&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;功率&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;当电压和电流为关联方向时，电感吸收的瞬时功率为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+p(t) = u(t)i(t) = Li(t)\frac{di(t)}{dt}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;电感是储能元件，它不消耗能量。释放的能量不会超过吸收的能量。电感不能产生能量，因此为无源元件。&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;储能&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;对功率从&lt;span class=&#34;math inline&#34;&gt;\(-\infty\)&lt;/span&gt;到&lt;span class=&#34;math inline&#34;&gt;\(t\)&lt;/span&gt;进行积分，即得&lt;span class=&#34;math inline&#34;&gt;\(t\)&lt;/span&gt;时刻电感上的储能：&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+w_c(t)=\int^t_{-\infty}p(\xi)d\xi=\int^{i(t)}_{i(-\infty)}Li(\xi)di(\xi)=\frac{1}{2}Li^2(t)-\frac{1}{2}Li^2(-\infty)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;而未充电时应有&lt;span class=&#34;math inline&#34;&gt;\(i(-\infty)=0\)&lt;/span&gt;，所以&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+w_c(t) = \frac{1}{2}Li^2(t)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;电感在某一时刻&lt;span class=&#34;math inline&#34;&gt;\(t\)&lt;/span&gt;的储能&lt;strong&gt;仅&lt;/strong&gt;取决于此时刻的电流，而与电压无关，并且大于等于零。&lt;/p&gt;
+&lt;h3 id=&#34;电容的串并联&#34;&gt;电容的串并联&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;串联&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\frac{1}{C_{eq}}=\frac{1}{C_1}+\frac{1}{C_2}+\cdots+\frac{1}{C_n}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;并联&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+C_{eq}=C_1+C_2+\cdots+C_n
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;电感的串并联&#34;&gt;电感的串并联&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;串联&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+L_{eq}=L_1+L_2+\cdots+L_n
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;并联&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\frac{1}{L_{eq}}=\frac{1}{L_1}+\frac{1}{L_2}+\cdots+\frac{1}{L_n}
+\]&lt;/span&gt;&lt;/p&gt;
 
 
 </description>
@@ -2346,7 +2486,7 @@ z^n=r^n(\cos n\theta+i\sin n\theta)
 z^{-n}=r^{-n}(\cos(-n\theta)+i\sin(-n\theta))
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;现在设&lt;span class=&#34;math inline&#34;&gt;\(\omega=r(\cos\theta+i\sin\theta)\)&lt;/span&gt;是给定的，要求的&lt;span class=&#34;math inline&#34;&gt;\(z=\rho(\cos\varphi+i\sin\varphi)\)&lt;/span&gt;.由de
-Moivre公式，&lt;span class=&#34;math inline&#34;&gt;\(z^n=\)&lt;/span&gt;$等价为&lt;/p&gt;
+Moivre公式，&lt;span class=&#34;math inline&#34;&gt;\(z^n=\omega\)&lt;/span&gt;等价为&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 \rho^n(\cos n\varphi+i\sin n\varphi)=r(\cos\theta+i\sin\theta)
 \]&lt;/span&gt;&lt;/p&gt;
