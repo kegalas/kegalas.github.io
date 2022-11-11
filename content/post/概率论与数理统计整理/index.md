@@ -943,6 +943,162 @@ $$
 3. 如果$0< |Corr(X,Y)|< 1$，则解释为$X,Y$之间有一定程度的线性关系。
 4. 线性相关的意义还可以从最小二乘法的角度去解释。
 
+## 大数定理和中心极限定理
+
+### 大数定理
+
+**定义1**
+
+设$X_1,X_2,\cdots$是随机变量序列，如果存在数列$a_1,a_2,\cdots$使得对任意的$\varepsilon>0$，有
+
+$$
+\lim_{n\to\infty}P\bigg(\bigg|\frac{1}{n}\sum^n_{i=1}X_i-a_n\bigg|\geq\varepsilon\bigg)=0
+$$
+
+则称随机变量序列$\{X_i\}$服从大数定律。
+
+**定义2**
+
+设$X_1,X_2,\cdots$是随机变量序列，$X$是随机变量，若对任意的$\varepsilon>0$，有
+
+$$
+\lim_{n\to\infty}P(|X_n-X|\geq \varepsilon)=0
+$$
+
+此时我们称$\{X_i\}$依概率收敛到$X$，记为
+
+$$
+X_n\stackrel{P}\rightarrow X,n\to\infty
+$$
+
+**马尔科夫不等式**
+
+若$Y$为只取非负值的随机变量，则对任给常数$\varepsilon>0$，有
+
+$$
+P(Y\geq \varepsilon)\leq E(Y)/\varepsilon
+$$
+
+**切比雪夫不等式**
+
+若$Var(Y)$存在，则
+
+$$
+P(|Y-EY|\geq\varepsilon)\leq Var(Y)/\varepsilon^2
+$$
+
+可以推知
+
+$$
+P(|Y-EY|<\varepsilon)\leq 1-Var(Y)/\varepsilon^2
+$$
+
+**切比雪夫大数定理**
+
+设$X_1,X_2,\cdots,X_n,\cdots$是相互独立独立的随机变量，具有相同的期望和方差，记它们的均值都为$a$。又设它们的方差存在并记为$\sigma^2$。则对任意给定的$\varepsilon>0$，有
+
+$$
+\lim_{n\to \infty}P(|\bar X_n-a|\geq \varepsilon) = 0
+$$
+
+*更一般的形式*
+
+设$X_1,X_2,\cdots,X_n,\cdots$是相互独立的随机变量序列，具有相同的期望$\mu$，如果存在常数$C>0$，使得$D(X_k)\leq C$，则对于任意$\varepsilon>0$，有
+
+$$
+\lim_{n\to\infty}P\bigg(\bigg|\frac{1}{n}\sum^n_{k=1}X_k-\mu\bigg|\geq\varepsilon\bigg)=0
+$$
+
+**马尔科夫大数定律**
+
+设$X_1,X_2,\cdots,X_n,\cdots$是随机变量序列，且
+
+$$
+\lim_{n\to\infty}\frac{1}{n^2}D\bigg[\sum^n_{k=1}X_k\bigg]=0
+$$
+
+则对于任意$\varepsilon>0$，有
+
+$$
+\lim_{n\to\infty}P\bigg(\bigg|\frac{1}{n}\sum^n_{k=1}X_k-\frac{1}{n}\sum^n_{k=1}E(X_k)\bigg|\geq\varepsilon\bigg)=0
+$$
+
+**辛钦大数定律**
+
+设$X_1,X_2,\cdots,X_n,\cdots$是相互独立且同分布的随机变量序列，具有有限的数学期望，记为$\mu$。则对于任意$\varepsilon>0$，有
+
+$$
+\lim_{n\to\infty}P\bigg(\bigg|\frac{1}{n}\sum^n_{k=1}X_k-\mu\bigg|\geq\varepsilon\bigg)=0
+$$
+
+**伯努利大数定律**
+
+设$n_A$是$n$次独立重复实验（$n$重伯努利实验）事件$A$发生的次数，$p$是事件$A$在每次试验中发生的概率，即$P(A)=p$，则对任意的$\varepsilon>0$，有
+
+$$
+\lim_{n\to\infty} P\bigg(\bigg|\frac{n_A}{n}-p\bigg|\geq\varepsilon\bigg)=0
+$$
+
+### 中心极限定理
+
+**定理1**
+
+设$X_1,X_2,\cdots,X_n,\cdots$为独立同分布的随机变量，$E(X_i)=\mu,Var(X_i)=\sigma^2(0<\sigma^2<\infty)$。则对任何实数$x$，有
+
+$$
+\lim_{n\to\infty}P\bigg(\frac{1}{\sqrt{n} \sigma}(X_1+\cdots+X_n-n\mu)\leq x\bigg)=\varPhi(x)
+$$
+
+这里，$\varPhi(x)$是标准正态分布$N(0,1)$的分布函数。
+
+也就是说，当$n$充分大时，有
+
+$$
+\sum_{k=1}^n X_k\sim N(n\mu,n\sigma^2),\quad \frac{\sum_{k=1}^nX_k-n\mu}{\sqrt{n}\sigma}\sim N(0,1)
+$$
+
+$$
+P\bigg(\sum^n_{k=1}X_k\leq x\bigg)\approx\Phi\bigg(\frac{x-n\mu}{\sqrt n\sigma}\bigg),\quad P\bigg(a<\sum^n_{k=1}X_k\leq b\bigg)\approx\Phi\bigg(\frac{b-n\mu}{\sqrt n\sigma}\bigg)-\bigg(\frac{a-n\mu}{\sqrt n\sigma}\bigg)
+$$
+
+$$
+\bar X\approx N(\mu,\sigma^2/n),\quad \frac{\bar X-\mu}{\sigma/\sqrt{n}}\approx N(0,1)
+$$
+
+**李雅普诺夫中心极限定理**
+
+设$X_1,X_2,\cdots,X_n,\cdots$相互独立，其具有如下数学期望和方差：$E(X_k)=\mu_k,D(X_k)=\sigma_k^2>0$，记$B_n^2=\sum^n_{k=1}\sigma^2_k$
+
+若存在正数$\delta$使得当$n\to\infty$时
+
+$$
+\frac{1}{B^{2+\delta}}\sum^n_{k=1}E\bigg[|X_i-\mu_i|^{2+\delta}\bigg]\to 0
+$$
+
+则
+
+$$
+\lim_{n\to\infty}P\bigg(\frac{\sum^n_{k=1}X_k-\sum^n_{k=1}\mu_k}{B_n}\leq x\bigg)=\Phi(x)
+$$
+
+**棣莫弗-拉普拉斯中心极限定理**
+
+设$n_A$是$n$次独立重复实验（$n$重伯努利实验）事件$A$发生的次数，$p$是事件$A$在每次试验中发生的概率，即$P(A)=p$，
+
+$$
+\lim_{n\to\infty}P\bigg(\frac{n_A-np}{\sqrt{np(1-p)}}\leq x\bigg)=\Phi(x)
+$$
+
+即，若$X\sim B(n,p)$，$n$充分大时
+
+$$
+X\sim N(np,np(1-p))
+$$
+
+$$
+P(X\leq x)\approx\Phi\bigg(\frac{x-np}{\sqrt{np(1-p)}}\bigg),\quad P(a<X\leq b)\approx\Phi\bigg(\frac{b-np}{\sqrt{np(1-p)}}\bigg)-\Phi\bigg(\frac{a-np}{\sqrt{np(1-p)}}\bigg)
+$$
+
 ## 常见的分布
 
 ### 0-1分布

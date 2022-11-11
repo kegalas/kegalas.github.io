@@ -4114,6 +4114,117 @@ Cov(c_1X+c_2,c_3Y+c_4)=c_1c_3Cov(X,Y)
 1\)&lt;/span&gt;，则解释为&lt;span class=&#34;math inline&#34;&gt;\(X,Y\)&lt;/span&gt;之间有一定程度的线性关系。&lt;/li&gt;
 &lt;li&gt;线性相关的意义还可以从最小二乘法的角度去解释。&lt;/li&gt;
 &lt;/ol&gt;
+&lt;h2 id=&#34;大数定理和中心极限定理&#34;&gt;大数定理和中心极限定理&lt;/h2&gt;
+&lt;h3 id=&#34;大数定理&#34;&gt;大数定理&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;定义1&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(X_1,X_2,\cdots\)&lt;/span&gt;是随机变量序列，如果存在数列&lt;span class=&#34;math inline&#34;&gt;\(a_1,a_2,\cdots\)&lt;/span&gt;使得对任意的&lt;span class=&#34;math inline&#34;&gt;\(\varepsilon&amp;gt;0\)&lt;/span&gt;，有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\lim_{n\to\infty}P\bigg(\bigg|\frac{1}{n}\sum^n_{i=1}X_i-a_n\bigg|\geq\varepsilon\bigg)=0
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;则称随机变量序列&lt;span class=&#34;math inline&#34;&gt;\(\{X_i\}\)&lt;/span&gt;服从大数定律。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定义2&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(X_1,X_2,\cdots\)&lt;/span&gt;是随机变量序列，&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;是随机变量，若对任意的&lt;span class=&#34;math inline&#34;&gt;\(\varepsilon&amp;gt;0\)&lt;/span&gt;，有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\lim_{n\to\infty}P(|X_n-X|\geq \varepsilon)=0
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;此时我们称&lt;span class=&#34;math inline&#34;&gt;\(\{X_i\}\)&lt;/span&gt;依概率收敛到&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;，记为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+X_n\stackrel{P}\rightarrow X,n\to\infty
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;马尔科夫不等式&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;若&lt;span class=&#34;math inline&#34;&gt;\(Y\)&lt;/span&gt;为只取非负值的随机变量，则对任给常数&lt;span class=&#34;math inline&#34;&gt;\(\varepsilon&amp;gt;0\)&lt;/span&gt;，有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+P(Y\geq \varepsilon)\leq E(Y)/\varepsilon
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;切比雪夫不等式&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;若&lt;span class=&#34;math inline&#34;&gt;\(Var(Y)\)&lt;/span&gt;存在，则&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+P(|Y-EY|\geq\varepsilon)\leq Var(Y)/\varepsilon^2
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;可以推知&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+P(|Y-EY|&amp;lt;\varepsilon)\leq 1-Var(Y)/\varepsilon^2
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;切比雪夫大数定理&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(X_1,X_2,\cdots,X_n,\cdots\)&lt;/span&gt;是相互独立独立的随机变量，具有相同的期望和方差，记它们的均值都为&lt;span class=&#34;math inline&#34;&gt;\(a\)&lt;/span&gt;。又设它们的方差存在并记为&lt;span class=&#34;math inline&#34;&gt;\(\sigma^2\)&lt;/span&gt;。则对任意给定的&lt;span class=&#34;math inline&#34;&gt;\(\varepsilon&amp;gt;0\)&lt;/span&gt;，有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\lim_{n\to \infty}P(|\bar X_n-a|\geq \varepsilon) = 0
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;更一般的形式&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(X_1,X_2,\cdots,X_n,\cdots\)&lt;/span&gt;是相互独立的随机变量序列，具有相同的期望&lt;span class=&#34;math inline&#34;&gt;\(\mu\)&lt;/span&gt;，如果存在常数&lt;span class=&#34;math inline&#34;&gt;\(C&amp;gt;0\)&lt;/span&gt;，使得&lt;span class=&#34;math inline&#34;&gt;\(D(X_k)\leq C\)&lt;/span&gt;，则对于任意&lt;span class=&#34;math inline&#34;&gt;\(\varepsilon&amp;gt;0\)&lt;/span&gt;，有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\lim_{n\to\infty}P\bigg(\bigg|\frac{1}{n}\sum^n_{k=1}X_k-\mu\bigg|\geq\varepsilon\bigg)=0
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;马尔科夫大数定律&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(X_1,X_2,\cdots,X_n,\cdots\)&lt;/span&gt;是随机变量序列，且&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\lim_{n\to\infty}\frac{1}{n^2}D\bigg[\sum^n_{k=1}X_k\bigg]=0
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;则对于任意&lt;span class=&#34;math inline&#34;&gt;\(\varepsilon&amp;gt;0\)&lt;/span&gt;，有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\lim_{n\to\infty}P\bigg(\bigg|\frac{1}{n}\sum^n_{k=1}X_k-\frac{1}{n}\sum^n_{k=1}E(X_k)\bigg|\geq\varepsilon\bigg)=0
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;辛钦大数定律&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(X_1,X_2,\cdots,X_n,\cdots\)&lt;/span&gt;是相互独立且同分布的随机变量序列，具有有限的数学期望，记为&lt;span class=&#34;math inline&#34;&gt;\(\mu\)&lt;/span&gt;。则对于任意&lt;span class=&#34;math inline&#34;&gt;\(\varepsilon&amp;gt;0\)&lt;/span&gt;，有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\lim_{n\to\infty}P\bigg(\bigg|\frac{1}{n}\sum^n_{k=1}X_k-\mu\bigg|\geq\varepsilon\bigg)=0
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;伯努利大数定律&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(n_A\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;次独立重复实验（&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;重伯努利实验）事件&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;发生的次数，&lt;span class=&#34;math inline&#34;&gt;\(p\)&lt;/span&gt;是事件&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;在每次试验中发生的概率，即&lt;span class=&#34;math inline&#34;&gt;\(P(A)=p\)&lt;/span&gt;，则对任意的&lt;span class=&#34;math inline&#34;&gt;\(\varepsilon&amp;gt;0\)&lt;/span&gt;，有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\lim_{n\to\infty}
+P\bigg(\bigg|\frac{n_A}{n}-p\bigg|\geq\varepsilon\bigg)=0
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;中心极限定理&#34;&gt;中心极限定理&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;定理1&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(X_1,X_2,\cdots,X_n,\cdots\)&lt;/span&gt;为独立同分布的随机变量，&lt;span class=&#34;math inline&#34;&gt;\(E(X_i)=\mu,Var(X_i)=\sigma^2(0&amp;lt;\sigma^2&amp;lt;\infty)\)&lt;/span&gt;。则对任何实数&lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;，有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\lim_{n\to\infty}P\bigg(\frac{1}{\sqrt{n}
+\sigma}(X_1+\cdots+X_n-n\mu)\leq x\bigg)=\varPhi(x)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;这里，&lt;span class=&#34;math inline&#34;&gt;\(\varPhi(x)\)&lt;/span&gt;是标准正态分布&lt;span class=&#34;math inline&#34;&gt;\(N(0,1)\)&lt;/span&gt;的分布函数。&lt;/p&gt;
+&lt;p&gt;也就是说，当&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;充分大时，有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\sum_{k=1}^n X_k\sim N(n\mu,n\sigma^2),\quad
+\frac{\sum_{k=1}^nX_k-n\mu}{\sqrt{n}\sigma}\sim N(0,1)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+P\bigg(\sum^n_{k=1}X_k\leq x\bigg)\approx\Phi\bigg(\frac{x-n\mu}{\sqrt
+n\sigma}\bigg),\quad P\bigg(a&amp;lt;\sum^n_{k=1}X_k\leq
+b\bigg)\approx\Phi\bigg(\frac{b-n\mu}{\sqrt
+n\sigma}\bigg)-\bigg(\frac{a-n\mu}{\sqrt n\sigma}\bigg)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\bar X\approx N(\mu,\sigma^2/n),\quad \frac{\bar
+X-\mu}{\sigma/\sqrt{n}}\approx N(0,1)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;李雅普诺夫中心极限定理&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(X_1,X_2,\cdots,X_n,\cdots\)&lt;/span&gt;相互独立，其具有如下数学期望和方差：&lt;span class=&#34;math inline&#34;&gt;\(E(X_k)=\mu_k,D(X_k)=\sigma_k^2&amp;gt;0\)&lt;/span&gt;，记&lt;span class=&#34;math inline&#34;&gt;\(B_n^2=\sum^n_{k=1}\sigma^2_k\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;若存在正数&lt;span class=&#34;math inline&#34;&gt;\(\delta\)&lt;/span&gt;使得当&lt;span class=&#34;math inline&#34;&gt;\(n\to\infty\)&lt;/span&gt;时&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\frac{1}{B^{2+\delta}}\sum^n_{k=1}E\bigg[|X_i-\mu_i|^{2+\delta}\bigg]\to
+0
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;则&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\lim_{n\to\infty}P\bigg(\frac{\sum^n_{k=1}X_k-\sum^n_{k=1}\mu_k}{B_n}\leq
+x\bigg)=\Phi(x)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;棣莫弗-拉普拉斯中心极限定理&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(n_A\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;次独立重复实验（&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;重伯努利实验）事件&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;发生的次数，&lt;span class=&#34;math inline&#34;&gt;\(p\)&lt;/span&gt;是事件&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;在每次试验中发生的概率，即&lt;span class=&#34;math inline&#34;&gt;\(P(A)=p\)&lt;/span&gt;，&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\lim_{n\to\infty}P\bigg(\frac{n_A-np}{\sqrt{np(1-p)}}\leq
+x\bigg)=\Phi(x)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;即，若&lt;span class=&#34;math inline&#34;&gt;\(X\sim B(n,p)\)&lt;/span&gt;，&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;充分大时&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+X\sim N(np,np(1-p))
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+P(X\leq x)\approx\Phi\bigg(\frac{x-np}{\sqrt{np(1-p)}}\bigg),\quad
+P(a&amp;lt;X\leq
+b)\approx\Phi\bigg(\frac{b-np}{\sqrt{np(1-p)}}\bigg)-\Phi\bigg(\frac{a-np}{\sqrt{np(1-p)}}\bigg)
+\]&lt;/span&gt;&lt;/p&gt;
 &lt;h2 id=&#34;常见的分布&#34;&gt;常见的分布&lt;/h2&gt;
 &lt;h3 id=&#34;分布&#34;&gt;0-1分布&lt;/h3&gt;
 &lt;p&gt;设某个事件&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;在一次试验中发生的概率为&lt;span class=&#34;math inline&#34;&gt;\(p\)&lt;/span&gt;，重复试验&lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt;次，以&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;记&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;在&lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt;次试验中发生的次数，则&lt;/p&gt;
