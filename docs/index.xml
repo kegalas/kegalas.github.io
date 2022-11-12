@@ -600,6 +600,96 @@ h^*(n)\)&lt;/span&gt; ,则称&lt;span class=&#34;math inline&#34;&gt;\(h(n)\)&lt
 &lt;h2 id=&#34;alpha-beta剪枝&#34;&gt;&lt;span class=&#34;math inline&#34;&gt;\(\alpha-\beta\)&lt;/span&gt;剪枝&lt;/h2&gt;
 &lt;p&gt;之前说的暴力算法，先生成一棵博弈树，然后再计算其倒推值，效率非常低。&lt;/p&gt;
 &lt;p&gt;而&lt;span class=&#34;math inline&#34;&gt;\(\alpha-\beta\)&lt;/span&gt;剪枝技术的基本思想是，边生成博弈树边计算评估各节点的倒推值并且根据评估出的倒推值范围，及时停止扩展那些已无必要再扩展的子节点，即相当于剪去了博弈树上的一些分枝，从而节约了机器开销，提高了搜索效率。&lt;/p&gt;
+&lt;h1 id=&#34;谓词逻辑表示与推理技术&#34;&gt;谓词逻辑表示与推理技术&lt;/h1&gt;
+&lt;p&gt;谓词逻辑的概念和离散数学中讲授的一样，不再重复。具体可见&lt;u&gt;&lt;strong&gt;&lt;a href=&#34;../离散数学整理&#34;&gt;离散数学整理&lt;/a&gt;&lt;/strong&gt;&lt;/u&gt;&lt;/p&gt;
+&lt;h2 id=&#34;谓词逻辑法&#34;&gt;谓词逻辑法&lt;/h2&gt;
+&lt;p&gt;谓词逻辑法采用谓词合式公式和一阶谓词演算把要解决的问题变为一个有待证明的问题,然后采用消解原理和消解反演来证明一个新语句是从已知的正确语句导出的,从而证明新语句也是正确的.&lt;/p&gt;
+&lt;h2 id=&#34;利用谓词公式进行知识表示的步骤&#34;&gt;利用谓词公式进行知识表示的步骤&lt;/h2&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;定义谓词及个体，确定其含义&lt;/li&gt;
+&lt;li&gt;根据要表达的事物或概念,为每个谓词中的变元赋值&lt;/li&gt;
+&lt;li&gt;根据表达的知识的含义,用适当的连接符号将各个谓词连接起来,形成谓词公式。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;置换与合一&#34;&gt;置换与合一&lt;/h2&gt;
+&lt;h3 id=&#34;置换&#34;&gt;置换&lt;/h3&gt;
+&lt;p&gt;介绍一下在离散数学中不是很详细的部分。&lt;/p&gt;
+&lt;p&gt;一个表达式的置换就是在该表达式中用置换项置换变量。&lt;/p&gt;
+&lt;p&gt;置换是形如&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\{t_1/x_1,t_2/x_2,\cdots,t_n/x_n\}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;的有限集合。其中，&lt;span class=&#34;math inline&#34;&gt;\(t_i\)&lt;/span&gt;是不同于&lt;span class=&#34;math inline&#34;&gt;\(x_i\)&lt;/span&gt;的项（常量、变量、函数）；&lt;span class=&#34;math inline&#34;&gt;\(x_1,x_2,\cdots,x_n\)&lt;/span&gt;是互不相同的变量；&lt;span class=&#34;math inline&#34;&gt;\(t_i/x_i\)&lt;/span&gt;表示用&lt;span class=&#34;math inline&#34;&gt;\(t_i\)&lt;/span&gt;代换&lt;span class=&#34;math inline&#34;&gt;\(x_i\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;令置换&lt;span class=&#34;math inline&#34;&gt;\(s=\{t_1/x_1,t_2/x_2,\cdots,t_n/x_n\}\)&lt;/span&gt;，而&lt;span class=&#34;math inline&#34;&gt;\(E\)&lt;/span&gt;是一个谓词公式，那么&lt;span class=&#34;math inline&#34;&gt;\(s\)&lt;/span&gt;作用于&lt;span class=&#34;math inline&#34;&gt;\(E\)&lt;/span&gt;，就是将&lt;span class=&#34;math inline&#34;&gt;\(E\)&lt;/span&gt;中出现的&lt;span class=&#34;math inline&#34;&gt;\(x_i\)&lt;/span&gt;都以&lt;span class=&#34;math inline&#34;&gt;\(t_i\)&lt;/span&gt;代入。结果以&lt;span class=&#34;math inline&#34;&gt;\(Es\)&lt;/span&gt;表示，并称为&lt;span class=&#34;math inline&#34;&gt;\(E\)&lt;/span&gt;的一个例&lt;/p&gt;
+&lt;p&gt;而合成，也称为置换乘法，是置换之间的一种运算，若&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\theta = \{t_1/x_1,\cdots,t_n/x_n\}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\lambda = \{u_1/y_1,\cdots,u_m/y_m\}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;置换的乘积&lt;span class=&#34;math inline&#34;&gt;\(\theta\cdot\lambda\)&lt;/span&gt;是个新的置换，作用于&lt;span class=&#34;math inline&#34;&gt;\(E\)&lt;/span&gt;相当于先&lt;span class=&#34;math inline&#34;&gt;\(\theta\)&lt;/span&gt;后&lt;span class=&#34;math inline&#34;&gt;\(\lambda\)&lt;/span&gt;对&lt;span class=&#34;math inline&#34;&gt;\(E\)&lt;/span&gt;的作用。&lt;/p&gt;
+&lt;p&gt;先作置换&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\{t_1\cdot\lambda/x_1,\cdots,t_n\cdot\lambda/x_n,u_1/y_1,\cdots,u_m/y_m\}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;若&lt;span class=&#34;math inline&#34;&gt;\(y_i\in\{x_1,\cdots,x_n\}\)&lt;/span&gt;时，先从中删除&lt;span class=&#34;math inline&#34;&gt;\(u_i/y_i\)&lt;/span&gt;；&lt;span class=&#34;math inline&#34;&gt;\(t_i\cdot\lambda=x_i\)&lt;/span&gt;时，再从中删除&lt;span class=&#34;math inline&#34;&gt;\(t_i\cdot\lambda/x_i\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;所得的置换称为&lt;span class=&#34;math inline&#34;&gt;\(\theta\)&lt;/span&gt;与&lt;span class=&#34;math inline&#34;&gt;\(\lambda\)&lt;/span&gt;的乘积，记作&lt;span class=&#34;math inline&#34;&gt;\(\theta\cdot\lambda\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;置换的乘法是有结合律的，但没有交换率。&lt;/p&gt;
+&lt;h3 id=&#34;合一&#34;&gt;合一&lt;/h3&gt;
+&lt;p&gt;合一是寻找项对变量的置换，以使两表达式一致。&lt;/p&gt;
+&lt;p&gt;如果一个置换&lt;span class=&#34;math inline&#34;&gt;\(s\)&lt;/span&gt;作用于表达式集&lt;span class=&#34;math inline&#34;&gt;\(\{E_i\}\)&lt;/span&gt;的每个元素，则我们用&lt;span class=&#34;math inline&#34;&gt;\(\{E_i\}s\)&lt;/span&gt;来表示置换例的集。&lt;/p&gt;
+&lt;p&gt;称表达式集&lt;span class=&#34;math inline&#34;&gt;\(\{E_i\}\)&lt;/span&gt;是可合一的。如果存在一个置换&lt;span class=&#34;math inline&#34;&gt;\(s\)&lt;/span&gt;，使得：&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+E_1s=E_2s=E_3s=\cdots
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;那么我们称此&lt;span class=&#34;math inline&#34;&gt;\(s\)&lt;/span&gt;为&lt;span class=&#34;math inline&#34;&gt;\(\{E_i\}\)&lt;/span&gt;的合一者，因为&lt;span class=&#34;math inline&#34;&gt;\(s\)&lt;/span&gt;的作用是使 集合&lt;span class=&#34;math inline&#34;&gt;\(\{E_i\}\)&lt;/span&gt;成为单一形式。&lt;/p&gt;
+&lt;p&gt;通过置换最少的变量以使表达式一致，这个置换就叫最一般合一者,记为mgu。&lt;/p&gt;
+&lt;h2 id=&#34;消解原理&#34;&gt;消解原理&lt;/h2&gt;
+&lt;p&gt;消解原理又称为归结原理。该原理是Robinson提出的一种基于逻辑的、采用反证法的推理方法。&lt;/p&gt;
+&lt;p&gt;消解法的基本原理是采用反证法或者称为反演推理方法，将待证明的表达式（定理）转换成为逻辑公式（谓词公式），然后再进行归结，归结能够顺利完成，则证明原公式(定理）是正确性的。&lt;/p&gt;
+&lt;h2 id=&#34;子句集的求解&#34;&gt;子句集的求解&lt;/h2&gt;
+&lt;p&gt;先给出一些定义&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;文字&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;一个原子公式和原子公式的否定都叫做文字&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;子句&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;由文字的析取组成的公式&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;空子句&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;不包含任何文字的子句&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;子句集&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;由子句构成的集合&lt;/p&gt;
+&lt;p&gt;任一谓词演算公式可以化成一个子句集。由九个步骤组成&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;&lt;p&gt;消去蕴涵符号（使用蕴含律）&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;减少否定符号的辖域，应用德摩根定律等使得每个否定符号都只结合一个谓词符号&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;对变量标准化。在任一量词辖域内，受该量词约束的变量为一哑元(虚构变量)，它可以在该辖域内处处统一地被另一个没有出现过的任意变量所代替，而不改变公式的真值。&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;消去存在量词&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;如果要消去的存在量词在某些全称量词的辖域内，例如&lt;span class=&#34;math inline&#34;&gt;\((\forall y)[(\exists
+x)P(x,y)]\)&lt;/span&gt;中，中，存在量词是在全称量词的辖域内，我们允许所存在的&lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;可能依赖于&lt;span class=&#34;math inline&#34;&gt;\(y\)&lt;/span&gt;值。令这种依赖关系明显地由函数&lt;span class=&#34;math inline&#34;&gt;\(g(y)\)&lt;/span&gt;所定义，它把每个&lt;span class=&#34;math inline&#34;&gt;\(y\)&lt;/span&gt;值映射到存在的那个&lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;。这种函数叫做Skolem函数。如果用Skolem函数代替存在的&lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;,我们就可以消去全部存在量词，并写成：&lt;span class=&#34;math inline&#34;&gt;\((\forall y)P(g(y),y)\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;如果不再全称量词的辖域内，直接用一个新的常量符号来替代即可。&lt;/li&gt;
+&lt;/ol&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;化为前束形。把所有全称量词移到公式的左边，并使每个量词的辖域包括这个量词后面公式的整个部分。所得公式称为前束形。前束形公式由前缀和母式组成，前缀由全称量词串组成，母式由没有量词的公式组成。&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;把母式化为合取范式&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;消去全称量词&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;消去连词符号&lt;span class=&#34;math inline&#34;&gt;\(\wedge\)&lt;/span&gt;。用&lt;span class=&#34;math inline&#34;&gt;\(\{(A\vee B),(A\vee C)\}\)&lt;/span&gt;替代&lt;span class=&#34;math inline&#34;&gt;\((A\vee B)\wedge(A\vee C)\)&lt;/span&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;更换变量名称，把每个子句中重复变量的名称换成不同的。&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;消解反演&#34;&gt;消解反演&lt;/h2&gt;
+&lt;p&gt;一般过程&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;建立子句集&lt;span class=&#34;math inline&#34;&gt;\(S\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;从子句集&lt;span class=&#34;math inline&#34;&gt;\(S\)&lt;/span&gt;出发,仅对&lt;span class=&#34;math inline&#34;&gt;\(S\)&lt;/span&gt;的子句间使用归结推理规则（也即反证法）&lt;/li&gt;
+&lt;li&gt;如果得出空子句, 则结束;否则转下一步&lt;/li&gt;
+&lt;li&gt;将所得归结式仍放入&lt;span class=&#34;math inline&#34;&gt;\(S\)&lt;/span&gt;中&lt;/li&gt;
+&lt;li&gt;对新的子句集使用归结推理规则&lt;/li&gt;
+&lt;li&gt;转3.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;空子句不含有文字,它不能被任何解释满足,所以空子句是永假的,不可满足的。&lt;/p&gt;
+&lt;p&gt;归结过程出现空子句,说明出现互补文字,说明S中有矛盾,因此S是不可满足的。&lt;/p&gt;
+&lt;h2 id=&#34;语义网络法&#34;&gt;语义网络法&lt;/h2&gt;
+&lt;p&gt;语义网络是知识的一种结构化图解表示，它由节点和弧线组成。节点用于表示实体、概念和情况等，节点之间的弧线用于表示节点间的关系。&lt;/p&gt;
+&lt;h2 id=&#34;框架表示&#34;&gt;框架表示&lt;/h2&gt;
+&lt;p&gt;框架是一种结构化表示法，通常采用语义网络中的节点-槽-值表示结构。&lt;/p&gt;
 
 
 </description>

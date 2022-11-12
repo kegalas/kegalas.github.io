@@ -125,7 +125,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 11 分钟
+                    阅读时长: 15 分钟
                 </time>
             </div>
         
@@ -339,6 +339,96 @@ h^*(n)\)</span> ,则称<span class="math inline">\(h(n)\)</span>为<span class="
 <h2 id="alpha-beta剪枝"><span class="math inline">\(\alpha-\beta\)</span>剪枝</h2>
 <p>之前说的暴力算法，先生成一棵博弈树，然后再计算其倒推值，效率非常低。</p>
 <p>而<span class="math inline">\(\alpha-\beta\)</span>剪枝技术的基本思想是，边生成博弈树边计算评估各节点的倒推值并且根据评估出的倒推值范围，及时停止扩展那些已无必要再扩展的子节点，即相当于剪去了博弈树上的一些分枝，从而节约了机器开销，提高了搜索效率。</p>
+<h1 id="谓词逻辑表示与推理技术">谓词逻辑表示与推理技术</h1>
+<p>谓词逻辑的概念和离散数学中讲授的一样，不再重复。具体可见<u><strong><a href="../离散数学整理">离散数学整理</a></strong></u></p>
+<h2 id="谓词逻辑法">谓词逻辑法</h2>
+<p>谓词逻辑法采用谓词合式公式和一阶谓词演算把要解决的问题变为一个有待证明的问题,然后采用消解原理和消解反演来证明一个新语句是从已知的正确语句导出的,从而证明新语句也是正确的.</p>
+<h2 id="利用谓词公式进行知识表示的步骤">利用谓词公式进行知识表示的步骤</h2>
+<ol type="1">
+<li>定义谓词及个体，确定其含义</li>
+<li>根据要表达的事物或概念,为每个谓词中的变元赋值</li>
+<li>根据表达的知识的含义,用适当的连接符号将各个谓词连接起来,形成谓词公式。</li>
+</ol>
+<h2 id="置换与合一">置换与合一</h2>
+<h3 id="置换">置换</h3>
+<p>介绍一下在离散数学中不是很详细的部分。</p>
+<p>一个表达式的置换就是在该表达式中用置换项置换变量。</p>
+<p>置换是形如</p>
+<p><span class="math display">\[
+\{t_1/x_1,t_2/x_2,\cdots,t_n/x_n\}
+\]</span></p>
+<p>的有限集合。其中，<span class="math inline">\(t_i\)</span>是不同于<span class="math inline">\(x_i\)</span>的项（常量、变量、函数）；<span class="math inline">\(x_1,x_2,\cdots,x_n\)</span>是互不相同的变量；<span class="math inline">\(t_i/x_i\)</span>表示用<span class="math inline">\(t_i\)</span>代换<span class="math inline">\(x_i\)</span></p>
+<p>令置换<span class="math inline">\(s=\{t_1/x_1,t_2/x_2,\cdots,t_n/x_n\}\)</span>，而<span class="math inline">\(E\)</span>是一个谓词公式，那么<span class="math inline">\(s\)</span>作用于<span class="math inline">\(E\)</span>，就是将<span class="math inline">\(E\)</span>中出现的<span class="math inline">\(x_i\)</span>都以<span class="math inline">\(t_i\)</span>代入。结果以<span class="math inline">\(Es\)</span>表示，并称为<span class="math inline">\(E\)</span>的一个例</p>
+<p>而合成，也称为置换乘法，是置换之间的一种运算，若</p>
+<p><span class="math display">\[
+\theta = \{t_1/x_1,\cdots,t_n/x_n\}
+\]</span></p>
+<p><span class="math display">\[
+\lambda = \{u_1/y_1,\cdots,u_m/y_m\}
+\]</span></p>
+<p>置换的乘积<span class="math inline">\(\theta\cdot\lambda\)</span>是个新的置换，作用于<span class="math inline">\(E\)</span>相当于先<span class="math inline">\(\theta\)</span>后<span class="math inline">\(\lambda\)</span>对<span class="math inline">\(E\)</span>的作用。</p>
+<p>先作置换</p>
+<p><span class="math display">\[
+\{t_1\cdot\lambda/x_1,\cdots,t_n\cdot\lambda/x_n,u_1/y_1,\cdots,u_m/y_m\}
+\]</span></p>
+<p>若<span class="math inline">\(y_i\in\{x_1,\cdots,x_n\}\)</span>时，先从中删除<span class="math inline">\(u_i/y_i\)</span>；<span class="math inline">\(t_i\cdot\lambda=x_i\)</span>时，再从中删除<span class="math inline">\(t_i\cdot\lambda/x_i\)</span></p>
+<p>所得的置换称为<span class="math inline">\(\theta\)</span>与<span class="math inline">\(\lambda\)</span>的乘积，记作<span class="math inline">\(\theta\cdot\lambda\)</span></p>
+<p>置换的乘法是有结合律的，但没有交换率。</p>
+<h3 id="合一">合一</h3>
+<p>合一是寻找项对变量的置换，以使两表达式一致。</p>
+<p>如果一个置换<span class="math inline">\(s\)</span>作用于表达式集<span class="math inline">\(\{E_i\}\)</span>的每个元素，则我们用<span class="math inline">\(\{E_i\}s\)</span>来表示置换例的集。</p>
+<p>称表达式集<span class="math inline">\(\{E_i\}\)</span>是可合一的。如果存在一个置换<span class="math inline">\(s\)</span>，使得：</p>
+<p><span class="math display">\[
+E_1s=E_2s=E_3s=\cdots
+\]</span></p>
+<p>那么我们称此<span class="math inline">\(s\)</span>为<span class="math inline">\(\{E_i\}\)</span>的合一者，因为<span class="math inline">\(s\)</span>的作用是使 集合<span class="math inline">\(\{E_i\}\)</span>成为单一形式。</p>
+<p>通过置换最少的变量以使表达式一致，这个置换就叫最一般合一者,记为mgu。</p>
+<h2 id="消解原理">消解原理</h2>
+<p>消解原理又称为归结原理。该原理是Robinson提出的一种基于逻辑的、采用反证法的推理方法。</p>
+<p>消解法的基本原理是采用反证法或者称为反演推理方法，将待证明的表达式（定理）转换成为逻辑公式（谓词公式），然后再进行归结，归结能够顺利完成，则证明原公式(定理）是正确性的。</p>
+<h2 id="子句集的求解">子句集的求解</h2>
+<p>先给出一些定义</p>
+<p><strong>文字</strong></p>
+<p>一个原子公式和原子公式的否定都叫做文字</p>
+<p><strong>子句</strong></p>
+<p>由文字的析取组成的公式</p>
+<p><strong>空子句</strong></p>
+<p>不包含任何文字的子句</p>
+<p><strong>子句集</strong></p>
+<p>由子句构成的集合</p>
+<p>任一谓词演算公式可以化成一个子句集。由九个步骤组成</p>
+<ol type="1">
+<li><p>消去蕴涵符号（使用蕴含律）</p></li>
+<li><p>减少否定符号的辖域，应用德摩根定律等使得每个否定符号都只结合一个谓词符号</p></li>
+<li><p>对变量标准化。在任一量词辖域内，受该量词约束的变量为一哑元(虚构变量)，它可以在该辖域内处处统一地被另一个没有出现过的任意变量所代替，而不改变公式的真值。</p></li>
+<li><p>消去存在量词</p>
+<ol type="1">
+<li>如果要消去的存在量词在某些全称量词的辖域内，例如<span class="math inline">\((\forall y)[(\exists
+x)P(x,y)]\)</span>中，中，存在量词是在全称量词的辖域内，我们允许所存在的<span class="math inline">\(x\)</span>可能依赖于<span class="math inline">\(y\)</span>值。令这种依赖关系明显地由函数<span class="math inline">\(g(y)\)</span>所定义，它把每个<span class="math inline">\(y\)</span>值映射到存在的那个<span class="math inline">\(x\)</span>。这种函数叫做Skolem函数。如果用Skolem函数代替存在的<span class="math inline">\(x\)</span>,我们就可以消去全部存在量词，并写成：<span class="math inline">\((\forall y)P(g(y),y)\)</span></li>
+<li>如果不再全称量词的辖域内，直接用一个新的常量符号来替代即可。</li>
+</ol></li>
+<li><p>化为前束形。把所有全称量词移到公式的左边，并使每个量词的辖域包括这个量词后面公式的整个部分。所得公式称为前束形。前束形公式由前缀和母式组成，前缀由全称量词串组成，母式由没有量词的公式组成。</p></li>
+<li><p>把母式化为合取范式</p></li>
+<li><p>消去全称量词</p></li>
+<li><p>消去连词符号<span class="math inline">\(\wedge\)</span>。用<span class="math inline">\(\{(A\vee B),(A\vee C)\}\)</span>替代<span class="math inline">\((A\vee B)\wedge(A\vee C)\)</span></p></li>
+<li><p>更换变量名称，把每个子句中重复变量的名称换成不同的。</p></li>
+</ol>
+<h2 id="消解反演">消解反演</h2>
+<p>一般过程</p>
+<ol type="1">
+<li>建立子句集<span class="math inline">\(S\)</span></li>
+<li>从子句集<span class="math inline">\(S\)</span>出发,仅对<span class="math inline">\(S\)</span>的子句间使用归结推理规则（也即反证法）</li>
+<li>如果得出空子句, 则结束;否则转下一步</li>
+<li>将所得归结式仍放入<span class="math inline">\(S\)</span>中</li>
+<li>对新的子句集使用归结推理规则</li>
+<li>转3.</li>
+</ol>
+<p>空子句不含有文字,它不能被任何解释满足,所以空子句是永假的,不可满足的。</p>
+<p>归结过程出现空子句,说明出现互补文字,说明S中有矛盾,因此S是不可满足的。</p>
+<h2 id="语义网络法">语义网络法</h2>
+<p>语义网络是知识的一种结构化图解表示，它由节点和弧线组成。节点用于表示实体、概念和情况等，节点之间的弧线用于表示节点间的关系。</p>
+<h2 id="框架表示">框架表示</h2>
+<p>框架是一种结构化表示法，通常采用语义网络中的节点-槽-值表示结构。</p>
 
 
 
@@ -613,6 +703,23 @@ h^*(n)\)</span> ,则称<span class="math inline">\(h(n)\)</span>为<span class="
         <li><a href="#与或图搜索">与或图搜索</a></li>
         <li><a href="#max-min搜索">Max-Min搜索</a></li>
         <li><a href="#alpha-beta剪枝"><span class="math inline">\(\alpha-\beta\)</span>剪枝</a></li>
+      </ol>
+    </li>
+    <li><a href="#谓词逻辑表示与推理技术">谓词逻辑表示与推理技术</a>
+      <ol>
+        <li><a href="#谓词逻辑法">谓词逻辑法</a></li>
+        <li><a href="#利用谓词公式进行知识表示的步骤">利用谓词公式进行知识表示的步骤</a></li>
+        <li><a href="#置换与合一">置换与合一</a>
+          <ol>
+            <li><a href="#置换">置换</a></li>
+            <li><a href="#合一">合一</a></li>
+          </ol>
+        </li>
+        <li><a href="#消解原理">消解原理</a></li>
+        <li><a href="#子句集的求解">子句集的求解</a></li>
+        <li><a href="#消解反演">消解反演</a></li>
+        <li><a href="#语义网络法">语义网络法</a></li>
+        <li><a href="#框架表示">框架表示</a></li>
       </ol>
     </li>
   </ol>
