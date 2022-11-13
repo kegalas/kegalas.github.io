@@ -690,6 +690,155 @@ x)P(x,y)]\)&lt;/span&gt;中，中，存在量词是在全称量词的辖域内�
 &lt;p&gt;语义网络是知识的一种结构化图解表示，它由节点和弧线组成。节点用于表示实体、概念和情况等，节点之间的弧线用于表示节点间的关系。&lt;/p&gt;
 &lt;h2 id=&#34;框架表示&#34;&gt;框架表示&lt;/h2&gt;
 &lt;p&gt;框架是一种结构化表示法，通常采用语义网络中的节点-槽-值表示结构。&lt;/p&gt;
+&lt;h1 id=&#34;规则演绎系统&#34;&gt;规则演绎系统&lt;/h1&gt;
+&lt;p&gt;基于规则的演绎推理是一种直接的推理方法，它不像消解反演把知识转化为子句集，而是把有关问题的知识和信息划分为规则和事实两种类型。&lt;/p&gt;
+&lt;p&gt;规则由包含蕴含形式的表达式表示，事实由无蕴含形式的表达式表示，并画出相应的与或图，然后通过规则进行演绎推理。&lt;/p&gt;
+&lt;p&gt;规则演绎系统可以分为规则正向演绎推理、规则逆向演绎系统和规则双向演绎系统。&lt;/p&gt;
+&lt;p&gt;基于规则的问题求解系统运用下述规则来建立：&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+If\to Then
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中，If部分可能由几个if组成，而Then部分可能由一个或一个以上的then组成。&lt;/p&gt;
+&lt;p&gt;在这种系统中，通常称每个if部分为前项，称每个then部分为后项。&lt;/p&gt;
+&lt;h2 id=&#34;规则正向演绎系统&#34;&gt;规则正向演绎系统&lt;/h2&gt;
+&lt;p&gt;规则正向演绎系统是从事实到目标进行操作的，即从状况条件到动作进行推理的，也就是从if到then的方向进行推理的。&lt;/p&gt;
+&lt;p&gt;过程&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;事实表达式的与或形变换。把事实表示为非蕴涵形式的与或形，作为系统的总数据库。具体变换步骤与前述化为子句形类似。&lt;/li&gt;
+&lt;li&gt;事实表达式的与或图表示，即用与或图来表达事实表达式。&lt;/li&gt;
+&lt;li&gt;与或图的F规则变换&lt;/li&gt;
+&lt;/ol&gt;
+&lt;blockquote&gt;
+&lt;p&gt;这些规则是建立在某个问题辖域中普通陈述性知识的蕴涵公式基础上的。我们把允许用作规则的公式类型限制为下列形式：&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+L\Rightarrow W
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;式中：&lt;span class=&#34;math inline&#34;&gt;\(L\)&lt;/span&gt;是单文字；&lt;span class=&#34;math inline&#34;&gt;\(W\)&lt;/span&gt;为与或形的公式。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ol start=&#34;4&#34; type=&#34;1&#34;&gt;
+&lt;li&gt;作为终止条件的目标公式&lt;/li&gt;
+&lt;/ol&gt;
+&lt;blockquote&gt;
+&lt;p&gt;基于规则的正向演绎推理的基本原理是：应用F规则作
+用于表示事实的与或图，改变与或图的结构，从而产生
+新的事实，直到推出目标公式，则推理成功结束。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;其推理过程为&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;首先用与或图把已知事实表示出来。&lt;/li&gt;
+&lt;li&gt;用F规则的左部和与或图的叶节点进行匹配，并将匹配成功的F规则加入到与或图中，即利用F规则转换与或图。&lt;/li&gt;
+&lt;li&gt;重复第（2）步，直到产生一个含有以目标节点作为终止节点的解图为止。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;规则逆向演绎系统&#34;&gt;规则逆向演绎系统&lt;/h2&gt;
+&lt;p&gt;规则逆向演绎系统是从then向if进行推理的，即从目标或动作向事实或状况条件进行推理的。&lt;/p&gt;
+&lt;p&gt;逆向演绎系统能够处理任意形式的目标表达式。采用和变换事实表达式类似的过程，把目标公式化成与或形。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;与或图的B规则变换&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;这个B规则是建立在确定的蕴涵式基础上的，正如正向系统的F规则一样。不过，我们现在把这些B规则限制为:
+&lt;span class=&#34;math inline&#34;&gt;\(W\Rightarrow L\)&lt;/span&gt;形式的表达式。&lt;/p&gt;
+&lt;p&gt;其中，W为任一与或形公式，L为文字，而且蕴涵式中任何变量的量词辖域为整个蕴涵式。其次，把B规则限制为这种形式的蕴涵式还可以简化匹配，使之不会引起重大的实际困难。&lt;/p&gt;
+&lt;p&gt;此外，可以把像&lt;span class=&#34;math inline&#34;&gt;\(W\Rightarrow(L1\wedge
+L2)\)&lt;/span&gt;这样的蕴涵式化为两个规则&lt;span class=&#34;math inline&#34;&gt;\(W\Rightarrow L1\)&lt;/span&gt;和&lt;span class=&#34;math inline&#34;&gt;\(W\Rightarrow L2\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;作为终止条件的事实节点的一致解图&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;逆向系统中的事实表达式均限制为文字合取形，它可以表示为一个文字集。当一个事实文字和标在该图文字节点上的文字相匹配时，就可把相应的后裔事实节点添加到该与或图中去。这个事实节点通过标有mgu的匹配弧与匹配的子目标文字节点连接起来。同一个事实文字可以多次重复使用(每次用不同变量)，以便建立多重事实节点。逆向系统成功的终止条件是与或图包含有某个终止在事实节点上的一致解图。&lt;/p&gt;
+&lt;h2 id=&#34;规则双向演绎系统&#34;&gt;规则双向演绎系统&lt;/h2&gt;
+&lt;p&gt;正向和逆向组合系统是建立在两个系统相结合的基础上的。此组合系统的总数据库由表示目标和表示事实的两个与或图结构组成，并分别用F规则和B规则来修正。&lt;/p&gt;
+&lt;p&gt;双向演绎系统的主要复杂之处在于其终止条件，终止涉及两个图结构之间的适当交接处。这些结构可由标有合一文字的节点上的匹配棱线来连接。&lt;/p&gt;
+&lt;h2 id=&#34;产生式系统&#34;&gt;产生式系统&lt;/h2&gt;
+&lt;p&gt;用来描述若干个不同的以一个基本概念为基础的系统。这个基本概念就是产生式规则或产生式条件和操作对的概念。&lt;/p&gt;
+&lt;p&gt;在产生式系统中，论域的知识分为两部分：用事实表示静态知识，如事物、事件和它们之间的关系；用产生式规则表示推理过程和行为。由于这类系统的知识库主要用于存储规则，因此又把此类系统称为基于规则的系统。&lt;/p&gt;
+&lt;h1 id=&#34;不确定性推理&#34;&gt;不确定性推理&lt;/h1&gt;
+&lt;h2 id=&#34;模糊计算和模糊推理&#34;&gt;模糊计算和模糊推理&lt;/h2&gt;
+&lt;p&gt;与二值逻辑这样的非真即假的概念不同，模糊概念中，从属于该概念到不属于该概念之间无明显分界线。&lt;/p&gt;
+&lt;p&gt;比如快慢、大小、软硬、强弱等。&lt;/p&gt;
+&lt;p&gt;其基本思想是，用属于程度替代属于或不属于。&lt;/p&gt;
+&lt;h3 id=&#34;经典集合&#34;&gt;经典集合&lt;/h3&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;是论域&lt;span class=&#34;math inline&#34;&gt;\(U\)&lt;/span&gt;上的一个集合，对任意&lt;span class=&#34;math inline&#34;&gt;\(u\in U\)&lt;/span&gt;，令&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+C_A(u) = \left\{\begin{matrix}
+1,u\in A\\
+0,u\notin A
+\end{matrix}\right.
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;则称&lt;span class=&#34;math inline&#34;&gt;\(C_A(u)\)&lt;/span&gt;为集合&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;的特征函数。&lt;/p&gt;
+&lt;h3 id=&#34;模糊理论基本概念&#34;&gt;模糊理论基本概念&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;模糊集合&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;论域&lt;span class=&#34;math inline&#34;&gt;\(U\)&lt;/span&gt;中的模糊集&lt;span class=&#34;math inline&#34;&gt;\(F\)&lt;/span&gt;用一个在区间&lt;span class=&#34;math inline&#34;&gt;\([0,1]\)&lt;/span&gt;的取值的隶属函数&lt;span class=&#34;math inline&#34;&gt;\(\mu_F\)&lt;/span&gt;来表示，即：&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\mu_F:U\to[0,1]
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(\mu_F\)&lt;/span&gt;称为&lt;span class=&#34;math inline&#34;&gt;\(F\)&lt;/span&gt;的隶属函数，&lt;span class=&#34;math inline&#34;&gt;\(\mu_F(u)\)&lt;/span&gt;称为&lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt;对&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;的隶属度。&lt;/p&gt;
+&lt;p&gt;直观上来说，就是将一些元素属于某个集合的程度映射到连续的&lt;span class=&#34;math inline&#34;&gt;\([0,1]\)&lt;/span&gt;上。&lt;/p&gt;
+&lt;h3 id=&#34;模糊集的表示方法&#34;&gt;模糊集的表示方法&lt;/h3&gt;
+&lt;p&gt;若&lt;span class=&#34;math inline&#34;&gt;\(U\)&lt;/span&gt;为离散域且为有限集合时，模糊集合可以表示为：&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;扎德表示法&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+F = \sum^n_{i=1}\mu_F(u_i)/u_i
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中“&lt;span class=&#34;math inline&#34;&gt;\(/\)&lt;/span&gt;”符号表示的意思是，分母是论域中的元素，分子是该元素对模糊子集&lt;span class=&#34;math inline&#34;&gt;\(F\)&lt;/span&gt;的隶属度。&lt;span class=&#34;math inline&#34;&gt;\(\sum\)&lt;/span&gt;也不是表示相加，只是一个记号。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;序偶表示法&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+F=\{(u_1,\mu(u_1)),(u_2,\mu(u_2)),\cdots,(u_n,\mu(u_n))\}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;向量表示法&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+F = \{\mu(u_1),\mu(u_2),\cdots,\mu(u_n)\}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;无论论域是有限的还是无限的，连续的还是离散的，扎德都用如下记号作为模糊子集的一般表示形式：&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+F = \int_U\frac{\mu_F}{u}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;这里的积分号不是数学中的积分，也不是求和，只是表示论域中各元素与其隶属度对应关系的总括，是一个记号。&lt;/p&gt;
+&lt;h3 id=&#34;集合运算&#34;&gt;集合运算&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;定义1&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(A,B\)&lt;/span&gt;是论域&lt;span class=&#34;math inline&#34;&gt;\(U\)&lt;/span&gt;的模糊集，即&lt;span class=&#34;math inline&#34;&gt;\(A,B\in F(U)\)&lt;/span&gt;，若对于任一&lt;span class=&#34;math inline&#34;&gt;\(u\in U\)&lt;/span&gt;都有&lt;span class=&#34;math inline&#34;&gt;\(\mu_B(u)\leq\mu_A(A)\)&lt;/span&gt;，则称&lt;span class=&#34;math inline&#34;&gt;\(B\)&lt;/span&gt;包含于&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;，或者说&lt;span class=&#34;math inline&#34;&gt;\(B\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;的一个子集，记作&lt;span class=&#34;math inline&#34;&gt;\(B\subseteq A\)&lt;/span&gt;。若对于任一&lt;span class=&#34;math inline&#34;&gt;\(u\in U\)&lt;/span&gt;都有&lt;span class=&#34;math inline&#34;&gt;\(\mu_B(u)=\mu_A(A)\)&lt;/span&gt;，则称&lt;span class=&#34;math inline&#34;&gt;\(B\)&lt;/span&gt;等于&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;，记作&lt;span class=&#34;math inline&#34;&gt;\(B=A\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定义2&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;并运算（&lt;span class=&#34;math inline&#34;&gt;\(A\bigcup
+B\)&lt;/span&gt;）的隶属度函数&lt;span class=&#34;math inline&#34;&gt;\(\mu_{A\bigcup
+B}\)&lt;/span&gt;对所有的&lt;span class=&#34;math inline&#34;&gt;\(u\in
+U\)&lt;/span&gt;被逐点定义为取大运算，即&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\mu_{A\bigcup B} = \mu_A(u)\vee\mu_B(u)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;式中，&lt;span class=&#34;math inline&#34;&gt;\(\vee\)&lt;/span&gt;符号取极大值运算。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定义3&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;交运算（&lt;span class=&#34;math inline&#34;&gt;\(A\bigcap
+B\)&lt;/span&gt;）的隶属度函数&lt;span class=&#34;math inline&#34;&gt;\(\mu_{A\bigcap
+B}\)&lt;/span&gt;对所有的&lt;span class=&#34;math inline&#34;&gt;\(u\in
+U\)&lt;/span&gt;被逐点定义为取小运算，即&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\mu_{A\bigcap B} = \mu_A(u)\wedge\mu_B(u)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;式中，&lt;span class=&#34;math inline&#34;&gt;\(\wedge\)&lt;/span&gt;符号取极小值运算。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定义4&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;补，隶属度函数&lt;span class=&#34;math inline&#34;&gt;\(\mu_{\bar
+A}\)&lt;/span&gt;，对所有的&lt;span class=&#34;math inline&#34;&gt;\(u\in
+U\)&lt;/span&gt;，被逐点定义为&lt;span class=&#34;math inline&#34;&gt;\(\mu_{\bar A}(u) =
+1-\mu_{A}(u)\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定理&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;集合运算的定理和经典的集合没有区别，例如结合、分配律，德摩根律等等。&lt;/p&gt;
+&lt;h3 id=&#34;模糊集的截集&#34;&gt;模糊集的截集&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;定义1&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(A\in
+F(u),\lambda\in[0,1]\)&lt;/span&gt;，则&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(A_\lambda=\{u|u\in
+U,\mu_A(u)\geq\lambda\}\)&lt;/span&gt;，称&lt;span class=&#34;math inline&#34;&gt;\(A_\lambda\)&lt;/span&gt;为&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;的一个&lt;span class=&#34;math inline&#34;&gt;\(\lambda\)&lt;/span&gt;截集，称&lt;span class=&#34;math inline&#34;&gt;\(\lambda\)&lt;/span&gt;为阈值（置信水平）&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(A_\lambda=\{u|u\in
+U,\mu_A(u)&amp;gt;\lambda\}\)&lt;/span&gt;，称&lt;span class=&#34;math inline&#34;&gt;\(A_\lambda\)&lt;/span&gt;为&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;的一个&lt;span class=&#34;math inline&#34;&gt;\(\lambda\)&lt;/span&gt;强截集&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(SuppA=\{u|u\in
+U,\mu_A(u)&amp;gt;0\}\)&lt;/span&gt;为&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;的支集&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(KerA=\{u|u\in
+U,\mu_A(u)=1\}\)&lt;/span&gt;为&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;的核&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;当&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;的核不为空，则称&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;为正规&lt;span class=&#34;math inline&#34;&gt;\(F\)&lt;/span&gt;集。&lt;/p&gt;
 
 
 </description>

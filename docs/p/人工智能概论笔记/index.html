@@ -125,7 +125,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 15 分钟
+                    阅读时长: 21 分钟
                 </time>
             </div>
         
@@ -429,6 +429,155 @@ x)P(x,y)]\)</span>中，中，存在量词是在全称量词的辖域内，我�
 <p>语义网络是知识的一种结构化图解表示，它由节点和弧线组成。节点用于表示实体、概念和情况等，节点之间的弧线用于表示节点间的关系。</p>
 <h2 id="框架表示">框架表示</h2>
 <p>框架是一种结构化表示法，通常采用语义网络中的节点-槽-值表示结构。</p>
+<h1 id="规则演绎系统">规则演绎系统</h1>
+<p>基于规则的演绎推理是一种直接的推理方法，它不像消解反演把知识转化为子句集，而是把有关问题的知识和信息划分为规则和事实两种类型。</p>
+<p>规则由包含蕴含形式的表达式表示，事实由无蕴含形式的表达式表示，并画出相应的与或图，然后通过规则进行演绎推理。</p>
+<p>规则演绎系统可以分为规则正向演绎推理、规则逆向演绎系统和规则双向演绎系统。</p>
+<p>基于规则的问题求解系统运用下述规则来建立：</p>
+<p><span class="math display">\[
+If\to Then
+\]</span></p>
+<p>其中，If部分可能由几个if组成，而Then部分可能由一个或一个以上的then组成。</p>
+<p>在这种系统中，通常称每个if部分为前项，称每个then部分为后项。</p>
+<h2 id="规则正向演绎系统">规则正向演绎系统</h2>
+<p>规则正向演绎系统是从事实到目标进行操作的，即从状况条件到动作进行推理的，也就是从if到then的方向进行推理的。</p>
+<p>过程</p>
+<ol type="1">
+<li>事实表达式的与或形变换。把事实表示为非蕴涵形式的与或形，作为系统的总数据库。具体变换步骤与前述化为子句形类似。</li>
+<li>事实表达式的与或图表示，即用与或图来表达事实表达式。</li>
+<li>与或图的F规则变换</li>
+</ol>
+<blockquote>
+<p>这些规则是建立在某个问题辖域中普通陈述性知识的蕴涵公式基础上的。我们把允许用作规则的公式类型限制为下列形式：</p>
+</blockquote>
+<blockquote>
+<p><span class="math display">\[
+L\Rightarrow W
+\]</span></p>
+</blockquote>
+<blockquote>
+<p>式中：<span class="math inline">\(L\)</span>是单文字；<span class="math inline">\(W\)</span>为与或形的公式。</p>
+</blockquote>
+<ol start="4" type="1">
+<li>作为终止条件的目标公式</li>
+</ol>
+<blockquote>
+<p>基于规则的正向演绎推理的基本原理是：应用F规则作
+用于表示事实的与或图，改变与或图的结构，从而产生
+新的事实，直到推出目标公式，则推理成功结束。</p>
+</blockquote>
+<blockquote>
+<p>其推理过程为</p>
+</blockquote>
+<blockquote>
+<ol type="1">
+<li>首先用与或图把已知事实表示出来。</li>
+<li>用F规则的左部和与或图的叶节点进行匹配，并将匹配成功的F规则加入到与或图中，即利用F规则转换与或图。</li>
+<li>重复第（2）步，直到产生一个含有以目标节点作为终止节点的解图为止。</li>
+</ol>
+</blockquote>
+<h2 id="规则逆向演绎系统">规则逆向演绎系统</h2>
+<p>规则逆向演绎系统是从then向if进行推理的，即从目标或动作向事实或状况条件进行推理的。</p>
+<p>逆向演绎系统能够处理任意形式的目标表达式。采用和变换事实表达式类似的过程，把目标公式化成与或形。</p>
+<p><strong>与或图的B规则变换</strong></p>
+<p>这个B规则是建立在确定的蕴涵式基础上的，正如正向系统的F规则一样。不过，我们现在把这些B规则限制为:
+<span class="math inline">\(W\Rightarrow L\)</span>形式的表达式。</p>
+<p>其中，W为任一与或形公式，L为文字，而且蕴涵式中任何变量的量词辖域为整个蕴涵式。其次，把B规则限制为这种形式的蕴涵式还可以简化匹配，使之不会引起重大的实际困难。</p>
+<p>此外，可以把像<span class="math inline">\(W\Rightarrow(L1\wedge
+L2)\)</span>这样的蕴涵式化为两个规则<span class="math inline">\(W\Rightarrow L1\)</span>和<span class="math inline">\(W\Rightarrow L2\)</span>。</p>
+<p><strong>作为终止条件的事实节点的一致解图</strong></p>
+<p>逆向系统中的事实表达式均限制为文字合取形，它可以表示为一个文字集。当一个事实文字和标在该图文字节点上的文字相匹配时，就可把相应的后裔事实节点添加到该与或图中去。这个事实节点通过标有mgu的匹配弧与匹配的子目标文字节点连接起来。同一个事实文字可以多次重复使用(每次用不同变量)，以便建立多重事实节点。逆向系统成功的终止条件是与或图包含有某个终止在事实节点上的一致解图。</p>
+<h2 id="规则双向演绎系统">规则双向演绎系统</h2>
+<p>正向和逆向组合系统是建立在两个系统相结合的基础上的。此组合系统的总数据库由表示目标和表示事实的两个与或图结构组成，并分别用F规则和B规则来修正。</p>
+<p>双向演绎系统的主要复杂之处在于其终止条件，终止涉及两个图结构之间的适当交接处。这些结构可由标有合一文字的节点上的匹配棱线来连接。</p>
+<h2 id="产生式系统">产生式系统</h2>
+<p>用来描述若干个不同的以一个基本概念为基础的系统。这个基本概念就是产生式规则或产生式条件和操作对的概念。</p>
+<p>在产生式系统中，论域的知识分为两部分：用事实表示静态知识，如事物、事件和它们之间的关系；用产生式规则表示推理过程和行为。由于这类系统的知识库主要用于存储规则，因此又把此类系统称为基于规则的系统。</p>
+<h1 id="不确定性推理">不确定性推理</h1>
+<h2 id="模糊计算和模糊推理">模糊计算和模糊推理</h2>
+<p>与二值逻辑这样的非真即假的概念不同，模糊概念中，从属于该概念到不属于该概念之间无明显分界线。</p>
+<p>比如快慢、大小、软硬、强弱等。</p>
+<p>其基本思想是，用属于程度替代属于或不属于。</p>
+<h3 id="经典集合">经典集合</h3>
+<p>设<span class="math inline">\(A\)</span>是论域<span class="math inline">\(U\)</span>上的一个集合，对任意<span class="math inline">\(u\in U\)</span>，令</p>
+<p><span class="math display">\[
+C_A(u) = \left\{\begin{matrix}
+1,u\in A\\
+0,u\notin A
+\end{matrix}\right.
+\]</span></p>
+<p>则称<span class="math inline">\(C_A(u)\)</span>为集合<span class="math inline">\(A\)</span>的特征函数。</p>
+<h3 id="模糊理论基本概念">模糊理论基本概念</h3>
+<p><strong>模糊集合</strong></p>
+<p>论域<span class="math inline">\(U\)</span>中的模糊集<span class="math inline">\(F\)</span>用一个在区间<span class="math inline">\([0,1]\)</span>的取值的隶属函数<span class="math inline">\(\mu_F\)</span>来表示，即：</p>
+<p><span class="math display">\[
+\mu_F:U\to[0,1]
+\]</span></p>
+<p><span class="math inline">\(\mu_F\)</span>称为<span class="math inline">\(F\)</span>的隶属函数，<span class="math inline">\(\mu_F(u)\)</span>称为<span class="math inline">\(u\)</span>对<span class="math inline">\(A\)</span>的隶属度。</p>
+<p>直观上来说，就是将一些元素属于某个集合的程度映射到连续的<span class="math inline">\([0,1]\)</span>上。</p>
+<h3 id="模糊集的表示方法">模糊集的表示方法</h3>
+<p>若<span class="math inline">\(U\)</span>为离散域且为有限集合时，模糊集合可以表示为：</p>
+<p><strong>扎德表示法</strong></p>
+<p><span class="math display">\[
+F = \sum^n_{i=1}\mu_F(u_i)/u_i
+\]</span></p>
+<p>其中“<span class="math inline">\(/\)</span>”符号表示的意思是，分母是论域中的元素，分子是该元素对模糊子集<span class="math inline">\(F\)</span>的隶属度。<span class="math inline">\(\sum\)</span>也不是表示相加，只是一个记号。</p>
+<p><strong>序偶表示法</strong></p>
+<p><span class="math display">\[
+F=\{(u_1,\mu(u_1)),(u_2,\mu(u_2)),\cdots,(u_n,\mu(u_n))\}
+\]</span></p>
+<p><strong>向量表示法</strong></p>
+<p><span class="math display">\[
+F = \{\mu(u_1),\mu(u_2),\cdots,\mu(u_n)\}
+\]</span></p>
+<p>无论论域是有限的还是无限的，连续的还是离散的，扎德都用如下记号作为模糊子集的一般表示形式：</p>
+<p><span class="math display">\[
+F = \int_U\frac{\mu_F}{u}
+\]</span></p>
+<p>这里的积分号不是数学中的积分，也不是求和，只是表示论域中各元素与其隶属度对应关系的总括，是一个记号。</p>
+<h3 id="集合运算">集合运算</h3>
+<p><strong>定义1</strong></p>
+<p>设<span class="math inline">\(A,B\)</span>是论域<span class="math inline">\(U\)</span>的模糊集，即<span class="math inline">\(A,B\in F(U)\)</span>，若对于任一<span class="math inline">\(u\in U\)</span>都有<span class="math inline">\(\mu_B(u)\leq\mu_A(A)\)</span>，则称<span class="math inline">\(B\)</span>包含于<span class="math inline">\(A\)</span>，或者说<span class="math inline">\(B\)</span>是<span class="math inline">\(A\)</span>的一个子集，记作<span class="math inline">\(B\subseteq A\)</span>。若对于任一<span class="math inline">\(u\in U\)</span>都有<span class="math inline">\(\mu_B(u)=\mu_A(A)\)</span>，则称<span class="math inline">\(B\)</span>等于<span class="math inline">\(A\)</span>，记作<span class="math inline">\(B=A\)</span></p>
+<p><strong>定义2</strong></p>
+<p>并运算（<span class="math inline">\(A\bigcup
+B\)</span>）的隶属度函数<span class="math inline">\(\mu_{A\bigcup
+B}\)</span>对所有的<span class="math inline">\(u\in
+U\)</span>被逐点定义为取大运算，即</p>
+<p><span class="math display">\[
+\mu_{A\bigcup B} = \mu_A(u)\vee\mu_B(u)
+\]</span></p>
+<p>式中，<span class="math inline">\(\vee\)</span>符号取极大值运算。</p>
+<p><strong>定义3</strong></p>
+<p>交运算（<span class="math inline">\(A\bigcap
+B\)</span>）的隶属度函数<span class="math inline">\(\mu_{A\bigcap
+B}\)</span>对所有的<span class="math inline">\(u\in
+U\)</span>被逐点定义为取小运算，即</p>
+<p><span class="math display">\[
+\mu_{A\bigcap B} = \mu_A(u)\wedge\mu_B(u)
+\]</span></p>
+<p>式中，<span class="math inline">\(\wedge\)</span>符号取极小值运算。</p>
+<p><strong>定义4</strong></p>
+<p>补，隶属度函数<span class="math inline">\(\mu_{\bar
+A}\)</span>，对所有的<span class="math inline">\(u\in
+U\)</span>，被逐点定义为<span class="math inline">\(\mu_{\bar A}(u) =
+1-\mu_{A}(u)\)</span></p>
+<p><strong>定理</strong></p>
+<p>集合运算的定理和经典的集合没有区别，例如结合、分配律，德摩根律等等。</p>
+<h3 id="模糊集的截集">模糊集的截集</h3>
+<p><strong>定义1</strong></p>
+<p>设<span class="math inline">\(A\in
+F(u),\lambda\in[0,1]\)</span>，则</p>
+<ol type="1">
+<li><span class="math inline">\(A_\lambda=\{u|u\in
+U,\mu_A(u)\geq\lambda\}\)</span>，称<span class="math inline">\(A_\lambda\)</span>为<span class="math inline">\(A\)</span>的一个<span class="math inline">\(\lambda\)</span>截集，称<span class="math inline">\(\lambda\)</span>为阈值（置信水平）</li>
+<li><span class="math inline">\(A_\lambda=\{u|u\in
+U,\mu_A(u)&gt;\lambda\}\)</span>，称<span class="math inline">\(A_\lambda\)</span>为<span class="math inline">\(A\)</span>的一个<span class="math inline">\(\lambda\)</span>强截集</li>
+<li><span class="math inline">\(SuppA=\{u|u\in
+U,\mu_A(u)&gt;0\}\)</span>为<span class="math inline">\(A\)</span>的支集</li>
+<li><span class="math inline">\(KerA=\{u|u\in
+U,\mu_A(u)=1\}\)</span>为<span class="math inline">\(A\)</span>的核</li>
+</ol>
+<p>当<span class="math inline">\(A\)</span>的核不为空，则称<span class="math inline">\(A\)</span>为正规<span class="math inline">\(F\)</span>集。</p>
 
 
 
@@ -720,6 +869,27 @@ x)P(x,y)]\)</span>中，中，存在量词是在全称量词的辖域内，我�
         <li><a href="#消解反演">消解反演</a></li>
         <li><a href="#语义网络法">语义网络法</a></li>
         <li><a href="#框架表示">框架表示</a></li>
+      </ol>
+    </li>
+    <li><a href="#规则演绎系统">规则演绎系统</a>
+      <ol>
+        <li><a href="#规则正向演绎系统">规则正向演绎系统</a></li>
+        <li><a href="#规则逆向演绎系统">规则逆向演绎系统</a></li>
+        <li><a href="#规则双向演绎系统">规则双向演绎系统</a></li>
+        <li><a href="#产生式系统">产生式系统</a></li>
+      </ol>
+    </li>
+    <li><a href="#不确定性推理">不确定性推理</a>
+      <ol>
+        <li><a href="#模糊计算和模糊推理">模糊计算和模糊推理</a>
+          <ol>
+            <li><a href="#经典集合">经典集合</a></li>
+            <li><a href="#模糊理论基本概念">模糊理论基本概念</a></li>
+            <li><a href="#模糊集的表示方法">模糊集的表示方法</a></li>
+            <li><a href="#集合运算">集合运算</a></li>
+            <li><a href="#模糊集的截集">模糊集的截集</a></li>
+          </ol>
+        </li>
       </ol>
     </li>
   </ol>
