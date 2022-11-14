@@ -112,7 +112,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 39 分钟
+                    阅读时长: 40 分钟
                 </time>
             </div>
         
@@ -1186,13 +1186,19 @@ f(z)=(z-z_0)^mg(z)
 <p><strong>常见的泰勒展开</strong></p>
 <p>以下都是在<span class="math inline">\(z=0\)</span>处的展开式</p>
 <p><span class="math display">\[
+\frac{1}{1-x}=\sum^\infty_{n=0}x^n,|z|&lt;1
+\]</span></p>
+<p><span class="math display">\[
+\frac{1}{1+x}=\sum^\infty_{n=0}(-1)^nx^n,|z|&lt;1
+\]</span></p>
+<p><span class="math display">\[
 e^z = \sum^\infty_{n=0} \frac{z^n}{n!},z\in\bm C
 \]</span></p>
 <p><span class="math display">\[
 cosz = \sum^\infty_{n=0} (-1)^n\frac{z^{2n}}{(2n)!},z\in\bm C
 \]</span></p>
 <p><span class="math display">\[
-cosz = \sum^\infty_{n=0} (-1)^n\frac{z^{2n+1}}{(2n+1)!},z\in\bm C
+sinz = \sum^\infty_{n=0} (-1)^n\frac{z^{2n+1}}{(2n+1)!},z\in\bm C
 \]</span></p>
 <p><span class="math display">\[
 \log(1+z) = \sum^\infty_{n=1} (-1)^{n-1}\frac{z^n}{n},|z|&lt;1
@@ -1200,6 +1206,39 @@ cosz = \sum^\infty_{n=0} (-1)^n\frac{z^{2n+1}}{(2n+1)!},z\in\bm C
 <p><span class="math display">\[
 exp[a\log(1+z)] = \sum^\infty_{n=0}\binom{a}{n}z^n,|z|&lt;1
 \]</span></p>
+<h2 id="辐角原理和rouche定理">辐角原理和Rouche定理</h2>
+<p>TODO</p>
+<h2 id="最大模原理和schwarz引理">最大模原理和Schwarz引理</h2>
+<p>TODO</p>
+<h1 id="全纯函数的laurent展开及其应用">全纯函数的Laurent展开及其应用</h1>
+<p>前面证明了，圆盘中的全纯函数一定可以在圆盘中展开成幂级数。但圆环中的全纯函数不一定，但是一定可以展开成洛朗级数。</p>
+<h2 id="全纯函数的laurent展开">全纯函数的Laurent展开</h2>
+<p>称级数</p>
+<p><span class="math display">\[
+\sum^\infty_{n=-\infty}a_n(z-z_0)^n=\sum^\infty_{n=0}a_n(z-z_0)^n+\sum^\infty_{n=1}a_{-n}(z-z_0)^{-n}
+\]</span></p>
+<p>为洛朗级数。由两部分组成，第一部分是幂级数，第二部分为负幂项的级数。如果这两个级数都收敛，则整个洛朗级数收敛。</p>
+<p><strong>定理1</strong></p>
+<p>如果洛朗级数</p>
+<p><span class="math display">\[
+\sum^\infty_{n=-\infty}a_n(z-z_0)^n=\sum^\infty_{n=0}a_n(z-z_0)^n+\sum^\infty_{n=1}a_{-n}(z-z_0)^{-n}
+\]</span></p>
+<p>的收敛域为圆环<span class="math inline">\(D=\{z:r&lt;|z-z_0|&lt;R\}\)</span>，那么它在<span class="math inline">\(D\)</span>中绝对收敛且内闭一致收敛，它的和函数在<span class="math inline">\(D\)</span>中全纯。</p>
+<p>上述级数的幂级数部分称为全纯部分，负幂项级数部分称为主要部分。</p>
+<p>该定理的逆定理也成立。</p>
+<p>设<span class="math inline">\(D=\{z:r&lt;|z-z_0|&lt;R\}\)</span>，如果<span class="math inline">\(f\in H(D)\)</span>，那么<span class="math inline">\(f\)</span>在<span class="math inline">\(D\)</span>上可以展开为洛朗级数</p>
+<p><span class="math display">\[
+f(z) = \sum^\infty_{n=-\infty}a_n(z-z_0)^n
+\]</span></p>
+<p>其中</p>
+<p><span class="math display">\[
+a_n = \frac{1}{2\pi
+i}\int_{\gamma_\rho}\frac{f(\zeta)}{(\zeta-z_0)^{n+1}}d\zeta
+\]</span></p>
+<p><span class="math display">\[
+\gamma_\rho = \{\zeta:|\zeta-z_0|=\rho\}(r&lt;\rho&lt;R)
+\]</span></p>
+<p>并且这个展开式是唯一的。</p>
 
 
 
@@ -1584,6 +1623,13 @@ exp[a\log(1+z)] = \sum^\infty_{n=0}\binom{a}{n}z^n,|z|&lt;1
         <li><a href="#weierstrass定理">Weierstrass定理</a></li>
         <li><a href="#幂级数">幂级数</a></li>
         <li><a href="#全纯函数的taylor展开">全纯函数的Taylor展开</a></li>
+        <li><a href="#辐角原理和rouche定理">辐角原理和Rouche定理</a></li>
+        <li><a href="#最大模原理和schwarz引理">最大模原理和Schwarz引理</a></li>
+      </ol>
+    </li>
+    <li><a href="#全纯函数的laurent展开及其应用">全纯函数的Laurent展开及其应用</a>
+      <ol>
+        <li><a href="#全纯函数的laurent展开">全纯函数的Laurent展开</a></li>
       </ol>
     </li>
   </ol>

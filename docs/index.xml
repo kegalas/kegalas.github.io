@@ -3677,13 +3677,19 @@ f(z)=(z-z_0)^mg(z)
 &lt;p&gt;&lt;strong&gt;常见的泰勒展开&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;以下都是在&lt;span class=&#34;math inline&#34;&gt;\(z=0\)&lt;/span&gt;处的展开式&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\frac{1}{1-x}=\sum^\infty_{n=0}x^n,|z|&amp;lt;1
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\frac{1}{1+x}=\sum^\infty_{n=0}(-1)^nx^n,|z|&amp;lt;1
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 e^z = \sum^\infty_{n=0} \frac{z^n}{n!},z\in\bm C
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 cosz = \sum^\infty_{n=0} (-1)^n\frac{z^{2n}}{(2n)!},z\in\bm C
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
-cosz = \sum^\infty_{n=0} (-1)^n\frac{z^{2n+1}}{(2n+1)!},z\in\bm C
+sinz = \sum^\infty_{n=0} (-1)^n\frac{z^{2n+1}}{(2n+1)!},z\in\bm C
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 \log(1+z) = \sum^\infty_{n=1} (-1)^{n-1}\frac{z^n}{n},|z|&amp;lt;1
@@ -3691,6 +3697,39 @@ cosz = \sum^\infty_{n=0} (-1)^n\frac{z^{2n+1}}{(2n+1)!},z\in\bm C
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 exp[a\log(1+z)] = \sum^\infty_{n=0}\binom{a}{n}z^n,|z|&amp;lt;1
 \]&lt;/span&gt;&lt;/p&gt;
+&lt;h2 id=&#34;辐角原理和rouche定理&#34;&gt;辐角原理和Rouche定理&lt;/h2&gt;
+&lt;p&gt;TODO&lt;/p&gt;
+&lt;h2 id=&#34;最大模原理和schwarz引理&#34;&gt;最大模原理和Schwarz引理&lt;/h2&gt;
+&lt;p&gt;TODO&lt;/p&gt;
+&lt;h1 id=&#34;全纯函数的laurent展开及其应用&#34;&gt;全纯函数的Laurent展开及其应用&lt;/h1&gt;
+&lt;p&gt;前面证明了，圆盘中的全纯函数一定可以在圆盘中展开成幂级数。但圆环中的全纯函数不一定，但是一定可以展开成洛朗级数。&lt;/p&gt;
+&lt;h2 id=&#34;全纯函数的laurent展开&#34;&gt;全纯函数的Laurent展开&lt;/h2&gt;
+&lt;p&gt;称级数&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\sum^\infty_{n=-\infty}a_n(z-z_0)^n=\sum^\infty_{n=0}a_n(z-z_0)^n+\sum^\infty_{n=1}a_{-n}(z-z_0)^{-n}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;为洛朗级数。由两部分组成，第一部分是幂级数，第二部分为负幂项的级数。如果这两个级数都收敛，则整个洛朗级数收敛。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定理1&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;如果洛朗级数&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\sum^\infty_{n=-\infty}a_n(z-z_0)^n=\sum^\infty_{n=0}a_n(z-z_0)^n+\sum^\infty_{n=1}a_{-n}(z-z_0)^{-n}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;的收敛域为圆环&lt;span class=&#34;math inline&#34;&gt;\(D=\{z:r&amp;lt;|z-z_0|&amp;lt;R\}\)&lt;/span&gt;，那么它在&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;中绝对收敛且内闭一致收敛，它的和函数在&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;中全纯。&lt;/p&gt;
+&lt;p&gt;上述级数的幂级数部分称为全纯部分，负幂项级数部分称为主要部分。&lt;/p&gt;
+&lt;p&gt;该定理的逆定理也成立。&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(D=\{z:r&amp;lt;|z-z_0|&amp;lt;R\}\)&lt;/span&gt;，如果&lt;span class=&#34;math inline&#34;&gt;\(f\in H(D)\)&lt;/span&gt;，那么&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;在&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;上可以展开为洛朗级数&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+f(z) = \sum^\infty_{n=-\infty}a_n(z-z_0)^n
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+a_n = \frac{1}{2\pi
+i}\int_{\gamma_\rho}\frac{f(\zeta)}{(\zeta-z_0)^{n+1}}d\zeta
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\gamma_\rho = \{\zeta:|\zeta-z_0|=\rho\}(r&amp;lt;\rho&amp;lt;R)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;并且这个展开式是唯一的。&lt;/p&gt;
 
 
 </description>

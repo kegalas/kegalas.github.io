@@ -1582,6 +1582,14 @@ $$
 以下都是在$z=0$处的展开式
 
 $$
+\frac{1}{1-x}=\sum^\infty_{n=0}x^n,|z|<1
+$$
+
+$$
+\frac{1}{1+x}=\sum^\infty_{n=0}(-1)^nx^n,|z|<1
+$$
+
+$$
 e^z = \sum^\infty_{n=0} \frac{z^n}{n!},z\in\bm C
 $$
 
@@ -1590,7 +1598,7 @@ cosz = \sum^\infty_{n=0} (-1)^n\frac{z^{2n}}{(2n)!},z\in\bm C
 $$
 
 $$
-cosz = \sum^\infty_{n=0} (-1)^n\frac{z^{2n+1}}{(2n+1)!},z\in\bm C
+sinz = \sum^\infty_{n=0} (-1)^n\frac{z^{2n+1}}{(2n+1)!},z\in\bm C
 $$
 
 $$
@@ -1600,3 +1608,57 @@ $$
 $$
 exp[a\log(1+z)] = \sum^\infty_{n=0}\binom{a}{n}z^n,|z|<1
 $$
+
+## 辐角原理和Rouche定理
+
+TODO
+
+## 最大模原理和Schwarz引理
+
+TODO
+
+# 全纯函数的Laurent展开及其应用
+
+前面证明了，圆盘中的全纯函数一定可以在圆盘中展开成幂级数。但圆环中的全纯函数不一定，但是一定可以展开成洛朗级数。
+
+## 全纯函数的Laurent展开
+
+称级数
+
+$$
+\sum^\infty_{n=-\infty}a_n(z-z_0)^n=\sum^\infty_{n=0}a_n(z-z_0)^n+\sum^\infty_{n=1}a_{-n}(z-z_0)^{-n}
+$$
+
+为洛朗级数。由两部分组成，第一部分是幂级数，第二部分为负幂项的级数。如果这两个级数都收敛，则整个洛朗级数收敛。
+
+**定理1**
+
+如果洛朗级数
+
+$$
+\sum^\infty_{n=-\infty}a_n(z-z_0)^n=\sum^\infty_{n=0}a_n(z-z_0)^n+\sum^\infty_{n=1}a_{-n}(z-z_0)^{-n}
+$$
+
+的收敛域为圆环$D=\{z:r<|z-z_0|<R\}$，那么它在$D$中绝对收敛且内闭一致收敛，它的和函数在$D$中全纯。
+
+上述级数的幂级数部分称为全纯部分，负幂项级数部分称为主要部分。
+
+该定理的逆定理也成立。
+
+设$D=\{z:r<|z-z_0|<R\}$，如果$f\in H(D)$，那么$f$在$D$上可以展开为洛朗级数
+
+$$
+f(z) = \sum^\infty_{n=-\infty}a_n(z-z_0)^n
+$$
+
+其中
+
+$$
+a_n = \frac{1}{2\pi i}\int_{\gamma_\rho}\frac{f(\zeta)}{(\zeta-z_0)^{n+1}}d\zeta
+$$
+
+$$
+\gamma_\rho = \{\zeta:|\zeta-z_0|=\rho\}(r<\rho<R)
+$$
+
+并且这个展开式是唯一的。
