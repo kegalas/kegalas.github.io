@@ -229,7 +229,7 @@ public:
 
 赋予了它少量功能，包括读写图片文件，图像翻转，以及设置某个像素的颜色值。
 
-完整的代码在<u>**[这里](https://github.com/kegalas/oar/blob/62a6ded4213783c747c766836720646be5dca341/tga_image.h)**</u>
+完整的代码在<u>**[这里](https://github.com/kegalas/oar/blob/3326779c1166f44db5b6f5e1ce5bd25d6dd98c84/tga_image.h)**</u>
 
 # tga_image.cpp
 
@@ -391,7 +391,7 @@ bool TGAImage::flipVertically(){
 **设置像素颜色**
 
 ```cpp
-bool TGAImage::setFragment(std::uint16_t const x, std::uint16_t const y, geo::vec4i const & color){
+bool TGAImage::setFragment(std::uint16_t const x, std::uint16_t const y, geo::OARColor const & color){
     assert(x>=0 && x<width && y>=0 && y<height);
     assert(color.r>=0 && color.r<=255);
     assert(color.g>=0 && color.g<=255);
@@ -422,6 +422,6 @@ bool TGAImage::setFragment(std::uint16_t const x, std::uint16_t const y, geo::ve
 }
 ```
 
-以四维颜色为例，主要注意下标要乘以像素占用的字节大小，以及颜色顺序为BGRA。
+主要注意下标要乘以像素占用的字节大小，以及颜色顺序为BGRA。
 
-完整的代码在<u>**[这里](https://github.com/kegalas/oar/blob/62a6ded4213783c747c766836720646be5dca341/tga_image.cpp)**</u>
+完整的代码在<u>**[这里](https://github.com/kegalas/oar/blob/3326779c1166f44db5b6f5e1ce5bd25d6dd98c84/tga_image.cpp)**</u>

@@ -515,7 +515,7 @@ typedef Mat<int, 4, 4> mat3f;
 
 另外这些全部都是在geo命名空间中，方便辨别。
 
-完整的代码在<u>**[这里](https://github.com/kegalas/oar/blob/291ae08843c20a07f193fedf875928bf354e99ca/geometry.h)**</u>
+完整的代码在<u>**[这里](https://github.com/kegalas/oar/blob/3326779c1166f44db5b6f5e1ce5bd25d6dd98c84/geometry.h)**</u>
 
 # geometry.cpp
 
@@ -532,21 +532,34 @@ geo::Vec<int,3>::Vec(geo::Vec<float, 2> const & v, float const z_){
 
 这段代码将二维的float向量转为三维的int向量，+0.5f即是四舍五入。
 
-然后就是转化为RGB、RGBA格式，以将四维float向量转变为RGBA为例
+然后就是转化为RGBA颜色格式，为了简单起见，我们假设所有的颜色都用RGBA表示，所以我们需要将RGB和灰度图像转化为RGBA，然后在写入图像时再具体分析写入什么颜色数据。举例将float的RGB和int的灰度转换为RGBA：
 
 ```cpp
-geo::Vec<int,4> geo::toRGBA(geo::Vec<float,4> const & v){
-    Vec<int,4> ret;
-    for(int i=0;i<4;i++){
+geo::Vec<int,4> geo::toOARColor(geo::Vec<float,3> const & v){
+    OARColor ret;
+    for(int i=0;i<3;i++){
         ret[i] = static_cast<int>(v[i]*255.f+0.5f);
         if (ret[i]<0) ret[i] = 0;
         else if(ret[i]>255) ret[i] = 255;
     }
+    ret[3] = 255;
+
+    return ret;
+}
+
+geo::Vec<int,4> geo::toOARColor(int const & v){
+    OARColor ret;
+    for(int i=0;i<3;i++){
+        if(v<0) ret[i] = 0;
+        else if(v>255) ret[i] = 255;
+        else ret[i] = v;
+    }
+    ret[3] = 255;
 
     return ret;
 }
 ```
 
-其将连续的[0,1]映射到离散的[0,255]，并且超出的部分映射到边界上，同时也计算了四舍五入。
+其将连续的[0,1]映射到离散的[0,255]（或者本来就是离散的），并且超出的部分映射到边界上，同时也计算了四舍五入。
 
-完整的代码在<u>**[这里](https://github.com/kegalas/oar/blob/291ae08843c20a07f193fedf875928bf354e99ca/geometry.cpp)**</u>
+完整的代码在<u>**[这里](https://github.com/kegalas/oar/blob/3326779c1166f44db5b6f5e1ce5bd25d6dd98c84/geometry.cpp)**</u>
