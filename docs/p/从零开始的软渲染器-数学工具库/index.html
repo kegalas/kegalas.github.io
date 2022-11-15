@@ -532,7 +532,7 @@ value)这个构造函数将主对角线上的元素设置为value。</p>
 <span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="kw">typedef</span> Mat<span class="op">&lt;</span><span class="dt">int</span><span class="op">,</span> <span class="dv">4</span><span class="op">,</span> <span class="dv">4</span><span class="op">&gt;</span> mat3f<span class="op">;</span></span></code></pre></div>
 <p>最后声明一下变量的别名方便使用。</p>
 <p>另外这些全部都是在geo命名空间中，方便辨别。</p>
-<p>完整的代码在<u><strong><a href="https://github.com/kegalas/oar/blob/291ae08843c20a07f193fedf875928bf354e99ca/geometry.h">这里</a></strong></u></p>
+<p>完整的代码在<u><strong><a href="https://github.com/kegalas/oar/blob/3326779c1166f44db5b6f5e1ce5bd25d6dd98c84/geometry.h">这里</a></strong></u></p>
 <h1 id="geometry.cpp">geometry.cpp</h1>
 <p>这个文件里大部分都是涉及向量类型转换的。唯一需要注意的是四舍五入。以三维为例</p>
 <div class="sourceCode" id="cb23"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="kw">template</span><span class="op">&lt;&gt;</span> <span class="kw">template</span><span class="op">&lt;&gt;</span></span>
@@ -542,19 +542,32 @@ value)这个构造函数将主对角线上的元素设置为value。</p>
 <span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>    z <span class="op">=</span> <span class="kw">static_cast</span><span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;(</span><span class="va">z_</span> <span class="op">+</span> <span class="fl">0.5</span><span class="bu">f</span><span class="op">);</span></span>
 <span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <p>这段代码将二维的float向量转为三维的int向量，+0.5f即是四舍五入。</p>
-<p>然后就是转化为RGB、RGBA格式，以将四维float向量转变为RGBA为例</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>geo<span class="op">::</span>Vec<span class="op">&lt;</span><span class="dt">int</span><span class="op">,</span><span class="dv">4</span><span class="op">&gt;</span> geo<span class="op">::</span>toRGBA<span class="op">(</span>geo<span class="op">::</span>Vec<span class="op">&lt;</span><span class="dt">float</span><span class="op">,</span><span class="dv">4</span><span class="op">&gt;</span> <span class="at">const</span> <span class="op">&amp;</span> v<span class="op">){</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>    Vec<span class="op">&lt;</span><span class="dt">int</span><span class="op">,</span><span class="dv">4</span><span class="op">&gt;</span> ret<span class="op">;</span></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span><span class="op">(</span><span class="dt">int</span> i<span class="op">=</span><span class="dv">0</span><span class="op">;</span>i<span class="op">&lt;</span><span class="dv">4</span><span class="op">;</span>i<span class="op">++){</span></span>
+<p>然后就是转化为RGBA颜色格式，为了简单起见，我们假设所有的颜色都用RGBA表示，所以我们需要将RGB和灰度图像转化为RGBA，然后在写入图像时再具体分析写入什么颜色数据。举例将float的RGB和int的灰度转换为RGBA：</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>geo<span class="op">::</span>Vec<span class="op">&lt;</span><span class="dt">int</span><span class="op">,</span><span class="dv">4</span><span class="op">&gt;</span> geo<span class="op">::</span>toOARColor<span class="op">(</span>geo<span class="op">::</span>Vec<span class="op">&lt;</span><span class="dt">float</span><span class="op">,</span><span class="dv">3</span><span class="op">&gt;</span> <span class="at">const</span> <span class="op">&amp;</span> v<span class="op">){</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>    OARColor ret<span class="op">;</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span><span class="op">(</span><span class="dt">int</span> i<span class="op">=</span><span class="dv">0</span><span class="op">;</span>i<span class="op">&lt;</span><span class="dv">3</span><span class="op">;</span>i<span class="op">++){</span></span>
 <span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>        ret<span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> <span class="kw">static_cast</span><span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;(</span>v<span class="op">[</span>i<span class="op">]*</span><span class="fl">255.</span><span class="bu">f</span><span class="op">+</span><span class="fl">0.5</span><span class="bu">f</span><span class="op">);</span></span>
 <span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span>ret<span class="op">[</span>i<span class="op">]&lt;</span><span class="dv">0</span><span class="op">)</span> ret<span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span> <span class="cf">if</span><span class="op">(</span>ret<span class="op">[</span>i<span class="op">]&gt;</span><span class="dv">255</span><span class="op">)</span> ret<span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> <span class="dv">255</span><span class="op">;</span></span>
 <span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> ret<span class="op">;</span></span>
-<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
-<p>其将连续的[0,1]映射到离散的[0,255]，并且超出的部分映射到边界上，同时也计算了四舍五入。</p>
-<p>完整的代码在<u><strong><a href="https://github.com/kegalas/oar/blob/291ae08843c20a07f193fedf875928bf354e99ca/geometry.cpp">这里</a></strong></u></p>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>    ret<span class="op">[</span><span class="dv">3</span><span class="op">]</span> <span class="op">=</span> <span class="dv">255</span><span class="op">;</span></span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> ret<span class="op">;</span></span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>geo<span class="op">::</span>Vec<span class="op">&lt;</span><span class="dt">int</span><span class="op">,</span><span class="dv">4</span><span class="op">&gt;</span> geo<span class="op">::</span>toOARColor<span class="op">(</span><span class="dt">int</span> <span class="at">const</span> <span class="op">&amp;</span> v<span class="op">){</span></span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>    OARColor ret<span class="op">;</span></span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span><span class="op">(</span><span class="dt">int</span> i<span class="op">=</span><span class="dv">0</span><span class="op">;</span>i<span class="op">&lt;</span><span class="dv">3</span><span class="op">;</span>i<span class="op">++){</span></span>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span><span class="op">(</span>v<span class="op">&lt;</span><span class="dv">0</span><span class="op">)</span> ret<span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span> <span class="cf">if</span><span class="op">(</span>v<span class="op">&gt;</span><span class="dv">255</span><span class="op">)</span> ret<span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> <span class="dv">255</span><span class="op">;</span></span>
+<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span> ret<span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> v<span class="op">;</span></span>
+<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a>    ret<span class="op">[</span><span class="dv">3</span><span class="op">]</span> <span class="op">=</span> <span class="dv">255</span><span class="op">;</span></span>
+<span id="cb24-21"><a href="#cb24-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-22"><a href="#cb24-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> ret<span class="op">;</span></span>
+<span id="cb24-23"><a href="#cb24-23" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>其将连续的[0,1]映射到离散的[0,255]（或者本来就是离散的），并且超出的部分映射到边界上，同时也计算了四舍五入。</p>
+<p>完整的代码在<u><strong><a href="https://github.com/kegalas/oar/blob/3326779c1166f44db5b6f5e1ce5bd25d6dd98c84/geometry.cpp">这里</a></strong></u></p>
 
 
 

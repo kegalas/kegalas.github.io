@@ -360,7 +360,7 @@
 <span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div>
 <p>赋予了它少量功能，包括读写图片文件，图像翻转，以及设置某个像素的颜色值。</p>
-<p>完整的代码在<u><strong><a href="https://github.com/kegalas/oar/blob/62a6ded4213783c747c766836720646be5dca341/tga_image.h">这里</a></strong></u></p>
+<p>完整的代码在<u><strong><a href="https://github.com/kegalas/oar/blob/3326779c1166f44db5b6f5e1ce5bd25d6dd98c84/tga_image.h">这里</a></strong></u></p>
 <h1 id="tga_image.cpp">tga_image.cpp</h1>
 <div class="sourceCode" id="cb7"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>TGAImage<span class="op">::</span>TGAImage<span class="op">(</span><span class="bu">std::</span>uint16_t<span class="op"> </span><span class="at">const</span> <span class="va">width_</span><span class="op">,</span> <span class="bu">std::</span>uint16_t<span class="op"> </span><span class="at">const</span> <span class="va">height_</span><span class="op">,</span> <span class="dt">unsigned</span> <span class="dt">int</span> <span class="at">const</span> <span class="va">type_</span><span class="op">){</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    width               <span class="op">=</span> <span class="va">width_</span><span class="op">;</span></span>
@@ -474,7 +474,7 @@
 <span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <p>如上，我们将isFlipVertically取反，并且将图像数据按height/2位轴做翻转。不过我们这里虽然叫图像翻转，但是最后输出的图像和原图不会有区别，因为我们翻转图像的时候同时改变了坐标原点的位置。这样做只是方便将两个坐标系下的图像数据统一到一起去计算。</p>
 <p><strong>设置像素颜色</strong></p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="dt">bool</span> TGAImage<span class="op">::</span>setFragment<span class="op">(</span><span class="bu">std::</span>uint16_t<span class="op"> </span><span class="at">const</span> x<span class="op">,</span> <span class="bu">std::</span>uint16_t<span class="op"> </span><span class="at">const</span> y<span class="op">,</span> geo<span class="op">::</span>vec4i <span class="at">const</span> <span class="op">&amp;</span> color<span class="op">){</span></span>
+<div class="sourceCode" id="cb17"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="dt">bool</span> TGAImage<span class="op">::</span>setFragment<span class="op">(</span><span class="bu">std::</span>uint16_t<span class="op"> </span><span class="at">const</span> x<span class="op">,</span> <span class="bu">std::</span>uint16_t<span class="op"> </span><span class="at">const</span> y<span class="op">,</span> geo<span class="op">::</span>OARColor <span class="at">const</span> <span class="op">&amp;</span> color<span class="op">){</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    <span class="ot">assert</span><span class="op">(</span>x<span class="op">&gt;=</span><span class="dv">0</span> <span class="op">&amp;&amp;</span> x<span class="op">&lt;</span>width <span class="op">&amp;&amp;</span> y<span class="op">&gt;=</span><span class="dv">0</span> <span class="op">&amp;&amp;</span> y<span class="op">&lt;</span>height<span class="op">);</span></span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    <span class="ot">assert</span><span class="op">(</span>color<span class="op">.</span>r<span class="op">&gt;=</span><span class="dv">0</span> <span class="op">&amp;&amp;</span> color<span class="op">.</span>r<span class="op">&lt;=</span><span class="dv">255</span><span class="op">);</span></span>
 <span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    <span class="ot">assert</span><span class="op">(</span>color<span class="op">.</span>g<span class="op">&gt;=</span><span class="dv">0</span> <span class="op">&amp;&amp;</span> color<span class="op">.</span>g<span class="op">&lt;=</span><span class="dv">255</span><span class="op">);</span></span>
@@ -503,8 +503,8 @@
 <span id="cb17-27"><a href="#cb17-27" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-28"><a href="#cb17-28" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="kw">true</span><span class="op">;</span></span>
 <span id="cb17-29"><a href="#cb17-29" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
-<p>以四维颜色为例，主要注意下标要乘以像素占用的字节大小，以及颜色顺序为BGRA。</p>
-<p>完整的代码在<u><strong><a href="https://github.com/kegalas/oar/blob/62a6ded4213783c747c766836720646be5dca341/tga_image.cpp">这里</a></strong></u></p>
+<p>主要注意下标要乘以像素占用的字节大小，以及颜色顺序为BGRA。</p>
+<p>完整的代码在<u><strong><a href="https://github.com/kegalas/oar/blob/3326779c1166f44db5b6f5e1ce5bd25d6dd98c84/tga_image.cpp">这里</a></strong></u></p>
 
 
 
