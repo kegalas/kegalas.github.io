@@ -125,7 +125,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 29 分钟
+                    阅读时长: 32 分钟
                 </time>
             </div>
         
@@ -595,309 +595,6 @@ f_Y(y) = \int^\infty_0 \frac{1}{|x_1|}f(x_1,\frac{y}{x_1})dx_1
 <p><span class="math display">\[
 f_Y(y) = \int^\infty_0 \frac{1}{|x_1|}f_1(x_1)f_2(\frac{y}{x_1})dx_1
 \]</span></p>
-<h2 id="数学期望与中位数">数学期望与中位数</h2>
-<h3 id="定义-1">定义</h3>
-<p><strong>定义1</strong></p>
-<p>设随机变量<span class="math inline">\(X\)</span>只取有限个可能值<span class="math inline">\(a_1,\cdots,a_m\)</span>，其概率分布为<span class="math inline">\(P(X=a_i)=p_i(i=1,\cdots,m)\)</span>，则<span class="math inline">\(X\)</span>的数学期望，记为<span class="math inline">\(E(X)\)</span>或<span class="math inline">\(EX\)</span>，定义为</p>
-<p><span class="math display">\[
-E(X) = a_1p_1+a_2p_2+\cdots+a_mp_m
-\]</span></p>
-<p>如果取无穷个值<span class="math inline">\(a_1,a_2,\cdots\)</span>，而概率分布为<span class="math inline">\(P(X=a_i)=p_i(i=1,\cdots)\)</span>，则有其数学期望为</p>
-<p><span class="math display">\[
-E(X) = \sum^\infty_{i=1}a_ip_i（式1）
-\]</span></p>
-<p>这个期望存在，必须要求这个级数收敛，并且是绝对收敛。</p>
-<p><strong>定义2</strong></p>
-<p>如果</p>
-<p><span class="math display">\[
-\sum^\infty_{i=1}|a_i|p_i&lt;\infty
-\]</span></p>
-<p>则称式1的右边的级数之和为<span class="math inline">\(X\)</span>的数学期望</p>
-<p><strong>定义3</strong></p>
-<p>设<span class="math inline">\(X\)</span>有概率密度函数<span class="math inline">\(f(x)\)</span>，如果</p>
-<p><span class="math display">\[
-\int^\infty_{-\infty}|x|f(x)dx&lt;\infty
-\]</span></p>
-<p>则称</p>
-<p><span class="math display">\[
-E(X) = \int^\infty_{-\infty}xf(x)dx
-\]</span></p>
-<p>为<span class="math inline">\(X\)</span>的数学期望。</p>
-<h3 id="性质">性质</h3>
-<p><strong>定理1</strong></p>
-<p>若干个随机变量之和的期望等于各变量的期望之和</p>
-<p><span class="math display">\[
-E(X_1+X_2+\cdots+X_n) = E(X_1)+E(X_2)+\cdots+E(X_n)
-\]</span></p>
-<p><strong>定理2</strong></p>
-<p>若干个独立（注意独立）随机变量之积的期望等于各变量期望之积</p>
-<p><span class="math display">\[
-E(X_1X_2\cdots X_n) = E(X_1)E(X_2)\cdots E(X_n)
-\]</span></p>
-<p><strong>随机变量函数的期望</strong></p>
-<p>设随机变量<span class="math inline">\(X\)</span>为离散型，有分布<span class="math inline">\(P(X=a_i)=p_i(i=1,2,\cdots)\)</span>；或者为连续型，有概率密度函数<span class="math inline">\(f(x)\)</span>，则</p>
-<p><span class="math display">\[
-E(g(x)) = \sum_i g(a_i)p_i（要求绝对收敛）
-\]</span></p>
-<p>或</p>
-<p><span class="math display">\[
-E(g(x)) =
-\int^\infty_{-\infty}g(x)f(x)dx（要求\int^\infty_{-\infty}|g(x)|f(x)dx&lt;\infty）
-\]</span></p>
-<p>有一个特例是，若<span class="math inline">\(c\)</span>为常数，则</p>
-<p><span class="math display">\[
-E(cX) = cE(X)
-\]</span></p>
-<h3 id="多维情况">多维情况</h3>
-<p>以二维为例</p>
-<p>设<span class="math inline">\(Z\)</span>是随机变量<span class="math inline">\(X,Y\)</span>的函数，<span class="math inline">\(Z=g(X,Y)\)</span>，<span class="math inline">\(g\)</span>是连续函数，<span class="math inline">\(Z\)</span>是一维随机变量</p>
-<p><em>离散情况</em></p>
-<p>设<span class="math inline">\((X,Y)\)</span>的分布律为<span class="math inline">\(P(X=x_i,Y=y_j)=p_{ij}\)</span></p>
-<p><span class="math display">\[
-E(Z) = E[g(X,Y)] = \sum_j\sum_i g(x_i,y_j)p_{ij}
-\]</span></p>
-<p><em>连续情况</em></p>
-<p>设<span class="math inline">\((X,Y)\)</span>的概率密度是<span class="math inline">\(f(x,y)\)</span>，则有</p>
-<p><span class="math display">\[
-E(Z)=E[g(X,Y)]=\int^{+\infty}_{-\infty}\int^{+\infty}_{-\infty}g(x,y)f(x,y)dxdy
-\]</span></p>
-<p>更高维可以同理推出。</p>
-<h3 id="条件数学期望">条件数学期望</h3>
-<p><span class="math display">\[
-E(Y|x) = \int^\infty_{-\infty}yf(y|x)dy
-\]</span></p>
-<p>类似于全概率公式，我们可以求得无条件的数学期望的一个重要公式</p>
-<p><span class="math display">\[
-E(Y) = \int^\infty_{-\infty}E(Y|x)f_1(x)dx
-\]</span></p>
-<p>其中</p>
-<p><span class="math display">\[
-f_1 = \int^\infty_{-\infty}f(x,y)dy
-\]</span></p>
-<p>如果将<span class="math inline">\(g(x)=E(Y|x)\)</span>，则</p>
-<p><span class="math display">\[
-E(Y) = \int^\infty_{-\infty}g(x)f_1(x)dx=E(g(X))=E(E(Y|X))
-\]</span></p>
-<p>整理得到</p>
-<p><span class="math display">\[
-E(Y) = E[E(Y|X)]
-\]</span></p>
-<p>如果是多维的，也有</p>
-<p><span class="math display">\[
-E(Y) =
-\int^\infty_{-\infty}\cdots\int^\infty_{-\infty}E(Y|x_1,\cdots,x_n)f(x_1,\cdots,x_n)dx_1\cdots
-dx_n
-\]</span></p>
-<p>如果是离散的，有<span class="math inline">\(P(X=a_i)=p_i\)</span>，则</p>
-<p><span class="math display">\[
-E(Y) = \sum^\infty_{i=1}p_iE(Y|a_i)
-\]</span></p>
-<h3 id="中位数">中位数</h3>
-<p><strong>定义1</strong></p>
-<p>设连续型随机变量<span class="math inline">\(X\)</span>的分布函数为<span class="math inline">\(F(x)\)</span>，则满足条件</p>
-<p><span class="math display">\[
-P(X\leq m)=F(m)=1/2
-\]</span></p>
-<p>的数<span class="math inline">\(m\)</span>称为<span class="math inline">\(X\)</span>或分布<span class="math inline">\(F\)</span>的中位数。</p>
-<p>而连续的时候，有</p>
-<p><span class="math display">\[
-P(X\leq m) = P(X&lt;m) = P(X&gt;m) = P(X\geq m) = 1/2   
-\]</span></p>
-<h2 id="方差与矩">方差与矩</h2>
-<h3 id="方差与标准差">方差与标准差</h3>
-<p><strong>定义1</strong></p>
-<p>设<span class="math inline">\(X\)</span>为随机变量，分布为<span class="math inline">\(F\)</span>，则</p>
-<p><span class="math display">\[
-Var(X) = E(X-EX)^2
-\]</span></p>
-<p>称为<span class="math inline">\(X\)</span>的方差，有时会记为<span class="math inline">\(DX\)</span>，其算术平方根称为标准差。</p>
-<p>将其展开得</p>
-<p><span class="math display">\[
-Var(X)=E(X^2)-(EX)^2
-\]</span></p>
-<p><strong>定理1</strong></p>
-<ol type="1">
-<li>常数的方差为<span class="math inline">\(0\)</span></li>
-<li>若<span class="math inline">\(c\)</span>为常数，则<span class="math inline">\(Var(X+c)=Var(X)\)</span></li>
-<li>若<span class="math inline">\(c\)</span>为常数，则<span class="math inline">\(Var(cX)=c^2Var(X)\)</span></li>
-<li><span class="math inline">\(Var(X)=0\)</span>的充要条件为，<span class="math inline">\(P(X=E(X))=1\)</span></li>
-</ol>
-<p><strong>定理2</strong></p>
-<p>独立（注意独立）随机变量之和的方差等于各变量的方差之和，即</p>
-<p><span class="math display">\[
-Var(X_1+X_2+\cdots+X_n) = Var(X_1)+Var(X_2)+\cdots+Var(X_n)
-\]</span></p>
-<p>如果不要求独立，二维有</p>
-<p><span class="math display">\[
-Var(X+Y)=Var(X)+Var(Y)+2E\{[X-E(X)][Y-E(Y)]\}
-\]</span></p>
-<h3 id="矩">矩</h3>
-<p><strong>定义1</strong></p>
-<p>设<span class="math inline">\(X\)</span>为随机变量，<span class="math inline">\(c\)</span>为常数，<span class="math inline">\(k\)</span>为正整数，则量<span class="math inline">\(E[(X-c)^k]\)</span>称为<span class="math inline">\(X\)</span>关于<span class="math inline">\(c\)</span>点的<span class="math inline">\(k\)</span>阶矩</p>
-<ol type="1">
-<li><span class="math inline">\(c=0\)</span>时称为<span class="math inline">\(X\)</span>的<span class="math inline">\(k\)</span>阶原点矩，记作<span class="math inline">\(\mu_k\)</span></li>
-<li><span class="math inline">\(c=E(X)\)</span>时称为<span class="math inline">\(X\)</span>的<span class="math inline">\(k\)</span>阶中心矩，记作<span class="math inline">\(v_k\)</span>。</li>
-</ol>
-<p>另外</p>
-<ol type="1">
-<li><span class="math inline">\(\mu_{kl}=E(X^kY^l)\)</span>称为<span class="math inline">\(X,Y\)</span>的<span class="math inline">\(k+l\)</span>阶混合原点矩，简称<span class="math inline">\(k+l\)</span>混合矩</li>
-<li><span class="math inline">\(v_{kl}=E[(X-E(X))^k(Y-E(Y))^l]\)</span>称为<span class="math inline">\(X,Y\)</span>的<span class="math inline">\(k+l\)</span>阶混合中心矩</li>
-</ol>
-<h2 id="协方差与相关系数">协方差与相关系数</h2>
-<p>对于二维随机向量<span class="math inline">\((X,Y)\)</span>，<span class="math inline">\(X,Y\)</span>本身都是一维随机变量，可以定义其均值、方差，我们记为</p>
-<p><span class="math display">\[
-E(X)=m_1,E(Y)=m_2,Var(X)=\sigma_1^2,Var(Y)=\sigma_2^2
-\]</span></p>
-<p><strong>定义1</strong></p>
-<p>称<span class="math inline">\(E[(X-m_1)(Y-m_2)]\)</span>为<span class="math inline">\(X,Y\)</span>的协方差，并记为<span class="math inline">\(Cov(X,Y)\)</span></p>
-<p>显然有<span class="math inline">\(Cov(X,Y)=Cov(Y,X)\)</span></p>
-<p>也有</p>
-<ol type="1">
-<li>对常数<span class="math inline">\(c_1,c_2,c_3,c_4\)</span>，有</li>
-</ol>
-<p><span class="math display">\[
-Cov(c_1X+c_2,c_3Y+c_4)=c_1c_3Cov(X,Y)
-\]</span></p>
-<ol start="2" type="1">
-<li><span class="math inline">\(Cov(X,Y)=E(XY)-m_1m_2=E(XY)-E(X)E(Y)\)</span></li>
-<li><span class="math inline">\(Cov(X,X)=Var(X)\)</span></li>
-<li><span class="math inline">\(Cov(X_1+X_2,Y)=Cov(X_1,Y)+Cov(X_2,Y)\)</span></li>
-<li><span class="math inline">\(Var(X\pm Y)=Var(X)+Var(Y)\pm
-2Cov(X,Y)\)</span></li>
-</ol>
-<p><strong>定理1</strong></p>
-<ol type="1">
-<li>若<span class="math inline">\(X,Y\)</span>独立，则<span class="math inline">\(Cov(X,Y)=0\)</span></li>
-<li><span class="math inline">\([Cov(X,Y)]^2\leq\sigma_1^2\sigma_2^2\)</span>，等号当且仅当<span class="math inline">\(X,Y\)</span>之间有严格线性关系（即存在常数<span class="math inline">\(a,b\)</span>使<span class="math inline">\(Y=a+bX\)</span>）时成立。</li>
-</ol>
-<p><strong>定义2</strong></p>
-<p>称<span class="math inline">\(Cov(X,Y)/(\sigma_1\sigma_2)\)</span>为<span class="math inline">\(X,Y\)</span>的相关系数，并记为<span class="math inline">\(Corr(X,Y)\)</span>，有时也记为<span class="math inline">\(\rho_{XY}\)</span></p>
-<p>可以将相关系数看做标准尺度下的协方差。</p>
-<p><strong>定理2</strong></p>
-<ol type="1">
-<li>若<span class="math inline">\(X,Y\)</span>独立，则<span class="math inline">\(Corr(X,Y)=0\)</span>，当然也要求方差大于<span class="math inline">\(0\)</span>才有定义。</li>
-<li><span class="math inline">\(-1\leq Corr(X,Y)\leq
-1\)</span>，等号当且仅当<span class="math inline">\(X,Y\)</span>之间有严格线性关系时达到。</li>
-</ol>
-<p>需要注意几点：</p>
-<ol type="1">
-<li>当<span class="math inline">\(Corr(X,Y)=0\)</span>（或<span class="math inline">\(Cov(X,Y)=0\)</span>）时，称<span class="math inline">\(X,Y\)</span>不相关，通常我们只能由“独立”推出“不相关”，而不能反过来。但是对于服从二维正态分布的<span class="math inline">\(X,Y\)</span>，“独立”和“不相关”是一回事。</li>
-<li>相关系数也常称为“线性相关系数”，相关系数并不是刻画<span class="math inline">\(X,Y\)</span>之间一般关系的程度，而只刻画了“线性”关系的程度。上述定理的第二条提供了一个依据。</li>
-<li>如果<span class="math inline">\(0&lt; |Corr(X,Y)|&lt;
-1\)</span>，则解释为<span class="math inline">\(X,Y\)</span>之间有一定程度的线性关系。</li>
-<li>线性相关的意义还可以从最小二乘法的角度去解释。</li>
-</ol>
-<h2 id="大数定理和中心极限定理">大数定理和中心极限定理</h2>
-<h3 id="大数定理">大数定理</h3>
-<p><strong>定义1</strong></p>
-<p>设<span class="math inline">\(X_1,X_2,\cdots\)</span>是随机变量序列，如果存在数列<span class="math inline">\(a_1,a_2,\cdots\)</span>使得对任意的<span class="math inline">\(\varepsilon&gt;0\)</span>，有</p>
-<p><span class="math display">\[
-\lim_{n\to\infty}P\bigg(\bigg|\frac{1}{n}\sum^n_{i=1}X_i-a_n\bigg|\geq\varepsilon\bigg)=0
-\]</span></p>
-<p>则称随机变量序列<span class="math inline">\(\{X_i\}\)</span>服从大数定律。</p>
-<p><strong>定义2</strong></p>
-<p>设<span class="math inline">\(X_1,X_2,\cdots\)</span>是随机变量序列，<span class="math inline">\(X\)</span>是随机变量，若对任意的<span class="math inline">\(\varepsilon&gt;0\)</span>，有</p>
-<p><span class="math display">\[
-\lim_{n\to\infty}P(|X_n-X|\geq \varepsilon)=0
-\]</span></p>
-<p>此时我们称<span class="math inline">\(\{X_i\}\)</span>依概率收敛到<span class="math inline">\(X\)</span>，记为</p>
-<p><span class="math display">\[
-X_n\stackrel{P}\rightarrow X,n\to\infty
-\]</span></p>
-<p><strong>马尔科夫不等式</strong></p>
-<p>若<span class="math inline">\(Y\)</span>为只取非负值的随机变量，则对任给常数<span class="math inline">\(\varepsilon&gt;0\)</span>，有</p>
-<p><span class="math display">\[
-P(Y\geq \varepsilon)\leq E(Y)/\varepsilon
-\]</span></p>
-<p><strong>切比雪夫不等式</strong></p>
-<p>若<span class="math inline">\(Var(Y)\)</span>存在，则</p>
-<p><span class="math display">\[
-P(|Y-EY|\geq\varepsilon)\leq Var(Y)/\varepsilon^2
-\]</span></p>
-<p>可以推知</p>
-<p><span class="math display">\[
-P(|Y-EY|&lt;\varepsilon)\leq 1-Var(Y)/\varepsilon^2
-\]</span></p>
-<p><strong>切比雪夫大数定理</strong></p>
-<p>设<span class="math inline">\(X_1,X_2,\cdots,X_n,\cdots\)</span>是相互独立独立的随机变量，具有相同的期望和方差，记它们的均值都为<span class="math inline">\(a\)</span>。又设它们的方差存在并记为<span class="math inline">\(\sigma^2\)</span>。则对任意给定的<span class="math inline">\(\varepsilon&gt;0\)</span>，有</p>
-<p><span class="math display">\[
-\lim_{n\to \infty}P(|\bar X_n-a|\geq \varepsilon) = 0
-\]</span></p>
-<p><em>更一般的形式</em></p>
-<p>设<span class="math inline">\(X_1,X_2,\cdots,X_n,\cdots\)</span>是相互独立的随机变量序列，具有相同的期望<span class="math inline">\(\mu\)</span>，如果存在常数<span class="math inline">\(C&gt;0\)</span>，使得<span class="math inline">\(D(X_k)\leq C\)</span>，则对于任意<span class="math inline">\(\varepsilon&gt;0\)</span>，有</p>
-<p><span class="math display">\[
-\lim_{n\to\infty}P\bigg(\bigg|\frac{1}{n}\sum^n_{k=1}X_k-\mu\bigg|\geq\varepsilon\bigg)=0
-\]</span></p>
-<p><strong>马尔科夫大数定律</strong></p>
-<p>设<span class="math inline">\(X_1,X_2,\cdots,X_n,\cdots\)</span>是随机变量序列，且</p>
-<p><span class="math display">\[
-\lim_{n\to\infty}\frac{1}{n^2}D\bigg[\sum^n_{k=1}X_k\bigg]=0
-\]</span></p>
-<p>则对于任意<span class="math inline">\(\varepsilon&gt;0\)</span>，有</p>
-<p><span class="math display">\[
-\lim_{n\to\infty}P\bigg(\bigg|\frac{1}{n}\sum^n_{k=1}X_k-\frac{1}{n}\sum^n_{k=1}E(X_k)\bigg|\geq\varepsilon\bigg)=0
-\]</span></p>
-<p><strong>辛钦大数定律</strong></p>
-<p>设<span class="math inline">\(X_1,X_2,\cdots,X_n,\cdots\)</span>是相互独立且同分布的随机变量序列，具有有限的数学期望，记为<span class="math inline">\(\mu\)</span>。则对于任意<span class="math inline">\(\varepsilon&gt;0\)</span>，有</p>
-<p><span class="math display">\[
-\lim_{n\to\infty}P\bigg(\bigg|\frac{1}{n}\sum^n_{k=1}X_k-\mu\bigg|\geq\varepsilon\bigg)=0
-\]</span></p>
-<p><strong>伯努利大数定律</strong></p>
-<p>设<span class="math inline">\(n_A\)</span>是<span class="math inline">\(n\)</span>次独立重复实验（<span class="math inline">\(n\)</span>重伯努利实验）事件<span class="math inline">\(A\)</span>发生的次数，<span class="math inline">\(p\)</span>是事件<span class="math inline">\(A\)</span>在每次试验中发生的概率，即<span class="math inline">\(P(A)=p\)</span>，则对任意的<span class="math inline">\(\varepsilon&gt;0\)</span>，有</p>
-<p><span class="math display">\[
-\lim_{n\to\infty}
-P\bigg(\bigg|\frac{n_A}{n}-p\bigg|\geq\varepsilon\bigg)=0
-\]</span></p>
-<h3 id="中心极限定理">中心极限定理</h3>
-<p><strong>定理1</strong></p>
-<p>设<span class="math inline">\(X_1,X_2,\cdots,X_n,\cdots\)</span>为独立同分布的随机变量，<span class="math inline">\(E(X_i)=\mu,Var(X_i)=\sigma^2(0&lt;\sigma^2&lt;\infty)\)</span>。则对任何实数<span class="math inline">\(x\)</span>，有</p>
-<p><span class="math display">\[
-\lim_{n\to\infty}P\bigg(\frac{1}{\sqrt{n}
-\sigma}(X_1+\cdots+X_n-n\mu)\leq x\bigg)=\varPhi(x)
-\]</span></p>
-<p>这里，<span class="math inline">\(\varPhi(x)\)</span>是标准正态分布<span class="math inline">\(N(0,1)\)</span>的分布函数。</p>
-<p>也就是说，当<span class="math inline">\(n\)</span>充分大时，有</p>
-<p><span class="math display">\[
-\sum_{k=1}^n X_k\sim N(n\mu,n\sigma^2),\quad
-\frac{\sum_{k=1}^nX_k-n\mu}{\sqrt{n}\sigma}\sim N(0,1)
-\]</span></p>
-<p><span class="math display">\[
-P\bigg(\sum^n_{k=1}X_k\leq x\bigg)\approx\Phi\bigg(\frac{x-n\mu}{\sqrt
-n\sigma}\bigg),\quad P\bigg(a&lt;\sum^n_{k=1}X_k\leq
-b\bigg)\approx\Phi\bigg(\frac{b-n\mu}{\sqrt
-n\sigma}\bigg)-\bigg(\frac{a-n\mu}{\sqrt n\sigma}\bigg)
-\]</span></p>
-<p><span class="math display">\[
-\bar X\approx N(\mu,\sigma^2/n),\quad \frac{\bar
-X-\mu}{\sigma/\sqrt{n}}\approx N(0,1)
-\]</span></p>
-<p><strong>李雅普诺夫中心极限定理</strong></p>
-<p>设<span class="math inline">\(X_1,X_2,\cdots,X_n,\cdots\)</span>相互独立，其具有如下数学期望和方差：<span class="math inline">\(E(X_k)=\mu_k,D(X_k)=\sigma_k^2&gt;0\)</span>，记<span class="math inline">\(B_n^2=\sum^n_{k=1}\sigma^2_k\)</span></p>
-<p>若存在正数<span class="math inline">\(\delta\)</span>使得当<span class="math inline">\(n\to\infty\)</span>时</p>
-<p><span class="math display">\[
-\frac{1}{B^{2+\delta}}\sum^n_{k=1}E\bigg[|X_i-\mu_i|^{2+\delta}\bigg]\to
-0
-\]</span></p>
-<p>则</p>
-<p><span class="math display">\[
-\lim_{n\to\infty}P\bigg(\frac{\sum^n_{k=1}X_k-\sum^n_{k=1}\mu_k}{B_n}\leq
-x\bigg)=\Phi(x)
-\]</span></p>
-<p><strong>棣莫弗-拉普拉斯中心极限定理</strong></p>
-<p>设<span class="math inline">\(n_A\)</span>是<span class="math inline">\(n\)</span>次独立重复实验（<span class="math inline">\(n\)</span>重伯努利实验）事件<span class="math inline">\(A\)</span>发生的次数，<span class="math inline">\(p\)</span>是事件<span class="math inline">\(A\)</span>在每次试验中发生的概率，即<span class="math inline">\(P(A)=p\)</span>，</p>
-<p><span class="math display">\[
-\lim_{n\to\infty}P\bigg(\frac{n_A-np}{\sqrt{np(1-p)}}\leq
-x\bigg)=\Phi(x)
-\]</span></p>
-<p>即，若<span class="math inline">\(X\sim B(n,p)\)</span>，<span class="math inline">\(n\)</span>充分大时</p>
-<p><span class="math display">\[
-X\sim N(np,np(1-p))
-\]</span></p>
-<p><span class="math display">\[
-P(X\leq x)\approx\Phi\bigg(\frac{x-np}{\sqrt{np(1-p)}}\bigg),\quad
-P(a&lt;X\leq
-b)\approx\Phi\bigg(\frac{b-np}{\sqrt{np(1-p)}}\bigg)-\Phi\bigg(\frac{a-np}{\sqrt{np(1-p)}}\bigg)
-\]</span></p>
 <h2 id="常见的分布">常见的分布</h2>
 <h3 id="分布">0-1分布</h3>
 <p>设某个事件<span class="math inline">\(A\)</span>在一次试验中发生的概率为<span class="math inline">\(p\)</span>，重复试验<span class="math inline">\(1\)</span>次，以<span class="math inline">\(X\)</span>记<span class="math inline">\(A\)</span>在<span class="math inline">\(1\)</span>次试验中发生的次数，则</p>
@@ -1262,7 +959,7 @@ x&gt;0\\
 \end{align}\]</span>. $$</p>
 <p>是概率密度函数。它称为“自由度为<span class="math inline">\(n\)</span>的皮尔逊卡方密度”，常记为<span class="math inline">\(\mathcal{X}{}_n^2\)</span></p>
 <p><strong>定理1</strong></p>
-<p>若<span class="math inline">\(X_1,\cdots,X_n\)</span>相互独立，都服从正态分布<span class="math inline">\(N(0,1)\)</span>，则<span class="math inline">\(Y=X_1^2+\cdots+X_N^2\)</span>服从自由度为<span class="math inline">\(n\)</span>的卡方分布<span class="math inline">\(\mathcal{X}{}_n^2\)</span></p>
+<p>若<span class="math inline">\(X_1,\cdots,X_n\)</span>相互独立，都服从正态分布<span class="math inline">\(N(0,1)\)</span>，则<span class="math inline">\(Y=X_1^2+\cdots+X_n^2\)</span>服从自由度为<span class="math inline">\(n\)</span>的卡方分布<span class="math inline">\(\mathcal{X}{}_n^2\)</span></p>
 <p>卡方分布有如下性质</p>
 <ol type="1">
 <li>设<span class="math inline">\(X_1,X_2\)</span>独立，<span class="math inline">\(X_1\sim \mathcal{X}_m^2,X_2\sim
@@ -1273,14 +970,418 @@ x&gt;0\\
 <p><span class="math display">\[
 X=2\lambda(X_1+\cdots+X_n)\sim \mathcal{X}_{2n}^2
 \]</span></p>
+<p><strong>期望</strong></p>
+<p>若<span class="math inline">\(X\sim\mathcal{X}_n^2\)</span>，<span class="math inline">\(E(X)=n\)</span></p>
+<p><strong>方差</strong></p>
+<p>若<span class="math inline">\(X\sim\mathcal{X}_n^2\)</span>，<span class="math inline">\(D(X)=2n\)</span></p>
 <h3 id="t分布">t分布</h3>
-<p><span class="math inline">\(Y=X_2/\sqrt{X_1/n}\)</span>的密度函数为</p>
+<p>若<span class="math inline">\(X\sim
+N(0,1),Y\sim\mathcal{X}_n^2\)</span>，且<span class="math inline">\(X,Y\)</span>相互独立</p>
+<p><span class="math inline">\(t=X/\sqrt{Y/n}\)</span>的密度函数为</p>
 <p><span class="math display">\[
 t_n(y)=\frac{\Gamma((n+1)/2)}{\sqrt{n\pi}\Gamma(n/2)}\bigg(1+\frac{y^2}{n}\bigg)^{-\frac{n+1}{2}}
 \]</span></p>
 <p>这个密度函数称为“自由度为<span class="math inline">\(n\)</span>的<span class="math inline">\(t\)</span>分布”的密度函数，常简记为<span class="math inline">\(t_n\)</span></p>
+<p><span class="math inline">\(n\)</span>充分大时</p>
+<p><span class="math display">\[
+\lim_{n\to\infty}t_n(y)=\frac{1}{\sqrt{2\pi}}e^{-t^2/2}
+\]</span></p>
 <h3 id="f分布">F分布</h3>
-<p>TODO</p>
+<p>设<span class="math inline">\(U\sim\mathcal{X}_{n_1}^2,V\sim\mathcal{X}_{n_2}^2\)</span>，且<span class="math inline">\(U,V\)</span>相互独立，则称随机变量</p>
+<p><span class="math display">\[
+F = \frac{U/n_1}{V/n_2}
+\]</span></p>
+<p>服从自由度为<span class="math inline">\((n_1,n_2)\)</span>的<span class="math inline">\(F\)</span>分布，概率密度为</p>
+<p><span class="math display">\[
+f_{n_1,n_2}(y) =
+n_1^{n_1/2}n_2^{n_2/2}\frac{\Gamma(\frac{n_1+n_2}{2})}{\Gamma(\frac{n_1}{2})\Gamma(\frac{n_2}{2})}y^{n_1/2-1}(n_1y+n_2)^{-(n_1+n_2)/2}
+\]</span></p>
+<p><strong>性质</strong></p>
+<p>若<span class="math inline">\(F\sim F(n_1,n_2)\)</span>，则<span class="math inline">\(\frac{1}{F}\sim F(n_2,n_1)\)</span></p>
+<h1 id="随机变量的数字特征">随机变量的数字特征</h1>
+<h2 id="数学期望与中位数">数学期望与中位数</h2>
+<h3 id="定义-1">定义</h3>
+<p><strong>定义1</strong></p>
+<p>设随机变量<span class="math inline">\(X\)</span>只取有限个可能值<span class="math inline">\(a_1,\cdots,a_m\)</span>，其概率分布为<span class="math inline">\(P(X=a_i)=p_i(i=1,\cdots,m)\)</span>，则<span class="math inline">\(X\)</span>的数学期望，记为<span class="math inline">\(E(X)\)</span>或<span class="math inline">\(EX\)</span>，定义为</p>
+<p><span class="math display">\[
+E(X) = a_1p_1+a_2p_2+\cdots+a_mp_m
+\]</span></p>
+<p>如果取无穷个值<span class="math inline">\(a_1,a_2,\cdots\)</span>，而概率分布为<span class="math inline">\(P(X=a_i)=p_i(i=1,\cdots)\)</span>，则有其数学期望为</p>
+<p><span class="math display">\[
+E(X) = \sum^\infty_{i=1}a_ip_i（式1）
+\]</span></p>
+<p>这个期望存在，必须要求这个级数收敛，并且是绝对收敛。</p>
+<p><strong>定义2</strong></p>
+<p>如果</p>
+<p><span class="math display">\[
+\sum^\infty_{i=1}|a_i|p_i&lt;\infty
+\]</span></p>
+<p>则称式1的右边的级数之和为<span class="math inline">\(X\)</span>的数学期望</p>
+<p><strong>定义3</strong></p>
+<p>设<span class="math inline">\(X\)</span>有概率密度函数<span class="math inline">\(f(x)\)</span>，如果</p>
+<p><span class="math display">\[
+\int^\infty_{-\infty}|x|f(x)dx&lt;\infty
+\]</span></p>
+<p>则称</p>
+<p><span class="math display">\[
+E(X) = \int^\infty_{-\infty}xf(x)dx
+\]</span></p>
+<p>为<span class="math inline">\(X\)</span>的数学期望。</p>
+<h3 id="性质">性质</h3>
+<p><strong>定理1</strong></p>
+<p>若干个随机变量之和的期望等于各变量的期望之和</p>
+<p><span class="math display">\[
+E(X_1+X_2+\cdots+X_n) = E(X_1)+E(X_2)+\cdots+E(X_n)
+\]</span></p>
+<p><strong>定理2</strong></p>
+<p>若干个独立（注意独立）随机变量之积的期望等于各变量期望之积</p>
+<p><span class="math display">\[
+E(X_1X_2\cdots X_n) = E(X_1)E(X_2)\cdots E(X_n)
+\]</span></p>
+<p><strong>随机变量函数的期望</strong></p>
+<p>设随机变量<span class="math inline">\(X\)</span>为离散型，有分布<span class="math inline">\(P(X=a_i)=p_i(i=1,2,\cdots)\)</span>；或者为连续型，有概率密度函数<span class="math inline">\(f(x)\)</span>，则</p>
+<p><span class="math display">\[
+E(g(x)) = \sum_i g(a_i)p_i（要求绝对收敛）
+\]</span></p>
+<p>或</p>
+<p><span class="math display">\[
+E(g(x)) =
+\int^\infty_{-\infty}g(x)f(x)dx（要求\int^\infty_{-\infty}|g(x)|f(x)dx&lt;\infty）
+\]</span></p>
+<p>有一个特例是，若<span class="math inline">\(c\)</span>为常数，则</p>
+<p><span class="math display">\[
+E(cX) = cE(X)
+\]</span></p>
+<h3 id="多维情况">多维情况</h3>
+<p>以二维为例</p>
+<p>设<span class="math inline">\(Z\)</span>是随机变量<span class="math inline">\(X,Y\)</span>的函数，<span class="math inline">\(Z=g(X,Y)\)</span>，<span class="math inline">\(g\)</span>是连续函数，<span class="math inline">\(Z\)</span>是一维随机变量</p>
+<p><em>离散情况</em></p>
+<p>设<span class="math inline">\((X,Y)\)</span>的分布律为<span class="math inline">\(P(X=x_i,Y=y_j)=p_{ij}\)</span></p>
+<p><span class="math display">\[
+E(Z) = E[g(X,Y)] = \sum_j\sum_i g(x_i,y_j)p_{ij}
+\]</span></p>
+<p><em>连续情况</em></p>
+<p>设<span class="math inline">\((X,Y)\)</span>的概率密度是<span class="math inline">\(f(x,y)\)</span>，则有</p>
+<p><span class="math display">\[
+E(Z)=E[g(X,Y)]=\int^{+\infty}_{-\infty}\int^{+\infty}_{-\infty}g(x,y)f(x,y)dxdy
+\]</span></p>
+<p>更高维可以同理推出。</p>
+<h3 id="条件数学期望">条件数学期望</h3>
+<p><span class="math display">\[
+E(Y|x) = \int^\infty_{-\infty}yf(y|x)dy
+\]</span></p>
+<p>类似于全概率公式，我们可以求得无条件的数学期望的一个重要公式</p>
+<p><span class="math display">\[
+E(Y) = \int^\infty_{-\infty}E(Y|x)f_1(x)dx
+\]</span></p>
+<p>其中</p>
+<p><span class="math display">\[
+f_1 = \int^\infty_{-\infty}f(x,y)dy
+\]</span></p>
+<p>如果将<span class="math inline">\(g(x)=E(Y|x)\)</span>，则</p>
+<p><span class="math display">\[
+E(Y) = \int^\infty_{-\infty}g(x)f_1(x)dx=E(g(X))=E(E(Y|X))
+\]</span></p>
+<p>整理得到</p>
+<p><span class="math display">\[
+E(Y) = E[E(Y|X)]
+\]</span></p>
+<p>如果是多维的，也有</p>
+<p><span class="math display">\[
+E(Y) =
+\int^\infty_{-\infty}\cdots\int^\infty_{-\infty}E(Y|x_1,\cdots,x_n)f(x_1,\cdots,x_n)dx_1\cdots
+dx_n
+\]</span></p>
+<p>如果是离散的，有<span class="math inline">\(P(X=a_i)=p_i\)</span>，则</p>
+<p><span class="math display">\[
+E(Y) = \sum^\infty_{i=1}p_iE(Y|a_i)
+\]</span></p>
+<h3 id="中位数">中位数</h3>
+<p><strong>定义1</strong></p>
+<p>设连续型随机变量<span class="math inline">\(X\)</span>的分布函数为<span class="math inline">\(F(x)\)</span>，则满足条件</p>
+<p><span class="math display">\[
+P(X\leq m)=F(m)=1/2
+\]</span></p>
+<p>的数<span class="math inline">\(m\)</span>称为<span class="math inline">\(X\)</span>或分布<span class="math inline">\(F\)</span>的中位数。</p>
+<p>而连续的时候，有</p>
+<p><span class="math display">\[
+P(X\leq m) = P(X&lt;m) = P(X&gt;m) = P(X\geq m) = 1/2   
+\]</span></p>
+<h2 id="方差与矩">方差与矩</h2>
+<h3 id="方差与标准差">方差与标准差</h3>
+<p><strong>定义1</strong></p>
+<p>设<span class="math inline">\(X\)</span>为随机变量，分布为<span class="math inline">\(F\)</span>，则</p>
+<p><span class="math display">\[
+Var(X) = E(X-EX)^2
+\]</span></p>
+<p>称为<span class="math inline">\(X\)</span>的方差，有时会记为<span class="math inline">\(DX\)</span>，其算术平方根称为标准差。</p>
+<p>将其展开得</p>
+<p><span class="math display">\[
+Var(X)=E(X^2)-(EX)^2
+\]</span></p>
+<p><strong>定理1</strong></p>
+<ol type="1">
+<li>常数的方差为<span class="math inline">\(0\)</span></li>
+<li>若<span class="math inline">\(c\)</span>为常数，则<span class="math inline">\(Var(X+c)=Var(X)\)</span></li>
+<li>若<span class="math inline">\(c\)</span>为常数，则<span class="math inline">\(Var(cX)=c^2Var(X)\)</span></li>
+<li><span class="math inline">\(Var(X)=0\)</span>的充要条件为，<span class="math inline">\(P(X=E(X))=1\)</span></li>
+</ol>
+<p><strong>定理2</strong></p>
+<p>独立（注意独立）随机变量之和的方差等于各变量的方差之和，即</p>
+<p><span class="math display">\[
+Var(X_1+X_2+\cdots+X_n) = Var(X_1)+Var(X_2)+\cdots+Var(X_n)
+\]</span></p>
+<p>如果不要求独立，二维有</p>
+<p><span class="math display">\[
+Var(X+Y)=Var(X)+Var(Y)+2E\{[X-E(X)][Y-E(Y)]\}
+\]</span></p>
+<h3 id="矩">矩</h3>
+<p><strong>定义1</strong></p>
+<p>设<span class="math inline">\(X\)</span>为随机变量，<span class="math inline">\(c\)</span>为常数，<span class="math inline">\(k\)</span>为正整数，则量<span class="math inline">\(E[(X-c)^k]\)</span>称为<span class="math inline">\(X\)</span>关于<span class="math inline">\(c\)</span>点的<span class="math inline">\(k\)</span>阶矩</p>
+<ol type="1">
+<li><span class="math inline">\(c=0\)</span>时称为<span class="math inline">\(X\)</span>的<span class="math inline">\(k\)</span>阶原点矩，记作<span class="math inline">\(\mu_k\)</span></li>
+<li><span class="math inline">\(c=E(X)\)</span>时称为<span class="math inline">\(X\)</span>的<span class="math inline">\(k\)</span>阶中心矩，记作<span class="math inline">\(v_k\)</span>。</li>
+</ol>
+<p>另外</p>
+<ol type="1">
+<li><span class="math inline">\(\mu_{kl}=E(X^kY^l)\)</span>称为<span class="math inline">\(X,Y\)</span>的<span class="math inline">\(k+l\)</span>阶混合原点矩，简称<span class="math inline">\(k+l\)</span>混合矩</li>
+<li><span class="math inline">\(v_{kl}=E[(X-E(X))^k(Y-E(Y))^l]\)</span>称为<span class="math inline">\(X,Y\)</span>的<span class="math inline">\(k+l\)</span>阶混合中心矩</li>
+</ol>
+<h2 id="协方差与相关系数">协方差与相关系数</h2>
+<p>对于二维随机向量<span class="math inline">\((X,Y)\)</span>，<span class="math inline">\(X,Y\)</span>本身都是一维随机变量，可以定义其均值、方差，我们记为</p>
+<p><span class="math display">\[
+E(X)=m_1,E(Y)=m_2,Var(X)=\sigma_1^2,Var(Y)=\sigma_2^2
+\]</span></p>
+<p><strong>定义1</strong></p>
+<p>称<span class="math inline">\(E[(X-m_1)(Y-m_2)]\)</span>为<span class="math inline">\(X,Y\)</span>的协方差，并记为<span class="math inline">\(Cov(X,Y)\)</span></p>
+<p>显然有<span class="math inline">\(Cov(X,Y)=Cov(Y,X)\)</span></p>
+<p>也有</p>
+<ol type="1">
+<li>对常数<span class="math inline">\(c_1,c_2,c_3,c_4\)</span>，有</li>
+</ol>
+<p><span class="math display">\[
+Cov(c_1X+c_2,c_3Y+c_4)=c_1c_3Cov(X,Y)
+\]</span></p>
+<ol start="2" type="1">
+<li><span class="math inline">\(Cov(X,Y)=E(XY)-m_1m_2=E(XY)-E(X)E(Y)\)</span></li>
+<li><span class="math inline">\(Cov(X,X)=Var(X)\)</span></li>
+<li><span class="math inline">\(Cov(X_1+X_2,Y)=Cov(X_1,Y)+Cov(X_2,Y)\)</span></li>
+<li><span class="math inline">\(Var(X\pm Y)=Var(X)+Var(Y)\pm
+2Cov(X,Y)\)</span></li>
+</ol>
+<p><strong>定理1</strong></p>
+<ol type="1">
+<li>若<span class="math inline">\(X,Y\)</span>独立，则<span class="math inline">\(Cov(X,Y)=0\)</span></li>
+<li><span class="math inline">\([Cov(X,Y)]^2\leq\sigma_1^2\sigma_2^2\)</span>，等号当且仅当<span class="math inline">\(X,Y\)</span>之间有严格线性关系（即存在常数<span class="math inline">\(a,b\)</span>使<span class="math inline">\(Y=a+bX\)</span>）时成立。</li>
+</ol>
+<p><strong>定义2</strong></p>
+<p>称<span class="math inline">\(Cov(X,Y)/(\sigma_1\sigma_2)\)</span>为<span class="math inline">\(X,Y\)</span>的相关系数，并记为<span class="math inline">\(Corr(X,Y)\)</span>，有时也记为<span class="math inline">\(\rho_{XY}\)</span></p>
+<p>可以将相关系数看做标准尺度下的协方差。</p>
+<p><strong>定理2</strong></p>
+<ol type="1">
+<li>若<span class="math inline">\(X,Y\)</span>独立，则<span class="math inline">\(Corr(X,Y)=0\)</span>，当然也要求方差大于<span class="math inline">\(0\)</span>才有定义。</li>
+<li><span class="math inline">\(-1\leq Corr(X,Y)\leq
+1\)</span>，等号当且仅当<span class="math inline">\(X,Y\)</span>之间有严格线性关系时达到。</li>
+</ol>
+<p>需要注意几点：</p>
+<ol type="1">
+<li>当<span class="math inline">\(Corr(X,Y)=0\)</span>（或<span class="math inline">\(Cov(X,Y)=0\)</span>）时，称<span class="math inline">\(X,Y\)</span>不相关，通常我们只能由“独立”推出“不相关”，而不能反过来。但是对于服从二维正态分布的<span class="math inline">\(X,Y\)</span>，“独立”和“不相关”是一回事。</li>
+<li>相关系数也常称为“线性相关系数”，相关系数并不是刻画<span class="math inline">\(X,Y\)</span>之间一般关系的程度，而只刻画了“线性”关系的程度。上述定理的第二条提供了一个依据。</li>
+<li>如果<span class="math inline">\(0&lt; |Corr(X,Y)|&lt;
+1\)</span>，则解释为<span class="math inline">\(X,Y\)</span>之间有一定程度的线性关系。</li>
+<li>线性相关的意义还可以从最小二乘法的角度去解释。</li>
+</ol>
+<h2 id="大数定理和中心极限定理">大数定理和中心极限定理</h2>
+<h3 id="大数定理">大数定理</h3>
+<p><strong>定义1</strong></p>
+<p>设<span class="math inline">\(X_1,X_2,\cdots\)</span>是随机变量序列，如果存在数列<span class="math inline">\(a_1,a_2,\cdots\)</span>使得对任意的<span class="math inline">\(\varepsilon&gt;0\)</span>，有</p>
+<p><span class="math display">\[
+\lim_{n\to\infty}P\bigg(\bigg|\frac{1}{n}\sum^n_{i=1}X_i-a_n\bigg|\geq\varepsilon\bigg)=0
+\]</span></p>
+<p>则称随机变量序列<span class="math inline">\(\{X_i\}\)</span>服从大数定律。</p>
+<p><strong>定义2</strong></p>
+<p>设<span class="math inline">\(X_1,X_2,\cdots\)</span>是随机变量序列，<span class="math inline">\(X\)</span>是随机变量，若对任意的<span class="math inline">\(\varepsilon&gt;0\)</span>，有</p>
+<p><span class="math display">\[
+\lim_{n\to\infty}P(|X_n-X|\geq \varepsilon)=0
+\]</span></p>
+<p>此时我们称<span class="math inline">\(\{X_i\}\)</span>依概率收敛到<span class="math inline">\(X\)</span>，记为</p>
+<p><span class="math display">\[
+X_n\stackrel{P}\rightarrow X,n\to\infty
+\]</span></p>
+<p><strong>马尔科夫不等式</strong></p>
+<p>若<span class="math inline">\(Y\)</span>为只取非负值的随机变量，则对任给常数<span class="math inline">\(\varepsilon&gt;0\)</span>，有</p>
+<p><span class="math display">\[
+P(Y\geq \varepsilon)\leq E(Y)/\varepsilon
+\]</span></p>
+<p><strong>切比雪夫不等式</strong></p>
+<p>若<span class="math inline">\(Var(Y)\)</span>存在，则</p>
+<p><span class="math display">\[
+P(|Y-EY|\geq\varepsilon)\leq Var(Y)/\varepsilon^2
+\]</span></p>
+<p>可以推知</p>
+<p><span class="math display">\[
+P(|Y-EY|&lt;\varepsilon)\leq 1-Var(Y)/\varepsilon^2
+\]</span></p>
+<p><strong>切比雪夫大数定理</strong></p>
+<p>设<span class="math inline">\(X_1,X_2,\cdots,X_n,\cdots\)</span>是相互独立独立的随机变量，具有相同的期望和方差，记它们的均值都为<span class="math inline">\(a\)</span>。又设它们的方差存在并记为<span class="math inline">\(\sigma^2\)</span>。则对任意给定的<span class="math inline">\(\varepsilon&gt;0\)</span>，有</p>
+<p><span class="math display">\[
+\lim_{n\to \infty}P(|\bar X_n-a|\geq \varepsilon) = 0
+\]</span></p>
+<p><em>更一般的形式</em></p>
+<p>设<span class="math inline">\(X_1,X_2,\cdots,X_n,\cdots\)</span>是相互独立的随机变量序列，具有相同的期望<span class="math inline">\(\mu\)</span>，如果存在常数<span class="math inline">\(C&gt;0\)</span>，使得<span class="math inline">\(D(X_k)\leq C\)</span>，则对于任意<span class="math inline">\(\varepsilon&gt;0\)</span>，有</p>
+<p><span class="math display">\[
+\lim_{n\to\infty}P\bigg(\bigg|\frac{1}{n}\sum^n_{k=1}X_k-\mu\bigg|\geq\varepsilon\bigg)=0
+\]</span></p>
+<p><strong>马尔科夫大数定律</strong></p>
+<p>设<span class="math inline">\(X_1,X_2,\cdots,X_n,\cdots\)</span>是随机变量序列，且</p>
+<p><span class="math display">\[
+\lim_{n\to\infty}\frac{1}{n^2}D\bigg[\sum^n_{k=1}X_k\bigg]=0
+\]</span></p>
+<p>则对于任意<span class="math inline">\(\varepsilon&gt;0\)</span>，有</p>
+<p><span class="math display">\[
+\lim_{n\to\infty}P\bigg(\bigg|\frac{1}{n}\sum^n_{k=1}X_k-\frac{1}{n}\sum^n_{k=1}E(X_k)\bigg|\geq\varepsilon\bigg)=0
+\]</span></p>
+<p><strong>辛钦大数定律</strong></p>
+<p>设<span class="math inline">\(X_1,X_2,\cdots,X_n,\cdots\)</span>是相互独立且同分布的随机变量序列，具有有限的数学期望，记为<span class="math inline">\(\mu\)</span>。则对于任意<span class="math inline">\(\varepsilon&gt;0\)</span>，有</p>
+<p><span class="math display">\[
+\lim_{n\to\infty}P\bigg(\bigg|\frac{1}{n}\sum^n_{k=1}X_k-\mu\bigg|\geq\varepsilon\bigg)=0
+\]</span></p>
+<p><strong>伯努利大数定律</strong></p>
+<p>设<span class="math inline">\(n_A\)</span>是<span class="math inline">\(n\)</span>次独立重复实验（<span class="math inline">\(n\)</span>重伯努利实验）事件<span class="math inline">\(A\)</span>发生的次数，<span class="math inline">\(p\)</span>是事件<span class="math inline">\(A\)</span>在每次试验中发生的概率，即<span class="math inline">\(P(A)=p\)</span>，则对任意的<span class="math inline">\(\varepsilon&gt;0\)</span>，有</p>
+<p><span class="math display">\[
+\lim_{n\to\infty}
+P\bigg(\bigg|\frac{n_A}{n}-p\bigg|\geq\varepsilon\bigg)=0
+\]</span></p>
+<h3 id="中心极限定理">中心极限定理</h3>
+<p><strong>定理1</strong></p>
+<p>设<span class="math inline">\(X_1,X_2,\cdots,X_n,\cdots\)</span>为独立同分布的随机变量，<span class="math inline">\(E(X_i)=\mu,Var(X_i)=\sigma^2(0&lt;\sigma^2&lt;\infty)\)</span>。则对任何实数<span class="math inline">\(x\)</span>，有</p>
+<p><span class="math display">\[
+\lim_{n\to\infty}P\bigg(\frac{1}{\sqrt{n}
+\sigma}(X_1+\cdots+X_n-n\mu)\leq x\bigg)=\varPhi(x)
+\]</span></p>
+<p>这里，<span class="math inline">\(\varPhi(x)\)</span>是标准正态分布<span class="math inline">\(N(0,1)\)</span>的分布函数。</p>
+<p>也就是说，当<span class="math inline">\(n\)</span>充分大时，有</p>
+<p><span class="math display">\[
+\sum_{k=1}^n X_k\sim N(n\mu,n\sigma^2),\quad
+\frac{\sum_{k=1}^nX_k-n\mu}{\sqrt{n}\sigma}\sim N(0,1)
+\]</span></p>
+<p><span class="math display">\[
+P\bigg(\sum^n_{k=1}X_k\leq x\bigg)\approx\Phi\bigg(\frac{x-n\mu}{\sqrt
+n\sigma}\bigg),\quad P\bigg(a&lt;\sum^n_{k=1}X_k\leq
+b\bigg)\approx\Phi\bigg(\frac{b-n\mu}{\sqrt
+n\sigma}\bigg)-\bigg(\frac{a-n\mu}{\sqrt n\sigma}\bigg)
+\]</span></p>
+<p><span class="math display">\[
+\bar X\approx N(\mu,\sigma^2/n),\quad \frac{\bar
+X-\mu}{\sigma/\sqrt{n}}\approx N(0,1)
+\]</span></p>
+<p><strong>李雅普诺夫中心极限定理</strong></p>
+<p>设<span class="math inline">\(X_1,X_2,\cdots,X_n,\cdots\)</span>相互独立，其具有如下数学期望和方差：<span class="math inline">\(E(X_k)=\mu_k,D(X_k)=\sigma_k^2&gt;0\)</span>，记<span class="math inline">\(B_n^2=\sum^n_{k=1}\sigma^2_k\)</span></p>
+<p>若存在正数<span class="math inline">\(\delta\)</span>使得当<span class="math inline">\(n\to\infty\)</span>时</p>
+<p><span class="math display">\[
+\frac{1}{B^{2+\delta}}\sum^n_{k=1}E\bigg[|X_i-\mu_i|^{2+\delta}\bigg]\to
+0
+\]</span></p>
+<p>则</p>
+<p><span class="math display">\[
+\lim_{n\to\infty}P\bigg(\frac{\sum^n_{k=1}X_k-\sum^n_{k=1}\mu_k}{B_n}\leq
+x\bigg)=\Phi(x)
+\]</span></p>
+<p><strong>棣莫弗-拉普拉斯中心极限定理</strong></p>
+<p>设<span class="math inline">\(n_A\)</span>是<span class="math inline">\(n\)</span>次独立重复实验（<span class="math inline">\(n\)</span>重伯努利实验）事件<span class="math inline">\(A\)</span>发生的次数，<span class="math inline">\(p\)</span>是事件<span class="math inline">\(A\)</span>在每次试验中发生的概率，即<span class="math inline">\(P(A)=p\)</span>，</p>
+<p><span class="math display">\[
+\lim_{n\to\infty}P\bigg(\frac{n_A-np}{\sqrt{np(1-p)}}\leq
+x\bigg)=\Phi(x)
+\]</span></p>
+<p>即，若<span class="math inline">\(X\sim B(n,p)\)</span>，<span class="math inline">\(n\)</span>充分大时</p>
+<p><span class="math display">\[
+X\sim N(np,np(1-p))
+\]</span></p>
+<p><span class="math display">\[
+P(X\leq x)\approx\Phi\bigg(\frac{x-np}{\sqrt{np(1-p)}}\bigg),\quad
+P(a&lt;X\leq
+b)\approx\Phi\bigg(\frac{b-np}{\sqrt{np(1-p)}}\bigg)-\Phi\bigg(\frac{a-np}{\sqrt{np(1-p)}}\bigg)
+\]</span></p>
+<h1 id="参数估计">参数估计</h1>
+<h2 id="数理统计学的基本概念">数理统计学的基本概念</h2>
+<h3 id="总体">总体</h3>
+<p>总体是指与所研究的问题有关的对象（个体）的全体所构成的集合。</p>
+<p>赋有一定概率分布的总体就称为统计总体。</p>
+<p>在数理统计学中，“总体”这个基本概念的要旨——总体就是一个概率分布，当总体分布为指数分布时，称为指数分布总体；当总体分布为正态分布时，称为正态分布总体，或简称正态总体。</p>
+<p>总体分布是一个概率分布族。这个分布族包含一个参数时，称为单参数分布族，例如指数分布。包含两个参数时，称为两参数分布族，例如正态分布。如果总体分布不能通过若干个未知参数表达出来，这种情况称为非参数总体。</p>
+<h3 id="样本">样本</h3>
+<p>样本是按一定的规定从总体中抽出的一部分个体，所谓“按一定的规定”，就是指总体中的每一个个体有同等的被抽出的机会。</p>
+<p>样本表现为若干个数据<span class="math inline">\(X_1,\cdots,X_n,n\)</span>称为“样本大小”或“样本容量”、“样本量”，样本<span class="math inline">\(X_1,\cdots,X_n\)</span>中的每一个<span class="math inline">\(X_i\)</span>也称为样本。有时<span class="math inline">\(X_1,\cdots,X_n\)</span>称为一组样本，而<span class="math inline">\(X_i\)</span>称为其中的第<span class="math inline">\(i\)</span>个样本。</p>
+<h3 id="统计量">统计量</h3>
+<p>完全由样本所决定的量叫做统计量。统计量只以来于样本，而不能依赖于任何其他未知的量。</p>
+<h3 id="简单随机样本">简单随机样本</h3>
+<p>设<span class="math inline">\(X\)</span>是具有分布函数<span class="math inline">\(F\)</span>的随机变量，若<span class="math inline">\(X_1,\cdots,X_n\)</span>是相互独立，且与<span class="math inline">\(X\)</span>具有相同分布函数<span class="math inline">\(F\)</span>的随机变量，则称<span class="math inline">\(X_1,\cdots,X_n\)</span>是一个来自总体<span class="math inline">\(X\)</span>的容量为<span class="math inline">\(n\)</span>的简单随机样本，简称样本。</p>
+<p>一个样本<span class="math inline">\(X_1,\cdots,X_n\)</span>的观察值<span class="math inline">\(x_1,\cdots,x_n\)</span>，称为样本值。</p>
+<p>联合分布函数为</p>
+<p><span class="math display">\[
+F^*(x_1,x_2,\cdots,x_n) = \prod^n_{i=1}F(x_i)
+\]</span></p>
+<p>如果是离散型，有</p>
+<p><span class="math display">\[
+p^*(X_1=x_1,X_2=x_2,\dots,X_n=x_n)=\prod^n_{i=1}p(x_i)
+\]</span></p>
+<p>如果是连续型，有</p>
+<p><span class="math display">\[
+f^*(x_1,x_2,\cdots,x_n) = \prod^n_{i=1}f(x_i)
+\]</span></p>
+<h3 id="经验分布函数">经验分布函数</h3>
+<p>设<span class="math inline">\(X_1,\cdots,X_n\)</span>是来自总体<span class="math inline">\(X\)</span>的一个样本，<span class="math inline">\(x_1,\cdots,x_n\)</span>，是样本<span class="math inline">\(X_1,\cdots,X_n\)</span>的一组样本值，将其从小到大排列，并且重新编号为<span class="math inline">\(x_1,\cdots,x_n\)</span>，则称函数</p>
+<p><span class="math display">\[
+F_n(x)=\frac{x_1,\cdots,x_n中小于等于x的样本值的个数}{n} =
+\left\{\begin{matrix}
+0,&amp;x&lt;x_1 \\
+k/n,&amp;x_k&lt;x_{k+1} \\
+1,&amp;x\geq x_n
+\end{matrix}\right.
+\]</span></p>
+<p>为总体<span class="math inline">\(X\)</span>的经验分布函数。</p>
+<h3 id="常用统计量">常用统计量</h3>
+<p><strong>样本均值</strong></p>
+<p><span class="math display">\[
+\overline{X} = \frac{1}{n}\sum^n_{i=1}X_i
+\]</span></p>
+<p>其样本值为</p>
+<p><span class="math display">\[
+\overline{x} = \frac{1}{n}\sum^n_{i=1}x_i
+\]</span></p>
+<p><strong>样本方差</strong></p>
+<p><span class="math display">\[
+S^2 = \frac{1}{n-1}\sum^n_{i=1}(X_i-\overline{X})^2 =
+\frac{1}{n-1}\bigg(\sum^n_{i=1}X_i^2-n\overline{X}^2\bigg)
+\]</span></p>
+<p>其样本值为</p>
+<p><span class="math display">\[
+s^2 = \frac{1}{n-1}\sum^n_{i=1}(x_i-\overline{x})^2 =
+\frac{1}{n-1}\bigg(\sum^n_{i=1}x_i^2-n\overline{x}^2\bigg)
+\]</span></p>
+<p><strong>样本标准差</strong></p>
+<p><span class="math display">\[
+S = \sqrt{\frac{1}{n-1}\sum^n_{i=1}(X_i-\overline{X})^2}
+\]</span></p>
+<p>其样本值为</p>
+<p><span class="math display">\[
+s = \sqrt{\frac{1}{n-1}\sum^n_{i=1}(x_i-\overline{x})^2}
+\]</span></p>
+<p><strong>样本<span class="math inline">\(k\)</span>阶原点矩</strong></p>
+<p><span class="math display">\[
+a_k = \frac{1}{n}\sum^n_{i=1}X_i^k
+\]</span></p>
+<p>样本值略。</p>
+<p><strong>样本<span class="math inline">\(k\)</span>阶中心矩</strong></p>
+<p><span class="math display">\[
+m_k = \frac{1}{n}\sum^n_{i=1}(X_i-\overline{X})^k
+\]</span></p>
+<p>样本值略</p>
+<p><strong>定理1</strong></p>
+<p>设总体<span class="math inline">\(X\)</span>均值为<span class="math inline">\(\mu\)</span>，方差为<span class="math inline">\(\sigma^2\)</span>（无论何种分布），<span class="math inline">\(X_1,X_2,\cdots,X_n\)</span>是来自总体<span class="math inline">\(X\)</span>的一个样本，<span class="math inline">\(\overline{X}\)</span>和<span class="math inline">\(S^2\)</span>分别是样本均值和样本方差，则有</p>
+<p><span class="math display">\[
+E(\overline{X})=\mu,D(\overline{X})=\sigma^2/n,E(S^2) = \sigma^2
+\]</span></p>
 
 
 
@@ -1674,6 +1775,33 @@ t_n(y)=\frac{\Gamma((n+1)/2)}{\sqrt{n\pi}\Gamma(n/2)}\bigg(1+\frac{y^2}{n}\bigg)
             <li><a href="#随机变量积的密度函数">随机变量积的密度函数</a></li>
           </ol>
         </li>
+        <li><a href="#常见的分布">常见的分布</a>
+          <ol>
+            <li><a href="#分布">0-1分布</a></li>
+            <li><a href="#二项分布">二项分布</a></li>
+            <li><a href="#泊松分布">泊松分布</a></li>
+            <li><a href="#超几何分布">超几何分布</a></li>
+            <li><a href="#负二项分布">负二项分布</a></li>
+            <li><a href="#几何分布">几何分布</a></li>
+            <li><a href="#多项分布">多项分布</a></li>
+            <li><a href="#正态分布">正态分布</a></li>
+            <li><a href="#二维正态分布">二维正态分布</a></li>
+            <li><a href="#n维正态随机变量">n维正态随机变量</a></li>
+            <li><a href="#指数分布">指数分布</a></li>
+            <li><a href="#威布尔分布">威布尔分布</a></li>
+            <li><a href="#均匀分布">均匀分布</a></li>
+            <li><a href="#二维随机向量的均匀分布">二维随机向量的均匀分布</a></li>
+            <li><a href="#最大值分布">最大值分布</a></li>
+            <li><a href="#最小值分布">最小值分布</a></li>
+            <li><a href="#卡方分布">卡方分布</a></li>
+            <li><a href="#t分布">t分布</a></li>
+            <li><a href="#f分布">F分布</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+    <li><a href="#随机变量的数字特征">随机变量的数字特征</a>
+      <ol>
         <li><a href="#数学期望与中位数">数学期望与中位数</a>
           <ol>
             <li><a href="#定义-1">定义</a></li>
@@ -1696,27 +1824,18 @@ t_n(y)=\frac{\Gamma((n+1)/2)}{\sqrt{n\pi}\Gamma(n/2)}\bigg(1+\frac{y^2}{n}\bigg)
             <li><a href="#中心极限定理">中心极限定理</a></li>
           </ol>
         </li>
-        <li><a href="#常见的分布">常见的分布</a>
+      </ol>
+    </li>
+    <li><a href="#参数估计">参数估计</a>
+      <ol>
+        <li><a href="#数理统计学的基本概念">数理统计学的基本概念</a>
           <ol>
-            <li><a href="#分布">0-1分布</a></li>
-            <li><a href="#二项分布">二项分布</a></li>
-            <li><a href="#泊松分布">泊松分布</a></li>
-            <li><a href="#超几何分布">超几何分布</a></li>
-            <li><a href="#负二项分布">负二项分布</a></li>
-            <li><a href="#几何分布">几何分布</a></li>
-            <li><a href="#多项分布">多项分布</a></li>
-            <li><a href="#正态分布">正态分布</a></li>
-            <li><a href="#二维正态分布">二维正态分布</a></li>
-            <li><a href="#n维正态随机变量">n维正态随机变量</a></li>
-            <li><a href="#指数分布">指数分布</a></li>
-            <li><a href="#威布尔分布">威布尔分布</a></li>
-            <li><a href="#均匀分布">均匀分布</a></li>
-            <li><a href="#二维随机向量的均匀分布">二维随机向量的均匀分布</a></li>
-            <li><a href="#最大值分布">最大值分布</a></li>
-            <li><a href="#最小值分布">最小值分布</a></li>
-            <li><a href="#卡方分布">卡方分布</a></li>
-            <li><a href="#t分布">t分布</a></li>
-            <li><a href="#f分布">F分布</a></li>
+            <li><a href="#总体">总体</a></li>
+            <li><a href="#样本">样本</a></li>
+            <li><a href="#统计量">统计量</a></li>
+            <li><a href="#简单随机样本">简单随机样本</a></li>
+            <li><a href="#经验分布函数">经验分布函数</a></li>
+            <li><a href="#常用统计量">常用统计量</a></li>
           </ol>
         </li>
       </ol>

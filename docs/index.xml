@@ -3690,10 +3690,10 @@ f(z)=(z-z_0)^mg(z)
 &lt;p&gt;&lt;strong&gt;常见的泰勒展开&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;以下都是在&lt;span class=&#34;math inline&#34;&gt;\(z=0\)&lt;/span&gt;处的展开式&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
-\frac{1}{1-x}=\sum^\infty_{n=0}x^n,|z|&amp;lt;1
+\frac{1}{1-z}=\sum^\infty_{n=0}z^n,|z|&amp;lt;1
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
-\frac{1}{1+x}=\sum^\infty_{n=0}(-1)^nx^n,|z|&amp;lt;1
+\frac{1}{1+z}=\sum^\infty_{n=0}(-1)^nz^n,|z|&amp;lt;1
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 e^z = \sum^\infty_{n=0} \frac{z^n}{n!},z\in\bm C
@@ -3743,6 +3743,107 @@ i}\int_{\gamma_\rho}\frac{f(\zeta)}{(\zeta-z_0)^{n+1}}d\zeta
 \gamma_\rho = \{\zeta:|\zeta-z_0|=\rho\}(r&amp;lt;\rho&amp;lt;R)
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;并且这个展开式是唯一的。&lt;/p&gt;
+&lt;h2 id=&#34;孤立奇点&#34;&gt;孤立奇点&lt;/h2&gt;
+&lt;p&gt;如果&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;在无心圆盘&lt;span class=&#34;math inline&#34;&gt;\(\{z:0&amp;lt;|z-z_0|&amp;lt;R\}\)&lt;/span&gt;中全纯（而在圆心不全纯），就称&lt;span class=&#34;math inline&#34;&gt;\(z_0\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;的孤立奇点。在奇点附近有三种情况&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(\lim_{z\to
+z_0}f(z)=a,a\)&lt;/span&gt;是一有限数，这时称&lt;span class=&#34;math inline&#34;&gt;\(z_0\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;的可去奇点&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(\lim_{z\to
+z_0}f(z)=\infty\)&lt;/span&gt;，这时称&lt;span class=&#34;math inline&#34;&gt;\(z_0\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;的极点&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(\lim_{z\to
+z_0}f(z)\)&lt;/span&gt;不存在，这时称&lt;span class=&#34;math inline&#34;&gt;\(z_0\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;的本性奇点&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;定理1&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(z_0\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;的可去奇点的充要条件是&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;在&lt;span class=&#34;math inline&#34;&gt;\(z_0\)&lt;/span&gt;附近有界。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;命题1&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(z_0\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;的极点的充要条件是&lt;span class=&#34;math inline&#34;&gt;\(z_0\)&lt;/span&gt;为&lt;span class=&#34;math inline&#34;&gt;\(1/f\)&lt;/span&gt;的零点。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定义1&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;如果&lt;span class=&#34;math inline&#34;&gt;\(z_0\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(1/f(z)\)&lt;/span&gt;的&lt;span class=&#34;math inline&#34;&gt;\(m\)&lt;/span&gt;阶零点，就称&lt;span class=&#34;math inline&#34;&gt;\(z_0\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;的&lt;span class=&#34;math inline&#34;&gt;\(m\)&lt;/span&gt;阶极点。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定理2&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(z_0\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;的&lt;span class=&#34;math inline&#34;&gt;\(m\)&lt;/span&gt;阶极点的充要条件是&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;在&lt;span class=&#34;math inline&#34;&gt;\(z_0\)&lt;/span&gt;附近的洛朗级数为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+f(z) =
+\frac{a_{-m}}{(z-z_0)^m}+\cdots+\frac{a_{-1}}{z-z_0}+a_0+a_1(z-z_0)+\cdots
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(a_{-m}\neq 0\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定理3&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;在可去奇点处的特征是洛朗级数没有主要部分，只有全纯部分&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;在奇点处的特征是洛朗级数的主要部分只有有限项。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定理4&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(z_0\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;的本性奇点，那么对任意&lt;span class=&#34;math inline&#34;&gt;\(A\in\bm C_\infty\)&lt;/span&gt;，必存在趋于&lt;span class=&#34;math inline&#34;&gt;\(z_0\)&lt;/span&gt;的点列&lt;span class=&#34;math inline&#34;&gt;\(\{z_n\}\)&lt;/span&gt;，使得&lt;span class=&#34;math inline&#34;&gt;\(\lim_{n\to\infty}f(z_n)=A\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定理5&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;全纯函数在本性奇点的邻域内无穷多次地取到每个有穷复值，最多只有一个例外&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定义2&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;我们讨论无穷远点。如果&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;在无穷远点的邻域（不包括无穷远点）&lt;span class=&#34;math inline&#34;&gt;\(\{z:0\leq
+R&amp;lt;|z|&amp;lt;\infty\}\)&lt;/span&gt;中全纯，&lt;span class=&#34;math inline&#34;&gt;\(\infty\)&lt;/span&gt;就是&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;的孤立奇点。&lt;/p&gt;
+&lt;p&gt;记&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+g(\zeta)=f(\frac{1}{\zeta})
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;如果&lt;span class=&#34;math inline&#34;&gt;\(\zeta=0\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(g\)&lt;/span&gt;的可去奇点、&lt;span class=&#34;math inline&#34;&gt;\(m\)&lt;/span&gt;阶极点或本性奇点，那么我们相应地称&lt;span class=&#34;math inline&#34;&gt;\(z=\infty\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;的可去奇点、&lt;span class=&#34;math inline&#34;&gt;\(m\)&lt;/span&gt;阶极点或本性奇点。&lt;/p&gt;
+&lt;h2 id=&#34;整函数与亚纯函数&#34;&gt;整函数与亚纯函数&lt;/h2&gt;
+&lt;p&gt;如果&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;在整个复平面&lt;span class=&#34;math inline&#34;&gt;\(\bm C\)&lt;/span&gt;上全纯，就称&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;为整函数&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定理1&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;在无穷远处全纯的整函数一定是常数。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定理2&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;如果无穷远点是整函数&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;的一个&lt;span class=&#34;math inline&#34;&gt;\(m\)&lt;/span&gt;阶极点，那么&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;是一个&lt;span class=&#34;math inline&#34;&gt;\(m\)&lt;/span&gt;次多项式。&lt;/p&gt;
+&lt;p&gt;如果&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;在整个复平面&lt;span class=&#34;math inline&#34;&gt;\(\bm
+C\)&lt;/span&gt;上除去极点外没有其他的奇点，就称&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;是一个亚纯函数。整函数显然是亚纯函数。&lt;/p&gt;
+&lt;p&gt;此外有理函数&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+f(z) = \frac{P_n(z)}{Q_m(z)}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;也是亚纯函数，这里，&lt;span class=&#34;math inline&#34;&gt;\(P_n(z),Q_m(z)\)&lt;/span&gt;是两个既约（分式最简）的多项式&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定理3&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;若&lt;span class=&#34;math inline&#34;&gt;\(z=\infty\)&lt;/span&gt;是亚纯函数&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;的可去奇点或极点，则&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;一定是有理函数。&lt;/p&gt;
+&lt;p&gt;反过来也成立。&lt;/p&gt;
+&lt;h2 id=&#34;残数定理&#34;&gt;残数定理&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;定义1&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(a\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;的一个孤立奇点，&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;在&lt;span class=&#34;math inline&#34;&gt;\(a\)&lt;/span&gt;点的邻域&lt;span class=&#34;math inline&#34;&gt;\(B(a,r)\)&lt;/span&gt;中的洛朗级数为&lt;span class=&#34;math inline&#34;&gt;\(f(z)=\sum^\infty_{n=-\infty}c_n(z-a)^n\)&lt;/span&gt;，称&lt;span class=&#34;math inline&#34;&gt;\(c_{-1}\)&lt;/span&gt;为&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;在&lt;span class=&#34;math inline&#34;&gt;\(a\)&lt;/span&gt;点的残数，记为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+Res(f,a) = c_{-1}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;或&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\underset{z=a}{Res}f = c_{-1}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;根据洛朗级数的计算方法，我们知道&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+c_{-1} = \frac{1}{2\pi i}\int_\gamma f(\zeta)d\zeta
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;结合上上式就有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\int_\gamma f(z)dz = 2\pi iRes(f,a)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;这里，&lt;span class=&#34;math inline&#34;&gt;\(\gamma=\{z:|z-a|=\rho\},0&amp;lt;\rho&amp;lt;r\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;若&lt;span class=&#34;math inline&#34;&gt;\(z=\infty\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;的孤立奇点，即&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;在&lt;span class=&#34;math inline&#34;&gt;\(R&amp;lt;|z|&amp;lt;\infty\)&lt;/span&gt;中全纯，我们定义&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;在&lt;span class=&#34;math inline&#34;&gt;\(z=\infty\)&lt;/span&gt;处的残数为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+Res(f,\infty) = -\frac{1}{2\pi i}\int_\gamma f(z)dz
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;这里，&lt;span class=&#34;math inline&#34;&gt;\(\gamma=\{z:|z|=\rho\},R&amp;lt;\rho&amp;lt;\infty\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;命题1&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;若&lt;span class=&#34;math inline&#34;&gt;\(a\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;的&lt;span class=&#34;math inline&#34;&gt;\(m\)&lt;/span&gt;阶极点，则&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+Res(f,a) = \frac{1}{(m-1)!}\lim_{z\to
+a}\frac{d^{m-1}}{dz^{m-1}}\{(z-a)^mf(z)\}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;命题2&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;若&lt;span class=&#34;math inline&#34;&gt;\(a\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;的&lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt;阶极点，则&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+Res(f,a) = \lim_{z\to a}(z-a)f(z)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;命题3&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(f=\frac{g}{h}\)&lt;/span&gt;，&lt;span class=&#34;math inline&#34;&gt;\(g,h\)&lt;/span&gt;都在&lt;span class=&#34;math inline&#34;&gt;\(a\)&lt;/span&gt;出全纯，且&lt;span class=&#34;math inline&#34;&gt;\(g(a)\neq 0\)&lt;/span&gt;，&lt;span class=&#34;math inline&#34;&gt;\(h(a)=0\)&lt;/span&gt;，&lt;span class=&#34;math inline&#34;&gt;\(h&amp;#39;(a)\neq 0\)&lt;/span&gt;，那么&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+Res(f,a) = \frac{g(a)}{h&amp;#39;(a)}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;残数定理&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;是复平面上的一个有界区域，它的边界&lt;span class=&#34;math inline&#34;&gt;\(\gamma\)&lt;/span&gt;由一条或若干条简单闭曲线组成，如果&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;在&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;中除去孤立奇点&lt;span class=&#34;math inline&#34;&gt;\(z_1,\cdots,z_n\)&lt;/span&gt;外是全纯的，在闭域&lt;span class=&#34;math inline&#34;&gt;\(\overline{D}\)&lt;/span&gt;上除去&lt;span class=&#34;math inline&#34;&gt;\(z_1,\cdots,z_n\)&lt;/span&gt;外是连续的，那么&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\int_\gamma f(z)dz = 2\pi i\sum^n_{k=1} Res(f,z_k)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定理1&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;若&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;在&lt;span class=&#34;math inline&#34;&gt;\(\bm C\)&lt;/span&gt;中除去&lt;span class=&#34;math inline&#34;&gt;\(z_1,\cdots,z_n\)&lt;/span&gt;外是全纯的，则&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;在&lt;span class=&#34;math inline&#34;&gt;\(z_1,\cdots,z_n\)&lt;/span&gt;及&lt;span class=&#34;math inline&#34;&gt;\(z=\infty\)&lt;/span&gt;处的残数之和为零。&lt;/p&gt;
 
 
 </description>
@@ -4213,309 +4314,6 @@ f_Y(y) = \int^\infty_0 \frac{1}{|x_1|}f(x_1,\frac{y}{x_1})dx_1
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 f_Y(y) = \int^\infty_0 \frac{1}{|x_1|}f_1(x_1)f_2(\frac{y}{x_1})dx_1
 \]&lt;/span&gt;&lt;/p&gt;
-&lt;h2 id=&#34;数学期望与中位数&#34;&gt;数学期望与中位数&lt;/h2&gt;
-&lt;h3 id=&#34;定义-1&#34;&gt;定义&lt;/h3&gt;
-&lt;p&gt;&lt;strong&gt;定义1&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;设随机变量&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;只取有限个可能值&lt;span class=&#34;math inline&#34;&gt;\(a_1,\cdots,a_m\)&lt;/span&gt;，其概率分布为&lt;span class=&#34;math inline&#34;&gt;\(P(X=a_i)=p_i(i=1,\cdots,m)\)&lt;/span&gt;，则&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;的数学期望，记为&lt;span class=&#34;math inline&#34;&gt;\(E(X)\)&lt;/span&gt;或&lt;span class=&#34;math inline&#34;&gt;\(EX\)&lt;/span&gt;，定义为&lt;/p&gt;
-&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
-E(X) = a_1p_1+a_2p_2+\cdots+a_mp_m
-\]&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;如果取无穷个值&lt;span class=&#34;math inline&#34;&gt;\(a_1,a_2,\cdots\)&lt;/span&gt;，而概率分布为&lt;span class=&#34;math inline&#34;&gt;\(P(X=a_i)=p_i(i=1,\cdots)\)&lt;/span&gt;，则有其数学期望为&lt;/p&gt;
-&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
-E(X) = \sum^\infty_{i=1}a_ip_i（式1）
-\]&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;这个期望存在，必须要求这个级数收敛，并且是绝对收敛。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;定义2&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;如果&lt;/p&gt;
-&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
-\sum^\infty_{i=1}|a_i|p_i&amp;lt;\infty
-\]&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;则称式1的右边的级数之和为&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;的数学期望&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;定义3&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;有概率密度函数&lt;span class=&#34;math inline&#34;&gt;\(f(x)\)&lt;/span&gt;，如果&lt;/p&gt;
-&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
-\int^\infty_{-\infty}|x|f(x)dx&amp;lt;\infty
-\]&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;则称&lt;/p&gt;
-&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
-E(X) = \int^\infty_{-\infty}xf(x)dx
-\]&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;为&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;的数学期望。&lt;/p&gt;
-&lt;h3 id=&#34;性质&#34;&gt;性质&lt;/h3&gt;
-&lt;p&gt;&lt;strong&gt;定理1&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;若干个随机变量之和的期望等于各变量的期望之和&lt;/p&gt;
-&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
-E(X_1+X_2+\cdots+X_n) = E(X_1)+E(X_2)+\cdots+E(X_n)
-\]&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;定理2&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;若干个独立（注意独立）随机变量之积的期望等于各变量期望之积&lt;/p&gt;
-&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
-E(X_1X_2\cdots X_n) = E(X_1)E(X_2)\cdots E(X_n)
-\]&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;随机变量函数的期望&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;设随机变量&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;为离散型，有分布&lt;span class=&#34;math inline&#34;&gt;\(P(X=a_i)=p_i(i=1,2,\cdots)\)&lt;/span&gt;；或者为连续型，有概率密度函数&lt;span class=&#34;math inline&#34;&gt;\(f(x)\)&lt;/span&gt;，则&lt;/p&gt;
-&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
-E(g(x)) = \sum_i g(a_i)p_i（要求绝对收敛）
-\]&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;或&lt;/p&gt;
-&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
-E(g(x)) =
-\int^\infty_{-\infty}g(x)f(x)dx（要求\int^\infty_{-\infty}|g(x)|f(x)dx&amp;lt;\infty）
-\]&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;有一个特例是，若&lt;span class=&#34;math inline&#34;&gt;\(c\)&lt;/span&gt;为常数，则&lt;/p&gt;
-&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
-E(cX) = cE(X)
-\]&lt;/span&gt;&lt;/p&gt;
-&lt;h3 id=&#34;多维情况&#34;&gt;多维情况&lt;/h3&gt;
-&lt;p&gt;以二维为例&lt;/p&gt;
-&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(Z\)&lt;/span&gt;是随机变量&lt;span class=&#34;math inline&#34;&gt;\(X,Y\)&lt;/span&gt;的函数，&lt;span class=&#34;math inline&#34;&gt;\(Z=g(X,Y)\)&lt;/span&gt;，&lt;span class=&#34;math inline&#34;&gt;\(g\)&lt;/span&gt;是连续函数，&lt;span class=&#34;math inline&#34;&gt;\(Z\)&lt;/span&gt;是一维随机变量&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;离散情况&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\((X,Y)\)&lt;/span&gt;的分布律为&lt;span class=&#34;math inline&#34;&gt;\(P(X=x_i,Y=y_j)=p_{ij}\)&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
-E(Z) = E[g(X,Y)] = \sum_j\sum_i g(x_i,y_j)p_{ij}
-\]&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;连续情况&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\((X,Y)\)&lt;/span&gt;的概率密度是&lt;span class=&#34;math inline&#34;&gt;\(f(x,y)\)&lt;/span&gt;，则有&lt;/p&gt;
-&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
-E(Z)=E[g(X,Y)]=\int^{+\infty}_{-\infty}\int^{+\infty}_{-\infty}g(x,y)f(x,y)dxdy
-\]&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;更高维可以同理推出。&lt;/p&gt;
-&lt;h3 id=&#34;条件数学期望&#34;&gt;条件数学期望&lt;/h3&gt;
-&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
-E(Y|x) = \int^\infty_{-\infty}yf(y|x)dy
-\]&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;类似于全概率公式，我们可以求得无条件的数学期望的一个重要公式&lt;/p&gt;
-&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
-E(Y) = \int^\infty_{-\infty}E(Y|x)f_1(x)dx
-\]&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;其中&lt;/p&gt;
-&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
-f_1 = \int^\infty_{-\infty}f(x,y)dy
-\]&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;如果将&lt;span class=&#34;math inline&#34;&gt;\(g(x)=E(Y|x)\)&lt;/span&gt;，则&lt;/p&gt;
-&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
-E(Y) = \int^\infty_{-\infty}g(x)f_1(x)dx=E(g(X))=E(E(Y|X))
-\]&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;整理得到&lt;/p&gt;
-&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
-E(Y) = E[E(Y|X)]
-\]&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;如果是多维的，也有&lt;/p&gt;
-&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
-E(Y) =
-\int^\infty_{-\infty}\cdots\int^\infty_{-\infty}E(Y|x_1,\cdots,x_n)f(x_1,\cdots,x_n)dx_1\cdots
-dx_n
-\]&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;如果是离散的，有&lt;span class=&#34;math inline&#34;&gt;\(P(X=a_i)=p_i\)&lt;/span&gt;，则&lt;/p&gt;
-&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
-E(Y) = \sum^\infty_{i=1}p_iE(Y|a_i)
-\]&lt;/span&gt;&lt;/p&gt;
-&lt;h3 id=&#34;中位数&#34;&gt;中位数&lt;/h3&gt;
-&lt;p&gt;&lt;strong&gt;定义1&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;设连续型随机变量&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;的分布函数为&lt;span class=&#34;math inline&#34;&gt;\(F(x)\)&lt;/span&gt;，则满足条件&lt;/p&gt;
-&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
-P(X\leq m)=F(m)=1/2
-\]&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;的数&lt;span class=&#34;math inline&#34;&gt;\(m\)&lt;/span&gt;称为&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;或分布&lt;span class=&#34;math inline&#34;&gt;\(F\)&lt;/span&gt;的中位数。&lt;/p&gt;
-&lt;p&gt;而连续的时候，有&lt;/p&gt;
-&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
-P(X\leq m) = P(X&amp;lt;m) = P(X&amp;gt;m) = P(X\geq m) = 1/2   
-\]&lt;/span&gt;&lt;/p&gt;
-&lt;h2 id=&#34;方差与矩&#34;&gt;方差与矩&lt;/h2&gt;
-&lt;h3 id=&#34;方差与标准差&#34;&gt;方差与标准差&lt;/h3&gt;
-&lt;p&gt;&lt;strong&gt;定义1&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;为随机变量，分布为&lt;span class=&#34;math inline&#34;&gt;\(F\)&lt;/span&gt;，则&lt;/p&gt;
-&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
-Var(X) = E(X-EX)^2
-\]&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;称为&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;的方差，有时会记为&lt;span class=&#34;math inline&#34;&gt;\(DX\)&lt;/span&gt;，其算术平方根称为标准差。&lt;/p&gt;
-&lt;p&gt;将其展开得&lt;/p&gt;
-&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
-Var(X)=E(X^2)-(EX)^2
-\]&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;定理1&lt;/strong&gt;&lt;/p&gt;
-&lt;ol type=&#34;1&#34;&gt;
-&lt;li&gt;常数的方差为&lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt;&lt;/li&gt;
-&lt;li&gt;若&lt;span class=&#34;math inline&#34;&gt;\(c\)&lt;/span&gt;为常数，则&lt;span class=&#34;math inline&#34;&gt;\(Var(X+c)=Var(X)\)&lt;/span&gt;&lt;/li&gt;
-&lt;li&gt;若&lt;span class=&#34;math inline&#34;&gt;\(c\)&lt;/span&gt;为常数，则&lt;span class=&#34;math inline&#34;&gt;\(Var(cX)=c^2Var(X)\)&lt;/span&gt;&lt;/li&gt;
-&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(Var(X)=0\)&lt;/span&gt;的充要条件为，&lt;span class=&#34;math inline&#34;&gt;\(P(X=E(X))=1\)&lt;/span&gt;&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;&lt;strong&gt;定理2&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;独立（注意独立）随机变量之和的方差等于各变量的方差之和，即&lt;/p&gt;
-&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
-Var(X_1+X_2+\cdots+X_n) = Var(X_1)+Var(X_2)+\cdots+Var(X_n)
-\]&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;如果不要求独立，二维有&lt;/p&gt;
-&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
-Var(X+Y)=Var(X)+Var(Y)+2E\{[X-E(X)][Y-E(Y)]\}
-\]&lt;/span&gt;&lt;/p&gt;
-&lt;h3 id=&#34;矩&#34;&gt;矩&lt;/h3&gt;
-&lt;p&gt;&lt;strong&gt;定义1&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;为随机变量，&lt;span class=&#34;math inline&#34;&gt;\(c\)&lt;/span&gt;为常数，&lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt;为正整数，则量&lt;span class=&#34;math inline&#34;&gt;\(E[(X-c)^k]\)&lt;/span&gt;称为&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;关于&lt;span class=&#34;math inline&#34;&gt;\(c\)&lt;/span&gt;点的&lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt;阶矩&lt;/p&gt;
-&lt;ol type=&#34;1&#34;&gt;
-&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(c=0\)&lt;/span&gt;时称为&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;的&lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt;阶原点矩，记作&lt;span class=&#34;math inline&#34;&gt;\(\mu_k\)&lt;/span&gt;&lt;/li&gt;
-&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(c=E(X)\)&lt;/span&gt;时称为&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;的&lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt;阶中心矩，记作&lt;span class=&#34;math inline&#34;&gt;\(v_k\)&lt;/span&gt;。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;另外&lt;/p&gt;
-&lt;ol type=&#34;1&#34;&gt;
-&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(\mu_{kl}=E(X^kY^l)\)&lt;/span&gt;称为&lt;span class=&#34;math inline&#34;&gt;\(X,Y\)&lt;/span&gt;的&lt;span class=&#34;math inline&#34;&gt;\(k+l\)&lt;/span&gt;阶混合原点矩，简称&lt;span class=&#34;math inline&#34;&gt;\(k+l\)&lt;/span&gt;混合矩&lt;/li&gt;
-&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(v_{kl}=E[(X-E(X))^k(Y-E(Y))^l]\)&lt;/span&gt;称为&lt;span class=&#34;math inline&#34;&gt;\(X,Y\)&lt;/span&gt;的&lt;span class=&#34;math inline&#34;&gt;\(k+l\)&lt;/span&gt;阶混合中心矩&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h2 id=&#34;协方差与相关系数&#34;&gt;协方差与相关系数&lt;/h2&gt;
-&lt;p&gt;对于二维随机向量&lt;span class=&#34;math inline&#34;&gt;\((X,Y)\)&lt;/span&gt;，&lt;span class=&#34;math inline&#34;&gt;\(X,Y\)&lt;/span&gt;本身都是一维随机变量，可以定义其均值、方差，我们记为&lt;/p&gt;
-&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
-E(X)=m_1,E(Y)=m_2,Var(X)=\sigma_1^2,Var(Y)=\sigma_2^2
-\]&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;定义1&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;称&lt;span class=&#34;math inline&#34;&gt;\(E[(X-m_1)(Y-m_2)]\)&lt;/span&gt;为&lt;span class=&#34;math inline&#34;&gt;\(X,Y\)&lt;/span&gt;的协方差，并记为&lt;span class=&#34;math inline&#34;&gt;\(Cov(X,Y)\)&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;显然有&lt;span class=&#34;math inline&#34;&gt;\(Cov(X,Y)=Cov(Y,X)\)&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;也有&lt;/p&gt;
-&lt;ol type=&#34;1&#34;&gt;
-&lt;li&gt;对常数&lt;span class=&#34;math inline&#34;&gt;\(c_1,c_2,c_3,c_4\)&lt;/span&gt;，有&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
-Cov(c_1X+c_2,c_3Y+c_4)=c_1c_3Cov(X,Y)
-\]&lt;/span&gt;&lt;/p&gt;
-&lt;ol start=&#34;2&#34; type=&#34;1&#34;&gt;
-&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(Cov(X,Y)=E(XY)-m_1m_2=E(XY)-E(X)E(Y)\)&lt;/span&gt;&lt;/li&gt;
-&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(Cov(X,X)=Var(X)\)&lt;/span&gt;&lt;/li&gt;
-&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(Cov(X_1+X_2,Y)=Cov(X_1,Y)+Cov(X_2,Y)\)&lt;/span&gt;&lt;/li&gt;
-&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(Var(X\pm Y)=Var(X)+Var(Y)\pm
-2Cov(X,Y)\)&lt;/span&gt;&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;&lt;strong&gt;定理1&lt;/strong&gt;&lt;/p&gt;
-&lt;ol type=&#34;1&#34;&gt;
-&lt;li&gt;若&lt;span class=&#34;math inline&#34;&gt;\(X,Y\)&lt;/span&gt;独立，则&lt;span class=&#34;math inline&#34;&gt;\(Cov(X,Y)=0\)&lt;/span&gt;&lt;/li&gt;
-&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\([Cov(X,Y)]^2\leq\sigma_1^2\sigma_2^2\)&lt;/span&gt;，等号当且仅当&lt;span class=&#34;math inline&#34;&gt;\(X,Y\)&lt;/span&gt;之间有严格线性关系（即存在常数&lt;span class=&#34;math inline&#34;&gt;\(a,b\)&lt;/span&gt;使&lt;span class=&#34;math inline&#34;&gt;\(Y=a+bX\)&lt;/span&gt;）时成立。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;&lt;strong&gt;定义2&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;称&lt;span class=&#34;math inline&#34;&gt;\(Cov(X,Y)/(\sigma_1\sigma_2)\)&lt;/span&gt;为&lt;span class=&#34;math inline&#34;&gt;\(X,Y\)&lt;/span&gt;的相关系数，并记为&lt;span class=&#34;math inline&#34;&gt;\(Corr(X,Y)\)&lt;/span&gt;，有时也记为&lt;span class=&#34;math inline&#34;&gt;\(\rho_{XY}\)&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;可以将相关系数看做标准尺度下的协方差。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;定理2&lt;/strong&gt;&lt;/p&gt;
-&lt;ol type=&#34;1&#34;&gt;
-&lt;li&gt;若&lt;span class=&#34;math inline&#34;&gt;\(X,Y\)&lt;/span&gt;独立，则&lt;span class=&#34;math inline&#34;&gt;\(Corr(X,Y)=0\)&lt;/span&gt;，当然也要求方差大于&lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt;才有定义。&lt;/li&gt;
-&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(-1\leq Corr(X,Y)\leq
-1\)&lt;/span&gt;，等号当且仅当&lt;span class=&#34;math inline&#34;&gt;\(X,Y\)&lt;/span&gt;之间有严格线性关系时达到。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;需要注意几点：&lt;/p&gt;
-&lt;ol type=&#34;1&#34;&gt;
-&lt;li&gt;当&lt;span class=&#34;math inline&#34;&gt;\(Corr(X,Y)=0\)&lt;/span&gt;（或&lt;span class=&#34;math inline&#34;&gt;\(Cov(X,Y)=0\)&lt;/span&gt;）时，称&lt;span class=&#34;math inline&#34;&gt;\(X,Y\)&lt;/span&gt;不相关，通常我们只能由“独立”推出“不相关”，而不能反过来。但是对于服从二维正态分布的&lt;span class=&#34;math inline&#34;&gt;\(X,Y\)&lt;/span&gt;，“独立”和“不相关”是一回事。&lt;/li&gt;
-&lt;li&gt;相关系数也常称为“线性相关系数”，相关系数并不是刻画&lt;span class=&#34;math inline&#34;&gt;\(X,Y\)&lt;/span&gt;之间一般关系的程度，而只刻画了“线性”关系的程度。上述定理的第二条提供了一个依据。&lt;/li&gt;
-&lt;li&gt;如果&lt;span class=&#34;math inline&#34;&gt;\(0&amp;lt; |Corr(X,Y)|&amp;lt;
-1\)&lt;/span&gt;，则解释为&lt;span class=&#34;math inline&#34;&gt;\(X,Y\)&lt;/span&gt;之间有一定程度的线性关系。&lt;/li&gt;
-&lt;li&gt;线性相关的意义还可以从最小二乘法的角度去解释。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h2 id=&#34;大数定理和中心极限定理&#34;&gt;大数定理和中心极限定理&lt;/h2&gt;
-&lt;h3 id=&#34;大数定理&#34;&gt;大数定理&lt;/h3&gt;
-&lt;p&gt;&lt;strong&gt;定义1&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(X_1,X_2,\cdots\)&lt;/span&gt;是随机变量序列，如果存在数列&lt;span class=&#34;math inline&#34;&gt;\(a_1,a_2,\cdots\)&lt;/span&gt;使得对任意的&lt;span class=&#34;math inline&#34;&gt;\(\varepsilon&amp;gt;0\)&lt;/span&gt;，有&lt;/p&gt;
-&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
-\lim_{n\to\infty}P\bigg(\bigg|\frac{1}{n}\sum^n_{i=1}X_i-a_n\bigg|\geq\varepsilon\bigg)=0
-\]&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;则称随机变量序列&lt;span class=&#34;math inline&#34;&gt;\(\{X_i\}\)&lt;/span&gt;服从大数定律。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;定义2&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(X_1,X_2,\cdots\)&lt;/span&gt;是随机变量序列，&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;是随机变量，若对任意的&lt;span class=&#34;math inline&#34;&gt;\(\varepsilon&amp;gt;0\)&lt;/span&gt;，有&lt;/p&gt;
-&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
-\lim_{n\to\infty}P(|X_n-X|\geq \varepsilon)=0
-\]&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;此时我们称&lt;span class=&#34;math inline&#34;&gt;\(\{X_i\}\)&lt;/span&gt;依概率收敛到&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;，记为&lt;/p&gt;
-&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
-X_n\stackrel{P}\rightarrow X,n\to\infty
-\]&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;马尔科夫不等式&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;若&lt;span class=&#34;math inline&#34;&gt;\(Y\)&lt;/span&gt;为只取非负值的随机变量，则对任给常数&lt;span class=&#34;math inline&#34;&gt;\(\varepsilon&amp;gt;0\)&lt;/span&gt;，有&lt;/p&gt;
-&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
-P(Y\geq \varepsilon)\leq E(Y)/\varepsilon
-\]&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;切比雪夫不等式&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;若&lt;span class=&#34;math inline&#34;&gt;\(Var(Y)\)&lt;/span&gt;存在，则&lt;/p&gt;
-&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
-P(|Y-EY|\geq\varepsilon)\leq Var(Y)/\varepsilon^2
-\]&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;可以推知&lt;/p&gt;
-&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
-P(|Y-EY|&amp;lt;\varepsilon)\leq 1-Var(Y)/\varepsilon^2
-\]&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;切比雪夫大数定理&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(X_1,X_2,\cdots,X_n,\cdots\)&lt;/span&gt;是相互独立独立的随机变量，具有相同的期望和方差，记它们的均值都为&lt;span class=&#34;math inline&#34;&gt;\(a\)&lt;/span&gt;。又设它们的方差存在并记为&lt;span class=&#34;math inline&#34;&gt;\(\sigma^2\)&lt;/span&gt;。则对任意给定的&lt;span class=&#34;math inline&#34;&gt;\(\varepsilon&amp;gt;0\)&lt;/span&gt;，有&lt;/p&gt;
-&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
-\lim_{n\to \infty}P(|\bar X_n-a|\geq \varepsilon) = 0
-\]&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;更一般的形式&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(X_1,X_2,\cdots,X_n,\cdots\)&lt;/span&gt;是相互独立的随机变量序列，具有相同的期望&lt;span class=&#34;math inline&#34;&gt;\(\mu\)&lt;/span&gt;，如果存在常数&lt;span class=&#34;math inline&#34;&gt;\(C&amp;gt;0\)&lt;/span&gt;，使得&lt;span class=&#34;math inline&#34;&gt;\(D(X_k)\leq C\)&lt;/span&gt;，则对于任意&lt;span class=&#34;math inline&#34;&gt;\(\varepsilon&amp;gt;0\)&lt;/span&gt;，有&lt;/p&gt;
-&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
-\lim_{n\to\infty}P\bigg(\bigg|\frac{1}{n}\sum^n_{k=1}X_k-\mu\bigg|\geq\varepsilon\bigg)=0
-\]&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;马尔科夫大数定律&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(X_1,X_2,\cdots,X_n,\cdots\)&lt;/span&gt;是随机变量序列，且&lt;/p&gt;
-&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
-\lim_{n\to\infty}\frac{1}{n^2}D\bigg[\sum^n_{k=1}X_k\bigg]=0
-\]&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;则对于任意&lt;span class=&#34;math inline&#34;&gt;\(\varepsilon&amp;gt;0\)&lt;/span&gt;，有&lt;/p&gt;
-&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
-\lim_{n\to\infty}P\bigg(\bigg|\frac{1}{n}\sum^n_{k=1}X_k-\frac{1}{n}\sum^n_{k=1}E(X_k)\bigg|\geq\varepsilon\bigg)=0
-\]&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;辛钦大数定律&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(X_1,X_2,\cdots,X_n,\cdots\)&lt;/span&gt;是相互独立且同分布的随机变量序列，具有有限的数学期望，记为&lt;span class=&#34;math inline&#34;&gt;\(\mu\)&lt;/span&gt;。则对于任意&lt;span class=&#34;math inline&#34;&gt;\(\varepsilon&amp;gt;0\)&lt;/span&gt;，有&lt;/p&gt;
-&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
-\lim_{n\to\infty}P\bigg(\bigg|\frac{1}{n}\sum^n_{k=1}X_k-\mu\bigg|\geq\varepsilon\bigg)=0
-\]&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;伯努利大数定律&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(n_A\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;次独立重复实验（&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;重伯努利实验）事件&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;发生的次数，&lt;span class=&#34;math inline&#34;&gt;\(p\)&lt;/span&gt;是事件&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;在每次试验中发生的概率，即&lt;span class=&#34;math inline&#34;&gt;\(P(A)=p\)&lt;/span&gt;，则对任意的&lt;span class=&#34;math inline&#34;&gt;\(\varepsilon&amp;gt;0\)&lt;/span&gt;，有&lt;/p&gt;
-&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
-\lim_{n\to\infty}
-P\bigg(\bigg|\frac{n_A}{n}-p\bigg|\geq\varepsilon\bigg)=0
-\]&lt;/span&gt;&lt;/p&gt;
-&lt;h3 id=&#34;中心极限定理&#34;&gt;中心极限定理&lt;/h3&gt;
-&lt;p&gt;&lt;strong&gt;定理1&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(X_1,X_2,\cdots,X_n,\cdots\)&lt;/span&gt;为独立同分布的随机变量，&lt;span class=&#34;math inline&#34;&gt;\(E(X_i)=\mu,Var(X_i)=\sigma^2(0&amp;lt;\sigma^2&amp;lt;\infty)\)&lt;/span&gt;。则对任何实数&lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;，有&lt;/p&gt;
-&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
-\lim_{n\to\infty}P\bigg(\frac{1}{\sqrt{n}
-\sigma}(X_1+\cdots+X_n-n\mu)\leq x\bigg)=\varPhi(x)
-\]&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;这里，&lt;span class=&#34;math inline&#34;&gt;\(\varPhi(x)\)&lt;/span&gt;是标准正态分布&lt;span class=&#34;math inline&#34;&gt;\(N(0,1)\)&lt;/span&gt;的分布函数。&lt;/p&gt;
-&lt;p&gt;也就是说，当&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;充分大时，有&lt;/p&gt;
-&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
-\sum_{k=1}^n X_k\sim N(n\mu,n\sigma^2),\quad
-\frac{\sum_{k=1}^nX_k-n\mu}{\sqrt{n}\sigma}\sim N(0,1)
-\]&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
-P\bigg(\sum^n_{k=1}X_k\leq x\bigg)\approx\Phi\bigg(\frac{x-n\mu}{\sqrt
-n\sigma}\bigg),\quad P\bigg(a&amp;lt;\sum^n_{k=1}X_k\leq
-b\bigg)\approx\Phi\bigg(\frac{b-n\mu}{\sqrt
-n\sigma}\bigg)-\bigg(\frac{a-n\mu}{\sqrt n\sigma}\bigg)
-\]&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
-\bar X\approx N(\mu,\sigma^2/n),\quad \frac{\bar
-X-\mu}{\sigma/\sqrt{n}}\approx N(0,1)
-\]&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;李雅普诺夫中心极限定理&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(X_1,X_2,\cdots,X_n,\cdots\)&lt;/span&gt;相互独立，其具有如下数学期望和方差：&lt;span class=&#34;math inline&#34;&gt;\(E(X_k)=\mu_k,D(X_k)=\sigma_k^2&amp;gt;0\)&lt;/span&gt;，记&lt;span class=&#34;math inline&#34;&gt;\(B_n^2=\sum^n_{k=1}\sigma^2_k\)&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;若存在正数&lt;span class=&#34;math inline&#34;&gt;\(\delta\)&lt;/span&gt;使得当&lt;span class=&#34;math inline&#34;&gt;\(n\to\infty\)&lt;/span&gt;时&lt;/p&gt;
-&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
-\frac{1}{B^{2+\delta}}\sum^n_{k=1}E\bigg[|X_i-\mu_i|^{2+\delta}\bigg]\to
-0
-\]&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;则&lt;/p&gt;
-&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
-\lim_{n\to\infty}P\bigg(\frac{\sum^n_{k=1}X_k-\sum^n_{k=1}\mu_k}{B_n}\leq
-x\bigg)=\Phi(x)
-\]&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;棣莫弗-拉普拉斯中心极限定理&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(n_A\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;次独立重复实验（&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;重伯努利实验）事件&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;发生的次数，&lt;span class=&#34;math inline&#34;&gt;\(p\)&lt;/span&gt;是事件&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;在每次试验中发生的概率，即&lt;span class=&#34;math inline&#34;&gt;\(P(A)=p\)&lt;/span&gt;，&lt;/p&gt;
-&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
-\lim_{n\to\infty}P\bigg(\frac{n_A-np}{\sqrt{np(1-p)}}\leq
-x\bigg)=\Phi(x)
-\]&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;即，若&lt;span class=&#34;math inline&#34;&gt;\(X\sim B(n,p)\)&lt;/span&gt;，&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;充分大时&lt;/p&gt;
-&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
-X\sim N(np,np(1-p))
-\]&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
-P(X\leq x)\approx\Phi\bigg(\frac{x-np}{\sqrt{np(1-p)}}\bigg),\quad
-P(a&amp;lt;X\leq
-b)\approx\Phi\bigg(\frac{b-np}{\sqrt{np(1-p)}}\bigg)-\Phi\bigg(\frac{a-np}{\sqrt{np(1-p)}}\bigg)
-\]&lt;/span&gt;&lt;/p&gt;
 &lt;h2 id=&#34;常见的分布&#34;&gt;常见的分布&lt;/h2&gt;
 &lt;h3 id=&#34;分布&#34;&gt;0-1分布&lt;/h3&gt;
 &lt;p&gt;设某个事件&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;在一次试验中发生的概率为&lt;span class=&#34;math inline&#34;&gt;\(p\)&lt;/span&gt;，重复试验&lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt;次，以&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;记&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;在&lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt;次试验中发生的次数，则&lt;/p&gt;
@@ -4880,7 +4678,7 @@ x&amp;gt;0\\
 \end{align}\]&lt;/span&gt;. $$&lt;/p&gt;
 &lt;p&gt;是概率密度函数。它称为“自由度为&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;的皮尔逊卡方密度”，常记为&lt;span class=&#34;math inline&#34;&gt;\(\mathcal{X}{}_n^2\)&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;定理1&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;若&lt;span class=&#34;math inline&#34;&gt;\(X_1,\cdots,X_n\)&lt;/span&gt;相互独立，都服从正态分布&lt;span class=&#34;math inline&#34;&gt;\(N(0,1)\)&lt;/span&gt;，则&lt;span class=&#34;math inline&#34;&gt;\(Y=X_1^2+\cdots+X_N^2\)&lt;/span&gt;服从自由度为&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;的卡方分布&lt;span class=&#34;math inline&#34;&gt;\(\mathcal{X}{}_n^2\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;若&lt;span class=&#34;math inline&#34;&gt;\(X_1,\cdots,X_n\)&lt;/span&gt;相互独立，都服从正态分布&lt;span class=&#34;math inline&#34;&gt;\(N(0,1)\)&lt;/span&gt;，则&lt;span class=&#34;math inline&#34;&gt;\(Y=X_1^2+\cdots+X_n^2\)&lt;/span&gt;服从自由度为&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;的卡方分布&lt;span class=&#34;math inline&#34;&gt;\(\mathcal{X}{}_n^2\)&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;卡方分布有如下性质&lt;/p&gt;
 &lt;ol type=&#34;1&#34;&gt;
 &lt;li&gt;设&lt;span class=&#34;math inline&#34;&gt;\(X_1,X_2\)&lt;/span&gt;独立，&lt;span class=&#34;math inline&#34;&gt;\(X_1\sim \mathcal{X}_m^2,X_2\sim
@@ -4891,14 +4689,418 @@ x&amp;gt;0\\
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 X=2\lambda(X_1+\cdots+X_n)\sim \mathcal{X}_{2n}^2
 \]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;期望&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;若&lt;span class=&#34;math inline&#34;&gt;\(X\sim\mathcal{X}_n^2\)&lt;/span&gt;，&lt;span class=&#34;math inline&#34;&gt;\(E(X)=n\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;方差&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;若&lt;span class=&#34;math inline&#34;&gt;\(X\sim\mathcal{X}_n^2\)&lt;/span&gt;，&lt;span class=&#34;math inline&#34;&gt;\(D(X)=2n\)&lt;/span&gt;&lt;/p&gt;
 &lt;h3 id=&#34;t分布&#34;&gt;t分布&lt;/h3&gt;
-&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(Y=X_2/\sqrt{X_1/n}\)&lt;/span&gt;的密度函数为&lt;/p&gt;
+&lt;p&gt;若&lt;span class=&#34;math inline&#34;&gt;\(X\sim
+N(0,1),Y\sim\mathcal{X}_n^2\)&lt;/span&gt;，且&lt;span class=&#34;math inline&#34;&gt;\(X,Y\)&lt;/span&gt;相互独立&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(t=X/\sqrt{Y/n}\)&lt;/span&gt;的密度函数为&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 t_n(y)=\frac{\Gamma((n+1)/2)}{\sqrt{n\pi}\Gamma(n/2)}\bigg(1+\frac{y^2}{n}\bigg)^{-\frac{n+1}{2}}
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;这个密度函数称为“自由度为&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;的&lt;span class=&#34;math inline&#34;&gt;\(t\)&lt;/span&gt;分布”的密度函数，常简记为&lt;span class=&#34;math inline&#34;&gt;\(t_n\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;充分大时&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\lim_{n\to\infty}t_n(y)=\frac{1}{\sqrt{2\pi}}e^{-t^2/2}
+\]&lt;/span&gt;&lt;/p&gt;
 &lt;h3 id=&#34;f分布&#34;&gt;F分布&lt;/h3&gt;
-&lt;p&gt;TODO&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(U\sim\mathcal{X}_{n_1}^2,V\sim\mathcal{X}_{n_2}^2\)&lt;/span&gt;，且&lt;span class=&#34;math inline&#34;&gt;\(U,V\)&lt;/span&gt;相互独立，则称随机变量&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+F = \frac{U/n_1}{V/n_2}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;服从自由度为&lt;span class=&#34;math inline&#34;&gt;\((n_1,n_2)\)&lt;/span&gt;的&lt;span class=&#34;math inline&#34;&gt;\(F\)&lt;/span&gt;分布，概率密度为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+f_{n_1,n_2}(y) =
+n_1^{n_1/2}n_2^{n_2/2}\frac{\Gamma(\frac{n_1+n_2}{2})}{\Gamma(\frac{n_1}{2})\Gamma(\frac{n_2}{2})}y^{n_1/2-1}(n_1y+n_2)^{-(n_1+n_2)/2}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;性质&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;若&lt;span class=&#34;math inline&#34;&gt;\(F\sim F(n_1,n_2)\)&lt;/span&gt;，则&lt;span class=&#34;math inline&#34;&gt;\(\frac{1}{F}\sim F(n_2,n_1)\)&lt;/span&gt;&lt;/p&gt;
+&lt;h1 id=&#34;随机变量的数字特征&#34;&gt;随机变量的数字特征&lt;/h1&gt;
+&lt;h2 id=&#34;数学期望与中位数&#34;&gt;数学期望与中位数&lt;/h2&gt;
+&lt;h3 id=&#34;定义-1&#34;&gt;定义&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;定义1&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设随机变量&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;只取有限个可能值&lt;span class=&#34;math inline&#34;&gt;\(a_1,\cdots,a_m\)&lt;/span&gt;，其概率分布为&lt;span class=&#34;math inline&#34;&gt;\(P(X=a_i)=p_i(i=1,\cdots,m)\)&lt;/span&gt;，则&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;的数学期望，记为&lt;span class=&#34;math inline&#34;&gt;\(E(X)\)&lt;/span&gt;或&lt;span class=&#34;math inline&#34;&gt;\(EX\)&lt;/span&gt;，定义为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+E(X) = a_1p_1+a_2p_2+\cdots+a_mp_m
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;如果取无穷个值&lt;span class=&#34;math inline&#34;&gt;\(a_1,a_2,\cdots\)&lt;/span&gt;，而概率分布为&lt;span class=&#34;math inline&#34;&gt;\(P(X=a_i)=p_i(i=1,\cdots)\)&lt;/span&gt;，则有其数学期望为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+E(X) = \sum^\infty_{i=1}a_ip_i（式1）
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;这个期望存在，必须要求这个级数收敛，并且是绝对收敛。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定义2&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;如果&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\sum^\infty_{i=1}|a_i|p_i&amp;lt;\infty
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;则称式1的右边的级数之和为&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;的数学期望&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定义3&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;有概率密度函数&lt;span class=&#34;math inline&#34;&gt;\(f(x)\)&lt;/span&gt;，如果&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\int^\infty_{-\infty}|x|f(x)dx&amp;lt;\infty
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;则称&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+E(X) = \int^\infty_{-\infty}xf(x)dx
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;为&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;的数学期望。&lt;/p&gt;
+&lt;h3 id=&#34;性质&#34;&gt;性质&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;定理1&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;若干个随机变量之和的期望等于各变量的期望之和&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+E(X_1+X_2+\cdots+X_n) = E(X_1)+E(X_2)+\cdots+E(X_n)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定理2&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;若干个独立（注意独立）随机变量之积的期望等于各变量期望之积&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+E(X_1X_2\cdots X_n) = E(X_1)E(X_2)\cdots E(X_n)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;随机变量函数的期望&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设随机变量&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;为离散型，有分布&lt;span class=&#34;math inline&#34;&gt;\(P(X=a_i)=p_i(i=1,2,\cdots)\)&lt;/span&gt;；或者为连续型，有概率密度函数&lt;span class=&#34;math inline&#34;&gt;\(f(x)\)&lt;/span&gt;，则&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+E(g(x)) = \sum_i g(a_i)p_i（要求绝对收敛）
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;或&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+E(g(x)) =
+\int^\infty_{-\infty}g(x)f(x)dx（要求\int^\infty_{-\infty}|g(x)|f(x)dx&amp;lt;\infty）
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;有一个特例是，若&lt;span class=&#34;math inline&#34;&gt;\(c\)&lt;/span&gt;为常数，则&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+E(cX) = cE(X)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;多维情况&#34;&gt;多维情况&lt;/h3&gt;
+&lt;p&gt;以二维为例&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(Z\)&lt;/span&gt;是随机变量&lt;span class=&#34;math inline&#34;&gt;\(X,Y\)&lt;/span&gt;的函数，&lt;span class=&#34;math inline&#34;&gt;\(Z=g(X,Y)\)&lt;/span&gt;，&lt;span class=&#34;math inline&#34;&gt;\(g\)&lt;/span&gt;是连续函数，&lt;span class=&#34;math inline&#34;&gt;\(Z\)&lt;/span&gt;是一维随机变量&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;离散情况&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\((X,Y)\)&lt;/span&gt;的分布律为&lt;span class=&#34;math inline&#34;&gt;\(P(X=x_i,Y=y_j)=p_{ij}\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+E(Z) = E[g(X,Y)] = \sum_j\sum_i g(x_i,y_j)p_{ij}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;连续情况&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\((X,Y)\)&lt;/span&gt;的概率密度是&lt;span class=&#34;math inline&#34;&gt;\(f(x,y)\)&lt;/span&gt;，则有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+E(Z)=E[g(X,Y)]=\int^{+\infty}_{-\infty}\int^{+\infty}_{-\infty}g(x,y)f(x,y)dxdy
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;更高维可以同理推出。&lt;/p&gt;
+&lt;h3 id=&#34;条件数学期望&#34;&gt;条件数学期望&lt;/h3&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+E(Y|x) = \int^\infty_{-\infty}yf(y|x)dy
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;类似于全概率公式，我们可以求得无条件的数学期望的一个重要公式&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+E(Y) = \int^\infty_{-\infty}E(Y|x)f_1(x)dx
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+f_1 = \int^\infty_{-\infty}f(x,y)dy
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;如果将&lt;span class=&#34;math inline&#34;&gt;\(g(x)=E(Y|x)\)&lt;/span&gt;，则&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+E(Y) = \int^\infty_{-\infty}g(x)f_1(x)dx=E(g(X))=E(E(Y|X))
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;整理得到&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+E(Y) = E[E(Y|X)]
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;如果是多维的，也有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+E(Y) =
+\int^\infty_{-\infty}\cdots\int^\infty_{-\infty}E(Y|x_1,\cdots,x_n)f(x_1,\cdots,x_n)dx_1\cdots
+dx_n
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;如果是离散的，有&lt;span class=&#34;math inline&#34;&gt;\(P(X=a_i)=p_i\)&lt;/span&gt;，则&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+E(Y) = \sum^\infty_{i=1}p_iE(Y|a_i)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;中位数&#34;&gt;中位数&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;定义1&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设连续型随机变量&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;的分布函数为&lt;span class=&#34;math inline&#34;&gt;\(F(x)\)&lt;/span&gt;，则满足条件&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+P(X\leq m)=F(m)=1/2
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;的数&lt;span class=&#34;math inline&#34;&gt;\(m\)&lt;/span&gt;称为&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;或分布&lt;span class=&#34;math inline&#34;&gt;\(F\)&lt;/span&gt;的中位数。&lt;/p&gt;
+&lt;p&gt;而连续的时候，有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+P(X\leq m) = P(X&amp;lt;m) = P(X&amp;gt;m) = P(X\geq m) = 1/2   
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h2 id=&#34;方差与矩&#34;&gt;方差与矩&lt;/h2&gt;
+&lt;h3 id=&#34;方差与标准差&#34;&gt;方差与标准差&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;定义1&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;为随机变量，分布为&lt;span class=&#34;math inline&#34;&gt;\(F\)&lt;/span&gt;，则&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+Var(X) = E(X-EX)^2
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;称为&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;的方差，有时会记为&lt;span class=&#34;math inline&#34;&gt;\(DX\)&lt;/span&gt;，其算术平方根称为标准差。&lt;/p&gt;
+&lt;p&gt;将其展开得&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+Var(X)=E(X^2)-(EX)^2
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定理1&lt;/strong&gt;&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;常数的方差为&lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;若&lt;span class=&#34;math inline&#34;&gt;\(c\)&lt;/span&gt;为常数，则&lt;span class=&#34;math inline&#34;&gt;\(Var(X+c)=Var(X)\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;若&lt;span class=&#34;math inline&#34;&gt;\(c\)&lt;/span&gt;为常数，则&lt;span class=&#34;math inline&#34;&gt;\(Var(cX)=c^2Var(X)\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(Var(X)=0\)&lt;/span&gt;的充要条件为，&lt;span class=&#34;math inline&#34;&gt;\(P(X=E(X))=1\)&lt;/span&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;定理2&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;独立（注意独立）随机变量之和的方差等于各变量的方差之和，即&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+Var(X_1+X_2+\cdots+X_n) = Var(X_1)+Var(X_2)+\cdots+Var(X_n)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;如果不要求独立，二维有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+Var(X+Y)=Var(X)+Var(Y)+2E\{[X-E(X)][Y-E(Y)]\}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;矩&#34;&gt;矩&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;定义1&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;为随机变量，&lt;span class=&#34;math inline&#34;&gt;\(c\)&lt;/span&gt;为常数，&lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt;为正整数，则量&lt;span class=&#34;math inline&#34;&gt;\(E[(X-c)^k]\)&lt;/span&gt;称为&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;关于&lt;span class=&#34;math inline&#34;&gt;\(c\)&lt;/span&gt;点的&lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt;阶矩&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(c=0\)&lt;/span&gt;时称为&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;的&lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt;阶原点矩，记作&lt;span class=&#34;math inline&#34;&gt;\(\mu_k\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(c=E(X)\)&lt;/span&gt;时称为&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;的&lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt;阶中心矩，记作&lt;span class=&#34;math inline&#34;&gt;\(v_k\)&lt;/span&gt;。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;另外&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(\mu_{kl}=E(X^kY^l)\)&lt;/span&gt;称为&lt;span class=&#34;math inline&#34;&gt;\(X,Y\)&lt;/span&gt;的&lt;span class=&#34;math inline&#34;&gt;\(k+l\)&lt;/span&gt;阶混合原点矩，简称&lt;span class=&#34;math inline&#34;&gt;\(k+l\)&lt;/span&gt;混合矩&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(v_{kl}=E[(X-E(X))^k(Y-E(Y))^l]\)&lt;/span&gt;称为&lt;span class=&#34;math inline&#34;&gt;\(X,Y\)&lt;/span&gt;的&lt;span class=&#34;math inline&#34;&gt;\(k+l\)&lt;/span&gt;阶混合中心矩&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;协方差与相关系数&#34;&gt;协方差与相关系数&lt;/h2&gt;
+&lt;p&gt;对于二维随机向量&lt;span class=&#34;math inline&#34;&gt;\((X,Y)\)&lt;/span&gt;，&lt;span class=&#34;math inline&#34;&gt;\(X,Y\)&lt;/span&gt;本身都是一维随机变量，可以定义其均值、方差，我们记为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+E(X)=m_1,E(Y)=m_2,Var(X)=\sigma_1^2,Var(Y)=\sigma_2^2
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定义1&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;称&lt;span class=&#34;math inline&#34;&gt;\(E[(X-m_1)(Y-m_2)]\)&lt;/span&gt;为&lt;span class=&#34;math inline&#34;&gt;\(X,Y\)&lt;/span&gt;的协方差，并记为&lt;span class=&#34;math inline&#34;&gt;\(Cov(X,Y)\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;显然有&lt;span class=&#34;math inline&#34;&gt;\(Cov(X,Y)=Cov(Y,X)\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;也有&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;对常数&lt;span class=&#34;math inline&#34;&gt;\(c_1,c_2,c_3,c_4\)&lt;/span&gt;，有&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+Cov(c_1X+c_2,c_3Y+c_4)=c_1c_3Cov(X,Y)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;ol start=&#34;2&#34; type=&#34;1&#34;&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(Cov(X,Y)=E(XY)-m_1m_2=E(XY)-E(X)E(Y)\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(Cov(X,X)=Var(X)\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(Cov(X_1+X_2,Y)=Cov(X_1,Y)+Cov(X_2,Y)\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(Var(X\pm Y)=Var(X)+Var(Y)\pm
+2Cov(X,Y)\)&lt;/span&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;定理1&lt;/strong&gt;&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;若&lt;span class=&#34;math inline&#34;&gt;\(X,Y\)&lt;/span&gt;独立，则&lt;span class=&#34;math inline&#34;&gt;\(Cov(X,Y)=0\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\([Cov(X,Y)]^2\leq\sigma_1^2\sigma_2^2\)&lt;/span&gt;，等号当且仅当&lt;span class=&#34;math inline&#34;&gt;\(X,Y\)&lt;/span&gt;之间有严格线性关系（即存在常数&lt;span class=&#34;math inline&#34;&gt;\(a,b\)&lt;/span&gt;使&lt;span class=&#34;math inline&#34;&gt;\(Y=a+bX\)&lt;/span&gt;）时成立。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;定义2&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;称&lt;span class=&#34;math inline&#34;&gt;\(Cov(X,Y)/(\sigma_1\sigma_2)\)&lt;/span&gt;为&lt;span class=&#34;math inline&#34;&gt;\(X,Y\)&lt;/span&gt;的相关系数，并记为&lt;span class=&#34;math inline&#34;&gt;\(Corr(X,Y)\)&lt;/span&gt;，有时也记为&lt;span class=&#34;math inline&#34;&gt;\(\rho_{XY}\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;可以将相关系数看做标准尺度下的协方差。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定理2&lt;/strong&gt;&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;若&lt;span class=&#34;math inline&#34;&gt;\(X,Y\)&lt;/span&gt;独立，则&lt;span class=&#34;math inline&#34;&gt;\(Corr(X,Y)=0\)&lt;/span&gt;，当然也要求方差大于&lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt;才有定义。&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(-1\leq Corr(X,Y)\leq
+1\)&lt;/span&gt;，等号当且仅当&lt;span class=&#34;math inline&#34;&gt;\(X,Y\)&lt;/span&gt;之间有严格线性关系时达到。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;需要注意几点：&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;当&lt;span class=&#34;math inline&#34;&gt;\(Corr(X,Y)=0\)&lt;/span&gt;（或&lt;span class=&#34;math inline&#34;&gt;\(Cov(X,Y)=0\)&lt;/span&gt;）时，称&lt;span class=&#34;math inline&#34;&gt;\(X,Y\)&lt;/span&gt;不相关，通常我们只能由“独立”推出“不相关”，而不能反过来。但是对于服从二维正态分布的&lt;span class=&#34;math inline&#34;&gt;\(X,Y\)&lt;/span&gt;，“独立”和“不相关”是一回事。&lt;/li&gt;
+&lt;li&gt;相关系数也常称为“线性相关系数”，相关系数并不是刻画&lt;span class=&#34;math inline&#34;&gt;\(X,Y\)&lt;/span&gt;之间一般关系的程度，而只刻画了“线性”关系的程度。上述定理的第二条提供了一个依据。&lt;/li&gt;
+&lt;li&gt;如果&lt;span class=&#34;math inline&#34;&gt;\(0&amp;lt; |Corr(X,Y)|&amp;lt;
+1\)&lt;/span&gt;，则解释为&lt;span class=&#34;math inline&#34;&gt;\(X,Y\)&lt;/span&gt;之间有一定程度的线性关系。&lt;/li&gt;
+&lt;li&gt;线性相关的意义还可以从最小二乘法的角度去解释。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;大数定理和中心极限定理&#34;&gt;大数定理和中心极限定理&lt;/h2&gt;
+&lt;h3 id=&#34;大数定理&#34;&gt;大数定理&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;定义1&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(X_1,X_2,\cdots\)&lt;/span&gt;是随机变量序列，如果存在数列&lt;span class=&#34;math inline&#34;&gt;\(a_1,a_2,\cdots\)&lt;/span&gt;使得对任意的&lt;span class=&#34;math inline&#34;&gt;\(\varepsilon&amp;gt;0\)&lt;/span&gt;，有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\lim_{n\to\infty}P\bigg(\bigg|\frac{1}{n}\sum^n_{i=1}X_i-a_n\bigg|\geq\varepsilon\bigg)=0
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;则称随机变量序列&lt;span class=&#34;math inline&#34;&gt;\(\{X_i\}\)&lt;/span&gt;服从大数定律。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定义2&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(X_1,X_2,\cdots\)&lt;/span&gt;是随机变量序列，&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;是随机变量，若对任意的&lt;span class=&#34;math inline&#34;&gt;\(\varepsilon&amp;gt;0\)&lt;/span&gt;，有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\lim_{n\to\infty}P(|X_n-X|\geq \varepsilon)=0
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;此时我们称&lt;span class=&#34;math inline&#34;&gt;\(\{X_i\}\)&lt;/span&gt;依概率收敛到&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;，记为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+X_n\stackrel{P}\rightarrow X,n\to\infty
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;马尔科夫不等式&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;若&lt;span class=&#34;math inline&#34;&gt;\(Y\)&lt;/span&gt;为只取非负值的随机变量，则对任给常数&lt;span class=&#34;math inline&#34;&gt;\(\varepsilon&amp;gt;0\)&lt;/span&gt;，有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+P(Y\geq \varepsilon)\leq E(Y)/\varepsilon
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;切比雪夫不等式&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;若&lt;span class=&#34;math inline&#34;&gt;\(Var(Y)\)&lt;/span&gt;存在，则&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+P(|Y-EY|\geq\varepsilon)\leq Var(Y)/\varepsilon^2
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;可以推知&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+P(|Y-EY|&amp;lt;\varepsilon)\leq 1-Var(Y)/\varepsilon^2
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;切比雪夫大数定理&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(X_1,X_2,\cdots,X_n,\cdots\)&lt;/span&gt;是相互独立独立的随机变量，具有相同的期望和方差，记它们的均值都为&lt;span class=&#34;math inline&#34;&gt;\(a\)&lt;/span&gt;。又设它们的方差存在并记为&lt;span class=&#34;math inline&#34;&gt;\(\sigma^2\)&lt;/span&gt;。则对任意给定的&lt;span class=&#34;math inline&#34;&gt;\(\varepsilon&amp;gt;0\)&lt;/span&gt;，有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\lim_{n\to \infty}P(|\bar X_n-a|\geq \varepsilon) = 0
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;更一般的形式&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(X_1,X_2,\cdots,X_n,\cdots\)&lt;/span&gt;是相互独立的随机变量序列，具有相同的期望&lt;span class=&#34;math inline&#34;&gt;\(\mu\)&lt;/span&gt;，如果存在常数&lt;span class=&#34;math inline&#34;&gt;\(C&amp;gt;0\)&lt;/span&gt;，使得&lt;span class=&#34;math inline&#34;&gt;\(D(X_k)\leq C\)&lt;/span&gt;，则对于任意&lt;span class=&#34;math inline&#34;&gt;\(\varepsilon&amp;gt;0\)&lt;/span&gt;，有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\lim_{n\to\infty}P\bigg(\bigg|\frac{1}{n}\sum^n_{k=1}X_k-\mu\bigg|\geq\varepsilon\bigg)=0
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;马尔科夫大数定律&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(X_1,X_2,\cdots,X_n,\cdots\)&lt;/span&gt;是随机变量序列，且&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\lim_{n\to\infty}\frac{1}{n^2}D\bigg[\sum^n_{k=1}X_k\bigg]=0
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;则对于任意&lt;span class=&#34;math inline&#34;&gt;\(\varepsilon&amp;gt;0\)&lt;/span&gt;，有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\lim_{n\to\infty}P\bigg(\bigg|\frac{1}{n}\sum^n_{k=1}X_k-\frac{1}{n}\sum^n_{k=1}E(X_k)\bigg|\geq\varepsilon\bigg)=0
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;辛钦大数定律&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(X_1,X_2,\cdots,X_n,\cdots\)&lt;/span&gt;是相互独立且同分布的随机变量序列，具有有限的数学期望，记为&lt;span class=&#34;math inline&#34;&gt;\(\mu\)&lt;/span&gt;。则对于任意&lt;span class=&#34;math inline&#34;&gt;\(\varepsilon&amp;gt;0\)&lt;/span&gt;，有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\lim_{n\to\infty}P\bigg(\bigg|\frac{1}{n}\sum^n_{k=1}X_k-\mu\bigg|\geq\varepsilon\bigg)=0
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;伯努利大数定律&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(n_A\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;次独立重复实验（&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;重伯努利实验）事件&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;发生的次数，&lt;span class=&#34;math inline&#34;&gt;\(p\)&lt;/span&gt;是事件&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;在每次试验中发生的概率，即&lt;span class=&#34;math inline&#34;&gt;\(P(A)=p\)&lt;/span&gt;，则对任意的&lt;span class=&#34;math inline&#34;&gt;\(\varepsilon&amp;gt;0\)&lt;/span&gt;，有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\lim_{n\to\infty}
+P\bigg(\bigg|\frac{n_A}{n}-p\bigg|\geq\varepsilon\bigg)=0
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;中心极限定理&#34;&gt;中心极限定理&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;定理1&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(X_1,X_2,\cdots,X_n,\cdots\)&lt;/span&gt;为独立同分布的随机变量，&lt;span class=&#34;math inline&#34;&gt;\(E(X_i)=\mu,Var(X_i)=\sigma^2(0&amp;lt;\sigma^2&amp;lt;\infty)\)&lt;/span&gt;。则对任何实数&lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;，有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\lim_{n\to\infty}P\bigg(\frac{1}{\sqrt{n}
+\sigma}(X_1+\cdots+X_n-n\mu)\leq x\bigg)=\varPhi(x)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;这里，&lt;span class=&#34;math inline&#34;&gt;\(\varPhi(x)\)&lt;/span&gt;是标准正态分布&lt;span class=&#34;math inline&#34;&gt;\(N(0,1)\)&lt;/span&gt;的分布函数。&lt;/p&gt;
+&lt;p&gt;也就是说，当&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;充分大时，有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\sum_{k=1}^n X_k\sim N(n\mu,n\sigma^2),\quad
+\frac{\sum_{k=1}^nX_k-n\mu}{\sqrt{n}\sigma}\sim N(0,1)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+P\bigg(\sum^n_{k=1}X_k\leq x\bigg)\approx\Phi\bigg(\frac{x-n\mu}{\sqrt
+n\sigma}\bigg),\quad P\bigg(a&amp;lt;\sum^n_{k=1}X_k\leq
+b\bigg)\approx\Phi\bigg(\frac{b-n\mu}{\sqrt
+n\sigma}\bigg)-\bigg(\frac{a-n\mu}{\sqrt n\sigma}\bigg)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\bar X\approx N(\mu,\sigma^2/n),\quad \frac{\bar
+X-\mu}{\sigma/\sqrt{n}}\approx N(0,1)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;李雅普诺夫中心极限定理&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(X_1,X_2,\cdots,X_n,\cdots\)&lt;/span&gt;相互独立，其具有如下数学期望和方差：&lt;span class=&#34;math inline&#34;&gt;\(E(X_k)=\mu_k,D(X_k)=\sigma_k^2&amp;gt;0\)&lt;/span&gt;，记&lt;span class=&#34;math inline&#34;&gt;\(B_n^2=\sum^n_{k=1}\sigma^2_k\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;若存在正数&lt;span class=&#34;math inline&#34;&gt;\(\delta\)&lt;/span&gt;使得当&lt;span class=&#34;math inline&#34;&gt;\(n\to\infty\)&lt;/span&gt;时&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\frac{1}{B^{2+\delta}}\sum^n_{k=1}E\bigg[|X_i-\mu_i|^{2+\delta}\bigg]\to
+0
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;则&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\lim_{n\to\infty}P\bigg(\frac{\sum^n_{k=1}X_k-\sum^n_{k=1}\mu_k}{B_n}\leq
+x\bigg)=\Phi(x)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;棣莫弗-拉普拉斯中心极限定理&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(n_A\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;次独立重复实验（&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;重伯努利实验）事件&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;发生的次数，&lt;span class=&#34;math inline&#34;&gt;\(p\)&lt;/span&gt;是事件&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;在每次试验中发生的概率，即&lt;span class=&#34;math inline&#34;&gt;\(P(A)=p\)&lt;/span&gt;，&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\lim_{n\to\infty}P\bigg(\frac{n_A-np}{\sqrt{np(1-p)}}\leq
+x\bigg)=\Phi(x)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;即，若&lt;span class=&#34;math inline&#34;&gt;\(X\sim B(n,p)\)&lt;/span&gt;，&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;充分大时&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+X\sim N(np,np(1-p))
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+P(X\leq x)\approx\Phi\bigg(\frac{x-np}{\sqrt{np(1-p)}}\bigg),\quad
+P(a&amp;lt;X\leq
+b)\approx\Phi\bigg(\frac{b-np}{\sqrt{np(1-p)}}\bigg)-\Phi\bigg(\frac{a-np}{\sqrt{np(1-p)}}\bigg)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h1 id=&#34;参数估计&#34;&gt;参数估计&lt;/h1&gt;
+&lt;h2 id=&#34;数理统计学的基本概念&#34;&gt;数理统计学的基本概念&lt;/h2&gt;
+&lt;h3 id=&#34;总体&#34;&gt;总体&lt;/h3&gt;
+&lt;p&gt;总体是指与所研究的问题有关的对象（个体）的全体所构成的集合。&lt;/p&gt;
+&lt;p&gt;赋有一定概率分布的总体就称为统计总体。&lt;/p&gt;
+&lt;p&gt;在数理统计学中，“总体”这个基本概念的要旨——总体就是一个概率分布，当总体分布为指数分布时，称为指数分布总体；当总体分布为正态分布时，称为正态分布总体，或简称正态总体。&lt;/p&gt;
+&lt;p&gt;总体分布是一个概率分布族。这个分布族包含一个参数时，称为单参数分布族，例如指数分布。包含两个参数时，称为两参数分布族，例如正态分布。如果总体分布不能通过若干个未知参数表达出来，这种情况称为非参数总体。&lt;/p&gt;
+&lt;h3 id=&#34;样本&#34;&gt;样本&lt;/h3&gt;
+&lt;p&gt;样本是按一定的规定从总体中抽出的一部分个体，所谓“按一定的规定”，就是指总体中的每一个个体有同等的被抽出的机会。&lt;/p&gt;
+&lt;p&gt;样本表现为若干个数据&lt;span class=&#34;math inline&#34;&gt;\(X_1,\cdots,X_n,n\)&lt;/span&gt;称为“样本大小”或“样本容量”、“样本量”，样本&lt;span class=&#34;math inline&#34;&gt;\(X_1,\cdots,X_n\)&lt;/span&gt;中的每一个&lt;span class=&#34;math inline&#34;&gt;\(X_i\)&lt;/span&gt;也称为样本。有时&lt;span class=&#34;math inline&#34;&gt;\(X_1,\cdots,X_n\)&lt;/span&gt;称为一组样本，而&lt;span class=&#34;math inline&#34;&gt;\(X_i\)&lt;/span&gt;称为其中的第&lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt;个样本。&lt;/p&gt;
+&lt;h3 id=&#34;统计量&#34;&gt;统计量&lt;/h3&gt;
+&lt;p&gt;完全由样本所决定的量叫做统计量。统计量只以来于样本，而不能依赖于任何其他未知的量。&lt;/p&gt;
+&lt;h3 id=&#34;简单随机样本&#34;&gt;简单随机样本&lt;/h3&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;是具有分布函数&lt;span class=&#34;math inline&#34;&gt;\(F\)&lt;/span&gt;的随机变量，若&lt;span class=&#34;math inline&#34;&gt;\(X_1,\cdots,X_n\)&lt;/span&gt;是相互独立，且与&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;具有相同分布函数&lt;span class=&#34;math inline&#34;&gt;\(F\)&lt;/span&gt;的随机变量，则称&lt;span class=&#34;math inline&#34;&gt;\(X_1,\cdots,X_n\)&lt;/span&gt;是一个来自总体&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;的容量为&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;的简单随机样本，简称样本。&lt;/p&gt;
+&lt;p&gt;一个样本&lt;span class=&#34;math inline&#34;&gt;\(X_1,\cdots,X_n\)&lt;/span&gt;的观察值&lt;span class=&#34;math inline&#34;&gt;\(x_1,\cdots,x_n\)&lt;/span&gt;，称为样本值。&lt;/p&gt;
+&lt;p&gt;联合分布函数为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+F^*(x_1,x_2,\cdots,x_n) = \prod^n_{i=1}F(x_i)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;如果是离散型，有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+p^*(X_1=x_1,X_2=x_2,\dots,X_n=x_n)=\prod^n_{i=1}p(x_i)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;如果是连续型，有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+f^*(x_1,x_2,\cdots,x_n) = \prod^n_{i=1}f(x_i)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;经验分布函数&#34;&gt;经验分布函数&lt;/h3&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(X_1,\cdots,X_n\)&lt;/span&gt;是来自总体&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;的一个样本，&lt;span class=&#34;math inline&#34;&gt;\(x_1,\cdots,x_n\)&lt;/span&gt;，是样本&lt;span class=&#34;math inline&#34;&gt;\(X_1,\cdots,X_n\)&lt;/span&gt;的一组样本值，将其从小到大排列，并且重新编号为&lt;span class=&#34;math inline&#34;&gt;\(x_1,\cdots,x_n\)&lt;/span&gt;，则称函数&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+F_n(x)=\frac{x_1,\cdots,x_n中小于等于x的样本值的个数}{n} =
+\left\{\begin{matrix}
+0,&amp;amp;x&amp;lt;x_1 \\
+k/n,&amp;amp;x_k&amp;lt;x_{k+1} \\
+1,&amp;amp;x\geq x_n
+\end{matrix}\right.
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;为总体&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;的经验分布函数。&lt;/p&gt;
+&lt;h3 id=&#34;常用统计量&#34;&gt;常用统计量&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;样本均值&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\overline{X} = \frac{1}{n}\sum^n_{i=1}X_i
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其样本值为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\overline{x} = \frac{1}{n}\sum^n_{i=1}x_i
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;样本方差&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+S^2 = \frac{1}{n-1}\sum^n_{i=1}(X_i-\overline{X})^2 =
+\frac{1}{n-1}\bigg(\sum^n_{i=1}X_i^2-n\overline{X}^2\bigg)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其样本值为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+s^2 = \frac{1}{n-1}\sum^n_{i=1}(x_i-\overline{x})^2 =
+\frac{1}{n-1}\bigg(\sum^n_{i=1}x_i^2-n\overline{x}^2\bigg)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;样本标准差&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+S = \sqrt{\frac{1}{n-1}\sum^n_{i=1}(X_i-\overline{X})^2}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其样本值为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+s = \sqrt{\frac{1}{n-1}\sum^n_{i=1}(x_i-\overline{x})^2}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;样本&lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt;阶原点矩&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+a_k = \frac{1}{n}\sum^n_{i=1}X_i^k
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;样本值略。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;样本&lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt;阶中心矩&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+m_k = \frac{1}{n}\sum^n_{i=1}(X_i-\overline{X})^k
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;样本值略&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定理1&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设总体&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;均值为&lt;span class=&#34;math inline&#34;&gt;\(\mu\)&lt;/span&gt;，方差为&lt;span class=&#34;math inline&#34;&gt;\(\sigma^2\)&lt;/span&gt;（无论何种分布），&lt;span class=&#34;math inline&#34;&gt;\(X_1,X_2,\cdots,X_n\)&lt;/span&gt;是来自总体&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;的一个样本，&lt;span class=&#34;math inline&#34;&gt;\(\overline{X}\)&lt;/span&gt;和&lt;span class=&#34;math inline&#34;&gt;\(S^2\)&lt;/span&gt;分别是样本均值和样本方差，则有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+E(\overline{X})=\mu,D(\overline{X})=\sigma^2/n,E(S^2) = \sigma^2
+\]&lt;/span&gt;&lt;/p&gt;
 
 
 </description>
@@ -10242,6 +10444,46 @@ v_y&amp;#39; = \frac{v_y\sqrt{1-\beta^2}}{1-\frac{u}{c^2}v_x}
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 v_z&amp;#39; = \frac{v_z\sqrt{1-\beta^2}}{1-\frac{u}{c^2}v_x}
 \]&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;相对论动量和质量&#34;&gt;相对论动量和质量&lt;/h3&gt;
+&lt;p&gt;质量是一个和速率有关的量&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+m(v) = \frac{m_0}{\sqrt{1-(\frac{v}{c})^2}}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;式中&lt;span class=&#34;math inline&#34;&gt;\(m_0\)&lt;/span&gt;是质点静止时的质量，即由相对该质点静止的观察者测得的质量，称为静止质量。&lt;/p&gt;
+&lt;p&gt;于是动量为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\bm p = m\bm v = \frac{m_0}{\sqrt{1-(\frac{v}{c})^2}}\bm v
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;同时，力为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\bm F = \frac{d\bm p}{dt} =
+\frac{d}{dt}\bigg(\frac{m_0}{\sqrt{1-(\frac{v}{c})^2}}\bm v\bigg)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;相对论动能&#34;&gt;相对论动能&lt;/h3&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+E_k = \int\bm F\cdot d\bm r = \int_0^v d(mv)\cdot \bm v
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+E_k = \int^m_{m_0}c^2dm = mc^2-m_0c^2
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;质能关系式&#34;&gt;质能关系式&lt;/h3&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+E=mc^2\\
+E_0=m_0c^2
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;光子的静质量为零，而频率为&lt;span class=&#34;math inline&#34;&gt;\(\nu\)&lt;/span&gt;的光子所对应的能量为&lt;span class=&#34;math inline&#34;&gt;\(E=h\nu\)&lt;/span&gt;，所以光子的动质量为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+m_\varphi = \frac{E}{c^2} = \frac{h\nu}{c^2}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;相对论能量和动量的关系&#34;&gt;相对论能量和动量的关系&lt;/h3&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+E^2 = p^2c^2 + E_0^2
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;对于光子&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+p = \frac{h\nu}{c} = \frac{h}{\lambda}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h2 id=&#34;量子物理基础&#34;&gt;量子物理基础&lt;/h2&gt;
 
 
 </description>

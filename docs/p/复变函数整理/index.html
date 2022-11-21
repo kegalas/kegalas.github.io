@@ -112,7 +112,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 40 分钟
+                    阅读时长: 43 分钟
                 </time>
             </div>
         
@@ -1186,10 +1186,10 @@ f(z)=(z-z_0)^mg(z)
 <p><strong>常见的泰勒展开</strong></p>
 <p>以下都是在<span class="math inline">\(z=0\)</span>处的展开式</p>
 <p><span class="math display">\[
-\frac{1}{1-x}=\sum^\infty_{n=0}x^n,|z|&lt;1
+\frac{1}{1-z}=\sum^\infty_{n=0}z^n,|z|&lt;1
 \]</span></p>
 <p><span class="math display">\[
-\frac{1}{1+x}=\sum^\infty_{n=0}(-1)^nx^n,|z|&lt;1
+\frac{1}{1+z}=\sum^\infty_{n=0}(-1)^nz^n,|z|&lt;1
 \]</span></p>
 <p><span class="math display">\[
 e^z = \sum^\infty_{n=0} \frac{z^n}{n!},z\in\bm C
@@ -1239,6 +1239,107 @@ i}\int_{\gamma_\rho}\frac{f(\zeta)}{(\zeta-z_0)^{n+1}}d\zeta
 \gamma_\rho = \{\zeta:|\zeta-z_0|=\rho\}(r&lt;\rho&lt;R)
 \]</span></p>
 <p>并且这个展开式是唯一的。</p>
+<h2 id="孤立奇点">孤立奇点</h2>
+<p>如果<span class="math inline">\(f\)</span>在无心圆盘<span class="math inline">\(\{z:0&lt;|z-z_0|&lt;R\}\)</span>中全纯（而在圆心不全纯），就称<span class="math inline">\(z_0\)</span>是<span class="math inline">\(f\)</span>的孤立奇点。在奇点附近有三种情况</p>
+<ol type="1">
+<li><span class="math inline">\(\lim_{z\to
+z_0}f(z)=a,a\)</span>是一有限数，这时称<span class="math inline">\(z_0\)</span>是<span class="math inline">\(f\)</span>的可去奇点</li>
+<li><span class="math inline">\(\lim_{z\to
+z_0}f(z)=\infty\)</span>，这时称<span class="math inline">\(z_0\)</span>是<span class="math inline">\(f\)</span>的极点</li>
+<li><span class="math inline">\(\lim_{z\to
+z_0}f(z)\)</span>不存在，这时称<span class="math inline">\(z_0\)</span>是<span class="math inline">\(f\)</span>的本性奇点</li>
+</ol>
+<p><strong>定理1</strong></p>
+<p><span class="math inline">\(z_0\)</span>是<span class="math inline">\(f\)</span>的可去奇点的充要条件是<span class="math inline">\(f\)</span>在<span class="math inline">\(z_0\)</span>附近有界。</p>
+<p><strong>命题1</strong></p>
+<p><span class="math inline">\(z_0\)</span>是<span class="math inline">\(f\)</span>的极点的充要条件是<span class="math inline">\(z_0\)</span>为<span class="math inline">\(1/f\)</span>的零点。</p>
+<p><strong>定义1</strong></p>
+<p>如果<span class="math inline">\(z_0\)</span>是<span class="math inline">\(1/f(z)\)</span>的<span class="math inline">\(m\)</span>阶零点，就称<span class="math inline">\(z_0\)</span>是<span class="math inline">\(f\)</span>的<span class="math inline">\(m\)</span>阶极点。</p>
+<p><strong>定理2</strong></p>
+<p><span class="math inline">\(z_0\)</span>是<span class="math inline">\(f\)</span>的<span class="math inline">\(m\)</span>阶极点的充要条件是<span class="math inline">\(f\)</span>在<span class="math inline">\(z_0\)</span>附近的洛朗级数为</p>
+<p><span class="math display">\[
+f(z) =
+\frac{a_{-m}}{(z-z_0)^m}+\cdots+\frac{a_{-1}}{z-z_0}+a_0+a_1(z-z_0)+\cdots
+\]</span></p>
+<p>其中<span class="math inline">\(a_{-m}\neq 0\)</span></p>
+<p><strong>定理3</strong></p>
+<p><span class="math inline">\(f\)</span>在可去奇点处的特征是洛朗级数没有主要部分，只有全纯部分</p>
+<p><span class="math inline">\(f\)</span>在奇点处的特征是洛朗级数的主要部分只有有限项。</p>
+<p><strong>定理4</strong></p>
+<p>设<span class="math inline">\(z_0\)</span>是<span class="math inline">\(f\)</span>的本性奇点，那么对任意<span class="math inline">\(A\in\bm C_\infty\)</span>，必存在趋于<span class="math inline">\(z_0\)</span>的点列<span class="math inline">\(\{z_n\}\)</span>，使得<span class="math inline">\(\lim_{n\to\infty}f(z_n)=A\)</span></p>
+<p><strong>定理5</strong></p>
+<p>全纯函数在本性奇点的邻域内无穷多次地取到每个有穷复值，最多只有一个例外</p>
+<p><strong>定义2</strong></p>
+<p>我们讨论无穷远点。如果<span class="math inline">\(f\)</span>在无穷远点的邻域（不包括无穷远点）<span class="math inline">\(\{z:0\leq
+R&lt;|z|&lt;\infty\}\)</span>中全纯，<span class="math inline">\(\infty\)</span>就是<span class="math inline">\(f\)</span>的孤立奇点。</p>
+<p>记</p>
+<p><span class="math display">\[
+g(\zeta)=f(\frac{1}{\zeta})
+\]</span></p>
+<p>如果<span class="math inline">\(\zeta=0\)</span>是<span class="math inline">\(g\)</span>的可去奇点、<span class="math inline">\(m\)</span>阶极点或本性奇点，那么我们相应地称<span class="math inline">\(z=\infty\)</span>是<span class="math inline">\(f\)</span>的可去奇点、<span class="math inline">\(m\)</span>阶极点或本性奇点。</p>
+<h2 id="整函数与亚纯函数">整函数与亚纯函数</h2>
+<p>如果<span class="math inline">\(f\)</span>在整个复平面<span class="math inline">\(\bm C\)</span>上全纯，就称<span class="math inline">\(f\)</span>为整函数</p>
+<p><strong>定理1</strong></p>
+<p>在无穷远处全纯的整函数一定是常数。</p>
+<p><strong>定理2</strong></p>
+<p>如果无穷远点是整函数<span class="math inline">\(f\)</span>的一个<span class="math inline">\(m\)</span>阶极点，那么<span class="math inline">\(f\)</span>是一个<span class="math inline">\(m\)</span>次多项式。</p>
+<p>如果<span class="math inline">\(f\)</span>在整个复平面<span class="math inline">\(\bm
+C\)</span>上除去极点外没有其他的奇点，就称<span class="math inline">\(f\)</span>是一个亚纯函数。整函数显然是亚纯函数。</p>
+<p>此外有理函数</p>
+<p><span class="math display">\[
+f(z) = \frac{P_n(z)}{Q_m(z)}
+\]</span></p>
+<p>也是亚纯函数，这里，<span class="math inline">\(P_n(z),Q_m(z)\)</span>是两个既约（分式最简）的多项式</p>
+<p><strong>定理3</strong></p>
+<p>若<span class="math inline">\(z=\infty\)</span>是亚纯函数<span class="math inline">\(f\)</span>的可去奇点或极点，则<span class="math inline">\(f\)</span>一定是有理函数。</p>
+<p>反过来也成立。</p>
+<h2 id="残数定理">残数定理</h2>
+<p><strong>定义1</strong></p>
+<p>设<span class="math inline">\(a\)</span>是<span class="math inline">\(f\)</span>的一个孤立奇点，<span class="math inline">\(f\)</span>在<span class="math inline">\(a\)</span>点的邻域<span class="math inline">\(B(a,r)\)</span>中的洛朗级数为<span class="math inline">\(f(z)=\sum^\infty_{n=-\infty}c_n(z-a)^n\)</span>，称<span class="math inline">\(c_{-1}\)</span>为<span class="math inline">\(f\)</span>在<span class="math inline">\(a\)</span>点的残数，记为</p>
+<p><span class="math display">\[
+Res(f,a) = c_{-1}
+\]</span></p>
+<p>或</p>
+<p><span class="math display">\[
+\underset{z=a}{Res}f = c_{-1}
+\]</span></p>
+<p>根据洛朗级数的计算方法，我们知道</p>
+<p><span class="math display">\[
+c_{-1} = \frac{1}{2\pi i}\int_\gamma f(\zeta)d\zeta
+\]</span></p>
+<p>结合上上式就有</p>
+<p><span class="math display">\[
+\int_\gamma f(z)dz = 2\pi iRes(f,a)
+\]</span></p>
+<p>这里，<span class="math inline">\(\gamma=\{z:|z-a|=\rho\},0&lt;\rho&lt;r\)</span></p>
+<p>若<span class="math inline">\(z=\infty\)</span>是<span class="math inline">\(f\)</span>的孤立奇点，即<span class="math inline">\(f\)</span>在<span class="math inline">\(R&lt;|z|&lt;\infty\)</span>中全纯，我们定义<span class="math inline">\(f\)</span>在<span class="math inline">\(z=\infty\)</span>处的残数为</p>
+<p><span class="math display">\[
+Res(f,\infty) = -\frac{1}{2\pi i}\int_\gamma f(z)dz
+\]</span></p>
+<p>这里，<span class="math inline">\(\gamma=\{z:|z|=\rho\},R&lt;\rho&lt;\infty\)</span></p>
+<p><strong>命题1</strong></p>
+<p>若<span class="math inline">\(a\)</span>是<span class="math inline">\(f\)</span>的<span class="math inline">\(m\)</span>阶极点，则</p>
+<p><span class="math display">\[
+Res(f,a) = \frac{1}{(m-1)!}\lim_{z\to
+a}\frac{d^{m-1}}{dz^{m-1}}\{(z-a)^mf(z)\}
+\]</span></p>
+<p><strong>命题2</strong></p>
+<p>若<span class="math inline">\(a\)</span>是<span class="math inline">\(f\)</span>的<span class="math inline">\(1\)</span>阶极点，则</p>
+<p><span class="math display">\[
+Res(f,a) = \lim_{z\to a}(z-a)f(z)
+\]</span></p>
+<p><strong>命题3</strong></p>
+<p>设<span class="math inline">\(f=\frac{g}{h}\)</span>，<span class="math inline">\(g,h\)</span>都在<span class="math inline">\(a\)</span>出全纯，且<span class="math inline">\(g(a)\neq 0\)</span>，<span class="math inline">\(h(a)=0\)</span>，<span class="math inline">\(h&#39;(a)\neq 0\)</span>，那么</p>
+<p><span class="math display">\[
+Res(f,a) = \frac{g(a)}{h&#39;(a)}
+\]</span></p>
+<p><strong>残数定理</strong></p>
+<p>设<span class="math inline">\(D\)</span>是复平面上的一个有界区域，它的边界<span class="math inline">\(\gamma\)</span>由一条或若干条简单闭曲线组成，如果<span class="math inline">\(f\)</span>在<span class="math inline">\(D\)</span>中除去孤立奇点<span class="math inline">\(z_1,\cdots,z_n\)</span>外是全纯的，在闭域<span class="math inline">\(\overline{D}\)</span>上除去<span class="math inline">\(z_1,\cdots,z_n\)</span>外是连续的，那么</p>
+<p><span class="math display">\[
+\int_\gamma f(z)dz = 2\pi i\sum^n_{k=1} Res(f,z_k)
+\]</span></p>
+<p><strong>定理1</strong></p>
+<p>若<span class="math inline">\(f\)</span>在<span class="math inline">\(\bm C\)</span>中除去<span class="math inline">\(z_1,\cdots,z_n\)</span>外是全纯的，则<span class="math inline">\(f\)</span>在<span class="math inline">\(z_1,\cdots,z_n\)</span>及<span class="math inline">\(z=\infty\)</span>处的残数之和为零。</p>
 
 
 
@@ -1630,6 +1731,9 @@ i}\int_{\gamma_\rho}\frac{f(\zeta)}{(\zeta-z_0)^{n+1}}d\zeta
     <li><a href="#全纯函数的laurent展开及其应用">全纯函数的Laurent展开及其应用</a>
       <ol>
         <li><a href="#全纯函数的laurent展开">全纯函数的Laurent展开</a></li>
+        <li><a href="#孤立奇点">孤立奇点</a></li>
+        <li><a href="#整函数与亚纯函数">整函数与亚纯函数</a></li>
+        <li><a href="#残数定理">残数定理</a></li>
       </ol>
     </li>
   </ol>
