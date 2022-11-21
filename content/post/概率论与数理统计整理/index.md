@@ -668,437 +668,6 @@ $$
 f_Y(y) = \int^\infty_0 \frac{1}{|x_1|}f_1(x_1)f_2(\frac{y}{x_1})dx_1
 $$
 
-## 数学期望与中位数
-
-### 定义
-
-**定义1**
-
-设随机变量$X$只取有限个可能值$a_1,\cdots,a_m$，其概率分布为$P(X=a_i)=p_i(i=1,\cdots,m)$，则$X$的数学期望，记为$E(X)$或$EX$，定义为
-
-$$
-E(X) = a_1p_1+a_2p_2+\cdots+a_mp_m
-$$
-
-如果取无穷个值$a_1,a_2,\cdots$，而概率分布为$P(X=a_i)=p_i(i=1,\cdots)$，则有其数学期望为
-
-$$
-E(X) = \sum^\infty_{i=1}a_ip_i（式1）
-$$
-
-这个期望存在，必须要求这个级数收敛，并且是绝对收敛。
-
-**定义2**
-
-如果
-
-$$
-\sum^\infty_{i=1}|a_i|p_i<\infty
-$$
-
-则称式1的右边的级数之和为$X$的数学期望
-
-**定义3**
-
-设$X$有概率密度函数$f(x)$，如果
-
-$$
-\int^\infty_{-\infty}|x|f(x)dx<\infty
-$$
-
-则称
-
-$$
-E(X) = \int^\infty_{-\infty}xf(x)dx
-$$
-
-为$X$的数学期望。
-
-### 性质
-
-**定理1**
-
-若干个随机变量之和的期望等于各变量的期望之和
-
-$$
-E(X_1+X_2+\cdots+X_n) = E(X_1)+E(X_2)+\cdots+E(X_n)
-$$
-
-**定理2**
-
-若干个独立（注意独立）随机变量之积的期望等于各变量期望之积
-
-$$
-E(X_1X_2\cdots X_n) = E(X_1)E(X_2)\cdots E(X_n)
-$$
-
-**随机变量函数的期望**
-
-设随机变量$X$为离散型，有分布$P(X=a_i)=p_i(i=1,2,\cdots)$；或者为连续型，有概率密度函数$f(x)$，则
-
-$$
-E(g(x)) = \sum_i g(a_i)p_i（要求绝对收敛）
-$$
-
-或
-
-$$
-E(g(x)) = \int^\infty_{-\infty}g(x)f(x)dx（要求\int^\infty_{-\infty}|g(x)|f(x)dx<\infty）
-$$
-
-有一个特例是，若$c$为常数，则
-
-$$
-E(cX) = cE(X)
-$$
-
-### 多维情况
-
-以二维为例
-
-设$Z$是随机变量$X,Y$的函数，$Z=g(X,Y)$，$g$是连续函数，$Z$是一维随机变量
-
-*离散情况*
-
-设$(X,Y)$的分布律为$P(X=x_i,Y=y_j)=p_{ij}$
-
-$$
-E(Z) = E[g(X,Y)] = \sum_j\sum_i g(x_i,y_j)p_{ij}
-$$
-
-*连续情况*
-
-设$(X,Y)$的概率密度是$f(x,y)$，则有
-
-$$
-E(Z)=E[g(X,Y)]=\int^{+\infty}_{-\infty}\int^{+\infty}_{-\infty}g(x,y)f(x,y)dxdy
-$$
-
-更高维可以同理推出。
-
-### 条件数学期望
-
-$$
-E(Y|x) = \int^\infty_{-\infty}yf(y|x)dy
-$$
-
-类似于全概率公式，我们可以求得无条件的数学期望的一个重要公式
-
-$$
-E(Y) = \int^\infty_{-\infty}E(Y|x)f_1(x)dx
-$$
-
-其中
-
-$$
-f_1 = \int^\infty_{-\infty}f(x,y)dy
-$$
-
-如果将$g(x)=E(Y|x)$，则
-
-$$
-E(Y) = \int^\infty_{-\infty}g(x)f_1(x)dx=E(g(X))=E(E(Y|X))
-$$
-
-整理得到
-
-$$
-E(Y) = E[E(Y|X)]
-$$
-
-如果是多维的，也有
-
-$$
-E(Y) = \int^\infty_{-\infty}\cdots\int^\infty_{-\infty}E(Y|x_1,\cdots,x_n)f(x_1,\cdots,x_n)dx_1\cdots dx_n
-$$
-
-如果是离散的，有$P(X=a_i)=p_i$，则
-
-$$
-E(Y) = \sum^\infty_{i=1}p_iE(Y|a_i)
-$$
-
-### 中位数
-
-**定义1**
-
-设连续型随机变量$X$的分布函数为$F(x)$，则满足条件
-
-$$
-P(X\leq m)=F(m)=1/2
-$$
-
-的数$m$称为$X$或分布$F$的中位数。
-
-而连续的时候，有
-
-$$
-P(X\leq m) = P(X<m) = P(X>m) = P(X\geq m) = 1/2   
-$$
-
-## 方差与矩
-
-### 方差与标准差
-
-**定义1**
-
-设$X$为随机变量，分布为$F$，则
-
-$$
-Var(X) = E(X-EX)^2
-$$
-
-称为$X$的方差，有时会记为$DX$，其算术平方根称为标准差。
-
-将其展开得
-
-$$
-Var(X)=E(X^2)-(EX)^2
-$$
-
-**定理1**
-
-1. 常数的方差为$0$
-2. 若$c$为常数，则$Var(X+c)=Var(X)$
-3. 若$c$为常数，则$Var(cX)=c^2Var(X)$
-4. $Var(X)=0$的充要条件为，$P(X=E(X))=1$
-
-**定理2**
-
-独立（注意独立）随机变量之和的方差等于各变量的方差之和，即
-
-$$
-Var(X_1+X_2+\cdots+X_n) = Var(X_1)+Var(X_2)+\cdots+Var(X_n)
-$$
-
-如果不要求独立，二维有
-
-$$
-Var(X+Y)=Var(X)+Var(Y)+2E\{[X-E(X)][Y-E(Y)]\}
-$$
-
-
-
-### 矩
-
-**定义1**
-
-设$X$为随机变量，$c$为常数，$k$为正整数，则量$E[(X-c)^k]$称为$X$关于$c$点的$k$阶矩
-
-1. $c=0$时称为$X$的$k$阶原点矩，记作$\mu_k$
-2. $c=E(X)$时称为$X$的$k$阶中心矩，记作$v_k$。
-
-另外
-
-1. $\mu_{kl}=E(X^kY^l)$称为$X,Y$的$k+l$阶混合原点矩，简称$k+l$混合矩
-2. $v_{kl}=E[(X-E(X))^k(Y-E(Y))^l]$称为$X,Y$的$k+l$阶混合中心矩
-
-## 协方差与相关系数
-
-对于二维随机向量$(X,Y)$，$X,Y$本身都是一维随机变量，可以定义其均值、方差，我们记为
-
-$$
-E(X)=m_1,E(Y)=m_2,Var(X)=\sigma_1^2,Var(Y)=\sigma_2^2
-$$
-
-**定义1**
-
-称$E[(X-m_1)(Y-m_2)]$为$X,Y$的协方差，并记为$Cov(X,Y)$
-
-显然有$Cov(X,Y)=Cov(Y,X)$
-
-也有
-
-1. 对常数$c_1,c_2,c_3,c_4$，有
-
-$$
-Cov(c_1X+c_2,c_3Y+c_4)=c_1c_3Cov(X,Y)
-$$
-
-2. $Cov(X,Y)=E(XY)-m_1m_2=E(XY)-E(X)E(Y)$
-3. $Cov(X,X)=Var(X)$
-4. $Cov(X_1+X_2,Y)=Cov(X_1,Y)+Cov(X_2,Y)$
-5. $Var(X\pm Y)=Var(X)+Var(Y)\pm 2Cov(X,Y)$
-
-**定理1**
-
-1. 若$X,Y$独立，则$Cov(X,Y)=0$
-2. $[Cov(X,Y)]^2\leq\sigma_1^2\sigma_2^2$，等号当且仅当$X,Y$之间有严格线性关系（即存在常数$a,b$使$Y=a+bX$）时成立。
-
-**定义2**
-
-称$Cov(X,Y)/(\sigma_1\sigma_2)$为$X,Y$的相关系数，并记为$Corr(X,Y)$，有时也记为$\rho_{XY}$
-
-可以将相关系数看做标准尺度下的协方差。
-
-**定理2**
-
-1. 若$X,Y$独立，则$Corr(X,Y)=0$，当然也要求方差大于$0$才有定义。
-2. $-1\leq Corr(X,Y)\leq 1$，等号当且仅当$X,Y$之间有严格线性关系时达到。
-
-需要注意几点：
-
-1. 当$Corr(X,Y)=0$（或$Cov(X,Y)=0$）时，称$X,Y$不相关，通常我们只能由“独立”推出“不相关”，而不能反过来。但是对于服从二维正态分布的$X,Y$，“独立”和“不相关”是一回事。
-2. 相关系数也常称为“线性相关系数”，相关系数并不是刻画$X,Y$之间一般关系的程度，而只刻画了“线性”关系的程度。上述定理的第二条提供了一个依据。
-3. 如果$0< |Corr(X,Y)|< 1$，则解释为$X,Y$之间有一定程度的线性关系。
-4. 线性相关的意义还可以从最小二乘法的角度去解释。
-
-## 大数定理和中心极限定理
-
-### 大数定理
-
-**定义1**
-
-设$X_1,X_2,\cdots$是随机变量序列，如果存在数列$a_1,a_2,\cdots$使得对任意的$\varepsilon>0$，有
-
-$$
-\lim_{n\to\infty}P\bigg(\bigg|\frac{1}{n}\sum^n_{i=1}X_i-a_n\bigg|\geq\varepsilon\bigg)=0
-$$
-
-则称随机变量序列$\{X_i\}$服从大数定律。
-
-**定义2**
-
-设$X_1,X_2,\cdots$是随机变量序列，$X$是随机变量，若对任意的$\varepsilon>0$，有
-
-$$
-\lim_{n\to\infty}P(|X_n-X|\geq \varepsilon)=0
-$$
-
-此时我们称$\{X_i\}$依概率收敛到$X$，记为
-
-$$
-X_n\stackrel{P}\rightarrow X,n\to\infty
-$$
-
-**马尔科夫不等式**
-
-若$Y$为只取非负值的随机变量，则对任给常数$\varepsilon>0$，有
-
-$$
-P(Y\geq \varepsilon)\leq E(Y)/\varepsilon
-$$
-
-**切比雪夫不等式**
-
-若$Var(Y)$存在，则
-
-$$
-P(|Y-EY|\geq\varepsilon)\leq Var(Y)/\varepsilon^2
-$$
-
-可以推知
-
-$$
-P(|Y-EY|<\varepsilon)\leq 1-Var(Y)/\varepsilon^2
-$$
-
-**切比雪夫大数定理**
-
-设$X_1,X_2,\cdots,X_n,\cdots$是相互独立独立的随机变量，具有相同的期望和方差，记它们的均值都为$a$。又设它们的方差存在并记为$\sigma^2$。则对任意给定的$\varepsilon>0$，有
-
-$$
-\lim_{n\to \infty}P(|\bar X_n-a|\geq \varepsilon) = 0
-$$
-
-*更一般的形式*
-
-设$X_1,X_2,\cdots,X_n,\cdots$是相互独立的随机变量序列，具有相同的期望$\mu$，如果存在常数$C>0$，使得$D(X_k)\leq C$，则对于任意$\varepsilon>0$，有
-
-$$
-\lim_{n\to\infty}P\bigg(\bigg|\frac{1}{n}\sum^n_{k=1}X_k-\mu\bigg|\geq\varepsilon\bigg)=0
-$$
-
-**马尔科夫大数定律**
-
-设$X_1,X_2,\cdots,X_n,\cdots$是随机变量序列，且
-
-$$
-\lim_{n\to\infty}\frac{1}{n^2}D\bigg[\sum^n_{k=1}X_k\bigg]=0
-$$
-
-则对于任意$\varepsilon>0$，有
-
-$$
-\lim_{n\to\infty}P\bigg(\bigg|\frac{1}{n}\sum^n_{k=1}X_k-\frac{1}{n}\sum^n_{k=1}E(X_k)\bigg|\geq\varepsilon\bigg)=0
-$$
-
-**辛钦大数定律**
-
-设$X_1,X_2,\cdots,X_n,\cdots$是相互独立且同分布的随机变量序列，具有有限的数学期望，记为$\mu$。则对于任意$\varepsilon>0$，有
-
-$$
-\lim_{n\to\infty}P\bigg(\bigg|\frac{1}{n}\sum^n_{k=1}X_k-\mu\bigg|\geq\varepsilon\bigg)=0
-$$
-
-**伯努利大数定律**
-
-设$n_A$是$n$次独立重复实验（$n$重伯努利实验）事件$A$发生的次数，$p$是事件$A$在每次试验中发生的概率，即$P(A)=p$，则对任意的$\varepsilon>0$，有
-
-$$
-\lim_{n\to\infty} P\bigg(\bigg|\frac{n_A}{n}-p\bigg|\geq\varepsilon\bigg)=0
-$$
-
-### 中心极限定理
-
-**定理1**
-
-设$X_1,X_2,\cdots,X_n,\cdots$为独立同分布的随机变量，$E(X_i)=\mu,Var(X_i)=\sigma^2(0<\sigma^2<\infty)$。则对任何实数$x$，有
-
-$$
-\lim_{n\to\infty}P\bigg(\frac{1}{\sqrt{n} \sigma}(X_1+\cdots+X_n-n\mu)\leq x\bigg)=\varPhi(x)
-$$
-
-这里，$\varPhi(x)$是标准正态分布$N(0,1)$的分布函数。
-
-也就是说，当$n$充分大时，有
-
-$$
-\sum_{k=1}^n X_k\sim N(n\mu,n\sigma^2),\quad \frac{\sum_{k=1}^nX_k-n\mu}{\sqrt{n}\sigma}\sim N(0,1)
-$$
-
-$$
-P\bigg(\sum^n_{k=1}X_k\leq x\bigg)\approx\Phi\bigg(\frac{x-n\mu}{\sqrt n\sigma}\bigg),\quad P\bigg(a<\sum^n_{k=1}X_k\leq b\bigg)\approx\Phi\bigg(\frac{b-n\mu}{\sqrt n\sigma}\bigg)-\bigg(\frac{a-n\mu}{\sqrt n\sigma}\bigg)
-$$
-
-$$
-\bar X\approx N(\mu,\sigma^2/n),\quad \frac{\bar X-\mu}{\sigma/\sqrt{n}}\approx N(0,1)
-$$
-
-**李雅普诺夫中心极限定理**
-
-设$X_1,X_2,\cdots,X_n,\cdots$相互独立，其具有如下数学期望和方差：$E(X_k)=\mu_k,D(X_k)=\sigma_k^2>0$，记$B_n^2=\sum^n_{k=1}\sigma^2_k$
-
-若存在正数$\delta$使得当$n\to\infty$时
-
-$$
-\frac{1}{B^{2+\delta}}\sum^n_{k=1}E\bigg[|X_i-\mu_i|^{2+\delta}\bigg]\to 0
-$$
-
-则
-
-$$
-\lim_{n\to\infty}P\bigg(\frac{\sum^n_{k=1}X_k-\sum^n_{k=1}\mu_k}{B_n}\leq x\bigg)=\Phi(x)
-$$
-
-**棣莫弗-拉普拉斯中心极限定理**
-
-设$n_A$是$n$次独立重复实验（$n$重伯努利实验）事件$A$发生的次数，$p$是事件$A$在每次试验中发生的概率，即$P(A)=p$，
-
-$$
-\lim_{n\to\infty}P\bigg(\frac{n_A-np}{\sqrt{np(1-p)}}\leq x\bigg)=\Phi(x)
-$$
-
-即，若$X\sim B(n,p)$，$n$充分大时
-
-$$
-X\sim N(np,np(1-p))
-$$
-
-$$
-P(X\leq x)\approx\Phi\bigg(\frac{x-np}{\sqrt{np(1-p)}}\bigg),\quad P(a<X\leq b)\approx\Phi\bigg(\frac{b-np}{\sqrt{np(1-p)}}\bigg)-\Phi\bigg(\frac{a-np}{\sqrt{np(1-p)}}\bigg)
-$$
-
 ## 常见的分布
 
 ### 0-1分布
@@ -1625,7 +1194,7 @@ $$
 
 **定理1**
 
-若$X_1,\cdots,X_n$相互独立，都服从正态分布$N(0,1)$，则$Y=X_1^2+\cdots+X_N^2$服从自由度为$n$的卡方分布$\mathcal{X}{}_n^2$
+若$X_1,\cdots,X_n$相互独立，都服从正态分布$N(0,1)$，则$Y=X_1^2+\cdots+X_n^2$服从自由度为$n$的卡方分布$\mathcal{X}{}_n^2$
 
 卡方分布有如下性质
 
@@ -1636,9 +1205,19 @@ $$
 X=2\lambda(X_1+\cdots+X_n)\sim \mathcal{X}_{2n}^2
 $$
 
+**期望**
+
+若$X\sim\mathcal{X}_n^2$，$E(X)=n$
+
+**方差**
+
+若$X\sim\mathcal{X}_n^2$，$D(X)=2n$
+
 ### t分布
 
-$Y=X_2/\sqrt{X_1/n}$的密度函数为
+若$X\sim N(0,1),Y\sim\mathcal{X}_n^2$，且$X,Y$相互独立
+
+$t=X/\sqrt{Y/n}$的密度函数为
 
 $$
 t_n(y)=\frac{\Gamma((n+1)/2)}{\sqrt{n\pi}\Gamma(n/2)}\bigg(1+\frac{y^2}{n}\bigg)^{-\frac{n+1}{2}}
@@ -1646,7 +1225,583 @@ $$
 
 这个密度函数称为“自由度为$n$的$t$分布”的密度函数，常简记为$t_n$
 
+$n$充分大时
+
+$$
+\lim_{n\to\infty}t_n(y)=\frac{1}{\sqrt{2\pi}}e^{-t^2/2}
+$$
+
 ### F分布
 
-TODO
+设$U\sim\mathcal{X}_{n_1}^2,V\sim\mathcal{X}_{n_2}^2$，且$U,V$相互独立，则称随机变量
 
+$$
+F = \frac{U/n_1}{V/n_2}
+$$
+
+服从自由度为$(n_1,n_2)$的$F$分布，概率密度为
+
+$$
+f_{n_1,n_2}(y) = n_1^{n_1/2}n_2^{n_2/2}\frac{\Gamma(\frac{n_1+n_2}{2})}{\Gamma(\frac{n_1}{2})\Gamma(\frac{n_2}{2})}y^{n_1/2-1}(n_1y+n_2)^{-(n_1+n_2)/2}
+$$
+
+**性质**
+
+若$F\sim F(n_1,n_2)$，则$\frac{1}{F}\sim F(n_2,n_1)$
+
+# 随机变量的数字特征
+
+## 数学期望与中位数
+
+### 定义
+
+**定义1**
+
+设随机变量$X$只取有限个可能值$a_1,\cdots,a_m$，其概率分布为$P(X=a_i)=p_i(i=1,\cdots,m)$，则$X$的数学期望，记为$E(X)$或$EX$，定义为
+
+$$
+E(X) = a_1p_1+a_2p_2+\cdots+a_mp_m
+$$
+
+如果取无穷个值$a_1,a_2,\cdots$，而概率分布为$P(X=a_i)=p_i(i=1,\cdots)$，则有其数学期望为
+
+$$
+E(X) = \sum^\infty_{i=1}a_ip_i（式1）
+$$
+
+这个期望存在，必须要求这个级数收敛，并且是绝对收敛。
+
+**定义2**
+
+如果
+
+$$
+\sum^\infty_{i=1}|a_i|p_i<\infty
+$$
+
+则称式1的右边的级数之和为$X$的数学期望
+
+**定义3**
+
+设$X$有概率密度函数$f(x)$，如果
+
+$$
+\int^\infty_{-\infty}|x|f(x)dx<\infty
+$$
+
+则称
+
+$$
+E(X) = \int^\infty_{-\infty}xf(x)dx
+$$
+
+为$X$的数学期望。
+
+### 性质
+
+**定理1**
+
+若干个随机变量之和的期望等于各变量的期望之和
+
+$$
+E(X_1+X_2+\cdots+X_n) = E(X_1)+E(X_2)+\cdots+E(X_n)
+$$
+
+**定理2**
+
+若干个独立（注意独立）随机变量之积的期望等于各变量期望之积
+
+$$
+E(X_1X_2\cdots X_n) = E(X_1)E(X_2)\cdots E(X_n)
+$$
+
+**随机变量函数的期望**
+
+设随机变量$X$为离散型，有分布$P(X=a_i)=p_i(i=1,2,\cdots)$；或者为连续型，有概率密度函数$f(x)$，则
+
+$$
+E(g(x)) = \sum_i g(a_i)p_i（要求绝对收敛）
+$$
+
+或
+
+$$
+E(g(x)) = \int^\infty_{-\infty}g(x)f(x)dx（要求\int^\infty_{-\infty}|g(x)|f(x)dx<\infty）
+$$
+
+有一个特例是，若$c$为常数，则
+
+$$
+E(cX) = cE(X)
+$$
+
+### 多维情况
+
+以二维为例
+
+设$Z$是随机变量$X,Y$的函数，$Z=g(X,Y)$，$g$是连续函数，$Z$是一维随机变量
+
+*离散情况*
+
+设$(X,Y)$的分布律为$P(X=x_i,Y=y_j)=p_{ij}$
+
+$$
+E(Z) = E[g(X,Y)] = \sum_j\sum_i g(x_i,y_j)p_{ij}
+$$
+
+*连续情况*
+
+设$(X,Y)$的概率密度是$f(x,y)$，则有
+
+$$
+E(Z)=E[g(X,Y)]=\int^{+\infty}_{-\infty}\int^{+\infty}_{-\infty}g(x,y)f(x,y)dxdy
+$$
+
+更高维可以同理推出。
+
+### 条件数学期望
+
+$$
+E(Y|x) = \int^\infty_{-\infty}yf(y|x)dy
+$$
+
+类似于全概率公式，我们可以求得无条件的数学期望的一个重要公式
+
+$$
+E(Y) = \int^\infty_{-\infty}E(Y|x)f_1(x)dx
+$$
+
+其中
+
+$$
+f_1 = \int^\infty_{-\infty}f(x,y)dy
+$$
+
+如果将$g(x)=E(Y|x)$，则
+
+$$
+E(Y) = \int^\infty_{-\infty}g(x)f_1(x)dx=E(g(X))=E(E(Y|X))
+$$
+
+整理得到
+
+$$
+E(Y) = E[E(Y|X)]
+$$
+
+如果是多维的，也有
+
+$$
+E(Y) = \int^\infty_{-\infty}\cdots\int^\infty_{-\infty}E(Y|x_1,\cdots,x_n)f(x_1,\cdots,x_n)dx_1\cdots dx_n
+$$
+
+如果是离散的，有$P(X=a_i)=p_i$，则
+
+$$
+E(Y) = \sum^\infty_{i=1}p_iE(Y|a_i)
+$$
+
+### 中位数
+
+**定义1**
+
+设连续型随机变量$X$的分布函数为$F(x)$，则满足条件
+
+$$
+P(X\leq m)=F(m)=1/2
+$$
+
+的数$m$称为$X$或分布$F$的中位数。
+
+而连续的时候，有
+
+$$
+P(X\leq m) = P(X<m) = P(X>m) = P(X\geq m) = 1/2   
+$$
+
+## 方差与矩
+
+### 方差与标准差
+
+**定义1**
+
+设$X$为随机变量，分布为$F$，则
+
+$$
+Var(X) = E(X-EX)^2
+$$
+
+称为$X$的方差，有时会记为$DX$，其算术平方根称为标准差。
+
+将其展开得
+
+$$
+Var(X)=E(X^2)-(EX)^2
+$$
+
+**定理1**
+
+1. 常数的方差为$0$
+2. 若$c$为常数，则$Var(X+c)=Var(X)$
+3. 若$c$为常数，则$Var(cX)=c^2Var(X)$
+4. $Var(X)=0$的充要条件为，$P(X=E(X))=1$
+
+**定理2**
+
+独立（注意独立）随机变量之和的方差等于各变量的方差之和，即
+
+$$
+Var(X_1+X_2+\cdots+X_n) = Var(X_1)+Var(X_2)+\cdots+Var(X_n)
+$$
+
+如果不要求独立，二维有
+
+$$
+Var(X+Y)=Var(X)+Var(Y)+2E\{[X-E(X)][Y-E(Y)]\}
+$$
+
+
+
+### 矩
+
+**定义1**
+
+设$X$为随机变量，$c$为常数，$k$为正整数，则量$E[(X-c)^k]$称为$X$关于$c$点的$k$阶矩
+
+1. $c=0$时称为$X$的$k$阶原点矩，记作$\mu_k$
+2. $c=E(X)$时称为$X$的$k$阶中心矩，记作$v_k$。
+
+另外
+
+1. $\mu_{kl}=E(X^kY^l)$称为$X,Y$的$k+l$阶混合原点矩，简称$k+l$混合矩
+2. $v_{kl}=E[(X-E(X))^k(Y-E(Y))^l]$称为$X,Y$的$k+l$阶混合中心矩
+
+## 协方差与相关系数
+
+对于二维随机向量$(X,Y)$，$X,Y$本身都是一维随机变量，可以定义其均值、方差，我们记为
+
+$$
+E(X)=m_1,E(Y)=m_2,Var(X)=\sigma_1^2,Var(Y)=\sigma_2^2
+$$
+
+**定义1**
+
+称$E[(X-m_1)(Y-m_2)]$为$X,Y$的协方差，并记为$Cov(X,Y)$
+
+显然有$Cov(X,Y)=Cov(Y,X)$
+
+也有
+
+1. 对常数$c_1,c_2,c_3,c_4$，有
+
+$$
+Cov(c_1X+c_2,c_3Y+c_4)=c_1c_3Cov(X,Y)
+$$
+
+2. $Cov(X,Y)=E(XY)-m_1m_2=E(XY)-E(X)E(Y)$
+3. $Cov(X,X)=Var(X)$
+4. $Cov(X_1+X_2,Y)=Cov(X_1,Y)+Cov(X_2,Y)$
+5. $Var(X\pm Y)=Var(X)+Var(Y)\pm 2Cov(X,Y)$
+
+**定理1**
+
+1. 若$X,Y$独立，则$Cov(X,Y)=0$
+2. $[Cov(X,Y)]^2\leq\sigma_1^2\sigma_2^2$，等号当且仅当$X,Y$之间有严格线性关系（即存在常数$a,b$使$Y=a+bX$）时成立。
+
+**定义2**
+
+称$Cov(X,Y)/(\sigma_1\sigma_2)$为$X,Y$的相关系数，并记为$Corr(X,Y)$，有时也记为$\rho_{XY}$
+
+可以将相关系数看做标准尺度下的协方差。
+
+**定理2**
+
+1. 若$X,Y$独立，则$Corr(X,Y)=0$，当然也要求方差大于$0$才有定义。
+2. $-1\leq Corr(X,Y)\leq 1$，等号当且仅当$X,Y$之间有严格线性关系时达到。
+
+需要注意几点：
+
+1. 当$Corr(X,Y)=0$（或$Cov(X,Y)=0$）时，称$X,Y$不相关，通常我们只能由“独立”推出“不相关”，而不能反过来。但是对于服从二维正态分布的$X,Y$，“独立”和“不相关”是一回事。
+2. 相关系数也常称为“线性相关系数”，相关系数并不是刻画$X,Y$之间一般关系的程度，而只刻画了“线性”关系的程度。上述定理的第二条提供了一个依据。
+3. 如果$0< |Corr(X,Y)|< 1$，则解释为$X,Y$之间有一定程度的线性关系。
+4. 线性相关的意义还可以从最小二乘法的角度去解释。
+
+## 大数定理和中心极限定理
+
+### 大数定理
+
+**定义1**
+
+设$X_1,X_2,\cdots$是随机变量序列，如果存在数列$a_1,a_2,\cdots$使得对任意的$\varepsilon>0$，有
+
+$$
+\lim_{n\to\infty}P\bigg(\bigg|\frac{1}{n}\sum^n_{i=1}X_i-a_n\bigg|\geq\varepsilon\bigg)=0
+$$
+
+则称随机变量序列$\{X_i\}$服从大数定律。
+
+**定义2**
+
+设$X_1,X_2,\cdots$是随机变量序列，$X$是随机变量，若对任意的$\varepsilon>0$，有
+
+$$
+\lim_{n\to\infty}P(|X_n-X|\geq \varepsilon)=0
+$$
+
+此时我们称$\{X_i\}$依概率收敛到$X$，记为
+
+$$
+X_n\stackrel{P}\rightarrow X,n\to\infty
+$$
+
+**马尔科夫不等式**
+
+若$Y$为只取非负值的随机变量，则对任给常数$\varepsilon>0$，有
+
+$$
+P(Y\geq \varepsilon)\leq E(Y)/\varepsilon
+$$
+
+**切比雪夫不等式**
+
+若$Var(Y)$存在，则
+
+$$
+P(|Y-EY|\geq\varepsilon)\leq Var(Y)/\varepsilon^2
+$$
+
+可以推知
+
+$$
+P(|Y-EY|<\varepsilon)\leq 1-Var(Y)/\varepsilon^2
+$$
+
+**切比雪夫大数定理**
+
+设$X_1,X_2,\cdots,X_n,\cdots$是相互独立独立的随机变量，具有相同的期望和方差，记它们的均值都为$a$。又设它们的方差存在并记为$\sigma^2$。则对任意给定的$\varepsilon>0$，有
+
+$$
+\lim_{n\to \infty}P(|\bar X_n-a|\geq \varepsilon) = 0
+$$
+
+*更一般的形式*
+
+设$X_1,X_2,\cdots,X_n,\cdots$是相互独立的随机变量序列，具有相同的期望$\mu$，如果存在常数$C>0$，使得$D(X_k)\leq C$，则对于任意$\varepsilon>0$，有
+
+$$
+\lim_{n\to\infty}P\bigg(\bigg|\frac{1}{n}\sum^n_{k=1}X_k-\mu\bigg|\geq\varepsilon\bigg)=0
+$$
+
+**马尔科夫大数定律**
+
+设$X_1,X_2,\cdots,X_n,\cdots$是随机变量序列，且
+
+$$
+\lim_{n\to\infty}\frac{1}{n^2}D\bigg[\sum^n_{k=1}X_k\bigg]=0
+$$
+
+则对于任意$\varepsilon>0$，有
+
+$$
+\lim_{n\to\infty}P\bigg(\bigg|\frac{1}{n}\sum^n_{k=1}X_k-\frac{1}{n}\sum^n_{k=1}E(X_k)\bigg|\geq\varepsilon\bigg)=0
+$$
+
+**辛钦大数定律**
+
+设$X_1,X_2,\cdots,X_n,\cdots$是相互独立且同分布的随机变量序列，具有有限的数学期望，记为$\mu$。则对于任意$\varepsilon>0$，有
+
+$$
+\lim_{n\to\infty}P\bigg(\bigg|\frac{1}{n}\sum^n_{k=1}X_k-\mu\bigg|\geq\varepsilon\bigg)=0
+$$
+
+**伯努利大数定律**
+
+设$n_A$是$n$次独立重复实验（$n$重伯努利实验）事件$A$发生的次数，$p$是事件$A$在每次试验中发生的概率，即$P(A)=p$，则对任意的$\varepsilon>0$，有
+
+$$
+\lim_{n\to\infty} P\bigg(\bigg|\frac{n_A}{n}-p\bigg|\geq\varepsilon\bigg)=0
+$$
+
+### 中心极限定理
+
+**定理1**
+
+设$X_1,X_2,\cdots,X_n,\cdots$为独立同分布的随机变量，$E(X_i)=\mu,Var(X_i)=\sigma^2(0<\sigma^2<\infty)$。则对任何实数$x$，有
+
+$$
+\lim_{n\to\infty}P\bigg(\frac{1}{\sqrt{n} \sigma}(X_1+\cdots+X_n-n\mu)\leq x\bigg)=\varPhi(x)
+$$
+
+这里，$\varPhi(x)$是标准正态分布$N(0,1)$的分布函数。
+
+也就是说，当$n$充分大时，有
+
+$$
+\sum_{k=1}^n X_k\sim N(n\mu,n\sigma^2),\quad \frac{\sum_{k=1}^nX_k-n\mu}{\sqrt{n}\sigma}\sim N(0,1)
+$$
+
+$$
+P\bigg(\sum^n_{k=1}X_k\leq x\bigg)\approx\Phi\bigg(\frac{x-n\mu}{\sqrt n\sigma}\bigg),\quad P\bigg(a<\sum^n_{k=1}X_k\leq b\bigg)\approx\Phi\bigg(\frac{b-n\mu}{\sqrt n\sigma}\bigg)-\bigg(\frac{a-n\mu}{\sqrt n\sigma}\bigg)
+$$
+
+$$
+\bar X\approx N(\mu,\sigma^2/n),\quad \frac{\bar X-\mu}{\sigma/\sqrt{n}}\approx N(0,1)
+$$
+
+**李雅普诺夫中心极限定理**
+
+设$X_1,X_2,\cdots,X_n,\cdots$相互独立，其具有如下数学期望和方差：$E(X_k)=\mu_k,D(X_k)=\sigma_k^2>0$，记$B_n^2=\sum^n_{k=1}\sigma^2_k$
+
+若存在正数$\delta$使得当$n\to\infty$时
+
+$$
+\frac{1}{B^{2+\delta}}\sum^n_{k=1}E\bigg[|X_i-\mu_i|^{2+\delta}\bigg]\to 0
+$$
+
+则
+
+$$
+\lim_{n\to\infty}P\bigg(\frac{\sum^n_{k=1}X_k-\sum^n_{k=1}\mu_k}{B_n}\leq x\bigg)=\Phi(x)
+$$
+
+**棣莫弗-拉普拉斯中心极限定理**
+
+设$n_A$是$n$次独立重复实验（$n$重伯努利实验）事件$A$发生的次数，$p$是事件$A$在每次试验中发生的概率，即$P(A)=p$，
+
+$$
+\lim_{n\to\infty}P\bigg(\frac{n_A-np}{\sqrt{np(1-p)}}\leq x\bigg)=\Phi(x)
+$$
+
+即，若$X\sim B(n,p)$，$n$充分大时
+
+$$
+X\sim N(np,np(1-p))
+$$
+
+$$
+P(X\leq x)\approx\Phi\bigg(\frac{x-np}{\sqrt{np(1-p)}}\bigg),\quad P(a<X\leq b)\approx\Phi\bigg(\frac{b-np}{\sqrt{np(1-p)}}\bigg)-\Phi\bigg(\frac{a-np}{\sqrt{np(1-p)}}\bigg)
+$$
+
+# 参数估计
+
+## 数理统计学的基本概念
+
+### 总体
+
+总体是指与所研究的问题有关的对象（个体）的全体所构成的集合。
+
+赋有一定概率分布的总体就称为统计总体。
+
+在数理统计学中，“总体”这个基本概念的要旨——总体就是一个概率分布，当总体分布为指数分布时，称为指数分布总体；当总体分布为正态分布时，称为正态分布总体，或简称正态总体。
+
+总体分布是一个概率分布族。这个分布族包含一个参数时，称为单参数分布族，例如指数分布。包含两个参数时，称为两参数分布族，例如正态分布。如果总体分布不能通过若干个未知参数表达出来，这种情况称为非参数总体。
+
+### 样本
+
+样本是按一定的规定从总体中抽出的一部分个体，所谓“按一定的规定”，就是指总体中的每一个个体有同等的被抽出的机会。
+
+样本表现为若干个数据$X_1,\cdots,X_n,n$称为“样本大小”或“样本容量”、“样本量”，样本$X_1,\cdots,X_n$中的每一个$X_i$也称为样本。有时$X_1,\cdots,X_n$称为一组样本，而$X_i$称为其中的第$i$个样本。
+
+### 统计量
+
+完全由样本所决定的量叫做统计量。统计量只以来于样本，而不能依赖于任何其他未知的量。
+
+### 简单随机样本
+
+设$X$是具有分布函数$F$的随机变量，若$X_1,\cdots,X_n$是相互独立，且与$X$具有相同分布函数$F$的随机变量，则称$X_1,\cdots,X_n$是一个来自总体$X$的容量为$n$的简单随机样本，简称样本。
+
+一个样本$X_1,\cdots,X_n$的观察值$x_1,\cdots,x_n$，称为样本值。
+
+联合分布函数为
+
+$$
+F^*(x_1,x_2,\cdots,x_n) = \prod^n_{i=1}F(x_i)
+$$
+
+如果是离散型，有
+
+$$
+p^*(X_1=x_1,X_2=x_2,\dots,X_n=x_n)=\prod^n_{i=1}p(x_i)
+$$
+
+如果是连续型，有
+
+$$
+f^*(x_1,x_2,\cdots,x_n) = \prod^n_{i=1}f(x_i)
+$$
+
+### 经验分布函数
+
+设$X_1,\cdots,X_n$是来自总体$X$的一个样本，$x_1,\cdots,x_n$，是样本$X_1,\cdots,X_n$的一组样本值，将其从小到大排列，并且重新编号为$x_1,\cdots,x_n$，则称函数 
+
+$$
+F_n(x)=\frac{x_1,\cdots,x_n中小于等于x的样本值的个数}{n} = \left\{\begin{matrix}
+0,&x<x_1 \\
+k/n,&x_k<x_{k+1} \\
+1,&x\geq x_n
+\end{matrix}\right.
+$$
+
+为总体$X$的经验分布函数。
+
+### 常用统计量
+
+**样本均值**
+
+$$
+\overline{X} = \frac{1}{n}\sum^n_{i=1}X_i
+$$
+
+其样本值为
+
+$$
+\overline{x} = \frac{1}{n}\sum^n_{i=1}x_i
+$$
+
+**样本方差**
+
+$$
+S^2 = \frac{1}{n-1}\sum^n_{i=1}(X_i-\overline{X})^2 = \frac{1}{n-1}\bigg(\sum^n_{i=1}X_i^2-n\overline{X}^2\bigg)
+$$
+
+其样本值为
+
+$$
+s^2 = \frac{1}{n-1}\sum^n_{i=1}(x_i-\overline{x})^2 = \frac{1}{n-1}\bigg(\sum^n_{i=1}x_i^2-n\overline{x}^2\bigg)
+$$
+
+**样本标准差**
+
+$$
+S = \sqrt{\frac{1}{n-1}\sum^n_{i=1}(X_i-\overline{X})^2}
+$$
+
+其样本值为
+
+$$
+s = \sqrt{\frac{1}{n-1}\sum^n_{i=1}(x_i-\overline{x})^2}
+$$
+
+**样本$k$阶原点矩**
+
+$$
+a_k = \frac{1}{n}\sum^n_{i=1}X_i^k
+$$
+
+样本值略。
+
+**样本$k$阶中心矩**
+
+$$
+m_k = \frac{1}{n}\sum^n_{i=1}(X_i-\overline{X})^k
+$$
+
+样本值略
+
+**定理1**
+
+设总体$X$均值为$\mu$，方差为$\sigma^2$（无论何种分布），$X_1,X_2,\cdots,X_n$是来自总体$X$的一个样本，$\overline{X}$和$S^2$分别是样本均值和样本方差，则有
+
+$$
+E(\overline{X})=\mu,D(\overline{X})=\sigma^2/n,E(S^2) = \sigma^2
+$$

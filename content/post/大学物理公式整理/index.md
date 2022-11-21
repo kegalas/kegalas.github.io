@@ -2371,3 +2371,64 @@ $$
 $$
 v_z' = \frac{v_z\sqrt{1-\beta^2}}{1-\frac{u}{c^2}v_x}
 $$
+
+### 相对论动量和质量
+
+质量是一个和速率有关的量
+
+$$
+m(v) = \frac{m_0}{\sqrt{1-(\frac{v}{c})^2}}
+$$
+
+式中$m_0$是质点静止时的质量，即由相对该质点静止的观察者测得的质量，称为静止质量。
+
+于是动量为
+
+$$
+\bm p = m\bm v = \frac{m_0}{\sqrt{1-(\frac{v}{c})^2}}\bm v
+$$
+
+同时，力为
+
+$$
+\bm F = \frac{d\bm p}{dt} = \frac{d}{dt}\bigg(\frac{m_0}{\sqrt{1-(\frac{v}{c})^2}}\bm v\bigg)
+$$
+
+### 相对论动能
+
+$$
+E_k = \int\bm F\cdot d\bm r = \int_0^v d(mv)\cdot \bm v
+$$
+
+$$
+E_k = \int^m_{m_0}c^2dm = mc^2-m_0c^2
+$$
+
+### 质能关系式
+
+$$
+E=mc^2\\
+E_0=m_0c^2
+$$
+
+光子的静质量为零，而频率为$\nu$的光子所对应的能量为$E=h\nu$，所以光子的动质量为
+
+$$
+m_\varphi = \frac{E}{c^2} = \frac{h\nu}{c^2}
+$$
+
+### 相对论能量和动量的关系
+
+$$
+E^2 = p^2c^2 + E_0^2
+$$
+
+对于光子
+
+$$
+p = \frac{h\nu}{c} = \frac{h}{\lambda}
+$$
+
+## 量子物理基础
+
+
