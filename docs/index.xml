@@ -3681,6 +3681,15 @@ f(z_0)=0,f&amp;#39;(z_0)=0,\cdots,f^{(m-1)}(z_0)=0,f^{(m)}(z_0)\neq 0
 f(z)=(z-z_0)^mg(z)
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;这里，&lt;span class=&#34;math inline&#34;&gt;\(g\)&lt;/span&gt;在&lt;span class=&#34;math inline&#34;&gt;\(z_0\)&lt;/span&gt;点全纯，且&lt;span class=&#34;math inline&#34;&gt;\(g(z_0)\neq 0\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;事实上，如果&lt;span class=&#34;math inline&#34;&gt;\(z_0\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(f(z)\)&lt;/span&gt;的&lt;span class=&#34;math inline&#34;&gt;\(m\)&lt;/span&gt;阶零点，那么&lt;span class=&#34;math inline&#34;&gt;\(f(z)\)&lt;/span&gt;可以表示成上述的形式，设&lt;span class=&#34;math inline&#34;&gt;\(g(z)\)&lt;/span&gt;在&lt;span class=&#34;math inline&#34;&gt;\(z_0\)&lt;/span&gt;处的泰勒展开为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+g(z) = c_0+c_1(z-z_0)+c_2(z-z_0)^2+\cdots
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(c_0=g(z_0)\neq 0\)&lt;/span&gt;，从而&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+f(z) = c_0(z-z_0)^m+c_1(z-z_0)^{m+1}+\cdots
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;也就是前&lt;span class=&#34;math inline&#34;&gt;\(m\)&lt;/span&gt;项系数都为0.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;命题2&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(\bm C\)&lt;/span&gt;中的域，&lt;span class=&#34;math inline&#34;&gt;\(f\in H(D)\)&lt;/span&gt;，如果&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;在&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;中的小圆盘&lt;span class=&#34;math inline&#34;&gt;\(B(z_0,\varepsilon)\)&lt;/span&gt;上恒等于零，那么&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;在&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;上恒等于&lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt;。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;命题3&lt;/strong&gt;&lt;/p&gt;
@@ -3768,7 +3777,8 @@ f(z) =
 &lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(a_{-m}\neq 0\)&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;定理3&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;在可去奇点处的特征是洛朗级数没有主要部分，只有全纯部分&lt;/p&gt;
-&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;在奇点处的特征是洛朗级数的主要部分只有有限项。&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;在极点处的特征是洛朗级数的主要部分只有有限项。最高负幂项为&lt;span class=&#34;math inline&#34;&gt;\(t^{-m}\)&lt;/span&gt;，则为&lt;span class=&#34;math inline&#34;&gt;\(m\)&lt;/span&gt;级极点。&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;在本性奇点处的特征是洛朗级数的主要部分有无限项。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;定理4&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(z_0\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;的本性奇点，那么对任意&lt;span class=&#34;math inline&#34;&gt;\(A\in\bm C_\infty\)&lt;/span&gt;，必存在趋于&lt;span class=&#34;math inline&#34;&gt;\(z_0\)&lt;/span&gt;的点列&lt;span class=&#34;math inline&#34;&gt;\(\{z_n\}\)&lt;/span&gt;，使得&lt;span class=&#34;math inline&#34;&gt;\(\lim_{n\to\infty}f(z_n)=A\)&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;定理5&lt;/strong&gt;&lt;/p&gt;
@@ -3844,6 +3854,92 @@ Res(f,a) = \frac{g(a)}{h&amp;#39;(a)}
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;定理1&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;若&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;在&lt;span class=&#34;math inline&#34;&gt;\(\bm C\)&lt;/span&gt;中除去&lt;span class=&#34;math inline&#34;&gt;\(z_1,\cdots,z_n\)&lt;/span&gt;外是全纯的，则&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;在&lt;span class=&#34;math inline&#34;&gt;\(z_1,\cdots,z_n\)&lt;/span&gt;及&lt;span class=&#34;math inline&#34;&gt;\(z=\infty\)&lt;/span&gt;处的残数之和为零。&lt;/p&gt;
+&lt;p&gt;这个定理可以用在，在用残数定理求积分时，如果里面的众多奇点不好算，就可以转化为算无穷远点的残数来代替。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定理2&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+Res[f(z),\infty] =
+-Res\bigg[f\bigg(\frac{1}{z}\bigg)\cdot\frac{1}{z^2},0\bigg]
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h2 id=&#34;利用残数定理计算定积分&#34;&gt;利用残数定理计算定积分&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;&lt;span class=&#34;math inline&#34;&gt;\(\int^\infty_{-\infty}f(x)dx\)&lt;/span&gt;型&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;在上半平面&lt;span class=&#34;math inline&#34;&gt;\(\{z: Imz&amp;gt;0\}\)&lt;/span&gt;中除去&lt;span class=&#34;math inline&#34;&gt;\(a_1,\cdots,a_n\)&lt;/span&gt;外是全纯的，在&lt;span class=&#34;math inline&#34;&gt;\(\{z: Imz\geq0\}\)&lt;/span&gt;中除去&lt;span class=&#34;math inline&#34;&gt;\(a_1,\cdots,a_n\)&lt;/span&gt;外是连续的，如果&lt;span class=&#34;math inline&#34;&gt;\(\lim_{z\to\infty}zf(z)=0\)&lt;/span&gt;，那么&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\int^\infty_{-\infty}f(x)dx = 2\pi i\sum^n_{k=1}Res(f,a_k)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;推论1&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(P,Q\)&lt;/span&gt;是两个既约多项式，&lt;span class=&#34;math inline&#34;&gt;\(Q\)&lt;/span&gt;没有实的零点，且&lt;span class=&#34;math inline&#34;&gt;\(degQ-degP\geq2\)&lt;/span&gt;，那么&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+int^\infty_{-\infty}\frac{P(x)}{Q(x)}dx = 2\pi
+i\sum^n_{k=1}Res\bigg(\frac{P(z)}{Q(z)},a_k\bigg)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;这里&lt;span class=&#34;math inline&#34;&gt;\(a_k\)&lt;/span&gt;为&lt;span class=&#34;math inline&#34;&gt;\(Q\)&lt;/span&gt;在上半平面中的全部零点，&lt;span class=&#34;math inline&#34;&gt;\(degP,degQ\)&lt;/span&gt;为&lt;span class=&#34;math inline&#34;&gt;\(P,Q\)&lt;/span&gt;的次数。&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Jordan引理&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;在&lt;span class=&#34;math inline&#34;&gt;\(\{z:R_0\leq|z|&amp;lt;\infty,Imz\geq0\}\)&lt;/span&gt;上连续，且&lt;span class=&#34;math inline&#34;&gt;\(\lim_{z\to\infty,Imz\geq0}f(z)=0\)&lt;/span&gt;，则对任意&lt;span class=&#34;math inline&#34;&gt;\(a&amp;gt;0\)&lt;/span&gt;，有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\lim_{R\to\infty}\int_{\gamma_R}e^{iaz}f(z)dz = 0
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;这里&lt;span class=&#34;math inline&#34;&gt;\(\gamma_R=\{z:z=Re^{i\theta},0\leq\theta\leq\pi,R\geq
+R_0\}\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;定理1&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;在上半平面&lt;span class=&#34;math inline&#34;&gt;\(\{z: Imz&amp;gt;0\}\)&lt;/span&gt;中除去&lt;span class=&#34;math inline&#34;&gt;\(a_1,\cdots,a_n\)&lt;/span&gt;外是全纯的，在&lt;span class=&#34;math inline&#34;&gt;\(\{z: Imz\geq0\}\)&lt;/span&gt;中除去&lt;span class=&#34;math inline&#34;&gt;\(a_1,\cdots,a_n\)&lt;/span&gt;外是连续的，如果&lt;span class=&#34;math inline&#34;&gt;\(\lim_{z\to\infty}f(z)=0\)&lt;/span&gt;，那么对任意&lt;span class=&#34;math inline&#34;&gt;\(\alpha&amp;gt;0\)&lt;/span&gt;，有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\int^\infty_{-\infty}e^{i\alpha x}f(x)dx = 2\pi
+i\sum^n_{k=1}Res(e^{i\alpha z}f(z),a_k)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;推论2&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\int^\infty_{-\infty}f(x)\cos\alpha xdx = Re\{ 2\pi
+i\sum^n_{k=1}Res(e^{i\alpha z}f(z),a_k) \}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\int^\infty_{-\infty}f(x)\sin\alpha xdx = Im\{ 2\pi
+i\sum^n_{k=1}Res(e^{i\alpha z}f(z),a_k) \}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;引理1&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;在扇形域&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+G = \{z=a+\rho e^{i\theta}:0&amp;lt;\rho\leq
+\rho_0,\theta_0\leq\theta\leq\theta_0+\alpha\}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;上连续，如果&lt;span class=&#34;math inline&#34;&gt;\(\lim_{z\to a}(z-a)f(z) =
+A\)&lt;/span&gt;，那么&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\lim_{\rho\to 0}\int_{\gamma_\rho}f(z)dz = iA\alpha
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;这里，&lt;span class=&#34;math inline&#34;&gt;\(\gamma_\rho = \{z=a+\rho
+e^{i\theta}:\theta_0\leq\theta\leq\theta_0+\alpha\}\)&lt;/span&gt;，它的方向是沿着辐角增加的方向。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&lt;span class=&#34;math inline&#34;&gt;\(\int^\infty_0f(x)dx\)&lt;/span&gt;型&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;TODO&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&lt;span class=&#34;math inline&#34;&gt;\(\int^b_af(x)dx\)&lt;/span&gt;型&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;对于一种重要的又穷限积分&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\int^{2\pi}_0 R(\sin\theta,\cos\theta)d\theta
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;一种办法是&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\int^{2\pi}_0 R(\sin\theta,\cos\theta)d\theta =
+2\int^\infty_{-\infty}R\bigg(\frac{2t}{1+t^2},\frac{1-t^2}{1+t^2}\bigg)\frac{1}{1+t^2}dt
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;另一种办法是&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\int^{2\pi}_0 R(\sin\theta,\cos\theta)d\theta =
+\int_{|z|=1}R\bigg(\frac{1}{2i}\bigg(z-\frac{1}{z}\bigg),\frac{1}{2}\bigg(z+\frac{1}{z}\bigg)\bigg)\frac{1}{iz}dz
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;对于另一种重要的又穷限积分&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\int^b_a(x-a)^r(b-x)^sf(x)dx
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;TODO&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Fresnel积分&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\int^\infty_0 \cos x^2dx = \int^\infty_0 \sin x^2dx =
+\frac{1}{2}\sqrt{\frac{\pi}{2}}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Poisson积分&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\int^\infty_0 e^{-ax^2}\cos bxdx =
+\frac{1}{2}\sqrt{\frac{\pi}{a}}exp\bigg(-\frac{b^2}{4a}\bigg)
+\]&lt;/span&gt;&lt;/p&gt;
 
 
 </description>
@@ -4717,6 +4813,69 @@ n_1^{n_1/2}n_2^{n_2/2}\frac{\Gamma(\frac{n_1+n_2}{2})}{\Gamma(\frac{n_1}{2})\Gam
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;性质&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;若&lt;span class=&#34;math inline&#34;&gt;\(F\sim F(n_1,n_2)\)&lt;/span&gt;，则&lt;span class=&#34;math inline&#34;&gt;\(\frac{1}{F}\sim F(n_2,n_1)\)&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;八大分布&#34;&gt;八大分布&lt;/h3&gt;
+&lt;h4 id=&#34;单正态总体&#34;&gt;单正态总体&lt;/h4&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(X\sim N(\mu,\sigma^2)\)&lt;/span&gt;，而&lt;span class=&#34;math inline&#34;&gt;\(X_1,X_2,\cdots,X_n\)&lt;/span&gt;是来自正态总体&lt;span class=&#34;math inline&#34;&gt;\(N(\mu,\sigma^2)\)&lt;/span&gt;的样本，&lt;span class=&#34;math inline&#34;&gt;\(\overline{X}\)&lt;/span&gt;和&lt;span class=&#34;math inline&#34;&gt;\(S^2\)&lt;/span&gt;分别是样本均值和样本方差，则有&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\overline{X}\sim
+N(\mu,\sigma^2/n)\quad\frac{\overline{X}-\mu}{\sigma/\sqrt n}\sim N(0,1)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;ol start=&#34;2&#34; type=&#34;1&#34;&gt;
+&lt;li&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\frac{\sum^n_{i=1}(X_i-\mu)^2}{\sigma^2}\sim \mathcal{X}^2_n
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;ol start=&#34;3&#34; type=&#34;1&#34;&gt;
+&lt;li&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\frac{(n-1)S^2}{\sigma^2}\sim\mathcal{X}^2_{n-1}\quad
+\frac{\sum^n_{i=1}(X_i-\overline X)^2}{\sigma^2}\sim
+\mathcal{X}^2_{n-1}且\overline X与S^2相互独立
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;ol start=&#34;4&#34; type=&#34;1&#34;&gt;
+&lt;li&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\frac{\overline X-\mu}{S/\sqrt n}\sim t(n-1)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h4 id=&#34;双正态总体&#34;&gt;双正态总体&lt;/h4&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\((X_1,\cdots,X_{n_1})\)&lt;/span&gt;和&lt;span class=&#34;math inline&#34;&gt;\((Y_1,\cdots,Y_{n_2})\)&lt;/span&gt;分别是来自正态总体&lt;span class=&#34;math inline&#34;&gt;\(N(\mu_1,\sigma_1^2)\)&lt;/span&gt;和&lt;span class=&#34;math inline&#34;&gt;\(N(\mu_2,\sigma_2^2)\)&lt;/span&gt;的样本，且这两个样本相互独立，设&lt;span class=&#34;math inline&#34;&gt;\(\overline X,\overline Y\)&lt;/span&gt;分别是样本均值&lt;/p&gt;
+&lt;ol start=&#34;5&#34; type=&#34;1&#34;&gt;
+&lt;li&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\frac{(\overline X-\overline
+Y)-(\mu_1-\mu_2)}{\sqrt{\sigma_1^2/n_1+\sigma_2^2/n_2}}\sim N(0,1)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;ol start=&#34;6&#34; type=&#34;1&#34;&gt;
+&lt;li&gt;当&lt;span class=&#34;math inline&#34;&gt;\(\sigma_1=\sigma_2\)&lt;/span&gt;未知时&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\frac{(\overline X-\overline
+Y)-(\mu_1-\mu_2)}{S_W\sqrt{1/n_1+1/n_2}}\sim t(n_1+n_2-2)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+S_W = \sqrt{\frac{(n_1-1)S_1^2+(n_2-1)S_2^2}{n_1+n_2-2}}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;ol start=&#34;7&#34; type=&#34;1&#34;&gt;
+&lt;li&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\frac{n_2\sigma_2^2\sum^{n_1}_{i=1}(X_i-\mu_1)^2}{n_1\sigma_1^2\sum^{n_2}_{i=1}(Y_i-\mu_2)^2}\sim
+F(n_1,n_2)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;ol start=&#34;8&#34; type=&#34;1&#34;&gt;
+&lt;li&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\frac{S_1^2/S_2^2}{\sigma_1^2/\sigma_2^2}\sim F(n_1-1,n_2-1)
+\]&lt;/span&gt;&lt;/p&gt;
 &lt;h1 id=&#34;随机变量的数字特征&#34;&gt;随机变量的数字特征&lt;/h1&gt;
 &lt;h2 id=&#34;数学期望与中位数&#34;&gt;数学期望与中位数&lt;/h2&gt;
 &lt;h3 id=&#34;定义-1&#34;&gt;定义&lt;/h3&gt;

@@ -1565,6 +1565,20 @@ $$
 
 这里，$g$在$z_0$点全纯，且$g(z_0)\neq 0$
 
+事实上，如果$z_0$是$f(z)$的$m$阶零点，那么$f(z)$可以表示成上述的形式，设$g(z)$在$z_0$处的泰勒展开为
+
+$$
+g(z) = c_0+c_1(z-z_0)+c_2(z-z_0)^2+\cdots
+$$
+
+其中$c_0=g(z_0)\neq 0$，从而
+
+$$
+f(z) = c_0(z-z_0)^m+c_1(z-z_0)^{m+1}+\cdots
+$$
+
+也就是前$m$项系数都为0.
+
 **命题2**
 
 设$D$是$\bm C$中的域，$f\in H(D)$，如果$f$在$D$中的小圆盘$B(z_0,\varepsilon)$上恒等于零，那么$f$在$D$上恒等于$0$。
@@ -1697,7 +1711,9 @@ $$
 
 $f$在可去奇点处的特征是洛朗级数没有主要部分，只有全纯部分
 
-$f$在奇点处的特征是洛朗级数的主要部分只有有限项。
+$f$在极点处的特征是洛朗级数的主要部分只有有限项。最高负幂项为$t^{-m}$，则为$m$级极点。
+
+$f$在本性奇点处的特征是洛朗级数的主要部分有无限项。
 
 **定理4**
 
@@ -1820,3 +1836,119 @@ $$
 **定理1**
 
 若$f$在$\bm C$中除去$z_1,\cdots,z_n$外是全纯的，则$f$在$z_1,\cdots,z_n$及$z=\infty$处的残数之和为零。
+
+这个定理可以用在，在用残数定理求积分时，如果里面的众多奇点不好算，就可以转化为算无穷远点的残数来代替。
+
+**定理2**
+
+$$
+Res[f(z),\infty] = -Res\bigg[f\bigg(\frac{1}{z}\bigg)\cdot\frac{1}{z^2},0\bigg]
+$$
+
+## 利用残数定理计算定积分
+
+**$\int^\infty_{-\infty}f(x)dx$型**
+
+设$f$在上半平面$\{z: Imz>0\}$中除去$a_1,\cdots,a_n$外是全纯的，在$\{z: Imz\geq0\}$中除去$a_1,\cdots,a_n$外是连续的，如果$\lim_{z\to\infty}zf(z)=0$，那么
+
+$$
+\int^\infty_{-\infty}f(x)dx = 2\pi i\sum^n_{k=1}Res(f,a_k)
+$$
+
+*推论1*
+
+设$P,Q$是两个既约多项式，$Q$没有实的零点，且$degQ-degP\geq2$，那么
+
+$$
+int^\infty_{-\infty}\frac{P(x)}{Q(x)}dx = 2\pi i\sum^n_{k=1}Res\bigg(\frac{P(z)}{Q(z)},a_k\bigg)
+$$
+
+这里$a_k$为$Q$在上半平面中的全部零点，$degP,degQ$为$P,Q$的次数。
+
+*Jordan引理*
+
+设$f$在$\{z:R_0\leq|z|<\infty,Imz\geq0\}$上连续，且$\lim_{z\to\infty,Imz\geq0}f(z)=0$，则对任意$a>0$，有
+
+$$
+\lim_{R\to\infty}\int_{\gamma_R}e^{iaz}f(z)dz = 0
+$$
+
+这里$\gamma_R=\{z:z=Re^{i\theta},0\leq\theta\leq\pi,R\geq R_0\}$
+
+*定理1*
+
+设$f$在上半平面$\{z: Imz>0\}$中除去$a_1,\cdots,a_n$外是全纯的，在$\{z: Imz\geq0\}$中除去$a_1,\cdots,a_n$外是连续的，如果$\lim_{z\to\infty}f(z)=0$，那么对任意$\alpha>0$，有
+
+$$
+\int^\infty_{-\infty}e^{i\alpha x}f(x)dx = 2\pi i\sum^n_{k=1}Res(e^{i\alpha z}f(z),a_k)
+$$
+
+*推论2*
+
+$$
+\int^\infty_{-\infty}f(x)\cos\alpha xdx = Re\{ 2\pi i\sum^n_{k=1}Res(e^{i\alpha z}f(z),a_k) \}
+$$
+
+$$
+\int^\infty_{-\infty}f(x)\sin\alpha xdx = Im\{ 2\pi i\sum^n_{k=1}Res(e^{i\alpha z}f(z),a_k) \}
+$$
+
+*引理1*
+
+设$f$在扇形域
+
+$$
+G = \{z=a+\rho e^{i\theta}:0<\rho\leq \rho_0,\theta_0\leq\theta\leq\theta_0+\alpha\}
+$$
+
+上连续，如果$\lim_{z\to a}(z-a)f(z) = A$，那么
+
+$$
+\lim_{\rho\to 0}\int_{\gamma_\rho}f(z)dz = iA\alpha
+$$
+
+这里，$\gamma_\rho = \{z=a+\rho e^{i\theta}:\theta_0\leq\theta\leq\theta_0+\alpha\}$，它的方向是沿着辐角增加的方向。
+
+**$\int^\infty_0f(x)dx$型**
+
+TODO
+
+**$\int^b_af(x)dx$型**
+
+对于一种重要的又穷限积分
+
+$$
+\int^{2\pi}_0 R(\sin\theta,\cos\theta)d\theta
+$$
+
+一种办法是
+
+$$
+\int^{2\pi}_0 R(\sin\theta,\cos\theta)d\theta = 2\int^\infty_{-\infty}R\bigg(\frac{2t}{1+t^2},\frac{1-t^2}{1+t^2}\bigg)\frac{1}{1+t^2}dt
+$$
+
+另一种办法是
+
+$$
+\int^{2\pi}_0 R(\sin\theta,\cos\theta)d\theta = \int_{|z|=1}R\bigg(\frac{1}{2i}\bigg(z-\frac{1}{z}\bigg),\frac{1}{2}\bigg(z+\frac{1}{z}\bigg)\bigg)\frac{1}{iz}dz
+$$
+
+对于另一种重要的又穷限积分
+
+$$
+\int^b_a(x-a)^r(b-x)^sf(x)dx
+$$
+
+TODO
+
+**Fresnel积分**
+
+$$
+\int^\infty_0 \cos x^2dx = \int^\infty_0 \sin x^2dx = \frac{1}{2}\sqrt{\frac{\pi}{2}}
+$$
+
+**Poisson积分**
+
+$$
+\int^\infty_0 e^{-ax^2}\cos bxdx = \frac{1}{2}\sqrt{\frac{\pi}{a}}exp\bigg(-\frac{b^2}{4a}\bigg)
+$$

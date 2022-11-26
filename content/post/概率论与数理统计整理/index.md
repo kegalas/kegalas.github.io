@@ -1249,6 +1249,70 @@ $$
 
 若$F\sim F(n_1,n_2)$，则$\frac{1}{F}\sim F(n_2,n_1)$
 
+### 八大分布
+
+#### 单正态总体
+
+设$X\sim N(\mu,\sigma^2)$，而$X_1,X_2,\cdots,X_n$是来自正态总体$N(\mu,\sigma^2)$的样本，$\overline{X}$和$S^2$分别是样本均值和样本方差，则有
+
+1. 
+
+$$
+\overline{X}\sim N(\mu,\sigma^2/n)\quad\frac{\overline{X}-\mu}{\sigma/\sqrt n}\sim N(0,1)
+$$
+
+2. 
+
+$$
+\frac{\sum^n_{i=1}(X_i-\mu)^2}{\sigma^2}\sim \mathcal{X}^2_n
+$$
+
+3. 
+
+$$
+\frac{(n-1)S^2}{\sigma^2}\sim\mathcal{X}^2_{n-1}\quad \frac{\sum^n_{i=1}(X_i-\overline X)^2}{\sigma^2}\sim \mathcal{X}^2_{n-1}且\overline X与S^2相互独立
+$$
+
+4. 
+
+$$
+\frac{\overline X-\mu}{S/\sqrt n}\sim t(n-1)
+$$
+
+#### 双正态总体
+
+设$(X_1,\cdots,X_{n_1})$和$(Y_1,\cdots,Y_{n_2})$分别是来自正态总体$N(\mu_1,\sigma_1^2)$和$N(\mu_2,\sigma_2^2)$的样本，且这两个样本相互独立，设$\overline X,\overline Y$分别是样本均值
+
+5. 
+
+$$
+\frac{(\overline X-\overline Y)-(\mu_1-\mu_2)}{\sqrt{\sigma_1^2/n_1+\sigma_2^2/n_2}}\sim N(0,1)
+$$
+
+6. 当$\sigma_1=\sigma_2$未知时
+
+$$
+\frac{(\overline X-\overline Y)-(\mu_1-\mu_2)}{S_W\sqrt{1/n_1+1/n_2}}\sim t(n_1+n_2-2)
+$$
+
+其中
+
+$$
+S_W = \sqrt{\frac{(n_1-1)S_1^2+(n_2-1)S_2^2}{n_1+n_2-2}}
+$$
+
+7. 
+
+$$
+\frac{n_2\sigma_2^2\sum^{n_1}_{i=1}(X_i-\mu_1)^2}{n_1\sigma_1^2\sum^{n_2}_{i=1}(Y_i-\mu_2)^2}\sim F(n_1,n_2)
+$$
+
+8. 
+
+$$
+\frac{S_1^2/S_2^2}{\sigma_1^2/\sigma_2^2}\sim F(n_1-1,n_2-1)
+$$
+
 # 随机变量的数字特征
 
 ## 数学期望与中位数

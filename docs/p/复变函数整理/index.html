@@ -112,7 +112,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 43 分钟
+                    阅读时长: 46 分钟
                 </time>
             </div>
         
@@ -1177,6 +1177,15 @@ f(z_0)=0,f&#39;(z_0)=0,\cdots,f^{(m-1)}(z_0)=0,f^{(m)}(z_0)\neq 0
 f(z)=(z-z_0)^mg(z)
 \]</span></p>
 <p>这里，<span class="math inline">\(g\)</span>在<span class="math inline">\(z_0\)</span>点全纯，且<span class="math inline">\(g(z_0)\neq 0\)</span></p>
+<p>事实上，如果<span class="math inline">\(z_0\)</span>是<span class="math inline">\(f(z)\)</span>的<span class="math inline">\(m\)</span>阶零点，那么<span class="math inline">\(f(z)\)</span>可以表示成上述的形式，设<span class="math inline">\(g(z)\)</span>在<span class="math inline">\(z_0\)</span>处的泰勒展开为</p>
+<p><span class="math display">\[
+g(z) = c_0+c_1(z-z_0)+c_2(z-z_0)^2+\cdots
+\]</span></p>
+<p>其中<span class="math inline">\(c_0=g(z_0)\neq 0\)</span>，从而</p>
+<p><span class="math display">\[
+f(z) = c_0(z-z_0)^m+c_1(z-z_0)^{m+1}+\cdots
+\]</span></p>
+<p>也就是前<span class="math inline">\(m\)</span>项系数都为0.</p>
 <p><strong>命题2</strong></p>
 <p>设<span class="math inline">\(D\)</span>是<span class="math inline">\(\bm C\)</span>中的域，<span class="math inline">\(f\in H(D)\)</span>，如果<span class="math inline">\(f\)</span>在<span class="math inline">\(D\)</span>中的小圆盘<span class="math inline">\(B(z_0,\varepsilon)\)</span>上恒等于零，那么<span class="math inline">\(f\)</span>在<span class="math inline">\(D\)</span>上恒等于<span class="math inline">\(0\)</span>。</p>
 <p><strong>命题3</strong></p>
@@ -1264,7 +1273,8 @@ f(z) =
 <p>其中<span class="math inline">\(a_{-m}\neq 0\)</span></p>
 <p><strong>定理3</strong></p>
 <p><span class="math inline">\(f\)</span>在可去奇点处的特征是洛朗级数没有主要部分，只有全纯部分</p>
-<p><span class="math inline">\(f\)</span>在奇点处的特征是洛朗级数的主要部分只有有限项。</p>
+<p><span class="math inline">\(f\)</span>在极点处的特征是洛朗级数的主要部分只有有限项。最高负幂项为<span class="math inline">\(t^{-m}\)</span>，则为<span class="math inline">\(m\)</span>级极点。</p>
+<p><span class="math inline">\(f\)</span>在本性奇点处的特征是洛朗级数的主要部分有无限项。</p>
 <p><strong>定理4</strong></p>
 <p>设<span class="math inline">\(z_0\)</span>是<span class="math inline">\(f\)</span>的本性奇点，那么对任意<span class="math inline">\(A\in\bm C_\infty\)</span>，必存在趋于<span class="math inline">\(z_0\)</span>的点列<span class="math inline">\(\{z_n\}\)</span>，使得<span class="math inline">\(\lim_{n\to\infty}f(z_n)=A\)</span></p>
 <p><strong>定理5</strong></p>
@@ -1340,6 +1350,92 @@ Res(f,a) = \frac{g(a)}{h&#39;(a)}
 \]</span></p>
 <p><strong>定理1</strong></p>
 <p>若<span class="math inline">\(f\)</span>在<span class="math inline">\(\bm C\)</span>中除去<span class="math inline">\(z_1,\cdots,z_n\)</span>外是全纯的，则<span class="math inline">\(f\)</span>在<span class="math inline">\(z_1,\cdots,z_n\)</span>及<span class="math inline">\(z=\infty\)</span>处的残数之和为零。</p>
+<p>这个定理可以用在，在用残数定理求积分时，如果里面的众多奇点不好算，就可以转化为算无穷远点的残数来代替。</p>
+<p><strong>定理2</strong></p>
+<p><span class="math display">\[
+Res[f(z),\infty] =
+-Res\bigg[f\bigg(\frac{1}{z}\bigg)\cdot\frac{1}{z^2},0\bigg]
+\]</span></p>
+<h2 id="利用残数定理计算定积分">利用残数定理计算定积分</h2>
+<p><strong><span class="math inline">\(\int^\infty_{-\infty}f(x)dx\)</span>型</strong></p>
+<p>设<span class="math inline">\(f\)</span>在上半平面<span class="math inline">\(\{z: Imz&gt;0\}\)</span>中除去<span class="math inline">\(a_1,\cdots,a_n\)</span>外是全纯的，在<span class="math inline">\(\{z: Imz\geq0\}\)</span>中除去<span class="math inline">\(a_1,\cdots,a_n\)</span>外是连续的，如果<span class="math inline">\(\lim_{z\to\infty}zf(z)=0\)</span>，那么</p>
+<p><span class="math display">\[
+\int^\infty_{-\infty}f(x)dx = 2\pi i\sum^n_{k=1}Res(f,a_k)
+\]</span></p>
+<p><em>推论1</em></p>
+<p>设<span class="math inline">\(P,Q\)</span>是两个既约多项式，<span class="math inline">\(Q\)</span>没有实的零点，且<span class="math inline">\(degQ-degP\geq2\)</span>，那么</p>
+<p><span class="math display">\[
+int^\infty_{-\infty}\frac{P(x)}{Q(x)}dx = 2\pi
+i\sum^n_{k=1}Res\bigg(\frac{P(z)}{Q(z)},a_k\bigg)
+\]</span></p>
+<p>这里<span class="math inline">\(a_k\)</span>为<span class="math inline">\(Q\)</span>在上半平面中的全部零点，<span class="math inline">\(degP,degQ\)</span>为<span class="math inline">\(P,Q\)</span>的次数。</p>
+<p><em>Jordan引理</em></p>
+<p>设<span class="math inline">\(f\)</span>在<span class="math inline">\(\{z:R_0\leq|z|&lt;\infty,Imz\geq0\}\)</span>上连续，且<span class="math inline">\(\lim_{z\to\infty,Imz\geq0}f(z)=0\)</span>，则对任意<span class="math inline">\(a&gt;0\)</span>，有</p>
+<p><span class="math display">\[
+\lim_{R\to\infty}\int_{\gamma_R}e^{iaz}f(z)dz = 0
+\]</span></p>
+<p>这里<span class="math inline">\(\gamma_R=\{z:z=Re^{i\theta},0\leq\theta\leq\pi,R\geq
+R_0\}\)</span></p>
+<p><em>定理1</em></p>
+<p>设<span class="math inline">\(f\)</span>在上半平面<span class="math inline">\(\{z: Imz&gt;0\}\)</span>中除去<span class="math inline">\(a_1,\cdots,a_n\)</span>外是全纯的，在<span class="math inline">\(\{z: Imz\geq0\}\)</span>中除去<span class="math inline">\(a_1,\cdots,a_n\)</span>外是连续的，如果<span class="math inline">\(\lim_{z\to\infty}f(z)=0\)</span>，那么对任意<span class="math inline">\(\alpha&gt;0\)</span>，有</p>
+<p><span class="math display">\[
+\int^\infty_{-\infty}e^{i\alpha x}f(x)dx = 2\pi
+i\sum^n_{k=1}Res(e^{i\alpha z}f(z),a_k)
+\]</span></p>
+<p><em>推论2</em></p>
+<p><span class="math display">\[
+\int^\infty_{-\infty}f(x)\cos\alpha xdx = Re\{ 2\pi
+i\sum^n_{k=1}Res(e^{i\alpha z}f(z),a_k) \}
+\]</span></p>
+<p><span class="math display">\[
+\int^\infty_{-\infty}f(x)\sin\alpha xdx = Im\{ 2\pi
+i\sum^n_{k=1}Res(e^{i\alpha z}f(z),a_k) \}
+\]</span></p>
+<p><em>引理1</em></p>
+<p>设<span class="math inline">\(f\)</span>在扇形域</p>
+<p><span class="math display">\[
+G = \{z=a+\rho e^{i\theta}:0&lt;\rho\leq
+\rho_0,\theta_0\leq\theta\leq\theta_0+\alpha\}
+\]</span></p>
+<p>上连续，如果<span class="math inline">\(\lim_{z\to a}(z-a)f(z) =
+A\)</span>，那么</p>
+<p><span class="math display">\[
+\lim_{\rho\to 0}\int_{\gamma_\rho}f(z)dz = iA\alpha
+\]</span></p>
+<p>这里，<span class="math inline">\(\gamma_\rho = \{z=a+\rho
+e^{i\theta}:\theta_0\leq\theta\leq\theta_0+\alpha\}\)</span>，它的方向是沿着辐角增加的方向。</p>
+<p><strong><span class="math inline">\(\int^\infty_0f(x)dx\)</span>型</strong></p>
+<p>TODO</p>
+<p><strong><span class="math inline">\(\int^b_af(x)dx\)</span>型</strong></p>
+<p>对于一种重要的又穷限积分</p>
+<p><span class="math display">\[
+\int^{2\pi}_0 R(\sin\theta,\cos\theta)d\theta
+\]</span></p>
+<p>一种办法是</p>
+<p><span class="math display">\[
+\int^{2\pi}_0 R(\sin\theta,\cos\theta)d\theta =
+2\int^\infty_{-\infty}R\bigg(\frac{2t}{1+t^2},\frac{1-t^2}{1+t^2}\bigg)\frac{1}{1+t^2}dt
+\]</span></p>
+<p>另一种办法是</p>
+<p><span class="math display">\[
+\int^{2\pi}_0 R(\sin\theta,\cos\theta)d\theta =
+\int_{|z|=1}R\bigg(\frac{1}{2i}\bigg(z-\frac{1}{z}\bigg),\frac{1}{2}\bigg(z+\frac{1}{z}\bigg)\bigg)\frac{1}{iz}dz
+\]</span></p>
+<p>对于另一种重要的又穷限积分</p>
+<p><span class="math display">\[
+\int^b_a(x-a)^r(b-x)^sf(x)dx
+\]</span></p>
+<p>TODO</p>
+<p><strong>Fresnel积分</strong></p>
+<p><span class="math display">\[
+\int^\infty_0 \cos x^2dx = \int^\infty_0 \sin x^2dx =
+\frac{1}{2}\sqrt{\frac{\pi}{2}}
+\]</span></p>
+<p><strong>Poisson积分</strong></p>
+<p><span class="math display">\[
+\int^\infty_0 e^{-ax^2}\cos bxdx =
+\frac{1}{2}\sqrt{\frac{\pi}{a}}exp\bigg(-\frac{b^2}{4a}\bigg)
+\]</span></p>
 
 
 
@@ -1734,6 +1830,7 @@ Res(f,a) = \frac{g(a)}{h&#39;(a)}
         <li><a href="#孤立奇点">孤立奇点</a></li>
         <li><a href="#整函数与亚纯函数">整函数与亚纯函数</a></li>
         <li><a href="#残数定理">残数定理</a></li>
+        <li><a href="#利用残数定理计算定积分">利用残数定理计算定积分</a></li>
       </ol>
     </li>
   </ol>

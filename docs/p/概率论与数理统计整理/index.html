@@ -125,7 +125,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 32 分钟
+                    阅读时长: 33 分钟
                 </time>
             </div>
         
@@ -998,6 +998,69 @@ n_1^{n_1/2}n_2^{n_2/2}\frac{\Gamma(\frac{n_1+n_2}{2})}{\Gamma(\frac{n_1}{2})\Gam
 \]</span></p>
 <p><strong>性质</strong></p>
 <p>若<span class="math inline">\(F\sim F(n_1,n_2)\)</span>，则<span class="math inline">\(\frac{1}{F}\sim F(n_2,n_1)\)</span></p>
+<h3 id="八大分布">八大分布</h3>
+<h4 id="单正态总体">单正态总体</h4>
+<p>设<span class="math inline">\(X\sim N(\mu,\sigma^2)\)</span>，而<span class="math inline">\(X_1,X_2,\cdots,X_n\)</span>是来自正态总体<span class="math inline">\(N(\mu,\sigma^2)\)</span>的样本，<span class="math inline">\(\overline{X}\)</span>和<span class="math inline">\(S^2\)</span>分别是样本均值和样本方差，则有</p>
+<ol type="1">
+<li></li>
+</ol>
+<p><span class="math display">\[
+\overline{X}\sim
+N(\mu,\sigma^2/n)\quad\frac{\overline{X}-\mu}{\sigma/\sqrt n}\sim N(0,1)
+\]</span></p>
+<ol start="2" type="1">
+<li></li>
+</ol>
+<p><span class="math display">\[
+\frac{\sum^n_{i=1}(X_i-\mu)^2}{\sigma^2}\sim \mathcal{X}^2_n
+\]</span></p>
+<ol start="3" type="1">
+<li></li>
+</ol>
+<p><span class="math display">\[
+\frac{(n-1)S^2}{\sigma^2}\sim\mathcal{X}^2_{n-1}\quad
+\frac{\sum^n_{i=1}(X_i-\overline X)^2}{\sigma^2}\sim
+\mathcal{X}^2_{n-1}且\overline X与S^2相互独立
+\]</span></p>
+<ol start="4" type="1">
+<li></li>
+</ol>
+<p><span class="math display">\[
+\frac{\overline X-\mu}{S/\sqrt n}\sim t(n-1)
+\]</span></p>
+<h4 id="双正态总体">双正态总体</h4>
+<p>设<span class="math inline">\((X_1,\cdots,X_{n_1})\)</span>和<span class="math inline">\((Y_1,\cdots,Y_{n_2})\)</span>分别是来自正态总体<span class="math inline">\(N(\mu_1,\sigma_1^2)\)</span>和<span class="math inline">\(N(\mu_2,\sigma_2^2)\)</span>的样本，且这两个样本相互独立，设<span class="math inline">\(\overline X,\overline Y\)</span>分别是样本均值</p>
+<ol start="5" type="1">
+<li></li>
+</ol>
+<p><span class="math display">\[
+\frac{(\overline X-\overline
+Y)-(\mu_1-\mu_2)}{\sqrt{\sigma_1^2/n_1+\sigma_2^2/n_2}}\sim N(0,1)
+\]</span></p>
+<ol start="6" type="1">
+<li>当<span class="math inline">\(\sigma_1=\sigma_2\)</span>未知时</li>
+</ol>
+<p><span class="math display">\[
+\frac{(\overline X-\overline
+Y)-(\mu_1-\mu_2)}{S_W\sqrt{1/n_1+1/n_2}}\sim t(n_1+n_2-2)
+\]</span></p>
+<p>其中</p>
+<p><span class="math display">\[
+S_W = \sqrt{\frac{(n_1-1)S_1^2+(n_2-1)S_2^2}{n_1+n_2-2}}
+\]</span></p>
+<ol start="7" type="1">
+<li></li>
+</ol>
+<p><span class="math display">\[
+\frac{n_2\sigma_2^2\sum^{n_1}_{i=1}(X_i-\mu_1)^2}{n_1\sigma_1^2\sum^{n_2}_{i=1}(Y_i-\mu_2)^2}\sim
+F(n_1,n_2)
+\]</span></p>
+<ol start="8" type="1">
+<li></li>
+</ol>
+<p><span class="math display">\[
+\frac{S_1^2/S_2^2}{\sigma_1^2/\sigma_2^2}\sim F(n_1-1,n_2-1)
+\]</span></p>
 <h1 id="随机变量的数字特征">随机变量的数字特征</h1>
 <h2 id="数学期望与中位数">数学期望与中位数</h2>
 <h3 id="定义-1">定义</h3>
@@ -1796,6 +1859,7 @@ E(\overline{X})=\mu,D(\overline{X})=\sigma^2/n,E(S^2) = \sigma^2
             <li><a href="#卡方分布">卡方分布</a></li>
             <li><a href="#t分布">t分布</a></li>
             <li><a href="#f分布">F分布</a></li>
+            <li><a href="#八大分布">八大分布</a></li>
           </ol>
         </li>
       </ol>
