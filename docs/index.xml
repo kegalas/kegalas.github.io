@@ -2616,6 +2616,171 @@ L_{eq}=L_1+L_2+\cdots+L_n
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 \frac{1}{L_{eq}}=\frac{1}{L_1}+\frac{1}{L_2}+\cdots+\frac{1}{L_n}
 \]&lt;/span&gt;&lt;/p&gt;
+&lt;h2 id=&#34;动态电路方程及其解&#34;&gt;动态电路方程及其解&lt;/h2&gt;
+&lt;h3 id=&#34;动态电路方程&#34;&gt;动态电路方程&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;一阶电路&lt;/strong&gt;&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;17.jpg&#34; alt=&#34;17.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;17.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;由KCL等可得&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\frac{du_C}{dt}+\frac{1}{\tau}u_C = \frac{1}{RC}u_S
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(\tau=RC\)&lt;/span&gt;，量纲为秒，称为时常数。&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;18.jpg&#34; alt=&#34;18.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;18.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;由&lt;span class=&#34;math inline&#34;&gt;\(KVL\)&lt;/span&gt;等可得&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\frac{i_L}{dt} + \frac{1}{\tau}i_L = \frac{R}{L}i_s
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(\tau=L/R\)&lt;/span&gt;，其量纲也为秒。&lt;/p&gt;
+&lt;p&gt;观察两个方程，除了变量不同，均为典型的一阶微分方程，因此均为一阶电路。一般形式为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+y&amp;#39;(t)+ay(t) = bf(t)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(y(t)\)&lt;/span&gt;为响应，&lt;span class=&#34;math inline&#34;&gt;\(f(t)\)&lt;/span&gt;为激励。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;二阶电路&lt;/strong&gt;&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;19.jpg&#34; alt=&#34;19.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;19.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\frac{d^2 u_C}{dt^2} + \frac{R}{L}\frac{du_C}{dt}+\frac{1}{LC}u_c =
+\frac{1}{LC}u_S
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;建立动态方程的一般步骤&lt;/strong&gt;&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;根据电路建立KCL或KVL方程，写出各个元件的伏安关系&lt;/li&gt;
+&lt;li&gt;在以上方程中消去中间变量，得到所需变量的微分方程&lt;/li&gt;
+&lt;li&gt;对于较复杂的动态电路，常用拉普拉斯变换进行分析&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;动态电路方程的求解&#34;&gt;动态电路方程的求解&lt;/h3&gt;
+&lt;p&gt;同高数内容，不再赘述。对于电路的一些形式可以在三要素部分介绍。&lt;/p&gt;
+&lt;h2 id=&#34;电路的初始值&#34;&gt;电路的初始值&lt;/h2&gt;
+&lt;h3 id=&#34;换路定律&#34;&gt;换路定律&lt;/h3&gt;
+&lt;p&gt;若电容电流&lt;span class=&#34;math inline&#34;&gt;\(i_C\)&lt;/span&gt;和电感电压&lt;span class=&#34;math inline&#34;&gt;\(u_L\)&lt;/span&gt;在&lt;span class=&#34;math inline&#34;&gt;\(t=0\)&lt;/span&gt;时为有限制，则换路前后瞬间电容电压&lt;span class=&#34;math inline&#34;&gt;\(u_C\)&lt;/span&gt;和电感电流&lt;span class=&#34;math inline&#34;&gt;\(i_L\)&lt;/span&gt;是连续的，即&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\left\{\begin{matrix}
+u_C(0_+) =u_C(0_-)\\
+i_L(0_+) = i_L(0_-)
+\end{matrix}\right.
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;而除了这两个值（独立初始值），其余各处的电压电流（非独立初始值）不受换路定律的约束，可以出现跃变。&lt;/p&gt;
+&lt;h3 id=&#34;独立初始值的求解&#34;&gt;独立初始值的求解&lt;/h3&gt;
+&lt;p&gt;在换路之前，也就是&lt;span class=&#34;math inline&#34;&gt;\(t&amp;lt;0\)&lt;/span&gt;时，直流电源作用下电路处于稳态。此时电容可以视为开路，电感视为短路，由此我们可以直接计算&lt;span class=&#34;math inline&#34;&gt;\(u_C(0_-)\)&lt;/span&gt;和&lt;span class=&#34;math inline&#34;&gt;\(i_L(0_-)\)&lt;/span&gt;，就像没有动态元件时所做的那样。&lt;/p&gt;
+&lt;p&gt;然后根据换路定律就可以求出&lt;span class=&#34;math inline&#34;&gt;\(t=0_+\)&lt;/span&gt;时的独立初始值。&lt;/p&gt;
+&lt;h3 id=&#34;非独立初始值的求解&#34;&gt;非独立初始值的求解&lt;/h3&gt;
+&lt;p&gt;在&lt;span class=&#34;math inline&#34;&gt;\(t=0_+\)&lt;/span&gt;时刻，将电容用电压等于&lt;span class=&#34;math inline&#34;&gt;\(u_C(0_+)\)&lt;/span&gt;的电压源替代，电感用电流等于&lt;span class=&#34;math inline&#34;&gt;\(i_L(0_+)\)&lt;/span&gt;的电流源替代，再去计算各处的电流电压。&lt;/p&gt;
+&lt;h2 id=&#34;动态电路的响应&#34;&gt;动态电路的响应&lt;/h2&gt;
+&lt;h3 id=&#34;零输入响应&#34;&gt;零输入响应&lt;/h3&gt;
+&lt;p&gt;外加激励均为零时，仅由初始状态所引起的响应，称为零输入响应，记为&lt;span class=&#34;math inline&#34;&gt;\(y_x(t)\)&lt;/span&gt;或&lt;span class=&#34;math inline&#34;&gt;\(y_{zi}(t)\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;例如&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;20.jpg&#34; alt=&#34;20.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;20.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;通过某种手段先给&lt;span class=&#34;math inline&#34;&gt;\(C\)&lt;/span&gt;充电到电压为&lt;span class=&#34;math inline&#34;&gt;\(u_C\)&lt;/span&gt;，然后接入电阻&lt;/p&gt;
+&lt;p&gt;此时方程为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+RC\frac{du_C}{dt}+u_C=0
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;解得&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+u_C(t) = Ke^{-t/\tau}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(\tau = RC\)&lt;/span&gt;，&lt;span class=&#34;math inline&#34;&gt;\(K=u_C(0_+)\)&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;零状态响应&#34;&gt;零状态响应&lt;/h3&gt;
+&lt;p&gt;当电路的初始储能为零(即初始状态为零)时，仅由外加激励所引起的响应，称为零状态响应，记为&lt;span class=&#34;math inline&#34;&gt;\(y_f(t)\)&lt;/span&gt;或&lt;span class=&#34;math inline&#34;&gt;\(y_{zs}(t)\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;例如&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;21.jpg&#34; alt=&#34;21.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;21.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(t=0\)&lt;/span&gt;突然将开关打开，给右侧电路一个激励。&lt;/p&gt;
+&lt;p&gt;方程解得&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+i_c = I_Se^{-t/\tau}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(\tau=RC\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;若有多个激励，零状态响应与各激励之间也满足可加性。这种性质称之为零状态线性。&lt;/p&gt;
+&lt;h3 id=&#34;全响应&#34;&gt;全响应&lt;/h3&gt;
+&lt;p&gt;电路在外加激励和初始状态共同作用下所产生的响应，称为全响应。&lt;/p&gt;
+&lt;p&gt;全响应=零输入响应+零状态响应，即&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+y(t) = y_{zi}(t) + y_{zs}(t)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;计算只要&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;将独立源置零计算零输入响应&lt;/li&gt;
+&lt;li&gt;将电容、电感的状态置零计算零状态响应&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;一阶电路的三要素&#34;&gt;一阶电路的三要素&lt;/h2&gt;
+&lt;p&gt;对于直流激励下的一阶电路中任意一处的电流和电压，只要计算出其在&lt;span class=&#34;math inline&#34;&gt;\(t=0_+\)&lt;/span&gt;和&lt;span class=&#34;math inline&#34;&gt;\(t=\infty\)&lt;/span&gt;时的值以及整个电路的时常数，就可以直接列出它随时间的函数&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+y(t) = y(\infty) + [y(0_+)-y(\infty)]e^{-t/\tau}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;如果起始时间是&lt;span class=&#34;math inline&#34;&gt;\(t=t_0\)&lt;/span&gt;，则&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+y(t) = y(\infty) + [y(t_{0_+})-y(\infty)]exp(-(t-t_0)/\tau)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;计算&lt;span class=&#34;math inline&#34;&gt;\(y(0_+)\)&lt;/span&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;独立初始值和非独立初始值的计算已经介绍过，不再重复。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;计算&lt;span class=&#34;math inline&#34;&gt;\(y(\infty)\)&lt;/span&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(t\to\infty\)&lt;/span&gt;时，电路进入直流稳态，此时电容看做开路，电感看做短路。然后再用这个电路去计算我们所要的电流、电压值。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;计算&lt;span class=&#34;math inline&#34;&gt;\(\tau\)&lt;/span&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;对于一阶&lt;span class=&#34;math inline&#34;&gt;\(RC\)&lt;/span&gt;电路，&lt;span class=&#34;math inline&#34;&gt;\(\tau = R_0C\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;对于一阶&lt;span class=&#34;math inline&#34;&gt;\(RL\)&lt;/span&gt;电路，&lt;span class=&#34;math inline&#34;&gt;\(\tau = L/R_0\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(R_0\)&lt;/span&gt;是换路后从动态元件&lt;span class=&#34;math inline&#34;&gt;\(C\)&lt;/span&gt;或&lt;span class=&#34;math inline&#34;&gt;\(L\)&lt;/span&gt;看进去的戴维南等效内阻。&lt;/p&gt;
+&lt;h2 id=&#34;阶跃函数与阶跃响应&#34;&gt;阶跃函数与阶跃响应&lt;/h2&gt;
+&lt;h3 id=&#34;阶跃函数&#34;&gt;阶跃函数&lt;/h3&gt;
+&lt;p&gt;单位阶跃函数用&lt;span class=&#34;math inline&#34;&gt;\(\varepsilon(t)\)&lt;/span&gt;表示，其定义为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\varepsilon(t) = \left\{\begin{matrix}
+1,t&amp;gt;0\\
+0,t&amp;lt;0
+\end{matrix}\right.
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(t=0\)&lt;/span&gt;处的值可以不定义。&lt;/p&gt;
+&lt;p&gt;如果单位直流电源接入的时刻为&lt;span class=&#34;math inline&#34;&gt;\(t_0\)&lt;/span&gt;，则可用延迟单位阶跃函数表示&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\varepsilon(t-t_0) = \left\{\begin{matrix}
+1,t&amp;gt;t_0\\
+0,t&amp;lt;t_0
+\end{matrix}\right.
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;阶跃响应&#34;&gt;阶跃响应&lt;/h3&gt;
+&lt;p&gt;当激励为单位阶跃函数&lt;span class=&#34;math inline&#34;&gt;\(\varepsilon(t)\)&lt;/span&gt;时，电路的零状态响应称为单位阶跃响应，简称阶跃响应，用g(t)表示。&lt;/p&gt;
+&lt;p&gt;单位阶跃函数&lt;span class=&#34;math inline&#34;&gt;\(\varepsilon(t)\)&lt;/span&gt;作用于电路相当于单位直流源(&lt;span class=&#34;math inline&#34;&gt;\(1V\)&lt;/span&gt;或&lt;span class=&#34;math inline&#34;&gt;\(1A\)&lt;/span&gt;)在&lt;span class=&#34;math inline&#34;&gt;\(t =
+0\)&lt;/span&gt;时接入电路，因此，一阶电路的阶跃响应仍可用三要素法求得。&lt;/p&gt;
+&lt;h1 id=&#34;正弦稳态分析&#34;&gt;正弦稳态分析&lt;/h1&gt;
+&lt;h2 id=&#34;正弦量&#34;&gt;正弦量&lt;/h2&gt;
+&lt;h3 id=&#34;正弦量的三要素&#34;&gt;正弦量的三要素&lt;/h3&gt;
+&lt;p&gt;按正弦(余弦)规律变化的电压、电流称为正弦电压、电流，统称为正弦量&lt;/p&gt;
+&lt;p&gt;正弦量的三要素是：振幅、初相、角频率。&lt;/p&gt;
+&lt;p&gt;瞬时值表达式为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+i(t) = I_m\cos(\omega t+\varphi_i)\\
+u(t) = U_m\cos(\omega t+\varphi_u)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(U_m(I_m)\)&lt;/span&gt;是最大值，称为振幅&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(\omega
+t+\varphi\)&lt;/span&gt;是相位（角），单位&lt;span class=&#34;math inline&#34;&gt;\(rad\)&lt;/span&gt;或度&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(t=0\)&lt;/span&gt;时的相位&lt;span class=&#34;math inline&#34;&gt;\(\varphi\)&lt;/span&gt;称为初相位，&lt;span class=&#34;math inline&#34;&gt;\(-\pi\leq \varphi\leq\pi\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(\omega\)&lt;/span&gt;是正弦量相位变化的速率&lt;/p&gt;
+&lt;h3 id=&#34;正弦量的有效值&#34;&gt;正弦量的有效值&lt;/h3&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+I = \frac{1}{\sqrt 2}I_m
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+U = \frac{1}{\sqrt 2}U_m
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;相位差&#34;&gt;相位差&lt;/h3&gt;
+&lt;p&gt;两个同频率的正弦波之间的相位之差称为相位差&lt;/p&gt;
+&lt;p&gt;频率相同，则相位差即为初相之差。&lt;/p&gt;
+&lt;h2 id=&#34;相量法&#34;&gt;相量法&lt;/h2&gt;
 
 
 </description>

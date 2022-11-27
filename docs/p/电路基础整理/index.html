@@ -125,7 +125,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 16 分钟
+                    阅读时长: 20 分钟
                 </time>
             </div>
         
@@ -604,6 +604,171 @@ L_{eq}=L_1+L_2+\cdots+L_n
 <p><span class="math display">\[
 \frac{1}{L_{eq}}=\frac{1}{L_1}+\frac{1}{L_2}+\cdots+\frac{1}{L_n}
 \]</span></p>
+<h2 id="动态电路方程及其解">动态电路方程及其解</h2>
+<h3 id="动态电路方程">动态电路方程</h3>
+<p><strong>一阶电路</strong></p>
+<figure>
+<img src="17.jpg" alt="17.jpg"/>
+<figcaption aria-hidden="true">17.jpg</figcaption>
+</figure>
+<p>由KCL等可得</p>
+<p><span class="math display">\[
+\frac{du_C}{dt}+\frac{1}{\tau}u_C = \frac{1}{RC}u_S
+\]</span></p>
+<p>其中<span class="math inline">\(\tau=RC\)</span>，量纲为秒，称为时常数。</p>
+<figure>
+<img src="18.jpg" alt="18.jpg"/>
+<figcaption aria-hidden="true">18.jpg</figcaption>
+</figure>
+<p>由<span class="math inline">\(KVL\)</span>等可得</p>
+<p><span class="math display">\[
+\frac{i_L}{dt} + \frac{1}{\tau}i_L = \frac{R}{L}i_s
+\]</span></p>
+<p>其中<span class="math inline">\(\tau=L/R\)</span>，其量纲也为秒。</p>
+<p>观察两个方程，除了变量不同，均为典型的一阶微分方程，因此均为一阶电路。一般形式为</p>
+<p><span class="math display">\[
+y&#39;(t)+ay(t) = bf(t)
+\]</span></p>
+<p>其中<span class="math inline">\(y(t)\)</span>为响应，<span class="math inline">\(f(t)\)</span>为激励。</p>
+<p><strong>二阶电路</strong></p>
+<figure>
+<img src="19.jpg" alt="19.jpg"/>
+<figcaption aria-hidden="true">19.jpg</figcaption>
+</figure>
+<p><span class="math display">\[
+\frac{d^2 u_C}{dt^2} + \frac{R}{L}\frac{du_C}{dt}+\frac{1}{LC}u_c =
+\frac{1}{LC}u_S
+\]</span></p>
+<p><strong>建立动态方程的一般步骤</strong></p>
+<ol type="1">
+<li>根据电路建立KCL或KVL方程，写出各个元件的伏安关系</li>
+<li>在以上方程中消去中间变量，得到所需变量的微分方程</li>
+<li>对于较复杂的动态电路，常用拉普拉斯变换进行分析</li>
+</ol>
+<h3 id="动态电路方程的求解">动态电路方程的求解</h3>
+<p>同高数内容，不再赘述。对于电路的一些形式可以在三要素部分介绍。</p>
+<h2 id="电路的初始值">电路的初始值</h2>
+<h3 id="换路定律">换路定律</h3>
+<p>若电容电流<span class="math inline">\(i_C\)</span>和电感电压<span class="math inline">\(u_L\)</span>在<span class="math inline">\(t=0\)</span>时为有限制，则换路前后瞬间电容电压<span class="math inline">\(u_C\)</span>和电感电流<span class="math inline">\(i_L\)</span>是连续的，即</p>
+<p><span class="math display">\[
+\left\{\begin{matrix}
+u_C(0_+) =u_C(0_-)\\
+i_L(0_+) = i_L(0_-)
+\end{matrix}\right.
+\]</span></p>
+<p>而除了这两个值（独立初始值），其余各处的电压电流（非独立初始值）不受换路定律的约束，可以出现跃变。</p>
+<h3 id="独立初始值的求解">独立初始值的求解</h3>
+<p>在换路之前，也就是<span class="math inline">\(t&lt;0\)</span>时，直流电源作用下电路处于稳态。此时电容可以视为开路，电感视为短路，由此我们可以直接计算<span class="math inline">\(u_C(0_-)\)</span>和<span class="math inline">\(i_L(0_-)\)</span>，就像没有动态元件时所做的那样。</p>
+<p>然后根据换路定律就可以求出<span class="math inline">\(t=0_+\)</span>时的独立初始值。</p>
+<h3 id="非独立初始值的求解">非独立初始值的求解</h3>
+<p>在<span class="math inline">\(t=0_+\)</span>时刻，将电容用电压等于<span class="math inline">\(u_C(0_+)\)</span>的电压源替代，电感用电流等于<span class="math inline">\(i_L(0_+)\)</span>的电流源替代，再去计算各处的电流电压。</p>
+<h2 id="动态电路的响应">动态电路的响应</h2>
+<h3 id="零输入响应">零输入响应</h3>
+<p>外加激励均为零时，仅由初始状态所引起的响应，称为零输入响应，记为<span class="math inline">\(y_x(t)\)</span>或<span class="math inline">\(y_{zi}(t)\)</span>。</p>
+<p>例如</p>
+<figure>
+<img src="20.jpg" alt="20.jpg"/>
+<figcaption aria-hidden="true">20.jpg</figcaption>
+</figure>
+<p>通过某种手段先给<span class="math inline">\(C\)</span>充电到电压为<span class="math inline">\(u_C\)</span>，然后接入电阻</p>
+<p>此时方程为</p>
+<p><span class="math display">\[
+RC\frac{du_C}{dt}+u_C=0
+\]</span></p>
+<p>解得</p>
+<p><span class="math display">\[
+u_C(t) = Ke^{-t/\tau}
+\]</span></p>
+<p>其中<span class="math inline">\(\tau = RC\)</span>，<span class="math inline">\(K=u_C(0_+)\)</span></p>
+<h3 id="零状态响应">零状态响应</h3>
+<p>当电路的初始储能为零(即初始状态为零)时，仅由外加激励所引起的响应，称为零状态响应，记为<span class="math inline">\(y_f(t)\)</span>或<span class="math inline">\(y_{zs}(t)\)</span>。</p>
+<p>例如</p>
+<figure>
+<img src="21.jpg" alt="21.jpg"/>
+<figcaption aria-hidden="true">21.jpg</figcaption>
+</figure>
+<p><span class="math inline">\(t=0\)</span>突然将开关打开，给右侧电路一个激励。</p>
+<p>方程解得</p>
+<p><span class="math display">\[
+i_c = I_Se^{-t/\tau}
+\]</span></p>
+<p>其中<span class="math inline">\(\tau=RC\)</span></p>
+<p>若有多个激励，零状态响应与各激励之间也满足可加性。这种性质称之为零状态线性。</p>
+<h3 id="全响应">全响应</h3>
+<p>电路在外加激励和初始状态共同作用下所产生的响应，称为全响应。</p>
+<p>全响应=零输入响应+零状态响应，即</p>
+<p><span class="math display">\[
+y(t) = y_{zi}(t) + y_{zs}(t)
+\]</span></p>
+<p>计算只要</p>
+<ol type="1">
+<li>将独立源置零计算零输入响应</li>
+<li>将电容、电感的状态置零计算零状态响应</li>
+</ol>
+<h2 id="一阶电路的三要素">一阶电路的三要素</h2>
+<p>对于直流激励下的一阶电路中任意一处的电流和电压，只要计算出其在<span class="math inline">\(t=0_+\)</span>和<span class="math inline">\(t=\infty\)</span>时的值以及整个电路的时常数，就可以直接列出它随时间的函数</p>
+<p><span class="math display">\[
+y(t) = y(\infty) + [y(0_+)-y(\infty)]e^{-t/\tau}
+\]</span></p>
+<p>如果起始时间是<span class="math inline">\(t=t_0\)</span>，则</p>
+<p><span class="math display">\[
+y(t) = y(\infty) + [y(t_{0_+})-y(\infty)]exp(-(t-t_0)/\tau)
+\]</span></p>
+<p><strong>计算<span class="math inline">\(y(0_+)\)</span></strong></p>
+<p>独立初始值和非独立初始值的计算已经介绍过，不再重复。</p>
+<p><strong>计算<span class="math inline">\(y(\infty)\)</span></strong></p>
+<p><span class="math inline">\(t\to\infty\)</span>时，电路进入直流稳态，此时电容看做开路，电感看做短路。然后再用这个电路去计算我们所要的电流、电压值。</p>
+<p><strong>计算<span class="math inline">\(\tau\)</span></strong></p>
+<p>对于一阶<span class="math inline">\(RC\)</span>电路，<span class="math inline">\(\tau = R_0C\)</span></p>
+<p>对于一阶<span class="math inline">\(RL\)</span>电路，<span class="math inline">\(\tau = L/R_0\)</span></p>
+<p><span class="math inline">\(R_0\)</span>是换路后从动态元件<span class="math inline">\(C\)</span>或<span class="math inline">\(L\)</span>看进去的戴维南等效内阻。</p>
+<h2 id="阶跃函数与阶跃响应">阶跃函数与阶跃响应</h2>
+<h3 id="阶跃函数">阶跃函数</h3>
+<p>单位阶跃函数用<span class="math inline">\(\varepsilon(t)\)</span>表示，其定义为</p>
+<p><span class="math display">\[
+\varepsilon(t) = \left\{\begin{matrix}
+1,t&gt;0\\
+0,t&lt;0
+\end{matrix}\right.
+\]</span></p>
+<p>其中<span class="math inline">\(t=0\)</span>处的值可以不定义。</p>
+<p>如果单位直流电源接入的时刻为<span class="math inline">\(t_0\)</span>，则可用延迟单位阶跃函数表示</p>
+<p><span class="math display">\[
+\varepsilon(t-t_0) = \left\{\begin{matrix}
+1,t&gt;t_0\\
+0,t&lt;t_0
+\end{matrix}\right.
+\]</span></p>
+<h3 id="阶跃响应">阶跃响应</h3>
+<p>当激励为单位阶跃函数<span class="math inline">\(\varepsilon(t)\)</span>时，电路的零状态响应称为单位阶跃响应，简称阶跃响应，用g(t)表示。</p>
+<p>单位阶跃函数<span class="math inline">\(\varepsilon(t)\)</span>作用于电路相当于单位直流源(<span class="math inline">\(1V\)</span>或<span class="math inline">\(1A\)</span>)在<span class="math inline">\(t =
+0\)</span>时接入电路，因此，一阶电路的阶跃响应仍可用三要素法求得。</p>
+<h1 id="正弦稳态分析">正弦稳态分析</h1>
+<h2 id="正弦量">正弦量</h2>
+<h3 id="正弦量的三要素">正弦量的三要素</h3>
+<p>按正弦(余弦)规律变化的电压、电流称为正弦电压、电流，统称为正弦量</p>
+<p>正弦量的三要素是：振幅、初相、角频率。</p>
+<p>瞬时值表达式为</p>
+<p><span class="math display">\[
+i(t) = I_m\cos(\omega t+\varphi_i)\\
+u(t) = U_m\cos(\omega t+\varphi_u)
+\]</span></p>
+<p><span class="math inline">\(U_m(I_m)\)</span>是最大值，称为振幅</p>
+<p><span class="math inline">\(\omega
+t+\varphi\)</span>是相位（角），单位<span class="math inline">\(rad\)</span>或度</p>
+<p><span class="math inline">\(t=0\)</span>时的相位<span class="math inline">\(\varphi\)</span>称为初相位，<span class="math inline">\(-\pi\leq \varphi\leq\pi\)</span></p>
+<p><span class="math inline">\(\omega\)</span>是正弦量相位变化的速率</p>
+<h3 id="正弦量的有效值">正弦量的有效值</h3>
+<p><span class="math display">\[
+I = \frac{1}{\sqrt 2}I_m
+\]</span></p>
+<p><span class="math display">\[
+U = \frac{1}{\sqrt 2}U_m
+\]</span></p>
+<h3 id="相位差">相位差</h3>
+<p>两个同频率的正弦波之间的相位之差称为相位差</p>
+<p>频率相同，则相位差即为初相之差。</p>
+<h2 id="相量法">相量法</h2>
 
 
 
@@ -944,6 +1109,45 @@ L_{eq}=L_1+L_2+\cdots+L_n
             <li><a href="#电感的串并联">电感的串并联</a></li>
           </ol>
         </li>
+        <li><a href="#动态电路方程及其解">动态电路方程及其解</a>
+          <ol>
+            <li><a href="#动态电路方程">动态电路方程</a></li>
+            <li><a href="#动态电路方程的求解">动态电路方程的求解</a></li>
+          </ol>
+        </li>
+        <li><a href="#电路的初始值">电路的初始值</a>
+          <ol>
+            <li><a href="#换路定律">换路定律</a></li>
+            <li><a href="#独立初始值的求解">独立初始值的求解</a></li>
+            <li><a href="#非独立初始值的求解">非独立初始值的求解</a></li>
+          </ol>
+        </li>
+        <li><a href="#动态电路的响应">动态电路的响应</a>
+          <ol>
+            <li><a href="#零输入响应">零输入响应</a></li>
+            <li><a href="#零状态响应">零状态响应</a></li>
+            <li><a href="#全响应">全响应</a></li>
+          </ol>
+        </li>
+        <li><a href="#一阶电路的三要素">一阶电路的三要素</a></li>
+        <li><a href="#阶跃函数与阶跃响应">阶跃函数与阶跃响应</a>
+          <ol>
+            <li><a href="#阶跃函数">阶跃函数</a></li>
+            <li><a href="#阶跃响应">阶跃响应</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+    <li><a href="#正弦稳态分析">正弦稳态分析</a>
+      <ol>
+        <li><a href="#正弦量">正弦量</a>
+          <ol>
+            <li><a href="#正弦量的三要素">正弦量的三要素</a></li>
+            <li><a href="#正弦量的有效值">正弦量的有效值</a></li>
+            <li><a href="#相位差">相位差</a></li>
+          </ol>
+        </li>
+        <li><a href="#相量法">相量法</a></li>
       </ol>
     </li>
   </ol>
