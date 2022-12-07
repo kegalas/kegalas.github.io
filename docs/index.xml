@@ -5120,6 +5120,8 @@ N(C_0+C_1\mu_1+\cdots+C_n\mu_n,C_1^2\sigma_1^2+\cdots+C_n^2\sigma_n^2)
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\mu\]&lt;/span&gt;&lt;/p&gt;
 &lt;h4 id=&#34;方差-5&#34;&gt;方差&lt;/h4&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\sigma^2\]&lt;/span&gt;&lt;/p&gt;
+&lt;h4 id=&#34;上alpha分位点&#34;&gt;上&lt;span class=&#34;math inline&#34;&gt;\(\alpha\)&lt;/span&gt;分位点&lt;/h4&gt;
+&lt;p&gt;标准正态分布的上&lt;span class=&#34;math inline&#34;&gt;\(\alpha\)&lt;/span&gt;分位点查表可知，具有一个性质为&lt;span class=&#34;math inline&#34;&gt;\(w_{1-\alpha}=-w_\alpha\)&lt;/span&gt;。对于非标准的则和中位数对称。&lt;/p&gt;
 &lt;h3 id=&#34;二维正态分布&#34;&gt;二维正态分布&lt;/h3&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 f(x_1,x_2)=(2\pi\sigma_1\sigma_2\sqrt{1-\rho^2})^{-1}\exp\left[-\frac{1}{2(1-\rho^2)}\left(\frac{(x_1-a)^2}{\sigma_1^2}-\frac{2\rho(x_1-a)(x_2-b)}{\sigma_1\sigma_2}+
@@ -5337,6 +5339,12 @@ X=2\lambda(X_1+\cdots+X_n)\sim \mathcal{X}_{2n}^2
 &lt;p&gt;若&lt;span class=&#34;math inline&#34;&gt;\(X\sim\mathcal{X}_n^2\)&lt;/span&gt;，&lt;span class=&#34;math inline&#34;&gt;\(E(X)=n\)&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;方差&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;若&lt;span class=&#34;math inline&#34;&gt;\(X\sim\mathcal{X}_n^2\)&lt;/span&gt;，&lt;span class=&#34;math inline&#34;&gt;\(D(X)=2n\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;上&lt;span class=&#34;math inline&#34;&gt;\(\alpha\)&lt;/span&gt;分位点&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;可由查表得到。有一个性质，当&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;充分大，如&lt;span class=&#34;math inline&#34;&gt;\(n&amp;gt;40\)&lt;/span&gt;时，则其上&lt;span class=&#34;math inline&#34;&gt;\(\alpha\)&lt;/span&gt;分位点约为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\dfrac{1}{2}\bigg(w_\alpha+\sqrt{2n-1}\bigg)^2
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(w_\alpha\)&lt;/span&gt;是标准正态分布的上&lt;span class=&#34;math inline&#34;&gt;\(\alpha\)&lt;/span&gt;分位点&lt;/p&gt;
 &lt;h3 id=&#34;t分布&#34;&gt;t分布&lt;/h3&gt;
 &lt;p&gt;若&lt;span class=&#34;math inline&#34;&gt;\(X\sim
 N(0,1),Y\sim\mathcal{X}_n^2\)&lt;/span&gt;，且&lt;span class=&#34;math inline&#34;&gt;\(X,Y\)&lt;/span&gt;相互独立&lt;/p&gt;
@@ -5349,6 +5357,10 @@ t_n(y)=\frac{\Gamma((n+1)/2)}{\sqrt{n\pi}\Gamma(n/2)}\bigg(1+\frac{y^2}{n}\bigg)
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 \lim_{n\to\infty}t_n(y)=\frac{1}{\sqrt{2\pi}}e^{-t^2/2}
 \]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;上&lt;span class=&#34;math inline&#34;&gt;\(\alpha\)&lt;/span&gt;分位点&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;查表可知。&lt;/p&gt;
+&lt;p&gt;具有对称性&lt;span class=&#34;math inline&#34;&gt;\(w_{1-\alpha}=-w_\alpha\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;当&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;充分大，如&lt;span class=&#34;math inline&#34;&gt;\(n&amp;gt;45\)&lt;/span&gt;时，其分位点和标准正态分布近似。&lt;/p&gt;
 &lt;h3 id=&#34;f分布&#34;&gt;F分布&lt;/h3&gt;
 &lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(U\sim\mathcal{X}_{n_1}^2,V\sim\mathcal{X}_{n_2}^2\)&lt;/span&gt;，且&lt;span class=&#34;math inline&#34;&gt;\(U,V\)&lt;/span&gt;相互独立，则称随机变量&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
@@ -5361,6 +5373,12 @@ n_1^{n_1/2}n_2^{n_2/2}\frac{\Gamma(\frac{n_1+n_2}{2})}{\Gamma(\frac{n_1}{2})\Gam
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;性质&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;若&lt;span class=&#34;math inline&#34;&gt;\(F\sim F(n_1,n_2)\)&lt;/span&gt;，则&lt;span class=&#34;math inline&#34;&gt;\(\frac{1}{F}\sim F(n_2,n_1)\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;上&lt;span class=&#34;math inline&#34;&gt;\(\alpha\)&lt;/span&gt;分位点&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;查表可知。&lt;/p&gt;
+&lt;p&gt;性质如下：&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+F_{1-\alpha}(n_1,n_2) = \dfrac{1}{F_\alpha(n_2,n_1)}
+\]&lt;/span&gt;&lt;/p&gt;
 &lt;h3 id=&#34;八大分布&#34;&gt;八大分布&lt;/h3&gt;
 &lt;h4 id=&#34;单正态总体&#34;&gt;单正态总体&lt;/h4&gt;
 &lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(X\sim N(\mu,\sigma^2)\)&lt;/span&gt;，而&lt;span class=&#34;math inline&#34;&gt;\(X_1,X_2,\cdots,X_n\)&lt;/span&gt;是来自正态总体&lt;span class=&#34;math inline&#34;&gt;\(N(\mu,\sigma^2)\)&lt;/span&gt;的样本，&lt;span class=&#34;math inline&#34;&gt;\(\overline{X}\)&lt;/span&gt;和&lt;span class=&#34;math inline&#34;&gt;\(S^2\)&lt;/span&gt;分别是样本均值和样本方差，则有&lt;/p&gt;
@@ -5875,6 +5893,185 @@ L(X_1,\cdots,X_n;\theta^*_1,\cdots,\theta^*_k)=\underset{\theta_1,\cdots,\theta_
 &lt;p&gt;上面的两个例子，其和矩估计恰好一致，但这只是一种巧合，更多时候是不一致的。但这两种估计方法结果一致，说明这些估计是良好的。&lt;/p&gt;
 &lt;p&gt;另外我们也可以应用样本中位数&lt;span class=&#34;math inline&#34;&gt;\(\hat
 m\)&lt;/span&gt;去估计正态总体的&lt;span class=&#34;math inline&#34;&gt;\(\mu\)&lt;/span&gt;，这个统计量可以在矩估计不能使用（主要体现为矩为无限大等场景）和极大似然法求根不容易等场景。&lt;/p&gt;
+&lt;h3 id=&#34;贝叶斯法&#34;&gt;贝叶斯法&lt;/h3&gt;
+&lt;p&gt;在矩估计和极大似然估计时，在我们心目中，未知参数&lt;span class=&#34;math inline&#34;&gt;\(\theta\)&lt;/span&gt;就简单地是一个未知数，在抽取样本之前，我们对&lt;span class=&#34;math inline&#34;&gt;\(\theta\)&lt;/span&gt;没有任何了解，所有的信息全来自样本。&lt;/p&gt;
+&lt;p&gt;贝叶斯学派则不然，它的出发点是：在进行抽样之前，我们已对&lt;span class=&#34;math inline&#34;&gt;\(\theta\)&lt;/span&gt;有一定的知识，叫做先验知识，即试验之前的知识，也叫做验前知识。&lt;/p&gt;
+&lt;p&gt;贝叶斯学派进一步要求：这种先验知识必须用&lt;span class=&#34;math inline&#34;&gt;\(\theta\)&lt;/span&gt;的某种概率分布表达出来，这个概率分布就叫做&lt;span class=&#34;math inline&#34;&gt;\(\theta\)&lt;/span&gt;的“先验分布”或“验前分布”。这个分布总结了我们在试验之前对未知参数&lt;span class=&#34;math inline&#34;&gt;\(\theta\)&lt;/span&gt;的知识。&lt;/p&gt;
+&lt;p&gt;比如我们可以使用工厂以前制造的产品废品率来作为先验知识。以&lt;span class=&#34;math inline&#34;&gt;\(h(\theta)\)&lt;/span&gt;代表先验密度。但如果这个工厂是新开的，无法得到&lt;span class=&#34;math inline&#34;&gt;\(h(\theta)\)&lt;/span&gt;，则我们必须设法定出一个&lt;span class=&#34;math inline&#34;&gt;\(h(\theta)\)&lt;/span&gt;，甚至是自己的主观估计也可以。&lt;/p&gt;
+&lt;p&gt;当我们确定先验密度后，设总体有概率密度&lt;span class=&#34;math inline&#34;&gt;\(f(X,\theta)\)&lt;/span&gt;，从这个总体中抽样本&lt;span class=&#34;math inline&#34;&gt;\(X_1,\cdots,X_n\)&lt;/span&gt;，则这组样本的密度为&lt;span class=&#34;math inline&#34;&gt;\(f(X_1,\theta)\cdots
+f(X_n,\theta)\)&lt;/span&gt;。它可视为在给定&lt;span class=&#34;math inline&#34;&gt;\(\theta\)&lt;/span&gt;时&lt;span class=&#34;math inline&#34;&gt;\((X_1,\cdots,X_n)\)&lt;/span&gt;的密度，&lt;span class=&#34;math inline&#34;&gt;\((\theta,X_1,\cdots,X_n)\)&lt;/span&gt;的联合密度为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+h(\theta)f(X_1,\theta)\cdots f(X_n,\theta)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;由此，算出&lt;span class=&#34;math inline&#34;&gt;\((X_1,\cdots,X_n)\)&lt;/span&gt;的边缘密度为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+p(X_1,\cdots,X_n) = \int h(\theta)f(X_1,\theta)\cdots
+f(X_n,\theta)d\theta
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;积分的范围依&lt;span class=&#34;math inline&#34;&gt;\(\theta\)&lt;/span&gt;的具体范围而定。然后有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+h(\theta|X_1,\cdots,X_n) = h(\theta)f(X_1,\theta)\cdots
+f(X_n,\theta)/p(X_1,\cdots,X_n)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;按照贝叶斯学派的观点，这个条件密度代表了我们现在取得样本&lt;span class=&#34;math inline&#34;&gt;\(X_1,\cdots,X_n\)&lt;/span&gt;后对&lt;span class=&#34;math inline&#34;&gt;\(\theta\)&lt;/span&gt;的知识，它综合了先验知识和样本的信息。这个式子称为后验（验后）密度。&lt;/p&gt;
+&lt;p&gt;贝叶斯学派也指出，在得出后验分布后，对参数&lt;span class=&#34;math inline&#34;&gt;\(\theta\)&lt;/span&gt;的任何统计推断都只能基于这个后验分布。&lt;/p&gt;
+&lt;h2 id=&#34;点估计的优良性准则&#34;&gt;点估计的优良性准则&lt;/h2&gt;
+&lt;h3 id=&#34;估计量的无偏性&#34;&gt;估计量的无偏性&lt;/h3&gt;
+&lt;p&gt;设某统计总体的分布包含未知参数&lt;span class=&#34;math inline&#34;&gt;\(\theta_1,\cdots,\theta_k\)&lt;/span&gt;，&lt;span class=&#34;math inline&#34;&gt;\(\X_1,\cdots,X_n\)&lt;/span&gt;是从该总体中抽出的样本，要估计&lt;span class=&#34;math inline&#34;&gt;\(g(\theta_1,\cdots,\theta_k)\)&lt;/span&gt;，&lt;span class=&#34;math inline&#34;&gt;\(g\)&lt;/span&gt;为一已知函数，设&lt;span class=&#34;math inline&#34;&gt;\(\hat
+g(X_1,\cdots,X_n)\)&lt;/span&gt;是一个估计量。如果对任何可能的&lt;span class=&#34;math inline&#34;&gt;\(\theta_1,\cdots,\theta_k\)&lt;/span&gt;都有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+E_{\theta_1,\cdots,\theta_k}[\hat
+g(X_1,\cdots,X_n)]=g(\theta_1,\cdots,\theta_k)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;则称&lt;span class=&#34;math inline&#34;&gt;\(\hat g\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(g(\theta_1,\cdots,\theta_k)\)&lt;/span&gt;的一个无偏估计量。&lt;/p&gt;
+&lt;p&gt;估计量的无偏性有两个含义：&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;没有系统性的误差&lt;/li&gt;
+&lt;li&gt;根据大数定理，若估计量有无偏性，则在大量次数使用取平均时，能以接近于&lt;span class=&#34;math inline&#34;&gt;\(100\%\)&lt;/span&gt;的把握无限逼近被估计的量。如果没有无偏性，那么估计值会和真值保持一定距离，这个距离就是系统误差。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;可以证明&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;例1&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(X_1,\cdots,X_n\)&lt;/span&gt;是从总体中抽出的样本，则样本均值&lt;span class=&#34;math inline&#34;&gt;\(\overline X\)&lt;/span&gt;是总体分布均值&lt;span class=&#34;math inline&#34;&gt;\(\theta\)&lt;/span&gt;的无偏估计。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;例2&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;样本方差&lt;span class=&#34;math inline&#34;&gt;\(S^2\)&lt;/span&gt;是总体分布方差&lt;span class=&#34;math inline&#34;&gt;\(\sigma^2\)&lt;/span&gt;的无偏估计。（而不是二阶中心矩）&lt;/p&gt;
+&lt;h3 id=&#34;最小方差无偏估计&#34;&gt;最小方差无偏估计&lt;/h3&gt;
+&lt;p&gt;一个参数往往有不止一个无偏估计，我们要从中调出一个最优的。&lt;/p&gt;
+&lt;h4 id=&#34;均方误差&#34;&gt;均方误差&lt;/h4&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(X_1,\cdots,X_n\)&lt;/span&gt;是从某一带参数&lt;span class=&#34;math inline&#34;&gt;\(\theta\)&lt;/span&gt;的总体中抽出的样本，要估计&lt;span class=&#34;math inline&#34;&gt;\(\theta\)&lt;/span&gt;。若我们采用估计量&lt;span class=&#34;math inline&#34;&gt;\(\hat\theta =
+\hat\theta(X_1,\cdots,X_n)\)&lt;/span&gt;，则其误差为&lt;span class=&#34;math inline&#34;&gt;\(\hat\theta(X_1,\cdots,X_n)-\theta\)&lt;/span&gt;。这个误差随样本的具体值而定，也是随机的，无法作为优良性的指标。我们取&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+M_{\hat\theta}(\theta)=E_\theta[\hat\theta(X_1,\cdots,X_n)-\theta]^2
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;作为&lt;span class=&#34;math inline&#34;&gt;\(\hat\theta\)&lt;/span&gt;的误差大小从整体角度的一个衡量。这个量越小，就表示&lt;span class=&#34;math inline&#34;&gt;\(\hat\theta\)&lt;/span&gt;的误差平均来讲比较小，因而也就越优。&lt;span class=&#34;math inline&#34;&gt;\(M_{\hat\theta}\)&lt;/span&gt;就称为估计量&lt;span class=&#34;math inline&#34;&gt;\(\theta\)&lt;/span&gt;的“均方误差”&lt;/p&gt;
+&lt;h4 id=&#34;最小方差无偏估计-1&#34;&gt;最小方差无偏估计&lt;/h4&gt;
+&lt;p&gt;从前面的讨论看到：若局限于无偏估计的范围，且采用均方误差的准则，则两个无偏估计&lt;span class=&#34;math inline&#34;&gt;\(\hat\theta_1\)&lt;/span&gt;和&lt;span class=&#34;math inline&#34;&gt;\(\hat\theta_2\)&lt;/span&gt;的比较归结为其方差的比较：方差小者为优。&lt;/p&gt;
+&lt;p&gt;最小方差无偏估计简记为MVU估计。&lt;/p&gt;
+&lt;h4 id=&#34;克拉美-劳不等式&#34;&gt;克拉美-劳不等式&lt;/h4&gt;
+&lt;p&gt;TODO&lt;/p&gt;
+&lt;h3 id=&#34;估计量的相合性与渐近正态性&#34;&gt;估计量的相合性与渐近正态性&lt;/h3&gt;
+&lt;h4 id=&#34;相合性&#34;&gt;相合性&lt;/h4&gt;
+&lt;p&gt;设总体分布依赖于参数&lt;span class=&#34;math inline&#34;&gt;\(\theta_1,\cdots,\theta_k,g(\theta_1,\cdots,\theta_k)\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(\theta_1,\cdots,\theta_k\)&lt;/span&gt;的一个给定函数，设&lt;span class=&#34;math inline&#34;&gt;\(X_1,\cdots,X_n\)&lt;/span&gt;
+为自该总体中抽出的样本，&lt;span class=&#34;math inline&#34;&gt;\(T(X_1,\cdots,X_n)\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(g(\theta_1,\cdots,\theta_k)\)&lt;/span&gt;的一个估计量，如果对任给&lt;span class=&#34;math inline&#34;&gt;\(\varepsilon&amp;gt;0\)&lt;/span&gt;有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\lim_{n\to\infty}P_{\theta_1,\cdots,\theta_k}(|T(X_1,\cdots,X_n)-g(\theta_1,\cdots,\theta_k)|\geq\varepsilon)
+= 0
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;而且这对&lt;span class=&#34;math inline&#34;&gt;\((\theta_1,\cdots,\theta_k)\)&lt;/span&gt;一切可能取的值都成立，则称&lt;span class=&#34;math inline&#34;&gt;\(T(X_1,\cdots,X_n)\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(g(\theta_1,\cdots,\theta_k)\)&lt;/span&gt;的一个相合估计。&lt;/p&gt;
+&lt;h4 id=&#34;渐近正态性&#34;&gt;渐近正态性&lt;/h4&gt;
+&lt;p&gt;正如在中心极限定理中所显示的，当&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;很大时，和的分布渐近于正态分布。理论上可以证明，这不只是和所独有的，许多形状复杂的统计量，当样本大小&lt;span class=&#34;math inline&#34;&gt;\(n\to\infty\)&lt;/span&gt;时，其分布都渐近于正态分布。这称为统计量的“渐近正态性”。&lt;/p&gt;
+&lt;h2 id=&#34;区间估计&#34;&gt;区间估计&lt;/h2&gt;
+&lt;h3 id=&#34;基本概念-1&#34;&gt;基本概念&lt;/h3&gt;
+&lt;p&gt;点估计是用一个点去估计未知参数。区间估计就是用一个区间去估计未知参数，即未知参数的值也会估计在一个区间之内。&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(X_1,\cdots,X_n\)&lt;/span&gt;是从该总体中抽出的样本。所谓&lt;span class=&#34;math inline&#34;&gt;\(\theta\)&lt;/span&gt;的区间估计，就是以满足条件&lt;span class=&#34;math inline&#34;&gt;\(\hat\theta_1(X_1,\cdots,X_n)\leq\hat\theta_2(X_1,\cdots,X_n)\)&lt;/span&gt;的两个统计量&lt;span class=&#34;math inline&#34;&gt;\(\hat\theta_1,\hat\theta_2\)&lt;/span&gt;为端点的区间&lt;span class=&#34;math inline&#34;&gt;\([\hat\theta_1,\hat\theta_2]\)&lt;/span&gt;。一旦有了样本&lt;span class=&#34;math inline&#34;&gt;\(X_1,\cdots,X_n\)&lt;/span&gt;，就把&lt;span class=&#34;math inline&#34;&gt;\(\theta\)&lt;/span&gt;估计在区间&lt;span class=&#34;math inline&#34;&gt;\([\hat\theta_1(X_1,\cdots,X_n),\hat\theta_2(X_1,\cdots,X_n)]\)&lt;/span&gt;之内。有两个要求&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(\theta\)&lt;/span&gt;要以很大的可能性落在&lt;span class=&#34;math inline&#34;&gt;\([\hat\theta_1,\hat\theta_2]\)&lt;/span&gt;之内，也就是说&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+P_\theta(\hat\theta_1\leq\theta\leq\hat\theta_2)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;要尽可能大。&lt;/p&gt;
+&lt;ol start=&#34;2&#34; type=&#34;1&#34;&gt;
+&lt;li&gt;估计的精密度要尽可能高。比方说，要求区间的长度&lt;span class=&#34;math inline&#34;&gt;\(\hat\theta_2-\hat\theta_1\)&lt;/span&gt;尽可能小，或某种能体现这个要求的其他准则。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;置信系数、置信区间、置信水平&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;给定一个很小的数&lt;span class=&#34;math inline&#34;&gt;\(\alpha&amp;gt;0\)&lt;/span&gt;。如果对参数&lt;span class=&#34;math inline&#34;&gt;\(\theta\)&lt;/span&gt;的任何值，&lt;span class=&#34;math inline&#34;&gt;\(P_\theta(\hat\theta_1\leq\theta\leq\hat\theta_2)\)&lt;/span&gt;都等于&lt;span class=&#34;math inline&#34;&gt;\(1-\alpha\)&lt;/span&gt;，则层区间估计&lt;span class=&#34;math inline&#34;&gt;\([\hat\theta_1,\hat\theta_2]\)&lt;/span&gt;的置信系数为&lt;span class=&#34;math inline&#34;&gt;\(1-\alpha\)&lt;/span&gt;，而这个区间叫做置信区间。&lt;/p&gt;
+&lt;p&gt;有时，我们无法证明恰好等于&lt;span class=&#34;math inline&#34;&gt;\(1-\alpha\)&lt;/span&gt;，但我们能证明它大于等于&lt;span class=&#34;math inline&#34;&gt;\(1-\alpha\)&lt;/span&gt;，那我们称&lt;span class=&#34;math inline&#34;&gt;\(1-\alpha\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\([\hat\theta_1,\hat\theta_2]\)&lt;/span&gt;的置信水平。当然，如果&lt;span class=&#34;math inline&#34;&gt;\(0.8\)&lt;/span&gt;是，那么&lt;span class=&#34;math inline&#34;&gt;\(0.7,0.6\)&lt;/span&gt;等等也都是，置信系数就是置信水平中的最大者。&lt;/p&gt;
+&lt;h3 id=&#34;枢轴变量法&#34;&gt;枢轴变量法&lt;/h3&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;找一个与要估计的参数&lt;span class=&#34;math inline&#34;&gt;\(g(\theta)\)&lt;/span&gt;有关的统计量&lt;span class=&#34;math inline&#34;&gt;\(T\)&lt;/span&gt;，一般是其一个良好的点估计&lt;/li&gt;
+&lt;li&gt;设法找出&lt;span class=&#34;math inline&#34;&gt;\(T\)&lt;/span&gt;和&lt;span class=&#34;math inline&#34;&gt;\(g(\theta)\)&lt;/span&gt;的某一函数&lt;span class=&#34;math inline&#34;&gt;\(S(T,g(\theta))\)&lt;/span&gt;，其分布&lt;span class=&#34;math inline&#34;&gt;\(F\)&lt;/span&gt;要与&lt;span class=&#34;math inline&#34;&gt;\(\theta\)&lt;/span&gt;无关，&lt;span class=&#34;math inline&#34;&gt;\(S\)&lt;/span&gt;称为枢轴变量。&lt;/li&gt;
+&lt;li&gt;对任何常数&lt;span class=&#34;math inline&#34;&gt;\(a&amp;lt;b\)&lt;/span&gt;，不等式&lt;span class=&#34;math inline&#34;&gt;\(a\leq S(T,g(\theta))\leq
+b\)&lt;/span&gt;要能改写为等价的形式&lt;span class=&#34;math inline&#34;&gt;\(A\leq
+g(\theta)\leq B\)&lt;/span&gt;，&lt;span class=&#34;math inline&#34;&gt;\(A,B\)&lt;/span&gt;只与&lt;span class=&#34;math inline&#34;&gt;\(T,a,b\)&lt;/span&gt;有关，而与&lt;span class=&#34;math inline&#34;&gt;\(\theta\)&lt;/span&gt;无关&lt;/li&gt;
+&lt;li&gt;取分布&lt;span class=&#34;math inline&#34;&gt;\(F\)&lt;/span&gt;的上&lt;span class=&#34;math inline&#34;&gt;\(\alpha/2\)&lt;/span&gt;分位点&lt;span class=&#34;math inline&#34;&gt;\(w_{\alpha/2}\)&lt;/span&gt;和上&lt;span class=&#34;math inline&#34;&gt;\(1-\alpha/2\)&lt;/span&gt;分位点&lt;span class=&#34;math inline&#34;&gt;\(w_{1-\alpha/2}\)&lt;/span&gt;，则有&lt;span class=&#34;math inline&#34;&gt;\(F(w_{\alpha/2})-F(w_{1-\alpha/2})=1-\alpha\)&lt;/span&gt;，因此&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+P(w_{1-\alpha/2}\leq S(T,g(\theta))\leq w_{\alpha/2})=1-\alpha
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;然后根据第三条改写为&lt;span class=&#34;math inline&#34;&gt;\(A\leq g(\theta)\leq
+B\)&lt;/span&gt;，则&lt;span class=&#34;math inline&#34;&gt;\([A,B]\)&lt;/span&gt;就是&lt;span class=&#34;math inline&#34;&gt;\(g(\theta)\)&lt;/span&gt;的一个置信系数为&lt;span class=&#34;math inline&#34;&gt;\(1-\alpha\)&lt;/span&gt;的区间估计。&lt;/p&gt;
+&lt;p&gt;上&lt;span class=&#34;math inline&#34;&gt;\(\beta\)&lt;/span&gt;分位点的含义是，对于任何分布&lt;span class=&#34;math inline&#34;&gt;\(F\)&lt;/span&gt;，满足条件&lt;span class=&#34;math inline&#34;&gt;\(F(v_\beta)=1-\beta\)&lt;/span&gt;的点&lt;span class=&#34;math inline&#34;&gt;\(v_\beta\)&lt;/span&gt;就是分布函数&lt;span class=&#34;math inline&#34;&gt;\(F\)&lt;/span&gt;的上&lt;span class=&#34;math inline&#34;&gt;\(\beta\)&lt;/span&gt;分位点。&lt;/p&gt;
+&lt;p&gt;下面给出一些常见的枢轴量&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;单正态总体&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;检验均值&lt;span class=&#34;math inline&#34;&gt;\(\mu\)&lt;/span&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;若&lt;span class=&#34;math inline&#34;&gt;\(\sigma^2\)&lt;/span&gt;已知，则枢轴量&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+U = \dfrac{\overline X-\mu}{\sigma/\sqrt n}\sim N(0,1)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;若&lt;span class=&#34;math inline&#34;&gt;\(\sigma^2\)&lt;/span&gt;未知，则枢轴量&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+t = \dfrac{\overline X-\mu}{S/\sqrt n}\sim t(n-1)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;检验方差&lt;span class=&#34;math inline&#34;&gt;\(\sigma^2\)&lt;/span&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;若&lt;span class=&#34;math inline&#34;&gt;\(\mu\)&lt;/span&gt;已知，则枢轴量&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\mathcal{X}^2 =
+\dfrac{\displaystyle\sum^n_{i=1}(X_i-\mu)^2}{\sigma^2}\sim
+\mathcal{X}^2_n
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;若&lt;span class=&#34;math inline&#34;&gt;\(\mu\)&lt;/span&gt;未知，则枢轴量&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\mathcal{X}^2 = \dfrac{(n-1)S^2}{\sigma^2}\sim \mathcal{X}^2_{n-1}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;两个相互独立的正态总体&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;检验均值差&lt;span class=&#34;math inline&#34;&gt;\(\mu_1-\mu_2\)&lt;/span&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;若&lt;span class=&#34;math inline&#34;&gt;\(\sigma^2_1,\sigma^2_2\)&lt;/span&gt;已知，则枢轴量&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+U = \dfrac{(\overline X-\overline
+Y)-(\mu_1-\mu_2)}{\sqrt{\sigma^2_1/n_1+\sigma^2_2/n_2}}\sim N(0,1)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;若&lt;span class=&#34;math inline&#34;&gt;\(\sigma^2_1=\sigma^2_2=\sigma^2\)&lt;/span&gt;未知，则枢轴量&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+t = \dfrac{(\overline X-\overline
+Y)-(\mu_1-\mu_2)}{S_W\sqrt{1/n_1+1/n_2}}\sim t(n_1+n_2-2)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;检验方差比&lt;span class=&#34;math inline&#34;&gt;\(\sigma_1^2/\sigma_2^2\)&lt;/span&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;若&lt;span class=&#34;math inline&#34;&gt;\(\mu_1,\mu_2\)&lt;/span&gt;已知，则枢轴量&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+F =
+\dfrac{n_2\sigma_2^2\sum^{n_1}_{i=1}(X_i-\mu_1)^2}{n_1\sigma_1^2\sum^{n_2}_{i=1}(Y_i-\mu_2)^2}\sim
+F(n_1,n_2)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;若&lt;span class=&#34;math inline&#34;&gt;\(\mu_1,\mu_2\)&lt;/span&gt;未知，则枢轴量&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+F = \dfrac{\sigma^2_2S_1^2}{\sigma_1^2S_2^2}\sim F(n_1-1,n_2-1)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;枢轴量的使用方法&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;我们最终要从枢轴量中得到置信区间，例如检验均值&lt;span class=&#34;math inline&#34;&gt;\(\mu\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;若&lt;span class=&#34;math inline&#34;&gt;\(\sigma^2\)&lt;/span&gt;已知，则枢轴量&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+U = \dfrac{\overline X-\mu}{\sigma/\sqrt n}\sim N(0,1)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;也就是我们要&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+P(w_{1-\alpha/2}\leq U\leq w_{\alpha/2}) = P(-w_{\alpha/2}\leq U\leq
+w_{\alpha/2})=1-\alpha
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;我们就将&lt;span class=&#34;math inline&#34;&gt;\(\mu\)&lt;/span&gt;的表达式写出来为&lt;span class=&#34;math inline&#34;&gt;\([\overline X - \dfrac{\sigma}{\sqrt
+n}w_{\alpha/2},\overline X + \dfrac{\sigma}{\sqrt
+n}w_{\alpha/2}]\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其他的使用办法也是类似的。&lt;/p&gt;
+&lt;h3 id=&#34;大样本法&#34;&gt;大样本法&lt;/h3&gt;
+&lt;p&gt;TODO&lt;/p&gt;
+&lt;h3 id=&#34;置信界&#34;&gt;置信界&lt;/h3&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(X_1,\cdots,X_n\)&lt;/span&gt;是从某一总体中抽出的样本，总体分布包含未知参数&lt;span class=&#34;math inline&#34;&gt;\(\theta\)&lt;/span&gt;，&lt;span class=&#34;math inline&#34;&gt;\(\overline{\theta}=\overline{\theta}(X_1,\cdots,X_n)\)&lt;/span&gt;和&lt;span class=&#34;math inline&#34;&gt;\(\underline{\theta}=\underline{\theta}(X_1,\cdots,X_n)\)&lt;/span&gt;都是统计量，则&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;若对&lt;span class=&#34;math inline&#34;&gt;\(\theta\)&lt;/span&gt;的一切可取的值，有&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+P_\theta(\overline{\theta}(X_1,\cdots,X_n)\geq\theta)=1-\alpha
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;则称&lt;span class=&#34;math inline&#34;&gt;\(\overline\theta\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(\theta\)&lt;/span&gt;的一个置信系数为&lt;span class=&#34;math inline&#34;&gt;\(1-\alpha\)&lt;/span&gt;的置信上界。&lt;/p&gt;
+&lt;ol start=&#34;2&#34; type=&#34;1&#34;&gt;
+&lt;li&gt;若对&lt;span class=&#34;math inline&#34;&gt;\(\theta\)&lt;/span&gt;的一切可取的值，有&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+P_\theta(\underline{\theta}(X_1,\cdots,X_n)\leq\theta)=1-\alpha
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;则称&lt;span class=&#34;math inline&#34;&gt;\(\underline\theta\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(\theta\)&lt;/span&gt;的一个置信系数为&lt;span class=&#34;math inline&#34;&gt;\(1-\alpha\)&lt;/span&gt;的置信下界。&lt;/p&gt;
+&lt;p&gt;单侧置信区间使用枢轴量的方法类似，只不过要将&lt;span class=&#34;math inline&#34;&gt;\(P\)&lt;/span&gt;函数代成单侧的情况的。对于置信上界，置信区间的下限为&lt;span class=&#34;math inline&#34;&gt;\(-\infty\)&lt;/span&gt;，对于置信下界，置信区间的上限为&lt;span class=&#34;math inline&#34;&gt;\(+\infty\)&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;贝叶斯法-1&#34;&gt;贝叶斯法&lt;/h3&gt;
+&lt;p&gt;TODO&lt;/p&gt;
 
 
 </description>

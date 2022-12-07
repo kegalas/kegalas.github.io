@@ -125,7 +125,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 38 分钟
+                    阅读时长: 48 分钟
                 </time>
             </div>
         
@@ -757,6 +757,8 @@ N(C_0+C_1\mu_1+\cdots+C_n\mu_n,C_1^2\sigma_1^2+\cdots+C_n^2\sigma_n^2)
 <p><span class="math display">\[\mu\]</span></p>
 <h4 id="方差-5">方差</h4>
 <p><span class="math display">\[\sigma^2\]</span></p>
+<h4 id="上alpha分位点">上<span class="math inline">\(\alpha\)</span>分位点</h4>
+<p>标准正态分布的上<span class="math inline">\(\alpha\)</span>分位点查表可知，具有一个性质为<span class="math inline">\(w_{1-\alpha}=-w_\alpha\)</span>。对于非标准的则和中位数对称。</p>
 <h3 id="二维正态分布">二维正态分布</h3>
 <p><span class="math display">\[
 f(x_1,x_2)=(2\pi\sigma_1\sigma_2\sqrt{1-\rho^2})^{-1}\exp\left[-\frac{1}{2(1-\rho^2)}\left(\frac{(x_1-a)^2}{\sigma_1^2}-\frac{2\rho(x_1-a)(x_2-b)}{\sigma_1\sigma_2}+
@@ -974,6 +976,12 @@ X=2\lambda(X_1+\cdots+X_n)\sim \mathcal{X}_{2n}^2
 <p>若<span class="math inline">\(X\sim\mathcal{X}_n^2\)</span>，<span class="math inline">\(E(X)=n\)</span></p>
 <p><strong>方差</strong></p>
 <p>若<span class="math inline">\(X\sim\mathcal{X}_n^2\)</span>，<span class="math inline">\(D(X)=2n\)</span></p>
+<p><strong>上<span class="math inline">\(\alpha\)</span>分位点</strong></p>
+<p>可由查表得到。有一个性质，当<span class="math inline">\(n\)</span>充分大，如<span class="math inline">\(n&gt;40\)</span>时，则其上<span class="math inline">\(\alpha\)</span>分位点约为</p>
+<p><span class="math display">\[
+\dfrac{1}{2}\bigg(w_\alpha+\sqrt{2n-1}\bigg)^2
+\]</span></p>
+<p>其中<span class="math inline">\(w_\alpha\)</span>是标准正态分布的上<span class="math inline">\(\alpha\)</span>分位点</p>
 <h3 id="t分布">t分布</h3>
 <p>若<span class="math inline">\(X\sim
 N(0,1),Y\sim\mathcal{X}_n^2\)</span>，且<span class="math inline">\(X,Y\)</span>相互独立</p>
@@ -986,6 +994,10 @@ t_n(y)=\frac{\Gamma((n+1)/2)}{\sqrt{n\pi}\Gamma(n/2)}\bigg(1+\frac{y^2}{n}\bigg)
 <p><span class="math display">\[
 \lim_{n\to\infty}t_n(y)=\frac{1}{\sqrt{2\pi}}e^{-t^2/2}
 \]</span></p>
+<p><strong>上<span class="math inline">\(\alpha\)</span>分位点</strong></p>
+<p>查表可知。</p>
+<p>具有对称性<span class="math inline">\(w_{1-\alpha}=-w_\alpha\)</span></p>
+<p>当<span class="math inline">\(n\)</span>充分大，如<span class="math inline">\(n&gt;45\)</span>时，其分位点和标准正态分布近似。</p>
 <h3 id="f分布">F分布</h3>
 <p>设<span class="math inline">\(U\sim\mathcal{X}_{n_1}^2,V\sim\mathcal{X}_{n_2}^2\)</span>，且<span class="math inline">\(U,V\)</span>相互独立，则称随机变量</p>
 <p><span class="math display">\[
@@ -998,6 +1010,12 @@ n_1^{n_1/2}n_2^{n_2/2}\frac{\Gamma(\frac{n_1+n_2}{2})}{\Gamma(\frac{n_1}{2})\Gam
 \]</span></p>
 <p><strong>性质</strong></p>
 <p>若<span class="math inline">\(F\sim F(n_1,n_2)\)</span>，则<span class="math inline">\(\frac{1}{F}\sim F(n_2,n_1)\)</span></p>
+<p><strong>上<span class="math inline">\(\alpha\)</span>分位点</strong></p>
+<p>查表可知。</p>
+<p>性质如下：</p>
+<p><span class="math display">\[
+F_{1-\alpha}(n_1,n_2) = \dfrac{1}{F_\alpha(n_2,n_1)}
+\]</span></p>
 <h3 id="八大分布">八大分布</h3>
 <h4 id="单正态总体">单正态总体</h4>
 <p>设<span class="math inline">\(X\sim N(\mu,\sigma^2)\)</span>，而<span class="math inline">\(X_1,X_2,\cdots,X_n\)</span>是来自正态总体<span class="math inline">\(N(\mu,\sigma^2)\)</span>的样本，<span class="math inline">\(\overline{X}\)</span>和<span class="math inline">\(S^2\)</span>分别是样本均值和样本方差，则有</p>
@@ -1512,6 +1530,185 @@ L(X_1,\cdots,X_n;\theta^*_1,\cdots,\theta^*_k)=\underset{\theta_1,\cdots,\theta_
 <p>上面的两个例子，其和矩估计恰好一致，但这只是一种巧合，更多时候是不一致的。但这两种估计方法结果一致，说明这些估计是良好的。</p>
 <p>另外我们也可以应用样本中位数<span class="math inline">\(\hat
 m\)</span>去估计正态总体的<span class="math inline">\(\mu\)</span>，这个统计量可以在矩估计不能使用（主要体现为矩为无限大等场景）和极大似然法求根不容易等场景。</p>
+<h3 id="贝叶斯法">贝叶斯法</h3>
+<p>在矩估计和极大似然估计时，在我们心目中，未知参数<span class="math inline">\(\theta\)</span>就简单地是一个未知数，在抽取样本之前，我们对<span class="math inline">\(\theta\)</span>没有任何了解，所有的信息全来自样本。</p>
+<p>贝叶斯学派则不然，它的出发点是：在进行抽样之前，我们已对<span class="math inline">\(\theta\)</span>有一定的知识，叫做先验知识，即试验之前的知识，也叫做验前知识。</p>
+<p>贝叶斯学派进一步要求：这种先验知识必须用<span class="math inline">\(\theta\)</span>的某种概率分布表达出来，这个概率分布就叫做<span class="math inline">\(\theta\)</span>的“先验分布”或“验前分布”。这个分布总结了我们在试验之前对未知参数<span class="math inline">\(\theta\)</span>的知识。</p>
+<p>比如我们可以使用工厂以前制造的产品废品率来作为先验知识。以<span class="math inline">\(h(\theta)\)</span>代表先验密度。但如果这个工厂是新开的，无法得到<span class="math inline">\(h(\theta)\)</span>，则我们必须设法定出一个<span class="math inline">\(h(\theta)\)</span>，甚至是自己的主观估计也可以。</p>
+<p>当我们确定先验密度后，设总体有概率密度<span class="math inline">\(f(X,\theta)\)</span>，从这个总体中抽样本<span class="math inline">\(X_1,\cdots,X_n\)</span>，则这组样本的密度为<span class="math inline">\(f(X_1,\theta)\cdots
+f(X_n,\theta)\)</span>。它可视为在给定<span class="math inline">\(\theta\)</span>时<span class="math inline">\((X_1,\cdots,X_n)\)</span>的密度，<span class="math inline">\((\theta,X_1,\cdots,X_n)\)</span>的联合密度为</p>
+<p><span class="math display">\[
+h(\theta)f(X_1,\theta)\cdots f(X_n,\theta)
+\]</span></p>
+<p>由此，算出<span class="math inline">\((X_1,\cdots,X_n)\)</span>的边缘密度为</p>
+<p><span class="math display">\[
+p(X_1,\cdots,X_n) = \int h(\theta)f(X_1,\theta)\cdots
+f(X_n,\theta)d\theta
+\]</span></p>
+<p>积分的范围依<span class="math inline">\(\theta\)</span>的具体范围而定。然后有</p>
+<p><span class="math display">\[
+h(\theta|X_1,\cdots,X_n) = h(\theta)f(X_1,\theta)\cdots
+f(X_n,\theta)/p(X_1,\cdots,X_n)
+\]</span></p>
+<p>按照贝叶斯学派的观点，这个条件密度代表了我们现在取得样本<span class="math inline">\(X_1,\cdots,X_n\)</span>后对<span class="math inline">\(\theta\)</span>的知识，它综合了先验知识和样本的信息。这个式子称为后验（验后）密度。</p>
+<p>贝叶斯学派也指出，在得出后验分布后，对参数<span class="math inline">\(\theta\)</span>的任何统计推断都只能基于这个后验分布。</p>
+<h2 id="点估计的优良性准则">点估计的优良性准则</h2>
+<h3 id="估计量的无偏性">估计量的无偏性</h3>
+<p>设某统计总体的分布包含未知参数<span class="math inline">\(\theta_1,\cdots,\theta_k\)</span>，<span class="math inline">\(\X_1,\cdots,X_n\)</span>是从该总体中抽出的样本，要估计<span class="math inline">\(g(\theta_1,\cdots,\theta_k)\)</span>，<span class="math inline">\(g\)</span>为一已知函数，设<span class="math inline">\(\hat
+g(X_1,\cdots,X_n)\)</span>是一个估计量。如果对任何可能的<span class="math inline">\(\theta_1,\cdots,\theta_k\)</span>都有</p>
+<p><span class="math display">\[
+E_{\theta_1,\cdots,\theta_k}[\hat
+g(X_1,\cdots,X_n)]=g(\theta_1,\cdots,\theta_k)
+\]</span></p>
+<p>则称<span class="math inline">\(\hat g\)</span>是<span class="math inline">\(g(\theta_1,\cdots,\theta_k)\)</span>的一个无偏估计量。</p>
+<p>估计量的无偏性有两个含义：</p>
+<ol type="1">
+<li>没有系统性的误差</li>
+<li>根据大数定理，若估计量有无偏性，则在大量次数使用取平均时，能以接近于<span class="math inline">\(100\%\)</span>的把握无限逼近被估计的量。如果没有无偏性，那么估计值会和真值保持一定距离，这个距离就是系统误差。</li>
+</ol>
+<p>可以证明</p>
+<p><strong>例1</strong></p>
+<p>设<span class="math inline">\(X_1,\cdots,X_n\)</span>是从总体中抽出的样本，则样本均值<span class="math inline">\(\overline X\)</span>是总体分布均值<span class="math inline">\(\theta\)</span>的无偏估计。</p>
+<p><strong>例2</strong></p>
+<p>样本方差<span class="math inline">\(S^2\)</span>是总体分布方差<span class="math inline">\(\sigma^2\)</span>的无偏估计。（而不是二阶中心矩）</p>
+<h3 id="最小方差无偏估计">最小方差无偏估计</h3>
+<p>一个参数往往有不止一个无偏估计，我们要从中调出一个最优的。</p>
+<h4 id="均方误差">均方误差</h4>
+<p>设<span class="math inline">\(X_1,\cdots,X_n\)</span>是从某一带参数<span class="math inline">\(\theta\)</span>的总体中抽出的样本，要估计<span class="math inline">\(\theta\)</span>。若我们采用估计量<span class="math inline">\(\hat\theta =
+\hat\theta(X_1,\cdots,X_n)\)</span>，则其误差为<span class="math inline">\(\hat\theta(X_1,\cdots,X_n)-\theta\)</span>。这个误差随样本的具体值而定，也是随机的，无法作为优良性的指标。我们取</p>
+<p><span class="math display">\[
+M_{\hat\theta}(\theta)=E_\theta[\hat\theta(X_1,\cdots,X_n)-\theta]^2
+\]</span></p>
+<p>作为<span class="math inline">\(\hat\theta\)</span>的误差大小从整体角度的一个衡量。这个量越小，就表示<span class="math inline">\(\hat\theta\)</span>的误差平均来讲比较小，因而也就越优。<span class="math inline">\(M_{\hat\theta}\)</span>就称为估计量<span class="math inline">\(\theta\)</span>的“均方误差”</p>
+<h4 id="最小方差无偏估计-1">最小方差无偏估计</h4>
+<p>从前面的讨论看到：若局限于无偏估计的范围，且采用均方误差的准则，则两个无偏估计<span class="math inline">\(\hat\theta_1\)</span>和<span class="math inline">\(\hat\theta_2\)</span>的比较归结为其方差的比较：方差小者为优。</p>
+<p>最小方差无偏估计简记为MVU估计。</p>
+<h4 id="克拉美-劳不等式">克拉美-劳不等式</h4>
+<p>TODO</p>
+<h3 id="估计量的相合性与渐近正态性">估计量的相合性与渐近正态性</h3>
+<h4 id="相合性">相合性</h4>
+<p>设总体分布依赖于参数<span class="math inline">\(\theta_1,\cdots,\theta_k,g(\theta_1,\cdots,\theta_k)\)</span>是<span class="math inline">\(\theta_1,\cdots,\theta_k\)</span>的一个给定函数，设<span class="math inline">\(X_1,\cdots,X_n\)</span>
+为自该总体中抽出的样本，<span class="math inline">\(T(X_1,\cdots,X_n)\)</span>是<span class="math inline">\(g(\theta_1,\cdots,\theta_k)\)</span>的一个估计量，如果对任给<span class="math inline">\(\varepsilon&gt;0\)</span>有</p>
+<p><span class="math display">\[
+\lim_{n\to\infty}P_{\theta_1,\cdots,\theta_k}(|T(X_1,\cdots,X_n)-g(\theta_1,\cdots,\theta_k)|\geq\varepsilon)
+= 0
+\]</span></p>
+<p>而且这对<span class="math inline">\((\theta_1,\cdots,\theta_k)\)</span>一切可能取的值都成立，则称<span class="math inline">\(T(X_1,\cdots,X_n)\)</span>是<span class="math inline">\(g(\theta_1,\cdots,\theta_k)\)</span>的一个相合估计。</p>
+<h4 id="渐近正态性">渐近正态性</h4>
+<p>正如在中心极限定理中所显示的，当<span class="math inline">\(n\)</span>很大时，和的分布渐近于正态分布。理论上可以证明，这不只是和所独有的，许多形状复杂的统计量，当样本大小<span class="math inline">\(n\to\infty\)</span>时，其分布都渐近于正态分布。这称为统计量的“渐近正态性”。</p>
+<h2 id="区间估计">区间估计</h2>
+<h3 id="基本概念-1">基本概念</h3>
+<p>点估计是用一个点去估计未知参数。区间估计就是用一个区间去估计未知参数，即未知参数的值也会估计在一个区间之内。</p>
+<p>设<span class="math inline">\(X_1,\cdots,X_n\)</span>是从该总体中抽出的样本。所谓<span class="math inline">\(\theta\)</span>的区间估计，就是以满足条件<span class="math inline">\(\hat\theta_1(X_1,\cdots,X_n)\leq\hat\theta_2(X_1,\cdots,X_n)\)</span>的两个统计量<span class="math inline">\(\hat\theta_1,\hat\theta_2\)</span>为端点的区间<span class="math inline">\([\hat\theta_1,\hat\theta_2]\)</span>。一旦有了样本<span class="math inline">\(X_1,\cdots,X_n\)</span>，就把<span class="math inline">\(\theta\)</span>估计在区间<span class="math inline">\([\hat\theta_1(X_1,\cdots,X_n),\hat\theta_2(X_1,\cdots,X_n)]\)</span>之内。有两个要求</p>
+<ol type="1">
+<li><span class="math inline">\(\theta\)</span>要以很大的可能性落在<span class="math inline">\([\hat\theta_1,\hat\theta_2]\)</span>之内，也就是说</li>
+</ol>
+<p><span class="math display">\[
+P_\theta(\hat\theta_1\leq\theta\leq\hat\theta_2)
+\]</span></p>
+<p>要尽可能大。</p>
+<ol start="2" type="1">
+<li>估计的精密度要尽可能高。比方说，要求区间的长度<span class="math inline">\(\hat\theta_2-\hat\theta_1\)</span>尽可能小，或某种能体现这个要求的其他准则。</li>
+</ol>
+<p><strong>置信系数、置信区间、置信水平</strong></p>
+<p>给定一个很小的数<span class="math inline">\(\alpha&gt;0\)</span>。如果对参数<span class="math inline">\(\theta\)</span>的任何值，<span class="math inline">\(P_\theta(\hat\theta_1\leq\theta\leq\hat\theta_2)\)</span>都等于<span class="math inline">\(1-\alpha\)</span>，则层区间估计<span class="math inline">\([\hat\theta_1,\hat\theta_2]\)</span>的置信系数为<span class="math inline">\(1-\alpha\)</span>，而这个区间叫做置信区间。</p>
+<p>有时，我们无法证明恰好等于<span class="math inline">\(1-\alpha\)</span>，但我们能证明它大于等于<span class="math inline">\(1-\alpha\)</span>，那我们称<span class="math inline">\(1-\alpha\)</span>是<span class="math inline">\([\hat\theta_1,\hat\theta_2]\)</span>的置信水平。当然，如果<span class="math inline">\(0.8\)</span>是，那么<span class="math inline">\(0.7,0.6\)</span>等等也都是，置信系数就是置信水平中的最大者。</p>
+<h3 id="枢轴变量法">枢轴变量法</h3>
+<ol type="1">
+<li>找一个与要估计的参数<span class="math inline">\(g(\theta)\)</span>有关的统计量<span class="math inline">\(T\)</span>，一般是其一个良好的点估计</li>
+<li>设法找出<span class="math inline">\(T\)</span>和<span class="math inline">\(g(\theta)\)</span>的某一函数<span class="math inline">\(S(T,g(\theta))\)</span>，其分布<span class="math inline">\(F\)</span>要与<span class="math inline">\(\theta\)</span>无关，<span class="math inline">\(S\)</span>称为枢轴变量。</li>
+<li>对任何常数<span class="math inline">\(a&lt;b\)</span>，不等式<span class="math inline">\(a\leq S(T,g(\theta))\leq
+b\)</span>要能改写为等价的形式<span class="math inline">\(A\leq
+g(\theta)\leq B\)</span>，<span class="math inline">\(A,B\)</span>只与<span class="math inline">\(T,a,b\)</span>有关，而与<span class="math inline">\(\theta\)</span>无关</li>
+<li>取分布<span class="math inline">\(F\)</span>的上<span class="math inline">\(\alpha/2\)</span>分位点<span class="math inline">\(w_{\alpha/2}\)</span>和上<span class="math inline">\(1-\alpha/2\)</span>分位点<span class="math inline">\(w_{1-\alpha/2}\)</span>，则有<span class="math inline">\(F(w_{\alpha/2})-F(w_{1-\alpha/2})=1-\alpha\)</span>，因此</li>
+</ol>
+<p><span class="math display">\[
+P(w_{1-\alpha/2}\leq S(T,g(\theta))\leq w_{\alpha/2})=1-\alpha
+\]</span></p>
+<p>然后根据第三条改写为<span class="math inline">\(A\leq g(\theta)\leq
+B\)</span>，则<span class="math inline">\([A,B]\)</span>就是<span class="math inline">\(g(\theta)\)</span>的一个置信系数为<span class="math inline">\(1-\alpha\)</span>的区间估计。</p>
+<p>上<span class="math inline">\(\beta\)</span>分位点的含义是，对于任何分布<span class="math inline">\(F\)</span>，满足条件<span class="math inline">\(F(v_\beta)=1-\beta\)</span>的点<span class="math inline">\(v_\beta\)</span>就是分布函数<span class="math inline">\(F\)</span>的上<span class="math inline">\(\beta\)</span>分位点。</p>
+<p>下面给出一些常见的枢轴量</p>
+<p><strong>单正态总体</strong></p>
+<p><em>检验均值<span class="math inline">\(\mu\)</span></em></p>
+<p>若<span class="math inline">\(\sigma^2\)</span>已知，则枢轴量</p>
+<p><span class="math display">\[
+U = \dfrac{\overline X-\mu}{\sigma/\sqrt n}\sim N(0,1)
+\]</span></p>
+<p>若<span class="math inline">\(\sigma^2\)</span>未知，则枢轴量</p>
+<p><span class="math display">\[
+t = \dfrac{\overline X-\mu}{S/\sqrt n}\sim t(n-1)
+\]</span></p>
+<p><em>检验方差<span class="math inline">\(\sigma^2\)</span></em></p>
+<p>若<span class="math inline">\(\mu\)</span>已知，则枢轴量</p>
+<p><span class="math display">\[
+\mathcal{X}^2 =
+\dfrac{\displaystyle\sum^n_{i=1}(X_i-\mu)^2}{\sigma^2}\sim
+\mathcal{X}^2_n
+\]</span></p>
+<p>若<span class="math inline">\(\mu\)</span>未知，则枢轴量</p>
+<p><span class="math display">\[
+\mathcal{X}^2 = \dfrac{(n-1)S^2}{\sigma^2}\sim \mathcal{X}^2_{n-1}
+\]</span></p>
+<p><strong>两个相互独立的正态总体</strong></p>
+<p><em>检验均值差<span class="math inline">\(\mu_1-\mu_2\)</span></em></p>
+<p>若<span class="math inline">\(\sigma^2_1,\sigma^2_2\)</span>已知，则枢轴量</p>
+<p><span class="math display">\[
+U = \dfrac{(\overline X-\overline
+Y)-(\mu_1-\mu_2)}{\sqrt{\sigma^2_1/n_1+\sigma^2_2/n_2}}\sim N(0,1)
+\]</span></p>
+<p>若<span class="math inline">\(\sigma^2_1=\sigma^2_2=\sigma^2\)</span>未知，则枢轴量</p>
+<p><span class="math display">\[
+t = \dfrac{(\overline X-\overline
+Y)-(\mu_1-\mu_2)}{S_W\sqrt{1/n_1+1/n_2}}\sim t(n_1+n_2-2)
+\]</span></p>
+<p><em>检验方差比<span class="math inline">\(\sigma_1^2/\sigma_2^2\)</span></em></p>
+<p>若<span class="math inline">\(\mu_1,\mu_2\)</span>已知，则枢轴量</p>
+<p><span class="math display">\[
+F =
+\dfrac{n_2\sigma_2^2\sum^{n_1}_{i=1}(X_i-\mu_1)^2}{n_1\sigma_1^2\sum^{n_2}_{i=1}(Y_i-\mu_2)^2}\sim
+F(n_1,n_2)
+\]</span></p>
+<p>若<span class="math inline">\(\mu_1,\mu_2\)</span>未知，则枢轴量</p>
+<p><span class="math display">\[
+F = \dfrac{\sigma^2_2S_1^2}{\sigma_1^2S_2^2}\sim F(n_1-1,n_2-1)
+\]</span></p>
+<p><strong>枢轴量的使用方法</strong></p>
+<p>我们最终要从枢轴量中得到置信区间，例如检验均值<span class="math inline">\(\mu\)</span></p>
+<p>若<span class="math inline">\(\sigma^2\)</span>已知，则枢轴量</p>
+<p><span class="math display">\[
+U = \dfrac{\overline X-\mu}{\sigma/\sqrt n}\sim N(0,1)
+\]</span></p>
+<p>也就是我们要</p>
+<p><span class="math display">\[
+P(w_{1-\alpha/2}\leq U\leq w_{\alpha/2}) = P(-w_{\alpha/2}\leq U\leq
+w_{\alpha/2})=1-\alpha
+\]</span></p>
+<p>我们就将<span class="math inline">\(\mu\)</span>的表达式写出来为<span class="math inline">\([\overline X - \dfrac{\sigma}{\sqrt
+n}w_{\alpha/2},\overline X + \dfrac{\sigma}{\sqrt
+n}w_{\alpha/2}]\)</span></p>
+<p>其他的使用办法也是类似的。</p>
+<h3 id="大样本法">大样本法</h3>
+<p>TODO</p>
+<h3 id="置信界">置信界</h3>
+<p>设<span class="math inline">\(X_1,\cdots,X_n\)</span>是从某一总体中抽出的样本，总体分布包含未知参数<span class="math inline">\(\theta\)</span>，<span class="math inline">\(\overline{\theta}=\overline{\theta}(X_1,\cdots,X_n)\)</span>和<span class="math inline">\(\underline{\theta}=\underline{\theta}(X_1,\cdots,X_n)\)</span>都是统计量，则</p>
+<ol type="1">
+<li>若对<span class="math inline">\(\theta\)</span>的一切可取的值，有</li>
+</ol>
+<p><span class="math display">\[
+P_\theta(\overline{\theta}(X_1,\cdots,X_n)\geq\theta)=1-\alpha
+\]</span></p>
+<p>则称<span class="math inline">\(\overline\theta\)</span>是<span class="math inline">\(\theta\)</span>的一个置信系数为<span class="math inline">\(1-\alpha\)</span>的置信上界。</p>
+<ol start="2" type="1">
+<li>若对<span class="math inline">\(\theta\)</span>的一切可取的值，有</li>
+</ol>
+<p><span class="math display">\[
+P_\theta(\underline{\theta}(X_1,\cdots,X_n)\leq\theta)=1-\alpha
+\]</span></p>
+<p>则称<span class="math inline">\(\underline\theta\)</span>是<span class="math inline">\(\theta\)</span>的一个置信系数为<span class="math inline">\(1-\alpha\)</span>的置信下界。</p>
+<p>单侧置信区间使用枢轴量的方法类似，只不过要将<span class="math inline">\(P\)</span>函数代成单侧的情况的。对于置信上界，置信区间的下限为<span class="math inline">\(-\infty\)</span>，对于置信下界，置信区间的上限为<span class="math inline">\(+\infty\)</span></p>
+<h3 id="贝叶斯法-1">贝叶斯法</h3>
+<p>TODO</p>
 
 
 
@@ -1974,6 +2171,23 @@ m\)</span>去估计正态总体的<span class="math inline">\(\mu\)</span>，这
             <li><a href="#参数的点估计问题">参数的点估计问题</a></li>
             <li><a href="#矩估计法">矩估计法</a></li>
             <li><a href="#极大似然估计法">极大似然估计法</a></li>
+            <li><a href="#贝叶斯法">贝叶斯法</a></li>
+          </ol>
+        </li>
+        <li><a href="#点估计的优良性准则">点估计的优良性准则</a>
+          <ol>
+            <li><a href="#估计量的无偏性">估计量的无偏性</a></li>
+            <li><a href="#最小方差无偏估计">最小方差无偏估计</a></li>
+            <li><a href="#估计量的相合性与渐近正态性">估计量的相合性与渐近正态性</a></li>
+          </ol>
+        </li>
+        <li><a href="#区间估计">区间估计</a>
+          <ol>
+            <li><a href="#基本概念-1">基本概念</a></li>
+            <li><a href="#枢轴变量法">枢轴变量法</a></li>
+            <li><a href="#大样本法">大样本法</a></li>
+            <li><a href="#置信界">置信界</a></li>
+            <li><a href="#贝叶斯法-1">贝叶斯法</a></li>
           </ol>
         </li>
       </ol>
