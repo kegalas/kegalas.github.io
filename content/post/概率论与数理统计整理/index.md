@@ -907,6 +907,10 @@ $$\mu$$
 
 $$\sigma^2$$
 
+#### 上$\alpha$分位点 
+
+标准正态分布的上$\alpha$分位点查表可知，具有一个性质为$w_{1-\alpha}=-w_\alpha$。对于非标准的则和中位数对称。
+
 ### 二维正态分布
 
 $$
@@ -1213,6 +1217,16 @@ $$
 
 若$X\sim\mathcal{X}_n^2$，$D(X)=2n$
 
+**上$\alpha$分位点**
+
+可由查表得到。有一个性质，当$n$充分大，如$n>40$时，则其上$\alpha$分位点约为
+
+$$
+\dfrac{1}{2}\bigg(w_\alpha+\sqrt{2n-1}\bigg)^2
+$$
+
+其中$w_\alpha$是标准正态分布的上$\alpha$分位点
+
 ### t分布
 
 若$X\sim N(0,1),Y\sim\mathcal{X}_n^2$，且$X,Y$相互独立
@@ -1231,6 +1245,14 @@ $$
 \lim_{n\to\infty}t_n(y)=\frac{1}{\sqrt{2\pi}}e^{-t^2/2}
 $$
 
+**上$\alpha$分位点**
+
+查表可知。
+
+具有对称性$w_{1-\alpha}=-w_\alpha$
+
+当$n$充分大，如$n>45$时，其分位点和标准正态分布近似。
+
 ### F分布
 
 设$U\sim\mathcal{X}_{n_1}^2,V\sim\mathcal{X}_{n_2}^2$，且$U,V$相互独立，则称随机变量
@@ -1248,6 +1270,16 @@ $$
 **性质**
 
 若$F\sim F(n_1,n_2)$，则$\frac{1}{F}\sim F(n_2,n_1)$
+
+**上$\alpha$分位点**
+
+查表可知。
+
+性质如下：
+
+$$
+F_{1-\alpha}(n_1,n_2) = \dfrac{1}{F_\alpha(n_2,n_1)}
+$$
 
 ### 八大分布
 
@@ -1975,3 +2007,254 @@ $$
 上面的两个例子，其和矩估计恰好一致，但这只是一种巧合，更多时候是不一致的。但这两种估计方法结果一致，说明这些估计是良好的。
 
 另外我们也可以应用样本中位数$\hat m$去估计正态总体的$\mu$，这个统计量可以在矩估计不能使用（主要体现为矩为无限大等场景）和极大似然法求根不容易等场景。
+
+### 贝叶斯法
+
+在矩估计和极大似然估计时，在我们心目中，未知参数$\theta$就简单地是一个未知数，在抽取样本之前，我们对$\theta$没有任何了解，所有的信息全来自样本。
+
+贝叶斯学派则不然，它的出发点是：在进行抽样之前，我们已对$\theta$有一定的知识，叫做先验知识，即试验之前的知识，也叫做验前知识。
+
+贝叶斯学派进一步要求：这种先验知识必须用$\theta$的某种概率分布表达出来，这个概率分布就叫做$\theta$的“先验分布”或“验前分布”。这个分布总结了我们在试验之前对未知参数$\theta$的知识。
+
+比如我们可以使用工厂以前制造的产品废品率来作为先验知识。以$h(\theta)$代表先验密度。但如果这个工厂是新开的，无法得到$h(\theta)$，则我们必须设法定出一个$h(\theta)$，甚至是自己的主观估计也可以。
+
+当我们确定先验密度后，设总体有概率密度$f(X,\theta)$，从这个总体中抽样本$X_1,\cdots,X_n$，则这组样本的密度为$f(X_1,\theta)\cdots f(X_n,\theta)$。它可视为在给定$\theta$时$(X_1,\cdots,X_n)$的密度，$(\theta,X_1,\cdots,X_n)$的联合密度为
+
+$$
+h(\theta)f(X_1,\theta)\cdots f(X_n,\theta)
+$$
+
+由此，算出$(X_1,\cdots,X_n)$的边缘密度为
+
+$$
+p(X_1,\cdots,X_n) = \int h(\theta)f(X_1,\theta)\cdots f(X_n,\theta)d\theta
+$$
+
+积分的范围依$\theta$的具体范围而定。然后有
+
+$$
+h(\theta|X_1,\cdots,X_n) = h(\theta)f(X_1,\theta)\cdots f(X_n,\theta)/p(X_1,\cdots,X_n)
+$$
+
+按照贝叶斯学派的观点，这个条件密度代表了我们现在取得样本$X_1,\cdots,X_n$后对$\theta$的知识，它综合了先验知识和样本的信息。这个式子称为后验（验后）密度。
+
+贝叶斯学派也指出，在得出后验分布后，对参数$\theta$的任何统计推断都只能基于这个后验分布。
+
+## 点估计的优良性准则
+
+### 估计量的无偏性
+
+设某统计总体的分布包含未知参数$\theta_1,\cdots,\theta_k$，$\X_1,\cdots,X_n$是从该总体中抽出的样本，要估计$g(\theta_1,\cdots,\theta_k)$，$g$为一已知函数，设$\hat g(X_1,\cdots,X_n)$是一个估计量。如果对任何可能的$\theta_1,\cdots,\theta_k$都有
+
+$$
+E_{\theta_1,\cdots,\theta_k}[\hat g(X_1,\cdots,X_n)]=g(\theta_1,\cdots,\theta_k)
+$$
+
+则称$\hat g$是$g(\theta_1,\cdots,\theta_k)$的一个无偏估计量。
+
+估计量的无偏性有两个含义：
+
+1. 没有系统性的误差
+2. 根据大数定理，若估计量有无偏性，则在大量次数使用取平均时，能以接近于$100\%$的把握无限逼近被估计的量。如果没有无偏性，那么估计值会和真值保持一定距离，这个距离就是系统误差。
+
+可以证明
+
+**例1**
+
+设$X_1,\cdots,X_n$是从总体中抽出的样本，则样本均值$\overline X$是总体分布均值$\theta$的无偏估计。
+
+**例2**
+
+样本方差$S^2$是总体分布方差$\sigma^2$的无偏估计。（而不是二阶中心矩）
+
+### 最小方差无偏估计
+
+一个参数往往有不止一个无偏估计，我们要从中调出一个最优的。
+
+#### 均方误差
+
+设$X_1,\cdots,X_n$是从某一带参数$\theta$的总体中抽出的样本，要估计$\theta$。若我们采用估计量$\hat\theta = \hat\theta(X_1,\cdots,X_n)$，则其误差为$\hat\theta(X_1,\cdots,X_n)-\theta$。这个误差随样本的具体值而定，也是随机的，无法作为优良性的指标。我们取
+
+$$
+M_{\hat\theta}(\theta)=E_\theta[\hat\theta(X_1,\cdots,X_n)-\theta]^2
+$$
+
+作为$\hat\theta$的误差大小从整体角度的一个衡量。这个量越小，就表示$\hat\theta$的误差平均来讲比较小，因而也就越优。$M_{\hat\theta}$就称为估计量$\theta$的“均方误差”
+
+#### 最小方差无偏估计
+
+从前面的讨论看到：若局限于无偏估计的范围，且采用均方误差的准则，则两个无偏估计$\hat\theta_1$和$\hat\theta_2$的比较归结为其方差的比较：方差小者为优。
+
+最小方差无偏估计简记为MVU估计。
+
+#### 克拉美-劳不等式
+
+TODO
+
+### 估计量的相合性与渐近正态性
+
+#### 相合性
+
+设总体分布依赖于参数$\theta_1,\cdots,\theta_k,g(\theta_1,\cdots,\theta_k)$是$\theta_1,\cdots,\theta_k$的一个给定函数，设$X_1,\cdots,X_n$
+为自该总体中抽出的样本，$T(X_1,\cdots,X_n)$是$g(\theta_1,\cdots,\theta_k)$的一个估计量，如果对任给$\varepsilon>0$有
+
+$$
+\lim_{n\to\infty}P_{\theta_1,\cdots,\theta_k}(|T(X_1,\cdots,X_n)-g(\theta_1,\cdots,\theta_k)|\geq\varepsilon) = 0
+$$
+
+而且这对$(\theta_1,\cdots,\theta_k)$一切可能取的值都成立，则称$T(X_1,\cdots,X_n)$是$g(\theta_1,\cdots,\theta_k)$的一个相合估计。
+
+#### 渐近正态性
+
+正如在中心极限定理中所显示的，当$n$很大时，和的分布渐近于正态分布。理论上可以证明，这不只是和所独有的，许多形状复杂的统计量，当样本大小$n\to\infty$时，其分布都渐近于正态分布。这称为统计量的“渐近正态性”。
+
+## 区间估计
+
+### 基本概念
+
+点估计是用一个点去估计未知参数。区间估计就是用一个区间去估计未知参数，即未知参数的值也会估计在一个区间之内。
+
+设$X_1,\cdots,X_n$是从该总体中抽出的样本。所谓$\theta$的区间估计，就是以满足条件$\hat\theta_1(X_1,\cdots,X_n)\leq\hat\theta_2(X_1,\cdots,X_n)$的两个统计量$\hat\theta_1,\hat\theta_2$为端点的区间$[\hat\theta_1,\hat\theta_2]$。一旦有了样本$X_1,\cdots,X_n$，就把$\theta$估计在区间$[\hat\theta_1(X_1,\cdots,X_n),\hat\theta_2(X_1,\cdots,X_n)]$之内。有两个要求
+
+1. $\theta$要以很大的可能性落在$[\hat\theta_1,\hat\theta_2]$之内，也就是说
+
+$$
+P_\theta(\hat\theta_1\leq\theta\leq\hat\theta_2)
+$$
+
+要尽可能大。
+
+2. 估计的精密度要尽可能高。比方说，要求区间的长度$\hat\theta_2-\hat\theta_1$尽可能小，或某种能体现这个要求的其他准则。
+
+**置信系数、置信区间、置信水平**
+
+给定一个很小的数$\alpha>0$。如果对参数$\theta$的任何值，$P_\theta(\hat\theta_1\leq\theta\leq\hat\theta_2)$都等于$1-\alpha$，则层区间估计$[\hat\theta_1,\hat\theta_2]$的置信系数为$1-\alpha$，而这个区间叫做置信区间。
+
+有时，我们无法证明恰好等于$1-\alpha$，但我们能证明它大于等于$1-\alpha$，那我们称$1-\alpha$是$[\hat\theta_1,\hat\theta_2]$的置信水平。当然，如果$0.8$是，那么$0.7,0.6$等等也都是，置信系数就是置信水平中的最大者。
+
+### 枢轴变量法
+
+1. 找一个与要估计的参数$g(\theta)$有关的统计量$T$，一般是其一个良好的点估计
+2. 设法找出$T$和$g(\theta)$的某一函数$S(T,g(\theta))$，其分布$F$要与$\theta$无关，$S$称为枢轴变量。
+3. 对任何常数$a<b$，不等式$a\leq S(T,g(\theta))\leq b$要能改写为等价的形式$A\leq g(\theta)\leq B$，$A,B$只与$T,a,b$有关，而与$\theta$无关
+4. 取分布$F$的上$\alpha/2$分位点$w_{\alpha/2}$和上$1-\alpha/2$分位点$w_{1-\alpha/2}$，则有$F(w_{\alpha/2})-F(w_{1-\alpha/2})=1-\alpha$，因此
+
+$$
+P(w_{1-\alpha/2}\leq S(T,g(\theta))\leq w_{\alpha/2})=1-\alpha
+$$
+
+然后根据第三条改写为$A\leq g(\theta)\leq B$，则$[A,B]$就是$g(\theta)$的一个置信系数为$1-\alpha$的区间估计。
+
+上$\beta$分位点的含义是，对于任何分布$F$，满足条件$F(v_\beta)=1-\beta$的点$v_\beta$就是分布函数$F$的上$\beta$分位点。
+
+下面给出一些常见的枢轴量
+
+**单正态总体**
+
+*检验均值$\mu$*
+
+若$\sigma^2$已知，则枢轴量
+
+$$
+U = \dfrac{\overline X-\mu}{\sigma/\sqrt n}\sim N(0,1)
+$$
+
+若$\sigma^2$未知，则枢轴量
+
+$$
+t = \dfrac{\overline X-\mu}{S/\sqrt n}\sim t(n-1)
+$$
+
+*检验方差$\sigma^2$*
+
+若$\mu$已知，则枢轴量
+
+$$
+\mathcal{X}^2 = \dfrac{\displaystyle\sum^n_{i=1}(X_i-\mu)^2}{\sigma^2}\sim \mathcal{X}^2_n
+$$
+
+若$\mu$未知，则枢轴量
+
+$$
+\mathcal{X}^2 = \dfrac{(n-1)S^2}{\sigma^2}\sim \mathcal{X}^2_{n-1}
+$$
+
+**两个相互独立的正态总体**
+
+*检验均值差$\mu_1-\mu_2$*
+
+若$\sigma^2_1,\sigma^2_2$已知，则枢轴量
+
+$$
+U = \dfrac{(\overline X-\overline Y)-(\mu_1-\mu_2)}{\sqrt{\sigma^2_1/n_1+\sigma^2_2/n_2}}\sim N(0,1)
+$$
+
+若$\sigma^2_1=\sigma^2_2=\sigma^2$未知，则枢轴量
+
+$$
+t = \dfrac{(\overline X-\overline Y)-(\mu_1-\mu_2)}{S_W\sqrt{1/n_1+1/n_2}}\sim t(n_1+n_2-2)
+$$
+
+*检验方差比$\sigma_1^2/\sigma_2^2$*
+
+若$\mu_1,\mu_2$已知，则枢轴量
+
+$$
+F = \dfrac{n_2\sigma_2^2\sum^{n_1}_{i=1}(X_i-\mu_1)^2}{n_1\sigma_1^2\sum^{n_2}_{i=1}(Y_i-\mu_2)^2}\sim F(n_1,n_2)
+$$
+
+若$\mu_1,\mu_2$未知，则枢轴量
+
+$$
+F = \dfrac{\sigma^2_2S_1^2}{\sigma_1^2S_2^2}\sim F(n_1-1,n_2-1)
+$$
+
+**枢轴量的使用方法**
+
+我们最终要从枢轴量中得到置信区间，例如检验均值$\mu$
+
+若$\sigma^2$已知，则枢轴量
+
+$$
+U = \dfrac{\overline X-\mu}{\sigma/\sqrt n}\sim N(0,1)
+$$
+
+也就是我们要
+
+$$
+P(w_{1-\alpha/2}\leq U\leq w_{\alpha/2}) = P(-w_{\alpha/2}\leq U\leq w_{\alpha/2})=1-\alpha
+$$
+
+我们就将$\mu$的表达式写出来为$[\overline X - \dfrac{\sigma}{\sqrt n}w_{\alpha/2},\overline X + \dfrac{\sigma}{\sqrt n}w_{\alpha/2}]$
+
+其他的使用办法也是类似的。
+
+### 大样本法
+
+TODO
+
+### 置信界
+
+设$X_1,\cdots,X_n$是从某一总体中抽出的样本，总体分布包含未知参数$\theta$，$\overline{\theta}=\overline{\theta}(X_1,\cdots,X_n)$和$\underline{\theta}=\underline{\theta}(X_1,\cdots,X_n)$都是统计量，则
+
+1. 若对$\theta$的一切可取的值，有
+
+$$
+P_\theta(\overline{\theta}(X_1,\cdots,X_n)\geq\theta)=1-\alpha
+$$
+
+则称$\overline\theta$是$\theta$的一个置信系数为$1-\alpha$的置信上界。
+
+2. 若对$\theta$的一切可取的值，有
+
+$$
+P_\theta(\underline{\theta}(X_1,\cdots,X_n)\leq\theta)=1-\alpha
+$$
+
+则称$\underline\theta$是$\theta$的一个置信系数为$1-\alpha$的置信下界。
+
+单侧置信区间使用枢轴量的方法类似，只不过要将$P$函数代成单侧的情况的。对于置信上界，置信区间的下限为$-\infty$，对于置信下界，置信区间的上限为$+\infty$
+
+### 贝叶斯法
+
+TODO
