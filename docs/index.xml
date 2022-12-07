@@ -711,11 +711,9 @@ If\to Then
 &lt;blockquote&gt;
 &lt;p&gt;这些规则是建立在某个问题辖域中普通陈述性知识的蕴涵公式基础上的。我们把允许用作规则的公式类型限制为下列形式：&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;blockquote&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 L\Rightarrow W
 \]&lt;/span&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
 &lt;blockquote&gt;
 &lt;p&gt;式中：&lt;span class=&#34;math inline&#34;&gt;\(L\)&lt;/span&gt;是单文字；&lt;span class=&#34;math inline&#34;&gt;\(W\)&lt;/span&gt;为与或形的公式。&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -783,6 +781,8 @@ C_A(u) = \left\{\begin{matrix}
 F = \sum^n_{i=1}\mu_F(u_i)/u_i
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;其中“&lt;span class=&#34;math inline&#34;&gt;\(/\)&lt;/span&gt;”符号表示的意思是，分母是论域中的元素，分子是该元素对模糊子集&lt;span class=&#34;math inline&#34;&gt;\(F\)&lt;/span&gt;的隶属度。&lt;span class=&#34;math inline&#34;&gt;\(\sum\)&lt;/span&gt;也不是表示相加，只是一个记号。&lt;/p&gt;
+&lt;p&gt;比如我们写出来的可能是&lt;span class=&#34;math inline&#34;&gt;\(A =
+1/u_1+0.7/u_2+0/u_3+0.5/u_4\)&lt;/span&gt;这样的形式。如果隶属度为&lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt;可以省略不写。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;序偶表示法&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 F=\{(u_1,\mu(u_1)),(u_2,\mu(u_2)),\cdots,(u_n,\mu(u_n))\}
@@ -822,6 +822,8 @@ U\)&lt;/span&gt;被逐点定义为取小运算，即&lt;/p&gt;
 A}\)&lt;/span&gt;，对所有的&lt;span class=&#34;math inline&#34;&gt;\(u\in
 U\)&lt;/span&gt;，被逐点定义为&lt;span class=&#34;math inline&#34;&gt;\(\mu_{\bar A}(u) =
 1-\mu_{A}(u)\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;模糊集合中有时会用&lt;span class=&#34;math inline&#34;&gt;\(\neg
+A\)&lt;/span&gt;表示&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;的补集。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;定理&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;集合运算的定理和经典的集合没有区别，例如结合、分配律，德摩根律等等。&lt;/p&gt;
 &lt;h3 id=&#34;模糊集的截集&#34;&gt;模糊集的截集&lt;/h3&gt;
@@ -839,6 +841,387 @@ U,\mu_A(u)&amp;gt;0\}\)&lt;/span&gt;为&lt;span class=&#34;math inline&#34;&gt;\
 U,\mu_A(u)=1\}\)&lt;/span&gt;为&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;的核&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;当&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;的核不为空，则称&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;为正规&lt;span class=&#34;math inline&#34;&gt;\(F\)&lt;/span&gt;集。&lt;/p&gt;
+&lt;h3 id=&#34;模糊集合的模糊度&#34;&gt;模糊集合的模糊度&lt;/h3&gt;
+&lt;p&gt;模糊度是模糊集模糊程度的一种度量&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定义&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(A\in F(U)\)&lt;/span&gt;，&lt;span class=&#34;math inline&#34;&gt;\(d\)&lt;/span&gt;是定义在&lt;span class=&#34;math inline&#34;&gt;\(F(U)\)&lt;/span&gt;上的一个实函数，如果它满足以下条件：&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;对任意&lt;span class=&#34;math inline&#34;&gt;\(A\in F(U)\)&lt;/span&gt;，有&lt;span class=&#34;math inline&#34;&gt;\(d(A)\in[0,1]\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;当且仅当&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;是一个普通集合时，&lt;span class=&#34;math inline&#34;&gt;\(d(A) = 0\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;若&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;的隶属函数&lt;span class=&#34;math inline&#34;&gt;\(\mu_A(U)\equiv0.5\)&lt;/span&gt;，则&lt;span class=&#34;math inline&#34;&gt;\(d(A)=1\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;若&lt;span class=&#34;math inline&#34;&gt;\(A,B\in F(U)\)&lt;/span&gt;，且对任意&lt;span class=&#34;math inline&#34;&gt;\(u\in U\)&lt;/span&gt;，满足&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\mu_B(u)\leq\mu_A(u)\leq0.5或者\mu_B(u)\geq\mu_A(u)\geq0.5
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;则有&lt;span class=&#34;math inline&#34;&gt;\(d(B)\leq d(A)\)&lt;/span&gt;&lt;/p&gt;
+&lt;ol start=&#34;5&#34; type=&#34;1&#34;&gt;
+&lt;li&gt;对任意&lt;span class=&#34;math inline&#34;&gt;\(A\in F(U)\)&lt;/span&gt;，有&lt;span class=&#34;math inline&#34;&gt;\(d(A)=d(\neg A)\)&lt;/span&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;则称&lt;span class=&#34;math inline&#34;&gt;\(d\)&lt;/span&gt;为定义在&lt;span class=&#34;math inline&#34;&gt;\(F(U)\)&lt;/span&gt;上的一个模糊度，&lt;span class=&#34;math inline&#34;&gt;\(d(A)\)&lt;/span&gt;称为&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;的模糊度。&lt;/p&gt;
+&lt;p&gt;直观地理解&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;模糊度是&lt;span class=&#34;math inline&#34;&gt;\([0,1]\)&lt;/span&gt;上的一个数&lt;/li&gt;
+&lt;li&gt;普通集合的模糊度是&lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt;，也就代表其不模糊&lt;/li&gt;
+&lt;li&gt;越靠近&lt;span class=&#34;math inline&#34;&gt;\(0.5\)&lt;/span&gt;就越模糊，&lt;span class=&#34;math inline&#34;&gt;\(\mu_A(u)=0.5\)&lt;/span&gt;时最模糊&lt;/li&gt;
+&lt;li&gt;模糊集&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;与其补集&lt;span class=&#34;math inline&#34;&gt;\(\neg A\)&lt;/span&gt;具有相同的模糊度&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;模糊度的计算方法&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Haming（海明）模糊度&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+d_1(A) = \frac{2}{n}\sum^n_{i=1}|\mu_A(u_i)-\mu_{A_{0.5}}(u_i)|
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中，&lt;span class=&#34;math inline&#34;&gt;\(\mu_{A_{0.5}}(u_i)\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;的&lt;span class=&#34;math inline&#34;&gt;\(\lambda=0.5\)&lt;/span&gt;截集的隶属函数。由于&lt;span class=&#34;math inline&#34;&gt;\(A_{0.5}\)&lt;/span&gt;是一个普通集合，所以&lt;span class=&#34;math inline&#34;&gt;\(\mu_{A_{0.5}}(u_i)\)&lt;/span&gt;实际上是特征函数&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Euclid（欧几里得）模糊度&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+d_2(A) = \frac{2}{\sqrt n
+}(\sum^n_{i=1}|\mu_A(u_i)-\mu_{A_{0.5}}(u_i)|^2)^{1/2}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Minkowski（明可夫斯基）模糊度&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+d_p(A) =
+\frac{2}{n^{1/p}}(\sum^n_{i=1}|\mu_A(u_i)-\mu_{A_{0.5}}(u_i)|^p)^{1/p}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Shannon（香农）模糊度&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+d(A) = \frac{1}{n\ln 2}\sum^n_{i=1}S(\mu_A(u_i))
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(S(x)\)&lt;/span&gt;是定义在&lt;span class=&#34;math inline&#34;&gt;\([0,1]\)&lt;/span&gt;上的香农函数，即&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+S(x) = \left\{\begin{matrix}
+-x\ln x-(1-x)ln(1-x),\quad &amp;amp;x\in(0,1) \\
+0,\quad &amp;amp;x=1\ or\ x = 0
+\end{matrix}\right.
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;模糊数&#34;&gt;模糊数&lt;/h3&gt;
+&lt;p&gt;模糊的数量，例如：500人左右，大约0.6等&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定义&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;如果实数域&lt;span class=&#34;math inline&#34;&gt;\(R\)&lt;/span&gt;上的模糊集&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;的隶属函数&lt;span class=&#34;math inline&#34;&gt;\(\mu_A(u)\)&lt;/span&gt;在&lt;span class=&#34;math inline&#34;&gt;\(R\)&lt;/span&gt;上连续且具有如下性质&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;是凸模糊集，即对任意&lt;span class=&#34;math inline&#34;&gt;\(\lambda\in[0,1]\)&lt;/span&gt;，&lt;span class=&#34;math inline&#34;&gt;\(A_\lambda\)&lt;/span&gt;是闭区间&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;是正规模糊集，即存在&lt;span class=&#34;math inline&#34;&gt;\(u\in R\)&lt;/span&gt;，使得&lt;span class=&#34;math inline&#34;&gt;\(\mu_A(u)=1\)&lt;/span&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;则称&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;为一个模糊数&lt;/p&gt;
+&lt;p&gt;直观上模糊数的隶属函数图形是单峰的，且在峰顶使隶属度达到&lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;模糊关系&#34;&gt;模糊关系&lt;/h3&gt;
+&lt;p&gt;在普通集合上定义的关系已经在离散数学中介绍过了。这种关系是一种确定性的关系，要么有，要么没有。&lt;/p&gt;
+&lt;p&gt;而模糊关系就不是非常明确的。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定义&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设论域&lt;span class=&#34;math inline&#34;&gt;\(U,V\)&lt;/span&gt;，则&lt;span class=&#34;math inline&#34;&gt;\(U\times V\)&lt;/span&gt;（笛卡尔积）的一个子集&lt;span class=&#34;math inline&#34;&gt;\(R\)&lt;/span&gt;就是从&lt;span class=&#34;math inline&#34;&gt;\(U\)&lt;/span&gt;到&lt;span class=&#34;math inline&#34;&gt;\(V\)&lt;/span&gt;的模糊关系，记作&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+U\overset{R}{\rightarrow} V
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;这里的模糊关系&lt;span class=&#34;math inline&#34;&gt;\(R\)&lt;/span&gt;是属于模糊二元关系。&lt;/p&gt;
+&lt;p&gt;其隶属函数为映射&lt;span class=&#34;math inline&#34;&gt;\(\mu_R:U\times
+V\to[0,1]\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;隶属度&lt;span class=&#34;math inline&#34;&gt;\(\mu_R(u_0,v_0)\)&lt;/span&gt;，表示&lt;span class=&#34;math inline&#34;&gt;\(u_0\)&lt;/span&gt;与&lt;span class=&#34;math inline&#34;&gt;\(v_0\)&lt;/span&gt;具有关系&lt;span class=&#34;math inline&#34;&gt;\(R\)&lt;/span&gt;的程度。&lt;/p&gt;
+&lt;p&gt;对于有限论域&lt;span class=&#34;math inline&#34;&gt;\(U = \{u_1,u_2,\cdots,u_m\},V
+= \{v_1,v_2,\cdots,v_n\}\)&lt;/span&gt;，则&lt;span class=&#34;math inline&#34;&gt;\(U\)&lt;/span&gt;对&lt;span class=&#34;math inline&#34;&gt;\(V\)&lt;/span&gt;的模糊关系的隶属函数可以用$mn &lt;span class=&#34;math inline&#34;&gt;\(阶模糊矩阵\)&lt;/span&gt;R$来表示，即&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+R = (r_{ij})_{m\times n}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;模糊集的笛卡尔乘积&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;模糊集&lt;span class=&#34;math inline&#34;&gt;\(A,B\)&lt;/span&gt;的笛卡尔乘积为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+A\times B = \int_{U\times V}\min(\mu_A(u),\mu_B(v))/(u,v)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;模糊关系的合成&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(R_1\)&lt;/span&gt;与&lt;span class=&#34;math inline&#34;&gt;\(R_2\)&lt;/span&gt;分别是&lt;span class=&#34;math inline&#34;&gt;\(u\times v\)&lt;/span&gt;及&lt;span class=&#34;math inline&#34;&gt;\(v\times w\)&lt;/span&gt;上的两个模糊关系，则&lt;span class=&#34;math inline&#34;&gt;\(R_1\)&lt;/span&gt;与&lt;span class=&#34;math inline&#34;&gt;\(R_2\)&lt;/span&gt;的合成是指从&lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt;到&lt;span class=&#34;math inline&#34;&gt;\(w\)&lt;/span&gt;的一个模糊关系，记为&lt;span class=&#34;math inline&#34;&gt;\(R_1\circ R_2\)&lt;/span&gt;，其隶属度为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\mu_{R_1\circ R_2}(u,w) =
+\{\bigvee^{v}\mu_{R_1}(u,v)\wedge\mu_{R_2}(v,w) \}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;模糊推理&#34;&gt;模糊推理&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;模糊命题&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;含有模糊概念、模糊数据的语句称为模糊命题。&lt;/p&gt;
+&lt;p&gt;它的一般表示形式为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+x\quad is \quad A
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;或者&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+x\quad is \quad A(CF)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;是模糊概念或模糊数，用相应的模糊集及隶属函数刻画；&lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;是论域上的变量，用以代表所论述对象的属性；
+&lt;span class=&#34;math inline&#34;&gt;\(CF\)&lt;/span&gt;是该模糊命题的可信度，它既可以是一个确定的数，也可以是一个模糊数或者模糊语言值。&lt;/p&gt;
+&lt;p&gt;模糊语言值是指表示大小、长短、多少等程度的一些词汇。如：极大、很大、相当大、比较大。模糊语言值同样可用模糊集描述。&lt;/p&gt;
+&lt;h2 id=&#34;模糊的知识表示&#34;&gt;模糊的知识表示&lt;/h2&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;模糊产生式规则的一般形式是&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+IF\quad E\quad THEN\quad H\quad (CF,\lambda)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(E\)&lt;/span&gt;是用模糊命题表示的模糊条件；&lt;span class=&#34;math inline&#34;&gt;\(H\)&lt;/span&gt;是用模糊命题表示的模糊结论；&lt;span class=&#34;math inline&#34;&gt;\(CF\)&lt;/span&gt;是知识的可信度因子，它既可以是一个确定的数，也可以是一个模糊数或模糊语言值。&lt;span class=&#34;math inline&#34;&gt;\(\lambda\)&lt;/span&gt;是匹配度的阈值，用以指出知识被运用的条件。&lt;/p&gt;
+&lt;ol start=&#34;2&#34; type=&#34;1&#34;&gt;
+&lt;li&gt;推理中所用的证据也用模糊命题表示，一般形式为&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+x\quad is \quad A&amp;#39;
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;或者&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+x\quad is \quad A&amp;#39;(CF)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;ol start=&#34;3&#34; type=&#34;1&#34;&gt;
+&lt;li&gt;模糊推理要解决的问题：证据与知识的条件是否匹配；如果匹配，如何利用知识及证据推出结论。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;模糊匹配与冲突消解&#34;&gt;模糊匹配与冲突消解&lt;/h2&gt;
+&lt;h3 id=&#34;贴近度&#34;&gt;贴近度&lt;/h3&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(A,B\)&lt;/span&gt;分别是论域&lt;span class=&#34;math inline&#34;&gt;\(U=\{u_1,u_2,\cdots,u_n\}\)&lt;/span&gt;上的两个模糊集，则它们的贴近度定义为：&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+(A,B) = [A\cdot B+(1-A\odot B)]/2
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+A\cdot B = \bigvee_U(\mu_A(u_i)\wedge\mu_B(u_i))
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;是内积&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+A\odot B = \bigwedge_U(\mu_A(u_i)\vee\mu_B(u_i))
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;是外积。&lt;/p&gt;
+&lt;h3 id=&#34;语义距离&#34;&gt;语义距离&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;海明距离&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+d(A,B) = \frac{1}{n}\sum^n_{i=1}|\mu_A(u_i)-\mu_B(u_i)|
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+d(A,B) = \frac{1}{b-a}\int^b_a|\mu_A(u)-\mu_B(u)|du
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;欧几里得距离&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+d(A,B) = \frac{1}{\sqrt n}\sqrt{\sum^n_{i=1}(\mu_A(u_i)-\mu_B(u_i))^2}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;明可夫斯基距离&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+d(A,B) =
+[\frac{1}{n}\sum^n_{i=1}|\mu_A(u_i)-\mu_{A_{0.5}}(u_i)|^p]^{1/p},\quad
+p\geq1
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;切比雪夫距离&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+d(A,B) = \underset{1\leq i\leq n}{\max}|\mu_A(u_i)-\mu_B(u_i)|
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;匹配度为&lt;span class=&#34;math inline&#34;&gt;\(1-d(A,B)\)&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;相似度&#34;&gt;相似度&lt;/h3&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;最大最小法&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+r(A,B) =
+\frac{\sum\min\{\mu_A(u_i),\mu_B(u_i)\}}{\sum\max\{\mu_A(u_i),\mu_B(u_i)\}}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;ol start=&#34;2&#34; type=&#34;1&#34;&gt;
+&lt;li&gt;算术平均法&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+r(A,B) =
+\frac{\sum\min\{\mu_A(u_i),\mu_B(u_i)\}}{\frac{1}{2}\sum(\mu_A(u_i)+\mu_B(u_i))}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;ol start=&#34;3&#34; type=&#34;1&#34;&gt;
+&lt;li&gt;几何平均最小法&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+r(A,B) = \frac{\sum\min\{\mu_A(u_i),\mu_B(u_i)\}}{\sum\sqrt
+{(\mu_A(u_i)\times\mu_B(u_i))}}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;ol start=&#34;4&#34; type=&#34;1&#34;&gt;
+&lt;li&gt;相关系数法&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+r(A,B) =
+\frac{\sum(\mu_A(u_i)-\bar\mu_A)\times(\mu_B(u_i)-\bar\mu_B)}{\sqrt{[\sum(\mu_A(u_i)-\bar\mu_A)^2]\times[\sum(\mu_B(u_i)-\bar\mu_B)^2]}}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\bar\mu_A = \frac{1}{n}\sum\mu_A(u_i),\quad\bar\mu_B =
+\frac{1}{n}\sum\mu_B(u_i)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;ol start=&#34;5&#34; type=&#34;1&#34;&gt;
+&lt;li&gt;指数法&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+r(A,B) = \exp\bigg(-\sum|\mu_A(u_i)-\mu_B(u_i)|\bigg)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;复合条件的模糊匹配&#34;&gt;复合条件的模糊匹配&lt;/h3&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;分别计算出每一个子条件与其证据的匹配度&lt;/li&gt;
+&lt;li&gt;求出整个前提条件与证据的总匹配度。目前常用的方法有“取极小”和“相乘”等。&lt;/li&gt;
+&lt;li&gt;检查总匹配度是否满足阈值条件，如果满足就可以匹配，否则为不可匹配。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;冲突消解&#34;&gt;冲突消解&lt;/h3&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;按匹配度大小排序&lt;/li&gt;
+&lt;li&gt;按加权平均值排序&lt;/li&gt;
+&lt;li&gt;按广义顺序关系排序&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;模糊推理的基本形式&#34;&gt;模糊推理的基本形式&lt;/h2&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;模糊假言推理&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;知识：&lt;span class=&#34;math inline&#34;&gt;\(IF\quad x\ is\ A\quad THEN\quad y\
+is\ B\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;证据：&lt;span class=&#34;math inline&#34;&gt;\(x\ is\ A&amp;#39;\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;结论：&lt;span class=&#34;math inline&#34;&gt;\(y\ is\ B&amp;#39;\)&lt;/span&gt;&lt;/p&gt;
+&lt;ol start=&#34;2&#34; type=&#34;1&#34;&gt;
+&lt;li&gt;模糊拒取式推理&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;知识：&lt;span class=&#34;math inline&#34;&gt;\(IF\quad x\ is\ A\quad THEN\quad y\
+is\ B\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;证据：&lt;span class=&#34;math inline&#34;&gt;\(y\ is\ B&amp;#39;\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;结论：&lt;span class=&#34;math inline&#34;&gt;\(x\ is\ A&amp;#39;\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;知识中只含有简单条件，且不带可信度因子的模糊推理称为简单模糊推理。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;合成推理知识&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;对于知识&lt;span class=&#34;math inline&#34;&gt;\(IF\quad x\ is\ A\quad THEN\quad
+y\ is\ B\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;首先构造出&lt;span class=&#34;math inline&#34;&gt;\(A,B\)&lt;/span&gt;之间的模糊关系&lt;span class=&#34;math inline&#34;&gt;\(R\)&lt;/span&gt;，&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;如果已知证据是&lt;span class=&#34;math inline&#34;&gt;\(x\ is\
+A&amp;#39;\)&lt;/span&gt;，且&lt;span class=&#34;math inline&#34;&gt;\(A,A&amp;#39;\)&lt;/span&gt;之间可以进行模糊匹配，则&lt;span class=&#34;math inline&#34;&gt;\(B&amp;#39; = A&amp;#39;\circ R\)&lt;/span&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;如果已知证据是&lt;span class=&#34;math inline&#34;&gt;\(y\ is\
+B&amp;#39;\)&lt;/span&gt;，且&lt;span class=&#34;math inline&#34;&gt;\(B,B&amp;#39;\)&lt;/span&gt;之间可以进行模糊匹配，则&lt;span class=&#34;math inline&#34;&gt;\(A&amp;#39; = R\circ B&amp;#39;\)&lt;/span&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;构造模糊关系r的方法&#34;&gt;构造模糊关系R的方法&lt;/h2&gt;
+&lt;h3 id=&#34;扎德方法&#34;&gt;扎德方法&lt;/h3&gt;
+&lt;p&gt;扎德提出了两种方法：一种称为条件命题的极大极小规则。另一种称为条件命题的算术规则，由它们获得的模糊关系分别记为&lt;span class=&#34;math inline&#34;&gt;\(R_m\)&lt;/span&gt;和&lt;span class=&#34;math inline&#34;&gt;\(R_a\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(A\in F(U), B\in
+F(V)\)&lt;/span&gt;，其分别表示为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+A = \int_U \mu_A(u)/u, B = \int_V \mu_B(u)/u
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;则&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+R_m = (A\times B)\cup(\neg A\times V) = \int_{U\times
+V}(\mu_A(u)\wedge\mu_B(v))\vee(1-\mu_A(u))/(u,v)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+R_m = (\neg A\times V)\oplus(U\times B) = \int_{U\times
+V}1\wedge(1-\mu_A(u)+\mu_B(v))/(u,v)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(\times\)&lt;/span&gt;是笛卡尔积；有界和&lt;span class=&#34;math inline&#34;&gt;\(x\oplus y=\min\{1,x+y\}\)&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;mamdani方法&#34;&gt;Mamdani方法&lt;/h3&gt;
+&lt;p&gt;对于知识&lt;span class=&#34;math inline&#34;&gt;\(IF\quad x\ is\ A\quad THEN\quad
+y\ is\ B\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+R_C = A\times B = \int_{U\times V}\mu_A(u)\wedge\mu_B(v)/(u,v)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;mizumoto方法&#34;&gt;Mizumoto方法&lt;/h3&gt;
+&lt;p&gt;米祖莫托等人根据多值逻辑中计算&lt;span class=&#34;math inline&#34;&gt;\(T(AB)\)&lt;/span&gt;的定义，提出了一组构造模糊关系的方法，分别记为&lt;span class=&#34;math inline&#34;&gt;\(R_s,R_g,R_{sg},R_{gs},R_{gg},R_{ss}\)&lt;/span&gt;等等。&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+R_s = A\times V \underset{s}{\Rightarrow} U\times B = \int_{U\times
+V}[\mu_A(u)\underset{s}{\to}\mu_B(v)]/(u,v)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\mu_A(u)\underset{s}{\to}\mu_B(v) = \left\{\begin{matrix}
+1,\mu_A(u)\leq\mu_B(v) \\
+0,\mu_A(u)&amp;gt;\mu_B(v)
+\end{matrix}\right.
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+R_s = A\times V \underset{g}{\Rightarrow} U\times B = \int_{U\times
+V}[\mu_A(u)\underset{g}{\to}\mu_B(v)]/(u,v)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\mu_A(u)\underset{g}{\to}\mu_B(v) = \left\{\begin{matrix}
+1,&amp;amp;\mu_A(u)\leq\mu_B(v) \\
+\mu_B(v),&amp;amp;\mu_A(u)&amp;gt;\mu_B(v)
+\end{matrix}\right.
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h2 id=&#34;模糊判决方法&#34;&gt;模糊判决方法&lt;/h2&gt;
+&lt;p&gt;在推理得到的模糊集合中取一个相对最能代表这个模糊集合的单值的过程就称作解模糊（去模糊）或模糊判决(Defuzzification)。&lt;/p&gt;
+&lt;p&gt;方法有：重心法、最大隶属度方法、加权平均法、隶属度限幅元素平均法等等。&lt;/p&gt;
+&lt;h3 id=&#34;重心法&#34;&gt;重心法&lt;/h3&gt;
+&lt;p&gt;所谓重心法就是取模糊隶属函数曲线与横坐标轴围成面积的重心作为代表点。理论上应该计算输出范围内一系列连续点的重心，即&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+u = \frac{\int_x x\mu_N(x)dx}{\int_x \mu_N(x)dx}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;最大隶属度法&#34;&gt;最大隶属度法&lt;/h3&gt;
+&lt;p&gt;这种方法最简单，只要在推理结论的模糊集合中取隶属度最大的那个元素作为输出量即可。不过，要求这种情况下的隶属函数曲线一定是单峰曲线。如果该曲线是梯形平顶，那么具有最大隶属度的元素就可能不只一个，这时就要对所有取最大隶属度的元素求其平均值。&lt;/p&gt;
+&lt;h3 id=&#34;系数加权平均法&#34;&gt;系数加权平均法&lt;/h3&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+u = \sum k_i\cdot x_i/\sum k_i
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中系数&lt;span class=&#34;math inline&#34;&gt;\(k_i\)&lt;/span&gt;的选择要根据实际情况而定。&lt;/p&gt;
+&lt;h3 id=&#34;隶属度限幅元素平均法&#34;&gt;隶属度限幅元素平均法&lt;/h3&gt;
+&lt;p&gt;用所确定的隶属度值
+a对隶属度函数曲线进行切割，再对切割后大于等于该隶属度的所有元素进行平均，用这个平均值作为输出执行量，这种方法就称为隶属度限幅元素平均法。&lt;/p&gt;
+&lt;h2 id=&#34;不确定性推理的基本概念&#34;&gt;不确定性推理的基本概念&lt;/h2&gt;
+&lt;p&gt;不确定性推理是建立在非经典逻辑基础上的一种推理，它是对不确定性知识的运用与处理。&lt;/p&gt;
+&lt;p&gt;具体地说，所谓不确定性推理就是从不确定性的初始证据（即事实）出发，通过运用不确定性的知识，最终推出具有一定程度不确定性的结论。&lt;/p&gt;
+&lt;h2 id=&#34;不确定性推理中的基本问题&#34;&gt;不确定性推理中的基本问题&lt;/h2&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;不确定性的表示与度量&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;不确定性一般分为两类，一类是知识的不确定性，一类是证据的不确定性。&lt;/p&gt;
+&lt;p&gt;知识不确定性的表示：目前在专家系统中知识的不确定性一般是由领域专家给出的，通常用一个数值表示，它表示相应知识的不确定性程度，称为知识的静态强度。&lt;/p&gt;
+&lt;p&gt;证据不确定性的表示：证据不确定性的表示方法与知识不确定性的表示方法一致，通常也用一个数值表示，代表相应证据的不确定性程度，称之为动态强度。&lt;/p&gt;
+&lt;ol start=&#34;2&#34; type=&#34;1&#34;&gt;
+&lt;li&gt;不确定性匹配算法及阈值的选择&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;推理是不断运用知识的过程,为了找到所需的知
+识,需要在这一过程中用知识的前提与已知证据进
+行匹配.只有匹配成功的知识才有可能被应用.&lt;/p&gt;
+&lt;ol start=&#34;3&#34; type=&#34;1&#34;&gt;
+&lt;li&gt;组合证据不确定性的计算方法&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;即已知证据&lt;span class=&#34;math inline&#34;&gt;\(E_1\)&lt;/span&gt;和&lt;span class=&#34;math inline&#34;&gt;\(E_2\)&lt;/span&gt;的不确定性度量，求证据&lt;span class=&#34;math inline&#34;&gt;\(E_1\)&lt;/span&gt;和&lt;span class=&#34;math inline&#34;&gt;\(E_2\)&lt;/span&gt;的析取和合取的不确定性，常用的方法有：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;最大最小法&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+T(E_1\ AND\ E_2) = \min\{T(E_1),T(E_2)\}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+T(E_1\ OR\ E_2) = \max\{T(E_1),T(E_2)\}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;概率法&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+T(E_1\ AND\ E_2) = T(E_1)\times T(E_2)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+T(E_1\ OR\ E_2) = T(E_1)+T(E_2) - T(E_1)\times T(E_2)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;有界法&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+T(E_1\ AND\ E_2) = \max\{0,T(E_1)+T(E_2)-1\}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+T(E_1\ OR\ E_2) = \min\{1,T(E_1)+T(E_2)\}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中，&lt;span class=&#34;math inline&#34;&gt;\(T(E)\)&lt;/span&gt;表示证据&lt;span class=&#34;math inline&#34;&gt;\(E\)&lt;/span&gt;为真的程度（动态强度），如可信度、概率等。&lt;/p&gt;
+&lt;ol start=&#34;4&#34; type=&#34;1&#34;&gt;
+&lt;li&gt;不确定性的传递算法&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;在每一步推理中，如何把证据及知识的不确定性传递给结论&lt;/li&gt;
+&lt;li&gt;在多步推理中，如何把初始证据的不确定性传递给最终结论&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol start=&#34;5&#34; type=&#34;1&#34;&gt;
+&lt;li&gt;结论不确定性的合成&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;用不同知识进行推理得到了相同结论，但所得结论的
+不确定性却不同。此时，需要用合适的算法对结论的 不确定性进行合成。&lt;/p&gt;
+&lt;h2 id=&#34;不确定性推理方法的分类&#34;&gt;不确定性推理方法的分类&lt;/h2&gt;
+&lt;p&gt;不确定性推理方法主要可分为模型法与控制法。&lt;/p&gt;
+&lt;p&gt;模型法：在推理一级对确定性推理进行扩展，引入证据的不确定性及知识的不确定性。&lt;/p&gt;
+&lt;p&gt;模型方法又分为数值方法和非数值方法两类。数值方法对不确定性进行定量的描述，按其所依据的理论又可分为基于概率的方法和基于模糊理论的方法。&lt;/p&gt;
+&lt;p&gt;本节主要针对模型方法中相关的典型算法展开.&lt;/p&gt;
+&lt;h3 id=&#34;逆概率法&#34;&gt;逆概率法&lt;/h3&gt;
+&lt;p&gt;TODO&lt;/p&gt;
+&lt;h1 id=&#34;遗传算法&#34;&gt;遗传算法&lt;/h1&gt;
+&lt;h2 id=&#34;基本思想&#34;&gt;基本思想&lt;/h2&gt;
+&lt;p&gt;遗传算法把问题的解表示成“染色体”，在算法中即是以一定方式编码的串。并且，在执行遗传算法之前，给出一群“染色体”，也即假设解（候选解）。然后，把这些假设解置于问题的“环境”中，并按适者生存的原则，从中选择出较适应环境的“染色体”进行复制，再通过交叉，变异过程产生更适应环境的新一代“染色体”群。这样，一代一代地进化，最后就会收敛到最适应环境的一个“染色体”上，它就是问题的最优解。&lt;/p&gt;
+&lt;p&gt;其算法框图为&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;4.jpg&#34; alt=&#34;4.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;4.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
 
 
 </description>
@@ -1818,7 +2201,7 @@ e_{i+1}\approx
 \bigg|\frac{f&amp;#39;&amp;#39;(r)}{2f&amp;#39;(r)}\bigg|^{\alpha-1}e_i^\alpha
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(\alpha = (1+\sqrt 5)/2\approx
-1.62\)&lt;/span&gt;。割线方法1️以超线性的速度收敛到一个单根，意味着它在线性和二次收敛方法之间。&lt;/p&gt;
+1.62\)&lt;/span&gt;。割线方法以超线性的速度收敛到一个单根，意味着它在线性和二次收敛方法之间。&lt;/p&gt;
 &lt;p&gt;割线方法有三种推广形式，它们也很重要。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;试位方法（Regula Falsi）&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;和二分法相似，但是其中的中点被类似割线方法的近似所替换，给定区间&lt;span class=&#34;math inline&#34;&gt;\([a,b]\)&lt;/span&gt;，该区间包含根（假设&lt;span class=&#34;math inline&#34;&gt;\(f(a)f(b)&amp;lt;0\)&lt;/span&gt;），使用割线方法定义下一个点为&lt;/p&gt;
@@ -5425,6 +5808,73 @@ m_k = \frac{1}{n}\sum^n_{i=1}(X_i-\overline{X})^k
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 E(\overline{X})=\mu,D(\overline{X})=\sigma^2/n,E(S^2) = \sigma^2
 \]&lt;/span&gt;&lt;/p&gt;
+&lt;h2 id=&#34;矩估计极大似然估计和贝叶斯估计&#34;&gt;矩估计、极大似然估计和贝叶斯估计&lt;/h2&gt;
+&lt;h3 id=&#34;参数的点估计问题&#34;&gt;参数的点估计问题&lt;/h3&gt;
+&lt;p&gt;设总体的分布为&lt;span class=&#34;math inline&#34;&gt;\(f(x;\theta_1,\cdots,\theta_k)\)&lt;/span&gt;，其形式已知（我们这里不区分连续和离散，具体情况具体处理就行），而有&lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt;个未知参数&lt;span class=&#34;math inline&#34;&gt;\(\theta_1,\cdots,\theta_k\)&lt;/span&gt;。例如对正态总体&lt;span class=&#34;math inline&#34;&gt;\(N(\mu,\sigma^2)\)&lt;/span&gt;，有&lt;span class=&#34;math inline&#34;&gt;\(\theta_1=\mu,\theta_2=\sigma^2\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;参数估计一般的方法就是使用总体中抽出的样本&lt;span class=&#34;math inline&#34;&gt;\(X_1,\cdots,X_n\)&lt;/span&gt;，去对参数&lt;span class=&#34;math inline&#34;&gt;\(\theta_1,\cdots,\theta_k\)&lt;/span&gt;的未知值做出估计。&lt;/p&gt;
+&lt;p&gt;为了估计&lt;span class=&#34;math inline&#34;&gt;\(\theta_1\)&lt;/span&gt;，我们需要构造出适当的统计量&lt;span class=&#34;math inline&#34;&gt;\(\hat \theta_1=\hat
+\theta_1(X_1,\cdots,X_n)\)&lt;/span&gt;，每当有了样本&lt;span class=&#34;math inline&#34;&gt;\(X_1,\cdots,X_n\)&lt;/span&gt;，就代入函数&lt;span class=&#34;math inline&#34;&gt;\(\hat
+\theta_1(X_1,\cdots,X_n)\)&lt;/span&gt;中算出一个值，用来作为&lt;span class=&#34;math inline&#34;&gt;\(\theta_1\)&lt;/span&gt;的估计值。&lt;/p&gt;
+&lt;p&gt;为这样的特定目的而构造的统计量&lt;span class=&#34;math inline&#34;&gt;\(\hat\theta_1\)&lt;/span&gt;叫做&lt;span class=&#34;math inline&#34;&gt;\(\theta_1\)&lt;/span&gt;的估计量。由于未知参数&lt;span class=&#34;math inline&#34;&gt;\(\theta_1\)&lt;/span&gt;是数轴上的一个点，用&lt;span class=&#34;math inline&#34;&gt;\(\hat\theta_1\)&lt;/span&gt;去估计&lt;span class=&#34;math inline&#34;&gt;\(\theta_1\)&lt;/span&gt;，等于用一个点去估计另一个点，所以这样的估计叫做点估计。&lt;/p&gt;
+&lt;h3 id=&#34;矩估计法&#34;&gt;矩估计法&lt;/h3&gt;
+&lt;p&gt;设总体分布为&lt;span class=&#34;math inline&#34;&gt;\(f(x;\theta_1,\cdots,\theta_k)\)&lt;/span&gt;，则它的矩（原点矩和中心矩都可以，此处以原点矩为例）&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\alpha_m = \int^\infty_{-\infty}x^mf(x;\theta_1,\cdots,\theta_k)dx
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;或&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\sum_i x^m_if(x_i;\theta_1,\cdots,\theta_k)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;依赖于&lt;span class=&#34;math inline&#34;&gt;\(\theta_1,\cdots,\theta_k\)&lt;/span&gt;。另一方面，至少样本大小&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;较大时，&lt;span class=&#34;math inline&#34;&gt;\(\alpha_m\)&lt;/span&gt;又应接近于样本的原点矩&lt;span class=&#34;math inline&#34;&gt;\(a_m\)&lt;/span&gt;；于是&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\alpha_m = \alpha_m(\theta_1,\cdots,\theta_k)\approx a_m =
+\sum^n_{i=1}X_i^m/n
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;取&lt;span class=&#34;math inline&#34;&gt;\(m=1,\cdots,k\)&lt;/span&gt;，并将上面的近似式改为等式，就得到一个方程组&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\alpha_m(\theta_1,\cdots,\theta_k)= a_m\quad (m=1,\cdots,k)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;解此方程组，得到根&lt;span class=&#34;math inline&#34;&gt;\(\hat\theta_i=\hat\theta_i(X_1,\cdots,X_n)(i=1,\cdots,k)\)&lt;/span&gt;，就以&lt;span class=&#34;math inline&#34;&gt;\(\hat\theta_i\)&lt;/span&gt;作为&lt;span class=&#34;math inline&#34;&gt;\(\theta_i\)&lt;/span&gt;的估计。如果要估计的是&lt;span class=&#34;math inline&#34;&gt;\(\theta_1,\cdots,\theta_k\)&lt;/span&gt;的某函数&lt;span class=&#34;math inline&#34;&gt;\(\theta_1,\cdots,\theta_k\)&lt;/span&gt;，则用&lt;span class=&#34;math inline&#34;&gt;\(\hat g = \hat g(X_1,\cdots,X_k) =
+g(\hat\theta_1,\cdots,\hat\theta_k)\)&lt;/span&gt;去估计它。这样定出的估计量叫做矩估计。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;正态总体的估计&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;例如，设&lt;span class=&#34;math inline&#34;&gt;\(X_1,\cdots,X_n\)&lt;/span&gt;是从正态总体&lt;span class=&#34;math inline&#34;&gt;\(N(\mu,\sigma^2)\)&lt;/span&gt;中抽出的样本，要估计&lt;span class=&#34;math inline&#34;&gt;\(\mu\)&lt;/span&gt;和&lt;span class=&#34;math inline&#34;&gt;\(\sigma^2\)&lt;/span&gt;。可以用样本的一阶原点矩即样本均值&lt;span class=&#34;math inline&#34;&gt;\(\overline{X}\)&lt;/span&gt;去估计&lt;span class=&#34;math inline&#34;&gt;\(\mu\)&lt;/span&gt;，而用样本的二阶中心距&lt;span class=&#34;math inline&#34;&gt;\(m_2\)&lt;/span&gt;去估计&lt;span class=&#34;math inline&#34;&gt;\(\sigma^2\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;这确实是可以的，但是我们更常用的是使用样本方差&lt;span class=&#34;math inline&#34;&gt;\(S^2\)&lt;/span&gt;而不是使用&lt;span class=&#34;math inline&#34;&gt;\(m_2\)&lt;/span&gt;，即做出了一定修正，理由之后介绍。&lt;/p&gt;
+&lt;p&gt;估计标准差也可以用&lt;span class=&#34;math inline&#34;&gt;\(\sqrt{m_2}\)&lt;/span&gt;，但更常用&lt;span class=&#34;math inline&#34;&gt;\(S\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;有时要估计&lt;span class=&#34;math inline&#34;&gt;\(\sigma/\mu\)&lt;/span&gt;，称为总体的变异系数，其是以均值为单位去恒量的总体的标准差。可以用&lt;span class=&#34;math inline&#34;&gt;\(\sqrt{m_2}/\overline X\)&lt;/span&gt;，一般用&lt;span class=&#34;math inline&#34;&gt;\(S/\overline X\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;指数分布总体的估计&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;又如指数分布的参数&lt;span class=&#34;math inline&#34;&gt;\(\lambda\)&lt;/span&gt;，因为&lt;span class=&#34;math inline&#34;&gt;\(1/\lambda\)&lt;/span&gt;是总体分布的均值，所以我们可以用&lt;span class=&#34;math inline&#34;&gt;\(\overline X\)&lt;/span&gt;去估计。&lt;/p&gt;
+&lt;p&gt;又因为其总体方差为&lt;span class=&#34;math inline&#34;&gt;\(1/\lambda^2\)&lt;/span&gt;，所以&lt;span class=&#34;math inline&#34;&gt;\(1/\lambda\)&lt;/span&gt;也可以用&lt;span class=&#34;math inline&#34;&gt;\(\sqrt{m_2}\)&lt;/span&gt;或&lt;span class=&#34;math inline&#34;&gt;\(S\)&lt;/span&gt;去估计，具体哪种好之后回去讨论。但通常我们能用低阶矩就不用高阶矩。&lt;/p&gt;
+&lt;h3 id=&#34;极大似然估计法&#34;&gt;极大似然估计法&lt;/h3&gt;
+&lt;p&gt;设总体分布为&lt;span class=&#34;math inline&#34;&gt;\(f(x;\theta_1,\cdots,\theta_k)\)&lt;/span&gt;，&lt;span class=&#34;math inline&#34;&gt;\(X_1,\cdots,X_n\)&lt;/span&gt;为自这个总体中抽出的样本，则样本&lt;span class=&#34;math inline&#34;&gt;\((X_1,\cdots,X_n)\)&lt;/span&gt;的分布（即其概率密度函数或概率密度）为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+f(x_1;\theta_1,\cdots,\theta_k)f(x_2;\theta_1,\cdots,\theta_k)\cdots
+f(x_n;\theta_1,\cdots,\theta_k)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;记为&lt;span class=&#34;math inline&#34;&gt;\(L(x_1,\cdots,x_n;\theta_1,\cdots,\theta_k)\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;当把&lt;span class=&#34;math inline&#34;&gt;\(\theta_1,\cdots,\theta_k\)&lt;/span&gt;而看作&lt;span class=&#34;math inline&#34;&gt;\(x_1,\cdots,x_n\)&lt;/span&gt;的函数时，&lt;span class=&#34;math inline&#34;&gt;\(L\)&lt;/span&gt;是一个概率密度函数或概率函数。&lt;span class=&#34;math inline&#34;&gt;\(L(Y_1,\cdots,Y_n;\theta_1,\cdots,\theta_k)&amp;gt;L(X_1,\cdots,X_n;\theta_1,\cdots,\theta_k)\)&lt;/span&gt;意味着在观察时出现&lt;span class=&#34;math inline&#34;&gt;\(Y_1,\cdots,Y_n\)&lt;/span&gt;这个点的概率比出现&lt;span class=&#34;math inline&#34;&gt;\(X_1,\cdots,X_n\)&lt;/span&gt;这个点的可能性大。&lt;/p&gt;
+&lt;p&gt;而反过来，&lt;span class=&#34;math inline&#34;&gt;\(L(X_1,\cdots,X_n;\theta_1&amp;#39;,\cdots,\theta_k&amp;#39;)&amp;gt;L(X_1,\cdots,X_n;\theta_1&amp;#39;&amp;#39;,\cdots,\theta_k&amp;#39;&amp;#39;)\)&lt;/span&gt;，则被估计的参数&lt;span class=&#34;math inline&#34;&gt;\(\theta_1,\cdots,\theta_k\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(\theta_1&amp;#39;,\cdots,\theta_k&amp;#39;\)&lt;/span&gt;的可能性比它是&lt;span class=&#34;math inline&#34;&gt;\(\theta_1&amp;#39;&amp;#39;,\cdots,\theta_k&amp;#39;&amp;#39;\)&lt;/span&gt;的可能性大。此时&lt;span class=&#34;math inline&#34;&gt;\(L\)&lt;/span&gt;称作似然函数。&lt;/p&gt;
+&lt;p&gt;所以我们的极大似然估计法就是用似然程度最大的那个点&lt;span class=&#34;math inline&#34;&gt;\((\theta_1^*,\cdots,\theta_k^*)\)&lt;/span&gt;，即满足条件&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+L(X_1,\cdots,X_n;\theta^*_1,\cdots,\theta^*_k)=\underset{\theta_1,\cdots,\theta_k}{\max}L(X_1,\cdots,X_n;\theta_1,\cdots,\theta_k)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;的&lt;span class=&#34;math inline&#34;&gt;\((\theta_1^*,\cdots,\theta_k^*)\)&lt;/span&gt;作为&lt;span class=&#34;math inline&#34;&gt;\((\theta_1,\cdots,\theta_k)\)&lt;/span&gt;的估计值。这个估计值就叫做极大似然估计，估计函数&lt;span class=&#34;math inline&#34;&gt;\(g(\theta_1,\cdots,\theta_n)\)&lt;/span&gt;就用&lt;span class=&#34;math inline&#34;&gt;\(g(\theta_1^*,\cdots,\theta_n^*)\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;因为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\ln L = \sum^n_{i=1}\ln f(X_i;\theta_1,\cdots,\theta_k)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;为使&lt;span class=&#34;math inline&#34;&gt;\(L\)&lt;/span&gt;最大，则建立似然方程组如下&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\dfrac{\partial\ln L}{\partial\theta_i} = 0\quad(i=1,\cdots,k)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;如果有唯一解，且是极大值点，则它必是使&lt;span class=&#34;math inline&#34;&gt;\(L\)&lt;/span&gt;达到最大的点。但有时候解不唯一，并且判断哪个使&lt;span class=&#34;math inline&#34;&gt;\(L\)&lt;/span&gt;达到极大也不容易。&lt;/p&gt;
+&lt;p&gt;有时&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;不连续，或者不可导，这时就不能列方程，要回到最原始的定义。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;正态总体&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;作为例子，正态总体用极大似然估计是可以的，它连续，并且可导，计算后得到的是&lt;span class=&#34;math inline&#34;&gt;\(\mu^*=\overline X,\sigma^{*2}=m_2\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;指数分布总体&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;估计得&lt;span class=&#34;math inline&#34;&gt;\(\lambda=1/\overline X\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;上面的两个例子，其和矩估计恰好一致，但这只是一种巧合，更多时候是不一致的。但这两种估计方法结果一致，说明这些估计是良好的。&lt;/p&gt;
+&lt;p&gt;另外我们也可以应用样本中位数&lt;span class=&#34;math inline&#34;&gt;\(\hat
+m\)&lt;/span&gt;去估计正态总体的&lt;span class=&#34;math inline&#34;&gt;\(\mu\)&lt;/span&gt;，这个统计量可以在矩估计不能使用（主要体现为矩为无限大等场景）和极大似然法求根不容易等场景。&lt;/p&gt;
 
 
 </description>
@@ -10871,6 +11321,10 @@ p = m_{\varphi}c=\frac{h}{\lambda}
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;h3 id=&#34;康普顿效应&#34;&gt;康普顿效应&lt;/h3&gt;
 &lt;p&gt;康普顿发现，单色&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;射线被物质散射时，散射线中有两种波长，其中一种波长比入射线的长，且波长改变量与入射线波长无关，而随散射角的增大而增大，这种波长变大的散射现象称为康普顿散射，或康普顿效应。&lt;/p&gt;
+&lt;p&gt;实验结果显示，对任一散射角&lt;span class=&#34;math inline&#34;&gt;\(\theta\)&lt;/span&gt;都测量到两种波长&lt;span class=&#34;math inline&#34;&gt;\(\lambda_0\)&lt;/span&gt;和&lt;span class=&#34;math inline&#34;&gt;\(\lambda\)&lt;/span&gt;的散射线，且&lt;span class=&#34;math inline&#34;&gt;\(\Delta\lambda = \lambda -
+\lambda_0\)&lt;/span&gt;随&lt;span class=&#34;math inline&#34;&gt;\(\theta\)&lt;/span&gt;增大而增大，而与&lt;span class=&#34;math inline&#34;&gt;\(\lambda_0\)&lt;/span&gt;及散射物质无关。&lt;/p&gt;
+&lt;p&gt;实验还表明对轻元素，波长变大的散射线相对较强，而对重元素，波长变大的散射线相对较弱。&lt;/p&gt;
+&lt;p&gt;康普顿小于的微观机制是：自由电子吸收一个入射光子后发射一个波长较长的光子，且电子与光子沿不同方向运动，由于动量和能量都守恒，因此康普顿散射过程可以看成是入射光子与自由电子的弹性碰撞。&lt;/p&gt;
 &lt;p&gt;波长改变量为&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 \Delta\lambda = \lambda-\lambda_0 = \frac{c}{\nu}-\frac{c}{\nu_0} =
@@ -10883,6 +11337,57 @@ p = m_{\varphi}c=\frac{h}{\lambda}
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(\lambda_C =
 \frac{h}{m_0c}\)&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;氢原子光谱&#34;&gt;氢原子光谱&lt;/h3&gt;
+&lt;p&gt;实验发现，各种元素的原子光谱都由分立的谱线所组成，并且谱线所组成，并且谱线的分布具有确定的规律。氢原子的是最简单的，其实验规律如下&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;氢原子光谱是彼此分立的线状光谱，每一条谱线具有确定的波长（或频率）&lt;/li&gt;
+&lt;li&gt;每一条光谱线的波数&lt;span class=&#34;math inline&#34;&gt;\(\~\nu=1/\lambda\)&lt;/span&gt;都可以表示为两项之差，即&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\~\nu = \dfrac{1}{\lambda} = T(k) - T(n) =
+R_H\left(\dfrac{1}{k^2}-\dfrac{1}{n^2}\right)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;式中&lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt;和&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;均为正整数，且&lt;span class=&#34;math inline&#34;&gt;\(n&amp;gt;k\)&lt;/span&gt;。&lt;span class=&#34;math inline&#34;&gt;\(R_H\)&lt;/span&gt;称为氢光谱的里伯德常数，近代测量值为&lt;span class=&#34;math inline&#34;&gt;\(R_H=1.0973731\times
+10^7m^{-1},T(n)=R_H/n^2\)&lt;/span&gt;称为氢的光谱项。上式称为里德伯-里兹并和原则。&lt;/p&gt;
+&lt;ol start=&#34;3&#34; type=&#34;1&#34;&gt;
+&lt;li&gt;当整数&lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt;取一定值时，&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;取大于&lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt;的各整数所对应的各条谱线构成一谱线系；每一谱线系都有一个线系的极限，对应于&lt;span class=&#34;math inline&#34;&gt;\(n\to\infty\)&lt;/span&gt;的情况。&lt;span class=&#34;math inline&#34;&gt;\(k=1(n=2,3,\cdots)\)&lt;/span&gt;的谱线系称为赖曼系，&lt;span class=&#34;math inline&#34;&gt;\(k=2(n=3,4,\cdots)\)&lt;/span&gt;的谱线系称为巴耳末系。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;玻尔理论对氢原子光谱的解释是：&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;原子只能处在一系列具有不连续能量的稳定状态，简称定态。所以核外电子只能在一系列不连续的圆轨道上运动，但并不辐射电磁波。&lt;/li&gt;
+&lt;li&gt;当原子从一个能量为&lt;span class=&#34;math inline&#34;&gt;\(E_k\)&lt;/span&gt;的定态跃迁到另一个能量为&lt;span class=&#34;math inline&#34;&gt;\(E_n\)&lt;/span&gt;的定态时，会发射或吸收一个频率为&lt;span class=&#34;math inline&#34;&gt;\(\nu_{kn}\)&lt;/span&gt;的光子&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\nu_{kn}=\dfrac{|E_k-E_n|}{h}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;ol start=&#34;3&#34; type=&#34;1&#34;&gt;
+&lt;li&gt;电子在稳定圆轨道上运动时，其轨道角动量&lt;span class=&#34;math inline&#34;&gt;\(L=mvr\)&lt;/span&gt;必须等于&lt;span class=&#34;math inline&#34;&gt;\(\dfrac{h}{2\pi}\)&lt;/span&gt;的整数倍，即&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+L = mvr = n\dfrac{h}{2\pi} = n\hbar (n=1,2,3,\cdots)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(\hbar =
+\dfrac{h}{2\pi}\)&lt;/span&gt;，称为约化普朗克常数。上式称为角动量量子化条件，&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;称为量子数。&lt;/p&gt;
+&lt;p&gt;玻尔还推出，原子处于第&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;个定态时的电子轨道半径为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+r_n = n^2r_1
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(r_1\)&lt;/span&gt;是氢原子中电子的最小轨道半径，称为玻尔半径，其值为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+r_1=\dfrac{\varepsilon_0h^2}{\pi me^2}=0.529\times 10^{-10}m
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(n=1\)&lt;/span&gt;的定态称为基态，&lt;span class=&#34;math inline&#34;&gt;\(n=2,3,4,\cdots\)&lt;/span&gt;各态均称为受激态。&lt;/p&gt;
+&lt;p&gt;氢原子能量等于电子的动能和电势能之和，处在量子数为&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;的定态时，能量为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+E_n = -\dfrac{1}{8\pi\varepsilon_0}\dfrac{e^2}{r_n} =
+-\dfrac{1}{n^2}\left(\dfrac{me^4}{8\varepsilon_0^2h^2}\right)\quad
+n=1,2,3,\cdots
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;这称为能量量子化，这种量子化的能量叫做能级。令&lt;span class=&#34;math inline&#34;&gt;\(n=1\)&lt;/span&gt;，则&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+E_1 = -\left(\dfrac{me^4}{8\varepsilon_0^2h^2}\right) = -13.6 eV
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;这个能量是基态能级的能量，也是氢原子的电离能。&lt;/p&gt;
 
 
 </description>

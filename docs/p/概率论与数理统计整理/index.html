@@ -125,7 +125,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 33 分钟
+                    阅读时长: 38 分钟
                 </time>
             </div>
         
@@ -1445,6 +1445,73 @@ m_k = \frac{1}{n}\sum^n_{i=1}(X_i-\overline{X})^k
 <p><span class="math display">\[
 E(\overline{X})=\mu,D(\overline{X})=\sigma^2/n,E(S^2) = \sigma^2
 \]</span></p>
+<h2 id="矩估计极大似然估计和贝叶斯估计">矩估计、极大似然估计和贝叶斯估计</h2>
+<h3 id="参数的点估计问题">参数的点估计问题</h3>
+<p>设总体的分布为<span class="math inline">\(f(x;\theta_1,\cdots,\theta_k)\)</span>，其形式已知（我们这里不区分连续和离散，具体情况具体处理就行），而有<span class="math inline">\(k\)</span>个未知参数<span class="math inline">\(\theta_1,\cdots,\theta_k\)</span>。例如对正态总体<span class="math inline">\(N(\mu,\sigma^2)\)</span>，有<span class="math inline">\(\theta_1=\mu,\theta_2=\sigma^2\)</span></p>
+<p>参数估计一般的方法就是使用总体中抽出的样本<span class="math inline">\(X_1,\cdots,X_n\)</span>，去对参数<span class="math inline">\(\theta_1,\cdots,\theta_k\)</span>的未知值做出估计。</p>
+<p>为了估计<span class="math inline">\(\theta_1\)</span>，我们需要构造出适当的统计量<span class="math inline">\(\hat \theta_1=\hat
+\theta_1(X_1,\cdots,X_n)\)</span>，每当有了样本<span class="math inline">\(X_1,\cdots,X_n\)</span>，就代入函数<span class="math inline">\(\hat
+\theta_1(X_1,\cdots,X_n)\)</span>中算出一个值，用来作为<span class="math inline">\(\theta_1\)</span>的估计值。</p>
+<p>为这样的特定目的而构造的统计量<span class="math inline">\(\hat\theta_1\)</span>叫做<span class="math inline">\(\theta_1\)</span>的估计量。由于未知参数<span class="math inline">\(\theta_1\)</span>是数轴上的一个点，用<span class="math inline">\(\hat\theta_1\)</span>去估计<span class="math inline">\(\theta_1\)</span>，等于用一个点去估计另一个点，所以这样的估计叫做点估计。</p>
+<h3 id="矩估计法">矩估计法</h3>
+<p>设总体分布为<span class="math inline">\(f(x;\theta_1,\cdots,\theta_k)\)</span>，则它的矩（原点矩和中心矩都可以，此处以原点矩为例）</p>
+<p><span class="math display">\[
+\alpha_m = \int^\infty_{-\infty}x^mf(x;\theta_1,\cdots,\theta_k)dx
+\]</span></p>
+<p>或</p>
+<p><span class="math display">\[
+\sum_i x^m_if(x_i;\theta_1,\cdots,\theta_k)
+\]</span></p>
+<p>依赖于<span class="math inline">\(\theta_1,\cdots,\theta_k\)</span>。另一方面，至少样本大小<span class="math inline">\(n\)</span>较大时，<span class="math inline">\(\alpha_m\)</span>又应接近于样本的原点矩<span class="math inline">\(a_m\)</span>；于是</p>
+<p><span class="math display">\[
+\alpha_m = \alpha_m(\theta_1,\cdots,\theta_k)\approx a_m =
+\sum^n_{i=1}X_i^m/n
+\]</span></p>
+<p>取<span class="math inline">\(m=1,\cdots,k\)</span>，并将上面的近似式改为等式，就得到一个方程组</p>
+<p><span class="math display">\[
+\alpha_m(\theta_1,\cdots,\theta_k)= a_m\quad (m=1,\cdots,k)
+\]</span></p>
+<p>解此方程组，得到根<span class="math inline">\(\hat\theta_i=\hat\theta_i(X_1,\cdots,X_n)(i=1,\cdots,k)\)</span>，就以<span class="math inline">\(\hat\theta_i\)</span>作为<span class="math inline">\(\theta_i\)</span>的估计。如果要估计的是<span class="math inline">\(\theta_1,\cdots,\theta_k\)</span>的某函数<span class="math inline">\(\theta_1,\cdots,\theta_k\)</span>，则用<span class="math inline">\(\hat g = \hat g(X_1,\cdots,X_k) =
+g(\hat\theta_1,\cdots,\hat\theta_k)\)</span>去估计它。这样定出的估计量叫做矩估计。</p>
+<p><strong>正态总体的估计</strong></p>
+<p>例如，设<span class="math inline">\(X_1,\cdots,X_n\)</span>是从正态总体<span class="math inline">\(N(\mu,\sigma^2)\)</span>中抽出的样本，要估计<span class="math inline">\(\mu\)</span>和<span class="math inline">\(\sigma^2\)</span>。可以用样本的一阶原点矩即样本均值<span class="math inline">\(\overline{X}\)</span>去估计<span class="math inline">\(\mu\)</span>，而用样本的二阶中心距<span class="math inline">\(m_2\)</span>去估计<span class="math inline">\(\sigma^2\)</span>。</p>
+<p>这确实是可以的，但是我们更常用的是使用样本方差<span class="math inline">\(S^2\)</span>而不是使用<span class="math inline">\(m_2\)</span>，即做出了一定修正，理由之后介绍。</p>
+<p>估计标准差也可以用<span class="math inline">\(\sqrt{m_2}\)</span>，但更常用<span class="math inline">\(S\)</span>。</p>
+<p>有时要估计<span class="math inline">\(\sigma/\mu\)</span>，称为总体的变异系数，其是以均值为单位去恒量的总体的标准差。可以用<span class="math inline">\(\sqrt{m_2}/\overline X\)</span>，一般用<span class="math inline">\(S/\overline X\)</span></p>
+<p><strong>指数分布总体的估计</strong></p>
+<p>又如指数分布的参数<span class="math inline">\(\lambda\)</span>，因为<span class="math inline">\(1/\lambda\)</span>是总体分布的均值，所以我们可以用<span class="math inline">\(\overline X\)</span>去估计。</p>
+<p>又因为其总体方差为<span class="math inline">\(1/\lambda^2\)</span>，所以<span class="math inline">\(1/\lambda\)</span>也可以用<span class="math inline">\(\sqrt{m_2}\)</span>或<span class="math inline">\(S\)</span>去估计，具体哪种好之后回去讨论。但通常我们能用低阶矩就不用高阶矩。</p>
+<h3 id="极大似然估计法">极大似然估计法</h3>
+<p>设总体分布为<span class="math inline">\(f(x;\theta_1,\cdots,\theta_k)\)</span>，<span class="math inline">\(X_1,\cdots,X_n\)</span>为自这个总体中抽出的样本，则样本<span class="math inline">\((X_1,\cdots,X_n)\)</span>的分布（即其概率密度函数或概率密度）为</p>
+<p><span class="math display">\[
+f(x_1;\theta_1,\cdots,\theta_k)f(x_2;\theta_1,\cdots,\theta_k)\cdots
+f(x_n;\theta_1,\cdots,\theta_k)
+\]</span></p>
+<p>记为<span class="math inline">\(L(x_1,\cdots,x_n;\theta_1,\cdots,\theta_k)\)</span></p>
+<p>当把<span class="math inline">\(\theta_1,\cdots,\theta_k\)</span>而看作<span class="math inline">\(x_1,\cdots,x_n\)</span>的函数时，<span class="math inline">\(L\)</span>是一个概率密度函数或概率函数。<span class="math inline">\(L(Y_1,\cdots,Y_n;\theta_1,\cdots,\theta_k)&gt;L(X_1,\cdots,X_n;\theta_1,\cdots,\theta_k)\)</span>意味着在观察时出现<span class="math inline">\(Y_1,\cdots,Y_n\)</span>这个点的概率比出现<span class="math inline">\(X_1,\cdots,X_n\)</span>这个点的可能性大。</p>
+<p>而反过来，<span class="math inline">\(L(X_1,\cdots,X_n;\theta_1&#39;,\cdots,\theta_k&#39;)&gt;L(X_1,\cdots,X_n;\theta_1&#39;&#39;,\cdots,\theta_k&#39;&#39;)\)</span>，则被估计的参数<span class="math inline">\(\theta_1,\cdots,\theta_k\)</span>是<span class="math inline">\(\theta_1&#39;,\cdots,\theta_k&#39;\)</span>的可能性比它是<span class="math inline">\(\theta_1&#39;&#39;,\cdots,\theta_k&#39;&#39;\)</span>的可能性大。此时<span class="math inline">\(L\)</span>称作似然函数。</p>
+<p>所以我们的极大似然估计法就是用似然程度最大的那个点<span class="math inline">\((\theta_1^*,\cdots,\theta_k^*)\)</span>，即满足条件</p>
+<p><span class="math display">\[
+L(X_1,\cdots,X_n;\theta^*_1,\cdots,\theta^*_k)=\underset{\theta_1,\cdots,\theta_k}{\max}L(X_1,\cdots,X_n;\theta_1,\cdots,\theta_k)
+\]</span></p>
+<p>的<span class="math inline">\((\theta_1^*,\cdots,\theta_k^*)\)</span>作为<span class="math inline">\((\theta_1,\cdots,\theta_k)\)</span>的估计值。这个估计值就叫做极大似然估计，估计函数<span class="math inline">\(g(\theta_1,\cdots,\theta_n)\)</span>就用<span class="math inline">\(g(\theta_1^*,\cdots,\theta_n^*)\)</span></p>
+<p>因为</p>
+<p><span class="math display">\[
+\ln L = \sum^n_{i=1}\ln f(X_i;\theta_1,\cdots,\theta_k)
+\]</span></p>
+<p>为使<span class="math inline">\(L\)</span>最大，则建立似然方程组如下</p>
+<p><span class="math display">\[
+\dfrac{\partial\ln L}{\partial\theta_i} = 0\quad(i=1,\cdots,k)
+\]</span></p>
+<p>如果有唯一解，且是极大值点，则它必是使<span class="math inline">\(L\)</span>达到最大的点。但有时候解不唯一，并且判断哪个使<span class="math inline">\(L\)</span>达到极大也不容易。</p>
+<p>有时<span class="math inline">\(f\)</span>不连续，或者不可导，这时就不能列方程，要回到最原始的定义。</p>
+<p><strong>正态总体</strong></p>
+<p>作为例子，正态总体用极大似然估计是可以的，它连续，并且可导，计算后得到的是<span class="math inline">\(\mu^*=\overline X,\sigma^{*2}=m_2\)</span></p>
+<p><strong>指数分布总体</strong></p>
+<p>估计得<span class="math inline">\(\lambda=1/\overline X\)</span></p>
+<p>上面的两个例子，其和矩估计恰好一致，但这只是一种巧合，更多时候是不一致的。但这两种估计方法结果一致，说明这些估计是良好的。</p>
+<p>另外我们也可以应用样本中位数<span class="math inline">\(\hat
+m\)</span>去估计正态总体的<span class="math inline">\(\mu\)</span>，这个统计量可以在矩估计不能使用（主要体现为矩为无限大等场景）和极大似然法求根不容易等场景。</p>
 
 
 
@@ -1900,6 +1967,13 @@ E(\overline{X})=\mu,D(\overline{X})=\sigma^2/n,E(S^2) = \sigma^2
             <li><a href="#简单随机样本">简单随机样本</a></li>
             <li><a href="#经验分布函数">经验分布函数</a></li>
             <li><a href="#常用统计量">常用统计量</a></li>
+          </ol>
+        </li>
+        <li><a href="#矩估计极大似然估计和贝叶斯估计">矩估计、极大似然估计和贝叶斯估计</a>
+          <ol>
+            <li><a href="#参数的点估计问题">参数的点估计问题</a></li>
+            <li><a href="#矩估计法">矩估计法</a></li>
+            <li><a href="#极大似然估计法">极大似然估计法</a></li>
           </ol>
         </li>
       </ol>

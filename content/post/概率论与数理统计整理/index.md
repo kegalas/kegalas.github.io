@@ -1869,3 +1869,109 @@ $$
 $$
 E(\overline{X})=\mu,D(\overline{X})=\sigma^2/n,E(S^2) = \sigma^2
 $$
+
+## 矩估计、极大似然估计和贝叶斯估计
+
+### 参数的点估计问题
+
+设总体的分布为$f(x;\theta_1,\cdots,\theta_k)$，其形式已知（我们这里不区分连续和离散，具体情况具体处理就行），而有$k$个未知参数$\theta_1,\cdots,\theta_k$。例如对正态总体$N(\mu,\sigma^2)$，有$\theta_1=\mu,\theta_2=\sigma^2$
+
+参数估计一般的方法就是使用总体中抽出的样本$X_1,\cdots,X_n$，去对参数$\theta_1,\cdots,\theta_k$的未知值做出估计。
+
+为了估计$\theta_1$，我们需要构造出适当的统计量$\hat \theta_1=\hat \theta_1(X_1,\cdots,X_n)$，每当有了样本$X_1,\cdots,X_n$，就代入函数$\hat \theta_1(X_1,\cdots,X_n)$中算出一个值，用来作为$\theta_1$的估计值。
+
+为这样的特定目的而构造的统计量$\hat\theta_1$叫做$\theta_1$的估计量。由于未知参数$\theta_1$是数轴上的一个点，用$\hat\theta_1$去估计$\theta_1$，等于用一个点去估计另一个点，所以这样的估计叫做点估计。
+
+### 矩估计法
+
+设总体分布为$f(x;\theta_1,\cdots,\theta_k)$，则它的矩（原点矩和中心矩都可以，此处以原点矩为例）
+
+$$
+\alpha_m = \int^\infty_{-\infty}x^mf(x;\theta_1,\cdots,\theta_k)dx
+$$
+
+或
+
+$$
+\sum_i x^m_if(x_i;\theta_1,\cdots,\theta_k)
+$$
+
+依赖于$\theta_1,\cdots,\theta_k$。另一方面，至少样本大小$n$较大时，$\alpha_m$又应接近于样本的原点矩$a_m$；于是
+
+$$
+\alpha_m = \alpha_m(\theta_1,\cdots,\theta_k)\approx a_m = \sum^n_{i=1}X_i^m/n
+$$
+
+取$m=1,\cdots,k$，并将上面的近似式改为等式，就得到一个方程组
+
+$$
+\alpha_m(\theta_1,\cdots,\theta_k)= a_m\quad (m=1,\cdots,k)
+$$
+
+解此方程组，得到根$\hat\theta_i=\hat\theta_i(X_1,\cdots,X_n)(i=1,\cdots,k)$，就以$\hat\theta_i$作为$\theta_i$的估计。如果要估计的是$\theta_1,\cdots,\theta_k$的某函数$\theta_1,\cdots,\theta_k$，则用$\hat g = \hat g(X_1,\cdots,X_k) = g(\hat\theta_1,\cdots,\hat\theta_k)$去估计它。这样定出的估计量叫做矩估计。
+
+**正态总体的估计**
+
+例如，设$X_1,\cdots,X_n$是从正态总体$N(\mu,\sigma^2)$中抽出的样本，要估计$\mu$和$\sigma^2$。可以用样本的一阶原点矩即样本均值$\overline{X}$去估计$\mu$，而用样本的二阶中心距$m_2$去估计$\sigma^2$。
+
+这确实是可以的，但是我们更常用的是使用样本方差$S^2$而不是使用$m_2$，即做出了一定修正，理由之后介绍。
+
+估计标准差也可以用$\sqrt{m_2}$，但更常用$S$。
+
+有时要估计$\sigma/\mu$，称为总体的变异系数，其是以均值为单位去恒量的总体的标准差。可以用$\sqrt{m_2}/\overline X$，一般用$S/\overline X$
+
+**指数分布总体的估计**
+
+又如指数分布的参数$\lambda$，因为$1/\lambda$是总体分布的均值，所以我们可以用$\overline X$去估计。
+
+又因为其总体方差为$1/\lambda^2$，所以$1/\lambda$也可以用$\sqrt{m_2}$或$S$去估计，具体哪种好之后回去讨论。但通常我们能用低阶矩就不用高阶矩。
+
+### 极大似然估计法
+
+设总体分布为$f(x;\theta_1,\cdots,\theta_k)$，$X_1,\cdots,X_n$为自这个总体中抽出的样本，则样本$(X_1,\cdots,X_n)$的分布（即其概率密度函数或概率密度）为
+
+$$
+f(x_1;\theta_1,\cdots,\theta_k)f(x_2;\theta_1,\cdots,\theta_k)\cdots f(x_n;\theta_1,\cdots,\theta_k)
+$$
+
+记为$L(x_1,\cdots,x_n;\theta_1,\cdots,\theta_k)$
+
+当把$\theta_1,\cdots,\theta_k$而看作$x_1,\cdots,x_n$的函数时，$L$是一个概率密度函数或概率函数。$L(Y_1,\cdots,Y_n;\theta_1,\cdots,\theta_k)>L(X_1,\cdots,X_n;\theta_1,\cdots,\theta_k)$意味着在观察时出现$Y_1,\cdots,Y_n$这个点的概率比出现$X_1,\cdots,X_n$这个点的可能性大。
+
+而反过来，$L(X_1,\cdots,X_n;\theta_1',\cdots,\theta_k')>L(X_1,\cdots,X_n;\theta_1'',\cdots,\theta_k'')$，则被估计的参数$\theta_1,\cdots,\theta_k$是$\theta_1',\cdots,\theta_k'$的可能性比它是$\theta_1'',\cdots,\theta_k''$的可能性大。此时$L$称作似然函数。
+
+所以我们的极大似然估计法就是用似然程度最大的那个点$(\theta_1^*,\cdots,\theta_k^*)$，即满足条件
+
+$$
+L(X_1,\cdots,X_n;\theta^*_1,\cdots,\theta^*_k)=\underset{\theta_1,\cdots,\theta_k}{\max}L(X_1,\cdots,X_n;\theta_1,\cdots,\theta_k)
+$$
+
+的$(\theta_1^*,\cdots,\theta_k^*)$作为$(\theta_1,\cdots,\theta_k)$的估计值。这个估计值就叫做极大似然估计，估计函数$g(\theta_1,\cdots,\theta_n)$就用$g(\theta_1^*,\cdots,\theta_n^*)$
+
+因为
+
+$$
+\ln L = \sum^n_{i=1}\ln f(X_i;\theta_1,\cdots,\theta_k)
+$$
+
+为使$L$最大，则建立似然方程组如下
+
+$$
+\dfrac{\partial\ln L}{\partial\theta_i} = 0\quad(i=1,\cdots,k)
+$$
+
+如果有唯一解，且是极大值点，则它必是使$L$达到最大的点。但有时候解不唯一，并且判断哪个使$L$达到极大也不容易。
+
+有时$f$不连续，或者不可导，这时就不能列方程，要回到最原始的定义。
+
+**正态总体**
+
+作为例子，正态总体用极大似然估计是可以的，它连续，并且可导，计算后得到的是$\mu^*=\overline X,\sigma^{*2}=m_2$
+
+**指数分布总体**
+
+估计得$\lambda=1/\overline X$
+
+上面的两个例子，其和矩估计恰好一致，但这只是一种巧合，更多时候是不一致的。但这两种估计方法结果一致，说明这些估计是良好的。
+
+另外我们也可以应用样本中位数$\hat m$去估计正态总体的$\mu$，这个统计量可以在矩估计不能使用（主要体现为矩为无限大等场景）和极大似然法求根不容易等场景。
