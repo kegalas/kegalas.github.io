@@ -125,7 +125,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 20 分钟
+                    阅读时长: 26 分钟
                 </time>
             </div>
         
@@ -769,6 +769,314 @@ U = \frac{1}{\sqrt 2}U_m
 <p>两个同频率的正弦波之间的相位之差称为相位差</p>
 <p>频率相同，则相位差即为初相之差。</p>
 <h2 id="相量法">相量法</h2>
+<h3 id="正弦量与相量">正弦量与相量</h3>
+<p>根据欧拉公式</p>
+<p><span class="math display">\[
+u(t) = U_mcos(\omega t+\varphi_u) = Re[U_me^{j(\omega t+\varphi_u)}] =
+Re[U_me^{j\varphi_u}e^{j\omega t}] = Re[\dot{U_m}e^{j\omega t}]
+\]</span></p>
+<p>这样，一个余弦时间函数就能用一个复指数函数来表示，其中</p>
+<p><span class="math display">\[
+\dot{U_m} = U_me^{j\varphi_u} = U_m\angle\varphi_u
+\]</span></p>
+<p><span class="math inline">\(\dot{U_m}\)</span>的模式正弦电压的振幅<span class="math inline">\(U_m\)</span>，辐角是正线电压的初相角<span class="math inline">\(\varphi_u\)</span>，我们称其为电压<span class="math inline">\(u\)</span>的振幅相量。为了将相量与一般复数做区别，<span class="math inline">\(U_m\)</span>上加<span class="math inline">\(\cdot\)</span>。</p>
+<p>式中<span class="math inline">\(e^{j\omega
+t}\)</span>称为旋转因子，它是模等于<span class="math inline">\(1\)</span>，初相为零，并以角速度<span class="math inline">\(\omega\)</span>逆时针旋转的复值函数。向量<span class="math inline">\(\dot{U_m}\)</span>乘以旋转因子<span class="math inline">\(e^{j\omega t}\)</span>得到的<span class="math inline">\(\dot{U_m}e^{j\omega t}\)</span>称为旋转相量，<span class="math inline">\(\dot{U_m}\)</span>称为其振幅。</p>
+<p>有效值与最大值的关系为</p>
+<p><span class="math display">\[
+\dot{I_m} = \sqrt 2 \dot I,\dot{U_m} = \sqrt 2 \dot U
+\]</span></p>
+<p><span class="math inline">\(u(t) = Re[\dot{U_m}e^{j\omega
+t}]\)</span>的几何意义是，一个正弦量在任意时刻的瞬时值，等于对应的选转向了同一时刻在实轴上的投影。</p>
+<p>注意相量法只适用于同频率正弦激励的线性时不变电路。</p>
+<h3 id="正弦量的相量运算">正弦量的相量运算</h3>
+<p><strong>同频率正弦量加减</strong></p>
+<p>设</p>
+<p><span class="math display">\[
+u_1(t) = \sqrt 2U_1\cos(\omega t+\varphi_1) = Re[\sqrt
+2\dot{U_1}e^{j\omega t}]
+\]</span></p>
+<p><span class="math display">\[
+u_2(t) = \sqrt 2U_2\cos(\omega t+\varphi_1) = Re[\sqrt
+2\dot{U_2}e^{j\omega t}]
+\]</span></p>
+<p><span class="math display">\[
+u(t) = u_1(t) + u_2(t) = Re[\sqrt 2\dot{U_1}e^{j\omega t}] + Re[\sqrt
+2\dot{U_2}e^{j\omega t}]
+\]</span></p>
+<p><span class="math display">\[
+Re[\sqrt 2\dot{U}e^{j\omega t}] = Re[\sqrt 2\dot{U_1}e^{j\omega t} +
+\sqrt 2\dot{U_2}e^{j\omega t}] =
+Re[\sqrt{2}(\dot{U_1}+\dot{U_2})e^{j\omega t}]
+\]</span></p>
+<p>所以有<span class="math inline">\(\dot U =
+\dot{U_1}+\dot{U_2}\)</span></p>
+<p>对于<span class="math inline">\(\dot I\)</span>同理。</p>
+<p><strong>正弦量的微分、积分</strong></p>
+<p>设<span class="math inline">\(i = \sqrt 2I\cos(\omega
+t+\varphi_i)=\sqrt 2Re[\dot Ie^{j\omega t}]\)</span></p>
+<p>微分</p>
+<p><span class="math display">\[
+\dfrac{di(t)}{dt} = \sqrt 2Re[j\omega\dot Ie^{j\omega t}]
+\]</span></p>
+<p>其中</p>
+<p><span class="math display">\[
+\dot I&#39; = j\omega\dot I = \omega I e^{j(\varphi_i+\pi/2)}
+\]</span></p>
+<p>积分</p>
+<p><span class="math display">\[
+\int i(t)dt = \sqrt 2Re[\dfrac{\dot I}{j\omega}e^{j\omega t}]
+\]</span></p>
+<p><span class="math display">\[
+\dot I&#39; = \dfrac{\dot I}{j\omega} =  \dfrac I\omega
+e^{j(\varphi_i-\pi/2)}
+\]</span></p>
+<h2 id="电路定律的相量形式">电路定律的相量形式</h2>
+<h3 id="kcl和kvl">KCL和KVL</h3>
+<p><span class="math display">\[
+\sum\dot I = 0
+\]</span></p>
+<p><span class="math display">\[
+\sum\dot U = 0
+\]</span></p>
+<p>如果改用最大值，也有</p>
+<p><span class="math display">\[
+\sum\dot I_m = 0
+\]</span></p>
+<p><span class="math display">\[
+\sum\dot U_m = 0
+\]</span></p>
+<h3 id="var的相量形式">VAR的相量形式</h3>
+<figure>
+<img src="22.jpg" alt="22.jpg"/>
+<figcaption aria-hidden="true">22.jpg</figcaption>
+</figure>
+<h2 id="阻抗与导纳">阻抗与导纳</h2>
+<h3 id="阻抗">阻抗</h3>
+<p>阻抗以如下形式定义</p>
+<p><span class="math display">\[
+Z = \dfrac{\dot U}{\dot I} = \dfrac{U\angle\varphi_u}{I\angle\varphi_i}
+= |Z|\angle\theta_Z = R+jX
+\]</span></p>
+<p>其中<span class="math inline">\(|Z|=\dfrac{U}{I}=\sqrt{R^2+X^2}\)</span>称为阻抗模，<span class="math inline">\(\theta_Z = \varphi_u-\varphi_i =
+\arctan\dfrac{X}{R}\)</span>称为阻抗角。</p>
+<p><span class="math inline">\(R =
+|Z|\cos\theta_Z\)</span>称为电阻，即阻抗的实部。<span class="math inline">\(X =
+|Z|\sin\theta_Z\)</span>称为电抗，即阻抗的虚部。</p>
+<p>单个元件<span class="math inline">\(R,L,C\)</span>的阻抗<span class="math inline">\(Z_R,Z_L,Z_C\)</span>分别为</p>
+<p><span class="math display">\[
+\left\{\begin{align*}
+&amp;Z_R = R\\
+&amp;Z_L = j\omega L = jX_L = X_L\angle\dfrac{\pi}{2} \\
+&amp;Z_C = \dfrac{1}{j\omega C} = -j\dfrac{1}{\omega C} = -jX_C =
+X_C\angle-\dfrac{\pi}{2}
+\end{align*}\right.
+\]</span></p>
+<p>阻抗串联时</p>
+<p><span class="math display">\[
+Z_{eq} = \sum Z_k
+\]</span></p>
+<p>分压为</p>
+<p><span class="math display">\[
+\dot U_k = \dfrac{Z_k}{Z_{eq}}\dot U
+\]</span></p>
+<h3 id="导纳">导纳</h3>
+<p>导纳以如下形式定义</p>
+<p><span class="math display">\[
+Y = \dfrac{\dot I}{\dot U} = \dfrac{I\angle\varphi_i}{U\angle\varphi_u}
+= |Y|\angle\theta_Y = G+jB
+\]</span></p>
+<p>其中<span class="math inline">\(|Y|=\dfrac{I}{U}=\sqrt{G^2+B^2}\)</span>称为导纳模，<span class="math inline">\(\theta_Y = \varphi_i-\varphi_u =
+\arctan\dfrac{B}{G}\)</span>称为导纳角。</p>
+<p><span class="math inline">\(G =
+|Y|\cos\theta_Y\)</span>称为电导，即导纳的实部。<span class="math inline">\(B =
+|B|\sin\theta_Y\)</span>称为电纳，即导纳的虚部。</p>
+<p>单个元件<span class="math inline">\(R,L,C\)</span>的导纳<span class="math inline">\(Y_R,Y_L,Y_C\)</span>分别为</p>
+<p><span class="math display">\[
+\left\{\begin{align*}
+&amp;Y_R = \dfrac{1}{R} = G\\
+&amp;Y_L = \dfrac{1}{j\omega L} = -j\dfrac{1}{\omega L} = -jB_L\\
+&amp;Y_C = j\omega C = jB_C
+\end{align*}\right.
+\]</span></p>
+<p>导纳并联时</p>
+<p><span class="math display">\[
+Y_{eq} = \sum Y_k
+\]</span></p>
+<p>分流为</p>
+<p><span class="math display">\[
+\dot I_k = \dfrac{Y_k}{Y_{eq}}\dot I
+\]</span></p>
+<h3 id="阻抗和导纳的关系">阻抗和导纳的关系</h3>
+<p>对统一电路，阻抗和导纳互为倒数。</p>
+<p><span class="math display">\[
+Z = \dfrac{1}{Y},Y=\dfrac{1}{Z}
+\]</span></p>
+<p>或者</p>
+<p><span class="math display">\[
+|Y| = \dfrac{1}{|Z|},\theta_y = -\theta_z
+\]</span></p>
+<h3 id="阻抗与导纳的性质">阻抗与导纳的性质</h3>
+<p>对于阻抗<span class="math inline">\(Z = R+jX\)</span></p>
+<p>若<span class="math inline">\(X&gt;0\)</span>，电路呈感性，<span class="math inline">\(0\degree&lt;\theta_z&lt;90\degree\)</span>。<span class="math inline">\(X=0\)</span>，电路呈阻性，<span class="math inline">\(\theta_z=0\)</span>。<span class="math inline">\(X&lt;0\)</span>，电路呈容性，<span class="math inline">\(-90\degree&lt;\theta_z&lt;0\degree\)</span>。</p>
+<p>对于导纳<span class="math inline">\(Y = G+jB\)</span></p>
+<p>若<span class="math inline">\(B&gt;0\)</span>，电路呈容性，<span class="math inline">\(0\degree&lt;\theta_y&lt;90\degree\)</span>。<span class="math inline">\(B=0\)</span>，电路呈阻性，<span class="math inline">\(\theta_y=0\)</span>。<span class="math inline">\(B&lt;0\)</span>，电路呈感性，<span class="math inline">\(-90\degree&lt;\theta_y&lt;0\degree\)</span>。</p>
+<p>电路为感性时，电压超前于电流，<span class="math inline">\(\theta_z&gt;0\)</span>，电路为阻性时，电压和电流同向，电路为容性时，电压落后与电流，<span class="math inline">\(\theta_z&lt;0\)</span></p>
+<p>RLC串联电路中会出现分压和大于总电压的情况。</p>
+<p>RLC并联电路中会出现分流和大于总电流的情况。</p>
+<h3 id="正弦稳态电路的计算">正弦稳态电路的计算</h3>
+<p>和直流电阻电路的电路定律是相似的，也就是说网孔法、节点法、阻抗的串并联、电源的等效互换、等效电源等方法可以使用。</p>
+<h2 id="正弦稳态电路的功率">正弦稳态电路的功率</h2>
+<h3 id="一端口电路的功率">一端口电路的功率</h3>
+<p>设无源一端口正弦稳态电路端口<span class="math inline">\(u,i\)</span>关联</p>
+<p><span class="math display">\[
+u(t) = \sqrt 2U\cos(\omega t+\varphi_u)
+\]</span></p>
+<p><span class="math display">\[
+i(t) = \sqrt 2I\cos(\omega t+\varphi_u-\theta)
+\]</span></p>
+<p><span class="math inline">\(\theta =
+\varphi_u-\varphi_i\)</span>，即<span class="math inline">\(u,i\)</span>的相位差</p>
+<p><strong>瞬时功率</strong></p>
+<p><span class="math display">\[
+p(t) = ui = UI[\cos\theta + \cos(2\omega t+2\varphi_u-\theta)]
+\]</span></p>
+<p><span class="math inline">\(p&gt;0\)</span>是电路吸收功率，<span class="math inline">\(p&lt;0\)</span>是电路发出功率。</p>
+<p>或者也可以</p>
+<p><span class="math display">\[
+p(t) = UI\cos\theta[1+\cos 2(\omega t+\varphi_u)] + UI\sin\theta\sin
+2(\omega t+\varphi_u)
+\]</span></p>
+<p>其中<span class="math inline">\(UI\cos\theta[1+\cos 2(\omega
+t+\varphi_u)]\)</span>为消耗功率，<span class="math inline">\(UI\sin\theta\sin 2(\omega
+t+\varphi_u)\)</span>为交换功率。</p>
+<p><strong>平均功率</strong></p>
+<p><span class="math display">\[
+P = \dfrac{1}{T}\int^T_0 p(t)dt = \dfrac{1}{T}\int^T_0[UI\cos\theta +
+UI\cos(2\omega t+2\varphi_u-\theta)]dt
+\]</span></p>
+<p>上式积分得</p>
+<p><span class="math display">\[
+P = UI\cos\theta = \dfrac{1}{2}U_mI_m\cos\theta
+\]</span></p>
+<p>其中<span class="math inline">\(\cos\theta\)</span>为功率因数，<span class="math inline">\(\theta=\varphi_u-\varphi_i\)</span>为功率因数角。无源网络中为等效阻抗的阻抗角。</p>
+<p>如果<span class="math inline">\(\cos\theta =
+0\)</span>，其为纯电抗电路，<span class="math inline">\(\cos\theta =
+1\)</span>，其为纯电阻电路。</p>
+<p>平均功率实际上是电阻消耗的功率，也称为有功功率。</p>
+<p><strong>无功功率</strong></p>
+<p><span class="math display">\[
+Q = UI\sin\theta
+\]</span></p>
+<p>表示交换功率的最大值，单位<span class="math inline">\(var\)</span>（乏）。<span class="math inline">\(Q\)</span>的大小反映电路<span class="math inline">\(N\)</span>与外电路交换功率的大小，由储能元件<span class="math inline">\(L,C\)</span>决定。</p>
+<p><strong>视在功率</strong></p>
+<p><span class="math display">\[
+S = UI
+\]</span></p>
+<p>反映电气设备的容量。</p>
+<p><strong>RLC的有功和无功功率</strong></p>
+<p><span class="math inline">\(P_R=UI,Q_R=0\)</span>，电阻只吸收功率，不发出功率</p>
+<p><span class="math inline">\(P_L=0,Q_L=UI\)</span>，电感不消耗功率，<span class="math inline">\(u\)</span>超前<span class="math inline">\(i90\degree\)</span></p>
+<p><span class="math inline">\(P_C=0,Q_C=-UI\)</span>，电容不消耗功率，<span class="math inline">\(i\)</span>超前<span class="math inline">\(u90\degree\)</span></p>
+<p>可见二端电路中只有电阻在消耗功率，电感和电容不消耗功率，只储存能量、交换能量。</p>
+<h3 id="复功率">复功率</h3>
+<p><span class="math display">\[
+\~S = P+jQ
+\]</span></p>
+<p>可以计算得到</p>
+<p><span class="math display">\[
+\~S = Ue^{j\varphi_u}Ie^{-j\varphi_i} = \dot U\dot I^* = Se^{j\theta}
+\]</span></p>
+<p><span class="math display">\[
+S = \sqrt{P^2+Q^2}
+\]</span></p>
+<p>其中<span class="math inline">\(\dot I^* =
+Ie^{-j\varphi_i}\)</span>是<span class="math inline">\(\dot
+I\)</span>的共轭值。</p>
+<p>功率与阻抗、导纳的关系为</p>
+<p><span class="math display">\[
+\~S = ZI^2 = RI^2+jXI^2
+\]</span></p>
+<p><span class="math display">\[
+P = RI^2,Q=XI^2,S=|Z|I^2
+\]</span></p>
+<p><span class="math display">\[
+\~S = Y^*U^2 = GU^2-jBU^2
+\]</span></p>
+<p><span class="math display">\[
+P = GU^2,Q=-BU^2,S=|Y|U^2
+\]</span></p>
+<p>对于正弦稳态电路，利用特勒根定理可以证明</p>
+<p><span class="math display">\[
+\sum\~S = 0
+\]</span></p>
+<p>拆开为</p>
+<p><span class="math display">\[
+\sum P = \sum UI\cos\theta = 0\\
+\sum Q = \sum UI\sin\theta = 0
+\]</span></p>
+<p>即对于正弦稳态电路，电路的总有功功率之代数和等于零，或者说，电路中发出的各有功功率之和等于吸收的各有功功率之和；电路的总无功功率之代数和恒等于零。</p>
+<p>注意复功率守恒不等于视在功率守恒。并且一般<span class="math inline">\(S\neq\sum S_k\)</span></p>
+<h3 id="多频电路的响应和平均功率">多频电路的响应和平均功率</h3>
+<p><strong>多频电路响应</strong></p>
+<p>我们可以把多个频率不相同的激励源先计算单独作用时的响应，再利用叠加定理计算多频电路响应。</p>
+<p><strong>多频电路瞬时功率</strong></p>
+<p>同样先计算单独作用时的电流，这里假设有两个，为<span class="math inline">\(i_1(t),i_2(t)\)</span></p>
+<p><span class="math display">\[
+p_R(t) = R[i_1(t)+i_2(t)]^2 = p_1(t)+p_2(t) + 2Ri_1(t)i_2(t)
+\]</span></p>
+<p><strong>多频电路平均功率</strong></p>
+<p>当<span class="math inline">\(i_1(t),i_2(t)\)</span>的频率之比为有理数，且不相等时</p>
+<p><span class="math display">\[
+P_R = P_1 + P_2
+\]</span></p>
+<p>如果相等时</p>
+<p><span class="math display">\[
+P_R = P_1 + P_2 + RI_{m1}I_{m2}\cos(\varphi_1-\varphi_2)
+\]</span></p>
+<p><strong>非正弦周期信号平均功率</strong></p>
+<p>可以把电压和电流展开为傅里叶级数，即分解为直流和各次谐波分量之和</p>
+<p><span class="math display">\[
+u(t) = U_0 + \sum^N_{k=1}\sqrt 2U_k\cos(k\omega t+\mu_{u_k})
+\]</span></p>
+<p><span class="math display">\[
+i(t) = I_0 + \sum^N_{k=1}\sqrt 2I_k\cos(k\omega t+\mu_{i_k})
+\]</span></p>
+<p>则该一端口电路吸收的平均功率为</p>
+<p><span class="math display">\[
+P = U_0I_0+\sum^N_{k=1}U_kI_k\cos\theta_k = P_0 +
+\sum^N_{k=1}P_k\quad(\theta_k = \varphi_{u_k}-\varphi_{i_k})
+\]</span></p>
+<p>电压和电流的有效值为</p>
+<p><span class="math display">\[
+U = \sqrt{\sum^N_{k=0}U_k^2}
+\]</span></p>
+<p><span class="math display">\[
+I = \sqrt{\sum^N_{k=0}I_k^2}
+\]</span></p>
+<h3 id="最大功率传输条件">最大功率传输条件</h3>
+<p>讨论正弦稳态电路中负载<span class="math inline">\(Z_L\)</span>获得最大功率<span class="math inline">\(P_{\max}\)</span>的条件。</p>
+<figure>
+<img src="23.jpg" alt="23.jpg"/>
+<figcaption aria-hidden="true">23.jpg</figcaption>
+</figure>
+<p><strong>共轭匹配</strong></p>
+<p><span class="math display">\[
+Z_L = R_L + jX_L
+\]</span></p>
+<p>其中<span class="math inline">\(R_L,X_L\)</span>可以独立调节时</p>
+<p><span class="math display">\[
+P_{\max} = \dfrac{U_s^2}{4R_s}
+\]</span></p>
+<p>条件是<span class="math inline">\(Z_L = Z_S^*\)</span>，即<span class="math inline">\(R_L=R_S,X_L=-X_S\)</span></p>
+<p><strong>模匹配</strong></p>
+<p>若<span class="math inline">\(Z_L =
+R_L+jX_L=|Z_L|\angle\theta\)</span>，<span class="math inline">\(|Z_L|\)</span>可变，<span class="math inline">\(\theta\)</span>不变，此时</p>
+<p><span class="math display">\[
+P_{\max} = \dfrac{\cos\theta
+U_s^2}{2|Z_S|+2(R_S\cos\theta+X_S\sin\theta)}
+\]</span></p>
+<p>条件是<span class="math inline">\(|Z_L|=|Z_S|\)</span></p>
 
 
 
@@ -1147,7 +1455,35 @@ U = \frac{1}{\sqrt 2}U_m
             <li><a href="#相位差">相位差</a></li>
           </ol>
         </li>
-        <li><a href="#相量法">相量法</a></li>
+        <li><a href="#相量法">相量法</a>
+          <ol>
+            <li><a href="#正弦量与相量">正弦量与相量</a></li>
+            <li><a href="#正弦量的相量运算">正弦量的相量运算</a></li>
+          </ol>
+        </li>
+        <li><a href="#电路定律的相量形式">电路定律的相量形式</a>
+          <ol>
+            <li><a href="#kcl和kvl">KCL和KVL</a></li>
+            <li><a href="#var的相量形式">VAR的相量形式</a></li>
+          </ol>
+        </li>
+        <li><a href="#阻抗与导纳">阻抗与导纳</a>
+          <ol>
+            <li><a href="#阻抗">阻抗</a></li>
+            <li><a href="#导纳">导纳</a></li>
+            <li><a href="#阻抗和导纳的关系">阻抗和导纳的关系</a></li>
+            <li><a href="#阻抗与导纳的性质">阻抗与导纳的性质</a></li>
+            <li><a href="#正弦稳态电路的计算">正弦稳态电路的计算</a></li>
+          </ol>
+        </li>
+        <li><a href="#正弦稳态电路的功率">正弦稳态电路的功率</a>
+          <ol>
+            <li><a href="#一端口电路的功率">一端口电路的功率</a></li>
+            <li><a href="#复功率">复功率</a></li>
+            <li><a href="#多频电路的响应和平均功率">多频电路的响应和平均功率</a></li>
+            <li><a href="#最大功率传输条件">最大功率传输条件</a></li>
+          </ol>
+        </li>
       </ol>
     </li>
   </ol>

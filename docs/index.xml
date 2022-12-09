@@ -3164,6 +3164,314 @@ U = \frac{1}{\sqrt 2}U_m
 &lt;p&gt;两个同频率的正弦波之间的相位之差称为相位差&lt;/p&gt;
 &lt;p&gt;频率相同，则相位差即为初相之差。&lt;/p&gt;
 &lt;h2 id=&#34;相量法&#34;&gt;相量法&lt;/h2&gt;
+&lt;h3 id=&#34;正弦量与相量&#34;&gt;正弦量与相量&lt;/h3&gt;
+&lt;p&gt;根据欧拉公式&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+u(t) = U_mcos(\omega t+\varphi_u) = Re[U_me^{j(\omega t+\varphi_u)}] =
+Re[U_me^{j\varphi_u}e^{j\omega t}] = Re[\dot{U_m}e^{j\omega t}]
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;这样，一个余弦时间函数就能用一个复指数函数来表示，其中&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\dot{U_m} = U_me^{j\varphi_u} = U_m\angle\varphi_u
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(\dot{U_m}\)&lt;/span&gt;的模式正弦电压的振幅&lt;span class=&#34;math inline&#34;&gt;\(U_m\)&lt;/span&gt;，辐角是正线电压的初相角&lt;span class=&#34;math inline&#34;&gt;\(\varphi_u\)&lt;/span&gt;，我们称其为电压&lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt;的振幅相量。为了将相量与一般复数做区别，&lt;span class=&#34;math inline&#34;&gt;\(U_m\)&lt;/span&gt;上加&lt;span class=&#34;math inline&#34;&gt;\(\cdot\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;式中&lt;span class=&#34;math inline&#34;&gt;\(e^{j\omega
+t}\)&lt;/span&gt;称为旋转因子，它是模等于&lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt;，初相为零，并以角速度&lt;span class=&#34;math inline&#34;&gt;\(\omega\)&lt;/span&gt;逆时针旋转的复值函数。向量&lt;span class=&#34;math inline&#34;&gt;\(\dot{U_m}\)&lt;/span&gt;乘以旋转因子&lt;span class=&#34;math inline&#34;&gt;\(e^{j\omega t}\)&lt;/span&gt;得到的&lt;span class=&#34;math inline&#34;&gt;\(\dot{U_m}e^{j\omega t}\)&lt;/span&gt;称为旋转相量，&lt;span class=&#34;math inline&#34;&gt;\(\dot{U_m}\)&lt;/span&gt;称为其振幅。&lt;/p&gt;
+&lt;p&gt;有效值与最大值的关系为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\dot{I_m} = \sqrt 2 \dot I,\dot{U_m} = \sqrt 2 \dot U
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(u(t) = Re[\dot{U_m}e^{j\omega
+t}]\)&lt;/span&gt;的几何意义是，一个正弦量在任意时刻的瞬时值，等于对应的选转向了同一时刻在实轴上的投影。&lt;/p&gt;
+&lt;p&gt;注意相量法只适用于同频率正弦激励的线性时不变电路。&lt;/p&gt;
+&lt;h3 id=&#34;正弦量的相量运算&#34;&gt;正弦量的相量运算&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;同频率正弦量加减&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+u_1(t) = \sqrt 2U_1\cos(\omega t+\varphi_1) = Re[\sqrt
+2\dot{U_1}e^{j\omega t}]
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+u_2(t) = \sqrt 2U_2\cos(\omega t+\varphi_1) = Re[\sqrt
+2\dot{U_2}e^{j\omega t}]
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+u(t) = u_1(t) + u_2(t) = Re[\sqrt 2\dot{U_1}e^{j\omega t}] + Re[\sqrt
+2\dot{U_2}e^{j\omega t}]
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+Re[\sqrt 2\dot{U}e^{j\omega t}] = Re[\sqrt 2\dot{U_1}e^{j\omega t} +
+\sqrt 2\dot{U_2}e^{j\omega t}] =
+Re[\sqrt{2}(\dot{U_1}+\dot{U_2})e^{j\omega t}]
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;所以有&lt;span class=&#34;math inline&#34;&gt;\(\dot U =
+\dot{U_1}+\dot{U_2}\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;对于&lt;span class=&#34;math inline&#34;&gt;\(\dot I\)&lt;/span&gt;同理。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;正弦量的微分、积分&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(i = \sqrt 2I\cos(\omega
+t+\varphi_i)=\sqrt 2Re[\dot Ie^{j\omega t}]\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;微分&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\dfrac{di(t)}{dt} = \sqrt 2Re[j\omega\dot Ie^{j\omega t}]
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\dot I&amp;#39; = j\omega\dot I = \omega I e^{j(\varphi_i+\pi/2)}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;积分&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\int i(t)dt = \sqrt 2Re[\dfrac{\dot I}{j\omega}e^{j\omega t}]
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\dot I&amp;#39; = \dfrac{\dot I}{j\omega} =  \dfrac I\omega
+e^{j(\varphi_i-\pi/2)}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h2 id=&#34;电路定律的相量形式&#34;&gt;电路定律的相量形式&lt;/h2&gt;
+&lt;h3 id=&#34;kcl和kvl&#34;&gt;KCL和KVL&lt;/h3&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\sum\dot I = 0
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\sum\dot U = 0
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;如果改用最大值，也有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\sum\dot I_m = 0
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\sum\dot U_m = 0
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;var的相量形式&#34;&gt;VAR的相量形式&lt;/h3&gt;
+&lt;figure&gt;
+&lt;img src=&#34;22.jpg&#34; alt=&#34;22.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;22.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;h2 id=&#34;阻抗与导纳&#34;&gt;阻抗与导纳&lt;/h2&gt;
+&lt;h3 id=&#34;阻抗&#34;&gt;阻抗&lt;/h3&gt;
+&lt;p&gt;阻抗以如下形式定义&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+Z = \dfrac{\dot U}{\dot I} = \dfrac{U\angle\varphi_u}{I\angle\varphi_i}
+= |Z|\angle\theta_Z = R+jX
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(|Z|=\dfrac{U}{I}=\sqrt{R^2+X^2}\)&lt;/span&gt;称为阻抗模，&lt;span class=&#34;math inline&#34;&gt;\(\theta_Z = \varphi_u-\varphi_i =
+\arctan\dfrac{X}{R}\)&lt;/span&gt;称为阻抗角。&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(R =
+|Z|\cos\theta_Z\)&lt;/span&gt;称为电阻，即阻抗的实部。&lt;span class=&#34;math inline&#34;&gt;\(X =
+|Z|\sin\theta_Z\)&lt;/span&gt;称为电抗，即阻抗的虚部。&lt;/p&gt;
+&lt;p&gt;单个元件&lt;span class=&#34;math inline&#34;&gt;\(R,L,C\)&lt;/span&gt;的阻抗&lt;span class=&#34;math inline&#34;&gt;\(Z_R,Z_L,Z_C\)&lt;/span&gt;分别为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\left\{\begin{align*}
+&amp;amp;Z_R = R\\
+&amp;amp;Z_L = j\omega L = jX_L = X_L\angle\dfrac{\pi}{2} \\
+&amp;amp;Z_C = \dfrac{1}{j\omega C} = -j\dfrac{1}{\omega C} = -jX_C =
+X_C\angle-\dfrac{\pi}{2}
+\end{align*}\right.
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;阻抗串联时&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+Z_{eq} = \sum Z_k
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;分压为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\dot U_k = \dfrac{Z_k}{Z_{eq}}\dot U
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;导纳&#34;&gt;导纳&lt;/h3&gt;
+&lt;p&gt;导纳以如下形式定义&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+Y = \dfrac{\dot I}{\dot U} = \dfrac{I\angle\varphi_i}{U\angle\varphi_u}
+= |Y|\angle\theta_Y = G+jB
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(|Y|=\dfrac{I}{U}=\sqrt{G^2+B^2}\)&lt;/span&gt;称为导纳模，&lt;span class=&#34;math inline&#34;&gt;\(\theta_Y = \varphi_i-\varphi_u =
+\arctan\dfrac{B}{G}\)&lt;/span&gt;称为导纳角。&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(G =
+|Y|\cos\theta_Y\)&lt;/span&gt;称为电导，即导纳的实部。&lt;span class=&#34;math inline&#34;&gt;\(B =
+|B|\sin\theta_Y\)&lt;/span&gt;称为电纳，即导纳的虚部。&lt;/p&gt;
+&lt;p&gt;单个元件&lt;span class=&#34;math inline&#34;&gt;\(R,L,C\)&lt;/span&gt;的导纳&lt;span class=&#34;math inline&#34;&gt;\(Y_R,Y_L,Y_C\)&lt;/span&gt;分别为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\left\{\begin{align*}
+&amp;amp;Y_R = \dfrac{1}{R} = G\\
+&amp;amp;Y_L = \dfrac{1}{j\omega L} = -j\dfrac{1}{\omega L} = -jB_L\\
+&amp;amp;Y_C = j\omega C = jB_C
+\end{align*}\right.
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;导纳并联时&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+Y_{eq} = \sum Y_k
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;分流为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\dot I_k = \dfrac{Y_k}{Y_{eq}}\dot I
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;阻抗和导纳的关系&#34;&gt;阻抗和导纳的关系&lt;/h3&gt;
+&lt;p&gt;对统一电路，阻抗和导纳互为倒数。&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+Z = \dfrac{1}{Y},Y=\dfrac{1}{Z}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;或者&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+|Y| = \dfrac{1}{|Z|},\theta_y = -\theta_z
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;阻抗与导纳的性质&#34;&gt;阻抗与导纳的性质&lt;/h3&gt;
+&lt;p&gt;对于阻抗&lt;span class=&#34;math inline&#34;&gt;\(Z = R+jX\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;若&lt;span class=&#34;math inline&#34;&gt;\(X&amp;gt;0\)&lt;/span&gt;，电路呈感性，&lt;span class=&#34;math inline&#34;&gt;\(0\degree&amp;lt;\theta_z&amp;lt;90\degree\)&lt;/span&gt;。&lt;span class=&#34;math inline&#34;&gt;\(X=0\)&lt;/span&gt;，电路呈阻性，&lt;span class=&#34;math inline&#34;&gt;\(\theta_z=0\)&lt;/span&gt;。&lt;span class=&#34;math inline&#34;&gt;\(X&amp;lt;0\)&lt;/span&gt;，电路呈容性，&lt;span class=&#34;math inline&#34;&gt;\(-90\degree&amp;lt;\theta_z&amp;lt;0\degree\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;对于导纳&lt;span class=&#34;math inline&#34;&gt;\(Y = G+jB\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;若&lt;span class=&#34;math inline&#34;&gt;\(B&amp;gt;0\)&lt;/span&gt;，电路呈容性，&lt;span class=&#34;math inline&#34;&gt;\(0\degree&amp;lt;\theta_y&amp;lt;90\degree\)&lt;/span&gt;。&lt;span class=&#34;math inline&#34;&gt;\(B=0\)&lt;/span&gt;，电路呈阻性，&lt;span class=&#34;math inline&#34;&gt;\(\theta_y=0\)&lt;/span&gt;。&lt;span class=&#34;math inline&#34;&gt;\(B&amp;lt;0\)&lt;/span&gt;，电路呈感性，&lt;span class=&#34;math inline&#34;&gt;\(-90\degree&amp;lt;\theta_y&amp;lt;0\degree\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;电路为感性时，电压超前于电流，&lt;span class=&#34;math inline&#34;&gt;\(\theta_z&amp;gt;0\)&lt;/span&gt;，电路为阻性时，电压和电流同向，电路为容性时，电压落后与电流，&lt;span class=&#34;math inline&#34;&gt;\(\theta_z&amp;lt;0\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;RLC串联电路中会出现分压和大于总电压的情况。&lt;/p&gt;
+&lt;p&gt;RLC并联电路中会出现分流和大于总电流的情况。&lt;/p&gt;
+&lt;h3 id=&#34;正弦稳态电路的计算&#34;&gt;正弦稳态电路的计算&lt;/h3&gt;
+&lt;p&gt;和直流电阻电路的电路定律是相似的，也就是说网孔法、节点法、阻抗的串并联、电源的等效互换、等效电源等方法可以使用。&lt;/p&gt;
+&lt;h2 id=&#34;正弦稳态电路的功率&#34;&gt;正弦稳态电路的功率&lt;/h2&gt;
+&lt;h3 id=&#34;一端口电路的功率&#34;&gt;一端口电路的功率&lt;/h3&gt;
+&lt;p&gt;设无源一端口正弦稳态电路端口&lt;span class=&#34;math inline&#34;&gt;\(u,i\)&lt;/span&gt;关联&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+u(t) = \sqrt 2U\cos(\omega t+\varphi_u)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+i(t) = \sqrt 2I\cos(\omega t+\varphi_u-\theta)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(\theta =
+\varphi_u-\varphi_i\)&lt;/span&gt;，即&lt;span class=&#34;math inline&#34;&gt;\(u,i\)&lt;/span&gt;的相位差&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;瞬时功率&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+p(t) = ui = UI[\cos\theta + \cos(2\omega t+2\varphi_u-\theta)]
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(p&amp;gt;0\)&lt;/span&gt;是电路吸收功率，&lt;span class=&#34;math inline&#34;&gt;\(p&amp;lt;0\)&lt;/span&gt;是电路发出功率。&lt;/p&gt;
+&lt;p&gt;或者也可以&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+p(t) = UI\cos\theta[1+\cos 2(\omega t+\varphi_u)] + UI\sin\theta\sin
+2(\omega t+\varphi_u)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(UI\cos\theta[1+\cos 2(\omega
+t+\varphi_u)]\)&lt;/span&gt;为消耗功率，&lt;span class=&#34;math inline&#34;&gt;\(UI\sin\theta\sin 2(\omega
+t+\varphi_u)\)&lt;/span&gt;为交换功率。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;平均功率&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+P = \dfrac{1}{T}\int^T_0 p(t)dt = \dfrac{1}{T}\int^T_0[UI\cos\theta +
+UI\cos(2\omega t+2\varphi_u-\theta)]dt
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;上式积分得&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+P = UI\cos\theta = \dfrac{1}{2}U_mI_m\cos\theta
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(\cos\theta\)&lt;/span&gt;为功率因数，&lt;span class=&#34;math inline&#34;&gt;\(\theta=\varphi_u-\varphi_i\)&lt;/span&gt;为功率因数角。无源网络中为等效阻抗的阻抗角。&lt;/p&gt;
+&lt;p&gt;如果&lt;span class=&#34;math inline&#34;&gt;\(\cos\theta =
+0\)&lt;/span&gt;，其为纯电抗电路，&lt;span class=&#34;math inline&#34;&gt;\(\cos\theta =
+1\)&lt;/span&gt;，其为纯电阻电路。&lt;/p&gt;
+&lt;p&gt;平均功率实际上是电阻消耗的功率，也称为有功功率。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;无功功率&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+Q = UI\sin\theta
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;表示交换功率的最大值，单位&lt;span class=&#34;math inline&#34;&gt;\(var\)&lt;/span&gt;（乏）。&lt;span class=&#34;math inline&#34;&gt;\(Q\)&lt;/span&gt;的大小反映电路&lt;span class=&#34;math inline&#34;&gt;\(N\)&lt;/span&gt;与外电路交换功率的大小，由储能元件&lt;span class=&#34;math inline&#34;&gt;\(L,C\)&lt;/span&gt;决定。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;视在功率&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+S = UI
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;反映电气设备的容量。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;RLC的有功和无功功率&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(P_R=UI,Q_R=0\)&lt;/span&gt;，电阻只吸收功率，不发出功率&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(P_L=0,Q_L=UI\)&lt;/span&gt;，电感不消耗功率，&lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt;超前&lt;span class=&#34;math inline&#34;&gt;\(i90\degree\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(P_C=0,Q_C=-UI\)&lt;/span&gt;，电容不消耗功率，&lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt;超前&lt;span class=&#34;math inline&#34;&gt;\(u90\degree\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;可见二端电路中只有电阻在消耗功率，电感和电容不消耗功率，只储存能量、交换能量。&lt;/p&gt;
+&lt;h3 id=&#34;复功率&#34;&gt;复功率&lt;/h3&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\~S = P+jQ
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;可以计算得到&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\~S = Ue^{j\varphi_u}Ie^{-j\varphi_i} = \dot U\dot I^* = Se^{j\theta}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+S = \sqrt{P^2+Q^2}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(\dot I^* =
+Ie^{-j\varphi_i}\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(\dot
+I\)&lt;/span&gt;的共轭值。&lt;/p&gt;
+&lt;p&gt;功率与阻抗、导纳的关系为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\~S = ZI^2 = RI^2+jXI^2
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+P = RI^2,Q=XI^2,S=|Z|I^2
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\~S = Y^*U^2 = GU^2-jBU^2
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+P = GU^2,Q=-BU^2,S=|Y|U^2
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;对于正弦稳态电路，利用特勒根定理可以证明&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\sum\~S = 0
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;拆开为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\sum P = \sum UI\cos\theta = 0\\
+\sum Q = \sum UI\sin\theta = 0
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;即对于正弦稳态电路，电路的总有功功率之代数和等于零，或者说，电路中发出的各有功功率之和等于吸收的各有功功率之和；电路的总无功功率之代数和恒等于零。&lt;/p&gt;
+&lt;p&gt;注意复功率守恒不等于视在功率守恒。并且一般&lt;span class=&#34;math inline&#34;&gt;\(S\neq\sum S_k\)&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;多频电路的响应和平均功率&#34;&gt;多频电路的响应和平均功率&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;多频电路响应&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;我们可以把多个频率不相同的激励源先计算单独作用时的响应，再利用叠加定理计算多频电路响应。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;多频电路瞬时功率&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;同样先计算单独作用时的电流，这里假设有两个，为&lt;span class=&#34;math inline&#34;&gt;\(i_1(t),i_2(t)\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+p_R(t) = R[i_1(t)+i_2(t)]^2 = p_1(t)+p_2(t) + 2Ri_1(t)i_2(t)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;多频电路平均功率&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;当&lt;span class=&#34;math inline&#34;&gt;\(i_1(t),i_2(t)\)&lt;/span&gt;的频率之比为有理数，且不相等时&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+P_R = P_1 + P_2
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;如果相等时&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+P_R = P_1 + P_2 + RI_{m1}I_{m2}\cos(\varphi_1-\varphi_2)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;非正弦周期信号平均功率&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;可以把电压和电流展开为傅里叶级数，即分解为直流和各次谐波分量之和&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+u(t) = U_0 + \sum^N_{k=1}\sqrt 2U_k\cos(k\omega t+\mu_{u_k})
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+i(t) = I_0 + \sum^N_{k=1}\sqrt 2I_k\cos(k\omega t+\mu_{i_k})
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;则该一端口电路吸收的平均功率为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+P = U_0I_0+\sum^N_{k=1}U_kI_k\cos\theta_k = P_0 +
+\sum^N_{k=1}P_k\quad(\theta_k = \varphi_{u_k}-\varphi_{i_k})
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;电压和电流的有效值为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+U = \sqrt{\sum^N_{k=0}U_k^2}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+I = \sqrt{\sum^N_{k=0}I_k^2}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;最大功率传输条件&#34;&gt;最大功率传输条件&lt;/h3&gt;
+&lt;p&gt;讨论正弦稳态电路中负载&lt;span class=&#34;math inline&#34;&gt;\(Z_L\)&lt;/span&gt;获得最大功率&lt;span class=&#34;math inline&#34;&gt;\(P_{\max}\)&lt;/span&gt;的条件。&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;23.jpg&#34; alt=&#34;23.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;23.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;&lt;strong&gt;共轭匹配&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+Z_L = R_L + jX_L
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(R_L,X_L\)&lt;/span&gt;可以独立调节时&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+P_{\max} = \dfrac{U_s^2}{4R_s}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;条件是&lt;span class=&#34;math inline&#34;&gt;\(Z_L = Z_S^*\)&lt;/span&gt;，即&lt;span class=&#34;math inline&#34;&gt;\(R_L=R_S,X_L=-X_S\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;模匹配&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;若&lt;span class=&#34;math inline&#34;&gt;\(Z_L =
+R_L+jX_L=|Z_L|\angle\theta\)&lt;/span&gt;，&lt;span class=&#34;math inline&#34;&gt;\(|Z_L|\)&lt;/span&gt;可变，&lt;span class=&#34;math inline&#34;&gt;\(\theta\)&lt;/span&gt;不变，此时&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+P_{\max} = \dfrac{\cos\theta
+U_s^2}{2|Z_S|+2(R_S\cos\theta+X_S\sin\theta)}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;条件是&lt;span class=&#34;math inline&#34;&gt;\(|Z_L|=|Z_S|\)&lt;/span&gt;&lt;/p&gt;
 
 
 </description>
@@ -11585,6 +11893,50 @@ n=1,2,3,\cdots
 E_1 = -\left(\dfrac{me^4}{8\varepsilon_0^2h^2}\right) = -13.6 eV
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;这个能量是基态能级的能量，也是氢原子的电离能。&lt;/p&gt;
+&lt;h3 id=&#34;微观粒子的波粒二象性&#34;&gt;微观粒子的波粒二象性&lt;/h3&gt;
+&lt;p&gt;德布罗意假设：不仅光具有波粒二象性，一切实物粒子如电子、原子、分子等也都具有波粒二象性。他给出如下公式&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+E = mc^2 = h\nu
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+p = mv = \dfrac{h}{\lambda}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;上二式可写成&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\nu = \dfrac{E}{h} = \dfrac{mc^2}{h} = \dfrac{m_0c^2}{h\sqrt{1-v^2/c^2}}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\lambda = \dfrac{h}{p} = \dfrac{h}{mv} =
+\dfrac{h}{m_0v}\sqrt{1-\dfrac{v^2}{c^2}}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;上面的&lt;span class=&#34;math inline&#34;&gt;\(\lambda\)&lt;/span&gt;称为德布罗意波或物质波的波长，该式称为德布罗意关系式。&lt;/p&gt;
+&lt;p&gt;德布罗意指出，电子在玻尔轨道上运动与这个电子的物质波沿轨道传播相联系，满足驻波条件&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+2\pi r = n\lambda
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;代入&lt;span class=&#34;math inline&#34;&gt;\(\lambda =
+\dfrac{h}{mv}\)&lt;/span&gt;就可以得到玻尔理论中的角动量量子化条件。&lt;/p&gt;
+&lt;h3 id=&#34;物质波的实验证明&#34;&gt;物质波的实验证明&lt;/h3&gt;
+&lt;p&gt;德布罗意冠以物质波的假设，首先在1927年由戴维孙-革末实验证实。&lt;/p&gt;
+&lt;p&gt;二人在做电子束在晶体表面散射实验时，观察到了和&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;射线在晶体表面衍射想类似的电子衍射现象。&lt;/p&gt;
+&lt;p&gt;1961年他人还做了电子束的单缝、双缝等等实验。&lt;/p&gt;
+&lt;p&gt;除了电子，也有人做了中子、原子的实验。&lt;/p&gt;
+&lt;h3 id=&#34;不确定关系&#34;&gt;不确定关系&lt;/h3&gt;
+&lt;p&gt;在经典力学中，质点在任何时刻都有完全确定的位置、动量、能量、角动量等。与此不同，微观粒子具有明显的波动性，以致它的某些成对物理量不可能同时具有确定的量值。例如，位置坐标和动量、角坐标和角动量等，其中一个量确定越准确，另一个量的不确定程度就越大。&lt;/p&gt;
+&lt;p&gt;海森堡根据量子力学推出，一个粒子的位置坐标的不确定量&lt;span class=&#34;math inline&#34;&gt;\(\Delta x\)&lt;/span&gt;和其同一时刻的动量不确定量&lt;span class=&#34;math inline&#34;&gt;\(\Delta p_x\)&lt;/span&gt;，满足&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\Delta x\Delta p_x \geq \dfrac{\hbar}{2}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;称为海森堡坐标和动量的不确定关系式。&lt;/p&gt;
+&lt;p&gt;不确定关系不仅存在于坐标和动量之间，也存在于能量和时间之间，如果微观体系处于某一状态的时间为&lt;span class=&#34;math inline&#34;&gt;\(\Delta t\)&lt;/span&gt;，则其能量必有一个不确定量&lt;span class=&#34;math inline&#34;&gt;\(\Delta E\)&lt;/span&gt;，由量子力学可推出&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\Delta E\Delta t\geq\dfrac{\hbar}{2}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;上式称为能量和时间不确定关系式。&lt;/p&gt;
+&lt;p&gt;将其应用于原子系统可以讨论原子各受激态能级宽度&lt;span class=&#34;math inline&#34;&gt;\(\Delta E\)&lt;/span&gt;和该能级平均寿命&lt;span class=&#34;math inline&#34;&gt;\(\Delta t\)&lt;/span&gt;之间的关系。&lt;/p&gt;
+&lt;p&gt;原子通常处于能量最低的基态，在受激发后将跃迁到各个能量较高的受激态，停留一段时间后又自发跃迁进入能量较低的定态。大量同类原子在同一高能级上停留时间长短不一，但平均停留时间为一定值，称为该能级的平均寿命。&lt;span class=&#34;math inline&#34;&gt;\(\Delta t\)&lt;/span&gt;越长的能级越稳定，宽度&lt;span class=&#34;math inline&#34;&gt;\(\Delta
+E\)&lt;/span&gt;越小。由于能级有一定宽度，光谱线也就有一定宽度了。&lt;/p&gt;
+&lt;p&gt;有些原子具有一种特殊的受激态，寿命可长达&lt;span class=&#34;math inline&#34;&gt;\(10^{-3}s\)&lt;/span&gt;或更长，这类受激态称为亚稳态。&lt;/p&gt;
 
 
 </description>
@@ -16708,7 +17060,7 @@ x \equiv a_k(mod\quad r_k)
 &lt;span id=&#34;cb20-8&#34;&gt;&lt;a href=&#34;#cb20-8&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;&lt;span class=&#34;dt&#34;&gt;int&lt;/span&gt; r&lt;span class=&#34;op&#34;&gt;[&lt;/span&gt;MAXN&lt;span class=&#34;op&#34;&gt;];&lt;/span&gt;&lt;span class=&#34;co&#34;&gt;//临时边序号，间接排序&lt;/span&gt;&lt;/span&gt;
 &lt;span id=&#34;cb20-9&#34;&gt;&lt;a href=&#34;#cb20-9&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;&lt;span class=&#34;dt&#34;&gt;int&lt;/span&gt; find_sets&lt;span class=&#34;op&#34;&gt;[&lt;/span&gt;MAXN&lt;span class=&#34;op&#34;&gt;];&lt;/span&gt;&lt;span class=&#34;co&#34;&gt;//并查集&lt;/span&gt;&lt;/span&gt;
 &lt;span id=&#34;cb20-10&#34;&gt;&lt;a href=&#34;#cb20-10&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;&lt;/span&gt;
-&lt;span id=&#34;cb20-11&#34;&gt;&lt;a href=&#34;#cb20-11&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;&lt;span class=&#34;dt&#34;&gt;int&lt;/span&gt; cmp&lt;span class=&#34;op&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;at&#34;&gt;const&lt;/span&gt; &lt;span class=&#34;dt&#34;&gt;int&lt;/span&gt; i&lt;span class=&#34;op&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;at&#34;&gt;const&lt;/span&gt; &lt;span class=&#34;dt&#34;&gt;int&lt;/span&gt; j&lt;span class=&#34;op&#34;&gt;){&lt;/span&gt;&lt;span class=&#34;cf&#34;&gt;return&lt;/span&gt; w&lt;span class=&#34;op&#34;&gt;[&lt;/span&gt;i&lt;span class=&#34;op&#34;&gt;]&amp;lt;&lt;/span&gt;w&lt;span class=&#34;op&#34;&gt;[&lt;/span&gt;j&lt;span class=&#34;op&#34;&gt;];}&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&#34;cb20-11&#34;&gt;&lt;a href=&#34;#cb20-11&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;&lt;span class=&#34;dt&#34;&gt;bool&lt;/span&gt; cmp&lt;span class=&#34;op&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;at&#34;&gt;const&lt;/span&gt; &lt;span class=&#34;dt&#34;&gt;int&lt;/span&gt; i&lt;span class=&#34;op&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;at&#34;&gt;const&lt;/span&gt; &lt;span class=&#34;dt&#34;&gt;int&lt;/span&gt; j&lt;span class=&#34;op&#34;&gt;){&lt;/span&gt;&lt;span class=&#34;cf&#34;&gt;return&lt;/span&gt; w&lt;span class=&#34;op&#34;&gt;[&lt;/span&gt;i&lt;span class=&#34;op&#34;&gt;]&amp;lt;&lt;/span&gt;w&lt;span class=&#34;op&#34;&gt;[&lt;/span&gt;j&lt;span class=&#34;op&#34;&gt;];}&lt;/span&gt;&lt;/span&gt;
 &lt;span id=&#34;cb20-12&#34;&gt;&lt;a href=&#34;#cb20-12&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;&lt;/span&gt;
 &lt;span id=&#34;cb20-13&#34;&gt;&lt;a href=&#34;#cb20-13&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;&lt;span class=&#34;dt&#34;&gt;int&lt;/span&gt; find&lt;span class=&#34;op&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;dt&#34;&gt;int&lt;/span&gt; x&lt;span class=&#34;op&#34;&gt;){&lt;/span&gt;&lt;span class=&#34;cf&#34;&gt;return&lt;/span&gt; find_sets&lt;span class=&#34;op&#34;&gt;[&lt;/span&gt;x&lt;span class=&#34;op&#34;&gt;]==&lt;/span&gt;x &lt;span class=&#34;op&#34;&gt;?&lt;/span&gt; x &lt;span class=&#34;op&#34;&gt;:&lt;/span&gt; find_sets&lt;span class=&#34;op&#34;&gt;[&lt;/span&gt;x&lt;span class=&#34;op&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;op&#34;&gt;=&lt;/span&gt; find&lt;span class=&#34;op&#34;&gt;(&lt;/span&gt;find_sets&lt;span class=&#34;op&#34;&gt;[&lt;/span&gt;x&lt;span class=&#34;op&#34;&gt;]);}&lt;/span&gt;&lt;/span&gt;
 &lt;span id=&#34;cb20-14&#34;&gt;&lt;a href=&#34;#cb20-14&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;&lt;/span&gt;

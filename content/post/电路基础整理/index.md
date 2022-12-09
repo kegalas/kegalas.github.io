@@ -952,4 +952,427 @@ $$
 
 ## 相量法
 
+### 正弦量与相量
 
+根据欧拉公式
+
+$$
+u(t) = U_mcos(\omega t+\varphi_u) = Re[U_me^{j(\omega t+\varphi_u)}] = Re[U_me^{j\varphi_u}e^{j\omega t}] = Re[\dot{U_m}e^{j\omega t}]
+$$
+
+这样，一个余弦时间函数就能用一个复指数函数来表示，其中
+
+$$
+\dot{U_m} = U_me^{j\varphi_u} = U_m\angle\varphi_u
+$$
+
+$\dot{U_m}$的模式正弦电压的振幅$U_m$，辐角是正线电压的初相角$\varphi_u$，我们称其为电压$u$的振幅相量。为了将相量与一般复数做区别，$U_m$上加$\cdot$。
+
+式中$e^{j\omega t}$称为旋转因子，它是模等于$1$，初相为零，并以角速度$\omega$逆时针旋转的复值函数。向量$\dot{U_m}$乘以旋转因子$e^{j\omega t}$得到的$\dot{U_m}e^{j\omega t}$称为旋转相量，$\dot{U_m}$称为其振幅。
+
+有效值与最大值的关系为
+
+$$
+\dot{I_m} = \sqrt 2 \dot I,\dot{U_m} = \sqrt 2 \dot U
+$$
+
+$u(t) = Re[\dot{U_m}e^{j\omega t}]$的几何意义是，一个正弦量在任意时刻的瞬时值，等于对应的选转向了同一时刻在实轴上的投影。
+
+注意相量法只适用于同频率正弦激励的线性时不变电路。
+
+### 正弦量的相量运算
+
+**同频率正弦量加减**
+
+设
+
+$$
+u_1(t) = \sqrt 2U_1\cos(\omega t+\varphi_1) = Re[\sqrt 2\dot{U_1}e^{j\omega t}]
+$$
+
+$$
+u_2(t) = \sqrt 2U_2\cos(\omega t+\varphi_1) = Re[\sqrt 2\dot{U_2}e^{j\omega t}]
+$$
+
+$$
+u(t) = u_1(t) + u_2(t) = Re[\sqrt 2\dot{U_1}e^{j\omega t}] + Re[\sqrt 2\dot{U_2}e^{j\omega t}]
+$$
+
+$$
+Re[\sqrt 2\dot{U}e^{j\omega t}] = Re[\sqrt 2\dot{U_1}e^{j\omega t} + \sqrt 2\dot{U_2}e^{j\omega t}] = Re[\sqrt{2}(\dot{U_1}+\dot{U_2})e^{j\omega t}]
+$$
+
+所以有$\dot U = \dot{U_1}+\dot{U_2}$
+
+对于$\dot I$同理。
+
+**正弦量的微分、积分**
+
+设$i = \sqrt 2I\cos(\omega t+\varphi_i)=\sqrt 2Re[\dot Ie^{j\omega t}]$
+
+微分
+
+$$
+\dfrac{di(t)}{dt} = \sqrt 2Re[j\omega\dot Ie^{j\omega t}]
+$$
+
+其中
+
+$$
+\dot I' = j\omega\dot I = \omega I e^{j(\varphi_i+\pi/2)}
+$$
+
+积分
+
+$$
+\int i(t)dt = \sqrt 2Re[\dfrac{\dot I}{j\omega}e^{j\omega t}]
+$$
+
+$$
+\dot I' = \dfrac{\dot I}{j\omega} =  \dfrac I\omega e^{j(\varphi_i-\pi/2)}
+$$
+
+## 电路定律的相量形式
+
+### KCL和KVL
+
+$$
+\sum\dot I = 0
+$$
+
+$$
+\sum\dot U = 0
+$$
+
+如果改用最大值，也有
+
+$$
+\sum\dot I_m = 0
+$$
+
+$$
+\sum\dot U_m = 0
+$$
+
+### VAR的相量形式
+
+![22.jpg](22.jpg)
+
+## 阻抗与导纳
+
+### 阻抗
+
+阻抗以如下形式定义
+
+$$
+Z = \dfrac{\dot U}{\dot I} = \dfrac{U\angle\varphi_u}{I\angle\varphi_i} = |Z|\angle\theta_Z = R+jX
+$$
+
+其中$|Z|=\dfrac{U}{I}=\sqrt{R^2+X^2}$称为阻抗模，$\theta_Z = \varphi_u-\varphi_i = \arctan\dfrac{X}{R}$称为阻抗角。
+
+$R = |Z|\cos\theta_Z$称为电阻，即阻抗的实部。$X = |Z|\sin\theta_Z$称为电抗，即阻抗的虚部。
+
+单个元件$R,L,C$的阻抗$Z_R,Z_L,Z_C$分别为
+
+$$
+\left\{\begin{align*}
+&Z_R = R\\
+&Z_L = j\omega L = jX_L = X_L\angle\dfrac{\pi}{2} \\
+&Z_C = \dfrac{1}{j\omega C} = -j\dfrac{1}{\omega C} = -jX_C = X_C\angle-\dfrac{\pi}{2}
+\end{align*}\right.
+$$
+
+阻抗串联时
+
+$$
+Z_{eq} = \sum Z_k
+$$
+
+分压为
+
+$$
+\dot U_k = \dfrac{Z_k}{Z_{eq}}\dot U
+$$
+
+### 导纳
+
+导纳以如下形式定义
+
+$$
+Y = \dfrac{\dot I}{\dot U} = \dfrac{I\angle\varphi_i}{U\angle\varphi_u} = |Y|\angle\theta_Y = G+jB
+$$
+
+其中$|Y|=\dfrac{I}{U}=\sqrt{G^2+B^2}$称为导纳模，$\theta_Y = \varphi_i-\varphi_u = \arctan\dfrac{B}{G}$称为导纳角。
+
+$G = |Y|\cos\theta_Y$称为电导，即导纳的实部。$B = |B|\sin\theta_Y$称为电纳，即导纳的虚部。
+
+单个元件$R,L,C$的导纳$Y_R,Y_L,Y_C$分别为
+
+$$
+\left\{\begin{align*}
+&Y_R = \dfrac{1}{R} = G\\
+&Y_L = \dfrac{1}{j\omega L} = -j\dfrac{1}{\omega L} = -jB_L\\
+&Y_C = j\omega C = jB_C
+\end{align*}\right.
+$$
+
+导纳并联时
+
+$$
+Y_{eq} = \sum Y_k
+$$
+
+分流为
+
+$$
+\dot I_k = \dfrac{Y_k}{Y_{eq}}\dot I
+$$
+
+### 阻抗和导纳的关系
+
+对统一电路，阻抗和导纳互为倒数。
+
+$$
+Z = \dfrac{1}{Y},Y=\dfrac{1}{Z}
+$$
+
+或者
+
+$$
+|Y| = \dfrac{1}{|Z|},\theta_y = -\theta_z
+$$
+
+### 阻抗与导纳的性质
+
+对于阻抗$Z = R+jX$
+
+若$X>0$，电路呈感性，$0\degree<\theta_z<90\degree$。$X=0$，电路呈阻性，$\theta_z=0$。$X<0$，电路呈容性，$-90\degree<\theta_z<0\degree$。
+
+对于导纳$Y = G+jB$
+
+若$B>0$，电路呈容性，$0\degree<\theta_y<90\degree$。$B=0$，电路呈阻性，$\theta_y=0$。$B<0$，电路呈感性，$-90\degree<\theta_y<0\degree$。
+
+电路为感性时，电压超前于电流，$\theta_z>0$，电路为阻性时，电压和电流同向，电路为容性时，电压落后与电流，$\theta_z<0$
+
+RLC串联电路中会出现分压和大于总电压的情况。
+
+RLC并联电路中会出现分流和大于总电流的情况。
+
+### 正弦稳态电路的计算
+
+和直流电阻电路的电路定律是相似的，也就是说网孔法、节点法、阻抗的串并联、电源的等效互换、等效电源等方法可以使用。
+
+## 正弦稳态电路的功率
+
+### 一端口电路的功率
+
+设无源一端口正弦稳态电路端口$u,i$关联
+
+$$
+u(t) = \sqrt 2U\cos(\omega t+\varphi_u)
+$$
+
+$$
+i(t) = \sqrt 2I\cos(\omega t+\varphi_u-\theta)
+$$
+
+$\theta = \varphi_u-\varphi_i$，即$u,i$的相位差
+
+**瞬时功率**
+
+$$
+p(t) = ui = UI[\cos\theta + \cos(2\omega t+2\varphi_u-\theta)]
+$$
+
+$p>0$是电路吸收功率，$p<0$是电路发出功率。
+
+或者也可以
+
+$$
+p(t) = UI\cos\theta[1+\cos 2(\omega t+\varphi_u)] + UI\sin\theta\sin 2(\omega t+\varphi_u)
+$$
+
+其中$UI\cos\theta[1+\cos 2(\omega t+\varphi_u)]$为消耗功率，$UI\sin\theta\sin 2(\omega t+\varphi_u)$为交换功率。
+
+**平均功率**
+
+$$
+P = \dfrac{1}{T}\int^T_0 p(t)dt = \dfrac{1}{T}\int^T_0[UI\cos\theta + UI\cos(2\omega t+2\varphi_u-\theta)]dt
+$$
+
+上式积分得
+
+$$
+P = UI\cos\theta = \dfrac{1}{2}U_mI_m\cos\theta
+$$
+
+其中$\cos\theta$为功率因数，$\theta=\varphi_u-\varphi_i$为功率因数角。无源网络中为等效阻抗的阻抗角。
+
+如果$\cos\theta = 0$，其为纯电抗电路，$\cos\theta = 1$，其为纯电阻电路。
+
+平均功率实际上是电阻消耗的功率，也称为有功功率。
+
+**无功功率**
+
+$$
+Q = UI\sin\theta
+$$
+
+表示交换功率的最大值，单位$var$（乏）。$Q$的大小反映电路$N$与外电路交换功率的大小，由储能元件$L,C$决定。
+
+**视在功率**
+
+$$
+S = UI
+$$
+
+反映电气设备的容量。
+
+**RLC的有功和无功功率**
+
+$P_R=UI,Q_R=0$，电阻只吸收功率，不发出功率
+
+$P_L=0,Q_L=UI$，电感不消耗功率，$u$超前$i90\degree$
+
+$P_C=0,Q_C=-UI$，电容不消耗功率，$i$超前$u90\degree$
+
+可见二端电路中只有电阻在消耗功率，电感和电容不消耗功率，只储存能量、交换能量。
+
+### 复功率
+
+$$
+\~S = P+jQ
+$$
+
+可以计算得到
+
+$$
+\~S = Ue^{j\varphi_u}Ie^{-j\varphi_i} = \dot U\dot I^* = Se^{j\theta}
+$$
+
+$$
+S = \sqrt{P^2+Q^2}
+$$
+
+其中$\dot I^* = Ie^{-j\varphi_i}$是$\dot I$的共轭值。
+
+功率与阻抗、导纳的关系为
+
+$$
+\~S = ZI^2 = RI^2+jXI^2
+$$
+
+$$
+P = RI^2,Q=XI^2,S=|Z|I^2
+$$
+
+$$
+\~S = Y^*U^2 = GU^2-jBU^2
+$$
+
+$$
+P = GU^2,Q=-BU^2,S=|Y|U^2
+$$
+
+对于正弦稳态电路，利用特勒根定理可以证明
+
+$$
+\sum\~S = 0
+$$
+
+拆开为
+
+$$
+\sum P = \sum UI\cos\theta = 0\\
+\sum Q = \sum UI\sin\theta = 0
+$$
+
+即对于正弦稳态电路，电路的总有功功率之代数和等于零，或者说，电路中发出的各有功功率之和等于吸收的各有功功率之和；电路的总无功功率之代数和恒等于零。
+
+注意复功率守恒不等于视在功率守恒。并且一般$S\neq\sum S_k$
+
+### 多频电路的响应和平均功率
+
+**多频电路响应**
+
+我们可以把多个频率不相同的激励源先计算单独作用时的响应，再利用叠加定理计算多频电路响应。
+
+**多频电路瞬时功率**
+
+同样先计算单独作用时的电流，这里假设有两个，为$i_1(t),i_2(t)$
+
+$$
+p_R(t) = R[i_1(t)+i_2(t)]^2 = p_1(t)+p_2(t) + 2Ri_1(t)i_2(t)
+$$
+
+**多频电路平均功率**
+
+当$i_1(t),i_2(t)$的频率之比为有理数，且不相等时
+
+$$
+P_R = P_1 + P_2
+$$
+
+如果相等时
+
+$$
+P_R = P_1 + P_2 + RI_{m1}I_{m2}\cos(\varphi_1-\varphi_2)
+$$
+
+**非正弦周期信号平均功率**
+
+可以把电压和电流展开为傅里叶级数，即分解为直流和各次谐波分量之和
+
+$$
+u(t) = U_0 + \sum^N_{k=1}\sqrt 2U_k\cos(k\omega t+\mu_{u_k})
+$$
+
+$$
+i(t) = I_0 + \sum^N_{k=1}\sqrt 2I_k\cos(k\omega t+\mu_{i_k})
+$$
+
+则该一端口电路吸收的平均功率为
+
+$$
+P = U_0I_0+\sum^N_{k=1}U_kI_k\cos\theta_k = P_0 + \sum^N_{k=1}P_k\quad(\theta_k = \varphi_{u_k}-\varphi_{i_k})
+$$
+
+电压和电流的有效值为
+
+$$
+U = \sqrt{\sum^N_{k=0}U_k^2}
+$$
+
+$$
+I = \sqrt{\sum^N_{k=0}I_k^2}
+$$
+
+### 最大功率传输条件
+
+讨论正弦稳态电路中负载$Z_L$获得最大功率$P_{\max}$的条件。
+
+![23.jpg](23.jpg)
+
+**共轭匹配**
+
+$$
+Z_L = R_L + jX_L
+$$
+
+其中$R_L,X_L$可以独立调节时
+
+$$
+P_{\max} = \dfrac{U_s^2}{4R_s}
+$$
+
+条件是$Z_L = Z_S^*$，即$R_L=R_S,X_L=-X_S$
+
+**模匹配**
+
+若$Z_L = R_L+jX_L=|Z_L|\angle\theta$，$|Z_L|$可变，$\theta$不变，此时
+
+$$
+P_{\max} = \dfrac{\cos\theta U_s^2}{2|Z_S|+2(R_S\cos\theta+X_S\sin\theta)}
+$$
+
+条件是$|Z_L|=|Z_S|$

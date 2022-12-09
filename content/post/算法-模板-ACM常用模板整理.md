@@ -1162,7 +1162,7 @@ int u[MAXN],v[MAXN],w[MAXN];
 int r[MAXN];//临时边序号，间接排序
 int find_sets[MAXN];//并查集
 
-int cmp(const int i, const int j){return w[i]<w[j];}
+bool cmp(const int i, const int j){return w[i]<w[j];}
 
 int find(int x){return find_sets[x]==x ? x : find_sets[x] = find(find_sets[x]);}
 
