@@ -6380,6 +6380,68 @@ P_\theta(\underline{\theta}(X_1,\cdots,X_n)\leq\theta)=1-\alpha
 &lt;p&gt;单侧置信区间使用枢轴量的方法类似，只不过要将&lt;span class=&#34;math inline&#34;&gt;\(P\)&lt;/span&gt;函数代成单侧的情况的。对于置信上界，置信区间的下限为&lt;span class=&#34;math inline&#34;&gt;\(-\infty\)&lt;/span&gt;，对于置信下界，置信区间的上限为&lt;span class=&#34;math inline&#34;&gt;\(+\infty\)&lt;/span&gt;&lt;/p&gt;
 &lt;h3 id=&#34;贝叶斯法-1&#34;&gt;贝叶斯法&lt;/h3&gt;
 &lt;p&gt;TODO&lt;/p&gt;
+&lt;h1 id=&#34;假设检验&#34;&gt;假设检验&lt;/h1&gt;
+&lt;h2 id=&#34;基本概念-2&#34;&gt;基本概念&lt;/h2&gt;
+&lt;p&gt;在显著性水平&lt;span class=&#34;math inline&#34;&gt;\(\alpha\)&lt;/span&gt;之下，检验假设&lt;span class=&#34;math inline&#34;&gt;\(H_0\)&lt;/span&gt;和&lt;span class=&#34;math inline&#34;&gt;\(H_1\)&lt;/span&gt;。&lt;span class=&#34;math inline&#34;&gt;\(H_0\)&lt;/span&gt;称为原假设或零假设，&lt;span class=&#34;math inline&#34;&gt;\(H_1\)&lt;/span&gt;称为备择假设，备择假设是指与原假设相矛盾的假设。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;双边假设检验&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+H_0 : \mu=\mu_0\quad H_1 : \mu\neq\mu_0
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;单边假设检验&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;右边假设&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+H_0 : \mu\leq\mu_0\quad H_1 : \mu&amp;gt;\mu_0
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;左边假设&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+H_0 : \mu\geq\mu_0\quad H_1 : \mu&amp;lt;\mu_0
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;仅涉及总体分布未知参数的假设称为参数假设。而对总体分布类型或分布的某些特征提出的假设称为非参数假设。&lt;/p&gt;
+&lt;p&gt;能够对原假设&lt;span class=&#34;math inline&#34;&gt;\(H_0\)&lt;/span&gt;是真或不真做出回答的统计量称为假设检验统计量。&lt;/p&gt;
+&lt;p&gt;使得原假设&lt;span class=&#34;math inline&#34;&gt;\(H_0\)&lt;/span&gt;为真的假设检验统计量取值范围称为假设检验的接受域；拒绝原假设&lt;span class=&#34;math inline&#34;&gt;\(H_0\)&lt;/span&gt;的假设检验统计量取值范围称为拒绝域；拒绝域的边界点称为临界点。&lt;/p&gt;
+&lt;p&gt;由于样本的随机性，进行判断时，可能会发生错误，发生错误也是一个随机事件&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;第I类错误（弃真）：&lt;span class=&#34;math inline&#34;&gt;\(H_0\)&lt;/span&gt;为真但拒绝&lt;span class=&#34;math inline&#34;&gt;\(H_0\)&lt;/span&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+P(拒绝H_0/H_0为真时) = \alpha
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;第II类错误（存伪）：&lt;span class=&#34;math inline&#34;&gt;\(H_0\)&lt;/span&gt;不真但接受&lt;span class=&#34;math inline&#34;&gt;\(H_0\)&lt;/span&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+P(接受H_0/H_0不真时) = \beta
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;给定样本容量，如果减小第I类错误的概率，则第II类错误的概率往往增大。如果要使两类错误的概率都减小，需要增大样本容量。&lt;/p&gt;
+&lt;p&gt;我们一般控制第I类错误的概率使其不大于&lt;span class=&#34;math inline&#34;&gt;\(\alpha\)&lt;/span&gt;，通常取&lt;span class=&#34;math inline&#34;&gt;\(\alpha\)&lt;/span&gt;为&lt;span class=&#34;math inline&#34;&gt;\(0.1,0.05,0.01,0.005\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;只控制第I类错误的概率，而不考虑第II类错误的概率的假设检验称为显著性检验，称&lt;span class=&#34;math inline&#34;&gt;\(\alpha\)&lt;/span&gt;为显著性水平。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;正态总体假设检验的接受域&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设总体&lt;span class=&#34;math inline&#34;&gt;\(X\sim
+N(\mu,\sigma^2),\mu\)&lt;/span&gt;未知，&lt;span class=&#34;math inline&#34;&gt;\(\sigma^2\)&lt;/span&gt;已知，设&lt;span class=&#34;math inline&#34;&gt;\(X_1,X_2,\cdots,X_n\)&lt;/span&gt;是来自总体的样本，给定显著性水平为&lt;span class=&#34;math inline&#34;&gt;\(\alpha\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;双边假设&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;接受域为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+|u| = \bigg|\dfrac{\bar x-\mu_0}{\sigma/\sqrt n}\bigg|&amp;lt;z_{\alpha/2}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;左边假设&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;接受域为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+u = \dfrac{\bar x-\mu_0}{\sigma/\sqrt n}&amp;gt;-z_\alpha
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;右边假设&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;接受域为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+u = \dfrac{\bar x-\mu_0}{\sigma/\sqrt n}&amp;lt;z_\alpha
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;求未知参数假设检验的步骤&lt;/strong&gt;&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;根据实际问题，提出原假设&lt;span class=&#34;math inline&#34;&gt;\(H_0\)&lt;/span&gt;和备择假设&lt;span class=&#34;math inline&#34;&gt;\(H_1\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;确定检验统计量及其在&lt;span class=&#34;math inline&#34;&gt;\(H_0\)&lt;/span&gt;为真时的分布&lt;/li&gt;
+&lt;li&gt;根据显著性水平&lt;span class=&#34;math inline&#34;&gt;\(\alpha\)&lt;/span&gt;和样本容量&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;，按照&lt;span class=&#34;math inline&#34;&gt;\(P(当H_0为真时拒绝H_0)=\alpha\)&lt;/span&gt;求出临界点，确定接受域或拒绝域&lt;/li&gt;
+&lt;li&gt;计算检验统计量的样本观测值&lt;/li&gt;
+&lt;li&gt;根据样本观测值做出决策，是接受原假设&lt;span class=&#34;math inline&#34;&gt;\(H_0\)&lt;/span&gt;还是拒绝&lt;span class=&#34;math inline&#34;&gt;\(H_0\)&lt;/span&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;双边假设的两个临界点：上&lt;span class=&#34;math inline&#34;&gt;\(\alpha/2\)&lt;/span&gt;分位点、上&lt;span class=&#34;math inline&#34;&gt;\(1-\alpha/2\)&lt;/span&gt;分位点&lt;/p&gt;
+&lt;p&gt;左边假设的一个临界点：上&lt;span class=&#34;math inline&#34;&gt;\(1-\alpha\)&lt;/span&gt;分位点&lt;/p&gt;
+&lt;p&gt;右边假设的一个临界点：上&lt;span class=&#34;math inline&#34;&gt;\(\alpha\)&lt;/span&gt;分位点&lt;/p&gt;
+&lt;h2 id=&#34;单正态总体和双正态总体参数的假设检验&#34;&gt;单正态总体和双正态总体参数的假设检验&lt;/h2&gt;
+&lt;p&gt;可以直接用之前提到枢轴量，以及其分位点来计算，具体形式和“正态总体假设检验的接受域”一小节类似，不再介绍。&lt;/p&gt;
 
 
 </description>

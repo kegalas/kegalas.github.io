@@ -125,7 +125,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 48 分钟
+                    阅读时长: 50 分钟
                 </time>
             </div>
         
@@ -1709,6 +1709,68 @@ P_\theta(\underline{\theta}(X_1,\cdots,X_n)\leq\theta)=1-\alpha
 <p>单侧置信区间使用枢轴量的方法类似，只不过要将<span class="math inline">\(P\)</span>函数代成单侧的情况的。对于置信上界，置信区间的下限为<span class="math inline">\(-\infty\)</span>，对于置信下界，置信区间的上限为<span class="math inline">\(+\infty\)</span></p>
 <h3 id="贝叶斯法-1">贝叶斯法</h3>
 <p>TODO</p>
+<h1 id="假设检验">假设检验</h1>
+<h2 id="基本概念-2">基本概念</h2>
+<p>在显著性水平<span class="math inline">\(\alpha\)</span>之下，检验假设<span class="math inline">\(H_0\)</span>和<span class="math inline">\(H_1\)</span>。<span class="math inline">\(H_0\)</span>称为原假设或零假设，<span class="math inline">\(H_1\)</span>称为备择假设，备择假设是指与原假设相矛盾的假设。</p>
+<p><strong>双边假设检验</strong></p>
+<p><span class="math display">\[
+H_0 : \mu=\mu_0\quad H_1 : \mu\neq\mu_0
+\]</span></p>
+<p><strong>单边假设检验</strong></p>
+<p><em>右边假设</em></p>
+<p><span class="math display">\[
+H_0 : \mu\leq\mu_0\quad H_1 : \mu&gt;\mu_0
+\]</span></p>
+<p><em>左边假设</em></p>
+<p><span class="math display">\[
+H_0 : \mu\geq\mu_0\quad H_1 : \mu&lt;\mu_0
+\]</span></p>
+<p>仅涉及总体分布未知参数的假设称为参数假设。而对总体分布类型或分布的某些特征提出的假设称为非参数假设。</p>
+<p>能够对原假设<span class="math inline">\(H_0\)</span>是真或不真做出回答的统计量称为假设检验统计量。</p>
+<p>使得原假设<span class="math inline">\(H_0\)</span>为真的假设检验统计量取值范围称为假设检验的接受域；拒绝原假设<span class="math inline">\(H_0\)</span>的假设检验统计量取值范围称为拒绝域；拒绝域的边界点称为临界点。</p>
+<p>由于样本的随机性，进行判断时，可能会发生错误，发生错误也是一个随机事件</p>
+<p><strong>第I类错误（弃真）：<span class="math inline">\(H_0\)</span>为真但拒绝<span class="math inline">\(H_0\)</span></strong></p>
+<p><span class="math display">\[
+P(拒绝H_0/H_0为真时) = \alpha
+\]</span></p>
+<p><strong>第II类错误（存伪）：<span class="math inline">\(H_0\)</span>不真但接受<span class="math inline">\(H_0\)</span></strong></p>
+<p><span class="math display">\[
+P(接受H_0/H_0不真时) = \beta
+\]</span></p>
+<p>给定样本容量，如果减小第I类错误的概率，则第II类错误的概率往往增大。如果要使两类错误的概率都减小，需要增大样本容量。</p>
+<p>我们一般控制第I类错误的概率使其不大于<span class="math inline">\(\alpha\)</span>，通常取<span class="math inline">\(\alpha\)</span>为<span class="math inline">\(0.1,0.05,0.01,0.005\)</span></p>
+<p>只控制第I类错误的概率，而不考虑第II类错误的概率的假设检验称为显著性检验，称<span class="math inline">\(\alpha\)</span>为显著性水平。</p>
+<p><strong>正态总体假设检验的接受域</strong></p>
+<p>设总体<span class="math inline">\(X\sim
+N(\mu,\sigma^2),\mu\)</span>未知，<span class="math inline">\(\sigma^2\)</span>已知，设<span class="math inline">\(X_1,X_2,\cdots,X_n\)</span>是来自总体的样本，给定显著性水平为<span class="math inline">\(\alpha\)</span></p>
+<p><em>双边假设</em></p>
+<p>接受域为</p>
+<p><span class="math display">\[
+|u| = \bigg|\dfrac{\bar x-\mu_0}{\sigma/\sqrt n}\bigg|&lt;z_{\alpha/2}
+\]</span></p>
+<p><em>左边假设</em></p>
+<p>接受域为</p>
+<p><span class="math display">\[
+u = \dfrac{\bar x-\mu_0}{\sigma/\sqrt n}&gt;-z_\alpha
+\]</span></p>
+<p><em>右边假设</em></p>
+<p>接受域为</p>
+<p><span class="math display">\[
+u = \dfrac{\bar x-\mu_0}{\sigma/\sqrt n}&lt;z_\alpha
+\]</span></p>
+<p><strong>求未知参数假设检验的步骤</strong></p>
+<ol type="1">
+<li>根据实际问题，提出原假设<span class="math inline">\(H_0\)</span>和备择假设<span class="math inline">\(H_1\)</span></li>
+<li>确定检验统计量及其在<span class="math inline">\(H_0\)</span>为真时的分布</li>
+<li>根据显著性水平<span class="math inline">\(\alpha\)</span>和样本容量<span class="math inline">\(n\)</span>，按照<span class="math inline">\(P(当H_0为真时拒绝H_0)=\alpha\)</span>求出临界点，确定接受域或拒绝域</li>
+<li>计算检验统计量的样本观测值</li>
+<li>根据样本观测值做出决策，是接受原假设<span class="math inline">\(H_0\)</span>还是拒绝<span class="math inline">\(H_0\)</span></li>
+</ol>
+<p>双边假设的两个临界点：上<span class="math inline">\(\alpha/2\)</span>分位点、上<span class="math inline">\(1-\alpha/2\)</span>分位点</p>
+<p>左边假设的一个临界点：上<span class="math inline">\(1-\alpha\)</span>分位点</p>
+<p>右边假设的一个临界点：上<span class="math inline">\(\alpha\)</span>分位点</p>
+<h2 id="单正态总体和双正态总体参数的假设检验">单正态总体和双正态总体参数的假设检验</h2>
+<p>可以直接用之前提到枢轴量，以及其分位点来计算，具体形式和“正态总体假设检验的接受域”一小节类似，不再介绍。</p>
 
 
 
@@ -2190,6 +2252,12 @@ P_\theta(\underline{\theta}(X_1,\cdots,X_n)\leq\theta)=1-\alpha
             <li><a href="#贝叶斯法-1">贝叶斯法</a></li>
           </ol>
         </li>
+      </ol>
+    </li>
+    <li><a href="#假设检验">假设检验</a>
+      <ol>
+        <li><a href="#基本概念-2">基本概念</a></li>
+        <li><a href="#单正态总体和双正态总体参数的假设检验">单正态总体和双正态总体参数的假设检验</a></li>
       </ol>
     </li>
   </ol>
