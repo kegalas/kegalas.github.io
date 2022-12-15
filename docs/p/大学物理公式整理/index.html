@@ -125,7 +125,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 38 分钟
+                    阅读时长: 42 分钟
                 </time>
             </div>
         
@@ -2082,6 +2082,131 @@ p = mv = \dfrac{h}{\lambda}
 <p>原子通常处于能量最低的基态，在受激发后将跃迁到各个能量较高的受激态，停留一段时间后又自发跃迁进入能量较低的定态。大量同类原子在同一高能级上停留时间长短不一，但平均停留时间为一定值，称为该能级的平均寿命。<span class="math inline">\(\Delta t\)</span>越长的能级越稳定，宽度<span class="math inline">\(\Delta
 E\)</span>越小。由于能级有一定宽度，光谱线也就有一定宽度了。</p>
 <p>有些原子具有一种特殊的受激态，寿命可长达<span class="math inline">\(10^{-3}s\)</span>或更长，这类受激态称为亚稳态。</p>
+<h3 id="波函数及其统计解释">波函数及其统计解释</h3>
+<p>波函数是时间和空间坐标的函数，表示为</p>
+<p><span class="math display">\[
+\varPsi(\bm r,t)
+\]</span></p>
+<p>假设粒子只沿<span class="math inline">\(x\)</span>轴正方向运动，且不受外力（即自由粒子）。则其德布罗意波的波函数可以表示为</p>
+<p><span class="math display">\[
+\varPsi(x,t) = \psi_0e^{-i2\pi(\nu t-\frac{x}{\lambda})} =
+\psi_0e^{-\frac{i}{\hbar}(Et-px)}
+\]</span></p>
+<p>其中<span class="math inline">\(\nu\)</span>是其物质波的频率，<span class="math inline">\(\lambda\)</span>是波长，<span class="math inline">\(E\)</span>是能量，<span class="math inline">\(p\)</span>是动量。<span class="math inline">\(\psi_0\)</span>是一个待定常数，<span class="math inline">\(\psi_0e^{\frac{i}{\hbar}px}\)</span>相当于<span class="math inline">\(x\)</span>处波函数的复振幅，而<span class="math inline">\(e^{-\frac{i}{\hbar}Et}\)</span>则反映波函数随时间的变化。</p>
+<p>玻恩指出，实物粒子的德布罗意波是一种概率波；<span class="math inline">\(t\)</span>时刻粒子在空间<span class="math inline">\(\bm r\)</span>处附近的体积元<span class="math inline">\(dV\)</span>中出现的概率<span class="math inline">\(dW\)</span>与该处波函数绝对值的平方成正比，可以写成</p>
+<p><span class="math display">\[
+dW = |\varPsi(\bm r,t)|^2dV = \varPsi(\bm r,t)\varPsi^*(\bm r,t) dV
+\]</span></p>
+<p>其中<span class="math inline">\(\varPsi^*(\bm r,t)\)</span>是<span class="math inline">\(\varPsi(\bm r,t)\)</span>的共轭负数。</p>
+<p>波函数绝对值平方<span class="math inline">\(|\varPsi(\bm
+r,t)|^2\)</span>代表<span class="math inline">\(t\)</span>时刻粒子在空间<span class="math inline">\(r\)</span>处的单位体积中出现的概率，又称为概率密度。</p>
+<p>波函数必须单值、有限、连续，不符合这三个条件的波函数是没有物理意义的。又因为粒子必定要在空间中的某一点出现，因此粒子在空间各点出现的概率总和等于<span class="math inline">\(1\)</span>，即应有</p>
+<p><span class="math display">\[
+\iiint|\varPsi(\bm r,t)|^2dxdydz = 1
+\]</span></p>
+<p>上式又称为波函数的归一化条件，其中积分区域遍及粒子可能到达的整个空间。</p>
+<h3 id="定态薛定谔方程">定态薛定谔方程</h3>
+<p>薛定谔建立了适用于低速情况的、描述微观粒子在外力场中运动的微分方程，也就是物质波波函数<span class="math inline">\(\varPsi(\bm
+r,t)\)</span>满足的方程，称为薛定谔方程。</p>
+<p>质量为<span class="math inline">\(m\)</span>的粒子在外力场中运动时，一般情况下，其势能<span class="math inline">\(V\)</span>可能是空间坐标和时间的函数，即<span class="math inline">\(V=V(\bm r,t)\)</span>，薛定谔方程为</p>
+<p><span class="math display">\[
+\bigg[-\dfrac{\hbar^2}{2m}\bigg(\dfrac{\partial^2}{\partial
+x^2}+\dfrac{\partial^2}{\partial y^2}+\dfrac{\partial^2}{\partial
+z^2}\bigg)+V(\bm r,t)\bigg]\varPsi(\bm r,t) = i\hbar\dfrac{\partial
+\varPsi(\bm r,t)}{\partial t}
+\]</span></p>
+<p>粒子在稳定力场中运动时，势能函数<span class="math inline">\(V\)</span>与时间无关，<span class="math inline">\(V=V(\bm r)\)</span>。此时也有<span class="math inline">\(|\varPsi(\bm r,t)|^2=|\varPsi(\bm
+r)|^2\)</span>，即概率密度与时间无关。定态波函数的空间部分<span class="math inline">\(\varPsi(\bm
+r)\)</span>也叫做定态波函数。其满足</p>
+<p><span class="math display">\[
+\bigg(\dfrac{\partial^2}{\partial x^2}+\dfrac{\partial^2}{\partial
+y^2}+\dfrac{\partial^2}{\partial z^2}\bigg)\varPsi(\bm
+r)+\dfrac{2m}{\hbar^2}(E-V)\varPsi(\bm r) = 0
+\]</span></p>
+<p>上式称为定态薛定谔方程，也称不含时间的薛定谔方程。</p>
+<p>如果粒子在一维空间中运动，则</p>
+<p><span class="math display">\[
+\dfrac{d^2\varPsi(x)}{dx^2}+\dfrac{2m}{\hbar^2}(E-V)\varPsi(x)=0
+\]</span></p>
+<p>上式称为一维定态薛定谔方程。</p>
+<p>在关于微观粒子的各种定态问题中，把势能函数<span class="math inline">\(V(\bm
+r)\)</span>的具体形式代入薛定谔方程中即可求解，得到定态波函数。</p>
+<h3 id="一维无限深势阱中的粒子">一维无限深势阱中的粒子</h3>
+<p>以金属中电子的运动为例，讨论薛定谔方程的应用。实际情况是相当复杂的，为简单起见，假定电子只能作沿<span class="math inline">\(x\)</span>轴的一维运动，且其势能函数具有如下的形式</p>
+<p><span class="math display">\[
+\left.\begin{align*}
+V(x) = 0,&amp;\quad0&lt;x&lt;a\\
+V(x) = \infty,&amp;\quad x&lt;0\ or\ x&gt;a
+\end{align*}\right\}
+\]</span></p>
+<p>这种形式的力场叫做一维无限深（方）势阱。由于力和势能的关系<span class="math inline">\(F_x = -\dfrac{\partial V}{\partial
+x}\)</span>，在金属内部，电子不受力的作用；在金属表面处势能突变，受到指向金属内部的无限大作用力，因此不可能越出金属表面。不过这个模型过于简单和粗略。</p>
+<p>我们可以推知，一维无限深势阱中粒子能量为</p>
+<p><span class="math display">\[
+E_n = \dfrac{\hbar^2k^2}{2m} = n^2\dfrac{h^2}{8ma^2},\quad n =
+1,2,3,\cdots
+\]</span></p>
+<p>由此可见，一维无限深势阱中粒子能量是量子化的，<span class="math inline">\(n\)</span>称为量子数。<span class="math inline">\(E_1\)</span>是最小能力，也称为零点能。其余各级能量可以表示为<span class="math inline">\(E_n = n^2E_1\)</span></p>
+<p>量子数为<span class="math inline">\(n\)</span>的定态波函数为</p>
+<p><span class="math display">\[
+\varPsi_n(x) = \pm\sqrt{\dfrac{2}{a}}\sin\dfrac{n\pi}{a}x,\quad
+n=1,2,3,\cdots
+\]</span></p>
+<p>束缚在无限深势阱中的粒子的定态波函数具有驻波的形式，且波长<span class="math inline">\(\lambda_n\)</span>满足</p>
+<p><span class="math display">\[
+a = n\dfrac{\lambda_{n}}{2},\quad,n=1,2,3,\cdots
+\]</span></p>
+<h3 id="氢原子的量子力学结论">氢原子的量子力学结论</h3>
+<ol type="1">
+<li>能量量子化</li>
+</ol>
+<p><span class="math display">\[
+E_n =
+-\dfrac{1}{n^2}\dfrac{me^4}{8\varepsilon_0^2h^2},\quad,n=1,2,3,\cdots
+\]</span></p>
+<p>这是氢原子的总能量，<span class="math inline">\(n\)</span>称为主量子数。</p>
+<ol start="2" type="1">
+<li>角动量量子化</li>
+</ol>
+<p><span class="math display">\[
+L = \sqrt{l(l+1)}\hbar,\quad l = 0,1,2,\cdots,n-1
+\]</span></p>
+<p>式中的<span class="math inline">\(l\)</span>为小于<span class="math inline">\(n\)</span>的正整数，称为副量子数。</p>
+<ol start="3" type="1">
+<li>角动量空间量子化</li>
+</ol>
+<p>电子绕核运动的角动量<span class="math inline">\(\bm
+L\)</span>在外磁场<span class="math inline">\(\bm
+B\)</span>方向的投影<span class="math inline">\(L_z\)</span>，量子力学给出的结果是</p>
+<p><span class="math display">\[
+L_z = m_l\hbar,\quad m_l = 0,\pm1,\pm2,\cdots,\pm l
+\]</span></p>
+<p>式中的<span class="math inline">\(m_l\)</span>称为磁量子数。上式说明<span class="math inline">\(\bm
+L\)</span>在空间的取向也是量子化的，称为空间量子化。</p>
+<h3 id="施特恩-盖拉赫实验电子自旋">施特恩-盖拉赫实验、电子自旋</h3>
+<p>电子自旋角动量的大小<span class="math inline">\(S\)</span>及其在外磁场方向的投影<span class="math inline">\(S_z\)</span>分别为</p>
+<p><span class="math display">\[
+S = \sqrt{\dfrac{1}{2}\bigg(\dfrac{1}{2}+1\bigg)}\hbar =
+\sqrt{\dfrac{3}{4}}\hbar
+\]</span></p>
+<p><span class="math display">\[
+S_z = \pm \dfrac{1}{2}\hbar
+\]</span></p>
+<p>自旋磁量子数<span class="math inline">\(m_s=\pm\dfrac{1}{2}\)</span>，它决定了电子自旋角动量<span class="math inline">\(\bm S\)</span>在外磁场中的取向。</p>
+<h3 id="原子的电子壳层结构">原子的电子壳层结构</h3>
+<ol type="1">
+<li>泡利不相容原理</li>
+</ol>
+<p>在一个原子中不能有两个或两个以上的电子处在完全相同的量子态。也就是说，任何两个电子都不可能具有一组完全相同的量子数<span class="math inline">\((n,l,m_l,m_s)\)</span>。</p>
+<p>根据泡利不相容原理不难算出各壳层上最多可容纳的电子数为</p>
+<p><span class="math display">\[
+Z_n = \sum_{l=0}^{n-1}2(2l+1) = 2n^2
+\]</span></p>
+<p>在<span class="math inline">\(n=1,2,3,4,\cdots\)</span>的<span class="math inline">\(K,L,M,N,\cdots\)</span>各壳层上，最多可容纳<span class="math inline">\(2,8,18,32,\cdots\)</span>个电子。而在<span class="math inline">\(l=0,1,2,3,\cdots\)</span>的各支壳层上，最多可容纳<span class="math inline">\(2,6,10,14,\cdots\)</span>个电子。</p>
+<ol start="2" type="1">
+<li>能量最小原理</li>
+</ol>
+<p>原子处于正常状态时，每个电子都趋向占据可能的最低能级。</p>
 
 
 
@@ -2510,6 +2635,12 @@ E\)</span>越小。由于能级有一定宽度，光谱线也就有一定宽度�
         <li><a href="#微观粒子的波粒二象性">微观粒子的波粒二象性</a></li>
         <li><a href="#物质波的实验证明">物质波的实验证明</a></li>
         <li><a href="#不确定关系">不确定关系</a></li>
+        <li><a href="#波函数及其统计解释">波函数及其统计解释</a></li>
+        <li><a href="#定态薛定谔方程">定态薛定谔方程</a></li>
+        <li><a href="#一维无限深势阱中的粒子">一维无限深势阱中的粒子</a></li>
+        <li><a href="#氢原子的量子力学结论">氢原子的量子力学结论</a></li>
+        <li><a href="#施特恩-盖拉赫实验电子自旋">施特恩-盖拉赫实验、电子自旋</a></li>
+        <li><a href="#原子的电子壳层结构">原子的电子壳层结构</a></li>
       </ol>
     </li>
   </ol>

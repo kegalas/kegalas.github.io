@@ -11999,6 +11999,131 @@ p = mv = \dfrac{h}{\lambda}
 &lt;p&gt;原子通常处于能量最低的基态，在受激发后将跃迁到各个能量较高的受激态，停留一段时间后又自发跃迁进入能量较低的定态。大量同类原子在同一高能级上停留时间长短不一，但平均停留时间为一定值，称为该能级的平均寿命。&lt;span class=&#34;math inline&#34;&gt;\(\Delta t\)&lt;/span&gt;越长的能级越稳定，宽度&lt;span class=&#34;math inline&#34;&gt;\(\Delta
 E\)&lt;/span&gt;越小。由于能级有一定宽度，光谱线也就有一定宽度了。&lt;/p&gt;
 &lt;p&gt;有些原子具有一种特殊的受激态，寿命可长达&lt;span class=&#34;math inline&#34;&gt;\(10^{-3}s\)&lt;/span&gt;或更长，这类受激态称为亚稳态。&lt;/p&gt;
+&lt;h3 id=&#34;波函数及其统计解释&#34;&gt;波函数及其统计解释&lt;/h3&gt;
+&lt;p&gt;波函数是时间和空间坐标的函数，表示为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\varPsi(\bm r,t)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;假设粒子只沿&lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;轴正方向运动，且不受外力（即自由粒子）。则其德布罗意波的波函数可以表示为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\varPsi(x,t) = \psi_0e^{-i2\pi(\nu t-\frac{x}{\lambda})} =
+\psi_0e^{-\frac{i}{\hbar}(Et-px)}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(\nu\)&lt;/span&gt;是其物质波的频率，&lt;span class=&#34;math inline&#34;&gt;\(\lambda\)&lt;/span&gt;是波长，&lt;span class=&#34;math inline&#34;&gt;\(E\)&lt;/span&gt;是能量，&lt;span class=&#34;math inline&#34;&gt;\(p\)&lt;/span&gt;是动量。&lt;span class=&#34;math inline&#34;&gt;\(\psi_0\)&lt;/span&gt;是一个待定常数，&lt;span class=&#34;math inline&#34;&gt;\(\psi_0e^{\frac{i}{\hbar}px}\)&lt;/span&gt;相当于&lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;处波函数的复振幅，而&lt;span class=&#34;math inline&#34;&gt;\(e^{-\frac{i}{\hbar}Et}\)&lt;/span&gt;则反映波函数随时间的变化。&lt;/p&gt;
+&lt;p&gt;玻恩指出，实物粒子的德布罗意波是一种概率波；&lt;span class=&#34;math inline&#34;&gt;\(t\)&lt;/span&gt;时刻粒子在空间&lt;span class=&#34;math inline&#34;&gt;\(\bm r\)&lt;/span&gt;处附近的体积元&lt;span class=&#34;math inline&#34;&gt;\(dV\)&lt;/span&gt;中出现的概率&lt;span class=&#34;math inline&#34;&gt;\(dW\)&lt;/span&gt;与该处波函数绝对值的平方成正比，可以写成&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+dW = |\varPsi(\bm r,t)|^2dV = \varPsi(\bm r,t)\varPsi^*(\bm r,t) dV
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(\varPsi^*(\bm r,t)\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(\varPsi(\bm r,t)\)&lt;/span&gt;的共轭负数。&lt;/p&gt;
+&lt;p&gt;波函数绝对值平方&lt;span class=&#34;math inline&#34;&gt;\(|\varPsi(\bm
+r,t)|^2\)&lt;/span&gt;代表&lt;span class=&#34;math inline&#34;&gt;\(t\)&lt;/span&gt;时刻粒子在空间&lt;span class=&#34;math inline&#34;&gt;\(r\)&lt;/span&gt;处的单位体积中出现的概率，又称为概率密度。&lt;/p&gt;
+&lt;p&gt;波函数必须单值、有限、连续，不符合这三个条件的波函数是没有物理意义的。又因为粒子必定要在空间中的某一点出现，因此粒子在空间各点出现的概率总和等于&lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt;，即应有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\iiint|\varPsi(\bm r,t)|^2dxdydz = 1
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;上式又称为波函数的归一化条件，其中积分区域遍及粒子可能到达的整个空间。&lt;/p&gt;
+&lt;h3 id=&#34;定态薛定谔方程&#34;&gt;定态薛定谔方程&lt;/h3&gt;
+&lt;p&gt;薛定谔建立了适用于低速情况的、描述微观粒子在外力场中运动的微分方程，也就是物质波波函数&lt;span class=&#34;math inline&#34;&gt;\(\varPsi(\bm
+r,t)\)&lt;/span&gt;满足的方程，称为薛定谔方程。&lt;/p&gt;
+&lt;p&gt;质量为&lt;span class=&#34;math inline&#34;&gt;\(m\)&lt;/span&gt;的粒子在外力场中运动时，一般情况下，其势能&lt;span class=&#34;math inline&#34;&gt;\(V\)&lt;/span&gt;可能是空间坐标和时间的函数，即&lt;span class=&#34;math inline&#34;&gt;\(V=V(\bm r,t)\)&lt;/span&gt;，薛定谔方程为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\bigg[-\dfrac{\hbar^2}{2m}\bigg(\dfrac{\partial^2}{\partial
+x^2}+\dfrac{\partial^2}{\partial y^2}+\dfrac{\partial^2}{\partial
+z^2}\bigg)+V(\bm r,t)\bigg]\varPsi(\bm r,t) = i\hbar\dfrac{\partial
+\varPsi(\bm r,t)}{\partial t}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;粒子在稳定力场中运动时，势能函数&lt;span class=&#34;math inline&#34;&gt;\(V\)&lt;/span&gt;与时间无关，&lt;span class=&#34;math inline&#34;&gt;\(V=V(\bm r)\)&lt;/span&gt;。此时也有&lt;span class=&#34;math inline&#34;&gt;\(|\varPsi(\bm r,t)|^2=|\varPsi(\bm
+r)|^2\)&lt;/span&gt;，即概率密度与时间无关。定态波函数的空间部分&lt;span class=&#34;math inline&#34;&gt;\(\varPsi(\bm
+r)\)&lt;/span&gt;也叫做定态波函数。其满足&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\bigg(\dfrac{\partial^2}{\partial x^2}+\dfrac{\partial^2}{\partial
+y^2}+\dfrac{\partial^2}{\partial z^2}\bigg)\varPsi(\bm
+r)+\dfrac{2m}{\hbar^2}(E-V)\varPsi(\bm r) = 0
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;上式称为定态薛定谔方程，也称不含时间的薛定谔方程。&lt;/p&gt;
+&lt;p&gt;如果粒子在一维空间中运动，则&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\dfrac{d^2\varPsi(x)}{dx^2}+\dfrac{2m}{\hbar^2}(E-V)\varPsi(x)=0
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;上式称为一维定态薛定谔方程。&lt;/p&gt;
+&lt;p&gt;在关于微观粒子的各种定态问题中，把势能函数&lt;span class=&#34;math inline&#34;&gt;\(V(\bm
+r)\)&lt;/span&gt;的具体形式代入薛定谔方程中即可求解，得到定态波函数。&lt;/p&gt;
+&lt;h3 id=&#34;一维无限深势阱中的粒子&#34;&gt;一维无限深势阱中的粒子&lt;/h3&gt;
+&lt;p&gt;以金属中电子的运动为例，讨论薛定谔方程的应用。实际情况是相当复杂的，为简单起见，假定电子只能作沿&lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;轴的一维运动，且其势能函数具有如下的形式&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\left.\begin{align*}
+V(x) = 0,&amp;amp;\quad0&amp;lt;x&amp;lt;a\\
+V(x) = \infty,&amp;amp;\quad x&amp;lt;0\ or\ x&amp;gt;a
+\end{align*}\right\}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;这种形式的力场叫做一维无限深（方）势阱。由于力和势能的关系&lt;span class=&#34;math inline&#34;&gt;\(F_x = -\dfrac{\partial V}{\partial
+x}\)&lt;/span&gt;，在金属内部，电子不受力的作用；在金属表面处势能突变，受到指向金属内部的无限大作用力，因此不可能越出金属表面。不过这个模型过于简单和粗略。&lt;/p&gt;
+&lt;p&gt;我们可以推知，一维无限深势阱中粒子能量为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+E_n = \dfrac{\hbar^2k^2}{2m} = n^2\dfrac{h^2}{8ma^2},\quad n =
+1,2,3,\cdots
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;由此可见，一维无限深势阱中粒子能量是量子化的，&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;称为量子数。&lt;span class=&#34;math inline&#34;&gt;\(E_1\)&lt;/span&gt;是最小能力，也称为零点能。其余各级能量可以表示为&lt;span class=&#34;math inline&#34;&gt;\(E_n = n^2E_1\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;量子数为&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;的定态波函数为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\varPsi_n(x) = \pm\sqrt{\dfrac{2}{a}}\sin\dfrac{n\pi}{a}x,\quad
+n=1,2,3,\cdots
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;束缚在无限深势阱中的粒子的定态波函数具有驻波的形式，且波长&lt;span class=&#34;math inline&#34;&gt;\(\lambda_n\)&lt;/span&gt;满足&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+a = n\dfrac{\lambda_{n}}{2},\quad,n=1,2,3,\cdots
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;氢原子的量子力学结论&#34;&gt;氢原子的量子力学结论&lt;/h3&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;能量量子化&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+E_n =
+-\dfrac{1}{n^2}\dfrac{me^4}{8\varepsilon_0^2h^2},\quad,n=1,2,3,\cdots
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;这是氢原子的总能量，&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;称为主量子数。&lt;/p&gt;
+&lt;ol start=&#34;2&#34; type=&#34;1&#34;&gt;
+&lt;li&gt;角动量量子化&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+L = \sqrt{l(l+1)}\hbar,\quad l = 0,1,2,\cdots,n-1
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;式中的&lt;span class=&#34;math inline&#34;&gt;\(l\)&lt;/span&gt;为小于&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;的正整数，称为副量子数。&lt;/p&gt;
+&lt;ol start=&#34;3&#34; type=&#34;1&#34;&gt;
+&lt;li&gt;角动量空间量子化&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;电子绕核运动的角动量&lt;span class=&#34;math inline&#34;&gt;\(\bm
+L\)&lt;/span&gt;在外磁场&lt;span class=&#34;math inline&#34;&gt;\(\bm
+B\)&lt;/span&gt;方向的投影&lt;span class=&#34;math inline&#34;&gt;\(L_z\)&lt;/span&gt;，量子力学给出的结果是&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+L_z = m_l\hbar,\quad m_l = 0,\pm1,\pm2,\cdots,\pm l
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;式中的&lt;span class=&#34;math inline&#34;&gt;\(m_l\)&lt;/span&gt;称为磁量子数。上式说明&lt;span class=&#34;math inline&#34;&gt;\(\bm
+L\)&lt;/span&gt;在空间的取向也是量子化的，称为空间量子化。&lt;/p&gt;
+&lt;h3 id=&#34;施特恩-盖拉赫实验电子自旋&#34;&gt;施特恩-盖拉赫实验、电子自旋&lt;/h3&gt;
+&lt;p&gt;电子自旋角动量的大小&lt;span class=&#34;math inline&#34;&gt;\(S\)&lt;/span&gt;及其在外磁场方向的投影&lt;span class=&#34;math inline&#34;&gt;\(S_z\)&lt;/span&gt;分别为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+S = \sqrt{\dfrac{1}{2}\bigg(\dfrac{1}{2}+1\bigg)}\hbar =
+\sqrt{\dfrac{3}{4}}\hbar
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+S_z = \pm \dfrac{1}{2}\hbar
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;自旋磁量子数&lt;span class=&#34;math inline&#34;&gt;\(m_s=\pm\dfrac{1}{2}\)&lt;/span&gt;，它决定了电子自旋角动量&lt;span class=&#34;math inline&#34;&gt;\(\bm S\)&lt;/span&gt;在外磁场中的取向。&lt;/p&gt;
+&lt;h3 id=&#34;原子的电子壳层结构&#34;&gt;原子的电子壳层结构&lt;/h3&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;泡利不相容原理&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;在一个原子中不能有两个或两个以上的电子处在完全相同的量子态。也就是说，任何两个电子都不可能具有一组完全相同的量子数&lt;span class=&#34;math inline&#34;&gt;\((n,l,m_l,m_s)\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;根据泡利不相容原理不难算出各壳层上最多可容纳的电子数为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+Z_n = \sum_{l=0}^{n-1}2(2l+1) = 2n^2
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;在&lt;span class=&#34;math inline&#34;&gt;\(n=1,2,3,4,\cdots\)&lt;/span&gt;的&lt;span class=&#34;math inline&#34;&gt;\(K,L,M,N,\cdots\)&lt;/span&gt;各壳层上，最多可容纳&lt;span class=&#34;math inline&#34;&gt;\(2,8,18,32,\cdots\)&lt;/span&gt;个电子。而在&lt;span class=&#34;math inline&#34;&gt;\(l=0,1,2,3,\cdots\)&lt;/span&gt;的各支壳层上，最多可容纳&lt;span class=&#34;math inline&#34;&gt;\(2,6,10,14,\cdots\)&lt;/span&gt;个电子。&lt;/p&gt;
+&lt;ol start=&#34;2&#34; type=&#34;1&#34;&gt;
+&lt;li&gt;能量最小原理&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;原子处于正常状态时，每个电子都趋向占据可能的最低能级。&lt;/p&gt;
 
 
 </description>
