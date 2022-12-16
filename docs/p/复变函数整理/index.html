@@ -112,7 +112,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 46 分钟
+                    阅读时长: 49 分钟
                 </time>
             </div>
         
@@ -546,6 +546,25 @@ H(D)\subset C^\infty(D)\subset C^k(D)\subset C^1(D)\subset C(D)
 <p><em>定理1</em></p>
 <p>设<span class="math inline">\(u\)</span>是单连通域<span class="math inline">\(D\)</span>上的调和函数，则必存在<span class="math inline">\(u\)</span>的共轭函数<span class="math inline">\(v\)</span>，使得<span class="math inline">\(u+iv\)</span>是<span class="math inline">\(D\)</span>上的全纯函数。</p>
 <h2 id="导数的几何意义">导数的几何意义</h2>
+<p>过<span class="math inline">\(z_0\)</span>点作一条光滑曲线<span class="math inline">\(\gamma\)</span>，它的方程为</p>
+<p><span class="math display">\[
+z = \gamma(t),a\leq t\leq b
+\]</span></p>
+<p>设<span class="math inline">\(\gamma(a)=z_0,\gamma&#39;(a)\neq
+0\)</span>。<span class="math inline">\(\gamma\)</span>在点<span class="math inline">\(z_0\)</span>处的切线与正实轴的夹角为<span class="math inline">\(Arg\gamma&#39;(a)\)</span>。设<span class="math inline">\(\omega = f(z)\)</span>把曲线<span class="math inline">\(\gamma\)</span>映为<span class="math inline">\(\sigma\)</span>，它的方程为</p>
+<p><span class="math display">\[
+\omega=\sigma(t)=f(\gamma(t)),a\leq t\leq b
+\]</span></p>
+<p>由于<span class="math inline">\(\sigma&#39;(a)=f&#39;(\gamma(a))\gamma&#39;(a)=f&#39;(z_0)\gamma&#39;(a)\neq
+0\)</span>，所以<span class="math inline">\(\sigma\)</span>在<span class="math inline">\(\omega_0=f(z_0)\)</span>处的切线与正实轴的夹角为</p>
+<p><span class="math display">\[
+Arg\sigma&#39;(a) = Argf&#39;(z_0)+Arg\gamma&#39;(a)
+\]</span></p>
+<p>或者写为</p>
+<p><span class="math display">\[
+Arg\sigma&#39;(a) - Arg\gamma&#39;(a) = Argf&#39;(z_0)
+\]</span></p>
+<p>这就说明像曲线<span class="math inline">\(\sigma\)</span>在<span class="math inline">\(\omega_0\)</span>处的切线与正实轴的夹角与原曲线<span class="math inline">\(\gamma\)</span>在<span class="math inline">\(z_0\)</span>处的切线与正实轴的夹角之差总是<span class="math inline">\(Argf&#39;(z_0)\)</span>，而与曲线<span class="math inline">\(\gamma\)</span>无关，<span class="math inline">\(Argf&#39;(z_0)\)</span>就称为映射<span class="math inline">\(\omega=f(z)\)</span>在<span class="math inline">\(z_0\)</span>处的转动角。</p>
 <p>过点<span class="math inline">\(z_0\)</span>作两条光滑曲线<span class="math inline">\(\gamma_1,\gamma_2\)</span>，它们的方程分别为</p>
 <p><span class="math display">\[
 z=\gamma_1(t),a\leq t\leq b
@@ -580,7 +599,14 @@ Arg\sigma_2&#39;(a)-Arg\gamma_2&#39;(a)
 <p>我们把这种性质的映射称为在<span class="math inline">\(z_0\)</span>点是保角的。</p>
 <p><strong>定理</strong></p>
 <p>全纯函数在其导数不为零的点处是保角的。</p>
-<p>导数的模的几何意义，即<span class="math inline">\(|f&#39;(z_0)|\)</span>为<span class="math inline">\(f\)</span>在<span class="math inline">\(z_0\)</span>处的伸缩率。</p>
+<p><strong>导数的模的几何意义</strong></p>
+<p><span class="math inline">\(|f&#39;(z_0)|\)</span>为<span class="math inline">\(f\)</span>在<span class="math inline">\(z_0\)</span>处的伸缩率。</p>
+<p>像点之间的距离与原像之间的距离之比只与<span class="math inline">\(z_0\)</span>有关，而与<span class="math inline">\(\gamma\)</span>无关。</p>
+<p><strong>共形映射的概念</strong></p>
+<p>综合导数辐角和模的几何意义，我们看到：如果<span class="math inline">\(f&#39;(z_0)\neq0\)</span>，在<span class="math inline">\(z_0\)</span>的邻域中，作一个以<span class="math inline">\(z_0\)</span>为顶点的小三角形，这个小三角形被<span class="math inline">\(f\)</span>映射为一个曲边三角形，它的微分三角形和原来的小三角形相似。因此，我们把这样的一个映射称为共形映射。</p>
+<p>更形式化的定义是：设函数<span class="math inline">\(\omega=f(z)\)</span>在<span class="math inline">\(z_0\)</span>的领域内有定义，且在<span class="math inline">\(z_0\)</span>处具有保角性和伸缩率的不变性，那么称映射<span class="math inline">\(\omega=f(z)\)</span>是共形映射。如果对<span class="math inline">\(D\)</span>内每一点都是共形的，那么<span class="math inline">\(\omega=f(z)\)</span>是在<span class="math inline">\(D\)</span>内的共形映射。</p>
+<p>如果<span class="math inline">\(\omega=f(z)\)</span>在<span class="math inline">\(z_0\)</span>全纯，<span class="math inline">\(f&#39;(z_0)\neq 0\)</span>，那么其在<span class="math inline">\(z_0\)</span>是共形的。</p>
+<p>如果<span class="math inline">\(\omega=f(z)\)</span>只保证伸缩率的不变性和夹角的绝对值不变（但方向相反），那么称为第二类共形映射，之前提到的属于第一类共形映射。</p>
 <h2 id="初等全纯函数">初等全纯函数</h2>
 <h3 id="指数函数">指数函数</h3>
 <p>设<span class="math inline">\(z=x+iy\)</span>，定义</p>
@@ -768,10 +794,26 @@ T&#39;(z)=\frac{ad-bc}{(cz+d)^2}\neq 0
 z = T^{-1}(\omega)=\frac{-d\omega+b}{c\omega-a}
 \]</span></p>
 <p>称为<span class="math inline">\(\omega=T(z)\)</span>的逆变换，它仍然是一个分式线性变换。由此可知<span class="math inline">\(\omega=T(z)\)</span>在<span class="math inline">\(\bm C\)</span>上是单叶的，当<span class="math inline">\(c\neq 0\)</span>时，规定<span class="math inline">\(T(-\frac{d}{c})=\infty,T(\infty)=\frac{a}{c}\)</span>。当<span class="math inline">\(c=0\)</span>时，规定<span class="math inline">\(T(\infty)=\infty\)</span>，于是<span class="math inline">\(\omega=T(z)\)</span>把<span class="math inline">\(\bm C_\infty\)</span>单叶地映射为<span class="math inline">\(C_\infty\)</span>。</p>
-<p>设<span class="math inline">\(S,T\)</span>是两个分式线性变换，那么<span class="math inline">\(S\circ T\)</span>也是分式线性变换。且对每一个<span class="math inline">\(T\)</span>，都有逆变换<span class="math inline">\(T^{-1}\)</span>。</p>
+<p>设<span class="math inline">\(S,T\)</span>是两个分式线性变换，那么<span class="math inline">\(S\circ T\)</span>也是分式线性变换。且对每一个<span class="math inline">\(T\)</span>，都有逆变换<span class="math inline">\(T^{-1}\)</span>，即<span class="math inline">\(T(T^{-1}(z))=z\)</span></p>
 <p>分式线性变换有如下性质</p>
 <ol type="1">
-<li>分式线性变换把圆周变成圆周</li>
+<li>保角性</li>
+<li>分式线性变换把圆周变成圆周（保圆性）</li>
+</ol>
+<p>分式线性变换也能拆成多个变换，例如</p>
+<p><span class="math display">\[
+\omega = \dfrac{az+b}{cz+d}
+\]</span></p>
+<p>就可以拆成三个变换</p>
+<p><span class="math display">\[
+z&#39; = cz+d\\
+z&#39;&#39; = \dfrac{1}{z&#39;}\\
+\omega=\alpha+\beta z&#39;&#39;
+\]</span></p>
+<p>其中<span class="math inline">\(\alpha =
+\dfrac{a}{c},\beta=\dfrac{bc-ad}{c}\)</span>。</p>
+<p>这个变换中第一个第三个是整线性变换，也就是进行了伸缩和平移变换。当然圆在伸缩和平移后还是一个圆。我们同样可以证明<span class="math inline">\(\omega=\dfrac{1}{z}\)</span>把圆周变为圆周，此时我们证明了分式线性变换吧圆周变为圆周。</p>
+<ol start="3" type="1">
 <li>交比是分式线性变换的不变量</li>
 </ol>
 <p><strong>命题1</strong></p>
@@ -835,9 +877,15 @@ Im(z,z_1,z_2,z_3)&lt;0
 <p><strong>定理4</strong></p>
 <p>设<span class="math inline">\(\gamma_1\)</span>和<span class="math inline">\(\gamma_2\)</span>是<span class="math inline">\(\bm
 C_\infty\)</span>中的两个圆周，<span class="math inline">\(z_1,z_2,z_3\)</span>是<span class="math inline">\(\gamma_1\)</span>上有序的三个点，如果分式线性变换<span class="math inline">\(T\)</span>把<span class="math inline">\(\gamma_1\)</span>映为<span class="math inline">\(\gamma_2\)</span>，那么它一定把<span class="math inline">\(\gamma_1\)</span>关于走向<span class="math inline">\(z_1,z_2,z_3\)</span>的右边和左边分别变为<span class="math inline">\(\gamma_2\)</span>关于走向<span class="math inline">\(T(z_1),T(z_2),T(z_3)\)</span>的右边和左边。</p>
-<ol start="3" type="1">
+<ol start="4" type="1">
 <li>对称点及其在分布线性变换下的不变性</li>
 </ol>
+<p><strong>定义1</strong></p>
+<p>设<span class="math inline">\(\gamma\)</span>是以<span class="math inline">\(a\)</span>为中心，以<span class="math inline">\(R\)</span>为半径的圆周，如果点<span class="math inline">\(z,z^*\)</span>在从<span class="math inline">\(a\)</span>出发的射线上，且满足</p>
+<p><span class="math display">\[
+|z-a||z^*-a|=R^2
+\]</span></p>
+<p>则称<span class="math inline">\(z,z^*\)</span>是关于<span class="math inline">\(\gamma\)</span>对称的。如果<span class="math inline">\(\gamma\)</span>是直线时，则当<span class="math inline">\(\gamma\)</span>是线段<span class="math inline">\([z,z^*]\)</span>的垂直平分线时，称<span class="math inline">\(z,z^*\)</span>关于<span class="math inline">\(\gamma\)</span>是对称的。</p>
 <p><strong>命题1</strong></p>
 <p>设<span class="math inline">\(\gamma\)</span>是<span class="math inline">\(\bm C_\infty\)</span>中的圆周，那么<span class="math inline">\(z,z^*\)</span>关于<span class="math inline">\(\gamma\)</span>对称的充要条件是对<span class="math inline">\(\gamma\)</span>上任意三点<span class="math inline">\(z_1,z_2,z_3\)</span>，有</p>
 <p><span class="math display">\[
@@ -1436,6 +1484,19 @@ e^{i\theta}:\theta_0\leq\theta\leq\theta_0+\alpha\}\)</span>，它的方向是�
 \int^\infty_0 e^{-ax^2}\cos bxdx =
 \frac{1}{2}\sqrt{\frac{\pi}{a}}exp\bigg(-\frac{b^2}{4a}\bigg)
 \]</span></p>
+<h1 id="共形映射">共形映射</h1>
+<h2 id="分式线性变换-1">分式线性变换</h2>
+<p>见前</p>
+<h2 id="几个初等函数所构成的映射">几个初等函数所构成的映射</h2>
+<h3 id="幂函数-1">幂函数</h3>
+<p><span class="math inline">\(\omega=z^n(n\in
+N,n\geq2)\)</span>这个函数在<span class="math inline">\(z\)</span>平面内处处可导，当<span class="math inline">\(z\neq 0\)</span>时<span class="math inline">\(\omega&#39;\neq
+0\)</span>，也就是说除了原点外处处共形映射。</p>
+<p>幂函数映射的特点是：把以原点为顶点的角形域映射为以原点为顶点的角形域。但张角变成了原来的<span class="math inline">\(n\)</span>倍。</p>
+<h3 id="指数函数-1">指数函数</h3>
+<p><span class="math inline">\(\omega=e^z\)</span>，易知在全平面上都是一个共形映射。</p>
+<p>其特点是：把水平的带形区域<span class="math inline">\(0&lt;Im(z)&lt;a(a\leq
+2\pi)\)</span>映射成角形域<span class="math inline">\(0&lt;arg\omega&lt;a\)</span>。</p>
 
 
 
@@ -1831,6 +1892,17 @@ e^{i\theta}:\theta_0\leq\theta\leq\theta_0+\alpha\}\)</span>，它的方向是�
         <li><a href="#整函数与亚纯函数">整函数与亚纯函数</a></li>
         <li><a href="#残数定理">残数定理</a></li>
         <li><a href="#利用残数定理计算定积分">利用残数定理计算定积分</a></li>
+      </ol>
+    </li>
+    <li><a href="#共形映射">共形映射</a>
+      <ol>
+        <li><a href="#分式线性变换-1">分式线性变换</a></li>
+        <li><a href="#几个初等函数所构成的映射">几个初等函数所构成的映射</a>
+          <ol>
+            <li><a href="#幂函数-1">幂函数</a></li>
+            <li><a href="#指数函数-1">指数函数</a></li>
+          </ol>
+        </li>
       </ol>
     </li>
   </ol>
