@@ -1552,184 +1552,251 @@ int main(){
 ###### DFS实现的Ford-Fulkerson
 
 ```cpp
-//luogu P3376
-//超时
+//luogu 3376
+//复杂度O(ef)，边数乘以最大流，所以在luogu上这题超时
 #include <iostream>
-#include <vector>
 #include <cstring>
-#include <cstdio>
+#include <vector>
 
-using namespace std;
+typedef long long LL;
 
-typedef long long ll;
-typedef unsigned long long ull;
-
-const ll INF = 0xffffffff;
-const int MAXM = 100005;
+const int MAXN = 205;
+const LL INF = 0xffffffff;
 
 struct Edge{
-    int to;
-    int rev;
-    ll cap;
-    Edge()=default;
-    Edge(int to, ll cap, int rev):to(to),cap(cap),rev(rev){}
-
+    int v;LL w;//指向的点，容量
+    Edge(int v_, LL w_):v(v_),w(w_){}
 };
 
-vector<Edge> G[MAXM];
-bool used[MAXM]; 
+std::vector<Edge> edges;
+std::vector<std::vector<int> > graph(MAXN);//vector版的链式前向星
+bool vis[MAXN];
 
-ll dfs(int v, int t, ll f){
-    if(v==t) return f;
-    used[v] = true;
-    for(int i=0;i<G[v].size();i++){
-        Edge& e=G[v][i];
-        if(!used[e.to]&&e.cap>0){
-            ll d = dfs(e.to, t, min(f,e.cap));
-            if(d>0){
-                e.cap-=d;
-                G[e.to][e.rev].cap+=d;
-                return d;
-            }
+LL DFS(int const & p, LL const & flow, int const & s, int const & t){
+    if(p==t) return flow;
+    vis[p] = true;
+
+    int size = graph[p].size();
+    for(int i=0 ; i<size ; i++){
+        int eg = graph[p][i];
+        int to = edges[eg].v;
+        LL vol = edges[eg].w, c;
+
+        if(vol>0 && !vis[to] && (c=DFS(to,std::min(flow,vol),s,t))!=-1){
+            edges[eg].w -= c;
+            edges[eg^1].w += c;
+            return c;
         }
     }
-    return 0;
+
+    return -1;
 }
 
-ll max_flow(int s, int t){
-    ll flow = 0;
-    for(;;){
-        memset(used,0,sizeof(used));
-        ll f = dfs(s,t,INF);
-        if(f==0) return flow;
-        flow+=f;
+LL FF(int const & p, LL const & flow, int const & s, int const & t){
+    LL ans = 0, c;
+    while((c=DFS(p,flow,s,t))!=-1){
+        std::memset(vis,0,sizeof(vis));
+        ans += c;
     }
+    return ans;
 }
 
 int main(){
-    int n,m;
-    cin>>n>>m;
-    //点数，边数
-    int s,t;
-    cin>>s>>t;
-    //源点，汇点
+    int n,m,s,t;//点数，边数，源点，汇点
+    std::cin>>n>>m>>s>>t;
+
     for(int i=1;i<=m;i++){
-        int a,b;
-        ll c;
-        scanf("%d%d%ld",&a,&b,&c);
-        //起点，终点，边容量
-        //cin>>a>>b>>c;
-        G[a].push_back(Edge(b,c,G[b].size()));//这里第三个参数实际上是反向边的编号
-        G[b].push_back(Edge(a,0,G[a].size()-1));
+        int u,v;LL w;
+        std::cin>>u>>v>>w;//起点，终点，边容量
+        graph[u].push_back(edges.size());
+        edges.push_back(Edge(v,w));
+        graph[v].push_back(edges.size());
+        edges.push_back(Edge(u,0));
     }
-    
-    ll ans = max_flow(s,t);
-    //得到最大流
-    printf("%ld",ans);
-    //cout<<ans<<endl;
+
+    std::cout<<FF(s,INF,s,t)<<"\n";//输出最大流
+
     return 0;
 }
-
-/*
-4 5 4 3
-4 2 30
-4 3 20
-2 3 20
-2 1 30
-1 3 40
-*/
 ```
 
 ###### EdmondsKarp
 
 ```cpp
+//luogu P3376
+//EK算法的时间复杂度为O(nm^2)，这题不会超时
 #include <iostream>
+#include <cstring>
 #include <vector>
 #include <queue>
-#include <cstring>
 
-using namespace std;
-
-typedef long long ll;
+typedef long long LL;
 
 const int MAXN = 205;
-const ll INF = 1LL<<35;
+const LL INF = 0xffffffff;
 
 struct Edge{
-    int from, to;
-    ll cap,flow;
-    Edge(int u, int v, ll c, ll f):from(u),to(v),cap(c),flow(f){}
+    int v;LL w;//指向的点，容量
+    Edge(int v_, LL w_):v(v_),w(w_){}
 };
 
-struct EdmondKarp{
-    int n,m;
-    vector<Edge> edges;  
-    vector<int> G[MAXN]; //邻接表
-    ll a[MAXN];
-    ll p[MAXN];
+std::vector<Edge> edges;
+std::vector<std::vector<int> > graph(MAXN);//vector版的链式前向星
+int last[MAXN];
+LL flow[MAXN];
 
-    void init(int n){
-        for(int i=0;i<n;i++){
-            G[i].clear();
-        }
-        edges.clear();
-    }
+bool BFS(int const & s, int const & t){
+    std::memset(last,-1,sizeof(last));
+    std::queue<int> qu;
+    qu.push(s);
+    flow[s] = INF;
+    while(!qu.empty()){
+        int p = qu.front();
+        qu.pop();
+        if(p == t) break;
 
-    void AddEdge(int from, int to, ll cap){
-        edges.push_back(Edge(from, to, cap, 0));
-        edges.push_back(Edge(to, from, 0, 0));
-        m = edges.size();
-        G[from].push_back(m-2);
-        G[to].push_back(m-1);
-    }
-
-    int Maxflow(int s, int t){
-        ll flow = 0;
-        for(;;){
-            memset(a, 0 ,sizeof(a));
-            queue<ll> Q;
-            Q.push(s);
-            a[s] = INF;
-            while(!Q.empty()){
-                ll x=Q.front();
-                Q.pop();
-                for(int i=0;i<G[x].size();i++){
-                    Edge& e = edges[G[x][i]];
-                    if(!a[e.to]&&e.cap>e.flow){
-                        p[e.to] = G[x][i];
-                        a[e.to] = min(a[x], e.cap-e.flow);
-                        Q.push(e.to);
-                    }
-                }
-                if(a[t]) break;
+        int size = graph[p].size();
+        for(int i=0;i<size;i++){
+            int eg = graph[p][i];
+            int to = edges[eg].v;
+            LL vol = edges[eg].w;
+            if(vol>0 && last[to] == -1){
+                last[to] = eg;
+                flow[to] = std::min(flow[p], vol);
+                qu.push(to);
             }
-            if(!a[t]) break;
-            for(int u=t;u!=s;u=edges[p[u]].from){
-                edges[p[u]].flow+=a[t];
-                edges[p[u]^1].flow -= a[t];
-            }
-            flow += a[t];
         }
-        return flow;
     }
-};
+    return last[t] != -1;
+}
+
+LL EK(int const & s, int const & t){
+    LL ans = 0;
+
+    while(BFS(s,t)){
+        ans += flow[t];
+        for(int i=t;i!=s;i=edges[last[i]^1].v){
+            edges[last[i]].w -= flow[t];
+            edges[last[i]^1].w += flow[t];
+        }
+    }
+
+    return ans;
+}
 
 int main(){
-    EdmondKarp EK;
-    cin>>EK.n;
-    //点数
-    int s,t;
-    int m;
-    cin>>m>>s>>t;
-    //边数，源点，汇点
+    int n,m,s,t;//点数，边数，源点，汇点
+    std::cin>>n>>m>>s>>t;
+
     for(int i=1;i<=m;i++){
-        int tmp1,tmp2,tmp3;
-        cin>>tmp1>>tmp2>>tmp3;
-        //起点，终点，边容量
-        EK.AddEdge(tmp1,tmp2,tmp3);
+        int u,v;LL w;
+        std::cin>>u>>v>>w;
+        graph[u].push_back(edges.size());
+        edges.push_back(Edge(v,w));
+        graph[v].push_back(edges.size());
+        edges.push_back(Edge(u,0));
     }
 
-    cout<<EK.Maxflow(s,t)<<endl;
+    std::cout<<EK(s,t)<<"\n";
+
+    return 0;
+}
+```
+
+###### Dinic
+
+```cpp
+//luogu P3376
+//Dinic算法的时间复杂度为O(n^2m)，这题不会超时
+#include <iostream>
+#include <cstring>
+#include <vector>
+#include <queue>
+
+typedef long long LL;
+
+const int MAXN = 205;
+const LL INF = 0xffffffff;
+
+struct Edge{
+    int v;LL w;//指向的点，容量
+    Edge(int v_, LL w_):v(v_),w(w_){}
+};
+
+std::vector<Edge> edges;
+std::vector<std::vector<int> > graph(MAXN);//vector版的链式前向星
+std::vector<int> cur(MAXN);
+int level[MAXN];
+LL flow[MAXN];
+
+bool BFS(int const & s, int const & t){//BFS分层
+    std::memset(level, -1, sizeof(level));
+    level[s] = 0;
+    std::queue<int> qu;
+    qu.push(s);
+
+    while(!qu.empty()){
+        int p = qu.front();
+        qu.pop();
+        int size = graph[p].size();
+        for(int i=0;i<size;i++){
+            int eg = graph[p][i];
+            int to = edges[eg].v;
+            LL vol = edges[eg].w;
+            if(vol>0 && level[to] == -1){
+                level[to] = level[p] + 1;
+                qu.push(to);
+            }
+        }
+    }
+
+    return level[t] != -1;
+}
+
+LL DFS(int const & p, LL const & flow, int const & s, int const & t){
+    if(p==t) return flow;
+
+    LL surplus = flow;//剩余流量
+
+    int size = graph[p].size();
+    for(int & i=cur[p];i<size && surplus;i++){//这里i是引用，是当前弧优化
+        int eg = graph[p][i];
+        int to = edges[eg].v;
+        LL vol = edges[eg].w;
+        if(vol>0 && level[to]==level[p]+1){
+            LL c = DFS(to, std::min(vol, surplus), s, t);
+            surplus -= c;
+            edges[eg].w -= c;
+            edges[eg^1].w += c;
+        }
+    }
+
+    return flow - surplus;
+}
+
+LL Dinic(int const & p, LL const & flow, int const & s, int const & t){
+    LL ans = 0;
+    while(BFS(s,t)){
+        cur.assign(MAXN,0);
+        ans += DFS(p,flow,s,t);
+    }
+    return ans;
+}
+
+int main(){
+    int n,m,s,t;//点数，边数，源点，汇点
+    std::cin>>n>>m>>s>>t;
+
+    for(int i=1;i<=m;i++){
+        int u,v;LL w;
+        std::cin>>u>>v>>w;
+        graph[u].push_back(edges.size());
+        edges.push_back(Edge(v,w));
+        graph[v].push_back(edges.size());
+        edges.push_back(Edge(u,0));
+    }
+
+    std::cout<<Dinic(s,INF,s,t)<<"\n";
 
     return 0;
 }
