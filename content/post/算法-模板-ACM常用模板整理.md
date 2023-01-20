@@ -1727,7 +1727,6 @@ std::vector<Edge> edges;
 std::vector<std::vector<int> > graph(MAXN);//vector版的链式前向星
 std::vector<int> cur(MAXN);
 int level[MAXN];
-LL flow[MAXN];
 
 bool BFS(int const & s, int const & t){//BFS分层
     std::memset(level, -1, sizeof(level));

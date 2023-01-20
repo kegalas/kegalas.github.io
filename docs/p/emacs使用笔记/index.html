@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='快捷键 光标、页面移动相关 按键 功能 C-v 下一屏 M-v 上一屏 C-l 重绘屏幕，将光标至于中央、顶端、底端 C-p 方向键上 C-n 方向键下 C-b 方向键左 C-f 方向键右 M-f 这个词的末尾'><title>Emacs使用笔记</title>
+
+<link rel='canonical' href='https://kegalas.top/p/emacs%E4%BD%BF%E7%94%A8%E7%AC%94%E8%AE%B0/'>
+
+<link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='Emacs使用笔记'>
+<meta property='og:description' content='快捷键 光标、页面移动相关 按键 功能 C-v 下一屏 M-v 上一屏 C-l 重绘屏幕，将光标至于中央、顶端、底端 C-p 方向键上 C-n 方向键下 C-b 方向键左 C-f 方向键右 M-f 这个词的末尾'>
+<meta property='og:url' content='https://kegalas.top/p/emacs%E4%BD%BF%E7%94%A8%E7%AC%94%E8%AE%B0/'>
+<meta property='og:site_name' content='KegalaS的个人博客'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Emacs' /><meta property='article:published_time' content='2023-01-20T16:09:29&#43;08:00'/><meta property='article:modified_time' content='2023-01-20T16:09:29&#43;08:00'/>
+<meta name="twitter:title" content="Emacs使用笔记">
+<meta name="twitter:description" content="快捷键 光标、页面移动相关 按键 功能 C-v 下一屏 M-v 上一屏 C-l 重绘屏幕，将光标至于中央、顶端、底端 C-p 方向键上 C-n 方向键下 C-b 方向键左 C-f 方向键右 M-f 这个词的末尾">
+    <link rel="shortcut icon" href="favicon-16x16.png" />
+
+    </head>
+    <body class="
+    article-page has-toc
+">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex 
+    
+        extended
+    
+">
+    
+        <div id="article-toolbar">
+            <a href="/" class="back-home">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="15 6 9 12 15 18" />
+</svg>
+
+
+
+                <span>返回</span>
+            </a>
+        </div>
+    
+<main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/%E5%85%B6%E4%BB%96/" >
+                其他
+            </a>
+        
+    </header>
+    
+
+    <h2 class="article-title">
+        <a href="/p/emacs%E4%BD%BF%E7%94%A8%E7%AC%94%E8%AE%B0/">Emacs使用笔记</a>
+    </h2>
+
+    
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Jan 20, 2023</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 2 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+</div>
+</header>
+
+    <section class="article-content">
+    
+
+<h1 id="快捷键">快捷键</h1>
+<h2 id="光标页面移动相关">光标、页面移动相关</h2>
+<table>
+<thead>
+<tr class="header">
+<th>按键</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>C-v</td>
+<td>下一屏</td>
+</tr>
+<tr class="even">
+<td>M-v</td>
+<td>上一屏</td>
+</tr>
+<tr class="odd">
+<td>C-l</td>
+<td>重绘屏幕，将光标至于中央、顶端、底端</td>
+</tr>
+<tr class="even">
+<td>C-p</td>
+<td>方向键上</td>
+</tr>
+<tr class="odd">
+<td>C-n</td>
+<td>方向键下</td>
+</tr>
+<tr class="even">
+<td>C-b</td>
+<td>方向键左</td>
+</tr>
+<tr class="odd">
+<td>C-f</td>
+<td>方向键右</td>
+</tr>
+<tr class="even">
+<td>M-f</td>
+<td>这个词的末尾</td>
+</tr>
+<tr class="odd">
+<td>M-b</td>
+<td>这个词的开头</td>
+</tr>
+<tr class="even">
+<td>C-a</td>
+<td>行首</td>
+</tr>
+<tr class="odd">
+<td>C-e</td>
+<td>行尾</td>
+</tr>
+<tr class="even">
+<td>M-a</td>
+<td>这一句的开头</td>
+</tr>
+<tr class="odd">
+<td>M-e</td>
+<td>这一句的末尾</td>
+</tr>
+<tr class="even">
+<td>M-&lt;</td>
+<td>文件开头</td>
+</tr>
+<tr class="odd">
+<td>M-&gt;</td>
+<td>文件末尾</td>
+</tr>
+<tr class="even">
+<td>C-M-v</td>
+<td>在另一个window里下一屏</td>
+</tr>
+<tr class="odd">
+<td>C-M-S-v</td>
+<td>在另一个window里上一屏</td>
+</tr>
+<tr class="even">
+<td>M-g M-g 行号</td>
+<td>跳转到某一行</td>
+</tr>
+<tr class="odd">
+<td>C-o</td>
+<td>与回车不同的是，光标不会进入到下一行</td>
+</tr>
+<tr class="even">
+<td>C-x C-o</td>
+<td>将光标前后的所有空白行变成一个空白行</td>
+</tr>
+</tbody>
+</table>
+<h2 id="文本操作">文本操作</h2>
+<table>
+<colgroup>
+<col style="width: 50%"/>
+<col style="width: 50%"/>
+</colgroup>
+<thead>
+<tr class="header">
+<th>按键</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>&lt;DEL&gt;</td>
+<td>删除(delete)光标前的一个字符，windows上为Backspace</td>
+</tr>
+<tr class="even">
+<td>C-d</td>
+<td>删除光标后的一个字符</td>
+</tr>
+<tr class="odd">
+<td>M-&lt;DEL&gt;</td>
+<td>移除(kill)光标前的一个词</td>
+</tr>
+<tr class="even">
+<td>M-d</td>
+<td>移除光标后的一个词</td>
+</tr>
+<tr class="odd">
+<td>C-k</td>
+<td>移除光标到行尾间的字符</td>
+</tr>
+<tr class="even">
+<td>M-k</td>
+<td>移除光标到句尾间的字符</td>
+</tr>
+<tr class="odd">
+<td>C-&lt;SPC&gt;</td>
+<td>开始标记范围，从光标处开始，移动光标扩大选中范围</td>
+</tr>
+<tr class="even">
+<td>C-w</td>
+<td>移除选中范围的字符</td>
+</tr>
+<tr class="odd">
+<td>C-y</td>
+<td>召回(yanking)被最近一次移除(kill)的字符</td>
+</tr>
+<tr class="even">
+<td>M-y</td>
+<td>在C-y之后，紧接着使用，可以替换为召回再上一次被移除的字符，连续使用多次则替换为召回在上多次被移除的字符</td>
+</tr>
+<tr class="odd">
+<td>C-/</td>
+<td>撤回，多次使用则撤回更以前的操作。如果使用C-g打断undo，则之后的C-/是重做</td>
+</tr>
+<tr class="even">
+<td>C-s</td>
+<td>向下文搜索。再次按C-s则搜索下一个出现的位置。&lt;Return&gt;即回车将光标停在这个位置，结束搜索。C-g结束搜索并将光标还原到原来的位置</td>
+</tr>
+<tr class="odd">
+<td>C-r</td>
+<td>向上文搜索,其他类似</td>
+</tr>
+<tr class="even">
+<td>M-x replace-string</td>
+<td>替换字符串</td>
+</tr>
+</tbody>
+</table>
+<h2 id="文件相关">文件相关</h2>
+<table>
+<thead>
+<tr class="header">
+<th>按键</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>C-x C-f</td>
+<td>寻找并打开一个文件，如果不存在，则新建这个文件</td>
+</tr>
+<tr class="even">
+<td>C-x C-s</td>
+<td>保存文件</td>
+</tr>
+<tr class="odd">
+<td>C-x C-r</td>
+<td>以只读方式打开文件</td>
+</tr>
+<tr class="even">
+<td>C-x C-q</td>
+<td>切换为只读模式</td>
+</tr>
+</tbody>
+</table>
+<h2 id="buffer相关">Buffer相关</h2>
+<table>
+<thead>
+<tr class="header">
+<th>按键</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>C-x C-b</td>
+<td>列出Buffer</td>
+</tr>
+<tr class="even">
+<td>C-x b 缓冲区名</td>
+<td>切换到这个缓冲区</td>
+</tr>
+<tr class="odd">
+<td>C-x s</td>
+<td>保存多个缓冲区</td>
+</tr>
+</tbody>
+</table>
+<h2 id="window相关">Window相关</h2>
+<table>
+<colgroup>
+<col style="width: 50%"/>
+<col style="width: 50%"/>
+</colgroup>
+<thead>
+<tr class="header">
+<th>按键</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>C-x 0</td>
+<td>关闭当前光标所在的window</td>
+</tr>
+<tr class="even">
+<td>C-x 1</td>
+<td>保留当前光标所在的window，关闭其他所有</td>
+</tr>
+<tr class="odd">
+<td>C-x 2</td>
+<td>将屏幕分为上下两个window</td>
+</tr>
+<tr class="even">
+<td>C-x 3</td>
+<td>将屏幕分为左右两个window</td>
+</tr>
+<tr class="odd">
+<td>C-x o</td>
+<td>光标切换到另一个window</td>
+</tr>
+<tr class="even">
+<td>C-x 4</td>
+<td>以该命令为前缀时，表示在另外一个窗口做……例如C-x 4
+f表示在另一个窗口打开新文件</td>
+</tr>
+</tbody>
+</table>
+<h2 id="其他">其他</h2>
+<table>
+<thead>
+<tr class="header">
+<th>按键</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>C-u 数字 其他命令</td>
+<td>给其他命令传递一个数字，大部分都是重复次数</td>
+</tr>
+<tr class="even">
+<td>C-g</td>
+<td>取消没输完的命令或者正在执行的命令</td>
+</tr>
+<tr class="odd">
+<td>C-x</td>
+<td>字符扩展，之后输入另一个字符或组合键</td>
+</tr>
+<tr class="even">
+<td>M-x</td>
+<td>命令名扩展，之后输入一个命令名</td>
+</tr>
+<tr class="odd">
+<td>C-x C-c</td>
+<td>退出Emacs</td>
+</tr>
+<tr class="even">
+<td>C-x C-=</td>
+<td>放大字号</td>
+</tr>
+<tr class="odd">
+<td>C-x C–</td>
+<td>减小字号</td>
+</tr>
+<tr class="even">
+<td>C-x C-0</td>
+<td>默认字号</td>
+</tr>
+</tbody>
+</table>
+
+
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/emacs/">Emacs</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css"integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js"integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8"crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js"integrity="sha384-vZTG03m&#43;2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl"crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.querySelector(`.article-content`), {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ]
+        });})
+</script>
+    
+</article>
+
+    <aside class="related-contents--wrapper">
+    
+    
+        <h2 class="section-title">相关文章</h2>
+        <div class="related-contents">
+            <div class="flex article-list--tile">
+                
+                    
+<article class="has-image">
+    <a href="/p/msys2%E4%B8%AD%E4%BD%BF%E7%94%A8mingw64%E7%9A%84g-%E7%BC%96%E8%AF%91%E8%BF%90%E8%A1%8C%E6%8A%A5%E9%94%99%E6%97%A0%E6%B3%95%E6%89%BE%E5%88%B0%E5%85%A5%E5%8F%A3/">
+        
+        
+            <div class="article-image">
+                <img src="/p/msys2%E4%B8%AD%E4%BD%BF%E7%94%A8mingw64%E7%9A%84g-%E7%BC%96%E8%AF%91%E8%BF%90%E8%A1%8C%E6%8A%A5%E9%94%99%E6%97%A0%E6%B3%95%E6%89%BE%E5%88%B0%E5%85%A5%E5%8F%A3/1.4011394892ad43b7efa8bdd166d30e51_hu8fe568a15a37a7bd8c510c832a970168_16486_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-QBE5SJKtQ7fvqL3RZtMOUQ==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Msys2中使用mingw64的G&#43;&#43;编译，运行报错无法找到入口</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="">
+    <a href="/p/%E9%87%8D%E6%96%B0%E7%BC%96%E8%AF%91hugo%E6%9D%A5%E4%BD%BF%E5%BE%97pandoc%E5%8F%AF%E4%BB%A5%E7%94%9F%E6%88%90%E7%9B%AE%E5%BD%95/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">重新编译hugo来使得pandoc可以生成目录</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="">
+    <a href="/p/%E5%9C%A8powershell%E4%B8%AD%E4%BD%BF%E7%94%A8v2rayn%E4%BB%A3%E7%90%86/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">在PowerShell中使用v2rayN代理</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="">
+    <a href="/p/msys2%E6%8A%A5%E9%94%99david-macek-is-unknown-trust/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">MSYS2报错David Macek is unknown trust</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/p/hugo%E7%9A%84stack%E7%9A%AE%E8%82%A4%E4%B8%AD%E4%BD%BF%E5%BE%97mailto%E8%B6%85%E9%93%BE%E6%8E%A5%E8%83%BD%E5%A4%9F%E7%9B%B4%E6%8E%A5%E6%89%93%E5%BC%80%E7%94%B5%E5%AD%90%E9%82%AE%E4%BB%B6%E5%AE%A2%E6%88%B7%E7%AB%AF/">
+        
+        
+            <div class="article-image">
+                <img src="/p/hugo%E7%9A%84stack%E7%9A%AE%E8%82%A4%E4%B8%AD%E4%BD%BF%E5%BE%97mailto%E8%B6%85%E9%93%BE%E6%8E%A5%E8%83%BD%E5%A4%9F%E7%9B%B4%E6%8E%A5%E6%89%93%E5%BC%80%E7%94%B5%E5%AD%90%E9%82%AE%E4%BB%B6%E5%AE%A2%E6%88%B7%E7%AB%AF/cover.6f09e2d71e2344266088e2fef78989fd_hu378ddc8c04e53c565ec514b2115f7fb1_40855_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-bwni1x4jRCZgiOL&#43;94mJ/Q==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Hugo的Stack皮肤中使得mailto超链接能够直接打开电子邮件客户端</h2>
+        </div>
+    </a>
+</article>
+                
+            </div>
+        </div>
+    
+</aside>
+
+     
+    
+        
+    <script src="https://utteranc.es/client.js" 
+        repo="kegalas/blogComments"
+        issue-term="pathname"
+        
+        crossorigin="anonymous"
+        async
+        >
+</script>
+
+<style>
+    .utterances {
+        max-width: unset;
+    }
+</style>
+
+<script>
+    function setUtterancesTheme(theme) {
+        let utterances = document.querySelector('.utterances iframe');
+        if (utterances) {
+            utterances.contentWindow.postMessage(
+                {
+                    type: 'set-theme',
+                    theme: `github-${theme}`
+                },
+                'https://utteranc.es'
+            );
+        }
+    }
+
+    addEventListener('message', event => {
+        if (event.origin !== 'https://utteranc.es') return;
+        setUtterancesTheme(document.documentElement.dataset.scheme)
+    });
+
+    window.addEventListener('onColorSchemeChange', (e) => {
+        setUtterancesTheme(e.detail)
+    })
+</script>
+
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2023 KegalaS的个人博客
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.4.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    
+        <aside class="sidebar right-sidebar sticky">
+            <section class="widget archives">
+                <div class="widget-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+                </div>
+                <h2 class="widget-title section-title">目录</h2>
+                
+                <div class="widget--toc">
+                    <nav id="TableOfContents">
+  <ol>
+    <li><a href="#快捷键">快捷键</a>
+      <ol>
+        <li><a href="#光标页面移动相关">光标、页面移动相关</a></li>
+        <li><a href="#文本操作">文本操作</a></li>
+        <li><a href="#文件相关">文件相关</a></li>
+        <li><a href="#buffer相关">Buffer相关</a></li>
+        <li><a href="#window相关">Window相关</a></li>
+        <li><a href="#其他">其他</a></li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+                </div>
+            </section>
+        </aside>
+    
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                defer="false"
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
