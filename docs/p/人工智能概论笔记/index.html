@@ -125,7 +125,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 30 分钟
+                    阅读时长: 31 分钟
                 </time>
             </div>
         
@@ -952,7 +952,51 @@ T(E_1\ OR\ E_2) = \min\{1,T(E_1)+T(E_2)\}
 <p>模型方法又分为数值方法和非数值方法两类。数值方法对不确定性进行定量的描述，按其所依据的理论又可分为基于概率的方法和基于模糊理论的方法。</p>
 <p>本节主要针对模型方法中相关的典型算法展开.</p>
 <h3 id="逆概率法">逆概率法</h3>
-<p>TODO</p>
+<p><em>经典概率方法</em></p>
+<ol type="1">
+<li>设有如下产生式规则：</li>
+</ol>
+<p><span class="math display">\[
+\text{IF\quad E\quad\quad THEN\quad H}
+\]</span></p>
+<p>其中，<span class="math inline">\(E\)</span>为前提条件，<span class="math inline">\(H\)</span>为结论。条件概率<span class="math inline">\(P(H|E)\)</span>可以作为在证据<span class="math inline">\(E\)</span>出现时结论<span class="math inline">\(H\)</span>的确定性程度，即规则的静态强度。</p>
+<ol start="2" type="1">
+<li>对于复合条件</li>
+</ol>
+<p><span class="math display">\[
+E=E_1\ \text{AND}\ E_2\ \text{AND}\cdots\text{AND}\ E_n
+\]</span></p>
+<p>当已知条件概率<span class="math inline">\(P(H|E_1,E_2,\cdots,E_n)\)</span>时，就可把它作为在证
+据<span class="math inline">\(E_1,E_2,\cdots,E_n\)</span>出现时结论H的确定性程度。</p>
+<ol start="3" type="1">
+<li>先验概率：<span class="math inline">\(P(H)\)</span>，后验概率<span class="math inline">\(P(H|E)\)</span></li>
+</ol>
+<p>经典概率方法要求给出条件概率<span class="math inline">\(P(H|E)\)</span>，在实际中通常比较困难。例如<span class="math inline">\(E\)</span>代表咳嗽，<span class="math inline">\(H\)</span>代表支气管炎，则<span class="math inline">\(P(H|E)\)</span>表示在咳嗽的人群中患支气管炎的概率，这个比较困难，因为样本空间太大。而<span class="math inline">\(P(E|H)\)</span>表示在得支气管炎的人群中咳嗽的概率，这个就比较容易获得。我们可以根据Bayes定理从<span class="math inline">\(P(E|H)\)</span>推出<span class="math inline">\(P(H|E)\)</span></p>
+<p><em>优点</em></p>
+<p>逆概率法有较强的理论背景和良好的数学特性，当证据彼此独立时计算的复杂度比较低。</p>
+<p><em>缺点</em></p>
+<p>逆概率法要求给出结论<span class="math inline">\(H_i\)</span>的先验概率<span class="math inline">\(P(H_i)\)</span>及条件概率<span class="math inline">\(P(E_j|H_i)\)</span>。</p>
+<h3 id="可信度方法">可信度方法</h3>
+<p>可信度方法是在确定性理论的基础上，结合概率
+论等提出的一种不确定性推理方法，简称C-F模型。
+该方法首先在医疗系统MYCIN中得到成功的应用。</p>
+<p><em>可信度的概念</em></p>
+<p>根据经验对一个事物和现象为真的相信程度称为可信度。</p>
+<p>在可信度方法中，由专家给出规则或知识的可信度，从而可避免对先验概率、或条件概率的要求。</p>
+<ol type="1">
+<li>知识不确定性的表示</li>
+</ol>
+<p>在C-F模型中，知识是用产生式规则表示的，其一般形式为：</p>
+<p><span class="math display">\[
+\text{IF}\quad E\quad \text{THEN}\quad H\quad (CF(H,E))
+\]</span></p>
+<p>其中</p>
+<ol type="1">
+<li>前提<span class="math inline">\(E\)</span>可以是命题的合取和析取组合</li>
+<li>结论<span class="math inline">\(H\)</span>可为单一命题，也可以是复合命题</li>
+<li><span class="math inline">\(CF(H,E)\)</span>为确定性因子(Certainty
+factor)，简称可信度，用以量度规则的确定性（可信）程度。取值于<span class="math inline">\([-1，1]\)</span>，表示<span class="math inline">\(E\)</span>为真时，对<span class="math inline">\(H\)</span>的支持程度。<span class="math inline">\(CF(H,E)\)</span>值越大，<span class="math inline">\(E\)</span>就越支持<span class="math inline">\(H\)</span>为真。</li>
+</ol>
 <h1 id="遗传算法">遗传算法</h1>
 <h2 id="基本思想">基本思想</h2>
 <p>遗传算法把问题的解表示成“染色体”，在算法中即是以一定方式编码的串。并且，在执行遗传算法之前，给出一群“染色体”，也即假设解（候选解）。然后，把这些假设解置于问题的“环境”中，并按适者生存的原则，从中选择出较适应环境的“染色体”进行复制，再通过交叉，变异过程产生更适应环境的新一代“染色体”群。这样，一代一代地进化，最后就会收敛到最适应环境的一个“染色体”上，它就是问题的最优解。</p>
@@ -1308,6 +1352,7 @@ T(E_1\ OR\ E_2) = \min\{1,T(E_1)+T(E_2)\}
         <li><a href="#不确定性推理方法的分类">不确定性推理方法的分类</a>
           <ol>
             <li><a href="#逆概率法">逆概率法</a></li>
+            <li><a href="#可信度方法">可信度方法</a></li>
           </ol>
         </li>
       </ol>

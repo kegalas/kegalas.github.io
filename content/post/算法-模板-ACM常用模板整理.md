@@ -2968,6 +2968,116 @@ judge函数应该根据题意写出。
 
 如果是浮点数的二分，则不推荐使用EPS进行精度判断（有可能会丢精度）。而是使用计数器，一般迭代100次就能保证符合题目要求。
 
+## 动态规划
+
+### 01背包
+
+```cpp
+//luogu P1048
+#include <iostream>
+#include <cmath>
+
+int const MAXN = 1005;
+
+using namespace std;
+
+int dp[MAXN];
+int w[MAXN];
+int v[MAXN];
+
+int main(){
+    int n,W;//物品数，背包大小
+    cin>>W>>n;
+    for(int i=1;i<=n;i++){
+        cin>>w[i]>>v[i];//物品体积，物品价值
+    }
+    for(int i=1;i<=n;i++){
+        for(int j=W;j>=w[i];j--){
+			dp[j] = std::max(dp[j],dp[j-w[i]]+v[i]);
+        }
+    }
+    cout<<dp[W]<<endl;
+    return 0;
+}
+```
+
+### 完全背包
+
+```cpp
+//luogu P1616
+#include <iostream>
+#include <cmath>
+
+int const MAXN = 10007;
+int const MAXW = 10000007;
+typedef long long LL;
+
+using namespace std;
+
+LL dp[MAXW];
+int w[MAXN];
+int v[MAXN];
+
+int main(){
+    int n,W;//物品数，背包大小
+    cin>>W>>n;
+    for(int i=1;i<=n;i++){
+        cin>>w[i]>>v[i];//物品体积，物品价值
+    }
+    for(int i=1;i<=n;i++){
+        for(int j=w[i];j<=W;j++){
+			dp[j] = std::max(dp[j],dp[j-w[i]]+v[i]);
+        }
+    }
+    cout<<dp[W]<<endl;
+    return 0;
+}
+```
+
+### 多重背包
+
+```cpp
+//luogu P1776
+#include <iostream>
+#include <cmath>
+
+int const MAXN = 100007;
+int const MAXW = 40007;
+typedef long long LL;
+
+using namespace std;
+
+LL dp[MAXW];
+int w[MAXN];
+int v[MAXN];
+
+int main(){
+    int m,W;//物品种类数，背包大小
+    cin>>m>>W;
+    int n = 0;
+    for(int i=1;i<=m;i++){
+        int c = 1;
+        int p,h,k;//物品价值，物品体积，物品数量
+        cin>>p>>h>>k;
+        while(k>c){
+            k -= c;
+            v[++n] = c*p;
+            w[n] = c*h;
+            c *= 2;
+        }
+        v[++n] = p*k;
+        w[n] = h*k;
+    }
+    for(int i=1;i<=n;i++){
+	    for(int j=W;j>=w[i];j--){
+	        dp[j] = std::max(dp[j],dp[j-w[i]]+v[i]);
+        }
+    }
+    cout<<dp[W]<<endl;
+    return 0;
+}
+```
+
 ## 概率论
 
 ### 处理分数期望、概率
