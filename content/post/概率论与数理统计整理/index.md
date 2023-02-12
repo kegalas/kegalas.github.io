@@ -35,6 +35,7 @@ markup: pandoc
 定义1: 事件A发生频率的稳定值$p$称为它的概率$P(A)$，即$P(A)=p$
 
 定义2: 随机试验$E$，样本空间$\Omega$，对于$E$的每一事件$A$赋予一个实数，记为$P(A)$，如果集合函数满足以下条件，P(A)称为事件A的概率
+
 1. 非负性: 对于每一个事件$A$，有$P(A)\geq0$
 2. 规范性: 对于必然事件$\Omega$，有$P(\Omega)=1$
 3. 可列可加性: 设$A_1,A_2,\cdots$是两两不相容的事件，即对于$A_iA_j=\empty,i\neq j(i,j=1,2,\cdots)$
@@ -552,7 +553,7 @@ $$
 
 **定义2**
 
-设$X_1,\cdots,X_n$是离散型随机变量，弱队任何常数$a_1,\cdots,a_n$都有
+设$X_1,\cdots,X_n$是离散型随机变量，若对任何常数$a_1,\cdots,a_n$都有
 
 $$
 P(X_1=a_1,\cdots,X_n=a_n) = P(X_1=a_1)\cdots P(X_n=a_n)
@@ -877,10 +878,10 @@ $$
 =\varPhi(0.25)-\varPhi(-1.25)
 $$
 
-可以查表代入。但是通常只有非负数的值，对于负数，有
+可以查表代入。但是通常只有非负数的值，对于负数$x$，有
 
 $$
-\varPhi = 1-\varPhi(-x)
+\varPhi(x) = 1-\varPhi(-x)
 $$
 
 #### 正态分布的线性组合性质
@@ -1185,13 +1186,10 @@ $$
 由$\Gamma$函数的定义可知，若$n>0$，则函数
 
 $$
-k_n(x)=
-\left\{\begin{align}
-
+k_n(x)=\left\{\begin{align*}
 &\frac{1}{\Gamma(n/2)2^{n/2}}e^{-x/2}x^{(n-2)/2} &,\quad x>0\\
 &0 &,\quad x\leq 0
-
-\end{align}\right.
+\end{align*}\right.
 $$
 
 是概率密度函数。它称为“自由度为$n$的皮尔逊卡方密度”，常记为$\mathcal{X}{}_n^2$
@@ -1674,7 +1672,9 @@ $$
 
 **切比雪夫大数定理**
 
-设$X_1,X_2,\cdots,X_n,\cdots$是相互独立独立的随机变量，具有相同的期望和方差，记它们的均值都为$a$。又设它们的方差存在并记为$\sigma^2$。则对任意给定的$\varepsilon>0$，有
+//TODO: 审校本小节
+
+设$X_1,X_2,\cdots,X_n,\cdots$是相互独立的随机变量，具有相同的期望和方差，记它们的均值都为$a$。又设它们的方差存在并记为$\sigma^2$。则对任意给定的$\varepsilon>0$，有
 
 $$
 \lim_{n\to \infty}P(|\bar X_n-a|\geq \varepsilon) = 0
@@ -1737,7 +1737,7 @@ $$
 $$
 
 $$
-P\bigg(\sum^n_{k=1}X_k\leq x\bigg)\approx\Phi\bigg(\frac{x-n\mu}{\sqrt n\sigma}\bigg),\quad P\bigg(a<\sum^n_{k=1}X_k\leq b\bigg)\approx\Phi\bigg(\frac{b-n\mu}{\sqrt n\sigma}\bigg)-\bigg(\frac{a-n\mu}{\sqrt n\sigma}\bigg)
+P\bigg(\sum^n_{k=1}X_k\leq x\bigg)\approx\Phi\bigg(\frac{x-n\mu}{\sqrt n\sigma}\bigg),\quad P\bigg(a<\sum^n_{k=1}X_k\leq b\bigg)\approx\Phi\bigg(\frac{b-n\mu}{\sqrt n\sigma}\bigg)-\Phi\bigg(\frac{a-n\mu}{\sqrt n\sigma}\bigg)
 $$
 
 $$
@@ -2044,7 +2044,7 @@ $$
 
 ### 估计量的无偏性
 
-设某统计总体的分布包含未知参数$\theta_1,\cdots,\theta_k$，$\X_1,\cdots,X_n$是从该总体中抽出的样本，要估计$g(\theta_1,\cdots,\theta_k)$，$g$为一已知函数，设$\hat g(X_1,\cdots,X_n)$是一个估计量。如果对任何可能的$\theta_1,\cdots,\theta_k$都有
+设某统计总体的分布包含未知参数$\theta_1,\cdots,\theta_k$，$X_1,\cdots,X_n$是从该总体中抽出的样本，要估计$g(\theta_1,\cdots,\theta_k)$，$g$为一已知函数，设$\hat g(X_1,\cdots,X_n)$是一个估计量。如果对任何可能的$\theta_1,\cdots,\theta_k$都有
 
 $$
 E_{\theta_1,\cdots,\theta_k}[\hat g(X_1,\cdots,X_n)]=g(\theta_1,\cdots,\theta_k)
