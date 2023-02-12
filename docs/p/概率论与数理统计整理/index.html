@@ -152,8 +152,13 @@
 <p>在相同的条件下，进行了<span class="math inline">\(n\)</span>次试验，其中事件<span class="math inline">\(A\)</span>发生的次数<span class="math inline">\(n_A\)</span>称为事件<span class="math inline">\(A\)</span>发生的频数，比值<span class="math inline">\(n_A/n\)</span>称为事件<span class="math inline">\(A\)</span>发生的频率，记为<span class="math inline">\(f_n(A)\)</span></p>
 <h2 id="概率">概率</h2>
 <p>定义1: 事件A发生频率的稳定值<span class="math inline">\(p\)</span>称为它的概率<span class="math inline">\(P(A)\)</span>，即<span class="math inline">\(P(A)=p\)</span></p>
-<p>定义2: 随机试验<span class="math inline">\(E\)</span>，样本空间<span class="math inline">\(\Omega\)</span>，对于<span class="math inline">\(E\)</span>的每一事件<span class="math inline">\(A\)</span>赋予一个实数，记为<span class="math inline">\(P(A)\)</span>，如果集合函数满足以下条件，P(A)称为事件A的概率
-1. 非负性: 对于每一个事件<span class="math inline">\(A\)</span>，有<span class="math inline">\(P(A)\geq0\)</span> 2. 规范性: 对于必然事件<span class="math inline">\(\Omega\)</span>，有<span class="math inline">\(P(\Omega)=1\)</span> 3. 可列可加性: 设<span class="math inline">\(A_1,A_2,\cdots\)</span>是两两不相容的事件，即对于<span class="math inline">\(A_iA_j=\empty,i\neq j(i,j=1,2,\cdots)\)</span></p>
+<p>定义2: 随机试验<span class="math inline">\(E\)</span>，样本空间<span class="math inline">\(\Omega\)</span>，对于<span class="math inline">\(E\)</span>的每一事件<span class="math inline">\(A\)</span>赋予一个实数，记为<span class="math inline">\(P(A)\)</span>，如果集合函数满足以下条件，P(A)称为事件A的概率</p>
+<ol type="1">
+<li>非负性: 对于每一个事件<span class="math inline">\(A\)</span>，有<span class="math inline">\(P(A)\geq0\)</span></li>
+<li>规范性: 对于必然事件<span class="math inline">\(\Omega\)</span>，有<span class="math inline">\(P(\Omega)=1\)</span></li>
+<li>可列可加性: 设<span class="math inline">\(A_1,A_2,\cdots\)</span>是两两不相容的事件，即对于<span class="math inline">\(A_iA_j=\empty,i\neq
+j(i,j=1,2,\cdots)\)</span></li>
+</ol>
 <p><span class="math display">\[
 P(\bigcup^\infty_{i=1}A_i)=\sum^\infty_{i=1}P(A_i)
 \]</span></p>
@@ -517,7 +522,7 @@ Y_1=g_1(X_1,\cdots,X_m), Y_2 = g_2(X_{m+1},\cdots,X_n)
 \]</span></p>
 <p>则<span class="math inline">\(Y_1,Y_2\)</span>独立。</p>
 <p><strong>定义2</strong></p>
-<p>设<span class="math inline">\(X_1,\cdots,X_n\)</span>是离散型随机变量，弱队任何常数<span class="math inline">\(a_1,\cdots,a_n\)</span>都有</p>
+<p>设<span class="math inline">\(X_1,\cdots,X_n\)</span>是离散型随机变量，若对任何常数<span class="math inline">\(a_1,\cdots,a_n\)</span>都有</p>
 <p><span class="math display">\[
 P(X_1=a_1,\cdots,X_n=a_n) = P(X_1=a_1)\cdots P(X_n=a_n)
 \]</span></p>
@@ -734,9 +739,9 @@ P\left(\frac{-1-1.5}{2}\leq\frac{X-1.5}{2}\leq\frac{2-1.5}{2}\right)
 <p><span class="math display">\[
 =\varPhi(0.25)-\varPhi(-1.25)
 \]</span></p>
-<p>可以查表代入。但是通常只有非负数的值，对于负数，有</p>
+<p>可以查表代入。但是通常只有非负数的值，对于负数<span class="math inline">\(x\)</span>，有</p>
 <p><span class="math display">\[
-\varPhi = 1-\varPhi(-x)
+\varPhi(x) = 1-\varPhi(-x)
 \]</span></p>
 <h4 id="正态分布的线性组合性质">正态分布的线性组合性质</h4>
 <p>对于正态分布，设<span class="math inline">\(X_1,X_2\)</span>分别服从正态分布<span class="math inline">\(N(\mu_1,\sigma_1^2),N(\mu_2,\sigma_2^2)\)</span>，对于<span class="math inline">\(Y=X_1+X_2\)</span></p>
@@ -952,13 +957,13 @@ F_{min}(z) = 1-[1-F_{X_1}(z)][1-F_{X_2}(z)]\cdots [1-F_{X_n}(z)]
 \]</span></p>
 <p><strong>卡方分布</strong></p>
 <p>由<span class="math inline">\(\Gamma\)</span>函数的定义可知，若<span class="math inline">\(n&gt;0\)</span>，则函数</p>
-<p>$$ k_n(x)= {<span class="math display">\[\begin{align}
-
+<p><span class="math display">\[
+k_n(x)=\left\{\begin{align*}
 &amp;\frac{1}{\Gamma(n/2)2^{n/2}}e^{-x/2}x^{(n-2)/2} &amp;,\quad
 x&gt;0\\
 &amp;0 &amp;,\quad x\leq 0
-
-\end{align}\]</span>. $$</p>
+\end{align*}\right.
+\]</span></p>
 <p>是概率密度函数。它称为“自由度为<span class="math inline">\(n\)</span>的皮尔逊卡方密度”，常记为<span class="math inline">\(\mathcal{X}{}_n^2\)</span></p>
 <p><strong>定理1</strong></p>
 <p>若<span class="math inline">\(X_1,\cdots,X_n\)</span>相互独立，都服从正态分布<span class="math inline">\(N(0,1)\)</span>，则<span class="math inline">\(Y=X_1^2+\cdots+X_n^2\)</span>服从自由度为<span class="math inline">\(n\)</span>的卡方分布<span class="math inline">\(\mathcal{X}{}_n^2\)</span></p>
@@ -1304,7 +1309,8 @@ P(|Y-EY|\geq\varepsilon)\leq Var(Y)/\varepsilon^2
 P(|Y-EY|&lt;\varepsilon)\leq 1-Var(Y)/\varepsilon^2
 \]</span></p>
 <p><strong>切比雪夫大数定理</strong></p>
-<p>设<span class="math inline">\(X_1,X_2,\cdots,X_n,\cdots\)</span>是相互独立独立的随机变量，具有相同的期望和方差，记它们的均值都为<span class="math inline">\(a\)</span>。又设它们的方差存在并记为<span class="math inline">\(\sigma^2\)</span>。则对任意给定的<span class="math inline">\(\varepsilon&gt;0\)</span>，有</p>
+<p>//TODO: 审校本小节</p>
+<p>设<span class="math inline">\(X_1,X_2,\cdots,X_n,\cdots\)</span>是相互独立的随机变量，具有相同的期望和方差，记它们的均值都为<span class="math inline">\(a\)</span>。又设它们的方差存在并记为<span class="math inline">\(\sigma^2\)</span>。则对任意给定的<span class="math inline">\(\varepsilon&gt;0\)</span>，有</p>
 <p><span class="math display">\[
 \lim_{n\to \infty}P(|\bar X_n-a|\geq \varepsilon) = 0
 \]</span></p>
@@ -1350,7 +1356,7 @@ P\bigg(\bigg|\frac{n_A}{n}-p\bigg|\geq\varepsilon\bigg)=0
 P\bigg(\sum^n_{k=1}X_k\leq x\bigg)\approx\Phi\bigg(\frac{x-n\mu}{\sqrt
 n\sigma}\bigg),\quad P\bigg(a&lt;\sum^n_{k=1}X_k\leq
 b\bigg)\approx\Phi\bigg(\frac{b-n\mu}{\sqrt
-n\sigma}\bigg)-\bigg(\frac{a-n\mu}{\sqrt n\sigma}\bigg)
+n\sigma}\bigg)-\Phi\bigg(\frac{a-n\mu}{\sqrt n\sigma}\bigg)
 \]</span></p>
 <p><span class="math display">\[
 \bar X\approx N(\mu,\sigma^2/n),\quad \frac{\bar
@@ -1554,7 +1560,7 @@ f(X_n,\theta)/p(X_1,\cdots,X_n)
 <p>贝叶斯学派也指出，在得出后验分布后，对参数<span class="math inline">\(\theta\)</span>的任何统计推断都只能基于这个后验分布。</p>
 <h2 id="点估计的优良性准则">点估计的优良性准则</h2>
 <h3 id="估计量的无偏性">估计量的无偏性</h3>
-<p>设某统计总体的分布包含未知参数<span class="math inline">\(\theta_1,\cdots,\theta_k\)</span>，<span class="math inline">\(\X_1,\cdots,X_n\)</span>是从该总体中抽出的样本，要估计<span class="math inline">\(g(\theta_1,\cdots,\theta_k)\)</span>，<span class="math inline">\(g\)</span>为一已知函数，设<span class="math inline">\(\hat
+<p>设某统计总体的分布包含未知参数<span class="math inline">\(\theta_1,\cdots,\theta_k\)</span>，<span class="math inline">\(X_1,\cdots,X_n\)</span>是从该总体中抽出的样本，要估计<span class="math inline">\(g(\theta_1,\cdots,\theta_k)\)</span>，<span class="math inline">\(g\)</span>为一已知函数，设<span class="math inline">\(\hat
 g(X_1,\cdots,X_n)\)</span>是一个估计量。如果对任何可能的<span class="math inline">\(\theta_1,\cdots,\theta_k\)</span>都有</p>
 <p><span class="math display">\[
 E_{\theta_1,\cdots,\theta_k}[\hat
