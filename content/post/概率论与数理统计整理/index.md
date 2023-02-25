@@ -763,7 +763,7 @@ $$\lambda$$
 以$X$记从含$M$个废品的$N$个产品中随机抽出$n$个里面所含有的废品数，$X$的分布为
 
 $$
-P(X=m)=\binom{M}{n}\binom{N-M}{n-m}\bigg/\binom{N}{n}
+P(X=m)=\binom{M}{m}\binom{N-M}{n-m}\bigg/\binom{N}{n}
 $$
 
 这是一种抽检不放回的试验，如果$N$特别大，$n$不够大时，放回与不放回差别不大。可以当作二项分布来看。或者说，若$X$服从超几何分布，则当$n$固定时，$M/N=p$固定；$N\to \infty$时，$X$近似服从二项分布$B(n,p)$。
@@ -1671,8 +1671,6 @@ P(|Y-EY|<\varepsilon)\leq 1-Var(Y)/\varepsilon^2
 $$
 
 **切比雪夫大数定理**
-
-//TODO: 审校本小节
 
 设$X_1,X_2,\cdots,X_n,\cdots$是相互独立的随机变量，具有相同的期望和方差，记它们的均值都为$a$。又设它们的方差存在并记为$\sigma^2$。则对任意给定的$\varepsilon>0$，有
 
