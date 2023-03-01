@@ -527,6 +527,7 @@ x^2}+\frac{\partial^2u(z)}{\partial y^2}=0
 <p>设<span class="math inline">\(D\)</span>是<span class="math inline">\(\bm C\)</span>中的域，用<span class="math inline">\(C(D)\)</span>表示<span class="math inline">\(D\)</span>上连续函数的全体，<span class="math inline">\(H(D)\)</span>表示<span class="math inline">\(D\)</span>上全纯函数的全体。</p>
 <p>用<span class="math inline">\(C^1(D)\)</span>记<span class="math inline">\(\frac{\partial f}{\partial x},\frac{\partial
 f}{\partial y}\)</span>在<span class="math inline">\(D\)</span>上连续的<span class="math inline">\(f\)</span>的全体。</p>
+<p><span class="math inline">\(C^k(D)\)</span>记在<span class="math inline">\(D\)</span>上有<span class="math inline">\(k\)</span>阶连续偏导数的函数的全体，<span class="math inline">\(C^\infty(D)\)</span>记在<span class="math inline">\(D\)</span>上有任意阶连续偏导数的函数的全体。</p>
 <p>有</p>
 <p><span class="math display">\[
 H(D)\subset C^\infty(D)\subset C^k(D)\subset C^1(D)\subset C(D)
@@ -643,7 +644,7 @@ C\)</span>是一个复变函数，如果对于<span class="math inline">\(D\)</s
 <p>对于给定的<span class="math inline">\(z\in C\)</span>，满足方程<span class="math inline">\(e^\omega=z\)</span>的<span class="math inline">\(\omega\)</span>称为<span class="math inline">\(z\)</span>的对数，记为<span class="math inline">\(\omega=Logz\)</span>。</p>
 <p>设<span class="math inline">\(z=re^{i\theta}\)</span>，<span class="math inline">\(\omega=u+iv\)</span>，则<span class="math inline">\(e^{u+iv}=re^{i\theta}\)</span>，所以<span class="math inline">\(e^u=r,v=\theta+2k\pi\)</span>。所以有</p>
 <p><span class="math display">\[
-Logz=log|z|+iargz+2k\pi=log|z|+iArgz
+Logz=log|z|+iargz+2k\pi i=log|z|+iArgz
 \]</span></p>
 <p>所以，<span class="math inline">\(Logz\)</span>是一个多值函数，它的多值性是由<span class="math inline">\(z\)</span>的辐角<span class="math inline">\(Argz\)</span>的多值性产生的。</p>
 <p><strong>定理1</strong></p>
@@ -679,7 +680,7 @@ k=0,1,\cdots,n-1
 \]</span></p>
 <p>其中<span class="math inline">\(\theta=argz\)</span>，变化范围在<span class="math inline">\(0&lt;argz&lt;2\pi\)</span></p>
 <p><strong>3. <span class="math inline">\(\mu =
-a+bi\)</span>，是一个负数</strong></p>
+a+bi\)</span>，是一个复数</strong></p>
 <p>一般的幂函数<span class="math inline">\(\omega=z^\mu\)</span>定义为</p>
 <p><span class="math display">\[
 \omega = z^\mu=e^{\mu Logz}
@@ -717,8 +718,8 @@ e^{-ix} = \cos x -i\sin x
 \]</span></p>
 <p>可以得到</p>
 <p><span class="math display">\[
-\cos z = \frac{1}{2}(e^{ix}+e^{-ix})\\
-\sin z = \frac{1}{2i}(e^{ix}-e^{-ix})
+\cos z = \frac{1}{2}(e^{iz}+e^{-iz})\\
+\sin z = \frac{1}{2i}(e^{iz}-e^{-iz})
 \]</span></p>
 <p>有如下性质</p>
 <ol type="1">
@@ -939,11 +940,11 @@ g(z))dz=\alpha\int_{\gamma}f(z)dz+\beta
 \]</span></p>
 <h2 id="cauchy积分定理">Cauchy积分定理</h2>
 <p><strong>Cauchy定理</strong></p>
-<p>设<span class="math inline">\(D\)</span>是<span class="math inline">\(\bm C\)</span>中的单连通域，<span class="math inline">\(f\in H(D)\)</span>（即全纯函数），且<span class="math inline">\(f&#39;\)</span>在<span class="math inline">\(D\)</span>中连续，则对<span class="math inline">\(D\)</span>中任意的可求长曲线<span class="math inline">\(\gamma\)</span>，均有</p>
+<p>设<span class="math inline">\(D\)</span>是<span class="math inline">\(\bm C\)</span>中的单连通域，<span class="math inline">\(f\in H(D)\)</span>（即全纯函数），且<span class="math inline">\(f&#39;\)</span>在<span class="math inline">\(D\)</span>中连续，则对<span class="math inline">\(D\)</span>中任意的可求长闭曲线<span class="math inline">\(\gamma\)</span>，均有</p>
 <p><span class="math display">\[
 \int_\gamma f(z)dz = 0
 \]</span></p>
-<p>注意，只要使得<span class="math inline">\(f\)</span>的不全纯的点在<span class="math inline">\(\gamma\)</span>包围的区域中，而不是必须在<span class="math inline">\(\gamma\)</span>上，就不能使用这个定理。</p>
+<p>注意，只要使得<span class="math inline">\(f\)</span>的不全纯的点在<span class="math inline">\(\gamma\)</span>包围的区域中（而不是必须在<span class="math inline">\(\gamma\)</span>上）就不能使用这个定理。</p>
 <p><strong>引理1</strong></p>
 <p>设<span class="math inline">\(f\)</span>是域<span class="math inline">\(D\)</span>中的连续函数，<span class="math inline">\(\gamma\)</span>是<span class="math inline">\(D\)</span>内的可求长曲线，对于任给的<span class="math inline">\(\varepsilon&gt;0\)</span>，一定存在一条<span class="math inline">\(D\)</span>中的折线<span class="math inline">\(P\)</span>，使得</p>
 <ol type="1">
@@ -1013,7 +1014,7 @@ G^{(n)}(z)=\frac{n!}{2\pi
 i}\int_\gamma\frac{g(\zeta)}{(\zeta-z)^{n+1}}d\zeta,n=1,2,\cdots
 \]</span></p>
 <p><strong>定理3</strong></p>
-<p>设<span class="math inline">\(D\)</span>是由可求长简单闭曲线<span class="math inline">\(\gamma\)</span>围成的域，如果<span class="math inline">\(f\in H(D)\bigcap C(\bar D)\)</span>，那么<span class="math inline">\(f\)</span>在<span class="math inline">\(D\)</span>上游任意阶导数，而且对任意<span class="math inline">\(z\in D\)</span>，有</p>
+<p>设<span class="math inline">\(D\)</span>是由可求长简单闭曲线<span class="math inline">\(\gamma\)</span>围成的域，如果<span class="math inline">\(f\in H(D)\bigcap C(\bar D)\)</span>，那么<span class="math inline">\(f\)</span>在<span class="math inline">\(D\)</span>上有任意阶导数，而且对任意<span class="math inline">\(z\in D\)</span>，有</p>
 <p><span class="math display">\[
 f^{(n)}(z)=\frac{n!}{2\pi
 i}\int_\gamma\frac{f(\zeta)}{(\zeta-z)^{n+1}}d\zeta,n=1,2,\cdots
@@ -1150,7 +1151,7 @@ R=1\bigg/\overline{\lim_{n\to\infty}}\sqrt[n]{|a_n|}
 \]</span></p>
 <p>其中<span class="math inline">\(\overline\lim\)</span>是上极限</p>
 <p><strong>Abel定理</strong></p>
-<p>如果<span class="math inline">\(\sum^\infty_{n=0}a_nz^n\)</span>在<span class="math inline">\(z=z_0\neq 0\)</span>处收敛，则必在<span class="math inline">\(\{z:|z|&lt;|z_0|\}\)</span>中内闭绝对之一收敛。</p>
+<p>如果<span class="math inline">\(\sum^\infty_{n=0}a_nz^n\)</span>在<span class="math inline">\(z=z_0\neq 0\)</span>处收敛，则必在<span class="math inline">\(\{z:|z|&lt;|z_0|\}\)</span>中内闭绝对一致收敛。</p>
 <p><strong>定理2</strong></p>
 <p>幂级数在其收敛圆内确定一个全纯函数。</p>
 <p><strong>非切向极限</strong></p>
@@ -1201,7 +1202,7 @@ f&#39;(z) = \sum^\infty_{n=0}nc_n(z-a)^{n-1}
 \int_0^zf(z)dz = \sum^\infty_{n=0}\frac{c_n}{n+1}(z-a)^{n+1}
 \]</span></p>
 <h2 id="全纯函数的taylor展开">全纯函数的Taylor展开</h2>
-<p>前面已经证明，幂级数在它的收敛圆内表示一个全纯函数，而在一个圆内全纯的函数爷一定可以展开成幂级数。</p>
+<p>前面已经证明，幂级数在它的收敛圆内表示一个全纯函数，而在一个圆内全纯的函数也一定可以展开成幂级数。</p>
 <p><strong>定理1</strong></p>
 <p>若<span class="math inline">\(f\in H(B(z_0,R))\)</span>，则<span class="math inline">\(f\)</span>可以在<span class="math inline">\(B(z_0,R)\)</span>中展开成幂级数</p>
 <p><span class="math display">\[
@@ -1334,7 +1335,7 @@ R&lt;|z|&lt;\infty\}\)</span>中全纯，<span class="math inline">\(\infty\)</s
 <p><span class="math display">\[
 g(\zeta)=f(\frac{1}{\zeta})
 \]</span></p>
-<p>如果<span class="math inline">\(\zeta=0\)</span>是<span class="math inline">\(g\)</span>的可去奇点、<span class="math inline">\(m\)</span>阶极点或本性奇点，那么我们相应地称<span class="math inline">\(z=\infty\)</span>是<span class="math inline">\(f\)</span>的可去奇点、<span class="math inline">\(m\)</span>阶极点或本性奇点。</p>
+<p>如果<span class="math inline">\(\zeta=0\)</span>是<span class="math inline">\(g\)</span>的可去奇点、<span class="math inline">\(m\)</span>阶极点或本性奇点，那么我们相应地称<span class="math inline">\(z=\dfrac{1}{\zeta}=\infty\)</span>是<span class="math inline">\(f\)</span>的可去奇点、<span class="math inline">\(m\)</span>阶极点或本性奇点。</p>
 <h2 id="整函数与亚纯函数">整函数与亚纯函数</h2>
 <p>如果<span class="math inline">\(f\)</span>在整个复平面<span class="math inline">\(\bm C\)</span>上全纯，就称<span class="math inline">\(f\)</span>为整函数</p>
 <p><strong>定理1</strong></p>
@@ -1387,7 +1388,7 @@ a}\frac{d^{m-1}}{dz^{m-1}}\{(z-a)^mf(z)\}
 Res(f,a) = \lim_{z\to a}(z-a)f(z)
 \]</span></p>
 <p><strong>命题3</strong></p>
-<p>设<span class="math inline">\(f=\frac{g}{h}\)</span>，<span class="math inline">\(g,h\)</span>都在<span class="math inline">\(a\)</span>出全纯，且<span class="math inline">\(g(a)\neq 0\)</span>，<span class="math inline">\(h(a)=0\)</span>，<span class="math inline">\(h&#39;(a)\neq 0\)</span>，那么</p>
+<p>设<span class="math inline">\(f=\frac{g}{h}\)</span>，<span class="math inline">\(g,h\)</span>都在<span class="math inline">\(a\)</span>处全纯，且<span class="math inline">\(g(a)\neq 0\)</span>，<span class="math inline">\(h(a)=0\)</span>，<span class="math inline">\(h&#39;(a)\neq 0\)</span>，那么</p>
 <p><span class="math display">\[
 Res(f,a) = \frac{g(a)}{h&#39;(a)}
 \]</span></p>
