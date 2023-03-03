@@ -602,9 +602,23 @@ $$
 \end{matrix}\right.
 $$
 
+设$D$是$\bm C$中的域，用$C(D)$表示$D$上连续函数的全体，$H(D)$表示$D$上全纯函数的全体。
+
+用$C^1(D)$记$\frac{\partial f}{\partial x},\frac{\partial f}{\partial y}$在$D$上连续的$f$的全体。
+
+$C^k(D)$记在$D$上有$k$阶连续偏导数的函数的全体，$C^\infty(D)$记在$D$上有任意阶连续偏导数的函数的全体。
+
+之后我们用柯西积分公式证明，有
+
+$$
+H(D)\subset C^\infty(D)\subset C^k(D)\subset C^1(D)\subset C(D)
+$$
+
+即域$D$上的全纯函数在$D$上有任意阶的连续偏导数。
+
 **调和函数**
 
-设$u$是域$D$上的实值函数，如果$u\in C^2(D)$，且对于任意$z\in D$，有
+设$u$是域$D$上的实值函数（或称二元实变函数），如果$u\in C^2(D)$，且对于任意$z\in D$，有
 
 $$
 \Delta u(z)=\frac{\partial^2u(z)}{\partial x^2}+\frac{\partial^2u(z)}{\partial y^2}=0
@@ -618,27 +632,13 @@ $$
 
 称为拉普拉斯算子。
 
-设$D$是$\bm C$中的域，用$C(D)$表示$D$上连续函数的全体，$H(D)$表示$D$上全纯函数的全体。
-
-用$C^1(D)$记$\frac{\partial f}{\partial x},\frac{\partial f}{\partial y}$在$D$上连续的$f$的全体。
-
-$C^k(D)$记在$D$上有$k$阶连续偏导数的函数的全体，$C^\infty(D)$记在$D$上有任意阶连续偏导数的函数的全体。
-
-有
-
-$$
-H(D)\subset C^\infty(D)\subset C^k(D)\subset C^1(D)\subset C(D)
-$$
-
-即域$D$上的全纯函数在$D$上有任意阶的连续偏导数。
-
 *定理1*
 
 设$f=u+iv\in H(D)$，那么$u,v$都是$D$上的调和函数。
 
 **共轭调和函数**
 
-设$u,v$是$D$上的一堆调和函数，如果它们还满足柯西-黎曼方程，
+设$u,v$是$D$上的一对调和函数，如果它们还满足柯西-黎曼方程，
 
 $$
 \left\{\begin{matrix}
@@ -652,6 +652,20 @@ $$
 *定理1*
 
 设$u$是单连通域$D$上的调和函数，则必存在$u$的共轭函数$v$，使得$u+iv$是$D$上的全纯函数。
+
+其中
+
+$$
+v(x,y) = \int^{(x,y)}_{(x_0,y_0)}\dfrac{\partial v}{\partial x}dx+\dfrac{\partial v}{\partial y}dy = \int^{(x,y)}_{(x_0,y_0)}-\dfrac{\partial u}{\partial y}dx+\dfrac{\partial u}{\partial x}dy
+$$
+
+且这个积分与路径无关。
+
+反过来说如果有$v$，则也必存在$u$
+
+$$
+u(x,y) = \int^{(x,y)}_{(x_0,y_0)}\dfrac{\partial u}{\partial x}dx+\dfrac{\partial u}{\partial y}dy = \int^{(x,y)}_{(x_0,y_0)}\dfrac{\partial v}{\partial y}dx-\dfrac{\partial v}{\partial x}dy
+$$
 
 ## 导数的几何意义
 
@@ -1364,29 +1378,6 @@ $$
 **Morera定理**
 
 如果$f$是域$D$上的连续函数，且沿$D$内任一可求长闭曲线的积分为零，那么$f$在$D$上全纯
-
-## 调和函数
-
-如果二元实变函数$\varphi(x,y)$在区域$D$内具有二阶连续偏导数并且满足拉普拉斯方程
-
-$$
-\frac{\partial^2 \varphi}{\partial x^2}+\frac{\partial^2 \varphi}{\partial y^2}=0
-$$
-
-那么称$\varphi(x,y)$为区域$D$内的调和函数。
-
-**定理**
-
-任何在区域$D$内全纯的函数，它的实部和虚部都是$D$内的调和函数
-
-在$D$内满足柯西-黎曼方程
-
-$$
-\frac{\partial u}{\partial x}=\frac{\partial v}{\partial y},
-\frac{\partial u}{\partial y}=-\frac{\partial v}{\partial x}
-$$
-
-的两个调和函数中，$v$称为$u$的共轭调和函数。也就是说，区域$D$内的全纯函数的虚部为实部的共轭调和函数。
 
 ## 非齐次Cauchy积分公式
 
