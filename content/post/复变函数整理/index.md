@@ -1142,6 +1142,12 @@ $$
 
 则称$z,z^*$是关于$\gamma$对称的。如果$\gamma$是直线时，则当$\gamma$是线段$[z,z^*]$的垂直平分线时，称$z,z^*$关于$\gamma$是对称的。
 
+其中
+
+$$
+z^* = a+\dfrac{R^2}{\bar{z}-\bar{a}}
+$$
+
 **命题1**
 
 设$\gamma$是$\bm C_\infty$中的圆周，那么$z,z^*$关于$\gamma$对称的充要条件是对$\gamma$上任意三点$z_1,z_2,z_3$，有
@@ -2036,4 +2042,16 @@ $\omega=e^z$，易知在全平面上都是一个共形映射。
 
 其特点是：把水平的带形区域$0<Im(z)<a(a\leq 2\pi)$映射成角形域$0<arg\omega<a$。
 
+## 几个常见的分式线性变换
 
+### 把单位圆映为单位圆
+
+$$
+w = e^{i\varphi}\bigg(\dfrac{z-\alpha}{1-\bar{\alpha}z}\bigg),|\alpha|<1,\varphi\in R
+$$
+
+### 把上半平面映为单位圆
+
+$$
+w = e^{i\theta}\bigg(\dfrac{z-\lambda}{z-\bar{\lambda}}\bigg),Im(\lambda)>0,\theta\in R
+$$
