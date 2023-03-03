@@ -249,6 +249,8 @@ solving)是个大课题，它涉及归约、推断、决策、规划、常识推
 <p><strong>代价树的广度优先搜索</strong></p>
 <p>每次从OPEN表中选择节点往CLOSED表传送时，总是选择其中代价最小的节点。</p>
 <p>换句话说就是用二叉堆去维护OPEN表的节点。</p>
+<p><strong>代价树的深度优先搜索</strong></p>
+<p>如果说深度优先搜索是将后继节点按枚举顺序放入OPEN表里，那么代价树的深度优先搜索就是将后继节点按代价从小到大的顺序放入OPEN表。</p>
 <h3 id="启发式搜索">启发式搜索</h3>
 <p>特点是重排OPEN表,选择最有希望的节点加以扩展。种类有：有序搜索、<span class="math inline">\(A^*\)</span>算法等等。</p>
 <p><strong>启发式搜索的估价函数</strong></p>
@@ -405,7 +407,7 @@ E_1s=E_2s=E_3s=\cdots
 <ol type="1">
 <li>如果要消去的存在量词在某些全称量词的辖域内，例如<span class="math inline">\((\forall y)[(\exists
 x)P(x,y)]\)</span>中，中，存在量词是在全称量词的辖域内，我们允许所存在的<span class="math inline">\(x\)</span>可能依赖于<span class="math inline">\(y\)</span>值。令这种依赖关系明显地由函数<span class="math inline">\(g(y)\)</span>所定义，它把每个<span class="math inline">\(y\)</span>值映射到存在的那个<span class="math inline">\(x\)</span>。这种函数叫做Skolem函数。如果用Skolem函数代替存在的<span class="math inline">\(x\)</span>,我们就可以消去全部存在量词，并写成：<span class="math inline">\((\forall y)P(g(y),y)\)</span></li>
-<li>如果不再全称量词的辖域内，直接用一个新的常量符号来替代即可。</li>
+<li>如果不在全称量词的辖域内，直接用一个新的常量符号来替代即可。</li>
 </ol></li>
 <li><p>化为前束形。把所有全称量词移到公式的左边，并使每个量词的辖域包括这个量词后面公式的整个部分。所得公式称为前束形。前束形公式由前缀和母式组成，前缀由全称量词串组成，母式由没有量词的公式组成。</p></li>
 <li><p>把母式化为合取范式</p></li>
@@ -655,7 +657,7 @@ U\overset{R}{\rightarrow} V
 V\to[0,1]\)</span></p>
 <p>隶属度<span class="math inline">\(\mu_R(u_0,v_0)\)</span>，表示<span class="math inline">\(u_0\)</span>与<span class="math inline">\(v_0\)</span>具有关系<span class="math inline">\(R\)</span>的程度。</p>
 <p>对于有限论域<span class="math inline">\(U = \{u_1,u_2,\cdots,u_m\},V
-= \{v_1,v_2,\cdots,v_n\}\)</span>，则<span class="math inline">\(U\)</span>对<span class="math inline">\(V\)</span>的模糊关系的隶属函数可以用$mn <span class="math inline">\(阶模糊矩阵\)</span>R$来表示，即</p>
+= \{v_1,v_2,\cdots,v_n\}\)</span>，则<span class="math inline">\(U\)</span>对<span class="math inline">\(V\)</span>的模糊关系的隶属函数可以用<span class="math inline">\(m\times n\)</span>阶模糊矩阵<span class="math inline">\(R\)</span>来表示，即</p>
 <p><span class="math display">\[
 R = (r_{ij})_{m\times n}
 \]</span></p>
@@ -834,7 +836,7 @@ R_m = (A\times B)\cup(\neg A\times V) = \int_{U\times
 V}(\mu_A(u)\wedge\mu_B(v))\vee(1-\mu_A(u))/(u,v)
 \]</span></p>
 <p><span class="math display">\[
-R_m = (\neg A\times V)\oplus(U\times B) = \int_{U\times
+R_a = (\neg A\times V)\oplus(U\times B) = \int_{U\times
 V}1\wedge(1-\mu_A(u)+\mu_B(v))/(u,v)
 \]</span></p>
 <p>其中<span class="math inline">\(\times\)</span>是笛卡尔积；有界和<span class="math inline">\(x\oplus y=\min\{1,x+y\}\)</span></p>

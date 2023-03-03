@@ -822,6 +822,8 @@ solving)是个大课题，它涉及归约、推断、决策、规划、常识推
 &lt;p&gt;&lt;strong&gt;代价树的广度优先搜索&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;每次从OPEN表中选择节点往CLOSED表传送时，总是选择其中代价最小的节点。&lt;/p&gt;
 &lt;p&gt;换句话说就是用二叉堆去维护OPEN表的节点。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;代价树的深度优先搜索&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;如果说深度优先搜索是将后继节点按枚举顺序放入OPEN表里，那么代价树的深度优先搜索就是将后继节点按代价从小到大的顺序放入OPEN表。&lt;/p&gt;
 &lt;h3 id=&#34;启发式搜索&#34;&gt;启发式搜索&lt;/h3&gt;
 &lt;p&gt;特点是重排OPEN表,选择最有希望的节点加以扩展。种类有：有序搜索、&lt;span class=&#34;math inline&#34;&gt;\(A^*\)&lt;/span&gt;算法等等。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;启发式搜索的估价函数&lt;/strong&gt;&lt;/p&gt;
@@ -978,7 +980,7 @@ E_1s=E_2s=E_3s=\cdots
 &lt;ol type=&#34;1&#34;&gt;
 &lt;li&gt;如果要消去的存在量词在某些全称量词的辖域内，例如&lt;span class=&#34;math inline&#34;&gt;\((\forall y)[(\exists
 x)P(x,y)]\)&lt;/span&gt;中，中，存在量词是在全称量词的辖域内，我们允许所存在的&lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;可能依赖于&lt;span class=&#34;math inline&#34;&gt;\(y\)&lt;/span&gt;值。令这种依赖关系明显地由函数&lt;span class=&#34;math inline&#34;&gt;\(g(y)\)&lt;/span&gt;所定义，它把每个&lt;span class=&#34;math inline&#34;&gt;\(y\)&lt;/span&gt;值映射到存在的那个&lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;。这种函数叫做Skolem函数。如果用Skolem函数代替存在的&lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;,我们就可以消去全部存在量词，并写成：&lt;span class=&#34;math inline&#34;&gt;\((\forall y)P(g(y),y)\)&lt;/span&gt;&lt;/li&gt;
-&lt;li&gt;如果不再全称量词的辖域内，直接用一个新的常量符号来替代即可。&lt;/li&gt;
+&lt;li&gt;如果不在全称量词的辖域内，直接用一个新的常量符号来替代即可。&lt;/li&gt;
 &lt;/ol&gt;&lt;/li&gt;
 &lt;li&gt;&lt;p&gt;化为前束形。把所有全称量词移到公式的左边，并使每个量词的辖域包括这个量词后面公式的整个部分。所得公式称为前束形。前束形公式由前缀和母式组成，前缀由全称量词串组成，母式由没有量词的公式组成。&lt;/p&gt;&lt;/li&gt;
 &lt;li&gt;&lt;p&gt;把母式化为合取范式&lt;/p&gt;&lt;/li&gt;
@@ -1228,7 +1230,7 @@ U\overset{R}{\rightarrow} V
 V\to[0,1]\)&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;隶属度&lt;span class=&#34;math inline&#34;&gt;\(\mu_R(u_0,v_0)\)&lt;/span&gt;，表示&lt;span class=&#34;math inline&#34;&gt;\(u_0\)&lt;/span&gt;与&lt;span class=&#34;math inline&#34;&gt;\(v_0\)&lt;/span&gt;具有关系&lt;span class=&#34;math inline&#34;&gt;\(R\)&lt;/span&gt;的程度。&lt;/p&gt;
 &lt;p&gt;对于有限论域&lt;span class=&#34;math inline&#34;&gt;\(U = \{u_1,u_2,\cdots,u_m\},V
-= \{v_1,v_2,\cdots,v_n\}\)&lt;/span&gt;，则&lt;span class=&#34;math inline&#34;&gt;\(U\)&lt;/span&gt;对&lt;span class=&#34;math inline&#34;&gt;\(V\)&lt;/span&gt;的模糊关系的隶属函数可以用$mn &lt;span class=&#34;math inline&#34;&gt;\(阶模糊矩阵\)&lt;/span&gt;R$来表示，即&lt;/p&gt;
+= \{v_1,v_2,\cdots,v_n\}\)&lt;/span&gt;，则&lt;span class=&#34;math inline&#34;&gt;\(U\)&lt;/span&gt;对&lt;span class=&#34;math inline&#34;&gt;\(V\)&lt;/span&gt;的模糊关系的隶属函数可以用&lt;span class=&#34;math inline&#34;&gt;\(m\times n\)&lt;/span&gt;阶模糊矩阵&lt;span class=&#34;math inline&#34;&gt;\(R\)&lt;/span&gt;来表示，即&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 R = (r_{ij})_{m\times n}
 \]&lt;/span&gt;&lt;/p&gt;
@@ -1407,7 +1409,7 @@ R_m = (A\times B)\cup(\neg A\times V) = \int_{U\times
 V}(\mu_A(u)\wedge\mu_B(v))\vee(1-\mu_A(u))/(u,v)
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
-R_m = (\neg A\times V)\oplus(U\times B) = \int_{U\times
+R_a = (\neg A\times V)\oplus(U\times B) = \int_{U\times
 V}1\wedge(1-\mu_A(u)+\mu_B(v))/(u,v)
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(\times\)&lt;/span&gt;是笛卡尔积；有界和&lt;span class=&#34;math inline&#34;&gt;\(x\oplus y=\min\{1,x+y\}\)&lt;/span&gt;&lt;/p&gt;
@@ -5005,8 +5007,17 @@ z}(z_0)=0\)&lt;/span&gt;就称为柯西-黎曼方程。&lt;/p&gt;
 \frac{\partial u}{\partial y}=-\frac{\partial v}{\partial x}
 \end{matrix}\right.
 \]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(\bm C\)&lt;/span&gt;中的域，用&lt;span class=&#34;math inline&#34;&gt;\(C(D)\)&lt;/span&gt;表示&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;上连续函数的全体，&lt;span class=&#34;math inline&#34;&gt;\(H(D)\)&lt;/span&gt;表示&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;上全纯函数的全体。&lt;/p&gt;
+&lt;p&gt;用&lt;span class=&#34;math inline&#34;&gt;\(C^1(D)\)&lt;/span&gt;记&lt;span class=&#34;math inline&#34;&gt;\(\frac{\partial f}{\partial x},\frac{\partial
+f}{\partial y}\)&lt;/span&gt;在&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;上连续的&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;的全体。&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(C^k(D)\)&lt;/span&gt;记在&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;上有&lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt;阶连续偏导数的函数的全体，&lt;span class=&#34;math inline&#34;&gt;\(C^\infty(D)\)&lt;/span&gt;记在&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;上有任意阶连续偏导数的函数的全体。&lt;/p&gt;
+&lt;p&gt;之后我们用柯西积分公式证明，有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+H(D)\subset C^\infty(D)\subset C^k(D)\subset C^1(D)\subset C(D)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;即域&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;上的全纯函数在&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;上有任意阶的连续偏导数。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;调和函数&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt;是域&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;上的实值函数，如果&lt;span class=&#34;math inline&#34;&gt;\(u\in C^2(D)\)&lt;/span&gt;，且对于任意&lt;span class=&#34;math inline&#34;&gt;\(z\in D\)&lt;/span&gt;，有&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt;是域&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;上的实值函数（或称二元实变函数），如果&lt;span class=&#34;math inline&#34;&gt;\(u\in C^2(D)\)&lt;/span&gt;，且对于任意&lt;span class=&#34;math inline&#34;&gt;\(z\in D\)&lt;/span&gt;，有&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 \Delta u(z)=\frac{\partial^2u(z)}{\partial
 x^2}+\frac{\partial^2u(z)}{\partial y^2}=0
@@ -5016,19 +5027,10 @@ x^2}+\frac{\partial^2u(z)}{\partial y^2}=0
 \Delta=\frac{\partial^2}{\partial x^2}+\frac{\partial^2}{\partial y^2}
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;称为拉普拉斯算子。&lt;/p&gt;
-&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(\bm C\)&lt;/span&gt;中的域，用&lt;span class=&#34;math inline&#34;&gt;\(C(D)\)&lt;/span&gt;表示&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;上连续函数的全体，&lt;span class=&#34;math inline&#34;&gt;\(H(D)\)&lt;/span&gt;表示&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;上全纯函数的全体。&lt;/p&gt;
-&lt;p&gt;用&lt;span class=&#34;math inline&#34;&gt;\(C^1(D)\)&lt;/span&gt;记&lt;span class=&#34;math inline&#34;&gt;\(\frac{\partial f}{\partial x},\frac{\partial
-f}{\partial y}\)&lt;/span&gt;在&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;上连续的&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;的全体。&lt;/p&gt;
-&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(C^k(D)\)&lt;/span&gt;记在&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;上有&lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt;阶连续偏导数的函数的全体，&lt;span class=&#34;math inline&#34;&gt;\(C^\infty(D)\)&lt;/span&gt;记在&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;上有任意阶连续偏导数的函数的全体。&lt;/p&gt;
-&lt;p&gt;有&lt;/p&gt;
-&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
-H(D)\subset C^\infty(D)\subset C^k(D)\subset C^1(D)\subset C(D)
-\]&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;即域&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;上的全纯函数在&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;上有任意阶的连续偏导数。&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;定理1&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(f=u+iv\in H(D)\)&lt;/span&gt;，那么&lt;span class=&#34;math inline&#34;&gt;\(u,v\)&lt;/span&gt;都是&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;上的调和函数。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;共轭调和函数&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(u,v\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;上的一堆调和函数，如果它们还满足柯西-黎曼方程，&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(u,v\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;上的一对调和函数，如果它们还满足柯西-黎曼方程，&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 \left\{\begin{matrix}
 \frac{\partial u}{\partial x}=\frac{\partial v}{\partial y} \\
@@ -5038,6 +5040,21 @@ H(D)\subset C^\infty(D)\subset C^k(D)\subset C^1(D)\subset C(D)
 &lt;p&gt;就称&lt;span class=&#34;math inline&#34;&gt;\(v\)&lt;/span&gt;为&lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt;的共轭调和函数。&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;定理1&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt;是单连通域&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;上的调和函数，则必存在&lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt;的共轭函数&lt;span class=&#34;math inline&#34;&gt;\(v\)&lt;/span&gt;，使得&lt;span class=&#34;math inline&#34;&gt;\(u+iv\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;上的全纯函数。&lt;/p&gt;
+&lt;p&gt;其中&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+v(x,y) = \int^{(x,y)}_{(x_0,y_0)}\dfrac{\partial v}{\partial
+x}dx+\dfrac{\partial v}{\partial y}dy =
+\int^{(x,y)}_{(x_0,y_0)}-\dfrac{\partial u}{\partial
+y}dx+\dfrac{\partial u}{\partial x}dy
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;且这个积分与路径无关。&lt;/p&gt;
+&lt;p&gt;反过来说如果有&lt;span class=&#34;math inline&#34;&gt;\(v\)&lt;/span&gt;，则也必存在&lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+u(x,y) = \int^{(x,y)}_{(x_0,y_0)}\dfrac{\partial u}{\partial
+x}dx+\dfrac{\partial u}{\partial y}dy =
+\int^{(x,y)}_{(x_0,y_0)}\dfrac{\partial v}{\partial y}dx-\dfrac{\partial
+v}{\partial x}dy
+\]&lt;/span&gt;&lt;/p&gt;
 &lt;h2 id=&#34;导数的几何意义&#34;&gt;导数的几何意义&lt;/h2&gt;
 &lt;p&gt;过&lt;span class=&#34;math inline&#34;&gt;\(z_0\)&lt;/span&gt;点作一条光滑曲线&lt;span class=&#34;math inline&#34;&gt;\(\gamma\)&lt;/span&gt;，它的方程为&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
@@ -5539,21 +5556,6 @@ P(z)=a_0z^n+a_1z^{n-1}+\cdots+a_n,a_0\neq 0
 &lt;p&gt;在&lt;span class=&#34;math inline&#34;&gt;\(\bm C\)&lt;/span&gt;中必有零点&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Morera定理&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;如果&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;是域&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;上的连续函数，且沿&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;内任一可求长闭曲线的积分为零，那么&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;在&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;上全纯&lt;/p&gt;
-&lt;h2 id=&#34;调和函数&#34;&gt;调和函数&lt;/h2&gt;
-&lt;p&gt;如果二元实变函数&lt;span class=&#34;math inline&#34;&gt;\(\varphi(x,y)\)&lt;/span&gt;在区域&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;内具有二阶连续偏导数并且满足拉普拉斯方程&lt;/p&gt;
-&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
-\frac{\partial^2 \varphi}{\partial x^2}+\frac{\partial^2
-\varphi}{\partial y^2}=0
-\]&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;那么称&lt;span class=&#34;math inline&#34;&gt;\(\varphi(x,y)\)&lt;/span&gt;为区域&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;内的调和函数。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;定理&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;任何在区域&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;内全纯的函数，它的实部和虚部都是&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;内的调和函数&lt;/p&gt;
-&lt;p&gt;在&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;内满足柯西-黎曼方程&lt;/p&gt;
-&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
-\frac{\partial u}{\partial x}=\frac{\partial v}{\partial y},
-\frac{\partial u}{\partial y}=-\frac{\partial v}{\partial x}
-\]&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;的两个调和函数中，&lt;span class=&#34;math inline&#34;&gt;\(v\)&lt;/span&gt;称为&lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt;的共轭调和函数。也就是说，区域&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;内的全纯函数的虚部为实部的共轭调和函数。&lt;/p&gt;
 &lt;h2 id=&#34;非齐次cauchy积分公式&#34;&gt;非齐次Cauchy积分公式&lt;/h2&gt;
 &lt;p&gt;TODO&lt;/p&gt;
 &lt;h2 id=&#34;一维barpartial问题的解&#34;&gt;一维&lt;span class=&#34;math inline&#34;&gt;\(\bar\partial\)&lt;/span&gt;问题的解&lt;/h2&gt;

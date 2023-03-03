@@ -513,8 +513,17 @@ z}(z_0)=0\)</span>就称为柯西-黎曼方程。</p>
 \frac{\partial u}{\partial y}=-\frac{\partial v}{\partial x}
 \end{matrix}\right.
 \]</span></p>
+<p>设<span class="math inline">\(D\)</span>是<span class="math inline">\(\bm C\)</span>中的域，用<span class="math inline">\(C(D)\)</span>表示<span class="math inline">\(D\)</span>上连续函数的全体，<span class="math inline">\(H(D)\)</span>表示<span class="math inline">\(D\)</span>上全纯函数的全体。</p>
+<p>用<span class="math inline">\(C^1(D)\)</span>记<span class="math inline">\(\frac{\partial f}{\partial x},\frac{\partial
+f}{\partial y}\)</span>在<span class="math inline">\(D\)</span>上连续的<span class="math inline">\(f\)</span>的全体。</p>
+<p><span class="math inline">\(C^k(D)\)</span>记在<span class="math inline">\(D\)</span>上有<span class="math inline">\(k\)</span>阶连续偏导数的函数的全体，<span class="math inline">\(C^\infty(D)\)</span>记在<span class="math inline">\(D\)</span>上有任意阶连续偏导数的函数的全体。</p>
+<p>之后我们用柯西积分公式证明，有</p>
+<p><span class="math display">\[
+H(D)\subset C^\infty(D)\subset C^k(D)\subset C^1(D)\subset C(D)
+\]</span></p>
+<p>即域<span class="math inline">\(D\)</span>上的全纯函数在<span class="math inline">\(D\)</span>上有任意阶的连续偏导数。</p>
 <p><strong>调和函数</strong></p>
-<p>设<span class="math inline">\(u\)</span>是域<span class="math inline">\(D\)</span>上的实值函数，如果<span class="math inline">\(u\in C^2(D)\)</span>，且对于任意<span class="math inline">\(z\in D\)</span>，有</p>
+<p>设<span class="math inline">\(u\)</span>是域<span class="math inline">\(D\)</span>上的实值函数（或称二元实变函数），如果<span class="math inline">\(u\in C^2(D)\)</span>，且对于任意<span class="math inline">\(z\in D\)</span>，有</p>
 <p><span class="math display">\[
 \Delta u(z)=\frac{\partial^2u(z)}{\partial
 x^2}+\frac{\partial^2u(z)}{\partial y^2}=0
@@ -524,19 +533,10 @@ x^2}+\frac{\partial^2u(z)}{\partial y^2}=0
 \Delta=\frac{\partial^2}{\partial x^2}+\frac{\partial^2}{\partial y^2}
 \]</span></p>
 <p>称为拉普拉斯算子。</p>
-<p>设<span class="math inline">\(D\)</span>是<span class="math inline">\(\bm C\)</span>中的域，用<span class="math inline">\(C(D)\)</span>表示<span class="math inline">\(D\)</span>上连续函数的全体，<span class="math inline">\(H(D)\)</span>表示<span class="math inline">\(D\)</span>上全纯函数的全体。</p>
-<p>用<span class="math inline">\(C^1(D)\)</span>记<span class="math inline">\(\frac{\partial f}{\partial x},\frac{\partial
-f}{\partial y}\)</span>在<span class="math inline">\(D\)</span>上连续的<span class="math inline">\(f\)</span>的全体。</p>
-<p><span class="math inline">\(C^k(D)\)</span>记在<span class="math inline">\(D\)</span>上有<span class="math inline">\(k\)</span>阶连续偏导数的函数的全体，<span class="math inline">\(C^\infty(D)\)</span>记在<span class="math inline">\(D\)</span>上有任意阶连续偏导数的函数的全体。</p>
-<p>有</p>
-<p><span class="math display">\[
-H(D)\subset C^\infty(D)\subset C^k(D)\subset C^1(D)\subset C(D)
-\]</span></p>
-<p>即域<span class="math inline">\(D\)</span>上的全纯函数在<span class="math inline">\(D\)</span>上有任意阶的连续偏导数。</p>
 <p><em>定理1</em></p>
 <p>设<span class="math inline">\(f=u+iv\in H(D)\)</span>，那么<span class="math inline">\(u,v\)</span>都是<span class="math inline">\(D\)</span>上的调和函数。</p>
 <p><strong>共轭调和函数</strong></p>
-<p>设<span class="math inline">\(u,v\)</span>是<span class="math inline">\(D\)</span>上的一堆调和函数，如果它们还满足柯西-黎曼方程，</p>
+<p>设<span class="math inline">\(u,v\)</span>是<span class="math inline">\(D\)</span>上的一对调和函数，如果它们还满足柯西-黎曼方程，</p>
 <p><span class="math display">\[
 \left\{\begin{matrix}
 \frac{\partial u}{\partial x}=\frac{\partial v}{\partial y} \\
@@ -546,6 +546,21 @@ H(D)\subset C^\infty(D)\subset C^k(D)\subset C^1(D)\subset C(D)
 <p>就称<span class="math inline">\(v\)</span>为<span class="math inline">\(u\)</span>的共轭调和函数。</p>
 <p><em>定理1</em></p>
 <p>设<span class="math inline">\(u\)</span>是单连通域<span class="math inline">\(D\)</span>上的调和函数，则必存在<span class="math inline">\(u\)</span>的共轭函数<span class="math inline">\(v\)</span>，使得<span class="math inline">\(u+iv\)</span>是<span class="math inline">\(D\)</span>上的全纯函数。</p>
+<p>其中</p>
+<p><span class="math display">\[
+v(x,y) = \int^{(x,y)}_{(x_0,y_0)}\dfrac{\partial v}{\partial
+x}dx+\dfrac{\partial v}{\partial y}dy =
+\int^{(x,y)}_{(x_0,y_0)}-\dfrac{\partial u}{\partial
+y}dx+\dfrac{\partial u}{\partial x}dy
+\]</span></p>
+<p>且这个积分与路径无关。</p>
+<p>反过来说如果有<span class="math inline">\(v\)</span>，则也必存在<span class="math inline">\(u\)</span></p>
+<p><span class="math display">\[
+u(x,y) = \int^{(x,y)}_{(x_0,y_0)}\dfrac{\partial u}{\partial
+x}dx+\dfrac{\partial u}{\partial y}dy =
+\int^{(x,y)}_{(x_0,y_0)}\dfrac{\partial v}{\partial y}dx-\dfrac{\partial
+v}{\partial x}dy
+\]</span></p>
 <h2 id="导数的几何意义">导数的几何意义</h2>
 <p>过<span class="math inline">\(z_0\)</span>点作一条光滑曲线<span class="math inline">\(\gamma\)</span>，它的方程为</p>
 <p><span class="math display">\[
@@ -1047,21 +1062,6 @@ P(z)=a_0z^n+a_1z^{n-1}+\cdots+a_n,a_0\neq 0
 <p>在<span class="math inline">\(\bm C\)</span>中必有零点</p>
 <p><strong>Morera定理</strong></p>
 <p>如果<span class="math inline">\(f\)</span>是域<span class="math inline">\(D\)</span>上的连续函数，且沿<span class="math inline">\(D\)</span>内任一可求长闭曲线的积分为零，那么<span class="math inline">\(f\)</span>在<span class="math inline">\(D\)</span>上全纯</p>
-<h2 id="调和函数">调和函数</h2>
-<p>如果二元实变函数<span class="math inline">\(\varphi(x,y)\)</span>在区域<span class="math inline">\(D\)</span>内具有二阶连续偏导数并且满足拉普拉斯方程</p>
-<p><span class="math display">\[
-\frac{\partial^2 \varphi}{\partial x^2}+\frac{\partial^2
-\varphi}{\partial y^2}=0
-\]</span></p>
-<p>那么称<span class="math inline">\(\varphi(x,y)\)</span>为区域<span class="math inline">\(D\)</span>内的调和函数。</p>
-<p><strong>定理</strong></p>
-<p>任何在区域<span class="math inline">\(D\)</span>内全纯的函数，它的实部和虚部都是<span class="math inline">\(D\)</span>内的调和函数</p>
-<p>在<span class="math inline">\(D\)</span>内满足柯西-黎曼方程</p>
-<p><span class="math display">\[
-\frac{\partial u}{\partial x}=\frac{\partial v}{\partial y},
-\frac{\partial u}{\partial y}=-\frac{\partial v}{\partial x}
-\]</span></p>
-<p>的两个调和函数中，<span class="math inline">\(v\)</span>称为<span class="math inline">\(u\)</span>的共轭调和函数。也就是说，区域<span class="math inline">\(D\)</span>内的全纯函数的虚部为实部的共轭调和函数。</p>
 <h2 id="非齐次cauchy积分公式">非齐次Cauchy积分公式</h2>
 <p>TODO</p>
 <h2 id="一维barpartial问题的解">一维<span class="math inline">\(\bar\partial\)</span>问题的解</h2>
@@ -1872,7 +1872,6 @@ N,n\geq2)\)</span>这个函数在<span class="math inline">\(z\)</span>平面内
         <li><a href="#全纯函数的原函数">全纯函数的原函数</a></li>
         <li><a href="#cauchy积分公式">Cauchy积分公式</a></li>
         <li><a href="#cauchy积分公式的一些重要推论">Cauchy积分公式的一些重要推论</a></li>
-        <li><a href="#调和函数">调和函数</a></li>
         <li><a href="#非齐次cauchy积分公式">非齐次Cauchy积分公式</a></li>
         <li><a href="#一维barpartial问题的解">一维<span class="math inline">\(\bar\partial\)</span>问题的解</a></li>
       </ol>
