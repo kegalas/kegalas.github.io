@@ -1587,7 +1587,7 @@ $$
 
 其中$\varepsilon_r$对于各向同性的均匀电介质为一常数，称为该介质的相对介电常数，是无量纲量。
 
-### 电解质分子的电结构
+### 电介质分子的电结构
 
 根据分子电结构的不同，可把电介质分为两类：
 
@@ -1788,7 +1788,7 @@ $$
 B = \frac{dF_{max}}{Idl}
 $$
 
-力的方向由右手定则确定。
+力的方向由左手定则确定。
 
 电流元$Id\bm l$在磁场中受到的磁场力$d\bm F$如下
 
@@ -1806,7 +1806,7 @@ $$
 
 其中$r$是距离，$\theta$是矢量$\bm r$和$d\bm l$的夹角。$\mu_0=4\pi\times 10^{-7}N/A^2$，称为真空磁导率。
 
-$d\bm B$的方向由右手定则确定。写成矢量形式如下
+$d\bm B$的方向由右手螺旋法则确定。写成矢量形式如下
 
 $$
 d\bm B = \frac{\mu_0}{4\pi}\frac{Id\bm l\times \bm r^0}{\bm r^2}
@@ -1892,7 +1892,7 @@ $$
 磁力矩为
 
 $$
-\bm M=\bm p_m\times B = IS\bm n\times B
+\bm M=\bm p_m\times B = IS\bm n\times \bm B
 $$
 
 其中$I$是线圈的电流，$S$是线圈面积，$\bm n$是线圈法向量。
@@ -2514,7 +2514,7 @@ $$
 光子的质量为
 
 $$
-m_\varphi = \frac{E}{c^2} = \frac{h\nu}{c^2} = \frac{g}{c\lambda}
+m_\varphi = \frac{E}{c^2} = \frac{h\nu}{c^2} = \frac{h}{c\lambda}
 $$
 
 动量为
