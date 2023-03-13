@@ -8,7 +8,7 @@ mathjax: true
 markup: pandoc
 ---
 
-# 快捷键
+# 原版快捷键
 
 ## 光标、页面移动相关
 
@@ -54,6 +54,7 @@ markup: pandoc
 |M-x replace-string|替换字符串|
 |C-o|与回车不同的是，光标不会进入到下一行|
 |C-x C-o|将光标前后的所有空白行变成一个空白行|
+|C-x h|全选|
 
 ## 文件相关
 
@@ -95,3 +96,126 @@ markup: pandoc
 |C-x C-=|放大字号|
 |C-x C\-\-|减小字号|
 |C-x C-0|默认字号|
+
+# 自用插件、设置
+
+## init.el
+
+[https://github.com/kegalas/.emacs.d/blob/main/init.el](https://github.com/kegalas/.emacs.d/blob/main/init.el)
+
+## use-package
+
+在init.el里自动安装其他插件的必备。通常可以用M-x package-install来手动安装use-package。
+
+## good-scroll
+
+平滑滚动的插件。
+
+## mwim
+
+优化了原版的C-a和C-e快捷键，具体如下。
+
+|按键|功能|
+|-|-|
+|C-a|跳到文字的开头或这一行的开头|
+|C-e|跳到文字的结尾或一行的结尾|
+
+## counsel、ivy、swiper
+
+三个著名的插件，优化了诸多功能，如搜索、切换buffer、文件操作、命令列表等等。
+
+下面的命令可能会根据我使用的熟练程度来更新。
+
+|按键|功能|
+|-|-|
+|C-s|使用swiper代替原版的搜索|
+|C-x b|替代原版的buffer列表|
+|C-x C-f|替代原版的文件操作|
+|M-x|替代原版的命令列表|
+
+## amx
+
+将我们在M-x中输入命令的历史记录下来，每次显示最常用的。
+
+## ace-window
+
+|按键|功能|
+|-|-|
+|C-x o|优化切换window的操作逻辑，可以根据编号进行切换|
+
+## undo-tree
+
+提供比原版更好的撤销、重做操作。
+
+|按键|功能|
+|-|-|
+|C-x u|打开undo tree|
+
+## which-key
+
+在输入快捷键时提醒我们可以接下来输入什么，以及有什么功能。
+
+## flycheck
+
+语法检查程序，对于c/c++需要装好clang才能使用。另外在windows上并不是完美支持的，虽然github的issue里最近没有什么东西。
+
+## dashboard
+
+一个欢迎界面。
+
+## highlight-symbol
+
+高亮Buffer中所有的、与光标处符号相同的符号。按<f3>开启。
+
+|按键|功能|
+|-|-|
+|\<f3\>|开启高亮|
+
+## rainbow-delimiters
+
+彩虹括号，方便在lisp系语言中看清。
+
+## company
+
+自动补全插件。
+
+## company-box
+
+在图形界面下为company提供图标。
+
+## lsp-mode
+
+代码分析。如定义跳转等等功能由lsp提供。
+
+## lsp-ui
+
+为lsp提供图形化的显示，同时
+
+|按键|功能|
+|-|-|
+|M-.|寻找符号定义|
+|M-?|寻找符号引用|
+
+## lsp-ivy
+
+使lsp和ivy协作，可以通过命令 lsp-ivy-workspace-symbol 来搜索当前工作区的符号。 
+
+## projectile
+
+项目管理插件。通常我们查找一个函数的定义或者别的什么的定义的时候，这些定义并不会在同一个文件里，而是在同一个项目里，此时我们lsp需要projectile才能正确查找。
+
+## counsel-projectile
+
+允许我们在项目中进行搜索。
+
+## magit
+
+内置git。
+
+## neotree
+
+打开文件夹树形结构图
+
+|按键|功能|
+|-|-|
+|\<f8\>|打开neotree|
