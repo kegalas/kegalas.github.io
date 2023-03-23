@@ -179,9 +179,13 @@ markup: pandoc
 
 自动补全插件。
 
+|按键|功能|
+|-|-|
+|<f1>|显示候选项的文档（如果有、如果支持）|
+
 ## company-box
 
-在图形界面下为company提供图标。
+在图形界面下为company提供图标。以及可以开一个小的悬浮窗口展示候选项的文档（如果有）。但是其有一些问题，我觉得还是不开好。
 
 ## lsp-mode
 
@@ -219,3 +223,29 @@ markup: pandoc
 |按键|功能|
 |-|-|
 |\<f8\>|打开neotree|
+
+## all-the-icons
+
+提供emacs内许多图标的显示功能，需要在下载插件后M-x all-the-icons-install-font。或是去其github下载fonts安装后才能使用。
+
+## yasnippet
+
+在补全的时候提供代码片段。
+
+## avy
+
+一套跳转光标的操作。暂时还不太会使用。
+
+见[https://github.com/abo-abo/avy](https://github.com/abo-abo/avy)
+
+## powerline
+
+更好的mode-line显示。
+
+## c++-mode
+
+提供c++、c的支持。
+
+## grip-mode
+
+与markdown相关，还在探索中。
