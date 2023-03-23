@@ -384,29 +384,14 @@ int main(){
 ```cpp
 #include <iostream>
 
-using namespace std;
+inline int gcd(int a,int b){
+    return b==0 ? a : gcd(b, a%b);
+}
 
 int main(){
-    long long a,b;
-    cin>>a>>b;
-    if(a<b){
-        a=a+b;
-        b=a-b;
-        a=a-b;
-    }
-
-    long long ans = b;
-
-    while((a%b)!=0){
-        long long tmp = a%b;
-        a = b;
-        b = tmp;
-        ans = b;
-    }
-
-    cout<<ans<<endl;
-    //返回最大公约数
-
+    int a,b;
+    std::cin>>a>>b;
+    std::cout<<gcd(a,b);
     return 0;
 }
 ```
@@ -592,16 +577,14 @@ int main(){
 
 using namespace std;
 
-int exgcd(int a, int b, int &x, int &y){
-    if(!b){
-        x=1;
-        y=0;
+int exgcd(int a,int b,int& x,int& y){
+    if(b==0){
+        x = 1;
+        y = 0;
         return a;
     }
-    int d = exgcd(b, a%b, x, y);
-    int tmp=x;
-    x = y;
-    y = tmp-a/b*y;
+    int d = exgcd(b,a%b,y,x);
+    y -= (a/b)*x;
     return d;
 }
 
@@ -1072,7 +1055,6 @@ int main(){
 ### 拓扑排序
 
 ```cpp
-//拓扑排序
 //拓扑排序
 #include <iostream>
 #include <vector>
@@ -2464,6 +2446,7 @@ int main(){
 
 ```cpp
 //树状数组
+//luogu P3374
 
 #include <iostream>
 #include <cstdio>
@@ -2474,19 +2457,17 @@ using namespace std;
 int arr[MAXN];
 int bit[MAXN];
 
-int n,m;
-
 inline int lowbit(int n){
     return n&(-n);
 }
 
-void update(int p, int k){
+void update(int p, int k, int n){
     for(;p<=n;p+=lowbit(p)){
         bit[p]+=k;
     }
 }
 
-long long query(int p){
+int query(int p){
     int ans=0;
     for(;p;p-=lowbit(p)){
         ans+=bit[p];
@@ -2495,11 +2476,12 @@ long long query(int p){
 }
 
 int main(){
+	int n,m;
     scanf("%d%d",&n,&m);
     //数组长度，查询数
     for(int i=1;i<=n;i++){
         scanf("%d",&arr[i]);
-        update(i,arr[i]);
+        update(i,arr[i],n);
     }
 
     for(int i=1;i<=m;i++){
@@ -2510,7 +2492,7 @@ int main(){
         if(op==1){
             scanf("%d",&k);
             //将单点增加k，如果想要改成修改，则可以update(x,-arr[x]+k)
-            update(x,k);
+            update(x,k,n);
         }
         else{
             scanf("%d",&y);
@@ -2534,7 +2516,6 @@ int main(){
 const int MAXN = 500005;
 
 LL arr[MAXN];
-LL n;
 
 struct Par{
     LL value,id;
@@ -2551,7 +2532,7 @@ inline LL lowbit(LL n){
     return n&(-n);
 }
 
-void update(LL p, LL k){
+void update(LL p, LL k, LL n){
     for(;p<=n;p+=lowbit(p)){
         bit[p]+=k;
     }
@@ -2566,6 +2547,7 @@ long long query(LL p){
 }
 
 int main(){
+    LL n;
     std::cin>>n;
 
     for(int i=1;i<=n;i++){
@@ -2583,7 +2565,7 @@ int main(){
 
     for(int i=1;i<=n;i++){
         ans += query(arr[i]);
-        update(arr[i],1);
+        update(arr[i],1,n);
     }
 
     ans = n*(n-1)/2-ans;//本来统计的是等于或顺序对，现在反过来计算逆序对
