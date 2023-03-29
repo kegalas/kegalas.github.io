@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='计算机组成原理的学习笔记'><title>计算机组成原理学习笔记</title>
+
+<link rel='canonical' href='https://kegalas.top/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/'>
+
+<link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='计算机组成原理学习笔记'>
+<meta property='og:description' content='计算机组成原理的学习笔记'>
+<meta property='og:url' content='https://kegalas.top/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/'>
+<meta property='og:site_name' content='KegalaS的个人博客'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='计算机' /><meta property='article:tag' content='组成原理' /><meta property='article:tag' content='大学' /><meta property='article:published_time' content='2023-03-29T16:00:26&#43;08:00'/><meta property='article:modified_time' content='2023-03-29T16:00:26&#43;08:00'/>
+<meta name="twitter:title" content="计算机组成原理学习笔记">
+<meta name="twitter:description" content="计算机组成原理的学习笔记">
+    <link rel="shortcut icon" href="favicon-16x16.png" />
+
+    </head>
+    <body class="
+    article-page has-toc
+">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex 
+    
+        extended
+    
+">
+    
+        <div id="article-toolbar">
+            <a href="/" class="back-home">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="15 6 9 12 15 18" />
+</svg>
+
+
+
+                <span>返回</span>
+            </a>
+        </div>
+    
+<main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/%E5%85%B6%E4%BB%96%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/" >
+                其他计算机科学
+            </a>
+        
+    </header>
+    
+
+    <h2 class="article-title">
+        <a href="/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">计算机组成原理学习笔记</a>
+    </h2>
+
+    
+    <h3 class="article-subtitle">
+        计算机组成原理的学习笔记
+    </h3>
+    
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Mar 29, 2023</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 8 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+</div>
+</header>
+
+    <section class="article-content">
+    
+
+<h1 id="简称表">简称表</h1>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">简称</th>
+<th style="text-align: center;">含义</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">CPU</td>
+<td style="text-align: center;">中央处理器</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">PC</td>
+<td style="text-align: center;">程序计数器</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">IR</td>
+<td style="text-align: center;">指令寄存器</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">CU</td>
+<td style="text-align: center;">控制单元</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">ALU</td>
+<td style="text-align: center;">算术逻辑单元</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">ACC</td>
+<td style="text-align: center;">累加器</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">MQ</td>
+<td style="text-align: center;">乘商寄存器</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">X</td>
+<td style="text-align: center;">操作数寄存器</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">MAR</td>
+<td style="text-align: center;">存储器地址寄存器</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">MDR</td>
+<td style="text-align: center;">存储器数据寄存器</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">MM</td>
+<td style="text-align: center;">主寄存器</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">I/O</td>
+<td style="text-align: center;">输入输出设备</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">简称</th>
+<th style="text-align: center;">含义</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">SATA</td>
+<td style="text-align: center;">串行ATA总线</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">PCI</td>
+<td style="text-align: center;">外围设备互联</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">DMA</td>
+<td style="text-align: center;">直接存储器访问</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">DMI</td>
+<td style="text-align: center;">直接媒体接口</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">QPI</td>
+<td style="text-align: center;">快速通道互联</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">FSB</td>
+<td style="text-align: center;">前端总线</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">PCH</td>
+<td style="text-align: center;">平台控制中心</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">IOH</td>
+<td style="text-align: center;">输入/输出中心</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">ICH</td>
+<td style="text-align: center;">控制器集线器</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">MCH</td>
+<td style="text-align: center;">内存控制器集线器</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">NVRAM</td>
+<td style="text-align: center;">非易失型随机存储器</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">SCSI</td>
+<td style="text-align: center;">小型计算机系统接口</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">简称</th>
+<th style="text-align: center;">含义</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">RAM</td>
+<td style="text-align: center;">随机存储器</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">ROM</td>
+<td style="text-align: center;">只读存储器</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">SRAM</td>
+<td style="text-align: center;">静态随机读写存储器</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">DRAM</td>
+<td style="text-align: center;">动态随机读写存储器</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">DDR SDRAM</td>
+<td style="text-align: center;">双倍数据率同步DRAM</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">MROM</td>
+<td style="text-align: center;">掩模ROM</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">PROM</td>
+<td style="text-align: center;">可一次编程ROM</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">EPROM</td>
+<td style="text-align: center;">可擦除的PROM</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">EEPROM</td>
+<td style="text-align: center;">电可擦除的EPROM</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">EAROM</td>
+<td style="text-align: center;">电改写ROM</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">SIMM</td>
+<td style="text-align: center;">单列直插式存储器模块</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">DIMM</td>
+<td style="text-align: center;">双列直插式存储器模块</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">FIFO</td>
+<td style="text-align: center;">先进先出算法</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">LRU</td>
+<td style="text-align: center;">近期最少使用算法</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">TLB</td>
+<td style="text-align: center;">转换后援缓冲器，快表</td>
+</tr>
+</tbody>
+</table>
+<h1 id="计算机的性能描述">计算机的性能描述</h1>
+<h2 id="机器字长">机器字长</h2>
+<p>指CPU一次能处理的数据位数</p>
+<h2 id="存储容量">存储容量</h2>
+<p>存储容量=存储单元个数×存储字长。其中MAR反应存储单元个数，MDR反应存储字长。</p>
+<h2 id="运行速度">运行速度</h2>
+<h3 id="主频时钟周期">主频/时钟周期</h3>
+<p>主频与时钟周期二者互为倒数</p>
+<h3 id="cpi">CPI</h3>
+<p>执行一条指令（平均）需要的时钟周期数</p>
+<p><span class="math display">\[
+CPI = \dfrac{\text{所有指令的时钟周期之和}}{\text{指令总数}}\\
+= \sum(\text{各类指令的CPI}\times \text{该类指令的比例})
+\]</span></p>
+<h3 id="mips">MIPS</h3>
+<p>每秒钟CPU能执行的指令总条数（百万条/秒）</p>
+<p><span class="math display">\[
+MIPS = \dfrac{\text{指令条数}}{\text{执行时间}\times 10^6}
+\]</span></p>
+<p><span class="math display">\[
+=
+\dfrac{\text{指令条数}}{\left(\dfrac{\text{所有指令CPU时钟周期数之和}}{f}\right)\times
+10^6}\\
+\]</span></p>
+<p><span class="math display">\[
+= \dfrac{f}{\text{CPI}\times 10^6}
+\]</span></p>
+<p>其中最后一个公式又称为全性能公式</p>
+<h2 id="amdahl定律">Amdahl定律</h2>
+<p><strong>加速比</strong></p>
+<p><span class="math display">\[
+\text{加速比} =
+\dfrac{\text{改进后的系统性能}}{\text{改进前的系统性能}}\\
+\]</span></p>
+<p><span class="math display">\[
+= \dfrac{\text{改进前的系统执行时间}}{\text{改进后的系统执行时间}}
+\]</span></p>
+<p><strong>可改进比例<span class="math inline">\(f_e\)</span></strong></p>
+<p>可改进部分在原系统执行时间中所占的比例</p>
+<p><strong>部件加速比<span class="math inline">\(r_e\)</span></strong></p>
+<p>可改进部分改进后性能提高的程度</p>
+<p><strong>Amdahl定律</strong></p>
+<p>假设改进前的系统执行时间为<span class="math inline">\(T_0\)</span>，改进后的系统执行时间为<span class="math inline">\(T_n\)</span>，则</p>
+<p><span class="math display">\[
+T_n = T_0\bigg(1-f_e+\dfrac{f_e}{r_e}\bigg)
+\]</span></p>
+<p>若加速比用<span class="math inline">\(S_p\)</span>表示，则有</p>
+<p><span class="math display">\[
+S_p = \dfrac{1}{1-f_e+\dfrac{f_e}{r_e}}
+\]</span></p>
+<p>有多个部件同时可以改进时</p>
+<p><span class="math display">\[
+S_p = \dfrac{1}{(1-\sum f_e)+\sum(\dfrac{f_e}{r_e})}
+\]</span></p>
+<h1 id="总线和io">总线和IO</h1>
+<h2 id="分类">分类</h2>
+<ul>
+<li>按照总线的传输方式不同（定时），可以分为同步总线和异步总线；</li>
+<li>按照总线中数据线的多少不同（传送信息），可以分为并行总线和串行总线。</li>
+<li>按照总线的使用方式不同，可以分为专用总线和公用总线。</li>
+<li>按照连接部件不同，可分为片内总线、系统总线、通信总线</li>
+<li>按照系统总线传输信息的不同，又可分为数据总线、地址总线、控制总线</li>
+</ul>
+<h2 id="总线带宽">总线带宽</h2>
+<p><span class="math display">\[
+\text{总线带宽} = \text{数据线宽度}\times \text{总线频率}
+\]</span></p>
+<h2 id="总线结构">总线结构</h2>
+<p>可以分为单总线和多总线结构。</p>
+<h2 id="总线控制">总线控制</h2>
+<h2 id="中断">中断</h2>
+<h1 id="存储系统">存储系统</h1>
+<h2 id="主存">主存</h2>
+<h3 id="技术指标">技术指标</h3>
+<p><strong>存储容量</strong></p>
+<p><span class="math display">\[
+\text{存储容量}=\text{存储单元个数}\times\text{存储字长}
+\]</span></p>
+<p>上式的单位是位，如果用字节需要除以8。</p>
+<p><strong>存储器带宽</strong></p>
+<p><span class="math display">\[
+B_m = \dfrac{n}{t_m}
+\]</span></p>
+<p>其中<span class="math inline">\(n\)</span>为每次读出/写入的字节数，<span class="math inline">\(t_m\)</span>为存储周期</p>
+<h3 id="半导体存储芯片的译码驱动方式">半导体存储芯片的译码驱动方式</h3>
+<h3 id="dram的刷新">DRAM的刷新</h3>
+<h3 id="存储器芯片的扩展">存储器芯片的扩展</h3>
+<h2 id="cache">Cache</h2>
+<h3 id="cache的命中率">Cache的命中率</h3>
+<p>在一个程序执行期间，设<span class="math inline">\(N_c\)</span>为访问Cache的总命中次数，<span class="math inline">\(N_m\)</span>为访问主存的总次数，则命中率<span class="math inline">\(h\)</span>（hit rate）为</p>
+<p><span class="math display">\[
+h = \dfrac{N_c}{N_c+N_m}
+\]</span></p>
+<p>设<span class="math inline">\(t_c\)</span>为命中时的Cache访问时间，<span class="math inline">\(t_m\)</span>为未命中时的主存访问时间，通常<span class="math inline">\(t_m &gt;&gt; tc\)</span> ，<span class="math inline">\(1-h\)</span>表示未命中率（缺失率，miss rate）</p>
+<p>当Cache和主存同时访问时，Cache-主存系统的平均访问时间<span class="math inline">\(ta\)</span>为：</p>
+<p><span class="math display">\[
+t_a = ht_c + (1-h)t_m
+\]</span></p>
+<p>当Cache和主存不同时访问时，Cache-主存系统的平均访问时间<span class="math inline">\(ta\)</span>为（我们一般考虑同时访问的情况）：</p>
+<p><span class="math display">\[
+t_a = ht_c+(1-h)(t_m+t_c) = t_c+(1-h)t_m
+\]</span></p>
+<h3 id="cache-主存系统的效率">Cache-主存系统的效率</h3>
+<p><span class="math display">\[
+e = \dfrac{t_c}{t_a} =
+\dfrac{\text{访问Cache的时间}}{\text{平均访问时间}}\times 100\%
+\]</span></p>
+<p><span class="math display">\[
+= \dfrac{t_c}{t_c+(1-h)\times t_m}\times 100\%
+\]</span></p>
+<h3 id="cache-主存系统的加速比">Cache-主存系统的加速比</h3>
+<p><span class="math display">\[
+S_p = \dfrac{t_m}{t_a} = \dfrac{t_m}{t_c+(1-h)\times t_m} =
+\dfrac{1}{1-h+\dfrac{1}{r}}
+\]</span></p>
+<p>其中，<span class="math inline">\(r=t_m/t_c\)</span>为从主存到Cache速度提升的倍数。</p>
+<h3 id="cache-主存系统的成本">Cache-主存系统的成本</h3>
+<p>假设计算机中的主存与Cache的容量分别为<span class="math inline">\(S_1\)</span>和<span class="math inline">\(S_2\)</span>,显然<span class="math inline">\(S_1
+&gt;&gt; S_2\)</span>；</p>
+<p>主存与Cache的单位价格分别为<span class="math inline">\(C_1\)</span>和<span class="math inline">\(C_2\)</span>，且<span class="math inline">\(C_1\)</span>是价格较低的。</p>
+<p>那么Cache—主存系统的平均价格<span class="math inline">\(C\)</span>为</p>
+<p><span class="math display">\[
+C = \dfrac{C_1\times S_1+C_2\times S_2}{S_1+S_2}
+\]</span></p>
+<h3 id="cache的映射">Cache的映射</h3>
+<h3 id="替换算法">替换算法</h3>
+<h3 id="多级cache">多级Cache</h3>
+<h2 id="虚拟存储器">虚拟存储器</h2>
+<h2 id="外部存储器">外部存储器</h2>
+<h3 id="磁盘">磁盘</h3>
+<p><strong>非格式化容量</strong></p>
+<p><span class="math display">\[
+\text{非格式化容量} =
+\text{位密度}\times\dfrac{\text{内圈磁道周长}+\text{外圈磁道周长}}{2}\times\text{每盘面磁道数}\times\text{盘面数}
+\]</span></p>
+<p><strong>格式化容量</strong></p>
+<p><span class="math display">\[
+\text{格式化容量} =
+\text{每扇区字节数}\times\text{每道扇区数}\times\text{每盘面磁道数}\times\text{盘面数}
+\]</span></p>
+<p><strong>平均存取时间</strong></p>
+<p><span class="math display">\[
+\text{平均存取时间} =
+\text{平均寻道时间}+\text{平均等待时间}+\text{传输时间}
+\]</span></p>
+<p><strong>数据传输率</strong></p>
+<p><span class="math display">\[
+\text{数据传输率} =
+\text{每个扇区的字节数}\times\text{每道扇区数}\times\text{磁盘的转速}
+\]</span></p>
+<h1 id="数据表示">数据表示</h1>
+<h2 id="带符号的定点小数">带符号的定点小数</h2>
+<p>其一般形式为</p>
+<p><span class="math display">\[
+X_s.X_{-1}X_{-2}\cdots X_{-(n-1)}
+\]</span></p>
+<p>其中第一位是符号位，后面的每一位都在小数点后，也就是说定点小数一定是纯小数，不含整数部分。</p>
+<h2 id="原码反码补码移码">原码、反码、补码、移码</h2>
+<p>原码转换为另外三个码的规则</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">原码符号</th>
+<th style="text-align: center;">反码</th>
+<th style="text-align: center;">补码</th>
+<th style="text-align: center;">移码</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">正</td>
+<td style="text-align: center;">相同</td>
+<td style="text-align: center;">相同</td>
+<td style="text-align: center;">符号位改为1</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">负</td>
+<td style="text-align: center;">除符号位外取反</td>
+<td style="text-align: center;">反码+1</td>
+<td style="text-align: center;">符号位与补码相反</td>
+</tr>
+</tbody>
+</table>
+<p>假设不含符号位有<span class="math inline">\(n\)</span>位，则原码和反码的范围为<span class="math inline">\(-2^{n}+1\sim
+2^{n}-1\)</span>，补码和移码的范围为<span class="math inline">\(-2^{n}\sim 2^{n}-1\)</span></p>
+<p>以上是定点整数的转换方法，定点小数的转换方法相同，数据范围不同</p>
+<p>假设不含符号位有<span class="math inline">\(n\)</span>位，则原码和反码的范围为<span class="math inline">\(-(1-2^n)\sim
+1-2^n\)</span>，补码和移码的范围为<span class="math inline">\(-1\sim
+1-2^n\)</span></p>
+<h2 id="浮点数">浮点数</h2>
+<p>浮点数<span class="math inline">\(N\)</span>由三部分来决定，阶码<span class="math inline">\(E\)</span>，尾数<span class="math inline">\(M\)</span>和阶码的底<span class="math inline">\(B\)</span></p>
+<p><span class="math display">\[
+N = B^E\cdot M
+\]</span></p>
+<p>阶码的底<span class="math inline">\(B\)</span>一般隐含表示，取决于机器本身。阶码是定点整数，尾数是定点小数。</p>
+<h3 id="非规格化浮点数">非规格化浮点数</h3>
+<p>非规格化浮点数不要求定点小数的第一位是1.其数据范围如下，假设尾数部分<span class="math inline">\(n+1\)</span>位，阶码部分<span class="math inline">\(k+1\)</span>位，均用补码表示</p>
+<table>
+<colgroup>
+<col style="width: 14%"/>
+<col style="width: 35%"/>
+<col style="width: 14%"/>
+<col style="width: 36%"/>
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">阶码最小值</th>
+<th style="text-align: center;"><span class="math inline">\(-2^k\)</span></th>
+<th style="text-align: center;">阶码最大值</th>
+<th style="text-align: center;"><span class="math inline">\(2^k-1\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">尾数最小负值</td>
+<td style="text-align: center;"><span class="math inline">\(-1\)</span></td>
+<td style="text-align: center;">尾数最大负值</td>
+<td style="text-align: center;"><span class="math inline">\(-2^{-n}\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">尾数最小正值</td>
+<td style="text-align: center;"><span class="math inline">\(2^{-n}\)</span></td>
+<td style="text-align: center;">尾数最大正值</td>
+<td style="text-align: center;"><span class="math inline">\(1-2^{-n}\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">可表示的最小负数</td>
+<td style="text-align: center;"><span class="math inline">\(-1\times
+2^{2^k-1}\)</span></td>
+<td style="text-align: center;">可表示的最大负数</td>
+<td style="text-align: center;"><span class="math inline">\(-2^{-n}\times 2^{-2^k}\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">可表示的最小正数</td>
+<td style="text-align: center;"><span class="math inline">\(2^{-n}\times
+2^{-2^k}\)</span></td>
+<td style="text-align: center;">可表示的最大正数</td>
+<td style="text-align: center;"><span class="math inline">\((1-2^{-n})\times 2^{2^k-1}\)</span></td>
+</tr>
+</tbody>
+</table>
+<h3 id="规格化浮点数">规格化浮点数</h3>
+<p>要求定点小数的第一位是1.在用补码表示时，符号位和第一位如果不同，则为规格化浮点数。</p>
+<table>
+<colgroup>
+<col style="width: 14%"/>
+<col style="width: 35%"/>
+<col style="width: 14%"/>
+<col style="width: 36%"/>
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">阶码最小值</th>
+<th style="text-align: center;"><span class="math inline">\(-2^k\)</span></th>
+<th style="text-align: center;">阶码最大值</th>
+<th style="text-align: center;"><span class="math inline">\(2^k-1\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">尾数最小负值</td>
+<td style="text-align: center;"><span class="math inline">\(-1\)</span></td>
+<td style="text-align: center;">尾数最大负值</td>
+<td style="text-align: center;"><span class="math inline">\(-(1/2+2^{-n})\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">尾数最小正值</td>
+<td style="text-align: center;"><span class="math inline">\(+1/2\)</span></td>
+<td style="text-align: center;">尾数最大正值</td>
+<td style="text-align: center;"><span class="math inline">\(1-2^{-n}\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">可表示的最小负数</td>
+<td style="text-align: center;"><span class="math inline">\(-1\times
+2^{2^k-1}\)</span></td>
+<td style="text-align: center;">可表示的最大负数</td>
+<td style="text-align: center;"><span class="math inline">\(-(1/2+2^{-n})\times 2^{-2^k}\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">可表示的最小正数</td>
+<td style="text-align: center;"><span class="math inline">\(1/2\times
+2^{-2^k}\)</span></td>
+<td style="text-align: center;">可表示的最大正数</td>
+<td style="text-align: center;"><span class="math inline">\((1-2^{-n})\times 2^{2^k-1}\)</span></td>
+</tr>
+</tbody>
+</table>
+<h3 id="ieee754标准浮点数">IEEE754标准浮点数</h3>
+<p>以单精度为例，单精度有32位长，最高位(<span class="math inline">\(S\)</span>)是浮点数的符号位，接下来8位是指数(<span class="math inline">\(E\)</span>)，最后23位是尾数(<span class="math inline">\(F\)</span>)。</p>
+<p>其表示为</p>
+<p><span class="math display">\[
+(-1)^S\times (1+F)\times 2^{(E-Bias)}
+\]</span></p>
+<p>其中，尾数本来应该为1.xxxxx，但是我们将第一位暗含了，所以式子中为<span class="math inline">\(1+F\)</span>，那23位尾数只包含小数点后面的数。这个尾数永远为正，不需要考虑补码等问题，符号由符号位提供。</p>
+<p>而<span class="math inline">\(Bias\)</span>提供了一种类似于移码的方式来表示正负，在单精度中，Bias为<span class="math inline">\(127\)</span>，也就是说，如果我们要表示<span class="math inline">\(2^6\)</span>，则<span class="math inline">\(E =
+6+127 = 133\)</span>，而133才是会被记录在那8位尾数中的数字。</p>
+<p>单精度表示对象表如下</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">指数</th>
+<th style="text-align: center;">尾数</th>
+<th style="text-align: center;">表示对象</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">非0</td>
+<td style="text-align: center;"><span class="math inline">\(\pm\)</span>非规格化数</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">1-254</td>
+<td style="text-align: center;">任意</td>
+<td style="text-align: center;"><span class="math inline">\(\pm\)</span>浮点数</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">255</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;"><span class="math inline">\(\pm\)</span>无穷</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">255</td>
+<td style="text-align: center;">非0</td>
+<td style="text-align: center;">NaN</td>
+</tr>
+</tbody>
+</table>
+<p>其中浮点数的表示范围为<span class="math inline">\(\pm[1,2)\times
+2^{[-126,127]}\)</span></p>
+<p>双精度浮点数的Bias为1023。</p>
+<h2 id="ascii码">ASCII码</h2>
+<h2 id="汉字编码">汉字编码</h2>
+<p><span class="math display">\[
+\text{国标码} = (\text{区位码})_{16} + 2020H
+\]</span></p>
+<p><span class="math display">\[
+\text{机内码} = (\text{国标码})_{16} + 8080H
+\]</span></p>
+<p><span class="math display">\[
+\text{机内码} = (\text{区位码})_{16} + A0A0H
+\]</span></p>
+<h2 id="unicode与utf-8">Unicode与UTF-8</h2>
+<h2 id="检错与纠错码">检错与纠错码</h2>
+<h3 id="校验码的码距">校验码的码距</h3>
+<p><span class="math display">\[
+d_{min} \geq t+e+1, 且e&gt;t
+\]</span></p>
+<p>其中<span class="math inline">\(d_{min}\)</span>为编码码距，<span class="math inline">\(t\)</span>为可纠错的位数，<span class="math inline">\(e\)</span>为可检错的位数</p>
+<p><span class="math inline">\(d_{min}\geq
+2\)</span>的数据校验码具有检错的能力</p>
+<h3 id="奇偶校验">奇偶校验</h3>
+<h3 id="海明码">海明码</h3>
+<p>设信息码为<span class="math inline">\(n\)</span>位，欲检测<span class="math inline">\(1\)</span>位错误，增添<span class="math inline">\(k\)</span>位校验位，组成<span class="math inline">\(m=n+k\)</span>位的校验码，应满足</p>
+<p><span class="math display">\[
+2^k\geq n+k-1
+\]</span></p>
+<h3 id="crc码">CRC码</h3>
+
+
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/">计算机</a>
+        
+            <a href="/tags/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/">组成原理</a>
+        
+            <a href="/tags/%E5%A4%A7%E5%AD%A6/">大学</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css"integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js"integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8"crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js"integrity="sha384-vZTG03m&#43;2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl"crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.querySelector(`.article-content`), {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ]
+        });})
+</script>
+    
+</article>
+
+    <aside class="related-contents--wrapper">
+    
+    
+</aside>
+
+     
+    
+        
+    <script src="https://utteranc.es/client.js" 
+        repo="kegalas/blogComments"
+        issue-term="pathname"
+        
+        crossorigin="anonymous"
+        async
+        >
+</script>
+
+<style>
+    .utterances {
+        max-width: unset;
+    }
+</style>
+
+<script>
+    function setUtterancesTheme(theme) {
+        let utterances = document.querySelector('.utterances iframe');
+        if (utterances) {
+            utterances.contentWindow.postMessage(
+                {
+                    type: 'set-theme',
+                    theme: `github-${theme}`
+                },
+                'https://utteranc.es'
+            );
+        }
+    }
+
+    addEventListener('message', event => {
+        if (event.origin !== 'https://utteranc.es') return;
+        setUtterancesTheme(document.documentElement.dataset.scheme)
+    });
+
+    window.addEventListener('onColorSchemeChange', (e) => {
+        setUtterancesTheme(e.detail)
+    })
+</script>
+
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2023 KegalaS的个人博客
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.4.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    
+        <aside class="sidebar right-sidebar sticky">
+            <section class="widget archives">
+                <div class="widget-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+                </div>
+                <h2 class="widget-title section-title">目录</h2>
+                
+                <div class="widget--toc">
+                    <nav id="TableOfContents">
+  <ol>
+    <li><a href="#简称表">简称表</a></li>
+    <li><a href="#计算机的性能描述">计算机的性能描述</a>
+      <ol>
+        <li><a href="#机器字长">机器字长</a></li>
+        <li><a href="#存储容量">存储容量</a></li>
+        <li><a href="#运行速度">运行速度</a>
+          <ol>
+            <li><a href="#主频时钟周期">主频/时钟周期</a></li>
+            <li><a href="#cpi">CPI</a></li>
+            <li><a href="#mips">MIPS</a></li>
+          </ol>
+        </li>
+        <li><a href="#amdahl定律">Amdahl定律</a></li>
+      </ol>
+    </li>
+    <li><a href="#总线和io">总线和IO</a>
+      <ol>
+        <li><a href="#分类">分类</a></li>
+        <li><a href="#总线带宽">总线带宽</a></li>
+        <li><a href="#总线结构">总线结构</a></li>
+        <li><a href="#总线控制">总线控制</a></li>
+        <li><a href="#中断">中断</a></li>
+      </ol>
+    </li>
+    <li><a href="#存储系统">存储系统</a>
+      <ol>
+        <li><a href="#主存">主存</a>
+          <ol>
+            <li><a href="#技术指标">技术指标</a></li>
+            <li><a href="#半导体存储芯片的译码驱动方式">半导体存储芯片的译码驱动方式</a></li>
+            <li><a href="#dram的刷新">DRAM的刷新</a></li>
+            <li><a href="#存储器芯片的扩展">存储器芯片的扩展</a></li>
+          </ol>
+        </li>
+        <li><a href="#cache">Cache</a>
+          <ol>
+            <li><a href="#cache的命中率">Cache的命中率</a></li>
+            <li><a href="#cache-主存系统的效率">Cache-主存系统的效率</a></li>
+            <li><a href="#cache-主存系统的加速比">Cache-主存系统的加速比</a></li>
+            <li><a href="#cache-主存系统的成本">Cache-主存系统的成本</a></li>
+            <li><a href="#cache的映射">Cache的映射</a></li>
+            <li><a href="#替换算法">替换算法</a></li>
+            <li><a href="#多级cache">多级Cache</a></li>
+          </ol>
+        </li>
+        <li><a href="#虚拟存储器">虚拟存储器</a></li>
+        <li><a href="#外部存储器">外部存储器</a>
+          <ol>
+            <li><a href="#磁盘">磁盘</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+    <li><a href="#数据表示">数据表示</a>
+      <ol>
+        <li><a href="#带符号的定点小数">带符号的定点小数</a></li>
+        <li><a href="#原码反码补码移码">原码、反码、补码、移码</a></li>
+        <li><a href="#浮点数">浮点数</a>
+          <ol>
+            <li><a href="#非规格化浮点数">非规格化浮点数</a></li>
+            <li><a href="#规格化浮点数">规格化浮点数</a></li>
+            <li><a href="#ieee754标准浮点数">IEEE754标准浮点数</a></li>
+          </ol>
+        </li>
+        <li><a href="#ascii码">ASCII码</a></li>
+        <li><a href="#汉字编码">汉字编码</a></li>
+        <li><a href="#unicode与utf-8">Unicode与UTF-8</a></li>
+        <li><a href="#检错与纠错码">检错与纠错码</a>
+          <ol>
+            <li><a href="#校验码的码距">校验码的码距</a></li>
+            <li><a href="#奇偶校验">奇偶校验</a></li>
+            <li><a href="#海明码">海明码</a></li>
+            <li><a href="#crc码">CRC码</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+                </div>
+            </section>
+        </aside>
+    
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                defer="false"
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

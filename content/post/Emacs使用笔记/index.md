@@ -97,11 +97,7 @@ markup: pandoc
 |C-x C\-\-|减小字号|
 |C-x C-0|默认字号|
 
-# 自用插件、设置
-
-## init.el
-
-[https://github.com/kegalas/.emacs.d/blob/main/init.el](https://github.com/kegalas/.emacs.d/blob/main/init.el)
+# 自用插件
 
 ## use-package
 
@@ -181,7 +177,7 @@ markup: pandoc
 
 |按键|功能|
 |-|-|
-|<f1>|显示候选项的文档（如果有、如果支持）|
+|\<f1\>|显示候选项的文档（如果有、如果支持）|
 
 ## company-box
 
@@ -249,3 +245,19 @@ markup: pandoc
 ## grip-mode
 
 与markdown相关，还在探索中。
+
+# 自用设置
+
+## init.el
+
+[https://github.com/kegalas/.emacs.d/blob/main/init.el](https://github.com/kegalas/.emacs.d/blob/main/init.el)
+
+## 额外快捷键
+
+|按键|功能|
+|-|-|
+|M-n|下十行|
+|M-p|上十行|
+|C-\<TAB\>|打4个空格，而不是像TAB在emacs中的智能缩进|
+|C-c c|适用于打codeforces等竞赛，编译当前window里的单c++文件|
+
