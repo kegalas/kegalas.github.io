@@ -3,7 +3,7 @@ title: "在PowerShell中使用v2rayN代理"
 date: 2022-08-06T16:33:44+08:00
 draft: false
 tags: [Windows,代理,PowerShell,v2rayN]
-categories: 其他
+categories: 其他计算机科学
 ---
 
 通常，v2rayN设置中的ip是127.0.0.1，http协议的端口是10809，在PowerShell中临时使用代理，需要输入如下命令

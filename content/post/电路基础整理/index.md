@@ -2,9 +2,9 @@
 title: "电路基础整理"
 date: 2022-09-02T11:22:59+08:00
 draft: false
-tags: [物理,电路,大学]
+tags: [电路,大学]
 description: 电路基础的学习笔记
-categories: 物理
+categories: 电路与信号
 mathjax: true
 markup: pandoc
 image: "cover.jpg"

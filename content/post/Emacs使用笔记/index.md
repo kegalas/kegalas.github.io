@@ -2,8 +2,8 @@
 title: "Emacs使用笔记"
 date: 2023-01-20T16:09:29+08:00
 draft: false
-tags: [Emacs]
-categories: 其他
+tags: [Emacs,计算机]
+categories: 其他计算机科学
 mathjax: true
 markup: pandoc
 ---

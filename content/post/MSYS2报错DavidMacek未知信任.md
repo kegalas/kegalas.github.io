@@ -2,8 +2,8 @@
 title: "MSYS2报错David Macek is unknown trust"
 date: 2022-07-01T12:05:59+08:00
 draft: false
-tags: [MSYS2]
-categories: 其他
+tags: [MSYS2,计算机,Windows]
+categories: 其他计算机科学
 ---
 
 在MSYS2中安装程序时遇到如下问题：
