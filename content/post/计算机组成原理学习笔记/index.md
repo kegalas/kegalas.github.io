@@ -7,6 +7,7 @@ description: 计算机组成原理的学习笔记
 categories: 其他计算机科学
 mathjax: true
 markup: pandoc
+image: "cover.jpg"
 ---
 
 # 简称表

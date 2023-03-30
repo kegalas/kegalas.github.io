@@ -3,7 +3,7 @@ title: "重新编译hugo来使得pandoc可以生成目录"
 date: 2022-08-06T16:41:53+08:00
 draft: false
 tags: [Hugo,Pandoc]
-categories: 其他
+categories: 其他计算机科学
 ---
 
 根据[https://github.com/olOwOlo/hugo-theme-even/issues/139](https://github.com/olOwOlo/hugo-theme-even/issues/139)，hugo无法正确生成目录的原因是，没有加入--toc参数。
@@ -16,7 +16,7 @@ categories: 其他
 
 实际上并没有那么简单，即使是加入了--toc参数也不能生成目录。笔者又找到一份他人修改的版本[https://github.com/bigshans/hugo](https://github.com/bigshans/hugo)。这个版本的convert.go明显是修改过的，能够正确生成目录。
 
-将其克隆、编译，然后替换掉原来的hugo.exe。经测试可以正常使用。
+将其克隆、编译，然后替换掉原来的hugo.exe。经测试可以正常使用。目前发现的唯一可以称得上是一个问题的是，代码没有高亮。
 
 编译方法见hugo的github readme。
 
