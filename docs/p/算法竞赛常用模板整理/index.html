@@ -440,27 +440,25 @@
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> exgcd<span class="op">(</span><span class="dt">int</span> a<span class="op">,</span> <span class="dt">int</span> b<span class="op">,</span> <span class="dt">int</span> <span class="op">&amp;</span>x<span class="op">,</span> <span class="dt">int</span> <span class="op">&amp;</span>y<span class="op">){</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span><span class="op">(!</span>b<span class="op">){</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> exgcd<span class="op">(</span><span class="dt">int</span> a<span class="op">,</span><span class="dt">int</span> b<span class="op">,</span><span class="dt">int</span><span class="op">&amp;</span> x<span class="op">,</span><span class="dt">int</span><span class="op">&amp;</span> y<span class="op">){</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span><span class="op">(</span>b<span class="op">==</span><span class="dv">0</span><span class="op">){</span></span>
 <span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>        x <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span>
 <span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>        y <span class="op">=</span> <span class="dv">0</span><span class="op">;</span><span class="co">//此时ax+by=gcd(a,b)中b=0，任何数与0的最大公约数是他本身，所以ax+0y=a，x=1 y=0</span></span>
 <span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> a<span class="op">;</span></span>
 <span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> d <span class="op">=</span> exgcd<span class="op">(</span>b<span class="op">,</span> a<span class="op">%</span>b<span class="op">,</span> x<span class="op">,</span> y<span class="op">);</span></span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> t <span class="op">=</span> x<span class="op">;</span></span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> y<span class="op">;</span></span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>    y <span class="op">=</span> t<span class="op">-(</span>a<span class="op">/</span>b<span class="op">)*</span>y<span class="op">;</span></span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> d<span class="op">;</span></span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">(){</span></span>
-<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> a<span class="op">,</span>b<span class="op">,</span>x<span class="op">,</span>y<span class="op">,</span>z<span class="op">;</span></span>
-<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>    cin<span class="op">&gt;&gt;</span>a<span class="op">&gt;&gt;</span>b<span class="op">;</span></span>
-<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>    z <span class="op">=</span> exgcd<span class="op">(</span>a<span class="op">,</span>b<span class="op">,</span>x<span class="op">,</span>y<span class="op">);</span></span>
-<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>    cout<span class="op">&lt;&lt;</span>x<span class="op">&lt;&lt;</span><span class="st">&#34; &#34;</span><span class="op">&lt;&lt;</span>y<span class="op">&lt;&lt;</span><span class="st">&#34; &#34;</span><span class="op">&lt;&lt;</span>z<span class="op">&lt;&lt;</span>endl<span class="op">;</span></span>
-<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>    <span class="co">//x,y的意义见开头，z即是最大公约数</span></span>
-<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> d <span class="op">=</span> exgcd<span class="op">(</span>b<span class="op">,</span>a<span class="op">%</span>b<span class="op">,</span>y<span class="op">,</span>x<span class="op">);</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    y <span class="op">-=</span> <span class="op">(</span>a<span class="op">/</span>b<span class="op">)*</span>x<span class="op">;</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> d<span class="op">;</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">(){</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> a<span class="op">,</span>b<span class="op">,</span>x<span class="op">,</span>y<span class="op">,</span>z<span class="op">;</span></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>    cin<span class="op">&gt;&gt;</span>a<span class="op">&gt;&gt;</span>b<span class="op">;</span></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>    z <span class="op">=</span> exgcd<span class="op">(</span>a<span class="op">,</span>b<span class="op">,</span>x<span class="op">,</span>y<span class="op">);</span></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>    cout<span class="op">&lt;&lt;</span>x<span class="op">&lt;&lt;</span><span class="st">&#34; &#34;</span><span class="op">&lt;&lt;</span>y<span class="op">&lt;&lt;</span><span class="st">&#34; &#34;</span><span class="op">&lt;&lt;</span>z<span class="op">&lt;&lt;</span>endl<span class="op">;</span></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>    <span class="co">//x,y的意义见开头，z即是最大公约数</span></span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <h3 id="欧几里得算法">欧几里得算法</h3>
 <div class="sourceCode" id="cb8"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -572,68 +570,66 @@
 <span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="at">const</span> <span class="dt">int</span> MAXN <span class="op">=</span> <span class="dv">3000005</span><span class="op">;</span></span>
 <span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> exgcd<span class="op">(</span><span class="dt">int</span> a<span class="op">,</span> <span class="dt">int</span> b<span class="op">,</span> <span class="dt">int</span> <span class="op">&amp;</span>x<span class="op">,</span> <span class="dt">int</span> <span class="op">&amp;</span>y<span class="op">){</span></span>
-<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span><span class="op">(!</span>b<span class="op">){</span></span>
-<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>        x<span class="op">=</span><span class="dv">1</span><span class="op">;</span></span>
-<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>        y<span class="op">=</span><span class="dv">0</span><span class="op">;</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> exgcd<span class="op">(</span><span class="dt">int</span> a<span class="op">,</span><span class="dt">int</span> b<span class="op">,</span><span class="dt">int</span><span class="op">&amp;</span> x<span class="op">,</span><span class="dt">int</span><span class="op">&amp;</span> y<span class="op">){</span></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span><span class="op">(</span>b<span class="op">==</span><span class="dv">0</span><span class="op">){</span></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>        x <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>        y <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> a<span class="op">;</span></span>
 <span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> d <span class="op">=</span> exgcd<span class="op">(</span>b<span class="op">,</span>a<span class="op">%</span>b<span class="op">,</span>x<span class="op">,</span>y<span class="op">);</span></span>
-<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> tmp <span class="op">=</span> x<span class="op">;</span></span>
-<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> y<span class="op">;</span></span>
-<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>    y <span class="op">=</span> tmp <span class="op">-</span> a<span class="op">/</span>b<span class="op">*</span>y<span class="op">;</span></span>
-<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> d<span class="op">;</span>   </span>
-<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> exgcd_inv<span class="op">(</span><span class="dt">int</span> a<span class="op">,</span> <span class="dt">int</span> b<span class="op">){</span></span>
-<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> x<span class="op">,</span>y<span class="op">;</span></span>
-<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> d <span class="op">=</span> exgcd<span class="op">(</span>a<span class="op">,</span>b<span class="op">,</span>x<span class="op">,</span>y<span class="op">);</span></span>
-<span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span><span class="op">(</span>d<span class="op">!=</span><span class="dv">1</span><span class="op">){</span><span class="co">//显然a，b要互质才会有逆元</span></span>
-<span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a>        cout<span class="op">&lt;&lt;</span><span class="st">&#34;None&#34;</span><span class="op">&lt;&lt;</span>endl<span class="op">;</span></span>
-<span id="cb11-32"><a href="#cb11-32" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb11-33"><a href="#cb11-33" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span><span class="op">{</span></span>
-<span id="cb11-34"><a href="#cb11-34" aria-hidden="true" tabindex="-1"></a>        cout<span class="op">&lt;&lt;(</span>x<span class="op">+</span>b<span class="op">)%</span>b<span class="op">&lt;&lt;</span>endl<span class="op">;</span><span class="co">//实际上是为了防止出现x为负数的情况</span></span>
-<span id="cb11-35"><a href="#cb11-35" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb11-36"><a href="#cb11-36" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb11-37"><a href="#cb11-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-38"><a href="#cb11-38" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> qPowMod<span class="op">(</span><span class="dt">int</span> a<span class="op">,</span> <span class="dt">int</span> n<span class="op">,</span> <span class="dt">int</span> b<span class="op">){</span></span>
-<span id="cb11-39"><a href="#cb11-39" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> ans <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span>
-<span id="cb11-40"><a href="#cb11-40" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span><span class="op">(</span>n<span class="op">){</span></span>
-<span id="cb11-41"><a href="#cb11-41" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span><span class="op">(</span>n<span class="op">&amp;</span><span class="dv">1</span><span class="op">){</span></span>
-<span id="cb11-42"><a href="#cb11-42" aria-hidden="true" tabindex="-1"></a>            ans <span class="op">=</span> ans<span class="op">%</span>b<span class="op">*</span>a<span class="op">%</span>b<span class="op">;</span></span>
-<span id="cb11-43"><a href="#cb11-43" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
-<span id="cb11-44"><a href="#cb11-44" aria-hidden="true" tabindex="-1"></a>        a <span class="op">=</span> a<span class="op">%</span>b<span class="op">*</span>a<span class="op">%</span>b<span class="op">;</span></span>
-<span id="cb11-45"><a href="#cb11-45" aria-hidden="true" tabindex="-1"></a>        n<span class="op">&gt;&gt;=</span><span class="dv">1</span><span class="op">;</span></span>
-<span id="cb11-46"><a href="#cb11-46" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb11-47"><a href="#cb11-47" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> ans<span class="op">;</span></span>
-<span id="cb11-48"><a href="#cb11-48" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb11-49"><a href="#cb11-49" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-50"><a href="#cb11-50" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> fermat_inv<span class="op">(</span><span class="dt">int</span> a<span class="op">,</span> <span class="dt">int</span> b<span class="op">){</span></span>
-<span id="cb11-51"><a href="#cb11-51" aria-hidden="true" tabindex="-1"></a>    cout<span class="op">&lt;&lt;</span>qPowMod<span class="op">(</span>a<span class="op">,</span>b<span class="op">-</span><span class="dv">2</span><span class="op">,</span>b<span class="op">)&lt;&lt;</span>endl<span class="op">;</span></span>
-<span id="cb11-52"><a href="#cb11-52" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> d <span class="op">=</span> exgcd<span class="op">(</span>b<span class="op">,</span>a<span class="op">%</span>b<span class="op">,</span>y<span class="op">,</span>x<span class="op">);</span></span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>    y <span class="op">-=</span> <span class="op">(</span>a<span class="op">/</span>b<span class="op">)*</span>x<span class="op">;</span></span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> d<span class="op">;</span></span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> exgcd_inv<span class="op">(</span><span class="dt">int</span> a<span class="op">,</span> <span class="dt">int</span> b<span class="op">){</span></span>
+<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> x<span class="op">,</span>y<span class="op">;</span></span>
+<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> d <span class="op">=</span> exgcd<span class="op">(</span>a<span class="op">,</span>b<span class="op">,</span>x<span class="op">,</span>y<span class="op">);</span></span>
+<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span><span class="op">(</span>d<span class="op">!=</span><span class="dv">1</span><span class="op">){</span><span class="co">//显然a，b要互质才会有逆元</span></span>
+<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a>        cout<span class="op">&lt;&lt;</span><span class="st">&#34;None&#34;</span><span class="op">&lt;&lt;</span>endl<span class="op">;</span></span>
+<span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span><span class="op">{</span></span>
+<span id="cb11-32"><a href="#cb11-32" aria-hidden="true" tabindex="-1"></a>        cout<span class="op">&lt;&lt;(</span>x<span class="op">+</span>b<span class="op">)%</span>b<span class="op">&lt;&lt;</span>endl<span class="op">;</span><span class="co">//实际上是为了防止出现x为负数的情况</span></span>
+<span id="cb11-33"><a href="#cb11-33" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb11-34"><a href="#cb11-34" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb11-35"><a href="#cb11-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-36"><a href="#cb11-36" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> qPowMod<span class="op">(</span><span class="dt">int</span> a<span class="op">,</span> <span class="dt">int</span> n<span class="op">,</span> <span class="dt">int</span> b<span class="op">){</span></span>
+<span id="cb11-37"><a href="#cb11-37" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> ans <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb11-38"><a href="#cb11-38" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span><span class="op">(</span>n<span class="op">){</span></span>
+<span id="cb11-39"><a href="#cb11-39" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span><span class="op">(</span>n<span class="op">&amp;</span><span class="dv">1</span><span class="op">){</span></span>
+<span id="cb11-40"><a href="#cb11-40" aria-hidden="true" tabindex="-1"></a>            ans <span class="op">=</span> ans<span class="op">%</span>b<span class="op">*</span>a<span class="op">%</span>b<span class="op">;</span></span>
+<span id="cb11-41"><a href="#cb11-41" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb11-42"><a href="#cb11-42" aria-hidden="true" tabindex="-1"></a>        a <span class="op">=</span> a<span class="op">%</span>b<span class="op">*</span>a<span class="op">%</span>b<span class="op">;</span></span>
+<span id="cb11-43"><a href="#cb11-43" aria-hidden="true" tabindex="-1"></a>        n<span class="op">&gt;&gt;=</span><span class="dv">1</span><span class="op">;</span></span>
+<span id="cb11-44"><a href="#cb11-44" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb11-45"><a href="#cb11-45" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> ans<span class="op">;</span></span>
+<span id="cb11-46"><a href="#cb11-46" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb11-47"><a href="#cb11-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-48"><a href="#cb11-48" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> fermat_inv<span class="op">(</span><span class="dt">int</span> a<span class="op">,</span> <span class="dt">int</span> b<span class="op">){</span></span>
+<span id="cb11-49"><a href="#cb11-49" aria-hidden="true" tabindex="-1"></a>    cout<span class="op">&lt;&lt;</span>qPowMod<span class="op">(</span>a<span class="op">,</span>b<span class="op">-</span><span class="dv">2</span><span class="op">,</span>b<span class="op">)&lt;&lt;</span>endl<span class="op">;</span></span>
+<span id="cb11-50"><a href="#cb11-50" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb11-51"><a href="#cb11-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-52"><a href="#cb11-52" aria-hidden="true" tabindex="-1"></a><span class="dt">long</span> <span class="dt">long</span> inv<span class="op">[</span>MAXN<span class="op">];</span></span>
 <span id="cb11-53"><a href="#cb11-53" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-54"><a href="#cb11-54" aria-hidden="true" tabindex="-1"></a><span class="dt">long</span> <span class="dt">long</span> inv<span class="op">[</span>MAXN<span class="op">];</span></span>
-<span id="cb11-55"><a href="#cb11-55" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-56"><a href="#cb11-56" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">(){</span></span>
-<span id="cb11-57"><a href="#cb11-57" aria-hidden="true" tabindex="-1"></a>    <span class="dt">long</span> <span class="dt">long</span> a<span class="op">,</span>b<span class="op">,</span>n<span class="op">;</span></span>
-<span id="cb11-58"><a href="#cb11-58" aria-hidden="true" tabindex="-1"></a>    cin<span class="op">&gt;&gt;</span>a<span class="op">&gt;&gt;</span>b<span class="op">;</span></span>
-<span id="cb11-59"><a href="#cb11-59" aria-hidden="true" tabindex="-1"></a>    exgcd_inv<span class="op">(</span>a<span class="op">,</span>b<span class="op">);</span></span>
-<span id="cb11-60"><a href="#cb11-60" aria-hidden="true" tabindex="-1"></a>    <span class="co">//fermat_inv(a,b);</span></span>
-<span id="cb11-61"><a href="#cb11-61" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-62"><a href="#cb11-62" aria-hidden="true" tabindex="-1"></a>    <span class="co">/*</span></span>
-<span id="cb11-63"><a href="#cb11-63" aria-hidden="true" tabindex="-1"></a><span class="co">    //线性求逆元</span></span>
-<span id="cb11-64"><a href="#cb11-64" aria-hidden="true" tabindex="-1"></a><span class="co">    inv[1] = 1;</span></span>
-<span id="cb11-65"><a href="#cb11-65" aria-hidden="true" tabindex="-1"></a><span class="co">    for(long long i = 2;i&lt;=n;i++){</span></span>
-<span id="cb11-66"><a href="#cb11-66" aria-hidden="true" tabindex="-1"></a><span class="co">        //inv[i] = -(b/i)*inv[b%i]; //这样写会出现负数</span></span>
-<span id="cb11-67"><a href="#cb11-67" aria-hidden="true" tabindex="-1"></a><span class="co">        inv[i] = (long long)(b-b/i)*inv[b%i]%b;</span></span>
-<span id="cb11-68"><a href="#cb11-68" aria-hidden="true" tabindex="-1"></a><span class="co">    }</span></span>
-<span id="cb11-69"><a href="#cb11-69" aria-hidden="true" tabindex="-1"></a><span class="co">    for(long long i=1;i&lt;=n;i++){</span></span>
-<span id="cb11-70"><a href="#cb11-70" aria-hidden="true" tabindex="-1"></a><span class="co">        printf(&#34;%lld\n&#34;,inv[i]);</span></span>
-<span id="cb11-71"><a href="#cb11-71" aria-hidden="true" tabindex="-1"></a><span class="co">    }</span></span>
-<span id="cb11-72"><a href="#cb11-72" aria-hidden="true" tabindex="-1"></a><span class="co">    */</span></span>
-<span id="cb11-73"><a href="#cb11-73" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-74"><a href="#cb11-74" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb11-75"><a href="#cb11-75" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<span id="cb11-54"><a href="#cb11-54" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">(){</span></span>
+<span id="cb11-55"><a href="#cb11-55" aria-hidden="true" tabindex="-1"></a>    <span class="dt">long</span> <span class="dt">long</span> a<span class="op">,</span>b<span class="op">,</span>n<span class="op">;</span></span>
+<span id="cb11-56"><a href="#cb11-56" aria-hidden="true" tabindex="-1"></a>    cin<span class="op">&gt;&gt;</span>a<span class="op">&gt;&gt;</span>b<span class="op">;</span></span>
+<span id="cb11-57"><a href="#cb11-57" aria-hidden="true" tabindex="-1"></a>    exgcd_inv<span class="op">(</span>a<span class="op">,</span>b<span class="op">);</span></span>
+<span id="cb11-58"><a href="#cb11-58" aria-hidden="true" tabindex="-1"></a>    <span class="co">//fermat_inv(a,b);</span></span>
+<span id="cb11-59"><a href="#cb11-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-60"><a href="#cb11-60" aria-hidden="true" tabindex="-1"></a>    <span class="co">/*</span></span>
+<span id="cb11-61"><a href="#cb11-61" aria-hidden="true" tabindex="-1"></a><span class="co">    //线性求逆元</span></span>
+<span id="cb11-62"><a href="#cb11-62" aria-hidden="true" tabindex="-1"></a><span class="co">    inv[1] = 1;</span></span>
+<span id="cb11-63"><a href="#cb11-63" aria-hidden="true" tabindex="-1"></a><span class="co">    for(long long i = 2;i&lt;=n;i++){</span></span>
+<span id="cb11-64"><a href="#cb11-64" aria-hidden="true" tabindex="-1"></a><span class="co">        //inv[i] = -(b/i)*inv[b%i]; //这样写会出现负数</span></span>
+<span id="cb11-65"><a href="#cb11-65" aria-hidden="true" tabindex="-1"></a><span class="co">        inv[i] = (long long)(b-b/i)*inv[b%i]%b;</span></span>
+<span id="cb11-66"><a href="#cb11-66" aria-hidden="true" tabindex="-1"></a><span class="co">    }</span></span>
+<span id="cb11-67"><a href="#cb11-67" aria-hidden="true" tabindex="-1"></a><span class="co">    for(long long i=1;i&lt;=n;i++){</span></span>
+<span id="cb11-68"><a href="#cb11-68" aria-hidden="true" tabindex="-1"></a><span class="co">        printf(&#34;%lld\n&#34;,inv[i]);</span></span>
+<span id="cb11-69"><a href="#cb11-69" aria-hidden="true" tabindex="-1"></a><span class="co">    }</span></span>
+<span id="cb11-70"><a href="#cb11-70" aria-hidden="true" tabindex="-1"></a><span class="co">    */</span></span>
+<span id="cb11-71"><a href="#cb11-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-72"><a href="#cb11-72" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb11-73"><a href="#cb11-73" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <h3 id="线性同余方程">线性同余方程</h3>
 <div class="sourceCode" id="cb12"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">//ax≡c (mod b)求解x</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co">//和ax+by=c等价</span></span>
