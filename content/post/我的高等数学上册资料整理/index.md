@@ -703,7 +703,7 @@ $$
 
 1. 单实根$r$，给出一项：$Ce^{rx}$
 
-2. 一对单负根$r_{1,2}=\alpha\pm\beta i$，给出两项：$e^{\alpha x}(C_1cos\beta x+C_2sin\beta x)$
+2. 一对单复根$r_{1,2}=\alpha\pm\beta i$，给出两项：$e^{\alpha x}(C_1cos\beta x+C_2sin\beta x)$
 
 3. k重实根r，给出$k$项：$e^{rx}(C_1+C_2x+\dots+C_kx^{k-1})$
 
