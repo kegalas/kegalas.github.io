@@ -149,20 +149,48 @@ x[n] = \sum^{+\infty}_{k=-\infty} x[k]\delta[n-k] = x[n]*\delta[n]
 x(t) = \int^{+\infty}_{-\infty}x(\tau)\delta(t-\tau)d\tau =
 x(t)*\delta(t)
 \]&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;一个系统对脉冲信号的响应记作&lt;span class=&#34;math inline&#34;&gt;\(h\)&lt;/span&gt;。一个系统的特征可以完全由脉冲响应刻画，一个系统对其他信号的响应可以用该信号和脉冲响应的卷积表示。&lt;/p&gt;
+&lt;p&gt;一个系统对脉冲信号的（零状态）响应记作&lt;span class=&#34;math inline&#34;&gt;\(h\)&lt;/span&gt;。一个系统的特征可以完全由脉冲响应刻画，一个系统对其他信号的响应可以用该信号和脉冲响应的卷积表示。&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 y[n] = x[n]*h[n]
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 y(t) = x(t)*h(t)
 \]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;通常，题目中不会给以下两个条件。因为是零状态的响应，所以&lt;span class=&#34;math inline&#34;&gt;\(h(0_-)=h&amp;#39;(0_-)=0\)&lt;/span&gt;&lt;/p&gt;
 &lt;h2 id=&#34;线性时不变系统的性质&#34;&gt;线性时不变系统的性质&lt;/h2&gt;
-&lt;p&gt;也即线性时不变下卷积的性质&lt;/p&gt;
+&lt;h3 id=&#34;线性时不变下卷积的性质&#34;&gt;线性时不变下卷积的性质&lt;/h3&gt;
 &lt;ol type=&#34;1&#34;&gt;
 &lt;li&gt;交换律&lt;/li&gt;
 &lt;li&gt;分配律&lt;/li&gt;
 &lt;li&gt;结合律&lt;/li&gt;
 &lt;/ol&gt;
+&lt;p&gt;当然他都叫线性时不变系统了，肯定有线性和时不变性。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;微分特性（仅限于连续情况）&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\dfrac{d^n}{dt^n}[f_1*f_2] = \dfrac{d^n f_1}{dt^n}*f_2 = f_1*\dfrac{d^n
+f_2}{dt^n}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;积分特性（仅限于连续情况）&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\int^t_{-\infty}[f_1*f_2]d\tau = [\int^t_{-\infty}f_1d\tau]*f_2 = f_1 *
+[\int^t_{-\infty}f_2d\tau]
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&lt;span class=&#34;math inline&#34;&gt;\(f_1(-\infty)=0\)&lt;/span&gt;或&lt;span class=&#34;math inline&#34;&gt;\(f_2&amp;#39;(\infty) =
+0\)&lt;/span&gt;（仅限连续情况）&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+f_1*f_2=f_1&amp;#39;*f_2&amp;#39;
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;（后向）差分特性（仅限于离散情况）&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\nabla[f_1*f_2] = \nabla f_1*f_2 = f_1*\nabla f_2
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;时移特性&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;若&lt;span class=&#34;math inline&#34;&gt;\(f(t)=f_1(t)*f_2(t)\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;则&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+f_1(t-t_1)*f_2(t-t_2) = f_1(t-t_1-t_2)*f_2(t) = f_1(t)*f_2(t-t_1-t_2) =
+f(t-t_1-t_2)
+\]&lt;/span&gt;&lt;/p&gt;
 &lt;h3 id=&#34;无记忆的lti&#34;&gt;无记忆的LTI&lt;/h3&gt;
 &lt;p&gt;因为输出只和当前的输入有关，所以其冲激响应为&lt;span class=&#34;math inline&#34;&gt;\(h(t)=K\delta(t)\)&lt;/span&gt;。&lt;/p&gt;
 &lt;p&gt;系统对于其他信号的响应就为&lt;span class=&#34;math inline&#34;&gt;\(y(t)=Kx(t)\)&lt;/span&gt;。离散的情况类似。&lt;/p&gt;
@@ -203,7 +231,7 @@ s(t) = \int^t_{-\infty} h(\tau)d\tau
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 h(t) = \dfrac{ds(t)}{dt}
 \]&lt;/span&gt;&lt;/p&gt;
-&lt;h2 id=&#34;用微分方程和差分方程描述的因果线性时不变系统&#34;&gt;用微分方程和差分方程描述的因果线性时不变系统&lt;/h2&gt;
+&lt;h2 id=&#34;用微分方程描述的连续因果线性时不变系统&#34;&gt;用微分方程描述的连续因果线性时不变系统&lt;/h2&gt;
 &lt;h3 id=&#34;微分方程&#34;&gt;微分方程&lt;/h3&gt;
 &lt;p&gt;微分方程的形式如下&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
@@ -278,8 +306,163 @@ P\cos(\beta t) + Q\sin(\beta t)
 &lt;p&gt;这个通常可以把&lt;span class=&#34;math inline&#34;&gt;\(y_p\)&lt;/span&gt;直接代入原方程求解系数。&lt;/p&gt;
 &lt;p&gt;注意，如果题目给的条件是&lt;span class=&#34;math inline&#34;&gt;\(y(0),y&amp;#39;(0)\)&lt;/span&gt;等条件，我们需要在全解中去求齐次解中设的参数。如果题目给的条件是&lt;span class=&#34;math inline&#34;&gt;\(y_{zi},y&amp;#39;_{zi}\)&lt;/span&gt;等条件，我们在齐次解中求参数即可。&lt;/p&gt;
 &lt;h3 id=&#34;系统的初始值&#34;&gt;系统的初始值&lt;/h3&gt;
+&lt;p&gt;初始值是&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;阶系统在&lt;span class=&#34;math inline&#34;&gt;\(t=0\)&lt;/span&gt;时接入激励，其响应在&lt;span class=&#34;math inline&#34;&gt;\(t=0_+\)&lt;/span&gt;时刻的值，即&lt;span class=&#34;math inline&#34;&gt;\(y^{(j)}(0_+) (j=0,1,2,\cdots,n-1)\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;初始状态是指系统在激励尚未接入的&lt;span class=&#34;math inline&#34;&gt;\(t=0_-\)&lt;/span&gt;时刻的响应值&lt;span class=&#34;math inline&#34;&gt;\(y^{(j)}(0_-)\)&lt;/span&gt;，该值反映了系统的历史情况，而与激励无关。&lt;/p&gt;
+&lt;p&gt;例如&lt;span class=&#34;math inline&#34;&gt;\(y&amp;#39;&amp;#39;(t)+3y&amp;#39;(t)+2y(t)=2\delta(t)+6\varepsilon(t)\)&lt;/span&gt;，（老师在PPT中给出但我没有看懂的办法是）两端积分&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\int^{0_+}_{0_-}y&amp;#39;&amp;#39;(t)dt+3\int^{0_+}_{0_-}y&amp;#39;(t)dt+2\int^{0_+}_{0_-}y(t)dt
+= 2\int^{0_+}_{0_-}\delta(t)dt + 6\int^{0_+}_{0_-}\varepsilon(t)dt
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中从左到右每一项分别对应，&lt;span class=&#34;math inline&#34;&gt;\(y&amp;#39;(0_+)-y&amp;#39;(0_-),y(0_+)-y(0_-),0,2,0\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;所以&lt;span class=&#34;math inline&#34;&gt;\(y&amp;#39;(0_+)-y&amp;#39;(0_-) = 2,
+y(0_+)-y(0_-) = 0\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;结论是，微分方程等号右边含有&lt;span class=&#34;math inline&#34;&gt;\(\delta(t)\)&lt;/span&gt;及其各阶导数时，响应&lt;span class=&#34;math inline&#34;&gt;\(y(t)\)&lt;/span&gt;及其各阶导数由&lt;span class=&#34;math inline&#34;&gt;\(0_-\)&lt;/span&gt;到&lt;span class=&#34;math inline&#34;&gt;\(0_+\)&lt;/span&gt;的瞬间将发生跃变（如果不含，则&lt;span class=&#34;math inline&#34;&gt;\(y(t)\)&lt;/span&gt;在t=0处是连续的，&lt;span class=&#34;math inline&#34;&gt;\(y(0_+)=0\)&lt;/span&gt;）。这时可按如下步骤由&lt;span class=&#34;math inline&#34;&gt;\(0_-\)&lt;/span&gt;求取&lt;span class=&#34;math inline&#34;&gt;\(0_+\)&lt;/span&gt;（以二阶系统为例）&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;将&lt;span class=&#34;math inline&#34;&gt;\(f(t)\)&lt;/span&gt;代入微分方程。如果等号右边含有&lt;span class=&#34;math inline&#34;&gt;\(\delta(t)\)&lt;/span&gt;及其各阶导数，根据微分方程等号两端各奇异函数的系数相等原理，判断方程左端&lt;span class=&#34;math inline&#34;&gt;\(y(t)\)&lt;/span&gt;的最高阶导数所含&lt;span class=&#34;math inline&#34;&gt;\(\delta(t)\)&lt;/span&gt;导数的最高阶次。&lt;/li&gt;
+&lt;li&gt;令&lt;span class=&#34;math inline&#34;&gt;\(y&amp;#39;&amp;#39;(t) =
+a\delta&amp;#39;&amp;#39;(t)+b\delta&amp;#39;(t)+c\delta(t)+r_0(t)\)&lt;/span&gt;（其中&lt;span class=&#34;math inline&#34;&gt;\(r_0(t)\)&lt;/span&gt;是指不含&lt;span class=&#34;math inline&#34;&gt;\(\delta(t)\)&lt;/span&gt;及其各阶导数的项，在第四步中的积分，由于不含这些项，所以是&lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt;），对&lt;span class=&#34;math inline&#34;&gt;\(y&amp;#39;&amp;#39;(t)\)&lt;/span&gt;进行积分（从&lt;span class=&#34;math inline&#34;&gt;\(-\infty\)&lt;/span&gt;到&lt;span class=&#34;math inline&#34;&gt;\(t\)&lt;/span&gt;），求得&lt;span class=&#34;math inline&#34;&gt;\(y&amp;#39;(t),y(t)\)&lt;/span&gt;。&lt;/li&gt;
+&lt;li&gt;将&lt;span class=&#34;math inline&#34;&gt;\(y&amp;#39;&amp;#39;,y&amp;#39;,y\)&lt;/span&gt;代入微分方程，根据等号两端各奇异函数的系数相等，从而求得各个待定系数。&lt;/li&gt;
+&lt;li&gt;分别对&lt;span class=&#34;math inline&#34;&gt;\(y&amp;#39;,y&amp;#39;&amp;#39;\)&lt;/span&gt;等号两端从&lt;span class=&#34;math inline&#34;&gt;\(0_-\)&lt;/span&gt;到&lt;span class=&#34;math inline&#34;&gt;\(0_+\)&lt;/span&gt;积分，求得&lt;span class=&#34;math inline&#34;&gt;\(0_+\)&lt;/span&gt;值&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;用这种方法能对上式较好的求解。&lt;/p&gt;
+&lt;h3 id=&#34;零输入响应&#34;&gt;零输入响应&lt;/h3&gt;
+&lt;p&gt;记作&lt;span class=&#34;math inline&#34;&gt;\(y_{zi}\)&lt;/span&gt;，对应齐次微分方程的解。故不存在跃变。&lt;/p&gt;
+&lt;h3 id=&#34;零状态响应&#34;&gt;零状态响应&lt;/h3&gt;
+&lt;p&gt;记作&lt;span class=&#34;math inline&#34;&gt;\(y_{zs}\)&lt;/span&gt;，对应非齐次方程的解，需要求出来齐次解和特解，再加起来。最后的全响应需要将零输入和零状态加起来。注意零输入和零状态都要求一个齐次解，虽然它们形式相同，但是系数可能不同。&lt;/p&gt;
+&lt;p&gt;有一种投机取巧的办法求全响应就是用电路课中介绍的三要素法。&lt;/p&gt;
+&lt;h3 id=&#34;响应分类&#34;&gt;响应分类&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;响应可以分为固有响应和强迫响应&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;固有响应仅与系统本身的特性有关，而与激励的函数形式无关。是微分方程的齐次解。&lt;/p&gt;
+&lt;p&gt;强迫响应与激励的函数形式有关。是微分方程的特解。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;响应可以分为暂态响应和稳态响应&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;暂态响应是指响应中暂时出现的分量，随着时间的增长，它将消失。&lt;/p&gt;
+&lt;p&gt;稳态响应是稳定的分量，若存在，通常表现为阶跃函数和周期函数。比如，电路系统中的直流稳态响应和正弦稳态响应。&lt;/p&gt;
+&lt;h3 id=&#34;微分方程求冲激响应&#34;&gt;微分方程求冲激响应&lt;/h3&gt;
+&lt;p&gt;例如我们有&lt;span class=&#34;math inline&#34;&gt;\(y&amp;#39;&amp;#39;+a_1y&amp;#39;+a_0y&amp;#39;
+= b_2f&amp;#39;&amp;#39;+b_1f&amp;#39;+b_0f\)&lt;/span&gt;，我们可以分两步进行&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;选择一个响应&lt;span class=&#34;math inline&#34;&gt;\(h_1(t)\)&lt;/span&gt;，使得&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+h_1&amp;#39;&amp;#39;+a_1h_1&amp;#39;+a_0h_1 = \delta
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+h_1(0_-)=h_1&amp;#39;(0-) = 0
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;然后我们使用之前提到的解法求出&lt;span class=&#34;math inline&#34;&gt;\(h_1\)&lt;/span&gt;&lt;/p&gt;
+&lt;ol start=&#34;2&#34; type=&#34;1&#34;&gt;
+&lt;li&gt;根据线性性质和微分特性，可知&lt;span class=&#34;math inline&#34;&gt;\(h =
+b_2h_1&amp;#39;&amp;#39;+b_1h_1&amp;#39;+b_0h_1\)&lt;/span&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;微分方程求阶跃响应&#34;&gt;微分方程求阶跃响应&lt;/h3&gt;
+&lt;p&gt;类似的，还是上面那个例子&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;选择一个响应&lt;span class=&#34;math inline&#34;&gt;\(g_1(t)\)&lt;/span&gt;，使得&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+g_1&amp;#39;&amp;#39;+a_1g_1&amp;#39;+a_0g_1 = \varepsilon
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+g_1(0_-)=g_1&amp;#39;(0-) = 0
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;然后我们使用之前提到的解法求出&lt;span class=&#34;math inline&#34;&gt;\(g_1\)&lt;/span&gt;&lt;/p&gt;
+&lt;ol start=&#34;2&#34; type=&#34;1&#34;&gt;
+&lt;li&gt;根据线性性质和微分特性，可知&lt;span class=&#34;math inline&#34;&gt;\(g =
+b_2g_1&amp;#39;&amp;#39;+b_1g_1&amp;#39;+b_0g_1\)&lt;/span&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;或者，如果我们已知冲激响应，我们有更简单的办法，由于微积分特性，我们可以求出&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+g(t) = \int^t_{-\infty} h(\tau)d\tau
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;同理&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+h(t) = g&amp;#39;(t)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h2 id=&#34;用差分方程描述的离散因果线性时不变系统&#34;&gt;用差分方程描述的离散因果线性时不变系统&lt;/h2&gt;
+&lt;h3 id=&#34;差分方程&#34;&gt;差分方程&lt;/h3&gt;
+&lt;p&gt;一般形式为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+y[k]+a_{n-1}y[k-1]+\cdots+a_0y[k-n] = b_mf[k]+\cdots+b_0f[k-m]
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;和微分方程相似，差分方程的解也可以分为&lt;span class=&#34;math inline&#34;&gt;\(y =
+y_h+y_p\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;齐次解也是由齐次方程求特征根得到。&lt;/p&gt;
+&lt;p&gt;对于每一个&lt;span class=&#34;math inline&#34;&gt;\(\lambda_i\)&lt;/span&gt;，&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;如果它是单实根，则&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+y_h = C\lambda^k
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;ol start=&#34;2&#34; type=&#34;1&#34;&gt;
+&lt;li&gt;如果它是二重实根，则&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+y_h = (C_1k+C_0)\lambda^k
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;ol start=&#34;3&#34; type=&#34;1&#34;&gt;
+&lt;li&gt;如果是一对共轭负根&lt;span class=&#34;math inline&#34;&gt;\(\lambda_{1,2} =
+\alpha\pm j\beta\)&lt;/span&gt;，则&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\rho^k[C\cos(\beta k)+D\sin(\beta k)]
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;整个齐次解就是把这些对于每一个&lt;span class=&#34;math inline&#34;&gt;\(\lambda_i\)&lt;/span&gt;的齐次解加起来，再根据条件求出待定系数。&lt;/p&gt;
+&lt;p&gt;特解的常见形式为&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;激励为&lt;span class=&#34;math inline&#34;&gt;\(f[k]=k\)&lt;/span&gt;时，如果所有的特征根均不等于&lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt;，&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+P_1 k+P_0
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;如果有&lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt;个等于&lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt;的特征根，&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+k(P_1k+P_0)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;ol start=&#34;2&#34; type=&#34;1&#34;&gt;
+&lt;li&gt;激励为&lt;span class=&#34;math inline&#34;&gt;\(f[k]=a^k\)&lt;/span&gt;，如果&lt;span class=&#34;math inline&#34;&gt;\(a\)&lt;/span&gt;不等于特征根&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+Pa^k
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;如果&lt;span class=&#34;math inline&#34;&gt;\(a\)&lt;/span&gt;等于特征根&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+(P_1t+P_0)a^k
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;ol start=&#34;3&#34; type=&#34;1&#34;&gt;
+&lt;li&gt;激励为&lt;span class=&#34;math inline&#34;&gt;\(cos(\beta k)\)&lt;/span&gt;或&lt;span class=&#34;math inline&#34;&gt;\(\sin(\beta
+k)\)&lt;/span&gt;，如果所有的特征根都不等于&lt;span class=&#34;math inline&#34;&gt;\(e^{\pm
+j\beta}\)&lt;/span&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+P\cos(\beta k) + Q\sin(\beta k)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;这个通常可以把&lt;span class=&#34;math inline&#34;&gt;\(y_p\)&lt;/span&gt;直接代入原方程求解系数。&lt;/p&gt;
+&lt;p&gt;注意，如果题目给的条件是&lt;span class=&#34;math inline&#34;&gt;\(y[k],y[k-1]\)&lt;/span&gt;等条件，我们需要在全解中去求齐次解中设的参数。如果题目给的条件是&lt;span class=&#34;math inline&#34;&gt;\(y_{zi}[k],y_{zi}[k-1]\)&lt;/span&gt;等条件，我们在齐次解中求参数即可。&lt;/p&gt;
+&lt;h3 id=&#34;零输入响应-1&#34;&gt;零输入响应&lt;/h3&gt;
+&lt;p&gt;同前&lt;/p&gt;
+&lt;h3 id=&#34;零状态响应-1&#34;&gt;零状态响应&lt;/h3&gt;
+&lt;p&gt;同前&lt;/p&gt;
+&lt;h3 id=&#34;差分方程求单位脉冲响应&#34;&gt;差分方程求单位脉冲响应&lt;/h3&gt;
+&lt;p&gt;例如&lt;span class=&#34;math inline&#34;&gt;\(y[k]-4y[k-1]+3y[k-2]=3f[k]-f[k-1]\)&lt;/span&gt;，我么可以首先&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+h[k]-4h[k-1]+3h[k-2]=3\delta[k]-\delta[k-1]
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;由隐含条件（二阶下），&lt;span class=&#34;math inline&#34;&gt;\(h(-1)=h(-2)=0\)&lt;/span&gt;，又由上式，我们可以求出&lt;span class=&#34;math inline&#34;&gt;\(h[0],h[1]\)&lt;/span&gt;。在对上式用传统方法求出齐次解。&lt;/p&gt;
+&lt;p&gt;由于代入求解参数时代入的是&lt;span class=&#34;math inline&#34;&gt;\(h[0],h[1]\)&lt;/span&gt;，对于&lt;span class=&#34;math inline&#34;&gt;\(k=1,k=0\)&lt;/span&gt;时方程也成立（实际上单位脉冲响应和零输入响应就是一个东西），所以单位脉冲响应就是&lt;span class=&#34;math inline&#34;&gt;\(h[k] = [-1+4(3)^k]\varepsilon[k]\)&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;差分方程求单位阶跃响应&#34;&gt;差分方程求单位阶跃响应&lt;/h3&gt;
+&lt;p&gt;阶跃响应和差分方程的全解是一个东西。我们求出全解即可。注意隐含条件（二阶下）是&lt;span class=&#34;math inline&#34;&gt;\(g[-1]=g[-2]=0\)&lt;/span&gt;，我们可以求出&lt;span class=&#34;math inline&#34;&gt;\(g[0],g[1]\)&lt;/span&gt;，代入求出参数。&lt;/p&gt;
+&lt;p&gt;或者由差分特性&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+g[k] = \sum^k_{i=-\infty}h[i]
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;同理有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+h[k] = g[k] - g[k-1]
+\]&lt;/span&gt;&lt;/p&gt;
 &lt;h2 id=&#34;用方框图描述lti&#34;&gt;用方框图描述LTI&lt;/h2&gt;
 &lt;h2 id=&#34;奇异函数&#34;&gt;奇异函数&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;对于连续情况&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 x(t) = x(t) * \delta(t)
 \]&lt;/span&gt;&lt;/p&gt;
@@ -331,7 +514,65 @@ f(t)\delta&amp;#39;(t) = f(0)\delta&amp;#39;(t)-f&amp;#39;(0)\delta(t)
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 \delta^{(n)}(-t)=(-1)^n\delta^{(n)}(t)
 \]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;对于离散情况&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+f[k]*\delta[k] = f[k]
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+f[k]*\delta[k-k_0] = f[k-k_0]
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+f[k]*\varepsilon[k] = \sum^k_{i=-\infty}f[i]
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;此外还有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+f[k]\delta[k] = f[0]\delta[k]
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+f[k]\delta[k-k_0] = f[k_0]\delta[k-k_0]
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\sum^{+\infty}_{k=-\infty}\delta[k] = 1
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\sum^{+\infty}_{k=-\infty}f[k]\delta[k] = f[0]
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\sum^{+\infty}_{k=-\infty}f[k]\delta[k-k_0] = f[k_0]
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\sum^{k}_{i=-\infty}\delta[i] = \varepsilon[k]
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\delta[k] = \varepsilon[k]-\varepsilon[k-1]
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\delta[k] = \delta[-k]
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h2 id=&#34;相关函数&#34;&gt;相关函数&lt;/h2&gt;
+&lt;p&gt;实函数&lt;span class=&#34;math inline&#34;&gt;\(f_1(t)\)&lt;/span&gt;和&lt;span class=&#34;math inline&#34;&gt;\(f_2(t)\)&lt;/span&gt;，如为能量有限信号，它们之间的互相关函数定义为：&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+R_{12}(\tau) = \int^{+\infty}_{-\infty}f_1(t)f_2(t-\tau)dt =
+\int^{+\infty}_{-\infty}f_1(t+\tau)f_2(t)dt
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+R_{21}(\tau) = \int^{+\infty}_{-\infty}f_1(t-\tau)f_2(t)dt =
+\int^{+\infty}_{-\infty}f_1(t)f_2(t+\tau)dt
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;一般两者不相等，但是有&lt;span class=&#34;math inline&#34;&gt;\(R_{12}(\tau) =
+R_{21}(-\tau)\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;如果&lt;span class=&#34;math inline&#34;&gt;\(f_1,f_2\)&lt;/span&gt;是同一个函数，那么无须区分二者，直接用&lt;span class=&#34;math inline&#34;&gt;\(R\)&lt;/span&gt;表示自相关系数，&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+R(\tau) = \int^{+\infty}_{-\infty}f(t+\tau)f(t)dt =
+\int^{+\infty}_{-\infty}f(t)f(t-\tau)dt
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;此时&lt;span class=&#34;math inline&#34;&gt;\(R(\tau)=R(-\tau)\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;这东西和卷积的形式很像，显然我们可以推出来&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+R_{12} = f_1(t)*f_2(-t)
+\]&lt;/span&gt;&lt;/p&gt;
 &lt;h1 id=&#34;周期信号的傅里叶级数表示&#34;&gt;周期信号的傅里叶级数表示&lt;/h1&gt;
+&lt;h2 id=&#34;信号的正交分解&#34;&gt;信号的正交分解&lt;/h2&gt;
 &lt;h2 id=&#34;lti对复指数信号的响应&#34;&gt;LTI对复指数信号的响应&lt;/h2&gt;
 &lt;p&gt;LTI对复指数信号的响应也是一个复指数信号，不同的只是在幅度上的变化&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
@@ -369,7 +610,13 @@ x(t) = \sum^{+\infty}_{k=-\infty}a_ke^{jkw_0t}
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 x(t) = a_0 + 2\sum^\infty_{k=1}[B_k\cos kw_0 t - C_k\sin kw_0t]
 \]&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(a_n\)&lt;/span&gt;由以下公式确定&lt;/p&gt;
+&lt;p&gt;或者&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+x(t) = \dfrac{a_0}{2}+\sum^\infty_{n=1}a_n\cos(n\Omega
+t)+\sum^\infty_{n=1}b_n\sin(n\Omega t) = \dfrac{A_0}{2} +
+\sum^\infty_{n=1}A_n\cos(n\Omega t+\varphi_n)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中（指数表示的那个）&lt;span class=&#34;math inline&#34;&gt;\(a_n\)&lt;/span&gt;由以下公式确定&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 a_n = \dfrac{1}{T}\int^T_0x(t)e^{-jnw0t}dt
 \]&lt;/span&gt;&lt;/p&gt;
@@ -434,8 +681,23 @@ x(t)y(t) \leftrightarrow a_k*b_k
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 \dfrac{1}{T}\int_T|x(t)|^2 dt = \sum^{+\infty}_{k=-\infty}|a_k|^2
 \]&lt;/span&gt;&lt;/p&gt;
-&lt;h2 id=&#34;奇次谐波和偶次谐波&#34;&gt;奇次谐波和偶次谐波&lt;/h2&gt;
-&lt;p&gt;TODO&lt;/p&gt;
+&lt;h2 id=&#34;谐波特性&#34;&gt;谐波特性&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;偶函数&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;如果&lt;span class=&#34;math inline&#34;&gt;\(x(t)\)&lt;/span&gt;是偶函数，则其没有正弦分量，只有余弦分量和直流分量。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;奇函数&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;如果&lt;span class=&#34;math inline&#34;&gt;\(x(t)\)&lt;/span&gt;是奇函数，则其没有余弦分量和直流分量，只有正弦分量。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;奇谐函数&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;傅里叶级数中只含有奇次谐波分量，不含有偶次谐波分量，即&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+a_0=a_2=a_4=\cdots=b_2=b_4=\cdots=0
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;表现为&lt;span class=&#34;math inline&#34;&gt;\(x(t) = -x(t\pm T/2)\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;偶谐函数&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;傅里叶级数中只含有偶次谐波分量，不含有奇次谐波分量，即&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+a_1=a_3=\cdots=b_1=b_3=\cdots=0
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;表现为&lt;span class=&#34;math inline&#34;&gt;\(x(t) = x(t\pm T/2)\)&lt;/span&gt;&lt;/p&gt;
 &lt;h2 id=&#34;离散时间周期信号的傅里叶级数表示&#34;&gt;离散时间周期信号的傅里叶级数表示&lt;/h2&gt;
 &lt;p&gt;离散时间周期信号的傅里叶级数是有限项级数，而连续情况下是无穷级数。所以离散情况下不存在收敛的问题。&lt;/p&gt;
 &lt;p&gt;离散情况下，周期N满足&lt;/p&gt;
@@ -528,6 +790,19 @@ x(t) = \sum^{+\infty}_{k=-\infty}a_ke^{jkw_0t}
 y(t) = \sum^{+\infty}_{k=-\infty}a_kH(jkw_0)e^{jkw_0t}
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;此时&lt;span class=&#34;math inline&#34;&gt;\(y(t)\)&lt;/span&gt;也是周期的，并且与&lt;span class=&#34;math inline&#34;&gt;\(x(t)\)&lt;/span&gt;有相同的基波频率。若&lt;span class=&#34;math inline&#34;&gt;\(a_k\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(x(t)\)&lt;/span&gt;的傅立叶系数，那么&lt;span class=&#34;math inline&#34;&gt;\(a_kH(jkw_0)\)&lt;/span&gt;就是&lt;span class=&#34;math inline&#34;&gt;\(y(t)\)&lt;/span&gt;的傅里叶系数。&lt;/p&gt;
+&lt;h2 id=&#34;周期信号的频谱&#34;&gt;周期信号的频谱&lt;/h2&gt;
+&lt;p&gt;分为单边谱和双边谱。&lt;/p&gt;
+&lt;p&gt;单边谱是对于三角函数形式展开的，&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+x(t) = \dfrac{A_0}{2} + \sum^\infty_{n=1}A_n\cos(n\Omega t+\varphi_n)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;频谱分为两个函数图像，即&lt;span class=&#34;math inline&#34;&gt;\(A_n\sim\omega\)&lt;/span&gt;的幅度谱和&lt;span class=&#34;math inline&#34;&gt;\(\varphi_n\sim\omega\)&lt;/span&gt;的相位谱（&lt;span class=&#34;math inline&#34;&gt;\(\omega=n\Omega,n=0,1,2,\cdots\)&lt;/span&gt;）&lt;/p&gt;
+&lt;p&gt;双边谱是对于指数形式展开的，&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+x(t) = \sum^{+\infty}_{k=-\infty}a_ke^{jkw_0t}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;频谱分为两个函数图像，即&lt;span class=&#34;math inline&#34;&gt;\(|a_k|\sim\omega\)&lt;/span&gt;的幅度谱和&lt;span class=&#34;math inline&#34;&gt;\(\varphi_k\sim\omega\)&lt;/span&gt;的相位谱（&lt;span class=&#34;math inline&#34;&gt;\(\omega=k\omega_0,\varphi_k=k\omega_0
+t,k=0,\pm1,\pm2,\cdots\)&lt;/span&gt;）&lt;/p&gt;
 &lt;h2 id=&#34;滤波&#34;&gt;滤波&lt;/h2&gt;
 &lt;p&gt;TODO&lt;/p&gt;
 &lt;h1 id=&#34;连续时间傅里叶变换&#34;&gt;连续时间傅里叶变换&lt;/h1&gt;
@@ -591,6 +866,9 @@ x^*(t)\leftrightarrow X^*(-jw)
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 x(-t)\leftrightarrow X(-jw)
 \]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;如果&lt;span class=&#34;math inline&#34;&gt;\(x(t)\)&lt;/span&gt;为实函数，&lt;span class=&#34;math inline&#34;&gt;\(x(-t)\leftrightarrow X(-jw) = X^*(jw)\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;如果&lt;span class=&#34;math inline&#34;&gt;\(x(t)\)&lt;/span&gt;为虚函数&lt;span class=&#34;math inline&#34;&gt;\(jg(t)\)&lt;/span&gt;，&lt;span class=&#34;math inline&#34;&gt;\(x(-t)\leftrightarrow X(-jw) =
+-X^*(jw)\)&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;尺度变换&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 x(at)\leftrightarrow\dfrac{1}{|a|}X(\dfrac{jw}{a})
@@ -605,7 +883,7 @@ x(t)y(t)\leftrightarrow \dfrac{1}{2\pi} X(jw)*Y(jw)
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;时域微分&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
-\dfrac{d}{dt}x(t)\leftrightarrow jwX(jw)
+\dfrac{d^n}{dt^n}x(t)\leftrightarrow (jw)^nX(jw)
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;积分&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
@@ -616,6 +894,14 @@ X(0)\delta(w)
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 tx(t)\leftrightarrow j\dfrac{d}{dw}X(jw)
 \]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+(-jt)^nx(t)\leftrightarrow X^{(n)}(jw)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;频域积分&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\dfrac{1}{-jt}x(t)+\pi x(0)\delta(t)\leftrightarrow
+\int^w_{-\infty}X(jx)dx
+\]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;非周期信号的帕塞瓦尔定理&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 \int^{+\infty}_{-\infty}|x(t)|^2dt=\dfrac{1}{2\pi}\int^{+\infty}_{-\infty}|X(jw)|^2dw
@@ -623,6 +909,27 @@ tx(t)\leftrightarrow j\dfrac{d}{dw}X(jw)
 &lt;p&gt;&lt;em&gt;对偶&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 X(jt)\leftrightarrow 2\pi x(-w)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;相关定理&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;前面我们介绍过相关函数，有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+R_{12}(t) = x_1(t)*x_2(-t)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+R_{21}(t) = x_2(t)*x_1(-t)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+R(t) = x(t)*x(-t)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;我们有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+R_{12}(t)\leftrightarrow X_1(jw)X_2^*(jw)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+R_{21}(t)\leftrightarrow X_2(jw)X_1^*(jw)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+R(\tau)\leftrightarrow |X(jw)|^2
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;h2 id=&#34;基本傅立叶变换对&#34;&gt;基本傅立叶变换对&lt;/h2&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
@@ -642,7 +949,7 @@ sin(w_0t)\leftrightarrow \dfrac{\pi}{j}[\delta(w-w_0)-\delta(w+w_0)]
 x(t)=1\leftrightarrow 2\pi\delta(w)
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
-g_\tau(t)\leftrightarrow tSa(\dfrac{wt}{2})
+g_\tau(t)\leftrightarrow \tau Sa(\dfrac{w\tau}{2})
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 sgn(t)\leftrightarrow \dfrac{2}{jw}
@@ -651,10 +958,22 @@ sgn(t)\leftrightarrow \dfrac{2}{jw}
 \delta(t)\leftrightarrow 1
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\delta^{(n)}\leftrightarrow(jw)^n
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 u(t)\leftrightarrow\dfrac{1}{jw}+\pi\delta(w)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+e^{-\alpha
+t}\varepsilon(t)\leftrightarrow\dfrac{1}{\alpha+jw},\alpha&amp;gt;0
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+e^{-\alpha |t|}\leftrightarrow\dfrac{2\alpha}{\alpha^2+w^2},\alpha&amp;gt;0
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;其中&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(sgn(t)\)&lt;/span&gt;是符号函数，&lt;span class=&#34;math inline&#34;&gt;\(Sa(\theta)=sin\theta/\theta\)&lt;/span&gt;，&lt;span class=&#34;math inline&#34;&gt;\(g_\tau(t)\)&lt;/span&gt;代表门函数，即在&lt;span class=&#34;math inline&#34;&gt;\([-\tau/2,\tau/2]\)&lt;/span&gt;的范围内取&lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt;，其他范围内取&lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;阶跃函数此时可以表示为&lt;span class=&#34;math inline&#34;&gt;\(\varepsilon(t) =
+\dfrac{1}{2}[1+sgn(t)]\)&lt;/span&gt;&lt;/p&gt;
 
 
 </description>

@@ -121,7 +121,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 10 分钟
+                    阅读时长: 17 分钟
                 </time>
             </div>
         
@@ -268,20 +268,48 @@ x[n] = \sum^{+\infty}_{k=-\infty} x[k]\delta[n-k] = x[n]*\delta[n]
 x(t) = \int^{+\infty}_{-\infty}x(\tau)\delta(t-\tau)d\tau =
 x(t)*\delta(t)
 \]</span></p>
-<p>一个系统对脉冲信号的响应记作<span class="math inline">\(h\)</span>。一个系统的特征可以完全由脉冲响应刻画，一个系统对其他信号的响应可以用该信号和脉冲响应的卷积表示。</p>
+<p>一个系统对脉冲信号的（零状态）响应记作<span class="math inline">\(h\)</span>。一个系统的特征可以完全由脉冲响应刻画，一个系统对其他信号的响应可以用该信号和脉冲响应的卷积表示。</p>
 <p><span class="math display">\[
 y[n] = x[n]*h[n]
 \]</span></p>
 <p><span class="math display">\[
 y(t) = x(t)*h(t)
 \]</span></p>
+<p>通常，题目中不会给以下两个条件。因为是零状态的响应，所以<span class="math inline">\(h(0_-)=h&#39;(0_-)=0\)</span></p>
 <h2 id="线性时不变系统的性质">线性时不变系统的性质</h2>
-<p>也即线性时不变下卷积的性质</p>
+<h3 id="线性时不变下卷积的性质">线性时不变下卷积的性质</h3>
 <ol type="1">
 <li>交换律</li>
 <li>分配律</li>
 <li>结合律</li>
 </ol>
+<p>当然他都叫线性时不变系统了，肯定有线性和时不变性。</p>
+<p><strong>微分特性（仅限于连续情况）</strong></p>
+<p><span class="math display">\[
+\dfrac{d^n}{dt^n}[f_1*f_2] = \dfrac{d^n f_1}{dt^n}*f_2 = f_1*\dfrac{d^n
+f_2}{dt^n}
+\]</span></p>
+<p><strong>积分特性（仅限于连续情况）</strong></p>
+<p><span class="math display">\[
+\int^t_{-\infty}[f_1*f_2]d\tau = [\int^t_{-\infty}f_1d\tau]*f_2 = f_1 *
+[\int^t_{-\infty}f_2d\tau]
+\]</span></p>
+<p><strong><span class="math inline">\(f_1(-\infty)=0\)</span>或<span class="math inline">\(f_2&#39;(\infty) =
+0\)</span>（仅限连续情况）</strong></p>
+<p><span class="math display">\[
+f_1*f_2=f_1&#39;*f_2&#39;
+\]</span></p>
+<p><strong>（后向）差分特性（仅限于离散情况）</strong></p>
+<p><span class="math display">\[
+\nabla[f_1*f_2] = \nabla f_1*f_2 = f_1*\nabla f_2
+\]</span></p>
+<p><strong>时移特性</strong></p>
+<p>若<span class="math inline">\(f(t)=f_1(t)*f_2(t)\)</span></p>
+<p>则</p>
+<p><span class="math display">\[
+f_1(t-t_1)*f_2(t-t_2) = f_1(t-t_1-t_2)*f_2(t) = f_1(t)*f_2(t-t_1-t_2) =
+f(t-t_1-t_2)
+\]</span></p>
 <h3 id="无记忆的lti">无记忆的LTI</h3>
 <p>因为输出只和当前的输入有关，所以其冲激响应为<span class="math inline">\(h(t)=K\delta(t)\)</span>。</p>
 <p>系统对于其他信号的响应就为<span class="math inline">\(y(t)=Kx(t)\)</span>。离散的情况类似。</p>
@@ -322,7 +350,7 @@ s(t) = \int^t_{-\infty} h(\tau)d\tau
 <p><span class="math display">\[
 h(t) = \dfrac{ds(t)}{dt}
 \]</span></p>
-<h2 id="用微分方程和差分方程描述的因果线性时不变系统">用微分方程和差分方程描述的因果线性时不变系统</h2>
+<h2 id="用微分方程描述的连续因果线性时不变系统">用微分方程描述的连续因果线性时不变系统</h2>
 <h3 id="微分方程">微分方程</h3>
 <p>微分方程的形式如下</p>
 <p><span class="math display">\[
@@ -397,8 +425,163 @@ P\cos(\beta t) + Q\sin(\beta t)
 <p>这个通常可以把<span class="math inline">\(y_p\)</span>直接代入原方程求解系数。</p>
 <p>注意，如果题目给的条件是<span class="math inline">\(y(0),y&#39;(0)\)</span>等条件，我们需要在全解中去求齐次解中设的参数。如果题目给的条件是<span class="math inline">\(y_{zi},y&#39;_{zi}\)</span>等条件，我们在齐次解中求参数即可。</p>
 <h3 id="系统的初始值">系统的初始值</h3>
+<p>初始值是<span class="math inline">\(n\)</span>阶系统在<span class="math inline">\(t=0\)</span>时接入激励，其响应在<span class="math inline">\(t=0_+\)</span>时刻的值，即<span class="math inline">\(y^{(j)}(0_+) (j=0,1,2,\cdots,n-1)\)</span>。</p>
+<p>初始状态是指系统在激励尚未接入的<span class="math inline">\(t=0_-\)</span>时刻的响应值<span class="math inline">\(y^{(j)}(0_-)\)</span>，该值反映了系统的历史情况，而与激励无关。</p>
+<p>例如<span class="math inline">\(y&#39;&#39;(t)+3y&#39;(t)+2y(t)=2\delta(t)+6\varepsilon(t)\)</span>，（老师在PPT中给出但我没有看懂的办法是）两端积分</p>
+<p><span class="math display">\[
+\int^{0_+}_{0_-}y&#39;&#39;(t)dt+3\int^{0_+}_{0_-}y&#39;(t)dt+2\int^{0_+}_{0_-}y(t)dt
+= 2\int^{0_+}_{0_-}\delta(t)dt + 6\int^{0_+}_{0_-}\varepsilon(t)dt
+\]</span></p>
+<p>其中从左到右每一项分别对应，<span class="math inline">\(y&#39;(0_+)-y&#39;(0_-),y(0_+)-y(0_-),0,2,0\)</span></p>
+<p>所以<span class="math inline">\(y&#39;(0_+)-y&#39;(0_-) = 2,
+y(0_+)-y(0_-) = 0\)</span></p>
+<p>结论是，微分方程等号右边含有<span class="math inline">\(\delta(t)\)</span>及其各阶导数时，响应<span class="math inline">\(y(t)\)</span>及其各阶导数由<span class="math inline">\(0_-\)</span>到<span class="math inline">\(0_+\)</span>的瞬间将发生跃变（如果不含，则<span class="math inline">\(y(t)\)</span>在t=0处是连续的，<span class="math inline">\(y(0_+)=0\)</span>）。这时可按如下步骤由<span class="math inline">\(0_-\)</span>求取<span class="math inline">\(0_+\)</span>（以二阶系统为例）</p>
+<ol type="1">
+<li>将<span class="math inline">\(f(t)\)</span>代入微分方程。如果等号右边含有<span class="math inline">\(\delta(t)\)</span>及其各阶导数，根据微分方程等号两端各奇异函数的系数相等原理，判断方程左端<span class="math inline">\(y(t)\)</span>的最高阶导数所含<span class="math inline">\(\delta(t)\)</span>导数的最高阶次。</li>
+<li>令<span class="math inline">\(y&#39;&#39;(t) =
+a\delta&#39;&#39;(t)+b\delta&#39;(t)+c\delta(t)+r_0(t)\)</span>（其中<span class="math inline">\(r_0(t)\)</span>是指不含<span class="math inline">\(\delta(t)\)</span>及其各阶导数的项，在第四步中的积分，由于不含这些项，所以是<span class="math inline">\(0\)</span>），对<span class="math inline">\(y&#39;&#39;(t)\)</span>进行积分（从<span class="math inline">\(-\infty\)</span>到<span class="math inline">\(t\)</span>），求得<span class="math inline">\(y&#39;(t),y(t)\)</span>。</li>
+<li>将<span class="math inline">\(y&#39;&#39;,y&#39;,y\)</span>代入微分方程，根据等号两端各奇异函数的系数相等，从而求得各个待定系数。</li>
+<li>分别对<span class="math inline">\(y&#39;,y&#39;&#39;\)</span>等号两端从<span class="math inline">\(0_-\)</span>到<span class="math inline">\(0_+\)</span>积分，求得<span class="math inline">\(0_+\)</span>值</li>
+</ol>
+<p>用这种方法能对上式较好的求解。</p>
+<h3 id="零输入响应">零输入响应</h3>
+<p>记作<span class="math inline">\(y_{zi}\)</span>，对应齐次微分方程的解。故不存在跃变。</p>
+<h3 id="零状态响应">零状态响应</h3>
+<p>记作<span class="math inline">\(y_{zs}\)</span>，对应非齐次方程的解，需要求出来齐次解和特解，再加起来。最后的全响应需要将零输入和零状态加起来。注意零输入和零状态都要求一个齐次解，虽然它们形式相同，但是系数可能不同。</p>
+<p>有一种投机取巧的办法求全响应就是用电路课中介绍的三要素法。</p>
+<h3 id="响应分类">响应分类</h3>
+<p><strong>响应可以分为固有响应和强迫响应</strong></p>
+<p>固有响应仅与系统本身的特性有关，而与激励的函数形式无关。是微分方程的齐次解。</p>
+<p>强迫响应与激励的函数形式有关。是微分方程的特解。</p>
+<p><strong>响应可以分为暂态响应和稳态响应</strong></p>
+<p>暂态响应是指响应中暂时出现的分量，随着时间的增长，它将消失。</p>
+<p>稳态响应是稳定的分量，若存在，通常表现为阶跃函数和周期函数。比如，电路系统中的直流稳态响应和正弦稳态响应。</p>
+<h3 id="微分方程求冲激响应">微分方程求冲激响应</h3>
+<p>例如我们有<span class="math inline">\(y&#39;&#39;+a_1y&#39;+a_0y&#39;
+= b_2f&#39;&#39;+b_1f&#39;+b_0f\)</span>，我们可以分两步进行</p>
+<ol type="1">
+<li>选择一个响应<span class="math inline">\(h_1(t)\)</span>，使得</li>
+</ol>
+<p><span class="math display">\[
+h_1&#39;&#39;+a_1h_1&#39;+a_0h_1 = \delta
+\]</span></p>
+<p><span class="math display">\[
+h_1(0_-)=h_1&#39;(0-) = 0
+\]</span></p>
+<p>然后我们使用之前提到的解法求出<span class="math inline">\(h_1\)</span></p>
+<ol start="2" type="1">
+<li>根据线性性质和微分特性，可知<span class="math inline">\(h =
+b_2h_1&#39;&#39;+b_1h_1&#39;+b_0h_1\)</span></li>
+</ol>
+<h3 id="微分方程求阶跃响应">微分方程求阶跃响应</h3>
+<p>类似的，还是上面那个例子</p>
+<ol type="1">
+<li>选择一个响应<span class="math inline">\(g_1(t)\)</span>，使得</li>
+</ol>
+<p><span class="math display">\[
+g_1&#39;&#39;+a_1g_1&#39;+a_0g_1 = \varepsilon
+\]</span></p>
+<p><span class="math display">\[
+g_1(0_-)=g_1&#39;(0-) = 0
+\]</span></p>
+<p>然后我们使用之前提到的解法求出<span class="math inline">\(g_1\)</span></p>
+<ol start="2" type="1">
+<li>根据线性性质和微分特性，可知<span class="math inline">\(g =
+b_2g_1&#39;&#39;+b_1g_1&#39;+b_0g_1\)</span></li>
+</ol>
+<p>或者，如果我们已知冲激响应，我们有更简单的办法，由于微积分特性，我们可以求出</p>
+<p><span class="math display">\[
+g(t) = \int^t_{-\infty} h(\tau)d\tau
+\]</span></p>
+<p>同理</p>
+<p><span class="math display">\[
+h(t) = g&#39;(t)
+\]</span></p>
+<h2 id="用差分方程描述的离散因果线性时不变系统">用差分方程描述的离散因果线性时不变系统</h2>
+<h3 id="差分方程">差分方程</h3>
+<p>一般形式为</p>
+<p><span class="math display">\[
+y[k]+a_{n-1}y[k-1]+\cdots+a_0y[k-n] = b_mf[k]+\cdots+b_0f[k-m]
+\]</span></p>
+<p>和微分方程相似，差分方程的解也可以分为<span class="math inline">\(y =
+y_h+y_p\)</span></p>
+<p>齐次解也是由齐次方程求特征根得到。</p>
+<p>对于每一个<span class="math inline">\(\lambda_i\)</span>，</p>
+<ol type="1">
+<li>如果它是单实根，则</li>
+</ol>
+<p><span class="math display">\[
+y_h = C\lambda^k
+\]</span></p>
+<ol start="2" type="1">
+<li>如果它是二重实根，则</li>
+</ol>
+<p><span class="math display">\[
+y_h = (C_1k+C_0)\lambda^k
+\]</span></p>
+<ol start="3" type="1">
+<li>如果是一对共轭负根<span class="math inline">\(\lambda_{1,2} =
+\alpha\pm j\beta\)</span>，则</li>
+</ol>
+<p><span class="math display">\[
+\rho^k[C\cos(\beta k)+D\sin(\beta k)]
+\]</span></p>
+<p>整个齐次解就是把这些对于每一个<span class="math inline">\(\lambda_i\)</span>的齐次解加起来，再根据条件求出待定系数。</p>
+<p>特解的常见形式为</p>
+<ol type="1">
+<li>激励为<span class="math inline">\(f[k]=k\)</span>时，如果所有的特征根均不等于<span class="math inline">\(1\)</span>，</li>
+</ol>
+<p><span class="math display">\[
+P_1 k+P_0
+\]</span></p>
+<p>如果有<span class="math inline">\(1\)</span>个等于<span class="math inline">\(1\)</span>的特征根，</p>
+<p><span class="math display">\[
+k(P_1k+P_0)
+\]</span></p>
+<ol start="2" type="1">
+<li>激励为<span class="math inline">\(f[k]=a^k\)</span>，如果<span class="math inline">\(a\)</span>不等于特征根</li>
+</ol>
+<p><span class="math display">\[
+Pa^k
+\]</span></p>
+<p>如果<span class="math inline">\(a\)</span>等于特征根</p>
+<p><span class="math display">\[
+(P_1t+P_0)a^k
+\]</span></p>
+<ol start="3" type="1">
+<li>激励为<span class="math inline">\(cos(\beta k)\)</span>或<span class="math inline">\(\sin(\beta
+k)\)</span>，如果所有的特征根都不等于<span class="math inline">\(e^{\pm
+j\beta}\)</span></li>
+</ol>
+<p><span class="math display">\[
+P\cos(\beta k) + Q\sin(\beta k)
+\]</span></p>
+<p>这个通常可以把<span class="math inline">\(y_p\)</span>直接代入原方程求解系数。</p>
+<p>注意，如果题目给的条件是<span class="math inline">\(y[k],y[k-1]\)</span>等条件，我们需要在全解中去求齐次解中设的参数。如果题目给的条件是<span class="math inline">\(y_{zi}[k],y_{zi}[k-1]\)</span>等条件，我们在齐次解中求参数即可。</p>
+<h3 id="零输入响应-1">零输入响应</h3>
+<p>同前</p>
+<h3 id="零状态响应-1">零状态响应</h3>
+<p>同前</p>
+<h3 id="差分方程求单位脉冲响应">差分方程求单位脉冲响应</h3>
+<p>例如<span class="math inline">\(y[k]-4y[k-1]+3y[k-2]=3f[k]-f[k-1]\)</span>，我么可以首先</p>
+<p><span class="math display">\[
+h[k]-4h[k-1]+3h[k-2]=3\delta[k]-\delta[k-1]
+\]</span></p>
+<p>由隐含条件（二阶下），<span class="math inline">\(h(-1)=h(-2)=0\)</span>，又由上式，我们可以求出<span class="math inline">\(h[0],h[1]\)</span>。在对上式用传统方法求出齐次解。</p>
+<p>由于代入求解参数时代入的是<span class="math inline">\(h[0],h[1]\)</span>，对于<span class="math inline">\(k=1,k=0\)</span>时方程也成立（实际上单位脉冲响应和零输入响应就是一个东西），所以单位脉冲响应就是<span class="math inline">\(h[k] = [-1+4(3)^k]\varepsilon[k]\)</span></p>
+<h3 id="差分方程求单位阶跃响应">差分方程求单位阶跃响应</h3>
+<p>阶跃响应和差分方程的全解是一个东西。我们求出全解即可。注意隐含条件（二阶下）是<span class="math inline">\(g[-1]=g[-2]=0\)</span>，我们可以求出<span class="math inline">\(g[0],g[1]\)</span>，代入求出参数。</p>
+<p>或者由差分特性</p>
+<p><span class="math display">\[
+g[k] = \sum^k_{i=-\infty}h[i]
+\]</span></p>
+<p>同理有</p>
+<p><span class="math display">\[
+h[k] = g[k] - g[k-1]
+\]</span></p>
 <h2 id="用方框图描述lti">用方框图描述LTI</h2>
 <h2 id="奇异函数">奇异函数</h2>
+<p><strong>对于连续情况</strong></p>
 <p><span class="math display">\[
 x(t) = x(t) * \delta(t)
 \]</span></p>
@@ -450,7 +633,65 @@ f(t)\delta&#39;(t) = f(0)\delta&#39;(t)-f&#39;(0)\delta(t)
 <p><span class="math display">\[
 \delta^{(n)}(-t)=(-1)^n\delta^{(n)}(t)
 \]</span></p>
+<p><strong>对于离散情况</strong></p>
+<p><span class="math display">\[
+f[k]*\delta[k] = f[k]
+\]</span></p>
+<p><span class="math display">\[
+f[k]*\delta[k-k_0] = f[k-k_0]
+\]</span></p>
+<p><span class="math display">\[
+f[k]*\varepsilon[k] = \sum^k_{i=-\infty}f[i]
+\]</span></p>
+<p>此外还有</p>
+<p><span class="math display">\[
+f[k]\delta[k] = f[0]\delta[k]
+\]</span></p>
+<p><span class="math display">\[
+f[k]\delta[k-k_0] = f[k_0]\delta[k-k_0]
+\]</span></p>
+<p><span class="math display">\[
+\sum^{+\infty}_{k=-\infty}\delta[k] = 1
+\]</span></p>
+<p><span class="math display">\[
+\sum^{+\infty}_{k=-\infty}f[k]\delta[k] = f[0]
+\]</span></p>
+<p><span class="math display">\[
+\sum^{+\infty}_{k=-\infty}f[k]\delta[k-k_0] = f[k_0]
+\]</span></p>
+<p><span class="math display">\[
+\sum^{k}_{i=-\infty}\delta[i] = \varepsilon[k]
+\]</span></p>
+<p><span class="math display">\[
+\delta[k] = \varepsilon[k]-\varepsilon[k-1]
+\]</span></p>
+<p><span class="math display">\[
+\delta[k] = \delta[-k]
+\]</span></p>
+<h2 id="相关函数">相关函数</h2>
+<p>实函数<span class="math inline">\(f_1(t)\)</span>和<span class="math inline">\(f_2(t)\)</span>，如为能量有限信号，它们之间的互相关函数定义为：</p>
+<p><span class="math display">\[
+R_{12}(\tau) = \int^{+\infty}_{-\infty}f_1(t)f_2(t-\tau)dt =
+\int^{+\infty}_{-\infty}f_1(t+\tau)f_2(t)dt
+\]</span></p>
+<p><span class="math display">\[
+R_{21}(\tau) = \int^{+\infty}_{-\infty}f_1(t-\tau)f_2(t)dt =
+\int^{+\infty}_{-\infty}f_1(t)f_2(t+\tau)dt
+\]</span></p>
+<p>一般两者不相等，但是有<span class="math inline">\(R_{12}(\tau) =
+R_{21}(-\tau)\)</span></p>
+<p>如果<span class="math inline">\(f_1,f_2\)</span>是同一个函数，那么无须区分二者，直接用<span class="math inline">\(R\)</span>表示自相关系数，</p>
+<p><span class="math display">\[
+R(\tau) = \int^{+\infty}_{-\infty}f(t+\tau)f(t)dt =
+\int^{+\infty}_{-\infty}f(t)f(t-\tau)dt
+\]</span></p>
+<p>此时<span class="math inline">\(R(\tau)=R(-\tau)\)</span></p>
+<p>这东西和卷积的形式很像，显然我们可以推出来</p>
+<p><span class="math display">\[
+R_{12} = f_1(t)*f_2(-t)
+\]</span></p>
 <h1 id="周期信号的傅里叶级数表示">周期信号的傅里叶级数表示</h1>
+<h2 id="信号的正交分解">信号的正交分解</h2>
 <h2 id="lti对复指数信号的响应">LTI对复指数信号的响应</h2>
 <p>LTI对复指数信号的响应也是一个复指数信号，不同的只是在幅度上的变化</p>
 <p><span class="math display">\[
@@ -488,7 +729,13 @@ x(t) = \sum^{+\infty}_{k=-\infty}a_ke^{jkw_0t}
 <p><span class="math display">\[
 x(t) = a_0 + 2\sum^\infty_{k=1}[B_k\cos kw_0 t - C_k\sin kw_0t]
 \]</span></p>
-<p>其中<span class="math inline">\(a_n\)</span>由以下公式确定</p>
+<p>或者</p>
+<p><span class="math display">\[
+x(t) = \dfrac{a_0}{2}+\sum^\infty_{n=1}a_n\cos(n\Omega
+t)+\sum^\infty_{n=1}b_n\sin(n\Omega t) = \dfrac{A_0}{2} +
+\sum^\infty_{n=1}A_n\cos(n\Omega t+\varphi_n)
+\]</span></p>
+<p>其中（指数表示的那个）<span class="math inline">\(a_n\)</span>由以下公式确定</p>
 <p><span class="math display">\[
 a_n = \dfrac{1}{T}\int^T_0x(t)e^{-jnw0t}dt
 \]</span></p>
@@ -553,8 +800,23 @@ x(t)y(t) \leftrightarrow a_k*b_k
 <p><span class="math display">\[
 \dfrac{1}{T}\int_T|x(t)|^2 dt = \sum^{+\infty}_{k=-\infty}|a_k|^2
 \]</span></p>
-<h2 id="奇次谐波和偶次谐波">奇次谐波和偶次谐波</h2>
-<p>TODO</p>
+<h2 id="谐波特性">谐波特性</h2>
+<p><strong>偶函数</strong></p>
+<p>如果<span class="math inline">\(x(t)\)</span>是偶函数，则其没有正弦分量，只有余弦分量和直流分量。</p>
+<p><strong>奇函数</strong></p>
+<p>如果<span class="math inline">\(x(t)\)</span>是奇函数，则其没有余弦分量和直流分量，只有正弦分量。</p>
+<p><strong>奇谐函数</strong></p>
+<p>傅里叶级数中只含有奇次谐波分量，不含有偶次谐波分量，即</p>
+<p><span class="math display">\[
+a_0=a_2=a_4=\cdots=b_2=b_4=\cdots=0
+\]</span></p>
+<p>表现为<span class="math inline">\(x(t) = -x(t\pm T/2)\)</span></p>
+<p><strong>偶谐函数</strong></p>
+<p>傅里叶级数中只含有偶次谐波分量，不含有奇次谐波分量，即</p>
+<p><span class="math display">\[
+a_1=a_3=\cdots=b_1=b_3=\cdots=0
+\]</span></p>
+<p>表现为<span class="math inline">\(x(t) = x(t\pm T/2)\)</span></p>
 <h2 id="离散时间周期信号的傅里叶级数表示">离散时间周期信号的傅里叶级数表示</h2>
 <p>离散时间周期信号的傅里叶级数是有限项级数，而连续情况下是无穷级数。所以离散情况下不存在收敛的问题。</p>
 <p>离散情况下，周期N满足</p>
@@ -647,6 +909,19 @@ x(t) = \sum^{+\infty}_{k=-\infty}a_ke^{jkw_0t}
 y(t) = \sum^{+\infty}_{k=-\infty}a_kH(jkw_0)e^{jkw_0t}
 \]</span></p>
 <p>此时<span class="math inline">\(y(t)\)</span>也是周期的，并且与<span class="math inline">\(x(t)\)</span>有相同的基波频率。若<span class="math inline">\(a_k\)</span>是<span class="math inline">\(x(t)\)</span>的傅立叶系数，那么<span class="math inline">\(a_kH(jkw_0)\)</span>就是<span class="math inline">\(y(t)\)</span>的傅里叶系数。</p>
+<h2 id="周期信号的频谱">周期信号的频谱</h2>
+<p>分为单边谱和双边谱。</p>
+<p>单边谱是对于三角函数形式展开的，</p>
+<p><span class="math display">\[
+x(t) = \dfrac{A_0}{2} + \sum^\infty_{n=1}A_n\cos(n\Omega t+\varphi_n)
+\]</span></p>
+<p>频谱分为两个函数图像，即<span class="math inline">\(A_n\sim\omega\)</span>的幅度谱和<span class="math inline">\(\varphi_n\sim\omega\)</span>的相位谱（<span class="math inline">\(\omega=n\Omega,n=0,1,2,\cdots\)</span>）</p>
+<p>双边谱是对于指数形式展开的，</p>
+<p><span class="math display">\[
+x(t) = \sum^{+\infty}_{k=-\infty}a_ke^{jkw_0t}
+\]</span></p>
+<p>频谱分为两个函数图像，即<span class="math inline">\(|a_k|\sim\omega\)</span>的幅度谱和<span class="math inline">\(\varphi_k\sim\omega\)</span>的相位谱（<span class="math inline">\(\omega=k\omega_0,\varphi_k=k\omega_0
+t,k=0,\pm1,\pm2,\cdots\)</span>）</p>
 <h2 id="滤波">滤波</h2>
 <p>TODO</p>
 <h1 id="连续时间傅里叶变换">连续时间傅里叶变换</h1>
@@ -710,6 +985,9 @@ x^*(t)\leftrightarrow X^*(-jw)
 <p><span class="math display">\[
 x(-t)\leftrightarrow X(-jw)
 \]</span></p>
+<p>如果<span class="math inline">\(x(t)\)</span>为实函数，<span class="math inline">\(x(-t)\leftrightarrow X(-jw) = X^*(jw)\)</span></p>
+<p>如果<span class="math inline">\(x(t)\)</span>为虚函数<span class="math inline">\(jg(t)\)</span>，<span class="math inline">\(x(-t)\leftrightarrow X(-jw) =
+-X^*(jw)\)</span></p>
 <p><em>尺度变换</em></p>
 <p><span class="math display">\[
 x(at)\leftrightarrow\dfrac{1}{|a|}X(\dfrac{jw}{a})
@@ -724,7 +1002,7 @@ x(t)y(t)\leftrightarrow \dfrac{1}{2\pi} X(jw)*Y(jw)
 \]</span></p>
 <p><em>时域微分</em></p>
 <p><span class="math display">\[
-\dfrac{d}{dt}x(t)\leftrightarrow jwX(jw)
+\dfrac{d^n}{dt^n}x(t)\leftrightarrow (jw)^nX(jw)
 \]</span></p>
 <p><em>积分</em></p>
 <p><span class="math display">\[
@@ -735,6 +1013,14 @@ X(0)\delta(w)
 <p><span class="math display">\[
 tx(t)\leftrightarrow j\dfrac{d}{dw}X(jw)
 \]</span></p>
+<p><span class="math display">\[
+(-jt)^nx(t)\leftrightarrow X^{(n)}(jw)
+\]</span></p>
+<p><em>频域积分</em></p>
+<p><span class="math display">\[
+\dfrac{1}{-jt}x(t)+\pi x(0)\delta(t)\leftrightarrow
+\int^w_{-\infty}X(jx)dx
+\]</span></p>
 <p><em>非周期信号的帕塞瓦尔定理</em></p>
 <p><span class="math display">\[
 \int^{+\infty}_{-\infty}|x(t)|^2dt=\dfrac{1}{2\pi}\int^{+\infty}_{-\infty}|X(jw)|^2dw
@@ -742,6 +1028,27 @@ tx(t)\leftrightarrow j\dfrac{d}{dw}X(jw)
 <p><em>对偶</em></p>
 <p><span class="math display">\[
 X(jt)\leftrightarrow 2\pi x(-w)
+\]</span></p>
+<p><em>相关定理</em></p>
+<p>前面我们介绍过相关函数，有</p>
+<p><span class="math display">\[
+R_{12}(t) = x_1(t)*x_2(-t)
+\]</span></p>
+<p><span class="math display">\[
+R_{21}(t) = x_2(t)*x_1(-t)
+\]</span></p>
+<p><span class="math display">\[
+R(t) = x(t)*x(-t)
+\]</span></p>
+<p>我们有</p>
+<p><span class="math display">\[
+R_{12}(t)\leftrightarrow X_1(jw)X_2^*(jw)
+\]</span></p>
+<p><span class="math display">\[
+R_{21}(t)\leftrightarrow X_2(jw)X_1^*(jw)
+\]</span></p>
+<p><span class="math display">\[
+R(\tau)\leftrightarrow |X(jw)|^2
 \]</span></p>
 <h2 id="基本傅立叶变换对">基本傅立叶变换对</h2>
 <p><span class="math display">\[
@@ -761,7 +1068,7 @@ sin(w_0t)\leftrightarrow \dfrac{\pi}{j}[\delta(w-w_0)-\delta(w+w_0)]
 x(t)=1\leftrightarrow 2\pi\delta(w)
 \]</span></p>
 <p><span class="math display">\[
-g_\tau(t)\leftrightarrow tSa(\dfrac{wt}{2})
+g_\tau(t)\leftrightarrow \tau Sa(\dfrac{w\tau}{2})
 \]</span></p>
 <p><span class="math display">\[
 sgn(t)\leftrightarrow \dfrac{2}{jw}
@@ -770,10 +1077,22 @@ sgn(t)\leftrightarrow \dfrac{2}{jw}
 \delta(t)\leftrightarrow 1
 \]</span></p>
 <p><span class="math display">\[
+\delta^{(n)}\leftrightarrow(jw)^n
+\]</span></p>
+<p><span class="math display">\[
 u(t)\leftrightarrow\dfrac{1}{jw}+\pi\delta(w)
+\]</span></p>
+<p><span class="math display">\[
+e^{-\alpha
+t}\varepsilon(t)\leftrightarrow\dfrac{1}{\alpha+jw},\alpha&gt;0
+\]</span></p>
+<p><span class="math display">\[
+e^{-\alpha |t|}\leftrightarrow\dfrac{2\alpha}{\alpha^2+w^2},\alpha&gt;0
 \]</span></p>
 <p>其中</p>
 <p><span class="math inline">\(sgn(t)\)</span>是符号函数，<span class="math inline">\(Sa(\theta)=sin\theta/\theta\)</span>，<span class="math inline">\(g_\tau(t)\)</span>代表门函数，即在<span class="math inline">\([-\tau/2,\tau/2]\)</span>的范围内取<span class="math inline">\(1\)</span>，其他范围内取<span class="math inline">\(0\)</span>。</p>
+<p>阶跃函数此时可以表示为<span class="math inline">\(\varepsilon(t) =
+\dfrac{1}{2}[1+sgn(t)]\)</span></p>
 
 
 
@@ -1066,6 +1385,7 @@ u(t)\leftrightarrow\dfrac{1}{jw}+\pi\delta(w)
         <li><a href="#用脉冲表示信号及其响应">用脉冲表示信号，及其响应</a></li>
         <li><a href="#线性时不变系统的性质">线性时不变系统的性质</a>
           <ol>
+            <li><a href="#线性时不变下卷积的性质">线性时不变下卷积的性质</a></li>
             <li><a href="#无记忆的lti">无记忆的LTI</a></li>
             <li><a href="#微分特性">微分特性</a></li>
             <li><a href="#积分特性">积分特性</a></li>
@@ -1075,26 +1395,43 @@ u(t)\leftrightarrow\dfrac{1}{jw}+\pi\delta(w)
             <li><a href="#lti的单位阶跃响应">LTI的单位阶跃响应</a></li>
           </ol>
         </li>
-        <li><a href="#用微分方程和差分方程描述的因果线性时不变系统">用微分方程和差分方程描述的因果线性时不变系统</a>
+        <li><a href="#用微分方程描述的连续因果线性时不变系统">用微分方程描述的连续因果线性时不变系统</a>
           <ol>
             <li><a href="#微分方程">微分方程</a></li>
             <li><a href="#系统的初始值">系统的初始值</a></li>
+            <li><a href="#零输入响应">零输入响应</a></li>
+            <li><a href="#零状态响应">零状态响应</a></li>
+            <li><a href="#响应分类">响应分类</a></li>
+            <li><a href="#微分方程求冲激响应">微分方程求冲激响应</a></li>
+            <li><a href="#微分方程求阶跃响应">微分方程求阶跃响应</a></li>
+          </ol>
+        </li>
+        <li><a href="#用差分方程描述的离散因果线性时不变系统">用差分方程描述的离散因果线性时不变系统</a>
+          <ol>
+            <li><a href="#差分方程">差分方程</a></li>
+            <li><a href="#零输入响应-1">零输入响应</a></li>
+            <li><a href="#零状态响应-1">零状态响应</a></li>
+            <li><a href="#差分方程求单位脉冲响应">差分方程求单位脉冲响应</a></li>
+            <li><a href="#差分方程求单位阶跃响应">差分方程求单位阶跃响应</a></li>
           </ol>
         </li>
         <li><a href="#用方框图描述lti">用方框图描述LTI</a></li>
         <li><a href="#奇异函数">奇异函数</a></li>
+        <li><a href="#相关函数">相关函数</a></li>
       </ol>
     </li>
     <li><a href="#周期信号的傅里叶级数表示">周期信号的傅里叶级数表示</a>
       <ol>
+        <li><a href="#信号的正交分解">信号的正交分解</a></li>
         <li><a href="#lti对复指数信号的响应">LTI对复指数信号的响应</a></li>
         <li><a href="#连续时间周期信号的傅里叶级数表示">连续时间周期信号的傅里叶级数表示</a></li>
         <li><a href="#傅立叶级数的收敛">傅立叶级数的收敛</a></li>
         <li><a href="#连续时间傅里叶级数的性质">连续时间傅里叶级数的性质</a></li>
-        <li><a href="#奇次谐波和偶次谐波">奇次谐波和偶次谐波</a></li>
+        <li><a href="#谐波特性">谐波特性</a></li>
         <li><a href="#离散时间周期信号的傅里叶级数表示">离散时间周期信号的傅里叶级数表示</a></li>
         <li><a href="#离散时间傅里叶级数的性质">离散时间傅里叶级数的性质</a></li>
         <li><a href="#傅里叶级数与lti">傅里叶级数与LTI</a></li>
+        <li><a href="#周期信号的频谱">周期信号的频谱</a></li>
         <li><a href="#滤波">滤波</a></li>
       </ol>
     </li>
