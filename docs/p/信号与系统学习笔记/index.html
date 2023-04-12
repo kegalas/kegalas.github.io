@@ -121,7 +121,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 17 分钟
+                    阅读时长: 20 分钟
                 </time>
             </div>
         
@@ -182,6 +182,13 @@ u[n] = \sum^n_{m=-\infty}\delta [m]
 \]</span></p>
 <p><span class="math display">\[
 u(t) = \int^t_{-\infty}\delta(\tau)d\tau
+\]</span></p>
+<p>单位冲激的导数，即单位冲激偶有</p>
+<p><span class="math display">\[
+\delta&#39;(t) = \begin{cases}
+\pm\infty &amp; \text{ if } t=0 \\
+0 &amp; \text{ if } t\neq 0
+\end{cases}
 \]</span></p>
 <h2 id="连续时间系统和离散时间系统">连续时间系统和离散时间系统</h2>
 <h3 id="定义">定义</h3>
@@ -423,7 +430,12 @@ j\beta\)</span></li>
 P\cos(\beta t) + Q\sin(\beta t)
 \]</span></p>
 <p>这个通常可以把<span class="math inline">\(y_p\)</span>直接代入原方程求解系数。</p>
+<ol start="4" type="1">
+<li>激励为<span class="math inline">\(\delta,\varepsilon\)</span>等时，由于我们的特解是零状态响应中的部分，所以都是在<span class="math inline">\(0_+\)</span>时的取值，我们直接把激励在<span class="math inline">\(0_+\)</span>的值写在等号右边，然后设定<span class="math inline">\(y_p=p\)</span>（常数），解出<span class="math inline">\(p\)</span>即可。显然，<span class="math inline">\(p\)</span>的值会是<span class="math inline">\(\varepsilon\text{的系数}/y\text{的系数}\)</span></li>
+</ol>
 <p>注意，如果题目给的条件是<span class="math inline">\(y(0),y&#39;(0)\)</span>等条件，我们需要在全解中去求齐次解中设的参数。如果题目给的条件是<span class="math inline">\(y_{zi},y&#39;_{zi}\)</span>等条件，我们在齐次解中求参数即可。</p>
+<p>如果给的激励包含多种情况？我自己的思考是，求出冲激响应即可，然后根据线性性质，将激励分别与冲激响应卷积，再相加。</p>
+<p>还有一种办法是求频率响应<span class="math inline">\(H(jw)\)</span>来求零状态响应，见后。</p>
 <h3 id="系统的初始值">系统的初始值</h3>
 <p>初始值是<span class="math inline">\(n\)</span>阶系统在<span class="math inline">\(t=0\)</span>时接入激励，其响应在<span class="math inline">\(t=0_+\)</span>时刻的值，即<span class="math inline">\(y^{(j)}(0_+) (j=0,1,2,\cdots,n-1)\)</span>。</p>
 <p>初始状态是指系统在激励尚未接入的<span class="math inline">\(t=0_-\)</span>时刻的响应值<span class="math inline">\(y^{(j)}(0_-)\)</span>，该值反映了系统的历史情况，而与激励无关。</p>
@@ -444,6 +456,9 @@ a\delta&#39;&#39;(t)+b\delta&#39;(t)+c\delta(t)+r_0(t)\)</span>（其中<span cl
 <li>分别对<span class="math inline">\(y&#39;,y&#39;&#39;\)</span>等号两端从<span class="math inline">\(0_-\)</span>到<span class="math inline">\(0_+\)</span>积分，求得<span class="math inline">\(0_+\)</span>值</li>
 </ol>
 <p>用这种方法能对上式较好的求解。</p>
+<p>必须要提到的一点是，设<span class="math inline">\(g(f) =
+\int^{0_+}_{0_-}f(x)dx\)</span>，应该只有<span class="math inline">\(f(x)=\delta(x)\)</span>（不考虑常数系数），才有<span class="math inline">\(g(f)=1\)</span>，其他全部都有<span class="math inline">\(g(f)=0\)</span>。或许有其他函数也满足<span class="math inline">\(g(f)\neq
+0\)</span>，但是在信号这里，所有连续的函数、阶跃函数、冲激函数的导数、二阶导数、<span class="math inline">\(n\)</span>阶导数<span class="math inline">\(g(f)\)</span>都等于<span class="math inline">\(0\)</span>，只有冲激函数自己等于<span class="math inline">\(1\)</span>。</p>
 <h3 id="零输入响应">零输入响应</h3>
 <p>记作<span class="math inline">\(y_{zi}\)</span>，对应齐次微分方程的解。故不存在跃变。</p>
 <h3 id="零状态响应">零状态响应</h3>
@@ -471,7 +486,7 @@ h_1(0_-)=h_1&#39;(0-) = 0
 <p>然后我们使用之前提到的解法求出<span class="math inline">\(h_1\)</span></p>
 <ol start="2" type="1">
 <li>根据线性性质和微分特性，可知<span class="math inline">\(h =
-b_2h_1&#39;&#39;+b_1h_1&#39;+b_0h_1\)</span></li>
+b_2h_1&#39;&#39;+b_1h_1&#39;+b_0h_1\)</span>。不过注意这个<span class="math inline">\(b_i\)</span>是常数，如果我们等式右边是<span class="math inline">\(b_2f&#39;&#39;+b_0f+q\)</span>，这个<span class="math inline">\(q\)</span>不是<span class="math inline">\(f\)</span>的导数（其他情况类似），则我们的<span class="math inline">\(h=b_2h_1&#39;&#39;+b_0h_1+q*h_1\)</span>。当然你也可以全部都做卷积，只是不是把<span class="math inline">\(b_2,b_1,b_0\)</span>拿来做卷积，而是把整体的<span class="math inline">\(b_2f&#39;&#39;,b_1f&#39;,b_0f\)</span>拿来做卷积。如果<span class="math inline">\(f=h\)</span>，卷积的结果就是<span class="math inline">\(b_2h_1&#39;&#39;+b_1h_1&#39;+b_0h_1\)</span></li>
 </ol>
 <h3 id="微分方程求阶跃响应">微分方程求阶跃响应</h3>
 <p>类似的，还是上面那个例子</p>
@@ -890,16 +905,17 @@ x[n]-x[n-1] \leftrightarrow (1-e^{-jk(2\pi/N)})a_k
 \dfrac{1}{N}\sum_{n=&lt;N&gt;}|x[n]|^2 = \sum_{k=&lt;N&gt;}|a_k|^2
 \]</span></p>
 <h2 id="傅里叶级数与lti">傅里叶级数与LTI</h2>
-<p>若<span class="math inline">\(x(t)=e^{st}\)</span>是一个连续时间线性时不变系统的输入，其输出久违<span class="math inline">\(y(t)=H(s)e^{st}\)</span>，而</p>
+<p>若<span class="math inline">\(x(t)=e^{st}\)</span>是一个连续时间线性时不变系统的输入，其输出就为<span class="math inline">\(y(t)=H(s)e^{st}\)</span>，而</p>
 <p><span class="math display">\[
 H(s) = \int^{+\infty}_{-\infty} h(\tau)e^{-s\tau}d\tau
 \]</span></p>
-<p>其中<span class="math inline">\(h(\tau)\)</span>是该线性时不变系统的单位冲激响应。</p>
+<p>其中<span class="math inline">\(h(\tau)\)</span>是该线性时不变系统的单位冲激响应（这其实是<span class="math inline">\(h(t)\)</span>的傅立叶变换）。</p>
 <p>同理离散情况下<span class="math inline">\(x[n]=z^n\)</span>，<span class="math inline">\(y[n]=H(z)z^n\)</span></p>
 <p><span class="math display">\[
 H(z) = \sum^{+\infty}_{k=-\infty}h[k]z^{-k}
 \]</span></p>
 <p>当<span class="math inline">\(s,z\)</span>是一般复数时，<span class="math inline">\(H(s),H(z)\)</span>就称为该系统的系统函数。一般我们考虑<span class="math inline">\(s=jw,z=e^{jw}\)</span>，此时<span class="math inline">\(H(s),H(z)\)</span>称为频率响应。</p>
+<p>此时我们可以说</p>
 <p>若用傅里叶级数表示输入</p>
 <p><span class="math display">\[
 x(t) = \sum^{+\infty}_{k=-\infty}a_ke^{jkw_0t}
@@ -909,6 +925,15 @@ x(t) = \sum^{+\infty}_{k=-\infty}a_ke^{jkw_0t}
 y(t) = \sum^{+\infty}_{k=-\infty}a_kH(jkw_0)e^{jkw_0t}
 \]</span></p>
 <p>此时<span class="math inline">\(y(t)\)</span>也是周期的，并且与<span class="math inline">\(x(t)\)</span>有相同的基波频率。若<span class="math inline">\(a_k\)</span>是<span class="math inline">\(x(t)\)</span>的傅立叶系数，那么<span class="math inline">\(a_kH(jkw_0)\)</span>就是<span class="math inline">\(y(t)\)</span>的傅里叶系数。</p>
+<p>离散情况下，若用傅里叶级数表示输入</p>
+<p><span class="math display">\[
+x[n] = \sum_{k=&lt;N&gt;} a_ke^{jk(2\pi/N)n}
+\]</span></p>
+<p>那么输出为</p>
+<p><span class="math display">\[
+y[n] = \sum_{k=&lt;N&gt;} a_kH(e^{j2\pi k/N})e^{jk(2\pi/N)n}
+\]</span></p>
+<p><span class="math inline">\(y[n]\)</span>也是周期的，且和<span class="math inline">\(x[n]\)</span>具有相同的周期，<span class="math inline">\(y[n]\)</span>的第<span class="math inline">\(k\)</span>个傅里叶系数就是<span class="math inline">\(a_kH(e^{j2\pi k/N})\)</span></p>
 <h2 id="周期信号的频谱">周期信号的频谱</h2>
 <p>分为单边谱和双边谱。</p>
 <p>单边谱是对于三角函数形式展开的，</p>
@@ -1093,6 +1118,24 @@ e^{-\alpha |t|}\leftrightarrow\dfrac{2\alpha}{\alpha^2+w^2},\alpha&gt;0
 <p><span class="math inline">\(sgn(t)\)</span>是符号函数，<span class="math inline">\(Sa(\theta)=sin\theta/\theta\)</span>，<span class="math inline">\(g_\tau(t)\)</span>代表门函数，即在<span class="math inline">\([-\tau/2,\tau/2]\)</span>的范围内取<span class="math inline">\(1\)</span>，其他范围内取<span class="math inline">\(0\)</span>。</p>
 <p>阶跃函数此时可以表示为<span class="math inline">\(\varepsilon(t) =
 \dfrac{1}{2}[1+sgn(t)]\)</span></p>
+<h2 id="线性常系数微分方程表征的系统">线性常系数微分方程表征的系统</h2>
+<p>线性常系数微分方程有如下形式</p>
+<p><span class="math display">\[
+\sum^N_{k=0}a_k\dfrac{d^k y(t)}{dt^k} = \sum^m_{k=0}b_k\dfrac{d^k
+x(t)}{dt^k}
+\]</span></p>
+<p>我们可以像之前一样用经典方法去解输入对应的输出（零状态响应）。但是我们也可以使用频率响应来求出。</p>
+<p>如果我们有<span class="math inline">\(x(t)=e^{jwt}\)</span>，则系统的输入就是<span class="math inline">\(y(t)=H(jw)e^{jwt}\)</span>。</p>
+<p>一个事实是，<span class="math inline">\(H(jw)\leftrightarrow
+h(t)\)</span>。我们之前还说过，<span class="math inline">\(y(t)=h(t)*x(t)\)</span>，我们就可以得到<span class="math inline">\(Y(jw)=H(jw)X(jw)\)</span>。</p>
+<p>或者我们有</p>
+<p><span class="math display">\[
+H(jw) = \dfrac{Y(jw)}{X(jw)} =
+\dfrac{\sum^M_{k=0}b_k(jw)^k}{\sum^{N}_{k=0}a_k(jw)^k}
+\]</span></p>
+<p>其中第二个等号后面的式子可以把微分方程的两边全部取傅立叶变换，再提项得到。</p>
+<p>有了<span class="math inline">\(H(jw)\)</span>，我们就容易求出对于任意一个输入信号<span class="math inline">\(f(t)\)</span>，这个系统的零状态响应。</p>
+<p>要么我们可以<span class="math inline">\(Y(jw)=H(jw)F(jw)\)</span>再傅立叶逆变换得到<span class="math inline">\(y(t)\)</span>，要么<span class="math inline">\(y(t)=H(jw)f(t)\)</span>。</p>
 
 
 
@@ -1442,6 +1485,7 @@ e^{-\alpha |t|}\leftrightarrow\dfrac{2\alpha}{\alpha^2+w^2},\alpha&gt;0
         <li><a href="#周期信号的傅立叶变换">周期信号的傅立叶变换</a></li>
         <li><a href="#连续时间傅里叶变换的性质">连续时间傅里叶变换的性质</a></li>
         <li><a href="#基本傅立叶变换对">基本傅立叶变换对</a></li>
+        <li><a href="#线性常系数微分方程表征的系统">线性常系数微分方程表征的系统</a></li>
       </ol>
     </li>
   </ol>
