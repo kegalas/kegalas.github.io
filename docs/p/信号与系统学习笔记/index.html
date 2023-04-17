@@ -121,7 +121,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 20 分钟
+                    阅读时长: 21 分钟
                 </time>
             </div>
         
@@ -159,9 +159,9 @@ n_2\)</span>内的离散时间信号<span class="math inline">\(x[n]\)</span>的
 <p>离散的情况下，<span class="math inline">\(sin(\beta
 k)\)</span>是否为周期信号？</p>
 <ol type="1">
-<li>如果<span class="math inline">\(2\pi/k\)</span>是整数，则周期为<span class="math inline">\(N=2\pi/\beta\)</span></li>
-<li>如果<span class="math inline">\(2\pi/k\)</span>是有理数，则周期为<span class="math inline">\(N=M(2\pi/\beta)\)</span>，<span class="math inline">\(M\)</span>为使<span class="math inline">\(N\)</span>称为正整数的最小正整数</li>
-<li>如果<span class="math inline">\(2\pi/k\)</span>是无理数，则不是周期信号。</li>
+<li>如果<span class="math inline">\(2\pi/\beta\)</span>是整数，则周期为<span class="math inline">\(N=2\pi/\beta\)</span></li>
+<li>如果<span class="math inline">\(2\pi/\beta\)</span>是有理数，则周期为<span class="math inline">\(N=M(2\pi/\beta)\)</span>，<span class="math inline">\(M\)</span>为使<span class="math inline">\(N\)</span>称为正整数的最小正整数</li>
+<li>如果<span class="math inline">\(2\pi/\beta\)</span>是无理数，则不是周期信号。</li>
 </ol>
 <h3 id="偶信号与奇信号">偶信号与奇信号</h3>
 <p>任何信号都能分解成一个偶信号和一个奇信号的和。</p>
@@ -431,7 +431,7 @@ P\cos(\beta t) + Q\sin(\beta t)
 \]</span></p>
 <p>这个通常可以把<span class="math inline">\(y_p\)</span>直接代入原方程求解系数。</p>
 <ol start="4" type="1">
-<li>激励为<span class="math inline">\(\delta,\varepsilon\)</span>等时，由于我们的特解是零状态响应中的部分，所以都是在<span class="math inline">\(0_+\)</span>时的取值，我们直接把激励在<span class="math inline">\(0_+\)</span>的值写在等号右边，然后设定<span class="math inline">\(y_p=p\)</span>（常数），解出<span class="math inline">\(p\)</span>即可。显然，<span class="math inline">\(p\)</span>的值会是<span class="math inline">\(\varepsilon\text{的系数}/y\text{的系数}\)</span></li>
+<li>激励为<span class="math inline">\(\delta,\varepsilon\)</span>等时，由于我们的特解是零状态响应中的部分，所以都是在<span class="math inline">\(0_+\)</span>时的取值，我们直接把激励在<span class="math inline">\(0_+\)</span>的值写在等号右边，然后设定<span class="math inline">\(y_p=p\)</span>（常数），解出<span class="math inline">\(p\)</span>即可。显然，<span class="math inline">\(p\)</span>的值会是<span class="math inline">\(\varepsilon\text{的系数}/y\text{的系数}\)</span>（因为<span class="math inline">\(y\)</span>现在是常数，任意阶导数为<span class="math inline">\(0\)</span>）。</li>
 </ol>
 <p>注意，如果题目给的条件是<span class="math inline">\(y(0),y&#39;(0)\)</span>等条件，我们需要在全解中去求齐次解中设的参数。如果题目给的条件是<span class="math inline">\(y_{zi},y&#39;_{zi}\)</span>等条件，我们在齐次解中求参数即可。</p>
 <p>如果给的激励包含多种情况？我自己的思考是，求出冲激响应即可，然后根据线性性质，将激励分别与冲激响应卷积，再相加。</p>
@@ -572,6 +572,9 @@ j\beta}\)</span></li>
 P\cos(\beta k) + Q\sin(\beta k)
 \]</span></p>
 <p>这个通常可以把<span class="math inline">\(y_p\)</span>直接代入原方程求解系数。</p>
+<ol start="4" type="1">
+<li>激励为<span class="math inline">\(\delta,\varepsilon\)</span>时。如果只有<span class="math inline">\(\varepsilon\)</span>，则我们直接设置<span class="math inline">\(y[k]\)</span>为常数，与连续的情况不同，差分不会使得<span class="math inline">\(y[k-1]\)</span>等于零。解出的特解就是<span class="math inline">\(y\)</span>的各项系数之和分之<span class="math inline">\(\varepsilon\)</span>的系数之和。如果只有<span class="math inline">\(\delta\)</span>，则实际上是在求冲激响应，由后面可得，就是在求齐次解，不存在特解。如果两个都有，只管<span class="math inline">\(\varepsilon\)</span>。</li>
+</ol>
 <p>注意，如果题目给的条件是<span class="math inline">\(y[k],y[k-1]\)</span>等条件，我们需要在全解中去求齐次解中设的参数。如果题目给的条件是<span class="math inline">\(y_{zi}[k],y_{zi}[k-1]\)</span>等条件，我们在齐次解中求参数即可。</p>
 <h3 id="零输入响应-1">零输入响应</h3>
 <p>同前</p>
@@ -582,10 +585,12 @@ P\cos(\beta k) + Q\sin(\beta k)
 <p><span class="math display">\[
 h[k]-4h[k-1]+3h[k-2]=3\delta[k]-\delta[k-1]
 \]</span></p>
-<p>由隐含条件（二阶下），<span class="math inline">\(h(-1)=h(-2)=0\)</span>，又由上式，我们可以求出<span class="math inline">\(h[0],h[1]\)</span>。在对上式用传统方法求出齐次解。</p>
-<p>由于代入求解参数时代入的是<span class="math inline">\(h[0],h[1]\)</span>，对于<span class="math inline">\(k=1,k=0\)</span>时方程也成立（实际上单位脉冲响应和零输入响应就是一个东西），所以单位脉冲响应就是<span class="math inline">\(h[k] = [-1+4(3)^k]\varepsilon[k]\)</span></p>
+<p>由隐含条件（二阶下），<span class="math inline">\(h[-1]=h[-2]=0\)</span>，又由上式，我们可以求出<span class="math inline">\(h[0],h[1]\)</span>。再对上式用传统方法求出齐次解。</p>
+<p>由于代入求解参数时代入的是<span class="math inline">\(h[0],h[1]\)</span>，对于<span class="math inline">\(k=1,k=0\)</span>时方程也成立（实际上单位脉冲响应和零输入响应、齐次解具有同样的形式，不需要特解），所以单位脉冲响应就是<span class="math inline">\(h[k] = [-1+4(3)^k]\varepsilon[k]\)</span></p>
+<p>当然，如果等式右边出现的是<span class="math inline">\(f[k-2]+f[k-1]\)</span>这样的，我们就要求出<span class="math inline">\(h[2],h[1]\)</span>，然后用这个代入求解齐次解的参数。</p>
+<p>或者我们还是用老办法，求出<span class="math inline">\(h_1[k]-4h_1[k-1]+3h_1[k-2]=\delta[k]\)</span>，中<span class="math inline">\(h_1[k]\)</span>的表达式（需要用<span class="math inline">\(h[0],h[-1]\)</span>求出参数），然后在根据线性性质求出<span class="math inline">\(h[k]\)</span></p>
 <h3 id="差分方程求单位阶跃响应">差分方程求单位阶跃响应</h3>
-<p>阶跃响应和差分方程的全解是一个东西。我们求出全解即可。注意隐含条件（二阶下）是<span class="math inline">\(g[-1]=g[-2]=0\)</span>，我们可以求出<span class="math inline">\(g[0],g[1]\)</span>，代入求出参数。</p>
+<p>阶跃响应和差分方程的全解是一个形式。我们求出全解即可。注意隐含条件（二阶下）是<span class="math inline">\(g[-1]=g[-2]=0\)</span>，我们可以求出<span class="math inline">\(g[0],g[1]\)</span>，代入求出参数。</p>
 <p>或者由差分特性</p>
 <p><span class="math display">\[
 g[k] = \sum^k_{i=-\infty}h[i]
@@ -752,7 +757,7 @@ t)+\sum^\infty_{n=1}b_n\sin(n\Omega t) = \dfrac{A_0}{2} +
 \]</span></p>
 <p>其中（指数表示的那个）<span class="math inline">\(a_n\)</span>由以下公式确定</p>
 <p><span class="math display">\[
-a_n = \dfrac{1}{T}\int^T_0x(t)e^{-jnw0t}dt
+a_n = \dfrac{1}{T}\int^T_0x(t)e^{-jnw_0t}dt
 \]</span></p>
 <p>或者也可以是在任意一个最小正周期内的积分，记作<span class="math inline">\(\int_T\)</span></p>
 <p><span class="math inline">\(a_n\)</span>称为傅里叶级数系数或频谱系数，<span class="math inline">\(a_0\)</span>为直流或常数分量。</p>
@@ -1050,7 +1055,7 @@ tx(t)\leftrightarrow j\dfrac{d}{dw}X(jw)
 <p><span class="math display">\[
 \int^{+\infty}_{-\infty}|x(t)|^2dt=\dfrac{1}{2\pi}\int^{+\infty}_{-\infty}|X(jw)|^2dw
 \]</span></p>
-<p><em>对偶</em></p>
+<p><em>对称</em></p>
 <p><span class="math display">\[
 X(jt)\leftrightarrow 2\pi x(-w)
 \]</span></p>

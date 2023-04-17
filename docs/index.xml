@@ -40,9 +40,9 @@ n_2\)&lt;/span&gt;内的离散时间信号&lt;span class=&#34;math inline&#34;&g
 &lt;p&gt;离散的情况下，&lt;span class=&#34;math inline&#34;&gt;\(sin(\beta
 k)\)&lt;/span&gt;是否为周期信号？&lt;/p&gt;
 &lt;ol type=&#34;1&#34;&gt;
-&lt;li&gt;如果&lt;span class=&#34;math inline&#34;&gt;\(2\pi/k\)&lt;/span&gt;是整数，则周期为&lt;span class=&#34;math inline&#34;&gt;\(N=2\pi/\beta\)&lt;/span&gt;&lt;/li&gt;
-&lt;li&gt;如果&lt;span class=&#34;math inline&#34;&gt;\(2\pi/k\)&lt;/span&gt;是有理数，则周期为&lt;span class=&#34;math inline&#34;&gt;\(N=M(2\pi/\beta)\)&lt;/span&gt;，&lt;span class=&#34;math inline&#34;&gt;\(M\)&lt;/span&gt;为使&lt;span class=&#34;math inline&#34;&gt;\(N\)&lt;/span&gt;称为正整数的最小正整数&lt;/li&gt;
-&lt;li&gt;如果&lt;span class=&#34;math inline&#34;&gt;\(2\pi/k\)&lt;/span&gt;是无理数，则不是周期信号。&lt;/li&gt;
+&lt;li&gt;如果&lt;span class=&#34;math inline&#34;&gt;\(2\pi/\beta\)&lt;/span&gt;是整数，则周期为&lt;span class=&#34;math inline&#34;&gt;\(N=2\pi/\beta\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;如果&lt;span class=&#34;math inline&#34;&gt;\(2\pi/\beta\)&lt;/span&gt;是有理数，则周期为&lt;span class=&#34;math inline&#34;&gt;\(N=M(2\pi/\beta)\)&lt;/span&gt;，&lt;span class=&#34;math inline&#34;&gt;\(M\)&lt;/span&gt;为使&lt;span class=&#34;math inline&#34;&gt;\(N\)&lt;/span&gt;称为正整数的最小正整数&lt;/li&gt;
+&lt;li&gt;如果&lt;span class=&#34;math inline&#34;&gt;\(2\pi/\beta\)&lt;/span&gt;是无理数，则不是周期信号。&lt;/li&gt;
 &lt;/ol&gt;
 &lt;h3 id=&#34;偶信号与奇信号&#34;&gt;偶信号与奇信号&lt;/h3&gt;
 &lt;p&gt;任何信号都能分解成一个偶信号和一个奇信号的和。&lt;/p&gt;
@@ -312,7 +312,7 @@ P\cos(\beta t) + Q\sin(\beta t)
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;这个通常可以把&lt;span class=&#34;math inline&#34;&gt;\(y_p\)&lt;/span&gt;直接代入原方程求解系数。&lt;/p&gt;
 &lt;ol start=&#34;4&#34; type=&#34;1&#34;&gt;
-&lt;li&gt;激励为&lt;span class=&#34;math inline&#34;&gt;\(\delta,\varepsilon\)&lt;/span&gt;等时，由于我们的特解是零状态响应中的部分，所以都是在&lt;span class=&#34;math inline&#34;&gt;\(0_+\)&lt;/span&gt;时的取值，我们直接把激励在&lt;span class=&#34;math inline&#34;&gt;\(0_+\)&lt;/span&gt;的值写在等号右边，然后设定&lt;span class=&#34;math inline&#34;&gt;\(y_p=p\)&lt;/span&gt;（常数），解出&lt;span class=&#34;math inline&#34;&gt;\(p\)&lt;/span&gt;即可。显然，&lt;span class=&#34;math inline&#34;&gt;\(p\)&lt;/span&gt;的值会是&lt;span class=&#34;math inline&#34;&gt;\(\varepsilon\text{的系数}/y\text{的系数}\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;激励为&lt;span class=&#34;math inline&#34;&gt;\(\delta,\varepsilon\)&lt;/span&gt;等时，由于我们的特解是零状态响应中的部分，所以都是在&lt;span class=&#34;math inline&#34;&gt;\(0_+\)&lt;/span&gt;时的取值，我们直接把激励在&lt;span class=&#34;math inline&#34;&gt;\(0_+\)&lt;/span&gt;的值写在等号右边，然后设定&lt;span class=&#34;math inline&#34;&gt;\(y_p=p\)&lt;/span&gt;（常数），解出&lt;span class=&#34;math inline&#34;&gt;\(p\)&lt;/span&gt;即可。显然，&lt;span class=&#34;math inline&#34;&gt;\(p\)&lt;/span&gt;的值会是&lt;span class=&#34;math inline&#34;&gt;\(\varepsilon\text{的系数}/y\text{的系数}\)&lt;/span&gt;（因为&lt;span class=&#34;math inline&#34;&gt;\(y\)&lt;/span&gt;现在是常数，任意阶导数为&lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt;）。&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;注意，如果题目给的条件是&lt;span class=&#34;math inline&#34;&gt;\(y(0),y&amp;#39;(0)\)&lt;/span&gt;等条件，我们需要在全解中去求齐次解中设的参数。如果题目给的条件是&lt;span class=&#34;math inline&#34;&gt;\(y_{zi},y&amp;#39;_{zi}\)&lt;/span&gt;等条件，我们在齐次解中求参数即可。&lt;/p&gt;
 &lt;p&gt;如果给的激励包含多种情况？我自己的思考是，求出冲激响应即可，然后根据线性性质，将激励分别与冲激响应卷积，再相加。&lt;/p&gt;
@@ -453,6 +453,9 @@ j\beta}\)&lt;/span&gt;&lt;/li&gt;
 P\cos(\beta k) + Q\sin(\beta k)
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;这个通常可以把&lt;span class=&#34;math inline&#34;&gt;\(y_p\)&lt;/span&gt;直接代入原方程求解系数。&lt;/p&gt;
+&lt;ol start=&#34;4&#34; type=&#34;1&#34;&gt;
+&lt;li&gt;激励为&lt;span class=&#34;math inline&#34;&gt;\(\delta,\varepsilon\)&lt;/span&gt;时。如果只有&lt;span class=&#34;math inline&#34;&gt;\(\varepsilon\)&lt;/span&gt;，则我们直接设置&lt;span class=&#34;math inline&#34;&gt;\(y[k]\)&lt;/span&gt;为常数，与连续的情况不同，差分不会使得&lt;span class=&#34;math inline&#34;&gt;\(y[k-1]\)&lt;/span&gt;等于零。解出的特解就是&lt;span class=&#34;math inline&#34;&gt;\(y\)&lt;/span&gt;的各项系数之和分之&lt;span class=&#34;math inline&#34;&gt;\(\varepsilon\)&lt;/span&gt;的系数之和。如果只有&lt;span class=&#34;math inline&#34;&gt;\(\delta\)&lt;/span&gt;，则实际上是在求冲激响应，由后面可得，就是在求齐次解，不存在特解。如果两个都有，只管&lt;span class=&#34;math inline&#34;&gt;\(\varepsilon\)&lt;/span&gt;。&lt;/li&gt;
+&lt;/ol&gt;
 &lt;p&gt;注意，如果题目给的条件是&lt;span class=&#34;math inline&#34;&gt;\(y[k],y[k-1]\)&lt;/span&gt;等条件，我们需要在全解中去求齐次解中设的参数。如果题目给的条件是&lt;span class=&#34;math inline&#34;&gt;\(y_{zi}[k],y_{zi}[k-1]\)&lt;/span&gt;等条件，我们在齐次解中求参数即可。&lt;/p&gt;
 &lt;h3 id=&#34;零输入响应-1&#34;&gt;零输入响应&lt;/h3&gt;
 &lt;p&gt;同前&lt;/p&gt;
@@ -463,10 +466,12 @@ P\cos(\beta k) + Q\sin(\beta k)
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 h[k]-4h[k-1]+3h[k-2]=3\delta[k]-\delta[k-1]
 \]&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;由隐含条件（二阶下），&lt;span class=&#34;math inline&#34;&gt;\(h(-1)=h(-2)=0\)&lt;/span&gt;，又由上式，我们可以求出&lt;span class=&#34;math inline&#34;&gt;\(h[0],h[1]\)&lt;/span&gt;。在对上式用传统方法求出齐次解。&lt;/p&gt;
-&lt;p&gt;由于代入求解参数时代入的是&lt;span class=&#34;math inline&#34;&gt;\(h[0],h[1]\)&lt;/span&gt;，对于&lt;span class=&#34;math inline&#34;&gt;\(k=1,k=0\)&lt;/span&gt;时方程也成立（实际上单位脉冲响应和零输入响应就是一个东西），所以单位脉冲响应就是&lt;span class=&#34;math inline&#34;&gt;\(h[k] = [-1+4(3)^k]\varepsilon[k]\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;由隐含条件（二阶下），&lt;span class=&#34;math inline&#34;&gt;\(h[-1]=h[-2]=0\)&lt;/span&gt;，又由上式，我们可以求出&lt;span class=&#34;math inline&#34;&gt;\(h[0],h[1]\)&lt;/span&gt;。再对上式用传统方法求出齐次解。&lt;/p&gt;
+&lt;p&gt;由于代入求解参数时代入的是&lt;span class=&#34;math inline&#34;&gt;\(h[0],h[1]\)&lt;/span&gt;，对于&lt;span class=&#34;math inline&#34;&gt;\(k=1,k=0\)&lt;/span&gt;时方程也成立（实际上单位脉冲响应和零输入响应、齐次解具有同样的形式，不需要特解），所以单位脉冲响应就是&lt;span class=&#34;math inline&#34;&gt;\(h[k] = [-1+4(3)^k]\varepsilon[k]\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;当然，如果等式右边出现的是&lt;span class=&#34;math inline&#34;&gt;\(f[k-2]+f[k-1]\)&lt;/span&gt;这样的，我们就要求出&lt;span class=&#34;math inline&#34;&gt;\(h[2],h[1]\)&lt;/span&gt;，然后用这个代入求解齐次解的参数。&lt;/p&gt;
+&lt;p&gt;或者我们还是用老办法，求出&lt;span class=&#34;math inline&#34;&gt;\(h_1[k]-4h_1[k-1]+3h_1[k-2]=\delta[k]\)&lt;/span&gt;，中&lt;span class=&#34;math inline&#34;&gt;\(h_1[k]\)&lt;/span&gt;的表达式（需要用&lt;span class=&#34;math inline&#34;&gt;\(h[0],h[-1]\)&lt;/span&gt;求出参数），然后在根据线性性质求出&lt;span class=&#34;math inline&#34;&gt;\(h[k]\)&lt;/span&gt;&lt;/p&gt;
 &lt;h3 id=&#34;差分方程求单位阶跃响应&#34;&gt;差分方程求单位阶跃响应&lt;/h3&gt;
-&lt;p&gt;阶跃响应和差分方程的全解是一个东西。我们求出全解即可。注意隐含条件（二阶下）是&lt;span class=&#34;math inline&#34;&gt;\(g[-1]=g[-2]=0\)&lt;/span&gt;，我们可以求出&lt;span class=&#34;math inline&#34;&gt;\(g[0],g[1]\)&lt;/span&gt;，代入求出参数。&lt;/p&gt;
+&lt;p&gt;阶跃响应和差分方程的全解是一个形式。我们求出全解即可。注意隐含条件（二阶下）是&lt;span class=&#34;math inline&#34;&gt;\(g[-1]=g[-2]=0\)&lt;/span&gt;，我们可以求出&lt;span class=&#34;math inline&#34;&gt;\(g[0],g[1]\)&lt;/span&gt;，代入求出参数。&lt;/p&gt;
 &lt;p&gt;或者由差分特性&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 g[k] = \sum^k_{i=-\infty}h[i]
@@ -633,7 +638,7 @@ t)+\sum^\infty_{n=1}b_n\sin(n\Omega t) = \dfrac{A_0}{2} +
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;其中（指数表示的那个）&lt;span class=&#34;math inline&#34;&gt;\(a_n\)&lt;/span&gt;由以下公式确定&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
-a_n = \dfrac{1}{T}\int^T_0x(t)e^{-jnw0t}dt
+a_n = \dfrac{1}{T}\int^T_0x(t)e^{-jnw_0t}dt
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;或者也可以是在任意一个最小正周期内的积分，记作&lt;span class=&#34;math inline&#34;&gt;\(\int_T\)&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(a_n\)&lt;/span&gt;称为傅里叶级数系数或频谱系数，&lt;span class=&#34;math inline&#34;&gt;\(a_0\)&lt;/span&gt;为直流或常数分量。&lt;/p&gt;
@@ -931,7 +936,7 @@ tx(t)\leftrightarrow j\dfrac{d}{dw}X(jw)
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 \int^{+\infty}_{-\infty}|x(t)|^2dt=\dfrac{1}{2\pi}\int^{+\infty}_{-\infty}|X(jw)|^2dw
 \]&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;对偶&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;对称&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 X(jt)\leftrightarrow 2\pi x(-w)
 \]&lt;/span&gt;&lt;/p&gt;
@@ -22519,7 +22524,7 @@ std::pair&amp;lt;int,std::string&amp;gt;等。其定义是在&amp;lt;utility&amp
 &lt;/tr&gt;
 &lt;tr class=&#34;even&#34;&gt;
 &lt;td&gt;^&lt;/td&gt;
-&lt;td&gt;在字符串开头匹配&lt;/td&gt;
+&lt;td&gt;在字符串开头匹配（在方括号里除外）&lt;/td&gt;
 &lt;td&gt;^Dear&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;odd&#34;&gt;
@@ -22558,16 +22563,21 @@ std::pair&amp;lt;int,std::string&amp;gt;等。其定义是在&amp;lt;utility&amp
 &lt;td&gt;[aeiou],[0-9A-Za-z]&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;even&#34;&gt;
+&lt;td&gt;[^…]&lt;/td&gt;
+&lt;td&gt;匹配除了其中字符的任意字符&lt;/td&gt;
+&lt;td&gt;[^aeiou]&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
 &lt;td&gt;\n&lt;/td&gt;
 &lt;td&gt;匹配回车符&lt;/td&gt;
 &lt;td&gt;&lt;/td&gt;
 &lt;/tr&gt;
-&lt;tr class=&#34;odd&#34;&gt;
+&lt;tr class=&#34;even&#34;&gt;
 &lt;td&gt;\s&lt;/td&gt;
 &lt;td&gt;匹配任何空白字符&lt;/td&gt;
 &lt;td&gt;&lt;/td&gt;
 &lt;/tr&gt;
-&lt;tr class=&#34;even&#34;&gt;
+&lt;tr class=&#34;odd&#34;&gt;
 &lt;td&gt;\S&lt;/td&gt;
 &lt;td&gt;匹配任何非空字符&lt;/td&gt;
 &lt;td&gt;&lt;/td&gt;
@@ -22580,6 +22590,8 @@ std::pair&amp;lt;int,std::string&amp;gt;等。其定义是在&amp;lt;utility&amp
 &lt;h4 id=&#34;stdregex&#34;&gt;std::regex&lt;/h4&gt;
 &lt;p&gt;一个类型，可以设定匹配的模式串。&lt;/p&gt;
 &lt;div class=&#34;sourceCode&#34; id=&#34;cb84&#34;&gt;&lt;pre class=&#34;sourceCode cpp&#34;&gt;&lt;code class=&#34;sourceCode cpp&#34;&gt;&lt;span id=&#34;cb84-1&#34;&gt;&lt;a href=&#34;#cb84-1&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;&lt;span class=&#34;bu&#34;&gt;std::&lt;/span&gt;regex&lt;span class=&#34;op&#34;&gt; &lt;/span&gt;pattern&lt;span class=&#34;op&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;st&#34;&gt;&amp;#34;.*&amp;lt;.*?&amp;gt;.*&amp;#34;&lt;/span&gt;&lt;span class=&#34;op&#34;&gt;);&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;后续如果要更换pattern的内容，可以使用pattern.assign(“sth.”)或者直接pattern
+= “sth.”&lt;/p&gt;
 &lt;h4 id=&#34;stdsmatch&#34;&gt;std::smatch&lt;/h4&gt;
 &lt;p&gt;一个类型，可以用于接收匹配的结果。&lt;/p&gt;
 &lt;h4 id=&#34;stdregex_match&#34;&gt;std::regex_match&lt;/h4&gt;
@@ -22609,6 +22621,41 @@ std::pair&amp;lt;int,std::string&amp;gt;等。其定义是在&amp;lt;utility&amp
 &lt;p&gt;s为源字符串，p为模式串，rs为匹配到的子串将会被替换成的字符串。&lt;/p&gt;
 &lt;p&gt;返回替换后的字符串。&lt;/p&gt;
 &lt;p&gt;这里会替换一切匹配到的子串，不像search一样麻烦。&lt;/p&gt;
+&lt;p&gt;如果我们只替换被匹配的子串的一部分，我们可以用如下方法&lt;/p&gt;
+&lt;div class=&#34;sourceCode&#34; id=&#34;cb89&#34;&gt;&lt;pre class=&#34;sourceCode cpp&#34;&gt;&lt;code class=&#34;sourceCode cpp&#34;&gt;&lt;span id=&#34;cb89-1&#34;&gt;&lt;a href=&#34;#cb89-1&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;string s &lt;span class=&#34;op&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;st&#34;&gt;&amp;#34;abcd123abcd&amp;#34;&lt;/span&gt;&lt;span class=&#34;op&#34;&gt;;&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&#34;cb89-2&#34;&gt;&lt;a href=&#34;#cb89-2&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;regex p&lt;span class=&#34;op&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;st&#34;&gt;&amp;#34;(abcd)([0-9]+)&amp;#34;&lt;/span&gt;&lt;span class=&#34;op&#34;&gt;);&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&#34;cb89-3&#34;&gt;&lt;a href=&#34;#cb89-3&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;string ss &lt;span class=&#34;op&#34;&gt;=&lt;/span&gt; regex_replace&lt;span class=&#34;op&#34;&gt;(&lt;/span&gt;s&lt;span class=&#34;op&#34;&gt;,&lt;/span&gt;p&lt;span class=&#34;op&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;st&#34;&gt;&amp;#34;a$2&amp;#34;&lt;/span&gt;&lt;span class=&#34;op&#34;&gt;);&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;则我们的ss会变成a123abcd。$2代表的是第二个捕捉组的意思（这里下标又是从1开始的，而不是0）。捕捉组是括号括起来的算一组。&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr class=&#34;header&#34;&gt;
+&lt;th&gt;转义符&lt;/th&gt;
+&lt;th&gt;含义&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td&gt;$n&lt;/td&gt;
+&lt;td&gt;表示第n个捕捉组捕捉到的字符串&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td&gt;$&amp;amp;&lt;/td&gt;
+&lt;td&gt;表示匹配到的整个子串，相当于$0&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td&gt;$`&lt;/td&gt;
+&lt;td&gt;在源字符串中，在匹配到的子串左边的部分&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td&gt;$&amp;#39;&lt;/td&gt;
+&lt;td&gt;在源字符串中，在匹配到的子串右边的部分&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td&gt;$$&lt;/td&gt;
+&lt;td&gt;美元符号&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
 
 
 </description>

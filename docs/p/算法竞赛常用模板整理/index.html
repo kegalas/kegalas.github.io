@@ -112,7 +112,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 29 分钟
+                    阅读时长: 30 分钟
                 </time>
             </div>
         
@@ -3280,7 +3280,7 @@ std::pair&lt;int,std::string&gt;等。其定义是在&lt;utility&gt;中，但是
 </tr>
 <tr class="even">
 <td>^</td>
-<td>在字符串开头匹配</td>
+<td>在字符串开头匹配（在方括号里除外）</td>
 <td>^Dear</td>
 </tr>
 <tr class="odd">
@@ -3319,16 +3319,21 @@ std::pair&lt;int,std::string&gt;等。其定义是在&lt;utility&gt;中，但是
 <td>[aeiou],[0-9A-Za-z]</td>
 </tr>
 <tr class="even">
+<td>[^…]</td>
+<td>匹配除了其中字符的任意字符</td>
+<td>[^aeiou]</td>
+</tr>
+<tr class="odd">
 <td>\n</td>
 <td>匹配回车符</td>
 <td></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>\s</td>
 <td>匹配任何空白字符</td>
 <td></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>\S</td>
 <td>匹配任何非空字符</td>
 <td></td>
@@ -3341,6 +3346,8 @@ std::pair&lt;int,std::string&gt;等。其定义是在&lt;utility&gt;中，但是
 <h4 id="stdregex">std::regex</h4>
 <p>一个类型，可以设定匹配的模式串。</p>
 <div class="sourceCode" id="cb84"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="bu">std::</span>regex<span class="op"> </span>pattern<span class="op">(</span><span class="st">&#34;.*&lt;.*?&gt;.*&#34;</span><span class="op">);</span></span></code></pre></div>
+<p>后续如果要更换pattern的内容，可以使用pattern.assign(“sth.”)或者直接pattern
+= “sth.”</p>
 <h4 id="stdsmatch">std::smatch</h4>
 <p>一个类型，可以用于接收匹配的结果。</p>
 <h4 id="stdregex_match">std::regex_match</h4>
@@ -3370,6 +3377,41 @@ std::pair&lt;int,std::string&gt;等。其定义是在&lt;utility&gt;中，但是
 <p>s为源字符串，p为模式串，rs为匹配到的子串将会被替换成的字符串。</p>
 <p>返回替换后的字符串。</p>
 <p>这里会替换一切匹配到的子串，不像search一样麻烦。</p>
+<p>如果我们只替换被匹配的子串的一部分，我们可以用如下方法</p>
+<div class="sourceCode" id="cb89"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a>string s <span class="op">=</span> <span class="st">&#34;abcd123abcd&#34;</span><span class="op">;</span></span>
+<span id="cb89-2"><a href="#cb89-2" aria-hidden="true" tabindex="-1"></a>regex p<span class="op">(</span><span class="st">&#34;(abcd)([0-9]+)&#34;</span><span class="op">);</span></span>
+<span id="cb89-3"><a href="#cb89-3" aria-hidden="true" tabindex="-1"></a>string ss <span class="op">=</span> regex_replace<span class="op">(</span>s<span class="op">,</span>p<span class="op">,</span><span class="st">&#34;a$2&#34;</span><span class="op">);</span></span></code></pre></div>
+<p>则我们的ss会变成a123abcd。$2代表的是第二个捕捉组的意思（这里下标又是从1开始的，而不是0）。捕捉组是括号括起来的算一组。</p>
+<table>
+<thead>
+<tr class="header">
+<th>转义符</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>$n</td>
+<td>表示第n个捕捉组捕捉到的字符串</td>
+</tr>
+<tr class="even">
+<td>$&amp;</td>
+<td>表示匹配到的整个子串，相当于$0</td>
+</tr>
+<tr class="odd">
+<td>$`</td>
+<td>在源字符串中，在匹配到的子串左边的部分</td>
+</tr>
+<tr class="even">
+<td>$&#39;</td>
+<td>在源字符串中，在匹配到的子串右边的部分</td>
+</tr>
+<tr class="odd">
+<td>$$</td>
+<td>美元符号</td>
+</tr>
+</tbody>
+</table>
 
 
 
