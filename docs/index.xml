@@ -273,7 +273,7 @@ y_h = Ce^{\lambda t}
 y_h = (C_1t+C_0)e^{\lambda t}
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;ol start=&#34;3&#34; type=&#34;1&#34;&gt;
-&lt;li&gt;如果是一对共轭负根&lt;span class=&#34;math inline&#34;&gt;\(\lambda_{1,2} =
+&lt;li&gt;如果是一对共轭复根&lt;span class=&#34;math inline&#34;&gt;\(\lambda_{1,2} =
 \alpha\pm j\beta\)&lt;/span&gt;，则&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
@@ -312,7 +312,7 @@ P\cos(\beta t) + Q\sin(\beta t)
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;这个通常可以把&lt;span class=&#34;math inline&#34;&gt;\(y_p\)&lt;/span&gt;直接代入原方程求解系数。&lt;/p&gt;
 &lt;ol start=&#34;4&#34; type=&#34;1&#34;&gt;
-&lt;li&gt;激励为&lt;span class=&#34;math inline&#34;&gt;\(\delta,\varepsilon\)&lt;/span&gt;等时，由于我们的特解是零状态响应中的部分，所以都是在&lt;span class=&#34;math inline&#34;&gt;\(0_+\)&lt;/span&gt;时的取值，我们直接把激励在&lt;span class=&#34;math inline&#34;&gt;\(0_+\)&lt;/span&gt;的值写在等号右边，然后设定&lt;span class=&#34;math inline&#34;&gt;\(y_p=p\)&lt;/span&gt;（常数），解出&lt;span class=&#34;math inline&#34;&gt;\(p\)&lt;/span&gt;即可。显然，&lt;span class=&#34;math inline&#34;&gt;\(p\)&lt;/span&gt;的值会是&lt;span class=&#34;math inline&#34;&gt;\(\varepsilon\text{的系数}/y\text{的系数}\)&lt;/span&gt;（因为&lt;span class=&#34;math inline&#34;&gt;\(y\)&lt;/span&gt;现在是常数，任意阶导数为&lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt;）。&lt;/li&gt;
+&lt;li&gt;激励为&lt;span class=&#34;math inline&#34;&gt;\(\delta,\varepsilon\)&lt;/span&gt;等时，由于我们的特解是零状态响应中的部分，所以都是在&lt;span class=&#34;math inline&#34;&gt;\(0_+\)&lt;/span&gt;时的取值，我们直接把激励在&lt;span class=&#34;math inline&#34;&gt;\(0_+\)&lt;/span&gt;的值写在等号右边，然后设定&lt;span class=&#34;math inline&#34;&gt;\(y_p=p\)&lt;/span&gt;（常数），解出&lt;span class=&#34;math inline&#34;&gt;\(p\)&lt;/span&gt;即可。显然，&lt;span class=&#34;math inline&#34;&gt;\(p\)&lt;/span&gt;的值会是&lt;span class=&#34;math inline&#34;&gt;\(\varepsilon\text{的系数}/y\text{的系数}\)&lt;/span&gt;（因为&lt;span class=&#34;math inline&#34;&gt;\(y\)&lt;/span&gt;现在是常数，任意阶导数为&lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt;）。如果是&lt;span class=&#34;math inline&#34;&gt;\(e^t\varepsilon(t)\)&lt;/span&gt;这种形式又怎么办呢，还是老话，我们求特解是&lt;span class=&#34;math inline&#34;&gt;\(0_+\)&lt;/span&gt;时的值，此时看做激励为&lt;span class=&#34;math inline&#34;&gt;\(e^t\)&lt;/span&gt;，然后用上面的特解。&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;注意，如果题目给的条件是&lt;span class=&#34;math inline&#34;&gt;\(y(0),y&amp;#39;(0)\)&lt;/span&gt;等条件，我们需要在全解中去求齐次解中设的参数。如果题目给的条件是&lt;span class=&#34;math inline&#34;&gt;\(y_{zi},y&amp;#39;_{zi}\)&lt;/span&gt;等条件，我们在齐次解中求参数即可。&lt;/p&gt;
 &lt;p&gt;如果给的激励包含多种情况？我自己的思考是，求出冲激响应即可，然后根据线性性质，将激励分别与冲激响应卷积，再相加。&lt;/p&gt;
@@ -364,7 +364,7 @@ h_1&amp;#39;&amp;#39;+a_1h_1&amp;#39;+a_0h_1 = \delta
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 h_1(0_-)=h_1&amp;#39;(0-) = 0
 \]&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;然后我们使用之前提到的解法求出&lt;span class=&#34;math inline&#34;&gt;\(h_1\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;计算出&lt;span class=&#34;math inline&#34;&gt;\(h_1(0_+),h_1&amp;#39;(0_+)\)&lt;/span&gt;，然后我们使用之前提到的解法求出&lt;span class=&#34;math inline&#34;&gt;\(h_1\)&lt;/span&gt;，不过显然这里特解为&lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt;，和齐次解具有同样的形式。&lt;/p&gt;
 &lt;ol start=&#34;2&#34; type=&#34;1&#34;&gt;
 &lt;li&gt;根据线性性质和微分特性，可知&lt;span class=&#34;math inline&#34;&gt;\(h =
 b_2h_1&amp;#39;&amp;#39;+b_1h_1&amp;#39;+b_0h_1\)&lt;/span&gt;。不过注意这个&lt;span class=&#34;math inline&#34;&gt;\(b_i\)&lt;/span&gt;是常数，如果我们等式右边是&lt;span class=&#34;math inline&#34;&gt;\(b_2f&amp;#39;&amp;#39;+b_0f+q\)&lt;/span&gt;，这个&lt;span class=&#34;math inline&#34;&gt;\(q\)&lt;/span&gt;不是&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;的导数（其他情况类似），则我们的&lt;span class=&#34;math inline&#34;&gt;\(h=b_2h_1&amp;#39;&amp;#39;+b_0h_1+q*h_1\)&lt;/span&gt;。当然你也可以全部都做卷积，只是不是把&lt;span class=&#34;math inline&#34;&gt;\(b_2,b_1,b_0\)&lt;/span&gt;拿来做卷积，而是把整体的&lt;span class=&#34;math inline&#34;&gt;\(b_2f&amp;#39;&amp;#39;,b_1f&amp;#39;,b_0f\)&lt;/span&gt;拿来做卷积。如果&lt;span class=&#34;math inline&#34;&gt;\(f=h\)&lt;/span&gt;，卷积的结果就是&lt;span class=&#34;math inline&#34;&gt;\(b_2h_1&amp;#39;&amp;#39;+b_1h_1&amp;#39;+b_0h_1\)&lt;/span&gt;&lt;/li&gt;
@@ -380,7 +380,7 @@ g_1&amp;#39;&amp;#39;+a_1g_1&amp;#39;+a_0g_1 = \varepsilon
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 g_1(0_-)=g_1&amp;#39;(0-) = 0
 \]&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;然后我们使用之前提到的解法求出&lt;span class=&#34;math inline&#34;&gt;\(g_1\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;计算出&lt;span class=&#34;math inline&#34;&gt;\(g_1(0_+),g_1&amp;#39;(0_+)\)&lt;/span&gt;，然后我们使用之前提到的解法求出&lt;span class=&#34;math inline&#34;&gt;\(g_1\)&lt;/span&gt;&lt;/p&gt;
 &lt;ol start=&#34;2&#34; type=&#34;1&#34;&gt;
 &lt;li&gt;根据线性性质和微分特性，可知&lt;span class=&#34;math inline&#34;&gt;\(g =
 b_2g_1&amp;#39;&amp;#39;+b_1g_1&amp;#39;+b_0g_1\)&lt;/span&gt;&lt;/li&gt;
@@ -416,7 +416,7 @@ y_h = C\lambda^k
 y_h = (C_1k+C_0)\lambda^k
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;ol start=&#34;3&#34; type=&#34;1&#34;&gt;
-&lt;li&gt;如果是一对共轭负根&lt;span class=&#34;math inline&#34;&gt;\(\lambda_{1,2} =
+&lt;li&gt;如果是一对共轭复根&lt;span class=&#34;math inline&#34;&gt;\(\lambda_{1,2} =
 \alpha\pm j\beta\)&lt;/span&gt;，则&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
@@ -442,7 +442,7 @@ Pa^k
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;如果&lt;span class=&#34;math inline&#34;&gt;\(a\)&lt;/span&gt;等于特征根&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
-(P_1t+P_0)a^k
+(P_1k+P_0)a^k
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;ol start=&#34;3&#34; type=&#34;1&#34;&gt;
 &lt;li&gt;激励为&lt;span class=&#34;math inline&#34;&gt;\(cos(\beta k)\)&lt;/span&gt;或&lt;span class=&#34;math inline&#34;&gt;\(\sin(\beta
@@ -454,7 +454,7 @@ P\cos(\beta k) + Q\sin(\beta k)
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;这个通常可以把&lt;span class=&#34;math inline&#34;&gt;\(y_p\)&lt;/span&gt;直接代入原方程求解系数。&lt;/p&gt;
 &lt;ol start=&#34;4&#34; type=&#34;1&#34;&gt;
-&lt;li&gt;激励为&lt;span class=&#34;math inline&#34;&gt;\(\delta,\varepsilon\)&lt;/span&gt;时。如果只有&lt;span class=&#34;math inline&#34;&gt;\(\varepsilon\)&lt;/span&gt;，则我们直接设置&lt;span class=&#34;math inline&#34;&gt;\(y[k]\)&lt;/span&gt;为常数，与连续的情况不同，差分不会使得&lt;span class=&#34;math inline&#34;&gt;\(y[k-1]\)&lt;/span&gt;等于零。解出的特解就是&lt;span class=&#34;math inline&#34;&gt;\(y\)&lt;/span&gt;的各项系数之和分之&lt;span class=&#34;math inline&#34;&gt;\(\varepsilon\)&lt;/span&gt;的系数之和。如果只有&lt;span class=&#34;math inline&#34;&gt;\(\delta\)&lt;/span&gt;，则实际上是在求冲激响应，由后面可得，就是在求齐次解，不存在特解。如果两个都有，只管&lt;span class=&#34;math inline&#34;&gt;\(\varepsilon\)&lt;/span&gt;。&lt;/li&gt;
+&lt;li&gt;激励为&lt;span class=&#34;math inline&#34;&gt;\(\delta,\varepsilon\)&lt;/span&gt;时。如果只有&lt;span class=&#34;math inline&#34;&gt;\(\varepsilon\)&lt;/span&gt;，则我们直接设置&lt;span class=&#34;math inline&#34;&gt;\(y[k]\)&lt;/span&gt;为常数，与连续的情况不同，差分不会使得&lt;span class=&#34;math inline&#34;&gt;\(y[k-1]\)&lt;/span&gt;等于零。解出的特解就是&lt;span class=&#34;math inline&#34;&gt;\(y\)&lt;/span&gt;的各项系数之和分之&lt;span class=&#34;math inline&#34;&gt;\(\varepsilon\)&lt;/span&gt;的系数之和（我确定这个在激励只有&lt;span class=&#34;math inline&#34;&gt;\(\varepsilon[k]\)&lt;/span&gt;的时候是成立的，如果有&lt;span class=&#34;math inline&#34;&gt;\(\varepsilon[k-1]\)&lt;/span&gt;等东西成不成立我不确定，没找到网上和教材中讨论这个）。如果只有&lt;span class=&#34;math inline&#34;&gt;\(\delta\)&lt;/span&gt;，则实际上是在求冲激响应，由后面可得，就是在求齐次解形式的解，不存在特解。如果两个都有，只管&lt;span class=&#34;math inline&#34;&gt;\(\varepsilon\)&lt;/span&gt;（这是我的猜测，没找到教材讨论这个，我们或许还可以考虑&lt;span class=&#34;math inline&#34;&gt;\(\delta[k]=\varepsilon[k]-\varepsilon[k-1]\)&lt;/span&gt;）。&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;注意，如果题目给的条件是&lt;span class=&#34;math inline&#34;&gt;\(y[k],y[k-1]\)&lt;/span&gt;等条件，我们需要在全解中去求齐次解中设的参数。如果题目给的条件是&lt;span class=&#34;math inline&#34;&gt;\(y_{zi}[k],y_{zi}[k-1]\)&lt;/span&gt;等条件，我们在齐次解中求参数即可。&lt;/p&gt;
 &lt;h3 id=&#34;零输入响应-1&#34;&gt;零输入响应&lt;/h3&gt;
@@ -472,6 +472,7 @@ h[k]-4h[k-1]+3h[k-2]=3\delta[k]-\delta[k-1]
 &lt;p&gt;或者我们还是用老办法，求出&lt;span class=&#34;math inline&#34;&gt;\(h_1[k]-4h_1[k-1]+3h_1[k-2]=\delta[k]\)&lt;/span&gt;，中&lt;span class=&#34;math inline&#34;&gt;\(h_1[k]\)&lt;/span&gt;的表达式（需要用&lt;span class=&#34;math inline&#34;&gt;\(h[0],h[-1]\)&lt;/span&gt;求出参数），然后在根据线性性质求出&lt;span class=&#34;math inline&#34;&gt;\(h[k]\)&lt;/span&gt;&lt;/p&gt;
 &lt;h3 id=&#34;差分方程求单位阶跃响应&#34;&gt;差分方程求单位阶跃响应&lt;/h3&gt;
 &lt;p&gt;阶跃响应和差分方程的全解是一个形式。我们求出全解即可。注意隐含条件（二阶下）是&lt;span class=&#34;math inline&#34;&gt;\(g[-1]=g[-2]=0\)&lt;/span&gt;，我们可以求出&lt;span class=&#34;math inline&#34;&gt;\(g[0],g[1]\)&lt;/span&gt;，代入求出参数。&lt;/p&gt;
+&lt;p&gt;作为区分，激励为&lt;span class=&#34;math inline&#34;&gt;\(\delta[k]\)&lt;/span&gt;时要求出&lt;span class=&#34;math inline&#34;&gt;\(h[0],h[-1]\)&lt;/span&gt;，激励为&lt;span class=&#34;math inline&#34;&gt;\(\varepsilon[k]\)&lt;/span&gt;时要求出&lt;span class=&#34;math inline&#34;&gt;\(h[1],h[0]\)&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;或者由差分特性&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 g[k] = \sum^k_{i=-\infty}h[i]
@@ -834,7 +835,15 @@ x(t) = \sum^{+\infty}_{k=-\infty}a_ke^{jkw_0t}
 &lt;p&gt;频谱分为两个函数图像，即&lt;span class=&#34;math inline&#34;&gt;\(|a_k|\sim\omega\)&lt;/span&gt;的幅度谱和&lt;span class=&#34;math inline&#34;&gt;\(\varphi_k\sim\omega\)&lt;/span&gt;的相位谱（&lt;span class=&#34;math inline&#34;&gt;\(\omega=k\omega_0,\varphi_k=k\omega_0
 t,k=0,\pm1,\pm2,\cdots\)&lt;/span&gt;）&lt;/p&gt;
 &lt;h2 id=&#34;滤波&#34;&gt;滤波&lt;/h2&gt;
-&lt;p&gt;TODO&lt;/p&gt;
+&lt;p&gt;按我的理解，简单来说，就是弄一个系统，使得它的频率响应&lt;span class=&#34;math inline&#34;&gt;\(H(jw)\)&lt;/span&gt;弄成你想要滤波的效果。&lt;/p&gt;
+&lt;p&gt;比如，你想要弄一个理想低通滤波器，那么你就设计一个系统，使得其&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+H(jw) = \begin{cases}
+1 &amp;amp; \text{ if } |w|\leq w_c \\
+0 &amp;amp; \text{ if } |w| &amp;gt;w_c
+\end{cases}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;这样输出&lt;span class=&#34;math inline&#34;&gt;\(y(t)=H(jw)x(t)\)&lt;/span&gt;，就只会保留&lt;span class=&#34;math inline&#34;&gt;\(x(t)\)&lt;/span&gt;中频率在&lt;span class=&#34;math inline&#34;&gt;\([-w_c,w_c]\)&lt;/span&gt;之间的部分。&lt;/p&gt;
 &lt;h1 id=&#34;连续时间傅里叶变换&#34;&gt;连续时间傅里叶变换&lt;/h1&gt;
 &lt;h2 id=&#34;非周期信号的表示&#34;&gt;非周期信号的表示&lt;/h2&gt;
 &lt;p&gt;可以把非周期信号当成一个周期信号在周期任意大时的极限。&lt;/p&gt;
@@ -867,6 +876,7 @@ X(jw) = \int^{+\infty}_{-\infty}x(t)e^{-jwt}dt
 &lt;li&gt;任何有限区间内，&lt;span class=&#34;math inline&#34;&gt;\(x(t)\)&lt;/span&gt;只有有限个最大值和最小值&lt;/li&gt;
 &lt;li&gt;任何有限区间内，&lt;span class=&#34;math inline&#34;&gt;\(x(t)\)&lt;/span&gt;有有限个不连续点，并且在每个不连续点处都必须是有限值。&lt;/li&gt;
 &lt;/ol&gt;
+&lt;p&gt;但有些函数其实不满足，也可以收敛，有傅里叶变换，比如阶跃函数。&lt;/p&gt;
 &lt;h2 id=&#34;周期信号的傅立叶变换&#34;&gt;周期信号的傅立叶变换&lt;/h2&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 x(t) = \sum^{+\infty}_{k=-\infty}a_ke^{jkw_0t}
@@ -1022,6 +1032,53 @@ H(jw) = \dfrac{Y(jw)}{X(jw)} =
 &lt;p&gt;其中第二个等号后面的式子可以把微分方程的两边全部取傅立叶变换，再提项得到。&lt;/p&gt;
 &lt;p&gt;有了&lt;span class=&#34;math inline&#34;&gt;\(H(jw)\)&lt;/span&gt;，我们就容易求出对于任意一个输入信号&lt;span class=&#34;math inline&#34;&gt;\(f(t)\)&lt;/span&gt;，这个系统的零状态响应。&lt;/p&gt;
 &lt;p&gt;要么我们可以&lt;span class=&#34;math inline&#34;&gt;\(Y(jw)=H(jw)F(jw)\)&lt;/span&gt;再傅立叶逆变换得到&lt;span class=&#34;math inline&#34;&gt;\(y(t)\)&lt;/span&gt;，要么&lt;span class=&#34;math inline&#34;&gt;\(y(t)=H(jw)f(t)\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(H(jw)\)&lt;/span&gt;一般是复函数，记为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+H(jw)=|H(jw)|e^{j\theta(w)}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(|H(jw)|\)&lt;/span&gt;称为幅频特性或者幅频响应，是&lt;span class=&#34;math inline&#34;&gt;\(w\)&lt;/span&gt;的偶函数。&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(\theta(w)\)&lt;/span&gt;称为相频特性或相频响应，是&lt;span class=&#34;math inline&#34;&gt;\(w\)&lt;/span&gt;的奇函数。&lt;/p&gt;
+&lt;h2 id=&#34;帕塞瓦尔能量方程&#34;&gt;帕塞瓦尔能量方程&lt;/h2&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+E = \lim_{T\to\infty}\int^T_{-T}|f(t)|^2dt =
+\int^\infty_{-\infty}|f(t)|^2dt =
+\dfrac{1}{2\pi}\int^\infty_{-\infty}|F(jw)|^2dw
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h2 id=&#34;能量频谱&#34;&gt;能量频谱&lt;/h2&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\mathcal{E}(w) = |F(jw)|^2
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;根据前面的相关定理，我们可以得到&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+R(\tau)\leftrightarrow \mathcal{E}(w)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;即能量信号的自相关函数与其能量谱是一对傅里叶变换。&lt;/p&gt;
+&lt;h2 id=&#34;频带宽度&#34;&gt;频带宽度&lt;/h2&gt;
+&lt;p&gt;在满足一定失真条件下，信号可以用某段频率范围的信号来表示，此频率范围称为频带宽度。&lt;/p&gt;
+&lt;p&gt;信号频谱的距离原点最近的两个零点之间集中了信号的绝大部分能量。信号的功率集中在低频段。&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;一般把第一个零点作为信号的频带宽度&lt;/li&gt;
+&lt;li&gt;对于一般周期信号，将幅度下降为&lt;span class=&#34;math inline&#34;&gt;\(\dfrac{1}{10}|F_n|_{\text{max}}\)&lt;/span&gt;的频率定义为频带宽度&lt;/li&gt;
+&lt;li&gt;系统的通频带&lt;span class=&#34;math inline&#34;&gt;\(&amp;gt;\)&lt;/span&gt;信号的带宽，才能不失真。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;功率频谱&#34;&gt;功率频谱&lt;/h2&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+P = \lim_{T\to\infty}\dfrac{1}{T}\int_T f^2(t)dt =
+\dfrac{1}{2\pi}\int^\infty_{-\infty}\lim_{T\to\infty}\dfrac{|F_T(jw)|^2}{T}dw
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;记&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\mathcal{P}(w) = \lim_{T\to\infty}\dfrac{|F_T(jw)|^2}{T}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;也可以证明&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+R(\tau)\leftrightarrow\mathcal{P}(w)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;即功率信号的自相关函数与其功率谱是一对傅里叶变换。&lt;/p&gt;
+&lt;h1 id=&#34;离散时间傅里叶变换&#34;&gt;离散时间傅里叶变换&lt;/h1&gt;
+&lt;h1 id=&#34;信号与系统的时域和频域特性&#34;&gt;信号与系统的时域和频域特性&lt;/h1&gt;
+&lt;h1 id=&#34;采样&#34;&gt;采样&lt;/h1&gt;
+&lt;h2 id=&#34;采样定理&#34;&gt;采样定理&lt;/h2&gt;
 
 
 </description>
@@ -19481,7 +19538,7 @@ $$&lt;/p&gt;
 &lt;span id=&#34;cb3-17&#34;&gt;&lt;a href=&#34;#cb3-17&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;        assi&lt;span class=&#34;op&#34;&gt;.&lt;/span&gt;push_back&lt;span class=&#34;op&#34;&gt;(&lt;/span&gt;a&lt;span class=&#34;op&#34;&gt;);&lt;/span&gt;&lt;/span&gt;
 &lt;span id=&#34;cb3-18&#34;&gt;&lt;a href=&#34;#cb3-18&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;    &lt;span class=&#34;op&#34;&gt;}&lt;/span&gt;&lt;/span&gt;
 &lt;span id=&#34;cb3-19&#34;&gt;&lt;a href=&#34;#cb3-19&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;    sort&lt;span class=&#34;op&#34;&gt;(&lt;/span&gt;assi&lt;span class=&#34;op&#34;&gt;.&lt;/span&gt;begin&lt;span class=&#34;op&#34;&gt;(),&lt;/span&gt;assi&lt;span class=&#34;op&#34;&gt;.&lt;/span&gt;end&lt;span class=&#34;op&#34;&gt;());&lt;/span&gt;&lt;/span&gt;
-&lt;span id=&#34;cb3-20&#34;&gt;&lt;a href=&#34;#cb3-20&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;    unique&lt;span class=&#34;op&#34;&gt;(&lt;/span&gt;assi&lt;span class=&#34;op&#34;&gt;.&lt;/span&gt;begin&lt;span class=&#34;op&#34;&gt;(),&lt;/span&gt;assi&lt;span class=&#34;op&#34;&gt;.&lt;/span&gt;end&lt;span class=&#34;op&#34;&gt;());&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&#34;cb3-20&#34;&gt;&lt;a href=&#34;#cb3-20&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;    assi&lt;span class=&#34;op&#34;&gt;.&lt;/span&gt;erase&lt;span class=&#34;op&#34;&gt;(&lt;/span&gt;unique&lt;span class=&#34;op&#34;&gt;(&lt;/span&gt;assi&lt;span class=&#34;op&#34;&gt;.&lt;/span&gt;begin&lt;span class=&#34;op&#34;&gt;(),&lt;/span&gt;assi&lt;span class=&#34;op&#34;&gt;.&lt;/span&gt;end&lt;span class=&#34;op&#34;&gt;()),&lt;/span&gt;assi&lt;span class=&#34;op&#34;&gt;.&lt;/span&gt;end&lt;span class=&#34;op&#34;&gt;());&lt;/span&gt;&lt;/span&gt;
 &lt;span id=&#34;cb3-21&#34;&gt;&lt;a href=&#34;#cb3-21&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;&lt;/span&gt;
 &lt;span id=&#34;cb3-22&#34;&gt;&lt;a href=&#34;#cb3-22&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;    &lt;span class=&#34;cf&#34;&gt;for&lt;/span&gt;&lt;span class=&#34;op&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;dt&#34;&gt;int&lt;/span&gt; i&lt;span class=&#34;op&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;dv&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;op&#34;&gt;;&lt;/span&gt;i&lt;span class=&#34;op&#34;&gt;&amp;lt;&lt;/span&gt;n&lt;span class=&#34;op&#34;&gt;;&lt;/span&gt;i&lt;span class=&#34;op&#34;&gt;++){&lt;/span&gt;&lt;/span&gt;
 &lt;span id=&#34;cb3-23&#34;&gt;&lt;a href=&#34;#cb3-23&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;        arr&lt;span class=&#34;op&#34;&gt;[&lt;/span&gt;i&lt;span class=&#34;op&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;op&#34;&gt;=&lt;/span&gt; upper_bound&lt;span class=&#34;op&#34;&gt;(&lt;/span&gt;assi&lt;span class=&#34;op&#34;&gt;.&lt;/span&gt;begin&lt;span class=&#34;op&#34;&gt;(),&lt;/span&gt;assi&lt;span class=&#34;op&#34;&gt;.&lt;/span&gt;end&lt;span class=&#34;op&#34;&gt;(),&lt;/span&gt;arr&lt;span class=&#34;op&#34;&gt;[&lt;/span&gt;i&lt;span class=&#34;op&#34;&gt;])-&lt;/span&gt;assi&lt;span class=&#34;op&#34;&gt;.&lt;/span&gt;begin&lt;span class=&#34;op&#34;&gt;();&lt;/span&gt;&lt;/span&gt;
