@@ -135,7 +135,7 @@ int main(){
         assi.push_back(a);
     }
     sort(assi.begin(),assi.end());
-    unique(assi.begin(),assi.end());
+    assi.erase(unique(assi.begin(),assi.end()),assi.end());
 
     for(int i=0;i<n;i++){
         arr[i] = upper_bound(assi.begin(),assi.end(),arr[i])-assi.begin();
