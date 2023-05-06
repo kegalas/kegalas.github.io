@@ -6,7 +6,27 @@
         <description>Recent content on KegalaS的个人博客</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Wed, 05 Apr 2023 20:24:29 +0800</lastBuildDate><atom:link href="https://kegalas.top/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sat, 06 May 2023 23:44:47 +0800</lastBuildDate><atom:link href="https://kegalas.top/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>MSYS2,MinGW64,Cygwin的使用区别浅谈</title>
+        <link>https://kegalas.top/p/msys2mingw64cygwin%E7%9A%84%E4%BD%BF%E7%94%A8%E5%8C%BA%E5%88%AB%E6%B5%85%E8%B0%88/</link>
+        <pubDate>Sat, 06 May 2023 23:44:47 +0800</pubDate>
+        
+        <guid>https://kegalas.top/p/msys2mingw64cygwin%E7%9A%84%E4%BD%BF%E7%94%A8%E5%8C%BA%E5%88%AB%E6%B5%85%E8%B0%88/</guid>
+        <description>&lt;p&gt;这篇文章不探讨这几个东西的历史、关系，只来说一下什么时候该用什么，以及区别。&lt;/p&gt;
+&lt;p&gt;首先，在MSYS2官网上下载安装后，它会提供许许多多的exe文件，包括msys2.exe, clang64.exe, mingw64.exe, ucrt64.exe等。这些东西里面都提供gcc或者clang/llvm等编译器，当然也提供其他一些工具链，但是编译出来的目标文件却不相同。我们把这些东西分为两类。&lt;/p&gt;
+&lt;p&gt;第一类是msys2.exe，它的目标文件依赖于msys2提供的一个叫做msys-2.0.dll的动态链接库，这是一个虚拟POSIX环境。通过这个东西，一个程序可以调用Linux的API，但是经过这个dll后，转换到调用Windows对应的API来实现。程序本身不是原生的目标文件，而是中间加了一个仿真。&lt;/p&gt;
+&lt;p&gt;第二类是其他三个，它们的目标文件是原生Windows的，也就是说，不需要这个msys-2.0.dll，直接就可以打开用。缺点是如果你要开发的东西非常依赖于POSIX，则这个东西没法编译，只能去用MSYS2。&lt;/p&gt;
+&lt;p&gt;而Cygwin，和MSYS2差不多（非常简略地来说的话），只不过POSIX环境变成了cygwin.dll。&lt;/p&gt;
+&lt;p&gt;总结，如果你需要给别人发Release，那么用MinGW、UCRT、CLANG的编译器（当然你也可以使用MSYS2然后附上msys-2.0.dll）。如果你开发的东西非常依赖POSIX，那么用MSYS2。&lt;/p&gt;
+&lt;p&gt;至于Cygwin，由于它的安装和卸载我不是很喜欢，我一般不用。不过Cygwin有它很优秀的X server在Windows下的表现，这点似乎比MSYS2好。&lt;/p&gt;
+&lt;p&gt;现在MSYS2官网更推荐使用UCRT而不是MINGW。如果你要使用clang/llvm，那么用clang64是肯定的（但是版本有点旧，需要新版本的可以使用&lt;a class=&#34;link&#34; href=&#34;https://github.com/mstorsjo/llvm-mingw/releases&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;llvm-mingw&lt;/a&gt;。而且我试了，在clang64里面装clang装进的是MSYS2里面。）。它们的具体区别可见&lt;a class=&#34;link&#34; href=&#34;https://www.msys2.org/docs/environments/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://www.msys2.org/docs/environments/&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;另外，笔者曾经有使用MinGW的困难（&lt;a class=&#34;link&#34; href=&#34;https://kegalas.top/p/msys2%E4%B8%AD%E4%BD%BF%E7%94%A8mingw64%E7%9A%84g-%E7%BC%96%E8%AF%91%E8%BF%90%E8%A1%8C%E6%8A%A5%E9%94%99%E6%97%A0%E6%B3%95%E6%89%BE%E5%88%B0%E5%85%A5%E5%8F%A3/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;链接&lt;/a&gt;），不过现在我觉得可能不是MinGW的问题，具体什么问题由于我现在没有再遇到，可能不能解决了。&lt;/p&gt;
+</description>
+        </item>
+        <item>
         <title>信号与系统学习笔记</title>
         <link>https://kegalas.top/p/%E4%BF%A1%E5%8F%B7%E4%B8%8E%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</link>
         <pubDate>Wed, 05 Apr 2023 20:24:29 +0800</pubDate>

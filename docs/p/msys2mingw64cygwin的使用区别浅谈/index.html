@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='这篇文章不探讨这几个东西的历史、关系，只来说一下什么时候该用什么，以及区别。 首先，在MSYS2官网上下载安装后，它会提供许许多多的exe文件'><title>MSYS2,MinGW64,Cygwin的使用区别浅谈</title>
+
+<link rel='canonical' href='https://kegalas.top/p/msys2mingw64cygwin%E7%9A%84%E4%BD%BF%E7%94%A8%E5%8C%BA%E5%88%AB%E6%B5%85%E8%B0%88/'>
+
+<link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='MSYS2,MinGW64,Cygwin的使用区别浅谈'>
+<meta property='og:description' content='这篇文章不探讨这几个东西的历史、关系，只来说一下什么时候该用什么，以及区别。 首先，在MSYS2官网上下载安装后，它会提供许许多多的exe文件'>
+<meta property='og:url' content='https://kegalas.top/p/msys2mingw64cygwin%E7%9A%84%E4%BD%BF%E7%94%A8%E5%8C%BA%E5%88%AB%E6%B5%85%E8%B0%88/'>
+<meta property='og:site_name' content='KegalaS的个人博客'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='MSYS2' /><meta property='article:tag' content='计算机' /><meta property='article:tag' content='Windows' /><meta property='article:tag' content='MinGW' /><meta property='article:published_time' content='2023-05-06T23:44:47&#43;08:00'/><meta property='article:modified_time' content='2023-05-06T23:44:47&#43;08:00'/>
+<meta name="twitter:title" content="MSYS2,MinGW64,Cygwin的使用区别浅谈">
+<meta name="twitter:description" content="这篇文章不探讨这几个东西的历史、关系，只来说一下什么时候该用什么，以及区别。 首先，在MSYS2官网上下载安装后，它会提供许许多多的exe文件">
+    <link rel="shortcut icon" href="favicon-16x16.png" />
+
+    </head>
+    <body class="
+    article-page 
+">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex 
+    
+        on-phone--column extended
+    
+">
+    
+        <aside class="sidebar left-sidebar sticky">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header class="site-info">
+        
+            
+            <figure class="site-avatar">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hue338277dc5d37c7fe2e3b3f1c288220f_302064_300x0_resize_box_3.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+
+                
+                    <span class="emoji">🤣</span>
+                
+            </figure>
+            
+        
+        
+        <h1 class="site-name"><a href="/">KegalaS的个人博客</a></h1>
+        <h2 class="site-description">长夜伴浪破晓梦,梦晓破浪伴夜长</h2><ol class="social-menu">
+                
+                    <li>
+                        <a 
+                            href='https://space.bilibili.com/8906855'
+                            target="_blank"
+                            title="Bilibili"
+                        >
+                            
+                            
+                                <?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 26.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="图层_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 24 24" style="enable-background:new 0 0 24 24;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#BABABA;}
+</style>
+<path class="st0" d="M6.69,1.35l3.57,3.57h3.49l3.57-3.57c0.43-0.43,1.13-0.43,1.56,0c0.43,0.43,0.43,1.13,0,1.56l0,0l-2.01,2.01
+	h2.29c2.13,0,3.85,1.72,3.85,3.85c0,0,0,0,0,0v8.8c0,2.13-1.72,3.85-3.85,3.85H4.85C2.72,21.41,1,19.69,1,17.56l0,0v-8.8
+	c0-2.13,1.72-3.85,3.85-3.85l0,0h2.29L5.13,2.9c-0.43-0.43-0.43-1.13,0-1.56C5.56,0.92,6.26,0.92,6.69,1.35L6.69,1.35z M19.15,7.11
+	H4.85C4,7.11,3.29,7.76,3.21,8.61L3.2,8.76v8.8c0,0.85,0.65,1.56,1.49,1.64l0.16,0.01h14.3c0.85,0,1.56-0.65,1.64-1.49l0.01-0.16
+	v-8.8C20.8,7.85,20.06,7.11,19.15,7.11z M7.6,10.41c0.61,0,1.1,0.49,1.1,1.1v2.2c0,0.61-0.49,1.1-1.1,1.1s-1.1-0.49-1.1-1.1v-2.2
+	C6.5,10.91,6.99,10.41,7.6,10.41z M16.4,10.41c0.61,0,1.1,0.49,1.1,1.1l0,0v2.2c0,0.61-0.49,1.1-1.1,1.1c-0.61,0-1.1-0.49-1.1-1.1
+	v-2.2C15.3,10.91,15.79,10.41,16.4,10.41L16.4,10.41L16.4,10.41z"/>
+</svg>
+
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a 
+                            href='mailto:kaoshen@outlook.com'
+                            target="_blank"
+                            title="E-Mail"
+                        >
+                            
+                            
+                                <?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 26.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="图层_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 24 24" style="enable-background:new 0 0 24 24;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#BABABA;}
+</style>
+<path class="st0" d="M18.88,9.46V8.53l-6.99,4.19L4.9,8.53v0.93l6.99,4.19L18.88,9.46z"/>
+<path class="st0" d="M14.85,13.2l3.53,2.97l0.46-0.94l-3.13-2.51L14.85,13.2z"/>
+<path class="st0" d="M22.15,12.25C22.15,6.59,17.56,2,11.89,2S1.64,6.59,1.64,12.25s4.59,10.25,10.25,10.25S22.15,17.92,22.15,12.25
+	z M2.57,12.25c0-5.15,4.17-9.32,9.32-9.32s9.32,4.17,9.32,9.32s-4.17,9.32-9.32,9.32S2.57,17.4,2.57,12.25z"/>
+<path class="st0" d="M4.59,15.04l0.46,0.95l3.53-2.97l-0.86-0.48L4.59,15.04z"/>
+</svg>
+
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a 
+                            href='https://github.com/kegalas'
+                            target="_blank"
+                            title="GitHub"
+                        >
+                            
+                            
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a 
+                            href='https://vndb.org/u166447/ulist?votes=1'
+                            target="_blank"
+                            title="VNDB"
+                        >
+                            
+                            
+                                <?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 26.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="图层_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 24 24" style="enable-background:new 0 0 24 24;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:none;stroke:#BABABA;stroke-width:2;stroke-miterlimit:10;}
+	.st1{fill:none;stroke:#ECECEC;stroke-miterlimit:10;}
+	.st2{fill:#FFFFFF;stroke:#BABABA;stroke-miterlimit:10;}
+</style>
+<path class="st0" d="M1.5,2.5l8.6,15.9c0.8,1.5,3,1.5,3.8,0l8.6-15.9"/>
+<g>
+	<g>
+		<path class="st1" d="M1.4,2.5"/>
+	</g>
+</g>
+<g>
+	<g>
+		<path class="st1" d="M-2.8,2.7"/>
+	</g>
+</g>
+<g>
+	<g>
+		<path class="st1" d="M-2.8,2.7"/>
+	</g>
+</g>
+<g>
+	<g>
+		<path class="st1" d="M5.9,2.5"/>
+	</g>
+</g>
+<g>
+	<g>
+		<path class="st1" d="M5.9,2.5"/>
+	</g>
+</g>
+<path class="st2" d="M2.5,12.5"/>
+</svg>
+
+                            
+                        </a>
+                    </li>
+                
+            </ol></header>
+
+    <ol class="menu" id="main-menu">
+        
+        
+        
+
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+
+        
+            <li id="dark-mode-toggle">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                <span>暗色模式</span>
+            </li>
+        
+    </ol>
+</aside>
+
+    
+<main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/%E5%85%B6%E4%BB%96%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/" >
+                其他计算机科学
+            </a>
+        
+    </header>
+    
+
+    <h2 class="article-title">
+        <a href="/p/msys2mingw64cygwin%E7%9A%84%E4%BD%BF%E7%94%A8%E5%8C%BA%E5%88%AB%E6%B5%85%E8%B0%88/">MSYS2,MinGW64,Cygwin的使用区别浅谈</a>
+    </h2>
+
+    
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">May 06, 2023</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 2 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+</div>
+</header>
+
+    <section class="article-content">
+    <p>这篇文章不探讨这几个东西的历史、关系，只来说一下什么时候该用什么，以及区别。</p>
+<p>首先，在MSYS2官网上下载安装后，它会提供许许多多的exe文件，包括msys2.exe, clang64.exe, mingw64.exe, ucrt64.exe等。这些东西里面都提供gcc或者clang/llvm等编译器，当然也提供其他一些工具链，但是编译出来的目标文件却不相同。我们把这些东西分为两类。</p>
+<p>第一类是msys2.exe，它的目标文件依赖于msys2提供的一个叫做msys-2.0.dll的动态链接库，这是一个虚拟POSIX环境。通过这个东西，一个程序可以调用Linux的API，但是经过这个dll后，转换到调用Windows对应的API来实现。程序本身不是原生的目标文件，而是中间加了一个仿真。</p>
+<p>第二类是其他三个，它们的目标文件是原生Windows的，也就是说，不需要这个msys-2.0.dll，直接就可以打开用。缺点是如果你要开发的东西非常依赖于POSIX，则这个东西没法编译，只能去用MSYS2。</p>
+<p>而Cygwin，和MSYS2差不多（非常简略地来说的话），只不过POSIX环境变成了cygwin.dll。</p>
+<p>总结，如果你需要给别人发Release，那么用MinGW、UCRT、CLANG的编译器（当然你也可以使用MSYS2然后附上msys-2.0.dll）。如果你开发的东西非常依赖POSIX，那么用MSYS2。</p>
+<p>至于Cygwin，由于它的安装和卸载我不是很喜欢，我一般不用。不过Cygwin有它很优秀的X server在Windows下的表现，这点似乎比MSYS2好。</p>
+<p>现在MSYS2官网更推荐使用UCRT而不是MINGW。如果你要使用clang/llvm，那么用clang64是肯定的（但是版本有点旧，需要新版本的可以使用<a class="link" href="https://github.com/mstorsjo/llvm-mingw/releases"  target="_blank" rel="noopener"
+    >llvm-mingw</a>。而且我试了，在clang64里面装clang装进的是MSYS2里面。）。它们的具体区别可见<a class="link" href="https://www.msys2.org/docs/environments/"  target="_blank" rel="noopener"
+    >https://www.msys2.org/docs/environments/</a>。</p>
+<p>另外，笔者曾经有使用MinGW的困难（<a class="link" href="https://kegalas.top/p/msys2%E4%B8%AD%E4%BD%BF%E7%94%A8mingw64%E7%9A%84g-%E7%BC%96%E8%AF%91%E8%BF%90%E8%A1%8C%E6%8A%A5%E9%94%99%E6%97%A0%E6%B3%95%E6%89%BE%E5%88%B0%E5%85%A5%E5%8F%A3/"  target="_blank" rel="noopener"
+    >链接</a>），不过现在我觉得可能不是MinGW的问题，具体什么问题由于我现在没有再遇到，可能不能解决了。</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/msys2/">MSYS2</a>
+        
+            <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/">计算机</a>
+        
+            <a href="/tags/windows/">Windows</a>
+        
+            <a href="/tags/mingw/">MinGW</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css"integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js"integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8"crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js"integrity="sha384-vZTG03m&#43;2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl"crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.querySelector(`.article-content`), {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ]
+        });})
+</script>
+    
+</article>
+
+    <aside class="related-contents--wrapper">
+    
+    
+        <h2 class="section-title">相关文章</h2>
+        <div class="related-contents">
+            <div class="flex article-list--tile">
+                
+                    
+<article class="has-image">
+    <a href="/p/msys2%E4%B8%AD%E4%BD%BF%E7%94%A8mingw64%E7%9A%84g-%E7%BC%96%E8%AF%91%E8%BF%90%E8%A1%8C%E6%8A%A5%E9%94%99%E6%97%A0%E6%B3%95%E6%89%BE%E5%88%B0%E5%85%A5%E5%8F%A3/">
+        
+        
+            <div class="article-image">
+                <img src="/p/msys2%E4%B8%AD%E4%BD%BF%E7%94%A8mingw64%E7%9A%84g-%E7%BC%96%E8%AF%91%E8%BF%90%E8%A1%8C%E6%8A%A5%E9%94%99%E6%97%A0%E6%B3%95%E6%89%BE%E5%88%B0%E5%85%A5%E5%8F%A3/1.4011394892ad43b7efa8bdd166d30e51_hu8fe568a15a37a7bd8c510c832a970168_16486_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-QBE5SJKtQ7fvqL3RZtMOUQ==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Msys2中使用mingw64的G&#43;&#43;编译，运行报错无法找到入口</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="">
+    <a href="/p/msys2%E6%8A%A5%E9%94%99david-macek-is-unknown-trust/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">MSYS2报错David Macek is unknown trust</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+        
+        
+            <div class="article-image">
+                <img src="/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/cover.d64d42eff1b234bef9a3a8dfd6f81ede_huaa3a4f4fef897a96376c721aafe499bc_261058_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-1k1C7/GyNL75o6jf1vge3g==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">计算机组成原理学习笔记</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="">
+    <a href="/p/emacs%E4%BD%BF%E7%94%A8%E7%AC%94%E8%AE%B0/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Emacs使用笔记</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="">
+    <a href="/p/%E5%9C%A8powershell%E4%B8%AD%E4%BD%BF%E7%94%A8v2rayn%E4%BB%A3%E7%90%86/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">在PowerShell中使用v2rayN代理</h2>
+        </div>
+    </a>
+</article>
+                
+            </div>
+        </div>
+    
+</aside>
+
+     
+    
+        
+    <script src="https://utteranc.es/client.js" 
+        repo="kegalas/blogComments"
+        issue-term="pathname"
+        
+        crossorigin="anonymous"
+        async
+        >
+</script>
+
+<style>
+    .utterances {
+        max-width: unset;
+    }
+</style>
+
+<script>
+    function setUtterancesTheme(theme) {
+        let utterances = document.querySelector('.utterances iframe');
+        if (utterances) {
+            utterances.contentWindow.postMessage(
+                {
+                    type: 'set-theme',
+                    theme: `github-${theme}`
+                },
+                'https://utteranc.es'
+            );
+        }
+    }
+
+    addEventListener('message', event => {
+        if (event.origin !== 'https://utteranc.es') return;
+        setUtterancesTheme(document.documentElement.dataset.scheme)
+    });
+
+    window.addEventListener('onColorSchemeChange', (e) => {
+        setUtterancesTheme(e.detail)
+    })
+</script>
+
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2023 KegalaS的个人博客
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.4.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                defer="false"
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
