@@ -9,6 +9,55 @@ mathjax: true
 markup: pandoc
 ---
 
+```CPP
+#include <iostream>
+#include <algorithm>
+#include <cmath>
+#include <string>
+#include <cstring>
+#include <map>
+#include <set>
+#include <queue>
+#include <stack>
+#include <vector>
+#include <cstdint>
+#include <cstdio>
+#include <bitset>
+#include <deque>
+#include <regex>
+#include <unordered_map>
+#include <unordered_set>
+
+#define debug(a) std::cout<<#a<<"="<<a<<std::endl
+#define lth(i,x,y) for(int i=x;i<=y;i++)
+#define htl(i,x,y) for(int i=x;i>=y;i--)
+#define mms(x) memset(x, 0, sizeof(x))
+
+using LL = long long;
+using ULL = unsigned long long;
+using i128 = __int128;
+using pii = std::pair<int,int>;
+using pll = std::pair<LL,LL>;
+
+int const MAXN = 200005;
+int const INF = 0x7fffffff;
+double const EPS = 1e-8;
+int const MOD = 998244353;
+double const PI = acos(-1);
+
+int arr[MAXN];
+
+int main(){
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(0);
+
+	
+
+    return 0;
+}
+
+```
+
 # 排序
 
 只给出归并排序，有可能在求逆序对的时候用得上。其他时候排序用sort函数即可。
@@ -16,6 +65,7 @@ markup: pandoc
 ## 归并排序
 
 ```c
+//复杂度nlogn
 #include <stdio.h>
 
 void merge(long *num,long *tmp, int left, int mid_index ,int right){
@@ -85,6 +135,7 @@ int main(){
 ## 快速幂
 
 ```cpp
+//复杂度logn
 #include <iostream>
 
 using namespace std;
@@ -115,7 +166,10 @@ int main(){
 
 ## 离散化
 
+有两种，一种是unique函数版，一种是树状数组求逆序对里使用的，都可以，区别是，那个对于相同的数字根据先后顺序确定大小，这个则是一样大
+
 ```cpp
+//复杂度nlogn
 //离散化 例如将1,500,40,1000保持相对大小不变，离散化为1,3,2,4
 #include <iostream>
 #include <vector>
@@ -155,6 +209,7 @@ int main(){
 ## KMP
 
 ```cpp
+//复杂度n
 //kmp,luogu3375
 #include <iostream>
 #include <vector>
@@ -206,6 +261,7 @@ int main(){
 ## 字典树(Trie)
 
 ```cpp
+//复杂度 插入或查找一次 模板串长度
 #include <iostream>
 #include <cstdio>
 #include <cstring>
@@ -267,6 +323,7 @@ int main(){
 ## AC自动机
 
 ```cpp
+//复杂度 文本串长度+模板串长度之和
 //AC自动机，luogu P3808
 
 #include <iostream>
@@ -350,6 +407,7 @@ int main(){
 ## 扩展欧几里得
 
 ```cpp
+//复杂度 logn
 //求解ax+by=gcd(a,b)的一组解
 //扩展欧几里得
 #include <iostream>
@@ -381,6 +439,7 @@ int main(){
 ## 欧几里得算法
 
 ```cpp
+//复杂度 logn
 #include <iostream>
 
 inline int gcd(int a,int b){
@@ -398,6 +457,7 @@ int main(){
 ## 欧拉筛
 
 ```cpp
+//复杂度 n
 //欧拉筛
 #include <iostream>
 #include <cstring>
@@ -432,6 +492,7 @@ int main(){
 ## Miller-Rabin素数测试
 
 ```cpp
+//对数 n 进行 k 轮测试的时间复杂度是 klog^3(n)
 //miller-rabin
 #include <iostream>
 #include <ctime>
@@ -490,6 +551,7 @@ int main(){
 ## 乘法逆元
 
 ```cpp
+//复杂度 扩展欧几里得法和费马小定理法 logn, 线性求逆元，对于1~n这些数，总共n
 //乘法逆元
 //分为扩展欧几里得法、快速幂法、线性求逆元
 //ax≡1(mod b)，x为a在乘法意义上的逆元，记作a^(-1)，或者inv(a)
@@ -568,6 +630,7 @@ int main(){
 ## 线性同余方程
 
 ```cpp
+//复杂度 logn
 //ax≡c (mod b)求解x
 //和ax+by=c等价
 #include <iostream>
@@ -633,6 +696,7 @@ x \equiv a_k(mod\quad r_k)
 $$
 
 ```cpp
+//复杂度 klogn
 #include <iostream>
 
 using namespace std;
@@ -697,6 +761,7 @@ $$
 注意阶乘和其逆元的预处理。
 
 ```cpp
+//复杂度 初始化为nlogn 后续查询为O(1)
 #include <iostream>
 
 #define LL long long
@@ -757,6 +822,7 @@ int main(){
 ### Dijkstra
 
 ```cpp
+//复杂度 优先队列实现为mlogm
 #include <iostream>
 #include <cstring>
 #include <vector>
@@ -837,6 +903,7 @@ int main(){
 ### Bellman-Ford
 
 ```cpp
+//复杂度 nm
 #include <iostream>
 #include <vector>
 #include <cstring>
@@ -910,6 +977,7 @@ int main(){
 ### SPFA
 
 ```cpp
+//复杂度 nm
 /*
     bellman-ford的优化
     只有上一次被松弛的结点，所连接的边，
@@ -1001,6 +1069,7 @@ int main(){
 ### Floyd
 
 ```cpp
+//复杂度 n^3
 //floyd
 #include <iostream>
 #include <cstring>
@@ -1052,6 +1121,7 @@ int main(){
 ## 拓扑排序
 
 ```cpp
+//复杂度 n
 //拓扑排序
 #include <iostream>
 #include <vector>
@@ -1131,6 +1201,7 @@ int main(){
 ### Kruskal
 
 ```cpp
+//复杂度 mlogm
 #include <iostream>
 #include <algorithm>
 #define MAXN 200005
@@ -1195,6 +1266,7 @@ int main(){
 ### Prim算法
 
 ```cpp
+//复杂度 (m+n)logn
 #include <iostream>
 #include <vector>
 #include <queue>
@@ -1278,6 +1350,7 @@ int main(){
 ### 朱刘算法
 
 ```cpp
+//复杂度 nm
 //最小树形图，朱刘算法
 //从根节点能到达其他所有点
 //luogu4716
@@ -1379,6 +1452,7 @@ int main(){
 ### 匈牙利算法
 
 ```cpp
+//复杂度 nm
 //luogu 3386
 //求二分图最大匹配，根据定理，最大匹配=最小点覆盖，以及最小边覆盖=点数-最大匹配
 #include <iostream>
@@ -1787,6 +1861,7 @@ int main(){
 #### Tarjan算法
 
 ```cpp
+//复杂度 n+m
 #include <iostream>
 #include <vector>
 #include <stack>
@@ -1853,6 +1928,7 @@ int main(){
 ### Tarjan算法
 
 ```cpp
+//复杂度 n+m
 //tarjan求割点,luogu P3388
 #include <iostream>
 #include <vector>
@@ -1918,6 +1994,7 @@ int main(){
 ### Tarjan算法
 
 ```cpp
+//复杂度 n+m
 //tarjan求割边
 #include <iostream>
 #include <vector>
@@ -1982,6 +2059,7 @@ int main(){
 ### Andrew扫描法
 
 ```cpp
+//复杂度 nlogn
 #include <iostream>
 #include <cstdio>
 #include <cstring>
@@ -2065,6 +2143,7 @@ int main(){
 ## 旋转卡壳求最远点对
 
 ```cpp
+//复杂度 nlogn，其中求凸包nlogn，旋转卡壳本身为n
 //Luogu P1452
 //旋转卡壳和凸包
 #include <iostream>
@@ -2182,6 +2261,7 @@ int main(){
 输入$n$个点的平面坐标，使用分治法计算最近点对，复杂度$O(nlogn)$
 
 ```cpp
+//复杂度nlogn
 //Luogu P1257
 #include <iostream>
 #include <algorithm>
@@ -2299,6 +2379,7 @@ C_0=1,C_{n+1}=\frac{2(2n+1)}{n+2}C_n
 $$
 
 ```cpp
+//复杂度 n
 #include <iostream>
 //前几项：1（第0项）, 1, 2, 5, 14, 42, 132, 429, 1430, 4862, 16796
 using namespace std;
@@ -2442,6 +2523,7 @@ int main(){
 ## 树状数组
 
 ```cpp
+//复杂度 单次查询 logn 单次修改 logn
 //树状数组
 //luogu P3374
 
@@ -2504,6 +2586,7 @@ int main(){
 ### 树状数组求逆序对
 
 ```cpp
+//复杂度 nlogn
 //Luogu P1908
 #include <iostream>
 #include <algorithm>
@@ -2576,6 +2659,7 @@ int main(){
 ## 并查集
 
 ```cpp
+//复杂度 很小
 //并查集
 
 #include <iostream>
@@ -2630,6 +2714,7 @@ int main(){
 ## 线段树
 
 ```cpp
+//复杂度 单次查询 logn 单次修改 logn
 //luogu 3372
 #include <iostream>
 #include <cstdio>
@@ -2801,6 +2886,7 @@ int main(){
 对于经典的RMQ（即给定一个数组，求区间内的最大值）问题，有如下代码
 
 ```cpp
+//复杂度 单次查询 logn 预处理 nlogn
 //luogu P3865
 #include <cstdio>
 #include <iostream>
@@ -2851,6 +2937,7 @@ int main(){
 ## 倍增求最近公共祖先
 
 ```cpp
+//复杂度 单次查询 logn 预处理 nlogn
 //luogu P3379
 #include <iostream>
 #include <vector>
@@ -2945,13 +3032,14 @@ else std::cout<<r<<"\n";
 ```
 judge函数应该根据题意写出。
 
-如果是浮点数的二分，则不推荐使用EPS进行精度判断（有可能会丢精度）。而是使用计数器，一般迭代100次就能保证符合题目要求。
+如果是浮点数的二分，则不推荐使用EPS进行精度判断（有可能会丢精度）。而是使用计数器，一般迭代100次就能保证符合题目要求。复杂度显然logn
 
 # 动态规划
 
 ## 01背包
 
 ```cpp
+//复杂度 nW
 //luogu P1048
 #include <iostream>
 #include <cmath>
@@ -2983,6 +3071,7 @@ int main(){
 ## 完全背包
 
 ```cpp
+//复杂度 nW
 //luogu P1616
 #include <iostream>
 #include <cmath>
@@ -3016,6 +3105,7 @@ int main(){
 ## 多重背包
 
 ```cpp
+//复杂度 Wsum(logk_i) 
 //luogu P1776
 #include <iostream>
 #include <cmath>
@@ -3116,7 +3206,7 @@ struct node{
 
 ## std::lower_bound,std::upper_bound
 
-对某个已经排序好的数组，查找第一个大于等于（lower_bound）或者大于(upper_bound)某个给定值的元素。复杂度：logn。
+对某个已经排序好的数组，查找第一个大于等于（lower_bound）或者大于(upper_bound)某个给定值的元素。复杂度：logn（对于随机访问的迭代器），n（对于其他迭代器）。
 
 ```cpp
 int a[5]={0,1,3,4,6};
@@ -3585,6 +3675,43 @@ std::tie(a,b,str) = t;
 auto[c,d,str2] = t;
 ```
 
+## std::next_permutation, std::prev_permutation
+
+```CPP
+bool next_permutation (Iterator first, Iterator last);
+bool prev_permutation(Iterator first, Iterator last);
+```
+
+这两个算法都是“原地”算法，也就是说会直接更改原数组，而不会返回一个新数组。这两个函数的作用是，获取按字典序比当前排列小1号的排列，以及大1号的排列。
+
+例如123是一个排列，比它正好大1号的排列是132，再大1号的是213。比321小1号的是312。
+
+用法如下
+
+```CPP
+string number = "213";
+next_permutation(number.begin(), number.end());
+cout << number;
+```
+
+输出231。
+
+如果当前已经是最小的还要得到更小的，则返回false。已经是最大的还要得到更大的，则返回false。其他情况返回true。
+
+复杂度：线性。
+
+## std::unique
+
+对一个已经排好序的数组去除重复元素。或者说是，移除一个一般数组中相邻的、相同的元素。复杂度：线性。
+
+```CPP
+Iterator unique(Iterator first, Iterator last);
+```
+
+给出一个范围来进行这个操作。具体用例可以见离散化一节。
+
+返回值是新数组的末尾的迭代器。
+
 ## std::cin
 
 ### 输入十六进制、八进制、二进制
@@ -3608,6 +3735,8 @@ std::cout<<bs.to_ulong();
 
 ### 输入不忽略空格、回车
 
+虽然可以用cin.get()和cin.getline()来实现，但是我们还是考虑用getchar比较好，当getchar返回EOF时代表输入结束。类似于逗号表达式返回最后一个的值，等号表达式返回等号左边的值，所以我们可以写(c=getchar())!=EOF。
+
 ## std::cout
 
 ### 输出十六进制、八进制、二进制
@@ -3630,6 +3759,14 @@ std::cout<<ans.substr(ans.find('1'),int(ans.end()-ans.begin()))<<"\n";
 ```
 
 需要去除前导0，如果直接输出bs或者其to_string的话会带有前导0
+
+### 浮点数精度
+
+```CPP
+std::cout<<std::fixed;//如果不用这个，则为有效数字四位。
+std::cout.precision(4);
+std::cout<<a;//这里输出小数点后4位。
+```
 
 ## scanf
 

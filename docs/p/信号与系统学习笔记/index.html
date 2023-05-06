@@ -121,7 +121,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 23 分钟
+                    阅读时长: 24 分钟
                 </time>
             </div>
         
@@ -1197,7 +1197,39 @@ R(\tau)\leftrightarrow\mathcal{P}(w)
 <h1 id="离散时间傅里叶变换">离散时间傅里叶变换</h1>
 <h1 id="信号与系统的时域和频域特性">信号与系统的时域和频域特性</h1>
 <h1 id="采样">采样</h1>
+<h2 id="冲激串采样">冲激串采样</h2>
+<p>周期冲激串<span class="math inline">\(p(t)\)</span>称为采样函数，周期<span class="math inline">\(T\)</span>称为采样周期，而<span class="math inline">\(p(t)\)</span>的基波频率<span class="math inline">\(w_s=2\pi/T\)</span>称为，采样频率。</p>
+<p>在时域中有</p>
+<p><span class="math display">\[
+x_p(t) = x(t)p(t)
+\]</span></p>
+<p>其中</p>
+<p><span class="math display">\[
+p(t) = \sum^{+\infty}_{n=-\infty}\delta(t-nT)
+\]</span></p>
+<p>经过计算可以得到，频域中有</p>
+<p><span class="math display">\[
+X_p(jw) = \dfrac{1}{T}\sum^{+\infty}_{k=-\infty}X(j(w-kw_s))
+\]</span></p>
 <h2 id="采样定理">采样定理</h2>
+<p>设<span class="math inline">\(x(t)\)</span>是某一个带限信号，在<span class="math inline">\(|w|&gt;w_M\)</span>时，<span class="math inline">\(X(jw)=0\)</span>。如果<span class="math inline">\(w_s&gt;2w_M\)</span>，其中<span class="math inline">\(w_s=2\pi /T\)</span>，那么<span class="math inline">\(x(t)\)</span>就唯一地由其样本<span class="math inline">\(x(nT),n=0,\pm1,\pm2,\cdots\)</span>所确定</p>
+<p>在采样定理中，采样频率必须大于<span class="math inline">\(2w_M\)</span>，该频率<span class="math inline">\(2w_M\)</span>一般称为奈奎斯特速率。</p>
+<p>已知样本值，重建<span class="math inline">\(x(t)\)</span>的方法：产生一个周期冲激串，其冲激幅度就是这些依次而来的样本值；然后将该冲激串通过一个增益为<span class="math inline">\(T\)</span>，截止频率大于<span class="math inline">\(w_M\)</span>而小于<span class="math inline">\(w_s-w_m\)</span>的理想低筒滤波器，该滤波器的输出就是<span class="math inline">\(x(t)\)</span>。</p>
+<p>这个滤波器的<span class="math inline">\(h(t)\)</span>为</p>
+<p><span class="math display">\[
+h(t) = T_s\dfrac{w_c}{\pi}Sa(w_ct)
+\]</span></p>
+<p>其中<span class="math inline">\(w_M&lt;w_c&lt;w_s-w_M\)</span>，方便起见常取<span class="math inline">\(w_c=0.5w_s\)</span></p>
+<p>此时</p>
+<p><span class="math display">\[
+x(t) = \sum^{+\infty}_{n=-\infty}x(nT_s)Sa[\dfrac{w_s}{2}(t-nT_s)]
+\]</span></p>
+<h1 id="拉普拉斯变换">拉普拉斯变换</h1>
+<p>一个信号<span class="math inline">\(x(t)\)</span>的拉普拉斯变换定义如下</p>
+<p><span class="math display">\[
+X(s) = \int^{+\infty}_{-\infty}x(t)e^{-st}dt
+\]</span></p>
+<p>当然，傅立叶变换就是<span class="math inline">\(s=jw\)</span>时的一个特例。</p>
 
 
 
@@ -1558,9 +1590,11 @@ R(\tau)\leftrightarrow\mathcal{P}(w)
     <li><a href="#信号与系统的时域和频域特性">信号与系统的时域和频域特性</a></li>
     <li><a href="#采样">采样</a>
       <ol>
+        <li><a href="#冲激串采样">冲激串采样</a></li>
         <li><a href="#采样定理">采样定理</a></li>
       </ol>
     </li>
+    <li><a href="#拉普拉斯变换">拉普拉斯变换</a></li>
   </ol>
 </nav>
                 </div>
