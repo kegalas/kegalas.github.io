@@ -19,8 +19,8 @@
 &lt;p&gt;而Cygwin，和MSYS2差不多（非常简略地来说的话），只不过POSIX环境变成了cygwin.dll。&lt;/p&gt;
 &lt;p&gt;总结，如果你需要给别人发Release，那么用MinGW、UCRT、CLANG的编译器（当然你也可以使用MSYS2然后附上msys-2.0.dll）。如果你开发的东西非常依赖POSIX，那么用MSYS2。&lt;/p&gt;
 &lt;p&gt;至于Cygwin，由于它的安装和卸载我不是很喜欢，我一般不用。不过Cygwin有它很优秀的X server在Windows下的表现，这点似乎比MSYS2好。&lt;/p&gt;
-&lt;p&gt;现在MSYS2官网更推荐使用UCRT而不是MINGW。如果你要使用clang/llvm，那么用clang64是肯定的（但是版本有点旧，需要新版本的可以使用&lt;a class=&#34;link&#34; href=&#34;https://github.com/mstorsjo/llvm-mingw/releases&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;llvm-mingw&lt;/a&gt;。而且我试了，在clang64里面装clang装进的是MSYS2里面。）。它们的具体区别可见&lt;a class=&#34;link&#34; href=&#34;https://www.msys2.org/docs/environments/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+&lt;p&gt;现在MSYS2官网更推荐使用UCRT而不是MINGW。如果你要使用clang/llvm，那么用clang64是肯定的（我试了，在clang64里面装用pacman -S clang装进的是MSYS2里面。而且版本比较旧，也没有clangd等工具。我们要用的是 pacman -S mingw-w64-clang-x86_64-toolchain，当然也可以用&lt;a class=&#34;link&#34; href=&#34;https://github.com/mstorsjo/llvm-mingw/releases&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;llvm-mingw&lt;/a&gt;，不过好像有一些其他问题。而且这个clang64的前端好像是gcc，而不是在Windows下安装的llvm的默认前端msvc）。它们的具体区别可见&lt;a class=&#34;link&#34; href=&#34;https://www.msys2.org/docs/environments/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;https://www.msys2.org/docs/environments/&lt;/a&gt;。&lt;/p&gt;
 &lt;p&gt;另外，笔者曾经有使用MinGW的困难（&lt;a class=&#34;link&#34; href=&#34;https://kegalas.top/p/msys2%E4%B8%AD%E4%BD%BF%E7%94%A8mingw64%E7%9A%84g-%E7%BC%96%E8%AF%91%E8%BF%90%E8%A1%8C%E6%8A%A5%E9%94%99%E6%97%A0%E6%B3%95%E6%89%BE%E5%88%B0%E5%85%A5%E5%8F%A3/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;链接&lt;/a&gt;），不过现在我觉得可能不是MinGW的问题，具体什么问题由于我现在没有再遇到，可能不能解决了。&lt;/p&gt;
@@ -9612,6 +9612,8 @@ u = \dfrac{\bar x-\mu_0}{\sigma/\sqrt n}&amp;lt;z_\alpha
 &lt;p&gt;推测原因是版本问题，或者是msys2和mingw64有什么差别。&lt;/p&gt;
 &lt;p&gt;另外，通过mingw64打开的命令行来运行编译出来的exe文件不会报错。&lt;/p&gt;
 &lt;p&gt;另外，如果遇到failed to synchronize all databases (unable to lock database)，而经过检查又没有发现/var/lib/pacman/db.lck这个文件的存在，可以考虑用管理员身份打开msys2.exe。如果能够打开就说明是权限问题，可以将整个msys2的权限进行修改，允许非管理员用户完全控制。&lt;/p&gt;
+&lt;p&gt;2023.5.7 后记，msys2和mingw确实有区别，新博客文章见&lt;a class=&#34;link&#34; href=&#34;https://kegalas.top/p/msys2mingw64cygwin%E7%9A%84%E4%BD%BF%E7%94%A8%E5%8C%BA%E5%88%AB%E6%B5%85%E8%B0%88/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;链接&lt;/a&gt;。另外本文上述办法没法完美解决，如果发给别人，他电脑上没有msys-2.0.dll，那么没法运行msys2编译的程序。&lt;/p&gt;
 </description>
         </item>
         <item>

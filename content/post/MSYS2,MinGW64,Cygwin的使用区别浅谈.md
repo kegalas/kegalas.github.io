@@ -21,6 +21,6 @@ mathjax: false
 
 至于Cygwin，由于它的安装和卸载我不是很喜欢，我一般不用。不过Cygwin有它很优秀的X server在Windows下的表现，这点似乎比MSYS2好。
 
-现在MSYS2官网更推荐使用UCRT而不是MINGW。如果你要使用clang/llvm，那么用clang64是肯定的（但是版本有点旧，需要新版本的可以使用[llvm-mingw](https://github.com/mstorsjo/llvm-mingw/releases)。而且我试了，在clang64里面装clang装进的是MSYS2里面。）。它们的具体区别可见[https://www.msys2.org/docs/environments/](https://www.msys2.org/docs/environments/)。
+现在MSYS2官网更推荐使用UCRT而不是MINGW。如果你要使用clang/llvm，那么用clang64是肯定的（我试了，在clang64里面装用pacman -S clang装进的是MSYS2里面。而且版本比较旧，也没有clangd等工具。我们要用的是 pacman -S mingw-w64-clang-x86_64-toolchain，当然也可以用[llvm-mingw](https://github.com/mstorsjo/llvm-mingw/releases)，不过好像有一些其他问题。而且这个clang64的前端好像是gcc，而不是在Windows下安装的llvm的默认前端msvc）。它们的具体区别可见[https://www.msys2.org/docs/environments/](https://www.msys2.org/docs/environments/)。
 
 另外，笔者曾经有使用MinGW的困难（[链接](https://kegalas.top/p/msys2%E4%B8%AD%E4%BD%BF%E7%94%A8mingw64%E7%9A%84g-%E7%BC%96%E8%AF%91%E8%BF%90%E8%A1%8C%E6%8A%A5%E9%94%99%E6%97%A0%E6%B3%95%E6%89%BE%E5%88%B0%E5%85%A5%E5%8F%A3/)），不过现在我觉得可能不是MinGW的问题，具体什么问题由于我现在没有再遇到，可能不能解决了。
