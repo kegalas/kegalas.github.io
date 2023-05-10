@@ -1567,3 +1567,191 @@ X(s) = \int^{+\infty}_{-\infty}x(t)e^{-st}dt
 $$
 
 当然，傅立叶变换就是$s=jw$时的一个特例。
+
+复变量$s$可以写为$s=\sigma+jw$，其中$\sigma,w$分别是它的实部和虚部。方便起见$X(s)=\mathcal{L}\{x(t)\}$，或者记作
+
+$$
+x(t)\overset{\mathcal{L}}{\longleftrightarrow} X(t)
+$$
+
+因为
+
+$$
+X(\sigma+jw) = \int^{+\infty}_{-\infty}x(t)e^{-(\sigma+jw)t}dt = \int^{+\infty}_{-\infty}[x(t)e^{-\sigma t}]e^{-jwt}dt
+$$
+
+所以$x(t)$的拉普拉斯变换可以看成$x(t)$乘以一个实指数信号以后的傅立叶变换。
+
+当然，正如傅立叶变换不是对所有信号都收敛，拉普拉斯变换对有些$Re\{s\}$收敛，而有些不收敛。
+
+## 拉普拉斯变换的有理分式情况
+
+如果拉普拉斯变换具有以下形式
+
+$$
+X(s) = \dfrac{N(s)}{D(s)}
+$$
+
+使得$N(s)=0$的$s$称为零点，使得$D(s)=0$的$s$称为极点。把这些点标记在复平面上。我们可以判断收敛域。
+
+## 拉普拉斯变换的收敛域
+
+收敛域记作$ROC$
+
+1. $X(s)$的收敛域在$s$平面内是由平行于$jw$轴的带状区域组成的。
+2. 对有理拉普拉斯变换来说，收敛域内不包括任何极点。
+3. 如果$x(t)$是有限持续期的，并且是绝对可积的，那么收敛域就是整个$s$平面。
+4. 如果$x(t)$是右边信号，并且$Re\{s\}=\sigma_0$这条线位于收敛域内，那么$Re\{s\}>\sigma_0$的全部$s$值一定在收敛域内
+5. 如果$x(t)$是左边信号，并且$Re\{s\}=\sigma_0$这条线位于收敛域内，那么$Re\{s\}<\sigma_0$的全部$s$值一定在收敛域内
+6. 如果$x(t)$是双边信号，并且$Re\{s\}=\sigma_0$这条线位于收敛域内，那么收敛域就一定由$s$平面的一条带状区域组成，直线$Re\{s\}=\sigma_0$位于该区域中。
+7. 如果$x(t)$的拉普拉斯变换$X(s)$是有理的，那么它的收敛域是被极点所界定的并且延伸到无限远。另外，在收敛域内不包含任何极点。
+8. 如果$x(t)$的拉普拉斯变换$X(s)$是有理的，若$x(t)$是右边信号，那么收敛域在$s$平面上位于最右边极点的右边；若$x(t)$是左边信号，那么收敛域在$s$平面上位于最左边极点的左边
+
+## 拉普拉斯逆变换
+
+$$
+x(t) = \dfrac{1}{2\pi j}\int^{\sigma+j\infty}_{\sigma-j\infty}X(s)e^{st}dt
+$$
+
+## （双边）拉普拉斯变换的性质
+
+假设$x_1(t)\leftrightarrow X_1(s),ROC=R_1$和$x_2(t)\leftrightarrow X_2(s),ROC=R_2$
+
+*线性*
+
+$$
+ax_1(t)+bx_2(t)\leftrightarrow aX_1(s)+bX_2(s), ROC至少是R_1\cap R_2
+$$
+
+*时移*
+
+$$
+x(t-t_0)\leftrightarrow e^{-st_0}X(s), ROC=R
+$$
+
+*$s$域平移*
+
+$$
+e^{s_0t}x(t)\leftrightarrow X(s-s_0),ROC=R的平移
+$$
+
+*时域尺度变换*
+
+$$
+x(at)\leftrightarrow \dfrac{1}{|a|}X(\dfrac{s}{a}),ROC=R/a
+$$
+
+*共轭*
+
+$$
+x^*(t) \leftrightarrow X^*(s^*), ROC=R
+$$
+
+*卷积*
+
+$$
+x_1(t)*x_2(t)\leftrightarrow X_1(s)X_2(s), ROC至少是R_1\cap R_2
+$$
+
+*时域微分*
+
+$$
+\dfrac{d}{dt}x(t)\leftrightarrow sX(s), ROC至少是R
+$$
+
+*$s$域积分*
+
+$$
+-tx(t)\leftrightarrow \dfrac{d}{ds}X(s), R
+$$
+
+*时域积分*
+
+$$
+\int^t_{-\infty}x(\tau)d\tau\leftrightarrow\dfrac{1}{s}X(s), ROC至少是R\cap\{Re{s}>0\}
+$$
+
+*初值定理和终值定理*
+
+若$t<0,x(t)=0$且在$t=0$不包括任何冲激或高阶奇异函数，则
+
+$$
+x(0^+)=\lim_{s\to\infty} sX(s)
+$$
+
+$$
+\lim_{t\to\infty}x(t) = \lim_{s\to 0}sX(s)
+$$
+
+## 常用拉普拉斯变换对
+
+$$
+\delta(t)\leftrightarrow 1, s\in C
+$$
+
+$$
+\varepsilon(t)\leftrightarrow\dfrac{1}{s},Re\{s\}>0
+$$
+
+$$
+-\varepsilon(-t)\leftrightarrow \dfrac{1}{s},Re\{s\}<0
+$$
+
+$$
+\dfrac{t^{n-1}}{(n-1)!}\varepsilon(t)\leftrightarrow\dfrac{1}{s^n},Re\{s\}>0
+$$
+
+$$
+-\dfrac{t^{n-1}}{(n-1)!}\varepsilon(-t)\leftrightarrow\dfrac{1}{s^n},Re\{s\}<0
+$$
+
+$$
+e^{-at}\varepsilon(t)\leftrightarrow\dfrac{1}{s+a},,Re\{s\}>-a
+$$
+
+$$
+-e^{-at}\varepsilon(-t)\leftrightarrow\dfrac{1}{s+a},,Re\{s\}<-a
+$$
+
+$$
+\dfrac{t^{n-1}}{(n-1)!}e^{-at}\varepsilon(t)\leftrightarrow\dfrac{1}{(s+a)^n},,Re\{s\}>-a
+$$
+
+$$
+-\dfrac{t^{n-1}}{(n-1)!}e^{-at}\varepsilon(-t)\leftrightarrow\dfrac{1}{(s+a)^n},,Re\{s\}<-a
+$$
+
+$$
+\delta(t-T)\leftrightarrow e^{-sT}, s\in C
+$$
+
+$$
+\cos(w_0t)\varepsilon(t)\leftrightarrow \dfrac{s}{s^2+w_0^2}, Re\{s\}>0
+$$
+
+$$
+\sin(w_0t)\varepsilon(t)\leftrightarrow \dfrac{w_0}{s^2+w_0^2}, Re\{s\}>0
+$$
+
+
+$$
+e^{-at}\cos(w_0t)\varepsilon(t)\leftrightarrow \dfrac{s+a}{(s+a)^2+w_0^2}, Re\{s\}>-a
+$$
+
+$$
+e^{-at}\sin(w_0t)\varepsilon(t)\leftrightarrow \dfrac{w_0}{(s+a)^2+w_0^2}, Re\{s\}>-a
+$$
+
+$$
+\dfrac{d^n}{dt^n}\delta(t)\leftrightarrow s^n, s\in C
+$$
+
+$$
+\varepsilon(t)*\cdots*\varepsilon(t)\leftrightarrow\dfrac{1}{s^n}, Re\{s\}>0
+$$
+
+## 用拉普拉斯变换分析与表征线性时不变系统
+
+TODO：拉普拉斯变换解微分方程，区分解中的零输入和零状态响应。
+
+## 单边拉普拉斯变换及其性质

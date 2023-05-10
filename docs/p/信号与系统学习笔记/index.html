@@ -121,7 +121,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 24 分钟
+                    阅读时长: 27 分钟
                 </time>
             </div>
         
@@ -1230,6 +1230,145 @@ x(t) = \sum^{+\infty}_{n=-\infty}x(nT_s)Sa[\dfrac{w_s}{2}(t-nT_s)]
 X(s) = \int^{+\infty}_{-\infty}x(t)e^{-st}dt
 \]</span></p>
 <p>当然，傅立叶变换就是<span class="math inline">\(s=jw\)</span>时的一个特例。</p>
+<p>复变量<span class="math inline">\(s\)</span>可以写为<span class="math inline">\(s=\sigma+jw\)</span>，其中<span class="math inline">\(\sigma,w\)</span>分别是它的实部和虚部。方便起见<span class="math inline">\(X(s)=\mathcal{L}\{x(t)\}\)</span>，或者记作</p>
+<p><span class="math display">\[
+x(t)\overset{\mathcal{L}}{\longleftrightarrow} X(t)
+\]</span></p>
+<p>因为</p>
+<p><span class="math display">\[
+X(\sigma+jw) = \int^{+\infty}_{-\infty}x(t)e^{-(\sigma+jw)t}dt =
+\int^{+\infty}_{-\infty}[x(t)e^{-\sigma t}]e^{-jwt}dt
+\]</span></p>
+<p>所以<span class="math inline">\(x(t)\)</span>的拉普拉斯变换可以看成<span class="math inline">\(x(t)\)</span>乘以一个实指数信号以后的傅立叶变换。</p>
+<p>当然，正如傅立叶变换不是对所有信号都收敛，拉普拉斯变换对有些<span class="math inline">\(Re\{s\}\)</span>收敛，而有些不收敛。</p>
+<h2 id="拉普拉斯变换的有理分式情况">拉普拉斯变换的有理分式情况</h2>
+<p>如果拉普拉斯变换具有以下形式</p>
+<p><span class="math display">\[
+X(s) = \dfrac{N(s)}{D(s)}
+\]</span></p>
+<p>使得<span class="math inline">\(N(s)=0\)</span>的<span class="math inline">\(s\)</span>称为零点，使得<span class="math inline">\(D(s)=0\)</span>的<span class="math inline">\(s\)</span>称为极点。把这些点标记在复平面上。我们可以判断收敛域。</p>
+<h2 id="拉普拉斯变换的收敛域">拉普拉斯变换的收敛域</h2>
+<p>收敛域记作<span class="math inline">\(ROC\)</span></p>
+<ol type="1">
+<li><span class="math inline">\(X(s)\)</span>的收敛域在<span class="math inline">\(s\)</span>平面内是由平行于<span class="math inline">\(jw\)</span>轴的带状区域组成的。</li>
+<li>对有理拉普拉斯变换来说，收敛域内不包括任何极点。</li>
+<li>如果<span class="math inline">\(x(t)\)</span>是有限持续期的，并且是绝对可积的，那么收敛域就是整个<span class="math inline">\(s\)</span>平面。</li>
+<li>如果<span class="math inline">\(x(t)\)</span>是右边信号，并且<span class="math inline">\(Re\{s\}=\sigma_0\)</span>这条线位于收敛域内，那么<span class="math inline">\(Re\{s\}&gt;\sigma_0\)</span>的全部<span class="math inline">\(s\)</span>值一定在收敛域内</li>
+<li>如果<span class="math inline">\(x(t)\)</span>是左边信号，并且<span class="math inline">\(Re\{s\}=\sigma_0\)</span>这条线位于收敛域内，那么<span class="math inline">\(Re\{s\}&lt;\sigma_0\)</span>的全部<span class="math inline">\(s\)</span>值一定在收敛域内</li>
+<li>如果<span class="math inline">\(x(t)\)</span>是双边信号，并且<span class="math inline">\(Re\{s\}=\sigma_0\)</span>这条线位于收敛域内，那么收敛域就一定由<span class="math inline">\(s\)</span>平面的一条带状区域组成，直线<span class="math inline">\(Re\{s\}=\sigma_0\)</span>位于该区域中。</li>
+<li>如果<span class="math inline">\(x(t)\)</span>的拉普拉斯变换<span class="math inline">\(X(s)\)</span>是有理的，那么它的收敛域是被极点所界定的并且延伸到无限远。另外，在收敛域内不包含任何极点。</li>
+<li>如果<span class="math inline">\(x(t)\)</span>的拉普拉斯变换<span class="math inline">\(X(s)\)</span>是有理的，若<span class="math inline">\(x(t)\)</span>是右边信号，那么收敛域在<span class="math inline">\(s\)</span>平面上位于最右边极点的右边；若<span class="math inline">\(x(t)\)</span>是左边信号，那么收敛域在<span class="math inline">\(s\)</span>平面上位于最左边极点的左边</li>
+</ol>
+<h2 id="拉普拉斯逆变换">拉普拉斯逆变换</h2>
+<p><span class="math display">\[
+x(t) = \dfrac{1}{2\pi
+j}\int^{\sigma+j\infty}_{\sigma-j\infty}X(s)e^{st}dt
+\]</span></p>
+<h2 id="双边拉普拉斯变换的性质">（双边）拉普拉斯变换的性质</h2>
+<p>假设<span class="math inline">\(x_1(t)\leftrightarrow
+X_1(s),ROC=R_1\)</span>和<span class="math inline">\(x_2(t)\leftrightarrow X_2(s),ROC=R_2\)</span></p>
+<p><em>线性</em></p>
+<p><span class="math display">\[
+ax_1(t)+bx_2(t)\leftrightarrow aX_1(s)+bX_2(s), ROC至少是R_1\cap R_2
+\]</span></p>
+<p><em>时移</em></p>
+<p><span class="math display">\[
+x(t-t_0)\leftrightarrow e^{-st_0}X(s), ROC=R
+\]</span></p>
+<p><em><span class="math inline">\(s\)</span>域平移</em></p>
+<p><span class="math display">\[
+e^{s_0t}x(t)\leftrightarrow X(s-s_0),ROC=R的平移
+\]</span></p>
+<p><em>时域尺度变换</em></p>
+<p><span class="math display">\[
+x(at)\leftrightarrow \dfrac{1}{|a|}X(\dfrac{s}{a}),ROC=R/a
+\]</span></p>
+<p><em>共轭</em></p>
+<p><span class="math display">\[
+x^*(t) \leftrightarrow X^*(s^*), ROC=R
+\]</span></p>
+<p><em>卷积</em></p>
+<p><span class="math display">\[
+x_1(t)*x_2(t)\leftrightarrow X_1(s)X_2(s), ROC至少是R_1\cap R_2
+\]</span></p>
+<p><em>时域微分</em></p>
+<p><span class="math display">\[
+\dfrac{d}{dt}x(t)\leftrightarrow sX(s), ROC至少是R
+\]</span></p>
+<p><em><span class="math inline">\(s\)</span>域积分</em></p>
+<p><span class="math display">\[
+-tx(t)\leftrightarrow \dfrac{d}{ds}X(s), R
+\]</span></p>
+<p><em>时域积分</em></p>
+<p><span class="math display">\[
+\int^t_{-\infty}x(\tau)d\tau\leftrightarrow\dfrac{1}{s}X(s),
+ROC至少是R\cap\{Re{s}&gt;0\}
+\]</span></p>
+<p><em>初值定理和终值定理</em></p>
+<p>若<span class="math inline">\(t&lt;0,x(t)=0\)</span>且在<span class="math inline">\(t=0\)</span>不包括任何冲激或高阶奇异函数，则</p>
+<p><span class="math display">\[
+x(0^+)=\lim_{s\to\infty} sX(s)
+\]</span></p>
+<p><span class="math display">\[
+\lim_{t\to\infty}x(t) = \lim_{s\to 0}sX(s)
+\]</span></p>
+<h2 id="常用拉普拉斯变换对">常用拉普拉斯变换对</h2>
+<p><span class="math display">\[
+\delta(t)\leftrightarrow 1, s\in C
+\]</span></p>
+<p><span class="math display">\[
+\varepsilon(t)\leftrightarrow\dfrac{1}{s},Re\{s\}&gt;0
+\]</span></p>
+<p><span class="math display">\[
+-\varepsilon(-t)\leftrightarrow \dfrac{1}{s},Re\{s\}&lt;0
+\]</span></p>
+<p><span class="math display">\[
+\dfrac{t^{n-1}}{(n-1)!}\varepsilon(t)\leftrightarrow\dfrac{1}{s^n},Re\{s\}&gt;0
+\]</span></p>
+<p><span class="math display">\[
+-\dfrac{t^{n-1}}{(n-1)!}\varepsilon(-t)\leftrightarrow\dfrac{1}{s^n},Re\{s\}&lt;0
+\]</span></p>
+<p><span class="math display">\[
+e^{-at}\varepsilon(t)\leftrightarrow\dfrac{1}{s+a},,Re\{s\}&gt;-a
+\]</span></p>
+<p><span class="math display">\[
+-e^{-at}\varepsilon(-t)\leftrightarrow\dfrac{1}{s+a},,Re\{s\}&lt;-a
+\]</span></p>
+<p><span class="math display">\[
+\dfrac{t^{n-1}}{(n-1)!}e^{-at}\varepsilon(t)\leftrightarrow\dfrac{1}{(s+a)^n},,Re\{s\}&gt;-a
+\]</span></p>
+<p><span class="math display">\[
+-\dfrac{t^{n-1}}{(n-1)!}e^{-at}\varepsilon(-t)\leftrightarrow\dfrac{1}{(s+a)^n},,Re\{s\}&lt;-a
+\]</span></p>
+<p><span class="math display">\[
+\delta(t-T)\leftrightarrow e^{-sT}, s\in C
+\]</span></p>
+<p><span class="math display">\[
+\cos(w_0t)\varepsilon(t)\leftrightarrow \dfrac{s}{s^2+w_0^2},
+Re\{s\}&gt;0
+\]</span></p>
+<p><span class="math display">\[
+\sin(w_0t)\varepsilon(t)\leftrightarrow \dfrac{w_0}{s^2+w_0^2},
+Re\{s\}&gt;0
+\]</span></p>
+<p><span class="math display">\[
+e^{-at}\cos(w_0t)\varepsilon(t)\leftrightarrow
+\dfrac{s+a}{(s+a)^2+w_0^2}, Re\{s\}&gt;-a
+\]</span></p>
+<p><span class="math display">\[
+e^{-at}\sin(w_0t)\varepsilon(t)\leftrightarrow
+\dfrac{w_0}{(s+a)^2+w_0^2}, Re\{s\}&gt;-a
+\]</span></p>
+<p><span class="math display">\[
+\dfrac{d^n}{dt^n}\delta(t)\leftrightarrow s^n, s\in C
+\]</span></p>
+<p><span class="math display">\[
+\varepsilon(t)*\cdots*\varepsilon(t)\leftrightarrow\dfrac{1}{s^n},
+Re\{s\}&gt;0
+\]</span></p>
+<h2 id="用拉普拉斯变换分析与表征线性时不变系统">用拉普拉斯变换分析与表征线性时不变系统</h2>
+<p>TODO：拉普拉斯变换解微分方程，区分解中的零输入和零状态响应。</p>
+<h2 id="单边拉普拉斯变换及其性质">单边拉普拉斯变换及其性质</h2>
 
 
 
@@ -1594,7 +1733,17 @@ X(s) = \int^{+\infty}_{-\infty}x(t)e^{-st}dt
         <li><a href="#采样定理">采样定理</a></li>
       </ol>
     </li>
-    <li><a href="#拉普拉斯变换">拉普拉斯变换</a></li>
+    <li><a href="#拉普拉斯变换">拉普拉斯变换</a>
+      <ol>
+        <li><a href="#拉普拉斯变换的有理分式情况">拉普拉斯变换的有理分式情况</a></li>
+        <li><a href="#拉普拉斯变换的收敛域">拉普拉斯变换的收敛域</a></li>
+        <li><a href="#拉普拉斯逆变换">拉普拉斯逆变换</a></li>
+        <li><a href="#双边拉普拉斯变换的性质">（双边）拉普拉斯变换的性质</a></li>
+        <li><a href="#常用拉普拉斯变换对">常用拉普拉斯变换对</a></li>
+        <li><a href="#用拉普拉斯变换分析与表征线性时不变系统">用拉普拉斯变换分析与表征线性时不变系统</a></li>
+        <li><a href="#单边拉普拉斯变换及其性质">单边拉普拉斯变换及其性质</a></li>
+      </ol>
+    </li>
   </ol>
 </nav>
                 </div>

@@ -1131,6 +1131,145 @@ x(t) = \sum^{+\infty}_{n=-\infty}x(nT_s)Sa[\dfrac{w_s}{2}(t-nT_s)]
 X(s) = \int^{+\infty}_{-\infty}x(t)e^{-st}dt
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;当然，傅立叶变换就是&lt;span class=&#34;math inline&#34;&gt;\(s=jw\)&lt;/span&gt;时的一个特例。&lt;/p&gt;
+&lt;p&gt;复变量&lt;span class=&#34;math inline&#34;&gt;\(s\)&lt;/span&gt;可以写为&lt;span class=&#34;math inline&#34;&gt;\(s=\sigma+jw\)&lt;/span&gt;，其中&lt;span class=&#34;math inline&#34;&gt;\(\sigma,w\)&lt;/span&gt;分别是它的实部和虚部。方便起见&lt;span class=&#34;math inline&#34;&gt;\(X(s)=\mathcal{L}\{x(t)\}\)&lt;/span&gt;，或者记作&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+x(t)\overset{\mathcal{L}}{\longleftrightarrow} X(t)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;因为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+X(\sigma+jw) = \int^{+\infty}_{-\infty}x(t)e^{-(\sigma+jw)t}dt =
+\int^{+\infty}_{-\infty}[x(t)e^{-\sigma t}]e^{-jwt}dt
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;所以&lt;span class=&#34;math inline&#34;&gt;\(x(t)\)&lt;/span&gt;的拉普拉斯变换可以看成&lt;span class=&#34;math inline&#34;&gt;\(x(t)\)&lt;/span&gt;乘以一个实指数信号以后的傅立叶变换。&lt;/p&gt;
+&lt;p&gt;当然，正如傅立叶变换不是对所有信号都收敛，拉普拉斯变换对有些&lt;span class=&#34;math inline&#34;&gt;\(Re\{s\}\)&lt;/span&gt;收敛，而有些不收敛。&lt;/p&gt;
+&lt;h2 id=&#34;拉普拉斯变换的有理分式情况&#34;&gt;拉普拉斯变换的有理分式情况&lt;/h2&gt;
+&lt;p&gt;如果拉普拉斯变换具有以下形式&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+X(s) = \dfrac{N(s)}{D(s)}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;使得&lt;span class=&#34;math inline&#34;&gt;\(N(s)=0\)&lt;/span&gt;的&lt;span class=&#34;math inline&#34;&gt;\(s\)&lt;/span&gt;称为零点，使得&lt;span class=&#34;math inline&#34;&gt;\(D(s)=0\)&lt;/span&gt;的&lt;span class=&#34;math inline&#34;&gt;\(s\)&lt;/span&gt;称为极点。把这些点标记在复平面上。我们可以判断收敛域。&lt;/p&gt;
+&lt;h2 id=&#34;拉普拉斯变换的收敛域&#34;&gt;拉普拉斯变换的收敛域&lt;/h2&gt;
+&lt;p&gt;收敛域记作&lt;span class=&#34;math inline&#34;&gt;\(ROC\)&lt;/span&gt;&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(X(s)\)&lt;/span&gt;的收敛域在&lt;span class=&#34;math inline&#34;&gt;\(s\)&lt;/span&gt;平面内是由平行于&lt;span class=&#34;math inline&#34;&gt;\(jw\)&lt;/span&gt;轴的带状区域组成的。&lt;/li&gt;
+&lt;li&gt;对有理拉普拉斯变换来说，收敛域内不包括任何极点。&lt;/li&gt;
+&lt;li&gt;如果&lt;span class=&#34;math inline&#34;&gt;\(x(t)\)&lt;/span&gt;是有限持续期的，并且是绝对可积的，那么收敛域就是整个&lt;span class=&#34;math inline&#34;&gt;\(s\)&lt;/span&gt;平面。&lt;/li&gt;
+&lt;li&gt;如果&lt;span class=&#34;math inline&#34;&gt;\(x(t)\)&lt;/span&gt;是右边信号，并且&lt;span class=&#34;math inline&#34;&gt;\(Re\{s\}=\sigma_0\)&lt;/span&gt;这条线位于收敛域内，那么&lt;span class=&#34;math inline&#34;&gt;\(Re\{s\}&amp;gt;\sigma_0\)&lt;/span&gt;的全部&lt;span class=&#34;math inline&#34;&gt;\(s\)&lt;/span&gt;值一定在收敛域内&lt;/li&gt;
+&lt;li&gt;如果&lt;span class=&#34;math inline&#34;&gt;\(x(t)\)&lt;/span&gt;是左边信号，并且&lt;span class=&#34;math inline&#34;&gt;\(Re\{s\}=\sigma_0\)&lt;/span&gt;这条线位于收敛域内，那么&lt;span class=&#34;math inline&#34;&gt;\(Re\{s\}&amp;lt;\sigma_0\)&lt;/span&gt;的全部&lt;span class=&#34;math inline&#34;&gt;\(s\)&lt;/span&gt;值一定在收敛域内&lt;/li&gt;
+&lt;li&gt;如果&lt;span class=&#34;math inline&#34;&gt;\(x(t)\)&lt;/span&gt;是双边信号，并且&lt;span class=&#34;math inline&#34;&gt;\(Re\{s\}=\sigma_0\)&lt;/span&gt;这条线位于收敛域内，那么收敛域就一定由&lt;span class=&#34;math inline&#34;&gt;\(s\)&lt;/span&gt;平面的一条带状区域组成，直线&lt;span class=&#34;math inline&#34;&gt;\(Re\{s\}=\sigma_0\)&lt;/span&gt;位于该区域中。&lt;/li&gt;
+&lt;li&gt;如果&lt;span class=&#34;math inline&#34;&gt;\(x(t)\)&lt;/span&gt;的拉普拉斯变换&lt;span class=&#34;math inline&#34;&gt;\(X(s)\)&lt;/span&gt;是有理的，那么它的收敛域是被极点所界定的并且延伸到无限远。另外，在收敛域内不包含任何极点。&lt;/li&gt;
+&lt;li&gt;如果&lt;span class=&#34;math inline&#34;&gt;\(x(t)\)&lt;/span&gt;的拉普拉斯变换&lt;span class=&#34;math inline&#34;&gt;\(X(s)\)&lt;/span&gt;是有理的，若&lt;span class=&#34;math inline&#34;&gt;\(x(t)\)&lt;/span&gt;是右边信号，那么收敛域在&lt;span class=&#34;math inline&#34;&gt;\(s\)&lt;/span&gt;平面上位于最右边极点的右边；若&lt;span class=&#34;math inline&#34;&gt;\(x(t)\)&lt;/span&gt;是左边信号，那么收敛域在&lt;span class=&#34;math inline&#34;&gt;\(s\)&lt;/span&gt;平面上位于最左边极点的左边&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;拉普拉斯逆变换&#34;&gt;拉普拉斯逆变换&lt;/h2&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+x(t) = \dfrac{1}{2\pi
+j}\int^{\sigma+j\infty}_{\sigma-j\infty}X(s)e^{st}dt
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h2 id=&#34;双边拉普拉斯变换的性质&#34;&gt;（双边）拉普拉斯变换的性质&lt;/h2&gt;
+&lt;p&gt;假设&lt;span class=&#34;math inline&#34;&gt;\(x_1(t)\leftrightarrow
+X_1(s),ROC=R_1\)&lt;/span&gt;和&lt;span class=&#34;math inline&#34;&gt;\(x_2(t)\leftrightarrow X_2(s),ROC=R_2\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;线性&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+ax_1(t)+bx_2(t)\leftrightarrow aX_1(s)+bX_2(s), ROC至少是R_1\cap R_2
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;时移&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+x(t-t_0)\leftrightarrow e^{-st_0}X(s), ROC=R
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;&lt;span class=&#34;math inline&#34;&gt;\(s\)&lt;/span&gt;域平移&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+e^{s_0t}x(t)\leftrightarrow X(s-s_0),ROC=R的平移
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;时域尺度变换&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+x(at)\leftrightarrow \dfrac{1}{|a|}X(\dfrac{s}{a}),ROC=R/a
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;共轭&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+x^*(t) \leftrightarrow X^*(s^*), ROC=R
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;卷积&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+x_1(t)*x_2(t)\leftrightarrow X_1(s)X_2(s), ROC至少是R_1\cap R_2
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;时域微分&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\dfrac{d}{dt}x(t)\leftrightarrow sX(s), ROC至少是R
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;&lt;span class=&#34;math inline&#34;&gt;\(s\)&lt;/span&gt;域积分&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+-tx(t)\leftrightarrow \dfrac{d}{ds}X(s), R
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;时域积分&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\int^t_{-\infty}x(\tau)d\tau\leftrightarrow\dfrac{1}{s}X(s),
+ROC至少是R\cap\{Re{s}&amp;gt;0\}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;初值定理和终值定理&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;若&lt;span class=&#34;math inline&#34;&gt;\(t&amp;lt;0,x(t)=0\)&lt;/span&gt;且在&lt;span class=&#34;math inline&#34;&gt;\(t=0\)&lt;/span&gt;不包括任何冲激或高阶奇异函数，则&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+x(0^+)=\lim_{s\to\infty} sX(s)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\lim_{t\to\infty}x(t) = \lim_{s\to 0}sX(s)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h2 id=&#34;常用拉普拉斯变换对&#34;&gt;常用拉普拉斯变换对&lt;/h2&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\delta(t)\leftrightarrow 1, s\in C
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\varepsilon(t)\leftrightarrow\dfrac{1}{s},Re\{s\}&amp;gt;0
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+-\varepsilon(-t)\leftrightarrow \dfrac{1}{s},Re\{s\}&amp;lt;0
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\dfrac{t^{n-1}}{(n-1)!}\varepsilon(t)\leftrightarrow\dfrac{1}{s^n},Re\{s\}&amp;gt;0
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+-\dfrac{t^{n-1}}{(n-1)!}\varepsilon(-t)\leftrightarrow\dfrac{1}{s^n},Re\{s\}&amp;lt;0
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+e^{-at}\varepsilon(t)\leftrightarrow\dfrac{1}{s+a},,Re\{s\}&amp;gt;-a
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+-e^{-at}\varepsilon(-t)\leftrightarrow\dfrac{1}{s+a},,Re\{s\}&amp;lt;-a
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\dfrac{t^{n-1}}{(n-1)!}e^{-at}\varepsilon(t)\leftrightarrow\dfrac{1}{(s+a)^n},,Re\{s\}&amp;gt;-a
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+-\dfrac{t^{n-1}}{(n-1)!}e^{-at}\varepsilon(-t)\leftrightarrow\dfrac{1}{(s+a)^n},,Re\{s\}&amp;lt;-a
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\delta(t-T)\leftrightarrow e^{-sT}, s\in C
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\cos(w_0t)\varepsilon(t)\leftrightarrow \dfrac{s}{s^2+w_0^2},
+Re\{s\}&amp;gt;0
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\sin(w_0t)\varepsilon(t)\leftrightarrow \dfrac{w_0}{s^2+w_0^2},
+Re\{s\}&amp;gt;0
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+e^{-at}\cos(w_0t)\varepsilon(t)\leftrightarrow
+\dfrac{s+a}{(s+a)^2+w_0^2}, Re\{s\}&amp;gt;-a
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+e^{-at}\sin(w_0t)\varepsilon(t)\leftrightarrow
+\dfrac{w_0}{(s+a)^2+w_0^2}, Re\{s\}&amp;gt;-a
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\dfrac{d^n}{dt^n}\delta(t)\leftrightarrow s^n, s\in C
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\varepsilon(t)*\cdots*\varepsilon(t)\leftrightarrow\dfrac{1}{s^n},
+Re\{s\}&amp;gt;0
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h2 id=&#34;用拉普拉斯变换分析与表征线性时不变系统&#34;&gt;用拉普拉斯变换分析与表征线性时不变系统&lt;/h2&gt;
+&lt;p&gt;TODO：拉普拉斯变换解微分方程，区分解中的零输入和零状态响应。&lt;/p&gt;
+&lt;h2 id=&#34;单边拉普拉斯变换及其性质&#34;&gt;单边拉普拉斯变换及其性质&lt;/h2&gt;
 
 
 </description>
