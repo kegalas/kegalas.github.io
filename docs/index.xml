@@ -1165,6 +1165,17 @@ X(s) = \dfrac{N(s)}{D(s)}
 x(t) = \dfrac{1}{2\pi
 j}\int^{\sigma+j\infty}_{\sigma-j\infty}X(s)e^{st}dt
 \]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;显然不太可能用这玩意去算，大部分时候我们都用后面的常用变换对来算。&lt;/p&gt;
+&lt;p&gt;如果&lt;span class=&#34;math inline&#34;&gt;\(X(s)\)&lt;/span&gt;是一个有理分式，则我们要做的就是将他拆开，为此我们可以使用待定系数法。&lt;/p&gt;
+&lt;p&gt;例如&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+X(s) = \dfrac{1}{x^2(x-1)}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;我们就要拆成&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+X(s)=\dfrac{a}{x}+\dfrac{b}{x^2}+\dfrac{c}{x-1}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;然后根据系数关系求得待定系数的值。注意，这里&lt;span class=&#34;math inline&#34;&gt;\(x^{-2}\)&lt;/span&gt;要拆成两项，一项是&lt;span class=&#34;math inline&#34;&gt;\(x^{-1}\)&lt;/span&gt;，一项是&lt;span class=&#34;math inline&#34;&gt;\(x^{-2}\)&lt;/span&gt;，其他情况以此类推。&lt;/p&gt;
 &lt;h2 id=&#34;双边拉普拉斯变换的性质&#34;&gt;（双边）拉普拉斯变换的性质&lt;/h2&gt;
 &lt;p&gt;假设&lt;span class=&#34;math inline&#34;&gt;\(x_1(t)\leftrightarrow
 X_1(s),ROC=R_1\)&lt;/span&gt;和&lt;span class=&#34;math inline&#34;&gt;\(x_2(t)\leftrightarrow X_2(s),ROC=R_2\)&lt;/span&gt;&lt;/p&gt;
@@ -1192,13 +1203,27 @@ x^*(t) \leftrightarrow X^*(s^*), ROC=R
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 x_1(t)*x_2(t)\leftrightarrow X_1(s)X_2(s), ROC至少是R_1\cap R_2
 \]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;乘积&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+x_1(t)x_2(t)\leftrightarrow \dfrac{1}{2\pi
+j}\int^{c+j\infty}_{c-j\infty}X_1(\eta)X_2(s-\eta)d\eta
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(R_1\)&lt;/span&gt;为&lt;span class=&#34;math inline&#34;&gt;\(Re\{s\}&amp;gt;\sigma_1\)&lt;/span&gt;，&lt;span class=&#34;math inline&#34;&gt;\(R_2\)&lt;/span&gt;为&lt;span class=&#34;math inline&#34;&gt;\(Re\{s\}&amp;gt;\sigma_2\)&lt;/span&gt;，则&lt;span class=&#34;math inline&#34;&gt;\(R\)&lt;/span&gt;为&lt;span class=&#34;math inline&#34;&gt;\(Re\{s\}&amp;gt;\sigma_1+\sigma_2,\sigma_1&amp;lt;c&amp;lt;Re\{s\}-\sigma_2\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;这里&lt;span class=&#34;math inline&#34;&gt;\(c\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(X_1(\eta)\)&lt;/span&gt;与&lt;span class=&#34;math inline&#34;&gt;\(X_2(\eta)\)&lt;/span&gt;收敛域重叠部分内与虚轴平行的直线。这里对积分路线的限制较严，积分计算也比较复杂，所以很少用该定理。&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;时域微分&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 \dfrac{d}{dt}x(t)\leftrightarrow sX(s), ROC至少是R
 \]&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;&lt;span class=&#34;math inline&#34;&gt;\(s\)&lt;/span&gt;域积分&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;&lt;span class=&#34;math inline&#34;&gt;\(s\)&lt;/span&gt;域微分&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 -tx(t)\leftrightarrow \dfrac{d}{ds}X(s), R
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+(-t)^nx(t)\leftrightarrow \dfrac{d^n}{ds^n}X(s), R
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;&lt;span class=&#34;math inline&#34;&gt;\(s\)&lt;/span&gt;域积分&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\dfrac{x(t)}{t}\leftrightarrow \int^{+\infty}_{s}X(\eta)d\eta
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;时域积分&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
@@ -1264,12 +1289,45 @@ e^{-at}\sin(w_0t)\varepsilon(t)\leftrightarrow
 \dfrac{d^n}{dt^n}\delta(t)\leftrightarrow s^n, s\in C
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+t\varepsilon(t)\leftrightarrow \dfrac{1}{s^2}, Re\{s\}&amp;gt;0
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+t^n\varepsilon(t)\leftrightarrow \dfrac{n!}{s^{n+1}}, Re\{s\}&amp;gt;0
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 \varepsilon(t)*\cdots*\varepsilon(t)\leftrightarrow\dfrac{1}{s^n},
 Re\{s\}&amp;gt;0
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;周期函数&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(f(t)\)&lt;/span&gt;是周期为&lt;span class=&#34;math inline&#34;&gt;\(T\)&lt;/span&gt;的周期函数，则其一个周期的拉普拉斯变换为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+f_T(t)\leftrightarrow \dfrac{F(s)}{1-e^{-sT}}
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;h2 id=&#34;用拉普拉斯变换分析与表征线性时不变系统&#34;&gt;用拉普拉斯变换分析与表征线性时不变系统&lt;/h2&gt;
 &lt;p&gt;TODO：拉普拉斯变换解微分方程，区分解中的零输入和零状态响应。&lt;/p&gt;
 &lt;h2 id=&#34;单边拉普拉斯变换及其性质&#34;&gt;单边拉普拉斯变换及其性质&lt;/h2&gt;
+&lt;p&gt;TODO：本节暂未完成&lt;/p&gt;
+&lt;p&gt;不列出收敛域，任何单边拉普拉斯变换的收敛域总是某右半平面。&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;时域微分&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+x&amp;#39;(t)\leftrightarrow sX(s)-x(0^-)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+x&amp;#39;&amp;#39;(t)\leftrightarrow s^2X(s)-sx(0^-)-x&amp;#39;(0^-)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+x^{(n)}(t)\leftrightarrow s^nX(s)-\sum^{n-1}_{m=0}s^{n-1-m}x^{(m)}(0^-)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;并且特别给出，当&lt;span class=&#34;math inline&#34;&gt;\(x(t)\)&lt;/span&gt;是因果信号时，&lt;span class=&#34;math inline&#34;&gt;\(x^{(n)}(t)\leftrightarrow s^nX(s)\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;时域积分&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;初始条件为零（松弛）时&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\bigg(\int^t_{0^-}\bigg)^nx(\tau)d\tau\leftrightarrow \dfrac{1}{s^n}X(s)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;在初始条件不是松弛的情况下，以下公式对于求微分方程的解非常好用。&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+x^{(-1)}(t)=\int^t_{-\infty}x(\tau)d\tau \leftrightarrow s^{-1}X(s)
++s^{-1}x^{(-1)}(0^-)\]&lt;/span&gt;&lt;/p&gt;
 
 
 </description>

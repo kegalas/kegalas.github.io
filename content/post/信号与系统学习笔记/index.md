@@ -1613,6 +1613,24 @@ $$
 x(t) = \dfrac{1}{2\pi j}\int^{\sigma+j\infty}_{\sigma-j\infty}X(s)e^{st}dt
 $$
 
+显然不太可能用这玩意去算，大部分时候我们都用后面的常用变换对来算。
+
+如果$X(s)$是一个有理分式，则我们要做的就是将他拆开，为此我们可以使用待定系数法。
+
+例如
+
+$$
+X(s) = \dfrac{1}{x^2(x-1)}
+$$
+
+我们就要拆成
+
+$$
+X(s)=\dfrac{a}{x}+\dfrac{b}{x^2}+\dfrac{c}{x-1}
+$$
+
+然后根据系数关系求得待定系数的值。注意，这里$x^{-2}$要拆成两项，一项是$x^{-1}$，一项是$x^{-2}$，其他情况以此类推。
+
 ## （双边）拉普拉斯变换的性质
 
 假设$x_1(t)\leftrightarrow X_1(s),ROC=R_1$和$x_2(t)\leftrightarrow X_2(s),ROC=R_2$
@@ -1653,16 +1671,36 @@ $$
 x_1(t)*x_2(t)\leftrightarrow X_1(s)X_2(s), ROC至少是R_1\cap R_2
 $$
 
+*乘积*
+
+$$
+x_1(t)x_2(t)\leftrightarrow \dfrac{1}{2\pi j}\int^{c+j\infty}_{c-j\infty}X_1(\eta)X_2(s-\eta)d\eta
+$$
+
+设$R_1$为$Re\{s\}>\sigma_1$，$R_2$为$Re\{s\}>\sigma_2$，则$R$为$Re\{s\}>\sigma_1+\sigma_2,\sigma_1<c<Re\{s\}-\sigma_2$
+
+这里$c$是$X_1(\eta)$与$X_2(\eta)$收敛域重叠部分内与虚轴平行的直线。这里对积分路线的限制较严，积分计算也比较复杂，所以很少用该定理。
+
 *时域微分*
 
 $$
 \dfrac{d}{dt}x(t)\leftrightarrow sX(s), ROC至少是R
 $$
 
-*$s$域积分*
+*$s$域微分*
 
 $$
 -tx(t)\leftrightarrow \dfrac{d}{ds}X(s), R
+$$
+
+$$
+(-t)^nx(t)\leftrightarrow \dfrac{d^n}{ds^n}X(s), R
+$$
+
+*$s$域积分*
+
+$$
+\dfrac{x(t)}{t}\leftrightarrow \int^{+\infty}_{s}X(\eta)d\eta
 $$
 
 *时域积分*
@@ -1747,7 +1785,23 @@ $$
 $$
 
 $$
+t\varepsilon(t)\leftrightarrow \dfrac{1}{s^2}, Re\{s\}>0
+$$
+
+$$
+t^n\varepsilon(t)\leftrightarrow \dfrac{n!}{s^{n+1}}, Re\{s\}>0
+$$
+
+$$
 \varepsilon(t)*\cdots*\varepsilon(t)\leftrightarrow\dfrac{1}{s^n}, Re\{s\}>0
+$$
+
+*周期函数*
+
+设$f(t)$是周期为$T$的周期函数，则其一个周期的拉普拉斯变换为
+
+$$
+f_T(t)\leftrightarrow \dfrac{F(s)}{1-e^{-sT}}
 $$
 
 ## 用拉普拉斯变换分析与表征线性时不变系统
@@ -1755,3 +1809,37 @@ $$
 TODO：拉普拉斯变换解微分方程，区分解中的零输入和零状态响应。
 
 ## 单边拉普拉斯变换及其性质
+
+TODO：本节暂未完成
+
+不列出收敛域，任何单边拉普拉斯变换的收敛域总是某右半平面。
+
+*时域微分*
+
+$$
+x'(t)\leftrightarrow sX(s)-x(0^-)
+$$
+
+$$
+x''(t)\leftrightarrow s^2X(s)-sx(0^-)-x'(0^-)
+$$
+
+$$
+x^{(n)}(t)\leftrightarrow s^nX(s)-\sum^{n-1}_{m=0}s^{n-1-m}x^{(m)}(0^-)
+$$
+
+并且特别给出，当$x(t)$是因果信号时，$x^{(n)}(t)\leftrightarrow s^nX(s)$。
+
+*时域积分*
+
+初始条件为零（松弛）时
+
+$$
+\bigg(\int^t_{0^-}\bigg)^nx(\tau)d\tau\leftrightarrow \dfrac{1}{s^n}X(s)
+$$
+
+在初始条件不是松弛的情况下，以下公式对于求微分方程的解非常好用。
+
+$$
+x^{(-1)}(t)=\int^t_{-\infty}x(\tau)d\tau \leftrightarrow s^{-1}X(s)
++s^{-1}x^{(-1)}(0^-)$$
