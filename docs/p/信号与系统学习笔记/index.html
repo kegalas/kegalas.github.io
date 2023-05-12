@@ -121,7 +121,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 28 分钟
+                    阅读时长: 31 分钟
                 </time>
             </div>
         
@@ -1157,6 +1157,10 @@ H(jw)=|H(jw)|e^{j\theta(w)}
 \]</span></p>
 <p>其中<span class="math inline">\(|H(jw)|\)</span>称为幅频特性或者幅频响应，是<span class="math inline">\(w\)</span>的偶函数。</p>
 <p><span class="math inline">\(\theta(w)\)</span>称为相频特性或相频响应，是<span class="math inline">\(w\)</span>的奇函数。</p>
+<p>当然，我们可以直接在微分方程转变为<span class="math inline">\(Y(jw)=aX(jw)\)</span>（<span class="math inline">\(a\)</span>是某个系数）后，直接将两边傅立叶逆变换得到<span class="math inline">\(y(t)\)</span>而不用先得到<span class="math inline">\(H(jw)\)</span> 。</p>
+<p>再次提醒，傅里叶变换只能求零状态响应。想要求出零输入响应和全响应，用后面介绍的拉普拉斯变换。</p>
+<h2 id="傅立叶变换与电路">傅立叶变换与电路</h2>
+<p>虽然书上没说，但我觉得电阻、电容、电感也可以有傅立叶变换的模型。但是这样就无法求初始值了，还是用拉普拉斯变换吧，见后。</p>
 <h2 id="帕塞瓦尔能量方程">帕塞瓦尔能量方程</h2>
 <p><span class="math display">\[
 E = \lim_{T\to\infty}\int^T_{-T}|f(t)|^2dt =
@@ -1403,10 +1407,111 @@ Re\{s\}&gt;0
 f_T(t)\leftrightarrow \dfrac{F(s)}{1-e^{-sT}}
 \]</span></p>
 <h2 id="用拉普拉斯变换分析与表征线性时不变系统">用拉普拉斯变换分析与表征线性时不变系统</h2>
-<p>TODO：拉普拉斯变换解微分方程，区分解中的零输入和零状态响应。</p>
+<p>一个线性时不变系统的输入和输出的拉普拉斯变换由该系统的单位冲激响应的拉普拉斯变换联系起来，和傅里叶变换一样</p>
+<p><span class="math display">\[
+Y(s) = H(s)X(s)
+\]</span></p>
+<p>若一个线性是不变系统的输入是<span class="math inline">\(x(t)=e^{st}\)</span>，则输出一定是。<span class="math inline">\(H(s)e^{st}\)</span>，即<span class="math inline">\(e^{st}\)</span>是系统的一个特征函数，其特征值就等于单位冲激响应的拉普拉斯变换。</p>
+<p>在拉普拉斯变换的范畴内，称<span class="math inline">\(H(s)\)</span>为系统函数或传递函数。<span class="math inline">\(s=jw\)</span>时<span class="math inline">\(H(s)\)</span>称为系统的频率响应。</p>
+<h3 id="因果性-2">因果性</h3>
+<p>一个因果系统的系统函数的收敛域是某个右半平面。</p>
+<p>对于一个具有有理系统函数的系统来说，系统的因果性就等效于收敛域位于最右边极点的右边的右半平面。</p>
+<p>反因果信号则为左半平面。</p>
+<h3 id="稳定性-2">稳定性</h3>
+<p>当且仅当系统函数<span class="math inline">\(H(s)\)</span>的收敛域包括<span class="math inline">\(jw\)</span>轴时，一个线性时不变系统是稳定的。</p>
+<p>当且仅当<span class="math inline">\(H(s)\)</span>的全部极点都位于<span class="math inline">\(s\)</span>平面的左半平面时，一个具有有理<span class="math inline">\(H(s)\)</span>的因果系统才是稳定的。</p>
+<p>反因果系统需要极点都在右半平面。</p>
+<h3 id="由线性常系数微分方程表征的线性时不变系统">由线性常系数微分方程表征的线性时不变系统</h3>
+<p>和用傅立叶变换求解微分方程一样，我们这里换成了两边求拉普拉斯变换。</p>
+<p>注意，如果有初始值，那么需要用后面的单边拉普拉斯变换中的微分和积分性质。不能用之前的双边性质。</p>
+<p>微分方程为</p>
+<p><span class="math display">\[
+\sum^N_{k=0}a_k\dfrac{d^k y(t)}{dt^k}= \sum^M_{k=0}b_k\dfrac{d^k
+x(t)}{dt^k}
+\]</span></p>
+<p>两边同时应用拉普拉斯变换（初始值为零，即零输入响应为零，假设在<span class="math inline">\(t=0\)</span>时接入<span class="math inline">\(x(t)\)</span>），得</p>
+<p><span class="math display">\[
+\bigg(\sum^N_{k=0}a_ks^k\bigg)Y(s)= \bigg(\sum^M_{k=0}b_ks^k\bigg)X(s)
+\]</span></p>
+<p>如果初始值不为零，则全响应为</p>
+<p><span class="math display">\[
+\bigg(\sum^N_{k=0}a_ks^k\bigg)Y(s)-\sum^N_{k=0}a_k\bigg[\sum^{k-1}_{p=0}s^{k-1-p}y^{(p)}(0^-)\bigg]=
+\bigg(\sum^M_{k=0}b_ks^k\bigg)X(s)
+\]</span></p>
+<p>之后我们可以算出</p>
+<p><span class="math display">\[
+H(s) = \dfrac{Y(s)}{X(s)}
+\]</span></p>
+<p>注意冲激响应是冲激函数的零状态响应。</p>
+<p>然后我们就可以用<span class="math inline">\(H(s)\)</span>去求任意输入的零状态响应，<span class="math inline">\(Y(s)=H(s)X(s)\)</span>，再拉普拉斯逆变换换到<span class="math inline">\(s\)</span>域上。</p>
+<p>或者，我们不求<span class="math inline">\(H(s)\)</span>。</p>
+<p><span class="math display">\[
+Y_{zs}(s) =
+\bigg(\sum^M_{k=0}b_ks^k\bigg)X(s)\bigg/\bigg(\sum^N_{k=0}a_ks^k\bigg)
+\]</span></p>
+<p>如果有零输入响应，那么</p>
+<p><span class="math display">\[
+Y_{zi} =
+\sum^N_{k=0}a_k\bigg[\sum^{k-1}_{p=0}s^{k-1-p}y^{(p)}(0^-)\bigg]\bigg/\bigg(\sum^N_{k=0}a_ks^k\bigg)
+\]</span></p>
+<p>全响应就是两个相加，之后要求<span class="math inline">\(s\)</span>域上的则逆变换即可。</p>
+<p>相比之下，傅立叶变换只能求零状态而不能求零输入。</p>
+<h2 id="系统的s域框图">系统的<span class="math inline">\(s\)</span>域框图</h2>
+<h2 id="电路的s域模型">电路的<span class="math inline">\(s\)</span>域模型</h2>
+<p><em>电阻</em></p>
+<p><span class="math display">\[
+u(t) = Ri(t)\leftrightarrow U(s) = RI(s)
+\]</span></p>
+<p>变换后仍然是电阻。</p>
+<p><em>电感</em></p>
+<p><span class="math display">\[
+u(t) = L\dfrac{di(t)}{dt}\leftrightarrow U(s) = sLI(s)-Li(0^-)
+\]</span></p>
+<p>变换后变成了一个大小为<span class="math inline">\(sL\)</span>的电阻，和一个电压大小为<span class="math inline">\(Li(0^-)\)</span>的电压源，方向：<span class="math inline">\(i\)</span>从电压源的负极流进，正极流出。也可以等效为电流源。</p>
+<p><em>电容</em></p>
+<p><span class="math display">\[
+i(t) = C\dfrac{du(t)}{dt}\leftrightarrow
+U(s)=\dfrac{sC}{I(s)}+\dfrac{u(0^-)}{s}
+\]</span></p>
+<p>变换后变成了一个大小为<span class="math inline">\(1/(sC)\)</span>的电阻，和一个电压大小为<span class="math inline">\(u(0^-)/s\)</span>的电压源，方向：<span class="math inline">\(i\)</span>从电压源的正极流进，负极流出。也可以等效为电流源。</p>
+<p><em>电源</em></p>
+<p><span class="math display">\[
+u_s(t),i_s(t)\leftrightarrow U_s(s),I_s(s)
+\]</span></p>
+<p><em>KCL和KVL</em></p>
+<p>节点</p>
+<p><span class="math display">\[
+\sum_k i_k(t) = 0\leftrightarrow\sum_k I_k(s)=0
+\]</span></p>
+<p>回路</p>
+<p><span class="math display">\[
+\sum_k u_k(t) = 0\leftrightarrow\sum_k U_k(s)=0
+\]</span></p>
 <h2 id="单边拉普拉斯变换及其性质">单边拉普拉斯变换及其性质</h2>
-<p>TODO：本节暂未完成</p>
+<p>一个连续时间信号<span class="math inline">\(x(t)\)</span>的单边拉普拉斯变换<span class="math inline">\(X(s)\)</span>定义为</p>
+<p><span class="math display">\[
+X(s)=\int^\infty_{0^-}x(t) e^{-st}dt
+\]</span></p>
+<p>积分下限取<span class="math inline">\(0^-\)</span>，来表示积分区间内包括了集中于<span class="math inline">\(t=0\)</span>的任何冲激或高阶奇异函数。</p>
+<p><span class="math display">\[
+x(t)\overset{\mathcal{UL}}{\longleftrightarrow}X(s) =
+\mathcal{UL}\{x(t)\}
+\]</span></p>
+<p>如果两个信号在<span class="math inline">\(t&lt;0\)</span>时不同，而在<span class="math inline">\(t\geq0\)</span>时相同，则具有不同的双边变换，相同的单边变换。任何在<span class="math inline">\(t&lt;0\)</span>时都为零的信号，双边和单边变换相同。</p>
+<p>单边变换就是将信号在<span class="math inline">\(t&lt;0\)</span>时将它置零而求得的双边变换。</p>
+<p><strong>性质</strong></p>
 <p>不列出收敛域，任何单边拉普拉斯变换的收敛域总是某右半平面。</p>
+<p><em>线性，<span class="math inline">\(s\)</span>域平移，时域尺度变换，<span class="math inline">\(s\)</span>域微分，初值终值定理</em></p>
+<p>和双边的一样。</p>
+<p><em>时移</em></p>
+<p>和双边的不同，这里没有这个性质。</p>
+<p><em>共轭</em></p>
+<p><span class="math display">\[
+x^*(t)\leftrightarrow X^*(s)
+\]</span></p>
+<p>与双边不同的是<span class="math inline">\(s\)</span>没有取共轭</p>
+<p><em>卷积</em></p>
+<p>特别要求<span class="math inline">\(t&lt;0\)</span>时，<span class="math inline">\(x_1(t),x_2(t)\)</span>都为零。</p>
 <p><em>时域微分</em></p>
 <p><span class="math display">\[
 x&#39;(t)\leftrightarrow sX(s)-x(0^-)
@@ -1427,6 +1532,8 @@ x^{(n)}(t)\leftrightarrow s^nX(s)-\sum^{n-1}_{m=0}s^{n-1-m}x^{(m)}(0^-)
 <p><span class="math display">\[
 x^{(-1)}(t)=\int^t_{-\infty}x(\tau)d\tau \leftrightarrow s^{-1}X(s)
 +s^{-1}x^{(-1)}(0^-)\]</span></p>
+<h1 id="z变换"><span class="math inline">\(z\)</span>变换</h1>
+<p>TODO</p>
 
 
 
@@ -1777,6 +1884,7 @@ x^{(-1)}(t)=\int^t_{-\infty}x(\tau)d\tau \leftrightarrow s^{-1}X(s)
         <li><a href="#连续时间傅里叶变换的性质">连续时间傅里叶变换的性质</a></li>
         <li><a href="#基本傅立叶变换对">基本傅立叶变换对</a></li>
         <li><a href="#线性常系数微分方程表征的系统">线性常系数微分方程表征的系统</a></li>
+        <li><a href="#傅立叶变换与电路">傅立叶变换与电路</a></li>
         <li><a href="#帕塞瓦尔能量方程">帕塞瓦尔能量方程</a></li>
         <li><a href="#能量频谱">能量频谱</a></li>
         <li><a href="#频带宽度">频带宽度</a></li>
@@ -1798,10 +1906,19 @@ x^{(-1)}(t)=\int^t_{-\infty}x(\tau)d\tau \leftrightarrow s^{-1}X(s)
         <li><a href="#拉普拉斯逆变换">拉普拉斯逆变换</a></li>
         <li><a href="#双边拉普拉斯变换的性质">（双边）拉普拉斯变换的性质</a></li>
         <li><a href="#常用拉普拉斯变换对">常用拉普拉斯变换对</a></li>
-        <li><a href="#用拉普拉斯变换分析与表征线性时不变系统">用拉普拉斯变换分析与表征线性时不变系统</a></li>
+        <li><a href="#用拉普拉斯变换分析与表征线性时不变系统">用拉普拉斯变换分析与表征线性时不变系统</a>
+          <ol>
+            <li><a href="#因果性-2">因果性</a></li>
+            <li><a href="#稳定性-2">稳定性</a></li>
+            <li><a href="#由线性常系数微分方程表征的线性时不变系统">由线性常系数微分方程表征的线性时不变系统</a></li>
+          </ol>
+        </li>
+        <li><a href="#系统的s域框图">系统的<span class="math inline">\(s\)</span>域框图</a></li>
+        <li><a href="#电路的s域模型">电路的<span class="math inline">\(s\)</span>域模型</a></li>
         <li><a href="#单边拉普拉斯变换及其性质">单边拉普拉斯变换及其性质</a></li>
       </ol>
     </li>
+    <li><a href="#z变换"><span class="math inline">\(z\)</span>变换</a></li>
   </ol>
 </nav>
                 </div>

@@ -1058,6 +1058,10 @@ H(jw)=|H(jw)|e^{j\theta(w)}
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(|H(jw)|\)&lt;/span&gt;称为幅频特性或者幅频响应，是&lt;span class=&#34;math inline&#34;&gt;\(w\)&lt;/span&gt;的偶函数。&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(\theta(w)\)&lt;/span&gt;称为相频特性或相频响应，是&lt;span class=&#34;math inline&#34;&gt;\(w\)&lt;/span&gt;的奇函数。&lt;/p&gt;
+&lt;p&gt;当然，我们可以直接在微分方程转变为&lt;span class=&#34;math inline&#34;&gt;\(Y(jw)=aX(jw)\)&lt;/span&gt;（&lt;span class=&#34;math inline&#34;&gt;\(a\)&lt;/span&gt;是某个系数）后，直接将两边傅立叶逆变换得到&lt;span class=&#34;math inline&#34;&gt;\(y(t)\)&lt;/span&gt;而不用先得到&lt;span class=&#34;math inline&#34;&gt;\(H(jw)\)&lt;/span&gt; 。&lt;/p&gt;
+&lt;p&gt;再次提醒，傅里叶变换只能求零状态响应。想要求出零输入响应和全响应，用后面介绍的拉普拉斯变换。&lt;/p&gt;
+&lt;h2 id=&#34;傅立叶变换与电路&#34;&gt;傅立叶变换与电路&lt;/h2&gt;
+&lt;p&gt;虽然书上没说，但我觉得电阻、电容、电感也可以有傅立叶变换的模型。但是这样就无法求初始值了，还是用拉普拉斯变换吧，见后。&lt;/p&gt;
 &lt;h2 id=&#34;帕塞瓦尔能量方程&#34;&gt;帕塞瓦尔能量方程&lt;/h2&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 E = \lim_{T\to\infty}\int^T_{-T}|f(t)|^2dt =
@@ -1304,10 +1308,111 @@ Re\{s\}&amp;gt;0
 f_T(t)\leftrightarrow \dfrac{F(s)}{1-e^{-sT}}
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;h2 id=&#34;用拉普拉斯变换分析与表征线性时不变系统&#34;&gt;用拉普拉斯变换分析与表征线性时不变系统&lt;/h2&gt;
-&lt;p&gt;TODO：拉普拉斯变换解微分方程，区分解中的零输入和零状态响应。&lt;/p&gt;
+&lt;p&gt;一个线性时不变系统的输入和输出的拉普拉斯变换由该系统的单位冲激响应的拉普拉斯变换联系起来，和傅里叶变换一样&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+Y(s) = H(s)X(s)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;若一个线性是不变系统的输入是&lt;span class=&#34;math inline&#34;&gt;\(x(t)=e^{st}\)&lt;/span&gt;，则输出一定是。&lt;span class=&#34;math inline&#34;&gt;\(H(s)e^{st}\)&lt;/span&gt;，即&lt;span class=&#34;math inline&#34;&gt;\(e^{st}\)&lt;/span&gt;是系统的一个特征函数，其特征值就等于单位冲激响应的拉普拉斯变换。&lt;/p&gt;
+&lt;p&gt;在拉普拉斯变换的范畴内，称&lt;span class=&#34;math inline&#34;&gt;\(H(s)\)&lt;/span&gt;为系统函数或传递函数。&lt;span class=&#34;math inline&#34;&gt;\(s=jw\)&lt;/span&gt;时&lt;span class=&#34;math inline&#34;&gt;\(H(s)\)&lt;/span&gt;称为系统的频率响应。&lt;/p&gt;
+&lt;h3 id=&#34;因果性-2&#34;&gt;因果性&lt;/h3&gt;
+&lt;p&gt;一个因果系统的系统函数的收敛域是某个右半平面。&lt;/p&gt;
+&lt;p&gt;对于一个具有有理系统函数的系统来说，系统的因果性就等效于收敛域位于最右边极点的右边的右半平面。&lt;/p&gt;
+&lt;p&gt;反因果信号则为左半平面。&lt;/p&gt;
+&lt;h3 id=&#34;稳定性-2&#34;&gt;稳定性&lt;/h3&gt;
+&lt;p&gt;当且仅当系统函数&lt;span class=&#34;math inline&#34;&gt;\(H(s)\)&lt;/span&gt;的收敛域包括&lt;span class=&#34;math inline&#34;&gt;\(jw\)&lt;/span&gt;轴时，一个线性时不变系统是稳定的。&lt;/p&gt;
+&lt;p&gt;当且仅当&lt;span class=&#34;math inline&#34;&gt;\(H(s)\)&lt;/span&gt;的全部极点都位于&lt;span class=&#34;math inline&#34;&gt;\(s\)&lt;/span&gt;平面的左半平面时，一个具有有理&lt;span class=&#34;math inline&#34;&gt;\(H(s)\)&lt;/span&gt;的因果系统才是稳定的。&lt;/p&gt;
+&lt;p&gt;反因果系统需要极点都在右半平面。&lt;/p&gt;
+&lt;h3 id=&#34;由线性常系数微分方程表征的线性时不变系统&#34;&gt;由线性常系数微分方程表征的线性时不变系统&lt;/h3&gt;
+&lt;p&gt;和用傅立叶变换求解微分方程一样，我们这里换成了两边求拉普拉斯变换。&lt;/p&gt;
+&lt;p&gt;注意，如果有初始值，那么需要用后面的单边拉普拉斯变换中的微分和积分性质。不能用之前的双边性质。&lt;/p&gt;
+&lt;p&gt;微分方程为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\sum^N_{k=0}a_k\dfrac{d^k y(t)}{dt^k}= \sum^M_{k=0}b_k\dfrac{d^k
+x(t)}{dt^k}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;两边同时应用拉普拉斯变换（初始值为零，即零输入响应为零，假设在&lt;span class=&#34;math inline&#34;&gt;\(t=0\)&lt;/span&gt;时接入&lt;span class=&#34;math inline&#34;&gt;\(x(t)\)&lt;/span&gt;），得&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\bigg(\sum^N_{k=0}a_ks^k\bigg)Y(s)= \bigg(\sum^M_{k=0}b_ks^k\bigg)X(s)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;如果初始值不为零，则全响应为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\bigg(\sum^N_{k=0}a_ks^k\bigg)Y(s)-\sum^N_{k=0}a_k\bigg[\sum^{k-1}_{p=0}s^{k-1-p}y^{(p)}(0^-)\bigg]=
+\bigg(\sum^M_{k=0}b_ks^k\bigg)X(s)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;之后我们可以算出&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+H(s) = \dfrac{Y(s)}{X(s)}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;注意冲激响应是冲激函数的零状态响应。&lt;/p&gt;
+&lt;p&gt;然后我们就可以用&lt;span class=&#34;math inline&#34;&gt;\(H(s)\)&lt;/span&gt;去求任意输入的零状态响应，&lt;span class=&#34;math inline&#34;&gt;\(Y(s)=H(s)X(s)\)&lt;/span&gt;，再拉普拉斯逆变换换到&lt;span class=&#34;math inline&#34;&gt;\(s\)&lt;/span&gt;域上。&lt;/p&gt;
+&lt;p&gt;或者，我们不求&lt;span class=&#34;math inline&#34;&gt;\(H(s)\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+Y_{zs}(s) =
+\bigg(\sum^M_{k=0}b_ks^k\bigg)X(s)\bigg/\bigg(\sum^N_{k=0}a_ks^k\bigg)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;如果有零输入响应，那么&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+Y_{zi} =
+\sum^N_{k=0}a_k\bigg[\sum^{k-1}_{p=0}s^{k-1-p}y^{(p)}(0^-)\bigg]\bigg/\bigg(\sum^N_{k=0}a_ks^k\bigg)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;全响应就是两个相加，之后要求&lt;span class=&#34;math inline&#34;&gt;\(s\)&lt;/span&gt;域上的则逆变换即可。&lt;/p&gt;
+&lt;p&gt;相比之下，傅立叶变换只能求零状态而不能求零输入。&lt;/p&gt;
+&lt;h2 id=&#34;系统的s域框图&#34;&gt;系统的&lt;span class=&#34;math inline&#34;&gt;\(s\)&lt;/span&gt;域框图&lt;/h2&gt;
+&lt;h2 id=&#34;电路的s域模型&#34;&gt;电路的&lt;span class=&#34;math inline&#34;&gt;\(s\)&lt;/span&gt;域模型&lt;/h2&gt;
+&lt;p&gt;&lt;em&gt;电阻&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+u(t) = Ri(t)\leftrightarrow U(s) = RI(s)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;变换后仍然是电阻。&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;电感&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+u(t) = L\dfrac{di(t)}{dt}\leftrightarrow U(s) = sLI(s)-Li(0^-)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;变换后变成了一个大小为&lt;span class=&#34;math inline&#34;&gt;\(sL\)&lt;/span&gt;的电阻，和一个电压大小为&lt;span class=&#34;math inline&#34;&gt;\(Li(0^-)\)&lt;/span&gt;的电压源，方向：&lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt;从电压源的负极流进，正极流出。也可以等效为电流源。&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;电容&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+i(t) = C\dfrac{du(t)}{dt}\leftrightarrow
+U(s)=\dfrac{sC}{I(s)}+\dfrac{u(0^-)}{s}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;变换后变成了一个大小为&lt;span class=&#34;math inline&#34;&gt;\(1/(sC)\)&lt;/span&gt;的电阻，和一个电压大小为&lt;span class=&#34;math inline&#34;&gt;\(u(0^-)/s\)&lt;/span&gt;的电压源，方向：&lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt;从电压源的正极流进，负极流出。也可以等效为电流源。&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;电源&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+u_s(t),i_s(t)\leftrightarrow U_s(s),I_s(s)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;KCL和KVL&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;节点&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\sum_k i_k(t) = 0\leftrightarrow\sum_k I_k(s)=0
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;回路&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\sum_k u_k(t) = 0\leftrightarrow\sum_k U_k(s)=0
+\]&lt;/span&gt;&lt;/p&gt;
 &lt;h2 id=&#34;单边拉普拉斯变换及其性质&#34;&gt;单边拉普拉斯变换及其性质&lt;/h2&gt;
-&lt;p&gt;TODO：本节暂未完成&lt;/p&gt;
+&lt;p&gt;一个连续时间信号&lt;span class=&#34;math inline&#34;&gt;\(x(t)\)&lt;/span&gt;的单边拉普拉斯变换&lt;span class=&#34;math inline&#34;&gt;\(X(s)\)&lt;/span&gt;定义为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+X(s)=\int^\infty_{0^-}x(t) e^{-st}dt
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;积分下限取&lt;span class=&#34;math inline&#34;&gt;\(0^-\)&lt;/span&gt;，来表示积分区间内包括了集中于&lt;span class=&#34;math inline&#34;&gt;\(t=0\)&lt;/span&gt;的任何冲激或高阶奇异函数。&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+x(t)\overset{\mathcal{UL}}{\longleftrightarrow}X(s) =
+\mathcal{UL}\{x(t)\}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;如果两个信号在&lt;span class=&#34;math inline&#34;&gt;\(t&amp;lt;0\)&lt;/span&gt;时不同，而在&lt;span class=&#34;math inline&#34;&gt;\(t\geq0\)&lt;/span&gt;时相同，则具有不同的双边变换，相同的单边变换。任何在&lt;span class=&#34;math inline&#34;&gt;\(t&amp;lt;0\)&lt;/span&gt;时都为零的信号，双边和单边变换相同。&lt;/p&gt;
+&lt;p&gt;单边变换就是将信号在&lt;span class=&#34;math inline&#34;&gt;\(t&amp;lt;0\)&lt;/span&gt;时将它置零而求得的双边变换。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;性质&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;不列出收敛域，任何单边拉普拉斯变换的收敛域总是某右半平面。&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;线性，&lt;span class=&#34;math inline&#34;&gt;\(s\)&lt;/span&gt;域平移，时域尺度变换，&lt;span class=&#34;math inline&#34;&gt;\(s\)&lt;/span&gt;域微分，初值终值定理&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;和双边的一样。&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;时移&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;和双边的不同，这里没有这个性质。&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;共轭&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+x^*(t)\leftrightarrow X^*(s)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;与双边不同的是&lt;span class=&#34;math inline&#34;&gt;\(s\)&lt;/span&gt;没有取共轭&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;卷积&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;特别要求&lt;span class=&#34;math inline&#34;&gt;\(t&amp;lt;0\)&lt;/span&gt;时，&lt;span class=&#34;math inline&#34;&gt;\(x_1(t),x_2(t)\)&lt;/span&gt;都为零。&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;时域微分&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 x&amp;#39;(t)\leftrightarrow sX(s)-x(0^-)
@@ -1328,6 +1433,8 @@ x^{(n)}(t)\leftrightarrow s^nX(s)-\sum^{n-1}_{m=0}s^{n-1-m}x^{(m)}(0^-)
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 x^{(-1)}(t)=\int^t_{-\infty}x(\tau)d\tau \leftrightarrow s^{-1}X(s)
 +s^{-1}x^{(-1)}(0^-)\]&lt;/span&gt;&lt;/p&gt;
+&lt;h1 id=&#34;z变换&#34;&gt;&lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;变换&lt;/h1&gt;
+&lt;p&gt;TODO&lt;/p&gt;
 
 
 </description>
