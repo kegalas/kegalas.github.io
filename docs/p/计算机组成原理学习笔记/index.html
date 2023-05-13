@@ -125,7 +125,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 8 分钟
+                    阅读时长: 10 分钟
                 </time>
             </div>
         
@@ -687,6 +687,68 @@ d_{min} \geq t+e+1, 且e&gt;t
 2^k\geq n+k-1
 \]</span></p>
 <h3 id="crc码">CRC码</h3>
+<h1 id="运算方法与运算器">运算方法与运算器</h1>
+<h2 id="机器数的逻辑运算">机器数的逻辑运算</h2>
+<p>按位与、或、非、异或等等。</p>
+<h2 id="机器数的移位运算">机器数的移位运算</h2>
+<h3 id="算术移位">算术移位</h3>
+<p>正数的原码、补码、反码，左移右移都补0.</p>
+<p>负数的原码左右都补0；补码右补1，左移补0；反码左右都补1.</p>
+<p>运算的结果<span class="math inline">\(p+q\)</span>位，保留前<span class="math inline">\(p\)</span>位，常见的舍入方法有：</p>
+<ol type="1">
+<li>恒舍（切断）。实现简单，误差大。</li>
+<li>冯诺依曼舍入法，又称恒置1法，把保留部分<span class="math inline">\(p\)</span>位的最低位置1.实现简单，平均误差接近0，应用较多。</li>
+<li>下舍上入法，即0舍1入。用<span class="math inline">\(q\)</span>位的最高位作为标志。如果为0，则全部舍去；如果为1，则在保留的<span class="math inline">\(p\)</span>位的最低位上加1.</li>
+<li>查表舍入法，或ROM舍入法。每次经查表来读得相应的处理结果。表的设计通常是当尾数最低<span class="math inline">\(k-1\)</span>位全1时用截断法，其余用舍入法。实现速度快，虽然增加了硬件，但是整体性能最佳。</li>
+</ol>
+<h3 id="逻辑移位">逻辑移位</h3>
+<p>把所有码都看成无符号码，左移右移都添加0，多出来的位直接舍弃。</p>
+<h3 id="循环移位">循环移位</h3>
+<figure>
+<img src="1.jpg" alt="1.jpg"/>
+<figcaption aria-hidden="true">1.jpg</figcaption>
+</figure>
+<h2 id="一位全加器">一位全加器</h2>
+<p>输入<span class="math inline">\(X_i,Y_i,C_i\)</span>，表示两个加数和一个进位。</p>
+<p>输出<span class="math inline">\(Z_i,C_{i+1}\)</span>，表示结果和进位。</p>
+<p><span class="math display">\[
+Z_i = X_i\oplus Y_i\oplus C_i
+\]</span></p>
+<p><span class="math display">\[
+C_{i+1} = (X_i\cdot Y_i)+(X_i+ Y_i)\cdot C_i
+\]</span></p>
+<p>若果令<span class="math inline">\(G_i = X_i\cdot Y_i, P_i = X_i+
+Y_i\)</span>，则<span class="math inline">\(C_{i+1}=G_i+P_i\cdot
+C_i\)</span></p>
+<p>当然<span class="math inline">\(P_i=X_i\oplus
+Y_i\)</span>其实是等效的，有些地方会这么写。</p>
+<h2 id="n位加减法器">n位加减法器</h2>
+<h3 id="串行行波进位的并行加减法器">串行（行波）进位的并行加减法器</h3>
+<h3 id="并行加法器的快速进位">并行加法器的快速进位</h3>
+<ol type="1">
+<li>并行进位（先行进位、同时进位、CLA）方式</li>
+</ol>
+<p>即把<span class="math inline">\(C_{i+2}\)</span>用<span class="math inline">\(C_{i+1}\)</span>表示，把<span class="math inline">\(C_{i+3}\)</span>用<span class="math inline">\(C_{i+2}\)</span>表示，以此类推，然后从一开始就得到进位信息。</p>
+<ol start="2" type="1">
+<li>分组并行进位</li>
+</ol>
+<p>单级先行进位，即，组内并行，组间串行。因为全部都并行电路很复杂，所以采用这个方法。</p>
+<p>多级先行进位，即组内并行，组间并行。</p>
+<h2 id="alu电路">ALU电路</h2>
+<p>既能完成算术运算又能完成逻辑运算的部件。</p>
+<h2 id="定点数加减运算">定点数加减运算</h2>
+<h3 id="补码">补码</h3>
+<p>两个数连同符号位一起相加，符号位产生的进位丢掉。减法则是把右边的加数变成相反数的补码再来相加。得到的结果也是补码。</p>
+<h3 id="符号扩展">符号扩展</h3>
+<p>将采用给定位数表示的数转换成具有更多位数的某种表示形式。</p>
+<p>对于补码，正数用0填充，负数用1填充。</p>
+<h3 id="溢出判断">溢出判断</h3>
+<p>有两种情况，一种是正溢，即两个正数相加。一种是负溢，即两个负数相加。</p>
+<ol type="1">
+<li>采用符号位判断。如果正数相加符号位变成1了，那么正溢。如果负数相加符号位变成0了，那么负溢。</li>
+<li>采用进位法。如果正数相加，最高有效位产生进位而符号位不产生进位，那么正溢。如果负数相加最高有效位不产生进位，而符号位产生进位，那么负溢。</li>
+<li>采用变形补码（双符号位补码，模4补码）。计算方法相同，都是相加然后进位。如果符号位为00，则为正数；11则为负数，01则为正溢，10则为负溢。</li>
+</ol>
 
 
 
@@ -756,6 +818,18 @@ d_{min} \geq t+e+1, 且e&gt;t
                 
                     
 <article class="">
+    <a href="/p/msys2%E4%B8%AD%E7%9A%84make%E5%B7%A5%E5%85%B7%E5%AE%89%E8%A3%85%E6%96%B9%E6%B3%95/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">MSYS2中的make工具安装方法</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="">
     <a href="/p/msys2mingw64cygwin%E7%9A%84%E4%BD%BF%E7%94%A8%E5%8C%BA%E5%88%AB%E6%B5%85%E8%B0%88/">
         
         
@@ -808,28 +882,6 @@ d_{min} \geq t+e+1, 且e&gt;t
 
         <div class="article-details">
             <h2 class="article-title">MSYS2报错David Macek is unknown trust</h2>
-        </div>
-    </a>
-</article>
-                
-                    
-<article class="has-image">
-    <a href="/p/hugo%E7%9A%84stack%E7%9A%AE%E8%82%A4%E4%B8%AD%E4%BD%BF%E5%BE%97mailto%E8%B6%85%E9%93%BE%E6%8E%A5%E8%83%BD%E5%A4%9F%E7%9B%B4%E6%8E%A5%E6%89%93%E5%BC%80%E7%94%B5%E5%AD%90%E9%82%AE%E4%BB%B6%E5%AE%A2%E6%88%B7%E7%AB%AF/">
-        
-        
-            <div class="article-image">
-                <img src="/p/hugo%E7%9A%84stack%E7%9A%AE%E8%82%A4%E4%B8%AD%E4%BD%BF%E5%BE%97mailto%E8%B6%85%E9%93%BE%E6%8E%A5%E8%83%BD%E5%A4%9F%E7%9B%B4%E6%8E%A5%E6%89%93%E5%BC%80%E7%94%B5%E5%AD%90%E9%82%AE%E4%BB%B6%E5%AE%A2%E6%88%B7%E7%AB%AF/cover.6f09e2d71e2344266088e2fef78989fd_hu378ddc8c04e53c565ec514b2115f7fb1_40855_250x150_fill_q75_box_smart1.jpg" 
-                        width="250" 
-                        height="150" 
-                        loading="lazy" 
-                        data-key="" 
-                        data-hash="md5-bwni1x4jRCZgiOL&#43;94mJ/Q==">
-                
-            </div>
-        
-
-        <div class="article-details">
-            <h2 class="article-title">Hugo的Stack皮肤中使得mailto超链接能够直接打开电子邮件客户端</h2>
         </div>
     </a>
 </article>
@@ -1072,6 +1124,33 @@ d_{min} \geq t+e+1, 且e&gt;t
             <li><a href="#奇偶校验">奇偶校验</a></li>
             <li><a href="#海明码">海明码</a></li>
             <li><a href="#crc码">CRC码</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+    <li><a href="#运算方法与运算器">运算方法与运算器</a>
+      <ol>
+        <li><a href="#机器数的逻辑运算">机器数的逻辑运算</a></li>
+        <li><a href="#机器数的移位运算">机器数的移位运算</a>
+          <ol>
+            <li><a href="#算术移位">算术移位</a></li>
+            <li><a href="#逻辑移位">逻辑移位</a></li>
+            <li><a href="#循环移位">循环移位</a></li>
+          </ol>
+        </li>
+        <li><a href="#一位全加器">一位全加器</a></li>
+        <li><a href="#n位加减法器">n位加减法器</a>
+          <ol>
+            <li><a href="#串行行波进位的并行加减法器">串行（行波）进位的并行加减法器</a></li>
+            <li><a href="#并行加法器的快速进位">并行加法器的快速进位</a></li>
+          </ol>
+        </li>
+        <li><a href="#alu电路">ALU电路</a></li>
+        <li><a href="#定点数加减运算">定点数加减运算</a>
+          <ol>
+            <li><a href="#补码">补码</a></li>
+            <li><a href="#符号扩展">符号扩展</a></li>
+            <li><a href="#溢出判断">溢出判断</a></li>
           </ol>
         </li>
       </ol>

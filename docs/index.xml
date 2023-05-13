@@ -6,7 +6,18 @@
         <description>Recent content on KegalaS的个人博客</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Sat, 06 May 2023 23:44:47 +0800</lastBuildDate><atom:link href="https://kegalas.top/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sat, 13 May 2023 15:15:55 +0800</lastBuildDate><atom:link href="https://kegalas.top/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>MSYS2中的make工具安装方法</title>
+        <link>https://kegalas.top/p/msys2%E4%B8%AD%E7%9A%84make%E5%B7%A5%E5%85%B7%E5%AE%89%E8%A3%85%E6%96%B9%E6%B3%95/</link>
+        <pubDate>Sat, 13 May 2023 15:15:55 +0800</pubDate>
+        
+        <guid>https://kegalas.top/p/msys2%E4%B8%AD%E7%9A%84make%E5%B7%A5%E5%85%B7%E5%AE%89%E8%A3%85%E6%96%B9%E6%B3%95/</guid>
+        <description>&lt;p&gt;你可能会遇到如下情况：无论你使用MSYS2还是MinGW64还是Ucrt64还是Clang64，去输入pacman -S make，你的make都只会安装在/usr/bin里，也就是MSYS2里。如果你安装它们的toolchain，例如pacman -S mingw-w64-ucrt-x86_64-toolchain，里面包含了mingw-w64-ucrt-x86_64-make这个工具，但是在/ucrt64/bin里面并没有make.exe。&lt;/p&gt;
+&lt;p&gt;其实并不是没有安装，只不过，他叫mingw32-make.exe。你如果要像使用make一样使用这个工具，你可以在打开cmd，在/ucrt64/bin中，输入mklink make mingw32-make.exe来创建软连接。这样，如果这个目录在环境变量之下，你就可以使用ucrt64中的make工具了。&lt;/p&gt;
+&lt;p&gt;值得注意的是，虽然他叫mingw32-make，不过编译32位和64位的源码都可以用。&lt;/p&gt;
+</description>
+        </item>
+        <item>
         <title>MSYS2,MinGW64,Cygwin的使用区别浅谈</title>
         <link>https://kegalas.top/p/msys2mingw64cygwin%E7%9A%84%E4%BD%BF%E7%94%A8%E5%8C%BA%E5%88%AB%E6%B5%85%E8%B0%88/</link>
         <pubDate>Sat, 06 May 2023 23:44:47 +0800</pubDate>
@@ -1388,6 +1399,7 @@ u_s(t),i_s(t)\leftrightarrow U_s(s),I_s(s)
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 \sum_k u_k(t) = 0\leftrightarrow\sum_k U_k(s)=0
 \]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;用了这些变换后，得到的新电路，就可以只用算电阻，不用算难算的电容和电感关系，解出来所需要的量之后，再逆变换得到&lt;span class=&#34;math inline&#34;&gt;\(t\)&lt;/span&gt;上的式子即可。&lt;/p&gt;
 &lt;h2 id=&#34;单边拉普拉斯变换及其性质&#34;&gt;单边拉普拉斯变换及其性质&lt;/h2&gt;
 &lt;p&gt;一个连续时间信号&lt;span class=&#34;math inline&#34;&gt;\(x(t)\)&lt;/span&gt;的单边拉普拉斯变换&lt;span class=&#34;math inline&#34;&gt;\(X(s)\)&lt;/span&gt;定义为&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
@@ -1997,6 +2009,68 @@ d_{min} \geq t+e+1, 且e&amp;gt;t
 2^k\geq n+k-1
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;h3 id=&#34;crc码&#34;&gt;CRC码&lt;/h3&gt;
+&lt;h1 id=&#34;运算方法与运算器&#34;&gt;运算方法与运算器&lt;/h1&gt;
+&lt;h2 id=&#34;机器数的逻辑运算&#34;&gt;机器数的逻辑运算&lt;/h2&gt;
+&lt;p&gt;按位与、或、非、异或等等。&lt;/p&gt;
+&lt;h2 id=&#34;机器数的移位运算&#34;&gt;机器数的移位运算&lt;/h2&gt;
+&lt;h3 id=&#34;算术移位&#34;&gt;算术移位&lt;/h3&gt;
+&lt;p&gt;正数的原码、补码、反码，左移右移都补0.&lt;/p&gt;
+&lt;p&gt;负数的原码左右都补0；补码右补1，左移补0；反码左右都补1.&lt;/p&gt;
+&lt;p&gt;运算的结果&lt;span class=&#34;math inline&#34;&gt;\(p+q\)&lt;/span&gt;位，保留前&lt;span class=&#34;math inline&#34;&gt;\(p\)&lt;/span&gt;位，常见的舍入方法有：&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;恒舍（切断）。实现简单，误差大。&lt;/li&gt;
+&lt;li&gt;冯诺依曼舍入法，又称恒置1法，把保留部分&lt;span class=&#34;math inline&#34;&gt;\(p\)&lt;/span&gt;位的最低位置1.实现简单，平均误差接近0，应用较多。&lt;/li&gt;
+&lt;li&gt;下舍上入法，即0舍1入。用&lt;span class=&#34;math inline&#34;&gt;\(q\)&lt;/span&gt;位的最高位作为标志。如果为0，则全部舍去；如果为1，则在保留的&lt;span class=&#34;math inline&#34;&gt;\(p\)&lt;/span&gt;位的最低位上加1.&lt;/li&gt;
+&lt;li&gt;查表舍入法，或ROM舍入法。每次经查表来读得相应的处理结果。表的设计通常是当尾数最低&lt;span class=&#34;math inline&#34;&gt;\(k-1\)&lt;/span&gt;位全1时用截断法，其余用舍入法。实现速度快，虽然增加了硬件，但是整体性能最佳。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;逻辑移位&#34;&gt;逻辑移位&lt;/h3&gt;
+&lt;p&gt;把所有码都看成无符号码，左移右移都添加0，多出来的位直接舍弃。&lt;/p&gt;
+&lt;h3 id=&#34;循环移位&#34;&gt;循环移位&lt;/h3&gt;
+&lt;figure&gt;
+&lt;img src=&#34;1.jpg&#34; alt=&#34;1.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;1.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;h2 id=&#34;一位全加器&#34;&gt;一位全加器&lt;/h2&gt;
+&lt;p&gt;输入&lt;span class=&#34;math inline&#34;&gt;\(X_i,Y_i,C_i\)&lt;/span&gt;，表示两个加数和一个进位。&lt;/p&gt;
+&lt;p&gt;输出&lt;span class=&#34;math inline&#34;&gt;\(Z_i,C_{i+1}\)&lt;/span&gt;，表示结果和进位。&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+Z_i = X_i\oplus Y_i\oplus C_i
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+C_{i+1} = (X_i\cdot Y_i)+(X_i+ Y_i)\cdot C_i
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;若果令&lt;span class=&#34;math inline&#34;&gt;\(G_i = X_i\cdot Y_i, P_i = X_i+
+Y_i\)&lt;/span&gt;，则&lt;span class=&#34;math inline&#34;&gt;\(C_{i+1}=G_i+P_i\cdot
+C_i\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;当然&lt;span class=&#34;math inline&#34;&gt;\(P_i=X_i\oplus
+Y_i\)&lt;/span&gt;其实是等效的，有些地方会这么写。&lt;/p&gt;
+&lt;h2 id=&#34;n位加减法器&#34;&gt;n位加减法器&lt;/h2&gt;
+&lt;h3 id=&#34;串行行波进位的并行加减法器&#34;&gt;串行（行波）进位的并行加减法器&lt;/h3&gt;
+&lt;h3 id=&#34;并行加法器的快速进位&#34;&gt;并行加法器的快速进位&lt;/h3&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;并行进位（先行进位、同时进位、CLA）方式&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;即把&lt;span class=&#34;math inline&#34;&gt;\(C_{i+2}\)&lt;/span&gt;用&lt;span class=&#34;math inline&#34;&gt;\(C_{i+1}\)&lt;/span&gt;表示，把&lt;span class=&#34;math inline&#34;&gt;\(C_{i+3}\)&lt;/span&gt;用&lt;span class=&#34;math inline&#34;&gt;\(C_{i+2}\)&lt;/span&gt;表示，以此类推，然后从一开始就得到进位信息。&lt;/p&gt;
+&lt;ol start=&#34;2&#34; type=&#34;1&#34;&gt;
+&lt;li&gt;分组并行进位&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;单级先行进位，即，组内并行，组间串行。因为全部都并行电路很复杂，所以采用这个方法。&lt;/p&gt;
+&lt;p&gt;多级先行进位，即组内并行，组间并行。&lt;/p&gt;
+&lt;h2 id=&#34;alu电路&#34;&gt;ALU电路&lt;/h2&gt;
+&lt;p&gt;既能完成算术运算又能完成逻辑运算的部件。&lt;/p&gt;
+&lt;h2 id=&#34;定点数加减运算&#34;&gt;定点数加减运算&lt;/h2&gt;
+&lt;h3 id=&#34;补码&#34;&gt;补码&lt;/h3&gt;
+&lt;p&gt;两个数连同符号位一起相加，符号位产生的进位丢掉。减法则是把右边的加数变成相反数的补码再来相加。得到的结果也是补码。&lt;/p&gt;
+&lt;h3 id=&#34;符号扩展&#34;&gt;符号扩展&lt;/h3&gt;
+&lt;p&gt;将采用给定位数表示的数转换成具有更多位数的某种表示形式。&lt;/p&gt;
+&lt;p&gt;对于补码，正数用0填充，负数用1填充。&lt;/p&gt;
+&lt;h3 id=&#34;溢出判断&#34;&gt;溢出判断&lt;/h3&gt;
+&lt;p&gt;有两种情况，一种是正溢，即两个正数相加。一种是负溢，即两个负数相加。&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;采用符号位判断。如果正数相加符号位变成1了，那么正溢。如果负数相加符号位变成0了，那么负溢。&lt;/li&gt;
+&lt;li&gt;采用进位法。如果正数相加，最高有效位产生进位而符号位不产生进位，那么正溢。如果负数相加最高有效位不产生进位，而符号位产生进位，那么负溢。&lt;/li&gt;
+&lt;li&gt;采用变形补码（双符号位补码，模4补码）。计算方法相同，都是相加然后进位。如果符号位为00，则为正数；11则为负数，01则为正溢，10则为负溢。&lt;/li&gt;
+&lt;/ol&gt;
 
 
 </description>

@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="en-us">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='通常，v2rayN设置中的ip是127.0.0.1，http协议的端口是10809，在PowerShell中临时使用代理，需要输入如下命令 $env:HTTP_PROXY=&amp;#34;http://127.0.0.1:10809&amp;#34;'><title>在PowerShell中使用v2rayN代理</title>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='你可能会遇到如下情况：无论你使用MSYS2还是MinGW64还是Ucrt64还是Clang64，去输入pacman -S make，你的make都'><title>MSYS2中的make工具安装方法</title>
 
-<link rel='canonical' href='https://kegalas.top/p/%E5%9C%A8powershell%E4%B8%AD%E4%BD%BF%E7%94%A8v2rayn%E4%BB%A3%E7%90%86/'>
+<link rel='canonical' href='https://kegalas.top/p/msys2%E4%B8%AD%E7%9A%84make%E5%B7%A5%E5%85%B7%E5%AE%89%E8%A3%85%E6%96%B9%E6%B3%95/'>
 
-<link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='在PowerShell中使用v2rayN代理'>
-<meta property='og:description' content='通常，v2rayN设置中的ip是127.0.0.1，http协议的端口是10809，在PowerShell中临时使用代理，需要输入如下命令 $env:HTTP_PROXY=&amp;#34;http://127.0.0.1:10809&amp;#34;'>
-<meta property='og:url' content='https://kegalas.top/p/%E5%9C%A8powershell%E4%B8%AD%E4%BD%BF%E7%94%A8v2rayn%E4%BB%A3%E7%90%86/'>
+<link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='MSYS2中的make工具安装方法'>
+<meta property='og:description' content='你可能会遇到如下情况：无论你使用MSYS2还是MinGW64还是Ucrt64还是Clang64，去输入pacman -S make，你的make都'>
+<meta property='og:url' content='https://kegalas.top/p/msys2%E4%B8%AD%E7%9A%84make%E5%B7%A5%E5%85%B7%E5%AE%89%E8%A3%85%E6%96%B9%E6%B3%95/'>
 <meta property='og:site_name' content='KegalaS的个人博客'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Windows' /><meta property='article:tag' content='代理' /><meta property='article:tag' content='PowerShell' /><meta property='article:tag' content='v2rayN' /><meta property='article:published_time' content='2022-08-06T16:33:44&#43;08:00'/><meta property='article:modified_time' content='2022-08-06T16:33:44&#43;08:00'/>
-<meta name="twitter:title" content="在PowerShell中使用v2rayN代理">
-<meta name="twitter:description" content="通常，v2rayN设置中的ip是127.0.0.1，http协议的端口是10809，在PowerShell中临时使用代理，需要输入如下命令 $env:HTTP_PROXY=&amp;#34;http://127.0.0.1:10809&amp;#34;">
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='MSYS2' /><meta property='article:tag' content='计算机' /><meta property='article:tag' content='Windows' /><meta property='article:tag' content='MinGW' /><meta property='article:published_time' content='2023-05-13T15:15:55&#43;08:00'/><meta property='article:modified_time' content='2023-05-13T15:15:55&#43;08:00'/>
+<meta name="twitter:title" content="MSYS2中的make工具安装方法">
+<meta name="twitter:description" content="你可能会遇到如下情况：无论你使用MSYS2还是MinGW64还是Ucrt64还是Clang64，去输入pacman -S make，你的make都">
     <link rel="shortcut icon" href="favicon-16x16.png" />
 
     </head>
@@ -329,7 +329,7 @@
     
 
     <h2 class="article-title">
-        <a href="/p/%E5%9C%A8powershell%E4%B8%AD%E4%BD%BF%E7%94%A8v2rayn%E4%BB%A3%E7%90%86/">在PowerShell中使用v2rayN代理</a>
+        <a href="/p/msys2%E4%B8%AD%E7%9A%84make%E5%B7%A5%E5%85%B7%E5%AE%89%E8%A3%85%E6%96%B9%E6%B3%95/">MSYS2中的make工具安装方法</a>
     </h2>
 
     
@@ -347,7 +347,7 @@
   <path d="M3 11h16" />
   <path d="M18 16.496v1.504l1 1" />
 </svg>
-                <time class="article-time--published">Aug 06, 2022</time>
+                <time class="article-time--published">May 13, 2023</time>
             </div>
         
 
@@ -372,20 +372,9 @@
 </header>
 
     <section class="article-content">
-    <p>通常，v2rayN设置中的ip是127.0.0.1，http协议的端口是10809，在PowerShell中临时使用代理，需要输入如下命令</p>
-<pre tabindex="0"><code>$env:HTTP_PROXY=&#34;http://127.0.0.1:10809&#34;
-$env:HTTPS_PROXY=&#34;http://127.0.0.1:10809&#34;
-</code></pre><p>之后输入</p>
-<pre tabindex="0"><code>curl www.google.com
-</code></pre><p>来检验是否成功。如果v2rayN本身是能够连接到谷歌的，那么得到的结果应该类似于下方：</p>
-<pre tabindex="0"><code>StatusCode        : 200
-StatusDescription : OK
-Content           : &lt;!doctype html&gt;&lt;html itemscope=&#34;&#34; itemtype=&#34;http://schema.org/WebPage&#34; lang=&#34;en&#34;&gt;&lt;head&gt;&lt;meta conten
-                    t=&#34;Search the world&#39;s information, including webpages, images, videos and more. Google has many spe
-                    ci...
-RawContent        : HTTP/1.1 200 OK
-......
-</code></pre><p>另外不要使用ping命令去测试，虽然不明原因但是确实无法ping到谷歌。</p>
+    <p>你可能会遇到如下情况：无论你使用MSYS2还是MinGW64还是Ucrt64还是Clang64，去输入pacman -S make，你的make都只会安装在/usr/bin里，也就是MSYS2里。如果你安装它们的toolchain，例如pacman -S mingw-w64-ucrt-x86_64-toolchain，里面包含了mingw-w64-ucrt-x86_64-make这个工具，但是在/ucrt64/bin里面并没有make.exe。</p>
+<p>其实并不是没有安装，只不过，他叫mingw32-make.exe。你如果要像使用make一样使用这个工具，你可以在打开cmd，在/ucrt64/bin中，输入mklink make mingw32-make.exe来创建软连接。这样，如果这个目录在环境变量之下，你就可以使用ucrt64中的make工具了。</p>
+<p>值得注意的是，虽然他叫mingw32-make，不过编译32位和64位的源码都可以用。</p>
 
 </section>
 
@@ -394,13 +383,13 @@ RawContent        : HTTP/1.1 200 OK
     
     <section class="article-tags">
         
+            <a href="/tags/msys2/">MSYS2</a>
+        
+            <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/">计算机</a>
+        
             <a href="/tags/windows/">Windows</a>
         
-            <a href="/tags/%E4%BB%A3%E7%90%86/">代理</a>
-        
-            <a href="/tags/powershell/">PowerShell</a>
-        
-            <a href="/tags/v2rayn/">v2rayN</a>
+            <a href="/tags/mingw/">MinGW</a>
         
     </section>
 
@@ -452,18 +441,6 @@ RawContent        : HTTP/1.1 200 OK
         <h2 class="section-title">相关文章</h2>
         <div class="related-contents">
             <div class="flex article-list--tile">
-                
-                    
-<article class="">
-    <a href="/p/msys2%E4%B8%AD%E7%9A%84make%E5%B7%A5%E5%85%B7%E5%AE%89%E8%A3%85%E6%96%B9%E6%B3%95/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">MSYS2中的make工具安装方法</h2>
-        </div>
-    </a>
-</article>
                 
                     
 <article class="">
@@ -529,6 +506,18 @@ RawContent        : HTTP/1.1 200 OK
 
         <div class="article-details">
             <h2 class="article-title">计算机组成原理学习笔记</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="">
+    <a href="/p/emacs%E4%BD%BF%E7%94%A8%E7%AC%94%E8%AE%B0/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Emacs使用笔记</h2>
         </div>
     </a>
 </article>
