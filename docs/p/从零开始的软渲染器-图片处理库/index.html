@@ -360,7 +360,7 @@
 <span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div>
 <p>赋予了它少量功能，包括读写图片文件，图像翻转，以及设置某个像素的颜色值。</p>
-<p>完整的代码在<u><strong><a href="https://github.com/kegalas/oar/blob/3326779c1166f44db5b6f5e1ce5bd25d6dd98c84/tga_image.h">这里</a></strong></u></p>
+<p>完整的代码在<u><strong><a href="https://github.com/kegalas/oar/blob/97058860346436641decc719d6b72cc7055eb24c/src/tga_image.h">这里</a></strong></u></p>
 <h1 id="tga_image.cpp">tga_image.cpp</h1>
 <div class="sourceCode" id="cb7"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>TGAImage<span class="op">::</span>TGAImage<span class="op">(</span><span class="bu">std::</span>uint16_t<span class="op"> </span><span class="at">const</span> <span class="va">width_</span><span class="op">,</span> <span class="bu">std::</span>uint16_t<span class="op"> </span><span class="at">const</span> <span class="va">height_</span><span class="op">,</span> <span class="dt">unsigned</span> <span class="dt">int</span> <span class="at">const</span> <span class="va">type_</span><span class="op">){</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    width               <span class="op">=</span> <span class="va">width_</span><span class="op">;</span></span>
@@ -368,9 +368,10 @@
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    type                <span class="op">=</span> <span class="va">type_</span><span class="op">;</span></span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    data                <span class="op">=</span> <span class="kw">new</span> <span class="bu">std::</span>uint8_t<span class="op">[</span>width<span class="op">*</span>height<span class="op">*</span>TGAType<span class="op">::</span>pixelSize<span class="op">[</span>type<span class="op">]];</span></span>
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    isFlipVertically    <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>fill<span class="op">(</span>data<span class="op">,</span>data<span class="op">+</span>width<span class="op">*</span>height<span class="op">*</span>TGAType<span class="op">::</span>pixelSize<span class="op">[</span>type<span class="op">],</span><span class="dv">0</span><span class="op">);</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <p>首先是一个构造函数，也不难理解，只是设定了图像自身的属性以及分配了图像数据的内存。</p>
-<p>注意我们分配图像数据内存的时候，要乘以每个像素占用的字节数。</p>
+<p>注意我们分配图像数据内存的时候，要乘以每个像素占用的字节数。同时注意要把图像数据清零，也可以用memset来。</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>TGAImage<span class="op">::</span>TGAImage<span class="op">(</span><span class="bu">std::</span>string<span class="op"> </span><span class="at">const</span> <span class="op">&amp;</span> dir<span class="op">){</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    readFromFile<span class="op">(</span>dir<span class="op">);</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
@@ -485,7 +486,7 @@
 <span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>    <span class="dt">size_t</span> index <span class="op">=</span> <span class="op">(</span>y<span class="op">*</span>width <span class="op">+</span> x<span class="op">)*</span>pixelSize<span class="op">;</span></span>
 <span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span><span class="op">(</span>type<span class="op">==</span>TGAType<span class="op">::</span>grey<span class="op">){</span></span>
-<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>        data<span class="op">[</span>index<span class="op">]</span> <span class="op">=</span> <span class="op">(</span>color<span class="op">.</span>r<span class="op">+</span>color<span class="op">.</span>g<span class="op">+</span>color<span class="op">.</span>b<span class="op">)/</span><span class="dv">3</span><span class="op">;</span></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>        data<span class="op">[</span>index<span class="op">]</span> <span class="op">=</span> <span class="kw">static_cast</span><span class="op">&lt;</span><span class="bu">std::</span>uint8_t<span class="op">&gt;</span> <span class="op">(</span>color<span class="op">.</span>r<span class="op">/</span><span class="fl">3.0</span><span class="op">+</span>color<span class="op">.</span>g<span class="op">/</span><span class="fl">3.0</span><span class="op">+</span>color<span class="op">.</span>b<span class="op">/</span><span class="fl">3.0</span><span class="op">+</span><span class="fl">0.5</span><span class="op">);</span></span>
 <span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
 <span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> <span class="cf">if</span><span class="op">(</span>type<span class="op">==</span>TGAType<span class="op">::</span>rgb <span class="op">||</span> type<span class="op">==</span>TGAType<span class="op">::</span>rgba<span class="op">){</span></span>
 <span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>        data<span class="op">[</span>index<span class="op">]</span> <span class="op">=</span> color<span class="op">.</span>b<span class="op">;</span></span>
@@ -504,7 +505,7 @@
 <span id="cb17-28"><a href="#cb17-28" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="kw">true</span><span class="op">;</span></span>
 <span id="cb17-29"><a href="#cb17-29" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <p>主要注意下标要乘以像素占用的字节大小，以及颜色顺序为BGRA。</p>
-<p>完整的代码在<u><strong><a href="https://github.com/kegalas/oar/blob/3326779c1166f44db5b6f5e1ce5bd25d6dd98c84/tga_image.cpp">这里</a></strong></u></p>
+<p>完整的代码在<u><strong><a href="https://github.com/kegalas/oar/blob/97058860346436641decc719d6b72cc7055eb24c/src/tga_image.cpp">这里</a></strong></u></p>
 
 
 
@@ -572,6 +573,28 @@
                 
                     
 <article class="has-image">
+    <a href="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E7%BA%BF%E6%AE%B5%E5%92%8C%E4%B8%89%E8%A7%92%E5%BD%A2%E7%9A%84%E5%85%89%E6%A0%85%E5%8C%96/">
+        
+        
+            <div class="article-image">
+                <img src="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E7%BA%BF%E6%AE%B5%E5%92%8C%E4%B8%89%E8%A7%92%E5%BD%A2%E7%9A%84%E5%85%89%E6%A0%85%E5%8C%96/cover.3eba88ce14bf80744d7e83238ed0ec4e_hu72dadf0d98aceb343e3fe7cb76faf398_301126_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-PrqIzhS/gHRNfoMjjtDsTg==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">从零开始的软渲染器 线段和三角形的光栅化</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
     <a href="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E6%95%B0%E5%AD%A6%E5%B7%A5%E5%85%B7%E5%BA%93/">
         
         
@@ -634,18 +657,6 @@
 
         <div class="article-details">
             <h2 class="article-title">计算机图形学基础学习笔记-光场、颜色和感知</h2>
-        </div>
-    </a>
-</article>
-                
-                    
-<article class="">
-    <a href="/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E7%9B%B8%E6%9C%BA%E4%B8%8E%E9%80%8F%E9%95%9C/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">计算机图形学基础学习笔记-相机与透镜</h2>
         </div>
     </a>
 </article>

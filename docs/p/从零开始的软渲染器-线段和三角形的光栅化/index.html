@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='导航页面 线段光栅化算法 从《Fundamentals of Computer Graphics》（第五版）中的第179页，我们得到了一种直线的表达方式， \[ f(x,y)\equiv (y_0-y_1)x&#43;(x_1-x_0)y &#43; x_0y_1-x_1y_0 ='><title>从零开始的软渲染器 线段和三角形的光栅化</title>
+
+<link rel='canonical' href='https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E7%BA%BF%E6%AE%B5%E5%92%8C%E4%B8%89%E8%A7%92%E5%BD%A2%E7%9A%84%E5%85%89%E6%A0%85%E5%8C%96/'>
+
+<link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='从零开始的软渲染器 线段和三角形的光栅化'>
+<meta property='og:description' content='导航页面 线段光栅化算法 从《Fundamentals of Computer Graphics》（第五版）中的第179页，我们得到了一种直线的表达方式， \[ f(x,y)\equiv (y_0-y_1)x&#43;(x_1-x_0)y &#43; x_0y_1-x_1y_0 ='>
+<meta property='og:url' content='https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E7%BA%BF%E6%AE%B5%E5%92%8C%E4%B8%89%E8%A7%92%E5%BD%A2%E7%9A%84%E5%85%89%E6%A0%85%E5%8C%96/'>
+<meta property='og:site_name' content='KegalaS的个人博客'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='图形学' /><meta property='article:tag' content='渲染' /><meta property='article:published_time' content='2023-05-17T21:31:12&#43;08:00'/><meta property='article:modified_time' content='2023-05-17T21:31:12&#43;08:00'/><meta property='og:image' content='https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E7%BA%BF%E6%AE%B5%E5%92%8C%E4%B8%89%E8%A7%92%E5%BD%A2%E7%9A%84%E5%85%89%E6%A0%85%E5%8C%96/cover.jpg' />
+<meta name="twitter:title" content="从零开始的软渲染器 线段和三角形的光栅化">
+<meta name="twitter:description" content="导航页面 线段光栅化算法 从《Fundamentals of Computer Graphics》（第五版）中的第179页，我们得到了一种直线的表达方式， \[ f(x,y)\equiv (y_0-y_1)x&#43;(x_1-x_0)y &#43; x_0y_1-x_1y_0 ="><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E7%BA%BF%E6%AE%B5%E5%92%8C%E4%B8%89%E8%A7%92%E5%BD%A2%E7%9A%84%E5%85%89%E6%A0%85%E5%8C%96/cover.jpg' />
+    <link rel="shortcut icon" href="favicon-16x16.png" />
+
+    </head>
+    <body class="
+    article-page has-toc
+">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex 
+    
+        extended
+    
+">
+    
+        <div id="article-toolbar">
+            <a href="/" class="back-home">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="15 6 9 12 15 18" />
+</svg>
+
+
+
+                <span>返回</span>
+            </a>
+        </div>
+    
+<main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E7%BA%BF%E6%AE%B5%E5%92%8C%E4%B8%89%E8%A7%92%E5%BD%A2%E7%9A%84%E5%85%89%E6%A0%85%E5%8C%96/">
+                <img src="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E7%BA%BF%E6%AE%B5%E5%92%8C%E4%B8%89%E8%A7%92%E5%BD%A2%E7%9A%84%E5%85%89%E6%A0%85%E5%8C%96/cover_hu72dadf0d98aceb343e3fe7cb76faf398_301126_800x0_resize_q75_box.jpg"
+                        srcset="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E7%BA%BF%E6%AE%B5%E5%92%8C%E4%B8%89%E8%A7%92%E5%BD%A2%E7%9A%84%E5%85%89%E6%A0%85%E5%8C%96/cover_hu72dadf0d98aceb343e3fe7cb76faf398_301126_800x0_resize_q75_box.jpg 800w, /p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E7%BA%BF%E6%AE%B5%E5%92%8C%E4%B8%89%E8%A7%92%E5%BD%A2%E7%9A%84%E5%85%89%E6%A0%85%E5%8C%96/cover_hu72dadf0d98aceb343e3fe7cb76faf398_301126_1600x0_resize_q75_box.jpg 1600w"
+                        width="800" 
+                        height="296" 
+                        loading="lazy"
+                        alt="Featured image of post 从零开始的软渲染器 线段和三角形的光栅化" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" >
+                图形学
+            </a>
+        
+    </header>
+    
+
+    <h2 class="article-title">
+        <a href="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E7%BA%BF%E6%AE%B5%E5%92%8C%E4%B8%89%E8%A7%92%E5%BD%A2%E7%9A%84%E5%85%89%E6%A0%85%E5%8C%96/">从零开始的软渲染器 线段和三角形的光栅化</a>
+    </h2>
+
+    
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">May 17, 2023</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 3 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+</div>
+</header>
+
+    <section class="article-content">
+    
+
+<p><u><strong><a href="../从零开始的软渲染器-导航/">导航页面</a></strong></u></p>
+<h1 id="线段光栅化算法">线段光栅化算法</h1>
+<p>从《Fundamentals of Computer
+Graphics》（第五版）中的第179页，我们得到了一种直线的表达方式，</p>
+<p><span class="math display">\[
+f(x,y)\equiv (y_0-y_1)x+(x_1-x_0)y + x_0y_1-x_1y_0 = 0
+\]</span></p>
+<p>其中<span class="math inline">\((x_0,y_0),(x_1,y_1)\)</span>代表直线上的任意不同的两点。并且<span class="math inline">\(x_0\leq
+x_1\)</span>，如果这个不满足，就交换两点的序号。然后直线的斜率显然就是</p>
+<p><span class="math display">\[
+m = \dfrac{y_1-y_0}{x_1-x_0}
+\]</span></p>
+<p>方便起见，我们先假设<span class="math inline">\(m\in(0,1]\)</span>。</p>
+<p>显然，我们要画一条直线的话，无非就两种情况：</p>
+<figure>
+<img src="1.jpg" alt="1.jpg"/>
+<figcaption aria-hidden="true">1.jpg</figcaption>
+</figure>
+<p>要么向右移动一格，要么向右后再向上移动一格。总之，我们总是向右移动一格，然后根据某种条件向上移动一格。我们可以把这个条件设置为</p>
+<p><span class="math display">\[
+\mathbf{if}\ f(x+1,y+0.5)&lt;0\ \mathbf{then}\ y=y+1
+\]</span></p>
+<p>注意这里的<span class="math inline">\((x,y)\)</span>取整数，起始像素在直线上。</p>
+<p>进一步的，如果我们不想每次都调用函数<span class="math inline">\(f\)</span>，我们有如下优化</p>
+<pre><code>y = y0
+d = f(x0+1,y0+0.5)
+for x = x0 to x1 do
+    draw(x,y)
+    if d&lt;0 then
+        y = y+1
+        d = d+(x1-x0)+(y0-y1)
+    else
+        d = d+(y0-y1)</code></pre>
+<p>不优化的方法写成cpp的样子大概如下</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span><span class="op">(</span>p0<span class="op">-&gt;</span>x<span class="op">&gt;</span>p1<span class="op">-&gt;</span>x<span class="op">)</span> <span class="bu">std::</span>swap<span class="op">(</span>p0<span class="op">,</span>p1<span class="op">);</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> fxy <span class="op">=</span> <span class="op">[&amp;](</span><span class="dt">float</span> x<span class="op">,</span> <span class="dt">float</span> y<span class="op">)-&gt;</span><span class="dt">float</span><span class="op">{</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">(</span>p0<span class="op">-&gt;</span>y<span class="op">-</span>p1<span class="op">-&gt;</span>y<span class="op">)*</span>x<span class="op">+(</span>p1<span class="op">-&gt;</span>x<span class="op">-</span>p0<span class="op">-&gt;</span>x<span class="op">)*</span>y<span class="op">+</span>p0<span class="op">-&gt;</span>x<span class="op">*</span>p1<span class="op">-&gt;</span>y<span class="op">-</span>p1<span class="op">-&gt;</span>x<span class="op">*</span>p0<span class="op">-&gt;</span>y<span class="op">;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> y <span class="op">=</span> p0<span class="op">-&gt;</span>y<span class="op">;</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span><span class="op">(</span><span class="dt">int</span> x <span class="op">=</span> p0<span class="op">-&gt;</span>x <span class="op">;</span> x<span class="op">&lt;=</span>p1<span class="op">-&gt;</span>x <span class="op">;</span> x<span class="op">++){</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    image<span class="op">.</span>setFragment<span class="op">(</span>x<span class="op">,</span>y<span class="op">,</span>color<span class="op">);</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="dt">float</span> er <span class="op">=</span> fxy<span class="op">(</span><span class="kw">static_cast</span><span class="op">&lt;</span><span class="dt">float</span><span class="op">&gt;(</span>x<span class="op">)+</span><span class="fl">1.</span><span class="bu">f</span><span class="op">,</span> <span class="kw">static_cast</span><span class="op">&lt;</span><span class="dt">float</span><span class="op">&gt;(</span>y<span class="op">)+</span><span class="fl">.5</span><span class="bu">f</span><span class="op">);</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span><span class="op">(</span>p0<span class="op">-&gt;</span>y<span class="op">&lt;</span>p1<span class="op">-&gt;</span>y <span class="op">&amp;&amp;</span> er<span class="op">&lt;</span><span class="fl">0.</span><span class="bu">f</span> <span class="op">&amp;&amp;</span> y<span class="op">&lt;</span>image<span class="op">.</span>getHeight<span class="op">()-</span><span class="dv">1</span><span class="op">){</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>        y<span class="op">++;</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> <span class="cf">if</span><span class="op">(</span>p0<span class="op">-&gt;</span>y<span class="op">&gt;</span>p1<span class="op">-&gt;</span>y <span class="op">&amp;&amp;</span> er<span class="op">&gt;</span><span class="fl">0.</span><span class="bu">f</span> <span class="op">&amp;&amp;</span> y<span class="op">&gt;</span><span class="dv">0</span><span class="op">){</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>        y<span class="op">--;</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>这里写的包括了<span class="math inline">\(m\in[-1,1]\)</span>的情况，负数情况很简单，就把y++变成y–，以及判断小于零转变为判断大于零。</p>
+<p>当<span class="math inline">\(m\in(1,+\infty]\)</span>时，情况转变为，我们要么向上走一格，要么向上后向右走一格，与之前的情况非常相似，我们只有把遍历x改成遍历y，判断x++的条件即可。</p>
+<h1 id="三角形光栅化算法">三角形光栅化算法</h1>
+<p>我会直接使用三角形的重心坐标来实现三角形的光栅化，因为比起其他一些扫描方法，重心坐标能比较方便的实现插值。</p>
+<p>三角形的重心坐标可见《Fundamentals of Computer
+Graphics》（第五版）中的第52页。</p>
+<p>根据线性代数的知识，假设我们三角形有三个不重合的点<span class="math inline">\(A,B,C\)</span>，则我们可以用<span class="math inline">\(\vec{AB},\vec{AC}\)</span>表示平面中任意的点<span class="math inline">\(p\)</span>，我们有如下公式</p>
+<p><span class="math display">\[
+\vec{p} = \alpha\vec{a} + \beta\vec{b}+\gamma\vec{c}
+\]</span></p>
+<p>其中<span class="math inline">\(\alpha+\beta+\gamma=1\)</span></p>
+<p>可以计算得到，对于平面上的任意一个点<span class="math inline">\((x,y)\)</span></p>
+<p><span class="math display">\[
+\gamma =
+\dfrac{(y_a-y_b)x+(x_b-x_a)y+x_ay_b-x_by_a}{(y_a-y_b)x_c+(x_b-x_a)y_c+x_ay_b-x_by_a}
+\]</span></p>
+<p><span class="math display">\[
+\beta =
+\dfrac{(y_a-y_c)x+(x_c-x_a)y+x_ay_c-x_cy_a}{(y_a-y_c)x_b+(x_c-x_a)y_b+x_ay_c-x_cy_a}
+\]</span></p>
+<p><span class="math display">\[
+\alpha = 1-\beta-\gamma
+\]</span></p>
+<p>当这个点在三角形内时，满足以下条件</p>
+<p><span class="math display">\[
+0&lt;\alpha&lt;1
+\]</span></p>
+<p><span class="math display">\[
+0&lt;\beta&lt;1
+\]</span></p>
+<p><span class="math display">\[
+0&lt;\gamma&lt;1
+\]</span></p>
+<p>特别的，如果在三角形上，则可以取等号。总体还是要满足<span class="math inline">\(\alpha+\beta+\gamma=1\)</span>。</p>
+<p>这个东西好就好在，如果需要对颜色进行插值，对于三角形内部任意一点<span class="math inline">\(p\)</span>，有<span class="math inline">\(color_p=\alpha color_a+\beta color_b+\gamma
+color_c\)</span>。</p>
+<p>我们绘制的时候设置三个点为红、绿、蓝，中间颜色进行插值，就会得到这个结果</p>
+<figure>
+<img src="2.jpg" alt="2.jpg"/>
+<figcaption aria-hidden="true">2.jpg</figcaption>
+</figure>
+<p>接下来我们谈谈具体怎么画三角形。</p>
+<p>首先非常暴力的想法是，把整个屏幕上的点扫描一遍，如果这个点在三角形内部，就给他上色。</p>
+<p>稍微优化一下，我们只需要扫描三角形的外接矩形（四边平行于坐标轴）即可。</p>
+<p>cpp代码如下</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> maxx <span class="op">=</span> <span class="dv">0</span><span class="op">,</span> minx <span class="op">=</span> image<span class="op">.</span>getWidth<span class="op">()-</span><span class="dv">1</span><span class="op">,</span> maxy <span class="op">=</span> <span class="dv">0</span><span class="op">,</span> miny <span class="op">=</span> image<span class="op">.</span>getHeight<span class="op">()-</span><span class="dv">1</span><span class="op">;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span><span class="op">(</span><span class="dt">int</span> i<span class="op">=</span><span class="dv">0</span><span class="op">;</span>i<span class="op">&lt;</span><span class="dv">3</span><span class="op">;</span>i<span class="op">++){</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>        maxx <span class="op">=</span> <span class="bu">std::</span>max<span class="op">(</span>maxx<span class="op">,</span> points<span class="op">[</span>i<span class="op">].</span>x<span class="op">);</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>        minx <span class="op">=</span> <span class="bu">std::</span>min<span class="op">(</span>minx<span class="op">,</span> points<span class="op">[</span>i<span class="op">].</span>x<span class="op">);</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>        maxy <span class="op">=</span> <span class="bu">std::</span>max<span class="op">(</span>maxy<span class="op">,</span> points<span class="op">[</span>i<span class="op">].</span>y<span class="op">);</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>        miny <span class="op">=</span> <span class="bu">std::</span>min<span class="op">(</span>miny<span class="op">,</span> points<span class="op">[</span>i<span class="op">].</span>y<span class="op">);</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span><span class="op">(</span><span class="dt">int</span> x<span class="op">=</span>minx<span class="op">;</span>x<span class="op">&lt;=</span>maxx<span class="op">;</span>x<span class="op">++){</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span><span class="op">(</span><span class="dt">int</span> y<span class="op">=</span>miny<span class="op">;</span>y<span class="op">&lt;=</span>maxy<span class="op">;</span>y<span class="op">++){</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>            <span class="bu">std::</span>tuple<span class="op">&lt;</span><span class="dt">float</span><span class="op">,</span><span class="dt">float</span><span class="op">,</span><span class="dt">float</span><span class="op">&gt;</span> ret <span class="op">=</span> geo<span class="op">::</span>getBarycentric<span class="op">(</span>points<span class="op">,</span> x<span class="op">,</span> y<span class="op">);</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>            <span class="dt">float</span> alpha <span class="op">=</span> <span class="bu">std::</span>get<span class="op">&lt;</span><span class="dv">0</span><span class="op">&gt;</span> <span class="op">(</span>ret<span class="op">);</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>            <span class="dt">float</span> beta  <span class="op">=</span> <span class="bu">std::</span>get<span class="op">&lt;</span><span class="dv">1</span><span class="op">&gt;</span> <span class="op">(</span>ret<span class="op">);</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>            <span class="dt">float</span> gamma <span class="op">=</span> <span class="bu">std::</span>get<span class="op">&lt;</span><span class="dv">2</span><span class="op">&gt;</span> <span class="op">(</span>ret<span class="op">);</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span><span class="op">(</span><span class="fl">0.</span><span class="bu">f</span><span class="op">&lt;=</span>alpha <span class="op">&amp;&amp;</span> alpha<span class="op">&lt;=</span><span class="fl">1.</span><span class="bu">f</span> <span class="op">&amp;&amp;</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>               <span class="fl">0.</span><span class="bu">f</span><span class="op">&lt;=</span>beta  <span class="op">&amp;&amp;</span> beta <span class="op">&lt;=</span><span class="fl">1.</span><span class="bu">f</span> <span class="op">&amp;&amp;</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>               <span class="fl">0.</span><span class="bu">f</span><span class="op">&lt;=</span>gamma <span class="op">&amp;&amp;</span> gamma<span class="op">&lt;=</span><span class="fl">1.</span><span class="bu">f</span><span class="op">)</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>            <span class="op">{</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>                geo<span class="op">::</span>OARColor color <span class="op">=</span> <span class="kw">static_cast</span><span class="op">&lt;</span>geo<span class="op">::</span>vec4i<span class="op">&gt;(</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>                                      alpha<span class="op">*</span><span class="kw">static_cast</span><span class="op">&lt;</span>geo<span class="op">::</span>vec4f<span class="op">&gt;(</span>colors<span class="op">[</span><span class="dv">0</span><span class="op">])</span> <span class="op">+</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>                                      beta<span class="op">*</span><span class="kw">static_cast</span><span class="op">&lt;</span>geo<span class="op">::</span>vec4f<span class="op">&gt;(</span>colors<span class="op">[</span><span class="dv">1</span><span class="op">])</span> <span class="op">+</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>                                      gamma<span class="op">*</span><span class="kw">static_cast</span><span class="op">&lt;</span>geo<span class="op">::</span>vec4f<span class="op">&gt;(</span>colors<span class="op">[</span><span class="dv">2</span><span class="op">]));</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>                image<span class="op">.</span>setFragment<span class="op">(</span>x<span class="op">,</span>y<span class="op">,</span>color<span class="op">);</span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>            <span class="op">}</span></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span></code></pre></div>
+<p>全部光栅化的代码可见<strong><a href="https://github.com/kegalas/oar/blob/97058860346436641decc719d6b72cc7055eb24c/src/raster.cpp">这里</a></strong></p>
+<p>另外，求重心坐标的代码我写到了geometry.cpp里，方便别处调用。链接在<strong><a href="https://github.com/kegalas/oar/blob/97058860346436641decc719d6b72cc7055eb24c/src/geometry.cpp">这里</a></strong>（在文件末尾）</p>
+
+
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a>
+        
+            <a href="/tags/%E6%B8%B2%E6%9F%93/">渲染</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css"integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js"integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8"crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js"integrity="sha384-vZTG03m&#43;2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl"crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.querySelector(`.article-content`), {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ]
+        });})
+</script>
+    
+</article>
+
+    <aside class="related-contents--wrapper">
+    
+    
+        <h2 class="section-title">相关文章</h2>
+        <div class="related-contents">
+            <div class="flex article-list--tile">
+                
+                    
+<article class="has-image">
+    <a href="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%9B%BE%E7%89%87%E5%A4%84%E7%90%86%E5%BA%93/">
+        
+        
+            <div class="article-image">
+                <img src="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%9B%BE%E7%89%87%E5%A4%84%E7%90%86%E5%BA%93/cover.941490c741ffb85644dfdbec13c85e5f_hu2fa2362891bfb402ec26ffe12b2b88a0_64078_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-lBSQx0H/uFZE39vsE8heXw==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">从零开始的软渲染器 图片处理库</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E6%95%B0%E5%AD%A6%E5%B7%A5%E5%85%B7%E5%BA%93/">
+        
+        
+            <div class="article-image">
+                <img src="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E6%95%B0%E5%AD%A6%E5%B7%A5%E5%85%B7%E5%BA%93/cover.05688f45246317d00a00a986d6147cbd_huc0107afa81d973e7d87fe5de99d27181_24753_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-BWiPRSRjF9AKAKmG1hR8vQ==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">从零开始的软渲染器 数学工具库</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%AF%BC%E8%88%AA/">
+        
+        
+            <div class="article-image">
+                <img src="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%AF%BC%E8%88%AA/cover.a704c2dab4556c46cd24cc053e56d999_huef498dd5cf38693b5a441291f5d52b83_173498_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-pwTC2rRVbEbNJMwFPlbZmQ==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">从零开始的软渲染器 导航</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="">
+    <a href="/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%8A%A8%E7%94%BB%E4%B8%8E%E6%A8%A1%E6%8B%9F/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">计算机图形学基础学习笔记-动画与模拟</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="">
+    <a href="/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%85%89%E5%9C%BA%E9%A2%9C%E8%89%B2%E5%92%8C%E6%84%9F%E7%9F%A5/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">计算机图形学基础学习笔记-光场、颜色和感知</h2>
+        </div>
+    </a>
+</article>
+                
+            </div>
+        </div>
+    
+</aside>
+
+     
+    
+        
+    <script src="https://utteranc.es/client.js" 
+        repo="kegalas/blogComments"
+        issue-term="pathname"
+        
+        crossorigin="anonymous"
+        async
+        >
+</script>
+
+<style>
+    .utterances {
+        max-width: unset;
+    }
+</style>
+
+<script>
+    function setUtterancesTheme(theme) {
+        let utterances = document.querySelector('.utterances iframe');
+        if (utterances) {
+            utterances.contentWindow.postMessage(
+                {
+                    type: 'set-theme',
+                    theme: `github-${theme}`
+                },
+                'https://utteranc.es'
+            );
+        }
+    }
+
+    addEventListener('message', event => {
+        if (event.origin !== 'https://utteranc.es') return;
+        setUtterancesTheme(document.documentElement.dataset.scheme)
+    });
+
+    window.addEventListener('onColorSchemeChange', (e) => {
+        setUtterancesTheme(e.detail)
+    })
+</script>
+
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2023 KegalaS的个人博客
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.4.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    
+        <aside class="sidebar right-sidebar sticky">
+            <section class="widget archives">
+                <div class="widget-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+                </div>
+                <h2 class="widget-title section-title">目录</h2>
+                
+                <div class="widget--toc">
+                    <nav id="TableOfContents">
+  <ol>
+    <li><a href="#线段光栅化算法">线段光栅化算法</a></li>
+    <li><a href="#三角形光栅化算法">三角形光栅化算法</a></li>
+  </ol>
+</nav>
+                </div>
+            </section>
+        </aside>
+    
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                defer="false"
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
