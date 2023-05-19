@@ -229,7 +229,7 @@ public:
 
 赋予了它少量功能，包括读写图片文件，图像翻转，以及设置某个像素的颜色值。
 
-完整的代码在<u>**[这里](https://github.com/kegalas/oar/blob/3326779c1166f44db5b6f5e1ce5bd25d6dd98c84/tga_image.h)**</u>
+完整的代码在<u>**[这里](https://github.com/kegalas/oar/blob/97058860346436641decc719d6b72cc7055eb24c/src/tga_image.h)**</u>
 
 # tga_image.cpp
 
@@ -240,12 +240,13 @@ TGAImage::TGAImage(std::uint16_t const width_, std::uint16_t const height_, unsi
     type                = type_;
     data                = new std::uint8_t[width*height*TGAType::pixelSize[type]];
     isFlipVertically    = 0;
+    std::fill(data,data+width*height*TGAType::pixelSize[type],0);
 }
 ```
 
 首先是一个构造函数，也不难理解，只是设定了图像自身的属性以及分配了图像数据的内存。
 
-注意我们分配图像数据内存的时候，要乘以每个像素占用的字节数。
+注意我们分配图像数据内存的时候，要乘以每个像素占用的字节数。同时注意要把图像数据清零，也可以用memset来。
 
 ```cpp
 TGAImage::TGAImage(std::string const & dir){
@@ -402,7 +403,7 @@ bool TGAImage::setFragment(std::uint16_t const x, std::uint16_t const y, geo::OA
     size_t index = (y*width + x)*pixelSize;
 
     if(type==TGAType::grey){
-        data[index] = (color.r+color.g+color.b)/3;
+        data[index] = static_cast<std::uint8_t> (color.r/3.0+color.g/3.0+color.b/3.0+0.5);
     }
     else if(type==TGAType::rgb || type==TGAType::rgba){
         data[index] = color.b;
@@ -424,4 +425,4 @@ bool TGAImage::setFragment(std::uint16_t const x, std::uint16_t const y, geo::OA
 
 主要注意下标要乘以像素占用的字节大小，以及颜色顺序为BGRA。
 
-完整的代码在<u>**[这里](https://github.com/kegalas/oar/blob/3326779c1166f44db5b6f5e1ce5bd25d6dd98c84/tga_image.cpp)**</u>
+完整的代码在<u>**[这里](https://github.com/kegalas/oar/blob/97058860346436641decc719d6b72cc7055eb24c/src/tga_image.cpp)**</u>
