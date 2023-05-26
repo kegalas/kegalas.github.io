@@ -6,7 +6,298 @@
         <description>Recent content on KegalaS的个人博客</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Wed, 17 May 2023 21:31:12 +0800</lastBuildDate><atom:link href="https://kegalas.top/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Thu, 25 May 2023 16:29:15 +0800</lastBuildDate><atom:link href="https://kegalas.top/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>模拟电路学习笔记</title>
+        <link>https://kegalas.top/p/%E6%A8%A1%E6%8B%9F%E7%94%B5%E8%B7%AF%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</link>
+        <pubDate>Thu, 25 May 2023 16:29:15 +0800</pubDate>
+        
+        <guid>https://kegalas.top/p/%E6%A8%A1%E6%8B%9F%E7%94%B5%E8%B7%AF%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</guid>
+        <description>&lt;img src="https://kegalas.top/p/%E6%A8%A1%E6%8B%9F%E7%94%B5%E8%B7%AF%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/cover.jpg" alt="Featured image of post 模拟电路学习笔记" /&gt;
+
+&lt;h1 id=&#34;集成运算放大器&#34;&gt;集成运算放大器&lt;/h1&gt;
+&lt;h2 id=&#34;基本分析方法&#34;&gt;基本分析方法&lt;/h2&gt;
+&lt;p&gt;一个集成运算放大器的典型形式如下&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;1.jpg&#34; alt=&#34;1.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;1.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;分析它的基本方式是：&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;虚短：&lt;span class=&#34;math inline&#34;&gt;\(u_+=u_-\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;虚断：&lt;span class=&#34;math inline&#34;&gt;\(i_+=i_-=0\)&lt;/span&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;以下是集成运算放大器的一些参数：&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(u_{id}=u_{i+}-u_{i-}\)&lt;/span&gt;：差模输出电压&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(A_{uo}\)&lt;/span&gt;：集成运放的开环电压放大倍数&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(R_i\)&lt;/span&gt;：集成运放的输入电阻&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(R_o\)&lt;/span&gt;：集成运放的输出电阻&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;其中理想条件是&lt;span class=&#34;math inline&#34;&gt;\(R_i\to\infty,R_o\to
+0,A_{uo}\to\infty,i_+=i_-=0\)&lt;/span&gt;。&lt;/p&gt;
+&lt;h2 id=&#34;电压传输特性&#34;&gt;电压传输特性&lt;/h2&gt;
+&lt;figure&gt;
+&lt;img src=&#34;2.jpg&#34; alt=&#34;2.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;2.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;h2 id=&#34;基本运算电路&#34;&gt;基本运算电路&lt;/h2&gt;
+&lt;h3 id=&#34;反向比例运算电路&#34;&gt;反向比例运算电路&lt;/h3&gt;
+&lt;figure&gt;
+&lt;img src=&#34;3.jpg&#34; alt=&#34;3.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;3.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;（根据虚短虚断）可以计算得到&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+u_O = -\dfrac{R_f}{R}u_I
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中输出电阻&lt;span class=&#34;math inline&#34;&gt;\(R_o=0\)&lt;/span&gt;，输入电阻&lt;span class=&#34;math inline&#34;&gt;\(R_i=R\)&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;同相比例运算电路&#34;&gt;同相比例运算电路&lt;/h3&gt;
+&lt;figure&gt;
+&lt;img src=&#34;4.jpg&#34; alt=&#34;4.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;4.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+u_O = (1+\dfrac{R_f}{R})u_I
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;引入了电压串联负反馈，可以认为输入电阻无穷大，输出电阻为&lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;电压跟随器&#34;&gt;电压跟随器&lt;/h3&gt;
+&lt;figure&gt;
+&lt;img src=&#34;5.jpg&#34; alt=&#34;5.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;5.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+u_O = u_I
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;反向求和运算电路&#34;&gt;反向求和运算电路&lt;/h3&gt;
+&lt;figure&gt;
+&lt;img src=&#34;6.jpg&#34; alt=&#34;6.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;6.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+u_O =
+-R_f\bigg(\dfrac{u_{I1}}{R_1}+\dfrac{u_{I2}}{R_2}+\dfrac{u_{I3}}{R_3}\bigg)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;可以看作是反相比例放大器的叠加电路，输入电阻取决于不同的端口。&lt;/p&gt;
+&lt;h3 id=&#34;同相求和运算电路&#34;&gt;同相求和运算电路&lt;/h3&gt;
+&lt;figure&gt;
+&lt;img src=&#34;7.jpg&#34; alt=&#34;7.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;7.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+u_O = R_f\cdot\dfrac{R_P}{R_N}\cdot
+\bigg(\dfrac{u_{I1}}{R_1}+\dfrac{u_{I2}}{R_2}+\dfrac{u_{I3}}{R_3}\bigg)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中，&lt;span class=&#34;math inline&#34;&gt;\(R_P = R_1\parallel R_2\parallel
+R_3\parallel R_4, R_N = R\parallel R_f\)&lt;/span&gt;，若&lt;span class=&#34;math inline&#34;&gt;\(R_P=R_N\)&lt;/span&gt;，则&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+u_O = R_f\cdot
+\bigg(\dfrac{u_{I1}}{R_1}+\dfrac{u_{I2}}{R_2}+\dfrac{u_{I3}}{R_3}\bigg)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;加减运算电路&#34;&gt;加减运算电路&lt;/h3&gt;
+&lt;p&gt;其实就是把上面两个电路结合一下。&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;8.jpg&#34; alt=&#34;8.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;8.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+u_O =
+R_f\bigg(\dfrac{u_{I3}}{R_3}+\dfrac{u_{I4}}{R_4}-\dfrac{u_{I1}}{R_1}-\dfrac{u_{I2}}{R_2}\bigg)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;差分比例运算电路&#34;&gt;差分比例运算电路&lt;/h3&gt;
+&lt;p&gt;是加减运算电路的一种特例，其只有两个输入，且参数对称&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;9.jpg&#34; alt=&#34;9.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;9.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+u_O = \dfrac{R_f}{R}(u_{I2}-u_{I1})
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;积分器&#34;&gt;积分器&lt;/h3&gt;
+&lt;figure&gt;
+&lt;img src=&#34;10.jpg&#34; alt=&#34;10.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;10.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+u_O = -\dfrac{1}{RC}\int u_Idt
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;微分器&#34;&gt;微分器&lt;/h3&gt;
+&lt;figure&gt;
+&lt;img src=&#34;11.jpg&#34; alt=&#34;11.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;11.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+u_O = -RC\dfrac{du_I}{dt}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h2 id=&#34;滤波器&#34;&gt;滤波器&lt;/h2&gt;
+&lt;p&gt;滤波器可以分为无源和有源滤波器。如果滤波电路仅由无源元件（电阻、电容、电感）组成，则称为无源滤波电路。如果滤波电路由无源元件和有源元件（双极型管，单极型管、集成运放）共同组成，则称为有源滤波电路。&lt;/p&gt;
+&lt;p&gt;我们主要讨论有源滤波器。在分析有源滤波电路时，常常通过拉普拉斯变换将电压、电流、以及无源元件变换为等效电路（具体见&lt;a href=&#34;../信号与系统学习笔记/#电路的s域模型&#34;&gt;信号与系统学习笔记&lt;/a&gt;）。输出量与输入量之比称为传递函数，即&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+A_u(s) = \dfrac{U_o(s)}{U_i(s)}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;下面介绍的都是有源滤波电路。&lt;/p&gt;
+&lt;h3 id=&#34;一阶同相输入低通滤波器&#34;&gt;一阶同相输入低通滤波器&lt;/h3&gt;
+&lt;figure&gt;
+&lt;img src=&#34;12.jpg&#34; alt=&#34;12.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;12.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;其传递函数为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+A_u(s)=\dfrac{U_o(s)}{U_i(s)}=\bigg(1+\dfrac{R_2}{R_1}\bigg)\dfrac{U_p(s)}{U_i(s)}=\bigg(1+\dfrac{R_2}{R_1}\bigg)\dfrac{1}{1+sRC}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;用&lt;span class=&#34;math inline&#34;&gt;\(jw\)&lt;/span&gt;取代&lt;span class=&#34;math inline&#34;&gt;\(s\)&lt;/span&gt;，令&lt;span class=&#34;math inline&#34;&gt;\(f_0=\dfrac{1}{2\pi RC}\)&lt;/span&gt;，得到&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\dot{A}_u =
+\bigg(1+\dfrac{R_2}{R_1}\bigg)\cdot\dfrac{1}{1+j\dfrac{f}{f_0}}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;式中&lt;span class=&#34;math inline&#34;&gt;\(f_0\)&lt;/span&gt;称为特征频率。令&lt;span class=&#34;math inline&#34;&gt;\(f=0\)&lt;/span&gt;，得到通带放大倍数。&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\dot A_{up}=1+\dfrac{R_2}{R_1}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;当&lt;span class=&#34;math inline&#34;&gt;\(f=f_0\)&lt;/span&gt;时，&lt;span class=&#34;math inline&#34;&gt;\(\dot A_u=\dfrac{\dot A_{up}}{\sqrt
+2}\)&lt;/span&gt;，故通带截止频率&lt;span class=&#34;math inline&#34;&gt;\(f_p=f_0\)&lt;/span&gt;。&lt;/p&gt;
+&lt;h3 id=&#34;二阶同相输入低通滤波器&#34;&gt;二阶同相输入低通滤波器&lt;/h3&gt;
+&lt;figure&gt;
+&lt;img src=&#34;13.jpg&#34; alt=&#34;13.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;13.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;假设&lt;span class=&#34;math inline&#34;&gt;\(C_1=C_2=C\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+A_u(s) = \bigg(1+\dfrac{R_2}{R_1}\bigg)\dfrac{1}{1+3sRC+(sRC)^2}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;用&lt;span class=&#34;math inline&#34;&gt;\(jw\)&lt;/span&gt;取代&lt;span class=&#34;math inline&#34;&gt;\(s\)&lt;/span&gt;，令&lt;span class=&#34;math inline&#34;&gt;\(f_0=\dfrac{1}{2\pi RC}\)&lt;/span&gt;，得到&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\dot A_u =
+\dfrac{1+\dfrac{R_2}{R_1}}{1-\bigg(\dfrac{f}{f_0}\bigg)^2+j3\dfrac{f}{f_0}}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;称&lt;span class=&#34;math inline&#34;&gt;\(f_0\)&lt;/span&gt;为特征频率。令上式分母的模等于&lt;span class=&#34;math inline&#34;&gt;\(\sqrt 2\)&lt;/span&gt;，可以解出通带截止频率为&lt;span class=&#34;math inline&#34;&gt;\(f_p\approx 0.37f_0\)&lt;/span&gt;。&lt;/p&gt;
+&lt;h3 id=&#34;一阶反向输入低通滤波器&#34;&gt;一阶反向输入低通滤波器&lt;/h3&gt;
+&lt;figure&gt;
+&lt;img src=&#34;14.jpg&#34; alt=&#34;14.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;14.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;通带放大倍数为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\dot A_{up} = -\dfrac{R_2}{R_1}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;电路的传输函数为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+A_u(s) =
+-\dfrac{R_2\parallel\dfrac{1}{sC}}{R_1}=\dfrac{R_2}{R_1}\dfrac{1}{1+sR_2C}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;用&lt;span class=&#34;math inline&#34;&gt;\(jw\)&lt;/span&gt;取代&lt;span class=&#34;math inline&#34;&gt;\(s\)&lt;/span&gt;，令&lt;span class=&#34;math inline&#34;&gt;\(f_0=\dfrac{1}{2\pi R_2C}\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\dot A_u = \dfrac{\dot A_{up}}{1+j\dfrac{f}{f_0}}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;截止频率&lt;span class=&#34;math inline&#34;&gt;\(f_p=f_0\)&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;二阶反向输入低通滤波器&#34;&gt;二阶反向输入低通滤波器&lt;/h3&gt;
+&lt;figure&gt;
+&lt;img src=&#34;15.jpg&#34; alt=&#34;15.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;15.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\dot A_{up} = -\dfrac{R_f}{R_1}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;教材上并没有给出&lt;span class=&#34;math inline&#34;&gt;\(\dot
+A_u\)&lt;/span&gt;的表达式和截止频率。&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+f_0=\dfrac{1}{2\pi\sqrt{C_1C_2R_2R_f}}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;二阶高通滤波器&#34;&gt;二阶高通滤波器&lt;/h3&gt;
+&lt;figure&gt;
+&lt;img src=&#34;16.jpg&#34; alt=&#34;16.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;16.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\dot A_{up} = 1+\dfrac{R_f}{R_1}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+f_p = \dfrac{1}{2\pi RC}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;带通滤波器&#34;&gt;带通滤波器&lt;/h3&gt;
+&lt;p&gt;将低通和高通串联，就得到带通。&lt;/p&gt;
+&lt;p&gt;设前者的截止频率为&lt;span class=&#34;math inline&#34;&gt;\(f_{p1}\)&lt;/span&gt;，后者的截止频率为&lt;span class=&#34;math inline&#34;&gt;\(f_{p2}\)&lt;/span&gt;，则&lt;span class=&#34;math inline&#34;&gt;\(f_{p2}应该小于\)&lt;/span&gt;&lt;span class=&#34;math inline&#34;&gt;\(f_{p1}\)&lt;/span&gt;，则通带为&lt;span class=&#34;math inline&#34;&gt;\((f_{p1}-f_{p2})\)&lt;/span&gt;&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;17.jpg&#34; alt=&#34;17.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;17.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\dot A_{uf} = 1+\dfrac{R_f}{R_1}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;当&lt;span class=&#34;math inline&#34;&gt;\(C_1=C_2=C,R_1=R,R_2=2R\)&lt;/span&gt;，令&lt;span class=&#34;math inline&#34;&gt;\(f_0=\dfrac{1}{2\pi RC}\)&lt;/span&gt;（中心频率）&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\dot A_u = \dfrac{1}{1+j\dfrac{1}{3-\dot
+A_{uf}}\bigg(\dfrac{f}{f_0}-\dfrac{f_0}{f}\bigg)}\dfrac{\dot
+A_{uf}}{3-\dot A_{uf}}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;当&lt;span class=&#34;math inline&#34;&gt;\(f=f_0\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\dot A_{up}=\dfrac{\dot A_{uf}}{|3-\dot A_{uf}|}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+f_{p1} = \dfrac{f_0}{2}\bigg(\sqrt{(3-\dot A_{uf})^2+4}-(3-\dot
+A_{uf})\bigg)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+f_{p2} = \dfrac{f_0}{2}\bigg(\sqrt{(3-\dot A_{uf})^2+4}+(3-\dot
+A_{uf})\bigg)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;带阻滤波器&#34;&gt;带阻滤波器&lt;/h3&gt;
+&lt;p&gt;将输入电压同时作用于低通和高通，再将两个电路的输出电压求和，就可以得到带阻滤波器。&lt;span class=&#34;math inline&#34;&gt;\(f_{p1}&amp;lt;f_{p2}\)&lt;/span&gt;，阻带为&lt;span class=&#34;math inline&#34;&gt;\((f_{p2}-f_{p1})\)&lt;/span&gt;&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;18.jpg&#34; alt=&#34;18.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;18.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\dot A_{up} = 1+\dfrac{R_f}{R_1}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;全通滤波器移相器&#34;&gt;全通滤波器（移相器）&lt;/h3&gt;
+&lt;figure&gt;
+&lt;img src=&#34;19.jpg&#34; alt=&#34;19.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;19.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\dot A_u = \dfrac{1-jwRC}{1+jwRC}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;也即&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+|\dot A_u| = 1
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\varphi = 180\degree-2arctan\dfrac{f}{f_0},f_0=\dfrac{1}{2\pi RC}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h1 id=&#34;半导体器件&#34;&gt;半导体器件&lt;/h1&gt;
+&lt;h2 id=&#34;半导体基础知识&#34;&gt;半导体基础知识&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;本征半导体&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;纯净的具有晶体结构的半导体称为本征半导体。例如硅和锗的纯净半导体。&lt;/p&gt;
+&lt;p&gt;本征半导体中，共价键的价电子可以获得足够大的能量，挣脱共价键的束缚，游离出去，成为自由电子，并在共价键处留下带有一个单位的正电荷的空穴。这个过程称为本征激发。&lt;/p&gt;
+&lt;p&gt;本征激发产生成对的自由电子和空穴，所以本征半导体中自由电子和空穴的数量相等。&lt;/p&gt;
+&lt;p&gt;价电子的反向递补运动等价为空穴在半导体中自由移动。因此，在本征激发的作用下，本征半导体中出现了带负电的自由电子和带正电的空穴，二者都可以参与导电，统称为载流子。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;杂质半导体&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;往本征半导体里掺入少量合适的杂质元素，便可得到杂质半导体。按掺入的杂质元素不同，可以分成N型半导体和P型半导体。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;N型半导体&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;在本征半导体中掺入五价原子，即构成N型半导体。N型半导体中每掺杂一个杂质元素的原子，就提供一个自由电子，从而大量增加了自由电子的浓度。&lt;/p&gt;
+&lt;p&gt;N型半导体中，自由电子的浓度大于空穴的浓度，故称自由电子为多数载流子，空穴为少数载流子，前者也称为多子，后者也称为少子，由于杂质原子可以提供电子，故称为施主原子。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;P型半导体&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;在本征半导体中掺入三价原子，即构成P型半导体。P型半导体中每掺杂一个杂质元素的原子，就提供一个空穴，从而大量增加了空穴的浓度。&lt;/p&gt;
+&lt;p&gt;P型半导体中，空穴为多子，自由电子为少子，主要靠空穴导电。因杂质原子中的空位吸收电子，故称之为受主原子。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;漂移电流和扩散电流&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;漂移电流：在电场的作用下，自由电子会逆着电场方向漂移，而空穴则顺着电场方向漂移，这样产生的电流称为漂移电流，该电流的大小主要取决于载流子的浓度，迁移率和电场强度。&lt;/p&gt;
+&lt;p&gt;扩散电流：半导体中载流子浓度不均匀分布时，载流子会从高浓度区向低浓度区扩散，从而形成扩散电流，该电流的大小正比于载流子的浓度差即浓度梯度的大小。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;PN结&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;通过掺杂工艺，把本征半导体的一边做成 P 型半导体，另一边做成 N
+型半导体，则 P 型半导体和 N
+型半导体的交接面处会形成一个有特殊物理性质的薄层，称为 PN 结。&lt;/p&gt;
+&lt;p&gt;在无外电场和其他激发作用下，参与扩散运动的多子数目等于参与漂移运动的少子数目，从而达到动态平衡，形成PN结。&lt;/p&gt;
+&lt;p&gt;由于扩散到P区的自由电子与空穴复合，而扩散到N区的空穴与自由电子复合，所以在交界面附近多子的浓度下降，P区出现负离子区，N区出现正离子区，它们是不能移动的，称为空间电荷区（耗尽层），从而形成内电场。&lt;/p&gt;
+&lt;p&gt;当外加电压极性不同时，PN结表现出截然不同的导电性能。&lt;/p&gt;
+&lt;p&gt;当电源的正极接到PN结的P端，且电源的负极接到PN结的N端时，称PN结外加正向电压，也称正向接法或正向偏置。此时空间电荷区变窄，削弱内电场，使扩散运动加剧，漂移运动减弱。由于电源的作用，扩散运动将源源不断地进行，从而形成正向电流，PN结导通。&lt;/p&gt;
+&lt;p&gt;当电源的正极接到PN结的N端，且电源的负极接到PN结的P端时，称PN结外加反向电压，也称反向接法或反向偏置。加强了内电场，阻止扩散运动，加剧漂移运动。但是少子数目极少，反向电流非常小，所以常常忽略不计，认为PN结外加反向电压时处于截止状态。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;PN结的电流方程&lt;/strong&gt;&lt;/p&gt;
+
+
+</description>
+        </item>
+        <item>
         <title>从零开始的软渲染器 线段和三角形的光栅化</title>
         <link>https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E7%BA%BF%E6%AE%B5%E5%92%8C%E4%B8%89%E8%A7%92%E5%BD%A2%E7%9A%84%E5%85%89%E6%A0%85%E5%8C%96/</link>
         <pubDate>Wed, 17 May 2023 21:31:12 +0800</pubDate>
@@ -1310,7 +1601,7 @@ X(s) = \dfrac{N(s)}{D(s)}
 &lt;li&gt;如果&lt;span class=&#34;math inline&#34;&gt;\(x(t)\)&lt;/span&gt;是右边信号，并且&lt;span class=&#34;math inline&#34;&gt;\(Re\{s\}=\sigma_0\)&lt;/span&gt;这条线位于收敛域内，那么&lt;span class=&#34;math inline&#34;&gt;\(Re\{s\}&amp;gt;\sigma_0\)&lt;/span&gt;的全部&lt;span class=&#34;math inline&#34;&gt;\(s\)&lt;/span&gt;值一定在收敛域内&lt;/li&gt;
 &lt;li&gt;如果&lt;span class=&#34;math inline&#34;&gt;\(x(t)\)&lt;/span&gt;是左边信号，并且&lt;span class=&#34;math inline&#34;&gt;\(Re\{s\}=\sigma_0\)&lt;/span&gt;这条线位于收敛域内，那么&lt;span class=&#34;math inline&#34;&gt;\(Re\{s\}&amp;lt;\sigma_0\)&lt;/span&gt;的全部&lt;span class=&#34;math inline&#34;&gt;\(s\)&lt;/span&gt;值一定在收敛域内&lt;/li&gt;
 &lt;li&gt;如果&lt;span class=&#34;math inline&#34;&gt;\(x(t)\)&lt;/span&gt;是双边信号，并且&lt;span class=&#34;math inline&#34;&gt;\(Re\{s\}=\sigma_0\)&lt;/span&gt;这条线位于收敛域内，那么收敛域就一定由&lt;span class=&#34;math inline&#34;&gt;\(s\)&lt;/span&gt;平面的一条带状区域组成，直线&lt;span class=&#34;math inline&#34;&gt;\(Re\{s\}=\sigma_0\)&lt;/span&gt;位于该区域中。&lt;/li&gt;
-&lt;li&gt;如果&lt;span class=&#34;math inline&#34;&gt;\(x(t)\)&lt;/span&gt;的拉普拉斯变换&lt;span class=&#34;math inline&#34;&gt;\(X(s)\)&lt;/span&gt;是有理的，那么它的收敛域是被极点所界定的并且延伸到无限远。另外，在收敛域内不包含任何极点。&lt;/li&gt;
+&lt;li&gt;如果&lt;span class=&#34;math inline&#34;&gt;\(x(t)\)&lt;/span&gt;的拉普拉斯变换&lt;span class=&#34;math inline&#34;&gt;\(X(s)\)&lt;/span&gt;是有理的，那么它的收敛域是被极点所界定的或延伸到无限远。另外，在收敛域内不包含任何极点。&lt;/li&gt;
 &lt;li&gt;如果&lt;span class=&#34;math inline&#34;&gt;\(x(t)\)&lt;/span&gt;的拉普拉斯变换&lt;span class=&#34;math inline&#34;&gt;\(X(s)\)&lt;/span&gt;是有理的，若&lt;span class=&#34;math inline&#34;&gt;\(x(t)\)&lt;/span&gt;是右边信号，那么收敛域在&lt;span class=&#34;math inline&#34;&gt;\(s\)&lt;/span&gt;平面上位于最右边极点的右边；若&lt;span class=&#34;math inline&#34;&gt;\(x(t)\)&lt;/span&gt;是左边信号，那么收敛域在&lt;span class=&#34;math inline&#34;&gt;\(s\)&lt;/span&gt;平面上位于最左边极点的左边&lt;/li&gt;
 &lt;/ol&gt;
 &lt;h2 id=&#34;拉普拉斯逆变换&#34;&gt;拉普拉斯逆变换&lt;/h2&gt;
@@ -1384,7 +1675,7 @@ j}\int^{c+j\infty}_{c-j\infty}X_1(\eta)X_2(s-\eta)d\eta
 ROC至少是R\cap\{Re{s}&amp;gt;0\}
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;初值定理和终值定理&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;若&lt;span class=&#34;math inline&#34;&gt;\(t&amp;lt;0,x(t)=0\)&lt;/span&gt;且在&lt;span class=&#34;math inline&#34;&gt;\(t=0\)&lt;/span&gt;不包括任何冲激或高阶奇异函数，则&lt;/p&gt;
+&lt;p&gt;若&lt;span class=&#34;math inline&#34;&gt;\(t&amp;lt;0\)&lt;/span&gt;时&lt;span class=&#34;math inline&#34;&gt;\(x(t)=0\)&lt;/span&gt;且在&lt;span class=&#34;math inline&#34;&gt;\(t=0\)&lt;/span&gt;不包括任何冲激或高阶奇异函数，则&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 x(0^+)=\lim_{s\to\infty} sX(s)
 \]&lt;/span&gt;&lt;/p&gt;
@@ -1560,7 +1851,7 @@ x(t)\overset{\mathcal{UL}}{\longleftrightarrow}X(s) =
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 x^*(t)\leftrightarrow X^*(s)
 \]&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;与双边不同的是&lt;span class=&#34;math inline&#34;&gt;\(s\)&lt;/span&gt;没有取共轭&lt;/p&gt;
+&lt;p&gt;与双边不同的是&lt;span class=&#34;math inline&#34;&gt;\(s\)&lt;/span&gt;没有取共轭（其实我有点怀疑是否是书的错误，因为后面的&lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;变换又是单边双边相同的，有点出乎我的意料。但是我不知道是这个错了还是那个错了）&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;卷积&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;特别要求&lt;span class=&#34;math inline&#34;&gt;\(t&amp;lt;0\)&lt;/span&gt;时，&lt;span class=&#34;math inline&#34;&gt;\(x_1(t),x_2(t)\)&lt;/span&gt;都为零。&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;时域微分&lt;/em&gt;&lt;/p&gt;
@@ -1584,7 +1875,239 @@ x^{(n)}(t)\leftrightarrow s^nX(s)-\sum^{n-1}_{m=0}s^{n-1-m}x^{(m)}(0^-)
 x^{(-1)}(t)=\int^t_{-\infty}x(\tau)d\tau \leftrightarrow s^{-1}X(s)
 +s^{-1}x^{(-1)}(0^-)\]&lt;/span&gt;&lt;/p&gt;
 &lt;h1 id=&#34;z变换&#34;&gt;&lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;变换&lt;/h1&gt;
-&lt;p&gt;TODO&lt;/p&gt;
+&lt;p&gt;一个离散时间信号&lt;span class=&#34;math inline&#34;&gt;\(x[n]\)&lt;/span&gt;的&lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;变换定义为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+X(z) = \sum^{+\infty}_{n=-\infty} x[n]z^{-n}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;是一个复变量。我们也记作&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+x[n]\overset{z}{\longleftrightarrow}X(z)=\mathcal{Z}\{x[n]\}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;当然，离散傅里叶变换就是&lt;span class=&#34;math inline&#34;&gt;\(z=e^{jw}\)&lt;/span&gt;时的一个特例。我们现在将&lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;表示为&lt;span class=&#34;math inline&#34;&gt;\(z=re^{jw}\)&lt;/span&gt;，用&lt;span class=&#34;math inline&#34;&gt;\(r\)&lt;/span&gt;表示&lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;的模，用&lt;span class=&#34;math inline&#34;&gt;\(w\)&lt;/span&gt;表示它的相角。于是就可以把&lt;span class=&#34;math inline&#34;&gt;\(X(re^{jw})\)&lt;/span&gt;看成序列&lt;span class=&#34;math inline&#34;&gt;\(x[n]\)&lt;/span&gt;乘以实指数&lt;span class=&#34;math inline&#34;&gt;\(r^{-n}\)&lt;/span&gt;后的傅里叶变换，即&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+X(re^{jw}) = \mathcal{F}\{x[n]r^{-n}\}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;类似于在虚轴&lt;span class=&#34;math inline&#34;&gt;\(jw\)&lt;/span&gt;上的拉普拉斯变换就是傅里叶变换，在复平面的单位圆上进行的&lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;变换，就是傅里叶变换。&lt;/p&gt;
+&lt;h2 id=&#34;z变换的有理分式情况&#34;&gt;&lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;变换的有理分式情况&lt;/h2&gt;
+&lt;p&gt;和拉普拉斯变换一样。同时也有极点和零点的概念。&lt;/p&gt;
+&lt;h2 id=&#34;z变换的收敛域&#34;&gt;&lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;变换的收敛域&lt;/h2&gt;
+&lt;p&gt;收敛域记作&lt;span class=&#34;math inline&#34;&gt;\(ROC\)&lt;/span&gt;&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(X(z)\)&lt;/span&gt;的收敛域是在&lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;平面内以原点为中心的圆环&lt;/li&gt;
+&lt;li&gt;收敛域内不包括任何极点&lt;/li&gt;
+&lt;li&gt;如果&lt;span class=&#34;math inline&#34;&gt;\(x[n]\)&lt;/span&gt;是有限长序列，那么收敛域就是整个&lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;平面，可能除去&lt;span class=&#34;math inline&#34;&gt;\(z=0\)&lt;/span&gt;和/或&lt;span class=&#34;math inline&#34;&gt;\(z=\infty\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;如果&lt;span class=&#34;math inline&#34;&gt;\(x[n]\)&lt;/span&gt;是一个右边序列，并且&lt;span class=&#34;math inline&#34;&gt;\(|z|=r_0\)&lt;/span&gt;的圆位于收敛域内，那么&lt;span class=&#34;math inline&#34;&gt;\(|z|&amp;gt;r_0\)&lt;/span&gt;的全部有限&lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;值都一定在这个收敛域内&lt;/li&gt;
+&lt;li&gt;如果&lt;span class=&#34;math inline&#34;&gt;\(x[n]\)&lt;/span&gt;是一个左边序列，而且&lt;span class=&#34;math inline&#34;&gt;\(|z|=r_0\)&lt;/span&gt;的圆位于收敛域内，那么满足&lt;span class=&#34;math inline&#34;&gt;\(0&amp;lt;|z|&amp;lt;r_0\)&lt;/span&gt;的全部&lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;值都一定在这个收敛域内&lt;/li&gt;
+&lt;li&gt;如果&lt;span class=&#34;math inline&#34;&gt;\(x[n]\)&lt;/span&gt;是一个双边序列，而且&lt;span class=&#34;math inline&#34;&gt;\(|z|=r_0\)&lt;/span&gt;的圆位于收敛域内，那么该收敛域在&lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;域中一定是包含&lt;span class=&#34;math inline&#34;&gt;\(|z|=r_0\)&lt;/span&gt;这一圆环的环状区域&lt;/li&gt;
+&lt;li&gt;如果&lt;span class=&#34;math inline&#34;&gt;\(x[n]\)&lt;/span&gt;的&lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;变换&lt;span class=&#34;math inline&#34;&gt;\(X(z)\)&lt;/span&gt;是有理的，它的收敛域就被极点所界定，或延伸至无限远&lt;/li&gt;
+&lt;li&gt;如果&lt;span class=&#34;math inline&#34;&gt;\(x[n]\)&lt;/span&gt;的&lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;变换&lt;span class=&#34;math inline&#34;&gt;\(X(z)\)&lt;/span&gt;是有理的，并且&lt;span class=&#34;math inline&#34;&gt;\(x[n]\)&lt;/span&gt;是右边序列，那么收敛域就位于&lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;平面内最外层的极点的外边，也就是半径等于&lt;span class=&#34;math inline&#34;&gt;\(X(z)\)&lt;/span&gt;极点中最大模值的圆的外边。而且，若&lt;span class=&#34;math inline&#34;&gt;\(x[n]\)&lt;/span&gt;是因果序列，即&lt;span class=&#34;math inline&#34;&gt;\(x[n]\)&lt;/span&gt;为&lt;span class=&#34;math inline&#34;&gt;\(n&amp;lt;0\)&lt;/span&gt;时等于零的右边序列，那么收敛域也包括&lt;span class=&#34;math inline&#34;&gt;\(z=\infty\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;如果&lt;span class=&#34;math inline&#34;&gt;\(x[n]\)&lt;/span&gt;的&lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;变换&lt;span class=&#34;math inline&#34;&gt;\(X(z)\)&lt;/span&gt;是有理的，并且&lt;span class=&#34;math inline&#34;&gt;\(x[n]\)&lt;/span&gt;是左边序列，那么收敛域就位于&lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;平面内最外层的极点的里边，也就是半径等于&lt;span class=&#34;math inline&#34;&gt;\(X(z)\)&lt;/span&gt;中除去&lt;span class=&#34;math inline&#34;&gt;\(z=0\)&lt;/span&gt;的极点中最小模值的圆的里边，并且向内延伸到可能包括&lt;span class=&#34;math inline&#34;&gt;\(z=0\)&lt;/span&gt;。特别是，若&lt;span class=&#34;math inline&#34;&gt;\(x[n]\)&lt;/span&gt;是反因果序列，即&lt;span class=&#34;math inline&#34;&gt;\(x[n]\)&lt;/span&gt;为&lt;span class=&#34;math inline&#34;&gt;\(n&amp;gt;0\)&lt;/span&gt;时等于零的左边序列，那么收敛域也包括&lt;span class=&#34;math inline&#34;&gt;\(z=0\)&lt;/span&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;z逆变换&#34;&gt;&lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;逆变换&lt;/h2&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+x[n] = \dfrac{1}{2\pi j}\oint X(z)z^{n-1}dz
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;和拉普拉斯逆变换一样，很难直接用这个东西去算。遇上有理分式就待定系数法拆开，遇上其他函数就分开来看，然后套用常用&lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;变换表和其性质来算。&lt;/p&gt;
+&lt;p&gt;当然，你可能会发现拆出来的项是&lt;span class=&#34;math inline&#34;&gt;\(\dfrac{1}{z-1}\)&lt;/span&gt;这种形式的，然后就会发现变换表里的不是&lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;而是&lt;span class=&#34;math inline&#34;&gt;\(z^{-1}\)&lt;/span&gt;。这种情况应该对&lt;span class=&#34;math inline&#34;&gt;\(\dfrac{X(z)}{z}\)&lt;/span&gt;进行因式分解，得到结果后两边同乘&lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;，然后再转换一下就可以使用变换表了。&lt;/p&gt;
+&lt;h2 id=&#34;双边z变换的性质&#34;&gt;（双边）&lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;变换的性质&lt;/h2&gt;
+&lt;p&gt;假设&lt;span class=&#34;math inline&#34;&gt;\(x_1[n]\leftrightarrow
+X_1(z),ROC=R_1\)&lt;/span&gt;和&lt;span class=&#34;math inline&#34;&gt;\(x_2[n]\leftrightarrow X_2(z),ROC=R_2\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;线性&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+ax_1[n]+bx_2[n]\leftrightarrow aX_1(z)+bX_2(z)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;时移&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+x[n-n_0]\leftrightarrow z^{-n_0}X(z), ROC=R
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;&lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;域尺度变换&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+e^{jw_0n}x[n]\leftrightarrow X(e^{-jw_0}z),ROC=R
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+z_0^nx[n]\leftrightarrow X(\dfrac{z}{z_0}),ROC=z_0R
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+a^nx[n]\leftrightarrow X(a^{-1}z),ROC=R的尺度变换
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;时间翻转&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+x[-n]\leftrightarrow X(a^{-1}z),ROC=R^{-1}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;时间扩展&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+x_{(k)}[n] = \left\{\begin{matrix}
+x[r], &amp;amp; n=rk\\
+0, &amp;amp; n\neq rk
+\end{matrix}\right.\leftrightarrow X(z^k)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;共轭&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+x^*[n] \leftrightarrow X^*[z^*], ROC=R
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;卷积&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+x_1[n]*x_2[n]\leftrightarrow X_1(z)X_2(z), ROC至少是R_1\cap R_2
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;一次差分&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+x[n]-x[n-1]\leftrightarrow (1-z^{-1})X(z),ROC至少是R\cap|z|&amp;gt;0
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;累加&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\sum^n_{k=-\infty}x[k]\leftrightarrow
+\dfrac{1}{1-z^{-1}}X(z),ROC至少是R\cap|z|&amp;gt;1
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;&lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;域微分&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+nx[n]\leftrightarrow -z\dfrac{d}{dz}X(z), ROC=R
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;&lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;域积分&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\dfrac{x[n]}{n+m}\leftrightarrow
+z^m\int^{\infty}_{z}\dfrac{X(\eta)}{\eta^{m+1}}d\eta,ROC=R
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;初值定理和终值定理&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;若&lt;span class=&#34;math inline&#34;&gt;\(n&amp;lt;0\)&lt;/span&gt;时,&lt;span class=&#34;math inline&#34;&gt;\(x[n]=0\)&lt;/span&gt;则&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+x[0]=\lim_{z\to\infty} X(z)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;若&lt;span class=&#34;math inline&#34;&gt;\(n&amp;lt;M\)&lt;/span&gt;时,&lt;span class=&#34;math inline&#34;&gt;\(x[n]=0\)&lt;/span&gt;则&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+x[M]=\lim_{z\to\infty} z^MX(z)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\lim_{n\to\infty}x[n] = \lim_{z\to 1}\dfrac{z-1}{z}X(z)或者\lim_{z\to
+1}(z-1)X(z)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h2 id=&#34;常用z变换对&#34;&gt;常用&lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;变换对&lt;/h2&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\delta[n]\leftrightarrow 1, z\in C
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+u[n] = \dfrac{1}{1-z^{-1}}, |z|&amp;gt;1
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+-u[-n-1] \leftrightarrow \dfrac{1}{1-z^{-1}}, |z|&amp;lt;1
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\delta[n-m]\leftrightarrow z^{-m},z\in C,z\neq0(if\ \ \
+m&amp;gt;0),z\neq\infty(if\ \ \ m&amp;lt;0)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+a^nu[n]\leftrightarrow\dfrac{1}{1-az^{-1}},|z|&amp;gt;|a|
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+-a^nu[-n-1]\leftrightarrow\dfrac{1}{1-az^{-1}},|z|&amp;lt;|a|
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+na^nu[n]\leftrightarrow\dfrac{az^{-1}}{(1-az^{-1})^2},|z|&amp;gt;|a|
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+-na^nu[-n-1]\leftrightarrow\dfrac{az^{-1}}{(1-az^{-1})^2},|z|&amp;lt;|a|
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\cos(w_0n)u[n]\leftrightarrow\dfrac{1-(\cos w_0)z^{-1}}{1-2(\cos
+w_0)z^{-1}+z^{-2}},|z|&amp;gt;1
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\sin(w_0n)u[n]\leftrightarrow\dfrac{(\sin w_0)z^{-1}}{1-2(\cos
+w_0)z^{-1}+z^{-2}},|z|&amp;gt;1
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+r^n\cos(w_0n)u[n]\leftrightarrow\dfrac{1-r(\cos w_0)z^{-1}}{1-2r(\cos
+w_0)z^{-1}+r^2z^{-2}},|z|&amp;gt;r
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+r^n\sin(w_0n)u[n]\leftrightarrow\dfrac{r(\sin w_0)z^{-1}}{1-2r(\cos
+w_0)z^{-1}+r^2z^{-2}},|z|&amp;gt;1
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h2 id=&#34;利用z变换分析与表征线性时不变系统&#34;&gt;利用&lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;变换分析与表征线性时不变系统&lt;/h2&gt;
+&lt;p&gt;同前，&lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;变换也有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+Y(z)=H(z)X(z)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(H(z)\)&lt;/span&gt;称为系统的系统函数或传递函数。如果单位圆在收敛域内，将&lt;span class=&#34;math inline&#34;&gt;\(H(z)\)&lt;/span&gt;在单位圆上求值，&lt;span class=&#34;math inline&#34;&gt;\(H(z)\)&lt;/span&gt;就变成了系统的频率响应。&lt;/p&gt;
+&lt;h3 id=&#34;因果性-3&#34;&gt;因果性&lt;/h3&gt;
+&lt;p&gt;一个离散时间线性时不变系统，当且仅当它的系统函数的收敛域在某个圆的外边，且包括无限远点时，该系统就是因果的。&lt;/p&gt;
+&lt;p&gt;一个具有有理系统函数&lt;span class=&#34;math inline&#34;&gt;\(H(z)\)&lt;/span&gt;的线性时不变系统是因果的当且仅当：&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;收敛域位于最外层极点外边某个圆的外边，并且&lt;/li&gt;
+&lt;li&gt;若&lt;span class=&#34;math inline&#34;&gt;\(H(z)\)&lt;/span&gt;表示成&lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;的多项式之比，其分子的阶次不能高于分母的阶次。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;稳定性-3&#34;&gt;稳定性&lt;/h3&gt;
+&lt;p&gt;一个线性时不变系统，当且仅当它的系统函数&lt;span class=&#34;math inline&#34;&gt;\(H(z)\)&lt;/span&gt;的收敛域包括单位圆&lt;span class=&#34;math inline&#34;&gt;\(|z|=1\)&lt;/span&gt;时，该系统就是稳定的。&lt;/p&gt;
+&lt;p&gt;一个具有有理系统函数的因果线性时不变系统，当且仅当&lt;span class=&#34;math inline&#34;&gt;\(H(z)\)&lt;/span&gt;的全部极点都位于单位圆内时，即全部极点的模均小于&lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt;时，该系统就是稳定的。&lt;/p&gt;
+&lt;h3 id=&#34;有线性常系数差分方程表征的线性时不变系统&#34;&gt;有线性常系数差分方程表征的线性时不变系统&lt;/h3&gt;
+&lt;p&gt;和拉普拉斯变换解微分方程基本一样。&lt;/p&gt;
+&lt;p&gt;差分方程的形式如下&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\sum^{N}_{k=0}a_ky[n-k]=\sum^M_{k=0}b_kx[n-k]
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;如果没有初始值（零输入响应为零），两边进行&lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;变换&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\sum^{N}_{k=0}a_kz^{-k}Y(z)=\sum^M_{k=0}b_kz^{-k}X(z)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;如果有初始值，用后面的单边&lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;变换的性质可以求得&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\sum^N_{k=0}a_k[z^{-k}Y(z)+\sum^{k-1}_{i=0}y[i-k]z^{-i}=\sum^M_{k=0}b_kz^{-k}X(z)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;之后我们可以求得&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+H(z)=Y(z)\bigg/X(z)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;和拉普拉斯变换也是一样的，这个冲激响应是零状态响应。如果有初始值，那么另外那部分就是零状态响应。&lt;/p&gt;
+&lt;p&gt;也可以不求&lt;span class=&#34;math inline&#34;&gt;\(H(z)\)&lt;/span&gt;直接求&lt;span class=&#34;math inline&#34;&gt;\(Y_{zs},Y_{zi}\)&lt;/span&gt;，方法和拉普拉斯变换完全一致。&lt;/p&gt;
+&lt;h2 id=&#34;系统的z域框图&#34;&gt;系统的&lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;域框图&lt;/h2&gt;
+&lt;h2 id=&#34;s域与z域的关系&#34;&gt;&lt;span class=&#34;math inline&#34;&gt;\(s\)&lt;/span&gt;域与&lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;域的关系&lt;/h2&gt;
+&lt;p&gt;&lt;em&gt;复变量&lt;span class=&#34;math inline&#34;&gt;\(s\)&lt;/span&gt;与&lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;的关系&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\left\{\begin{matrix}
+z = e^{sT}\\
+s = \dfrac{1}{T}\ln z
+\end{matrix}\right.
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;&lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;平面与&lt;span class=&#34;math inline&#34;&gt;\(s\)&lt;/span&gt;平面的映射关系&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(s=\sigma+jw,z=\rho
+e^{j\theta}\)&lt;/span&gt;，有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\left\{\begin{matrix}
+\rho = e^{\sigma T}\\
+\theta = wT
+\end{matrix}\right.
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中的例子如下&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(s\)&lt;/span&gt;平面的左半平面映射为&lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;平面的单位圆内部&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(s\)&lt;/span&gt;平面的&lt;span class=&#34;math inline&#34;&gt;\(jw\)&lt;/span&gt;轴映射为&lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;平面的单位圆&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(s\)&lt;/span&gt;平面的右半平面映射为&lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;平面的单位圆外部&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(s\)&lt;/span&gt;平面上的实轴映射为&lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;平面的正实轴&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(s\)&lt;/span&gt;平面上的原点映射为&lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;平面上&lt;span class=&#34;math inline&#34;&gt;\(z=1\)&lt;/span&gt;的点。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;单边z变换&#34;&gt;单边&lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;变换&lt;/h2&gt;
+&lt;p&gt;一个序列&lt;span class=&#34;math inline&#34;&gt;\(x[n]\)&lt;/span&gt;的单边&lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;变换&lt;span class=&#34;math inline&#34;&gt;\(X(z)\)&lt;/span&gt;定义为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+X(z)=\sum^{+\infty}_{n=0}x[n]z^{-n}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+x[n]\overset{\mathcal{UZ}}{\longleftrightarrow}X(z) =
+\mathcal{UZ}\{x[n]\}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(x[n]\)&lt;/span&gt;的单边&lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;变换可以看成&lt;span class=&#34;math inline&#34;&gt;\(x[n]u[n]\)&lt;/span&gt;的双边&lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;变换。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;性质&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;不列出收敛域，任何单边&lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;变换的收敛域总是位于某个圆的外边。&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;线性，&lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;域尺度变换，时间扩展，共轭（实际上我不知道这里是不是书籍的错误，到底是相同还是不同），累加，&lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;域微分，初值终值定理&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;和双边的一样。&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;时移&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+x[n+1] = zX(z)-zx[0]
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;卷积&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;特别要求&lt;span class=&#34;math inline&#34;&gt;\(n&amp;lt;0\)&lt;/span&gt;时，&lt;span class=&#34;math inline&#34;&gt;\(x_1[n],x_2[n]\)&lt;/span&gt;都为零。&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;一次差分&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+x[n]-x[n-1]\leftrightarrow (1-z^{-1})X(z)-x[-1]
+\]&lt;/span&gt;&lt;/p&gt;
 
 
 </description>
@@ -2182,8 +2705,12 @@ Y_i\)&lt;/span&gt;，则&lt;span class=&#34;math inline&#34;&gt;\(C_{i+1}=G_i+P_
 C_i\)&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;当然&lt;span class=&#34;math inline&#34;&gt;\(P_i=X_i\oplus
 Y_i\)&lt;/span&gt;其实是等效的，有些地方会这么写。&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(G_i\)&lt;/span&gt;为进位产生函数：若本位两个输入均为&lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt;，必向高位产生进位，与低位进位无关。&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(P_i\)&lt;/span&gt;为进位传递函数：当&lt;span class=&#34;math inline&#34;&gt;\(P_i
+=1\)&lt;/span&gt;时，若低位有进位，本位将产生进位。&lt;/p&gt;
 &lt;h2 id=&#34;n位加减法器&#34;&gt;n位加减法器&lt;/h2&gt;
 &lt;h3 id=&#34;串行行波进位的并行加减法器&#34;&gt;串行（行波）进位的并行加减法器&lt;/h3&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;个全加器串接起来，就可以进行两个&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;位数的相加减。进位信号是逐级形成的。&lt;/p&gt;
 &lt;h3 id=&#34;并行加法器的快速进位&#34;&gt;并行加法器的快速进位&lt;/h3&gt;
 &lt;ol type=&#34;1&#34;&gt;
 &lt;li&gt;并行进位（先行进位、同时进位、CLA）方式&lt;/li&gt;
@@ -2223,15 +2750,70 @@ Y_i\)&lt;/span&gt;其实是等效的，有些地方会这么写。&lt;/p&gt;
 &lt;/ol&gt;
 &lt;h2 id=&#34;定点数乘法运算&#34;&gt;定点数乘法运算&lt;/h2&gt;
 &lt;p&gt;乘法用加法和移位实现，参照手算竖式乘法。&lt;/p&gt;
+&lt;p&gt;原码乘法，略。&lt;/p&gt;
+&lt;p&gt;部分积这个概念可能会考。&lt;/p&gt;
 &lt;ol type=&#34;1&#34;&gt;
 &lt;li&gt;补码乘法——校正法&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;计算x*y&lt;/p&gt;
+&lt;p&gt;当y&amp;gt;0时，不管被乘数x的正负都直接按原码乘法计算，只是移位时按补码规则进行。&lt;/p&gt;
+&lt;p&gt;y&amp;lt;0时，可以先把[y]补的符号位丢掉不管，仍按原码乘法运算，最后再加上[-x]补进行校正。&lt;/p&gt;
+&lt;p&gt;综上，表达式为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+=[X]_补\cdot 0.y_1y_2\cdots y_n + [-X]_补\cdot y_0
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;ol start=&#34;2&#34; type=&#34;1&#34;&gt;
 &lt;li&gt;补码乘法——比较法（Booth法）&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;我们可以证明，&lt;span class=&#34;math inline&#34;&gt;\([-X]_补=-[X]_补\)&lt;/span&gt;，布斯法从这里入手。&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+[X\cdot Y]_补 = [X]_补\cdot(-y_0\cdot 2^0+y_1\cdot 2^{-1}+y_2\cdot
+2^{-2}+\cdots+y_n\cdot 2^{-n})
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+= [X]_补\cdot[-y_0\cdot 2^0+(y_1\cdot 2^{0}-y_1\cdot 2^{-1})+(y_2\cdot
+2^{-1}-y_2\cdot 2^{-2})+\cdots+(y_n\cdot 2^{-(n-1)}-y_n\cdot 2^{-n})]
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+= [X]_补\cdot[(y_1-y_0)\cdot 2^0+(y_2-y_1)\cdot
+2^{-1}+\cdots+(y_n-y_{n-1})\cdot 2^{-(n-1)}+(y_{n+1}-y_n)\cdot 2^{-n}]
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(y_{n+1}=0\)&lt;/span&gt;，写出来只是方便起见。&lt;/p&gt;
+&lt;p&gt;于是我们可以方便的递推&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+[z_0]_补 = 0
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+[z_1]_补 = 2^{-1}\{(y_{n+1}-y_n)[x]_补+[z_0]_补\}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\vdots
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+[z_n]_补=2^{-1}\{(y_2-y_1)[x]_补+[z_{n-1}]_补\}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+[x\cdot y]_补 = [z_n]_补+(y_1-y_0)[x]_补
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;ol start=&#34;3&#34; type=&#34;1&#34;&gt;
 &lt;li&gt;阵列乘法器&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;TODO&lt;/p&gt;
+&lt;p&gt;原码和补码的乘法算法，利用加法和移位进行，属于串行乘法，它是一行行地来实现竖式乘法的。而阵列乘法器，通过电路实现了整个竖式乘法，速度快。&lt;/p&gt;
 &lt;h2 id=&#34;定点数除法运算&#34;&gt;定点数除法运算&lt;/h2&gt;
 &lt;p&gt;类似的，除法是用减法和移位实现。&lt;/p&gt;
-&lt;p&gt;TODO&lt;/p&gt;
+&lt;p&gt;原码除法分为恢复余数法和加减交替法&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;恢复余数法是直接作减法试探方法，不管被除数（或余数）减除数是否够减，都一律先做减法。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;若余数为正，表示够减，该位商上“1”；若余数为负，表示不够减，该位商上“0”，并要恢复原来的被除数（或余数）。&lt;/p&gt;
+&lt;ol start=&#34;2&#34; type=&#34;1&#34;&gt;
+&lt;li&gt;加减交替法&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;符号位不参与运算；上商 n+1 次；第一次上商判溢出；左移 n 次，加 n+1
+或n+2次；用移位的次数判断除法是否结束；若最终余数为负，需恢复余数。&lt;/p&gt;
+&lt;p&gt;补码除法：补码除法共上商 n +1 次（末位恒置
+1）第一次为商符；第一次商可判溢出；加 n+1 次 左移 n
+次；用移位的次数判断除法是否结束；精度误差最大为&lt;span class=&#34;math inline&#34;&gt;\(2^{-n}\)&lt;/span&gt;&lt;/p&gt;
 &lt;h2 id=&#34;浮点数加减运算&#34;&gt;浮点数加减运算&lt;/h2&gt;
 &lt;p&gt;步骤如下&lt;/p&gt;
 &lt;ol type=&#34;1&#34;&gt;
@@ -2251,6 +2833,78 @@ Y_i\)&lt;/span&gt;其实是等效的，有些地方会这么写。&lt;/p&gt;
 &lt;li&gt;溢出判断&lt;/li&gt;
 &lt;/ol&gt;
 &lt;h2 id=&#34;运算器的组成和结构&#34;&gt;运算器的组成和结构&lt;/h2&gt;
+&lt;h1 id=&#34;指令系统&#34;&gt;指令系统&lt;/h1&gt;
+&lt;h2 id=&#34;存储模式&#34;&gt;存储模式&lt;/h2&gt;
+&lt;p&gt;大端存储（大部分RISC），小端存储（Intel/AMD）&lt;/p&gt;
+&lt;p&gt;堆栈（Stack）：具有先进后出(FILO)操作规则的被特殊定义的主存区域。&lt;/p&gt;
+&lt;p&gt;使用堆栈时用三个专用地址寄存器来管理&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;堆栈指针（Stack Pointer，SP）：指示当前可操作的堆栈单元。&lt;/li&gt;
+&lt;li&gt;堆栈基址（Stack Base，SB）：指示堆栈的底部。&lt;/li&gt;
+&lt;li&gt;堆栈界限（Stack Limit，SL）：指示堆栈的最顶端&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;堆栈界限&lt;span class=&#34;math inline&#34;&gt;\(=\)&lt;/span&gt;堆栈基址&lt;span class=&#34;math inline&#34;&gt;\(\pm\)&lt;/span&gt;堆栈大小。&lt;/p&gt;
+&lt;h2 id=&#34;寄存器组织&#34;&gt;寄存器组织&lt;/h2&gt;
+&lt;p&gt;寄存器按功能可以分为通用寄存器和专用寄存器。按可操作性分为可见与不可见寄存器。&lt;/p&gt;
+&lt;p&gt;典型寄存器有地址寄存器(AR)、数据寄存器(DR)、指令寄存器(IR)、程序计数器(PC)、堆栈指针寄存器(SP)、标志寄存器(FR)等。&lt;/p&gt;
+&lt;h2 id=&#34;指令格式&#34;&gt;指令格式&lt;/h2&gt;
+&lt;p&gt;为了使指令能够有效地指挥计算机完成各种操作，一条指令应包含两个基本要素：操作码和地址码，其基本格式为：操作码字段+地址码字段。&lt;/p&gt;
+&lt;p&gt;指令功能不同，需要的操作数数量也不同。地址码字段为指令指定源操作数、目的操作数和下条指令地址等信息，格式为：源操作数+目的操作数+下条指令地址。&lt;/p&gt;
+&lt;p&gt;按照地址码字段的数量，指令可以分为四地址、三地址、两地址、单地址和零地址指令。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;四地址指令：op,rd, rs1, rs2,ni;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;rs1 op rs2-&amp;gt;rd, ni提供顺序或转移地址&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;三地址指令：op,rd,rs1,rs2&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;rs1 op rs2-&amp;gt;rd, PC提供顺序地址&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;二地址指令：op,rd,rs1&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;rd op rs1-&amp;gt;rd或rs1 op ACC-&amp;gt;rd, PC提供顺序地址&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;单地址指令：op rd&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;rd op ACC -&amp;gt; ACC或rd自身操作-&amp;gt;rd,
+PC提供顺序地址；或rd提供转移地址。ACC为累加器或操作码隐含指定的操作数。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;零地址指令：op&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;由操作码指定操作数（隐含寻址）或无需操作数。&lt;/p&gt;
+&lt;h3 id=&#34;定长操作码&#34;&gt;定长操作码&lt;/h3&gt;
+&lt;p&gt;对所有指令的操作码用相同位数的二进制数进行编码，即为定长操作码编码方式。&lt;/p&gt;
+&lt;p&gt;某计算机的指令系统需要设置&lt;span class=&#34;math inline&#34;&gt;\(N\)&lt;/span&gt;条指令，若所有指令的操作码均用&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;位二进制数表示，则应满足关系式：&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+N\leq 2^n
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;从&lt;span class=&#34;math inline&#34;&gt;\(2^n\)&lt;/span&gt;个编码中选出&lt;span class=&#34;math inline&#34;&gt;\(N\)&lt;/span&gt;个编码分配给&lt;span class=&#34;math inline&#34;&gt;\(N\)&lt;/span&gt;条指令，即可完成操作码设计。&lt;/p&gt;
+&lt;h3 id=&#34;变长操作码&#34;&gt;变长操作码&lt;/h3&gt;
+&lt;p&gt;对不同类型的指令操作码用不固定长度的二进制数进行编码即为变长操作码或扩展操作码编码方式。&lt;/p&gt;
+&lt;p&gt;扩展操作码技术是指令优化技术，其技术核心是：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;使程序中指令的平均操作码长度尽可能短，以减少操作码在程序中的总位数；&lt;/li&gt;
+&lt;li&gt;尽可能充分地利用指令的二进制数位，以增加指令字表示的操作信息。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;扩展操作码的设计原则：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;如果指令字长固定，则长地址码对应短操作码，操作码长度随地址码长度缩短而增加。&lt;/li&gt;
+&lt;li&gt;如果指令字长可变，则以指令的使用频率作为设计依据，频率高的用短操作码，长的用长操作码。用到了霍夫曼编码。&lt;/li&gt;
+&lt;li&gt;设计总是从短操作码开始，并且保证短码不能是长码的前缀。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;寻址&#34;&gt;寻址&lt;/h2&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;隐含寻址：操作数的存放地由操作码指定。&lt;/li&gt;
+&lt;li&gt;立即寻址：操作数在指令中。&lt;/li&gt;
+&lt;li&gt;寄存器寻址：操作数在指令指定的寄存器中。&lt;/li&gt;
+&lt;li&gt;直接寻址：操作数地址在指令中，操作数在主存单元中，访问一次主存便可获得操作数。&lt;/li&gt;
+&lt;li&gt;（存储器）间接寻址：操作数地址的地址在指令中，操作数在主存单元中。&lt;/li&gt;
+&lt;li&gt;寄存器间接寻址：操作数地址在指令指定的寄存器中，操作数在主存单元中，访问一次主存即可获得操作数。&lt;/li&gt;
+&lt;li&gt;相对寻址：操作数地址由程序计数器和指令提供的地址偏移量决定，操作数在主存单元中，访问一次主存即可获得操作数。&lt;/li&gt;
+&lt;li&gt;基址寻址：操作数地址由基址寄存器和指令提供的地址偏移量决定，操作数在主存单元中,访问一次主存即可获得操作数。&lt;/li&gt;
+&lt;li&gt;变址寻址：操作数地址由变址寄存器和指令提供的地址偏移量决定，操作数在主存单元中。&lt;/li&gt;
+&lt;li&gt;堆栈寻址：该寻址方式通常由指令操作码指定，用在涉及堆栈操作的指令中，所寻址的操作数在堆栈中。&lt;/li&gt;
+&lt;/ol&gt;
 
 
 </description>

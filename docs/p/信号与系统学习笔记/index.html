@@ -121,7 +121,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 31 分钟
+                    阅读时长: 37 分钟
                 </time>
             </div>
         
@@ -1260,7 +1260,7 @@ X(s) = \dfrac{N(s)}{D(s)}
 <li>如果<span class="math inline">\(x(t)\)</span>是右边信号，并且<span class="math inline">\(Re\{s\}=\sigma_0\)</span>这条线位于收敛域内，那么<span class="math inline">\(Re\{s\}&gt;\sigma_0\)</span>的全部<span class="math inline">\(s\)</span>值一定在收敛域内</li>
 <li>如果<span class="math inline">\(x(t)\)</span>是左边信号，并且<span class="math inline">\(Re\{s\}=\sigma_0\)</span>这条线位于收敛域内，那么<span class="math inline">\(Re\{s\}&lt;\sigma_0\)</span>的全部<span class="math inline">\(s\)</span>值一定在收敛域内</li>
 <li>如果<span class="math inline">\(x(t)\)</span>是双边信号，并且<span class="math inline">\(Re\{s\}=\sigma_0\)</span>这条线位于收敛域内，那么收敛域就一定由<span class="math inline">\(s\)</span>平面的一条带状区域组成，直线<span class="math inline">\(Re\{s\}=\sigma_0\)</span>位于该区域中。</li>
-<li>如果<span class="math inline">\(x(t)\)</span>的拉普拉斯变换<span class="math inline">\(X(s)\)</span>是有理的，那么它的收敛域是被极点所界定的并且延伸到无限远。另外，在收敛域内不包含任何极点。</li>
+<li>如果<span class="math inline">\(x(t)\)</span>的拉普拉斯变换<span class="math inline">\(X(s)\)</span>是有理的，那么它的收敛域是被极点所界定的或延伸到无限远。另外，在收敛域内不包含任何极点。</li>
 <li>如果<span class="math inline">\(x(t)\)</span>的拉普拉斯变换<span class="math inline">\(X(s)\)</span>是有理的，若<span class="math inline">\(x(t)\)</span>是右边信号，那么收敛域在<span class="math inline">\(s\)</span>平面上位于最右边极点的右边；若<span class="math inline">\(x(t)\)</span>是左边信号，那么收敛域在<span class="math inline">\(s\)</span>平面上位于最左边极点的左边</li>
 </ol>
 <h2 id="拉普拉斯逆变换">拉普拉斯逆变换</h2>
@@ -1334,7 +1334,7 @@ j}\int^{c+j\infty}_{c-j\infty}X_1(\eta)X_2(s-\eta)d\eta
 ROC至少是R\cap\{Re{s}&gt;0\}
 \]</span></p>
 <p><em>初值定理和终值定理</em></p>
-<p>若<span class="math inline">\(t&lt;0,x(t)=0\)</span>且在<span class="math inline">\(t=0\)</span>不包括任何冲激或高阶奇异函数，则</p>
+<p>若<span class="math inline">\(t&lt;0\)</span>时<span class="math inline">\(x(t)=0\)</span>且在<span class="math inline">\(t=0\)</span>不包括任何冲激或高阶奇异函数，则</p>
 <p><span class="math display">\[
 x(0^+)=\lim_{s\to\infty} sX(s)
 \]</span></p>
@@ -1510,7 +1510,7 @@ x(t)\overset{\mathcal{UL}}{\longleftrightarrow}X(s) =
 <p><span class="math display">\[
 x^*(t)\leftrightarrow X^*(s)
 \]</span></p>
-<p>与双边不同的是<span class="math inline">\(s\)</span>没有取共轭</p>
+<p>与双边不同的是<span class="math inline">\(s\)</span>没有取共轭（其实我有点怀疑是否是书的错误，因为后面的<span class="math inline">\(z\)</span>变换又是单边双边相同的，有点出乎我的意料。但是我不知道是这个错了还是那个错了）</p>
 <p><em>卷积</em></p>
 <p>特别要求<span class="math inline">\(t&lt;0\)</span>时，<span class="math inline">\(x_1(t),x_2(t)\)</span>都为零。</p>
 <p><em>时域微分</em></p>
@@ -1534,7 +1534,239 @@ x^{(n)}(t)\leftrightarrow s^nX(s)-\sum^{n-1}_{m=0}s^{n-1-m}x^{(m)}(0^-)
 x^{(-1)}(t)=\int^t_{-\infty}x(\tau)d\tau \leftrightarrow s^{-1}X(s)
 +s^{-1}x^{(-1)}(0^-)\]</span></p>
 <h1 id="z变换"><span class="math inline">\(z\)</span>变换</h1>
-<p>TODO</p>
+<p>一个离散时间信号<span class="math inline">\(x[n]\)</span>的<span class="math inline">\(z\)</span>变换定义为</p>
+<p><span class="math display">\[
+X(z) = \sum^{+\infty}_{n=-\infty} x[n]z^{-n}
+\]</span></p>
+<p>其中<span class="math inline">\(z\)</span>是一个复变量。我们也记作</p>
+<p><span class="math display">\[
+x[n]\overset{z}{\longleftrightarrow}X(z)=\mathcal{Z}\{x[n]\}
+\]</span></p>
+<p>当然，离散傅里叶变换就是<span class="math inline">\(z=e^{jw}\)</span>时的一个特例。我们现在将<span class="math inline">\(z\)</span>表示为<span class="math inline">\(z=re^{jw}\)</span>，用<span class="math inline">\(r\)</span>表示<span class="math inline">\(z\)</span>的模，用<span class="math inline">\(w\)</span>表示它的相角。于是就可以把<span class="math inline">\(X(re^{jw})\)</span>看成序列<span class="math inline">\(x[n]\)</span>乘以实指数<span class="math inline">\(r^{-n}\)</span>后的傅里叶变换，即</p>
+<p><span class="math display">\[
+X(re^{jw}) = \mathcal{F}\{x[n]r^{-n}\}
+\]</span></p>
+<p>类似于在虚轴<span class="math inline">\(jw\)</span>上的拉普拉斯变换就是傅里叶变换，在复平面的单位圆上进行的<span class="math inline">\(z\)</span>变换，就是傅里叶变换。</p>
+<h2 id="z变换的有理分式情况"><span class="math inline">\(z\)</span>变换的有理分式情况</h2>
+<p>和拉普拉斯变换一样。同时也有极点和零点的概念。</p>
+<h2 id="z变换的收敛域"><span class="math inline">\(z\)</span>变换的收敛域</h2>
+<p>收敛域记作<span class="math inline">\(ROC\)</span></p>
+<ol type="1">
+<li><span class="math inline">\(X(z)\)</span>的收敛域是在<span class="math inline">\(z\)</span>平面内以原点为中心的圆环</li>
+<li>收敛域内不包括任何极点</li>
+<li>如果<span class="math inline">\(x[n]\)</span>是有限长序列，那么收敛域就是整个<span class="math inline">\(z\)</span>平面，可能除去<span class="math inline">\(z=0\)</span>和/或<span class="math inline">\(z=\infty\)</span></li>
+<li>如果<span class="math inline">\(x[n]\)</span>是一个右边序列，并且<span class="math inline">\(|z|=r_0\)</span>的圆位于收敛域内，那么<span class="math inline">\(|z|&gt;r_0\)</span>的全部有限<span class="math inline">\(z\)</span>值都一定在这个收敛域内</li>
+<li>如果<span class="math inline">\(x[n]\)</span>是一个左边序列，而且<span class="math inline">\(|z|=r_0\)</span>的圆位于收敛域内，那么满足<span class="math inline">\(0&lt;|z|&lt;r_0\)</span>的全部<span class="math inline">\(z\)</span>值都一定在这个收敛域内</li>
+<li>如果<span class="math inline">\(x[n]\)</span>是一个双边序列，而且<span class="math inline">\(|z|=r_0\)</span>的圆位于收敛域内，那么该收敛域在<span class="math inline">\(z\)</span>域中一定是包含<span class="math inline">\(|z|=r_0\)</span>这一圆环的环状区域</li>
+<li>如果<span class="math inline">\(x[n]\)</span>的<span class="math inline">\(z\)</span>变换<span class="math inline">\(X(z)\)</span>是有理的，它的收敛域就被极点所界定，或延伸至无限远</li>
+<li>如果<span class="math inline">\(x[n]\)</span>的<span class="math inline">\(z\)</span>变换<span class="math inline">\(X(z)\)</span>是有理的，并且<span class="math inline">\(x[n]\)</span>是右边序列，那么收敛域就位于<span class="math inline">\(z\)</span>平面内最外层的极点的外边，也就是半径等于<span class="math inline">\(X(z)\)</span>极点中最大模值的圆的外边。而且，若<span class="math inline">\(x[n]\)</span>是因果序列，即<span class="math inline">\(x[n]\)</span>为<span class="math inline">\(n&lt;0\)</span>时等于零的右边序列，那么收敛域也包括<span class="math inline">\(z=\infty\)</span></li>
+<li>如果<span class="math inline">\(x[n]\)</span>的<span class="math inline">\(z\)</span>变换<span class="math inline">\(X(z)\)</span>是有理的，并且<span class="math inline">\(x[n]\)</span>是左边序列，那么收敛域就位于<span class="math inline">\(z\)</span>平面内最外层的极点的里边，也就是半径等于<span class="math inline">\(X(z)\)</span>中除去<span class="math inline">\(z=0\)</span>的极点中最小模值的圆的里边，并且向内延伸到可能包括<span class="math inline">\(z=0\)</span>。特别是，若<span class="math inline">\(x[n]\)</span>是反因果序列，即<span class="math inline">\(x[n]\)</span>为<span class="math inline">\(n&gt;0\)</span>时等于零的左边序列，那么收敛域也包括<span class="math inline">\(z=0\)</span></li>
+</ol>
+<h2 id="z逆变换"><span class="math inline">\(z\)</span>逆变换</h2>
+<p><span class="math display">\[
+x[n] = \dfrac{1}{2\pi j}\oint X(z)z^{n-1}dz
+\]</span></p>
+<p>和拉普拉斯逆变换一样，很难直接用这个东西去算。遇上有理分式就待定系数法拆开，遇上其他函数就分开来看，然后套用常用<span class="math inline">\(z\)</span>变换表和其性质来算。</p>
+<p>当然，你可能会发现拆出来的项是<span class="math inline">\(\dfrac{1}{z-1}\)</span>这种形式的，然后就会发现变换表里的不是<span class="math inline">\(z\)</span>而是<span class="math inline">\(z^{-1}\)</span>。这种情况应该对<span class="math inline">\(\dfrac{X(z)}{z}\)</span>进行因式分解，得到结果后两边同乘<span class="math inline">\(z\)</span>，然后再转换一下就可以使用变换表了。</p>
+<h2 id="双边z变换的性质">（双边）<span class="math inline">\(z\)</span>变换的性质</h2>
+<p>假设<span class="math inline">\(x_1[n]\leftrightarrow
+X_1(z),ROC=R_1\)</span>和<span class="math inline">\(x_2[n]\leftrightarrow X_2(z),ROC=R_2\)</span></p>
+<p><em>线性</em></p>
+<p><span class="math display">\[
+ax_1[n]+bx_2[n]\leftrightarrow aX_1(z)+bX_2(z)
+\]</span></p>
+<p><em>时移</em></p>
+<p><span class="math display">\[
+x[n-n_0]\leftrightarrow z^{-n_0}X(z), ROC=R
+\]</span></p>
+<p><em><span class="math inline">\(z\)</span>域尺度变换</em></p>
+<p><span class="math display">\[
+e^{jw_0n}x[n]\leftrightarrow X(e^{-jw_0}z),ROC=R
+\]</span></p>
+<p><span class="math display">\[
+z_0^nx[n]\leftrightarrow X(\dfrac{z}{z_0}),ROC=z_0R
+\]</span></p>
+<p><span class="math display">\[
+a^nx[n]\leftrightarrow X(a^{-1}z),ROC=R的尺度变换
+\]</span></p>
+<p><em>时间翻转</em></p>
+<p><span class="math display">\[
+x[-n]\leftrightarrow X(a^{-1}z),ROC=R^{-1}
+\]</span></p>
+<p><em>时间扩展</em></p>
+<p><span class="math display">\[
+x_{(k)}[n] = \left\{\begin{matrix}
+x[r], &amp; n=rk\\
+0, &amp; n\neq rk
+\end{matrix}\right.\leftrightarrow X(z^k)
+\]</span></p>
+<p><em>共轭</em></p>
+<p><span class="math display">\[
+x^*[n] \leftrightarrow X^*[z^*], ROC=R
+\]</span></p>
+<p><em>卷积</em></p>
+<p><span class="math display">\[
+x_1[n]*x_2[n]\leftrightarrow X_1(z)X_2(z), ROC至少是R_1\cap R_2
+\]</span></p>
+<p><em>一次差分</em></p>
+<p><span class="math display">\[
+x[n]-x[n-1]\leftrightarrow (1-z^{-1})X(z),ROC至少是R\cap|z|&gt;0
+\]</span></p>
+<p><em>累加</em></p>
+<p><span class="math display">\[
+\sum^n_{k=-\infty}x[k]\leftrightarrow
+\dfrac{1}{1-z^{-1}}X(z),ROC至少是R\cap|z|&gt;1
+\]</span></p>
+<p><em><span class="math inline">\(z\)</span>域微分</em></p>
+<p><span class="math display">\[
+nx[n]\leftrightarrow -z\dfrac{d}{dz}X(z), ROC=R
+\]</span></p>
+<p><em><span class="math inline">\(z\)</span>域积分</em></p>
+<p><span class="math display">\[
+\dfrac{x[n]}{n+m}\leftrightarrow
+z^m\int^{\infty}_{z}\dfrac{X(\eta)}{\eta^{m+1}}d\eta,ROC=R
+\]</span></p>
+<p><em>初值定理和终值定理</em></p>
+<p>若<span class="math inline">\(n&lt;0\)</span>时,<span class="math inline">\(x[n]=0\)</span>则</p>
+<p><span class="math display">\[
+x[0]=\lim_{z\to\infty} X(z)
+\]</span></p>
+<p>若<span class="math inline">\(n&lt;M\)</span>时,<span class="math inline">\(x[n]=0\)</span>则</p>
+<p><span class="math display">\[
+x[M]=\lim_{z\to\infty} z^MX(z)
+\]</span></p>
+<p><span class="math display">\[
+\lim_{n\to\infty}x[n] = \lim_{z\to 1}\dfrac{z-1}{z}X(z)或者\lim_{z\to
+1}(z-1)X(z)
+\]</span></p>
+<h2 id="常用z变换对">常用<span class="math inline">\(z\)</span>变换对</h2>
+<p><span class="math display">\[
+\delta[n]\leftrightarrow 1, z\in C
+\]</span></p>
+<p><span class="math display">\[
+u[n] = \dfrac{1}{1-z^{-1}}, |z|&gt;1
+\]</span></p>
+<p><span class="math display">\[
+-u[-n-1] \leftrightarrow \dfrac{1}{1-z^{-1}}, |z|&lt;1
+\]</span></p>
+<p><span class="math display">\[
+\delta[n-m]\leftrightarrow z^{-m},z\in C,z\neq0(if\ \ \
+m&gt;0),z\neq\infty(if\ \ \ m&lt;0)
+\]</span></p>
+<p><span class="math display">\[
+a^nu[n]\leftrightarrow\dfrac{1}{1-az^{-1}},|z|&gt;|a|
+\]</span></p>
+<p><span class="math display">\[
+-a^nu[-n-1]\leftrightarrow\dfrac{1}{1-az^{-1}},|z|&lt;|a|
+\]</span></p>
+<p><span class="math display">\[
+na^nu[n]\leftrightarrow\dfrac{az^{-1}}{(1-az^{-1})^2},|z|&gt;|a|
+\]</span></p>
+<p><span class="math display">\[
+-na^nu[-n-1]\leftrightarrow\dfrac{az^{-1}}{(1-az^{-1})^2},|z|&lt;|a|
+\]</span></p>
+<p><span class="math display">\[
+\cos(w_0n)u[n]\leftrightarrow\dfrac{1-(\cos w_0)z^{-1}}{1-2(\cos
+w_0)z^{-1}+z^{-2}},|z|&gt;1
+\]</span></p>
+<p><span class="math display">\[
+\sin(w_0n)u[n]\leftrightarrow\dfrac{(\sin w_0)z^{-1}}{1-2(\cos
+w_0)z^{-1}+z^{-2}},|z|&gt;1
+\]</span></p>
+<p><span class="math display">\[
+r^n\cos(w_0n)u[n]\leftrightarrow\dfrac{1-r(\cos w_0)z^{-1}}{1-2r(\cos
+w_0)z^{-1}+r^2z^{-2}},|z|&gt;r
+\]</span></p>
+<p><span class="math display">\[
+r^n\sin(w_0n)u[n]\leftrightarrow\dfrac{r(\sin w_0)z^{-1}}{1-2r(\cos
+w_0)z^{-1}+r^2z^{-2}},|z|&gt;1
+\]</span></p>
+<h2 id="利用z变换分析与表征线性时不变系统">利用<span class="math inline">\(z\)</span>变换分析与表征线性时不变系统</h2>
+<p>同前，<span class="math inline">\(z\)</span>变换也有</p>
+<p><span class="math display">\[
+Y(z)=H(z)X(z)
+\]</span></p>
+<p><span class="math inline">\(H(z)\)</span>称为系统的系统函数或传递函数。如果单位圆在收敛域内，将<span class="math inline">\(H(z)\)</span>在单位圆上求值，<span class="math inline">\(H(z)\)</span>就变成了系统的频率响应。</p>
+<h3 id="因果性-3">因果性</h3>
+<p>一个离散时间线性时不变系统，当且仅当它的系统函数的收敛域在某个圆的外边，且包括无限远点时，该系统就是因果的。</p>
+<p>一个具有有理系统函数<span class="math inline">\(H(z)\)</span>的线性时不变系统是因果的当且仅当：</p>
+<ol type="1">
+<li>收敛域位于最外层极点外边某个圆的外边，并且</li>
+<li>若<span class="math inline">\(H(z)\)</span>表示成<span class="math inline">\(z\)</span>的多项式之比，其分子的阶次不能高于分母的阶次。</li>
+</ol>
+<h3 id="稳定性-3">稳定性</h3>
+<p>一个线性时不变系统，当且仅当它的系统函数<span class="math inline">\(H(z)\)</span>的收敛域包括单位圆<span class="math inline">\(|z|=1\)</span>时，该系统就是稳定的。</p>
+<p>一个具有有理系统函数的因果线性时不变系统，当且仅当<span class="math inline">\(H(z)\)</span>的全部极点都位于单位圆内时，即全部极点的模均小于<span class="math inline">\(1\)</span>时，该系统就是稳定的。</p>
+<h3 id="有线性常系数差分方程表征的线性时不变系统">有线性常系数差分方程表征的线性时不变系统</h3>
+<p>和拉普拉斯变换解微分方程基本一样。</p>
+<p>差分方程的形式如下</p>
+<p><span class="math display">\[
+\sum^{N}_{k=0}a_ky[n-k]=\sum^M_{k=0}b_kx[n-k]
+\]</span></p>
+<p>如果没有初始值（零输入响应为零），两边进行<span class="math inline">\(z\)</span>变换</p>
+<p><span class="math display">\[
+\sum^{N}_{k=0}a_kz^{-k}Y(z)=\sum^M_{k=0}b_kz^{-k}X(z)
+\]</span></p>
+<p>如果有初始值，用后面的单边<span class="math inline">\(z\)</span>变换的性质可以求得</p>
+<p><span class="math display">\[
+\sum^N_{k=0}a_k[z^{-k}Y(z)+\sum^{k-1}_{i=0}y[i-k]z^{-i}=\sum^M_{k=0}b_kz^{-k}X(z)
+\]</span></p>
+<p>之后我们可以求得</p>
+<p><span class="math display">\[
+H(z)=Y(z)\bigg/X(z)
+\]</span></p>
+<p>和拉普拉斯变换也是一样的，这个冲激响应是零状态响应。如果有初始值，那么另外那部分就是零状态响应。</p>
+<p>也可以不求<span class="math inline">\(H(z)\)</span>直接求<span class="math inline">\(Y_{zs},Y_{zi}\)</span>，方法和拉普拉斯变换完全一致。</p>
+<h2 id="系统的z域框图">系统的<span class="math inline">\(z\)</span>域框图</h2>
+<h2 id="s域与z域的关系"><span class="math inline">\(s\)</span>域与<span class="math inline">\(z\)</span>域的关系</h2>
+<p><em>复变量<span class="math inline">\(s\)</span>与<span class="math inline">\(z\)</span>的关系</em></p>
+<p><span class="math display">\[
+\left\{\begin{matrix}
+z = e^{sT}\\
+s = \dfrac{1}{T}\ln z
+\end{matrix}\right.
+\]</span></p>
+<p><em><span class="math inline">\(z\)</span>平面与<span class="math inline">\(s\)</span>平面的映射关系</em></p>
+<p>设<span class="math inline">\(s=\sigma+jw,z=\rho
+e^{j\theta}\)</span>，有</p>
+<p><span class="math display">\[
+\left\{\begin{matrix}
+\rho = e^{\sigma T}\\
+\theta = wT
+\end{matrix}\right.
+\]</span></p>
+<p>其中的例子如下</p>
+<ol type="1">
+<li><span class="math inline">\(s\)</span>平面的左半平面映射为<span class="math inline">\(z\)</span>平面的单位圆内部</li>
+<li><span class="math inline">\(s\)</span>平面的<span class="math inline">\(jw\)</span>轴映射为<span class="math inline">\(z\)</span>平面的单位圆</li>
+<li><span class="math inline">\(s\)</span>平面的右半平面映射为<span class="math inline">\(z\)</span>平面的单位圆外部</li>
+<li><span class="math inline">\(s\)</span>平面上的实轴映射为<span class="math inline">\(z\)</span>平面的正实轴</li>
+<li><span class="math inline">\(s\)</span>平面上的原点映射为<span class="math inline">\(z\)</span>平面上<span class="math inline">\(z=1\)</span>的点。</li>
+</ol>
+<h2 id="单边z变换">单边<span class="math inline">\(z\)</span>变换</h2>
+<p>一个序列<span class="math inline">\(x[n]\)</span>的单边<span class="math inline">\(z\)</span>变换<span class="math inline">\(X(z)\)</span>定义为</p>
+<p><span class="math display">\[
+X(z)=\sum^{+\infty}_{n=0}x[n]z^{-n}
+\]</span></p>
+<p><span class="math display">\[
+x[n]\overset{\mathcal{UZ}}{\longleftrightarrow}X(z) =
+\mathcal{UZ}\{x[n]\}
+\]</span></p>
+<p><span class="math inline">\(x[n]\)</span>的单边<span class="math inline">\(z\)</span>变换可以看成<span class="math inline">\(x[n]u[n]\)</span>的双边<span class="math inline">\(z\)</span>变换。</p>
+<p><strong>性质</strong></p>
+<p>不列出收敛域，任何单边<span class="math inline">\(z\)</span>变换的收敛域总是位于某个圆的外边。</p>
+<p><em>线性，<span class="math inline">\(z\)</span>域尺度变换，时间扩展，共轭（实际上我不知道这里是不是书籍的错误，到底是相同还是不同），累加，<span class="math inline">\(z\)</span>域微分，初值终值定理</em></p>
+<p>和双边的一样。</p>
+<p><em>时移</em></p>
+<p><span class="math display">\[
+x[n+1] = zX(z)-zx[0]
+\]</span></p>
+<p><em>卷积</em></p>
+<p>特别要求<span class="math inline">\(n&lt;0\)</span>时，<span class="math inline">\(x_1[n],x_2[n]\)</span>都为零。</p>
+<p><em>一次差分</em></p>
+<p><span class="math display">\[
+x[n]-x[n-1]\leftrightarrow (1-z^{-1})X(z)-x[-1]
+\]</span></p>
 
 
 
@@ -1601,6 +1833,28 @@ x^{(-1)}(t)=\int^t_{-\infty}x(\tau)d\tau \leftrightarrow s^{-1}X(s)
         <h2 class="section-title">相关文章</h2>
         <div class="related-contents">
             <div class="flex article-list--tile">
+                
+                    
+<article class="has-image">
+    <a href="/p/%E6%A8%A1%E6%8B%9F%E7%94%B5%E8%B7%AF%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+        
+        
+            <div class="article-image">
+                <img src="/p/%E6%A8%A1%E6%8B%9F%E7%94%B5%E8%B7%AF%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/cover.cb5207a280f008b492170b2b3e2ab757_hu519ff8a40d33619eeac863a3de25a967_23559_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-y1IHooDwCLSSFwsrPiq3Vw==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">模拟电路学习笔记</h2>
+        </div>
+    </a>
+</article>
                 
                     
 <article class="has-image">
@@ -1919,7 +2173,25 @@ x^{(-1)}(t)=\int^t_{-\infty}x(\tau)d\tau \leftrightarrow s^{-1}X(s)
         <li><a href="#单边拉普拉斯变换及其性质">单边拉普拉斯变换及其性质</a></li>
       </ol>
     </li>
-    <li><a href="#z变换"><span class="math inline">\(z\)</span>变换</a></li>
+    <li><a href="#z变换"><span class="math inline">\(z\)</span>变换</a>
+      <ol>
+        <li><a href="#z变换的有理分式情况"><span class="math inline">\(z\)</span>变换的有理分式情况</a></li>
+        <li><a href="#z变换的收敛域"><span class="math inline">\(z\)</span>变换的收敛域</a></li>
+        <li><a href="#z逆变换"><span class="math inline">\(z\)</span>逆变换</a></li>
+        <li><a href="#双边z变换的性质">（双边）<span class="math inline">\(z\)</span>变换的性质</a></li>
+        <li><a href="#常用z变换对">常用<span class="math inline">\(z\)</span>变换对</a></li>
+        <li><a href="#利用z变换分析与表征线性时不变系统">利用<span class="math inline">\(z\)</span>变换分析与表征线性时不变系统</a>
+          <ol>
+            <li><a href="#因果性-3">因果性</a></li>
+            <li><a href="#稳定性-3">稳定性</a></li>
+            <li><a href="#有线性常系数差分方程表征的线性时不变系统">有线性常系数差分方程表征的线性时不变系统</a></li>
+          </ol>
+        </li>
+        <li><a href="#系统的z域框图">系统的<span class="math inline">\(z\)</span>域框图</a></li>
+        <li><a href="#s域与z域的关系"><span class="math inline">\(s\)</span>域与<span class="math inline">\(z\)</span>域的关系</a></li>
+        <li><a href="#单边z变换">单边<span class="math inline">\(z\)</span>变换</a></li>
+      </ol>
+    </li>
   </ol>
 </nav>
                 </div>

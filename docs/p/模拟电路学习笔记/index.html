@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='模拟电子技术基础学习笔记'><title>模拟电路学习笔记</title>
+
+<link rel='canonical' href='https://kegalas.top/p/%E6%A8%A1%E6%8B%9F%E7%94%B5%E8%B7%AF%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/'>
+
+<link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='模拟电路学习笔记'>
+<meta property='og:description' content='模拟电子技术基础学习笔记'>
+<meta property='og:url' content='https://kegalas.top/p/%E6%A8%A1%E6%8B%9F%E7%94%B5%E8%B7%AF%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/'>
+<meta property='og:site_name' content='KegalaS的个人博客'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='大学' /><meta property='article:tag' content='模电' /><meta property='article:tag' content='电路' /><meta property='article:published_time' content='2023-05-25T16:29:15&#43;08:00'/><meta property='article:modified_time' content='2023-05-25T16:29:15&#43;08:00'/><meta property='og:image' content='https://kegalas.top/p/%E6%A8%A1%E6%8B%9F%E7%94%B5%E8%B7%AF%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/cover.jpg' />
+<meta name="twitter:title" content="模拟电路学习笔记">
+<meta name="twitter:description" content="模拟电子技术基础学习笔记"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://kegalas.top/p/%E6%A8%A1%E6%8B%9F%E7%94%B5%E8%B7%AF%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/cover.jpg' />
+    <link rel="shortcut icon" href="favicon-16x16.png" />
+
+    </head>
+    <body class="
+    article-page has-toc
+">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex 
+    
+        extended
+    
+">
+    
+        <div id="article-toolbar">
+            <a href="/" class="back-home">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="15 6 9 12 15 18" />
+</svg>
+
+
+
+                <span>返回</span>
+            </a>
+        </div>
+    
+<main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/p/%E6%A8%A1%E6%8B%9F%E7%94%B5%E8%B7%AF%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+                <img src="/p/%E6%A8%A1%E6%8B%9F%E7%94%B5%E8%B7%AF%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/cover_hu519ff8a40d33619eeac863a3de25a967_23559_800x0_resize_q75_box.jpg"
+                        srcset="/p/%E6%A8%A1%E6%8B%9F%E7%94%B5%E8%B7%AF%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/cover_hu519ff8a40d33619eeac863a3de25a967_23559_800x0_resize_q75_box.jpg 800w, /p/%E6%A8%A1%E6%8B%9F%E7%94%B5%E8%B7%AF%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/cover_hu519ff8a40d33619eeac863a3de25a967_23559_1600x0_resize_q75_box.jpg 1600w"
+                        width="800" 
+                        height="454" 
+                        loading="lazy"
+                        alt="Featured image of post 模拟电路学习笔记" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/%E7%94%B5%E8%B7%AF%E4%B8%8E%E4%BF%A1%E5%8F%B7/" >
+                电路与信号
+            </a>
+        
+    </header>
+    
+
+    <h2 class="article-title">
+        <a href="/p/%E6%A8%A1%E6%8B%9F%E7%94%B5%E8%B7%AF%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">模拟电路学习笔记</a>
+    </h2>
+
+    
+    <h3 class="article-subtitle">
+        模拟电子技术基础学习笔记
+    </h3>
+    
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">May 25, 2023</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 6 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+</div>
+</header>
+
+    <section class="article-content">
+    
+
+<h1 id="集成运算放大器">集成运算放大器</h1>
+<h2 id="基本分析方法">基本分析方法</h2>
+<p>一个集成运算放大器的典型形式如下</p>
+<figure>
+<img src="1.jpg" alt="1.jpg"/>
+<figcaption aria-hidden="true">1.jpg</figcaption>
+</figure>
+<p>分析它的基本方式是：</p>
+<ol type="1">
+<li>虚短：<span class="math inline">\(u_+=u_-\)</span></li>
+<li>虚断：<span class="math inline">\(i_+=i_-=0\)</span></li>
+</ol>
+<p>以下是集成运算放大器的一些参数：</p>
+<ol type="1">
+<li><span class="math inline">\(u_{id}=u_{i+}-u_{i-}\)</span>：差模输出电压</li>
+<li><span class="math inline">\(A_{uo}\)</span>：集成运放的开环电压放大倍数</li>
+<li><span class="math inline">\(R_i\)</span>：集成运放的输入电阻</li>
+<li><span class="math inline">\(R_o\)</span>：集成运放的输出电阻</li>
+</ol>
+<p>其中理想条件是<span class="math inline">\(R_i\to\infty,R_o\to
+0,A_{uo}\to\infty,i_+=i_-=0\)</span>。</p>
+<h2 id="电压传输特性">电压传输特性</h2>
+<figure>
+<img src="2.jpg" alt="2.jpg"/>
+<figcaption aria-hidden="true">2.jpg</figcaption>
+</figure>
+<h2 id="基本运算电路">基本运算电路</h2>
+<h3 id="反向比例运算电路">反向比例运算电路</h3>
+<figure>
+<img src="3.jpg" alt="3.jpg"/>
+<figcaption aria-hidden="true">3.jpg</figcaption>
+</figure>
+<p>（根据虚短虚断）可以计算得到</p>
+<p><span class="math display">\[
+u_O = -\dfrac{R_f}{R}u_I
+\]</span></p>
+<p>其中输出电阻<span class="math inline">\(R_o=0\)</span>，输入电阻<span class="math inline">\(R_i=R\)</span></p>
+<h3 id="同相比例运算电路">同相比例运算电路</h3>
+<figure>
+<img src="4.jpg" alt="4.jpg"/>
+<figcaption aria-hidden="true">4.jpg</figcaption>
+</figure>
+<p><span class="math display">\[
+u_O = (1+\dfrac{R_f}{R})u_I
+\]</span></p>
+<p>引入了电压串联负反馈，可以认为输入电阻无穷大，输出电阻为<span class="math inline">\(0\)</span></p>
+<h3 id="电压跟随器">电压跟随器</h3>
+<figure>
+<img src="5.jpg" alt="5.jpg"/>
+<figcaption aria-hidden="true">5.jpg</figcaption>
+</figure>
+<p><span class="math display">\[
+u_O = u_I
+\]</span></p>
+<h3 id="反向求和运算电路">反向求和运算电路</h3>
+<figure>
+<img src="6.jpg" alt="6.jpg"/>
+<figcaption aria-hidden="true">6.jpg</figcaption>
+</figure>
+<p><span class="math display">\[
+u_O =
+-R_f\bigg(\dfrac{u_{I1}}{R_1}+\dfrac{u_{I2}}{R_2}+\dfrac{u_{I3}}{R_3}\bigg)
+\]</span></p>
+<p>可以看作是反相比例放大器的叠加电路，输入电阻取决于不同的端口。</p>
+<h3 id="同相求和运算电路">同相求和运算电路</h3>
+<figure>
+<img src="7.jpg" alt="7.jpg"/>
+<figcaption aria-hidden="true">7.jpg</figcaption>
+</figure>
+<p><span class="math display">\[
+u_O = R_f\cdot\dfrac{R_P}{R_N}\cdot
+\bigg(\dfrac{u_{I1}}{R_1}+\dfrac{u_{I2}}{R_2}+\dfrac{u_{I3}}{R_3}\bigg)
+\]</span></p>
+<p>其中，<span class="math inline">\(R_P = R_1\parallel R_2\parallel
+R_3\parallel R_4, R_N = R\parallel R_f\)</span>，若<span class="math inline">\(R_P=R_N\)</span>，则</p>
+<p><span class="math display">\[
+u_O = R_f\cdot
+\bigg(\dfrac{u_{I1}}{R_1}+\dfrac{u_{I2}}{R_2}+\dfrac{u_{I3}}{R_3}\bigg)
+\]</span></p>
+<h3 id="加减运算电路">加减运算电路</h3>
+<p>其实就是把上面两个电路结合一下。</p>
+<figure>
+<img src="8.jpg" alt="8.jpg"/>
+<figcaption aria-hidden="true">8.jpg</figcaption>
+</figure>
+<p><span class="math display">\[
+u_O =
+R_f\bigg(\dfrac{u_{I3}}{R_3}+\dfrac{u_{I4}}{R_4}-\dfrac{u_{I1}}{R_1}-\dfrac{u_{I2}}{R_2}\bigg)
+\]</span></p>
+<h3 id="差分比例运算电路">差分比例运算电路</h3>
+<p>是加减运算电路的一种特例，其只有两个输入，且参数对称</p>
+<figure>
+<img src="9.jpg" alt="9.jpg"/>
+<figcaption aria-hidden="true">9.jpg</figcaption>
+</figure>
+<p><span class="math display">\[
+u_O = \dfrac{R_f}{R}(u_{I2}-u_{I1})
+\]</span></p>
+<h3 id="积分器">积分器</h3>
+<figure>
+<img src="10.jpg" alt="10.jpg"/>
+<figcaption aria-hidden="true">10.jpg</figcaption>
+</figure>
+<p><span class="math display">\[
+u_O = -\dfrac{1}{RC}\int u_Idt
+\]</span></p>
+<h3 id="微分器">微分器</h3>
+<figure>
+<img src="11.jpg" alt="11.jpg"/>
+<figcaption aria-hidden="true">11.jpg</figcaption>
+</figure>
+<p><span class="math display">\[
+u_O = -RC\dfrac{du_I}{dt}
+\]</span></p>
+<h2 id="滤波器">滤波器</h2>
+<p>滤波器可以分为无源和有源滤波器。如果滤波电路仅由无源元件（电阻、电容、电感）组成，则称为无源滤波电路。如果滤波电路由无源元件和有源元件（双极型管，单极型管、集成运放）共同组成，则称为有源滤波电路。</p>
+<p>我们主要讨论有源滤波器。在分析有源滤波电路时，常常通过拉普拉斯变换将电压、电流、以及无源元件变换为等效电路（具体见<a href="../信号与系统学习笔记/#电路的s域模型">信号与系统学习笔记</a>）。输出量与输入量之比称为传递函数，即</p>
+<p><span class="math display">\[
+A_u(s) = \dfrac{U_o(s)}{U_i(s)}
+\]</span></p>
+<p>下面介绍的都是有源滤波电路。</p>
+<h3 id="一阶同相输入低通滤波器">一阶同相输入低通滤波器</h3>
+<figure>
+<img src="12.jpg" alt="12.jpg"/>
+<figcaption aria-hidden="true">12.jpg</figcaption>
+</figure>
+<p>其传递函数为</p>
+<p><span class="math display">\[
+A_u(s)=\dfrac{U_o(s)}{U_i(s)}=\bigg(1+\dfrac{R_2}{R_1}\bigg)\dfrac{U_p(s)}{U_i(s)}=\bigg(1+\dfrac{R_2}{R_1}\bigg)\dfrac{1}{1+sRC}
+\]</span></p>
+<p>用<span class="math inline">\(jw\)</span>取代<span class="math inline">\(s\)</span>，令<span class="math inline">\(f_0=\dfrac{1}{2\pi RC}\)</span>，得到</p>
+<p><span class="math display">\[
+\dot{A}_u =
+\bigg(1+\dfrac{R_2}{R_1}\bigg)\cdot\dfrac{1}{1+j\dfrac{f}{f_0}}
+\]</span></p>
+<p>式中<span class="math inline">\(f_0\)</span>称为特征频率。令<span class="math inline">\(f=0\)</span>，得到通带放大倍数。</p>
+<p><span class="math display">\[
+\dot A_{up}=1+\dfrac{R_2}{R_1}
+\]</span></p>
+<p>当<span class="math inline">\(f=f_0\)</span>时，<span class="math inline">\(\dot A_u=\dfrac{\dot A_{up}}{\sqrt
+2}\)</span>，故通带截止频率<span class="math inline">\(f_p=f_0\)</span>。</p>
+<h3 id="二阶同相输入低通滤波器">二阶同相输入低通滤波器</h3>
+<figure>
+<img src="13.jpg" alt="13.jpg"/>
+<figcaption aria-hidden="true">13.jpg</figcaption>
+</figure>
+<p>假设<span class="math inline">\(C_1=C_2=C\)</span></p>
+<p><span class="math display">\[
+A_u(s) = \bigg(1+\dfrac{R_2}{R_1}\bigg)\dfrac{1}{1+3sRC+(sRC)^2}
+\]</span></p>
+<p>用<span class="math inline">\(jw\)</span>取代<span class="math inline">\(s\)</span>，令<span class="math inline">\(f_0=\dfrac{1}{2\pi RC}\)</span>，得到</p>
+<p><span class="math display">\[
+\dot A_u =
+\dfrac{1+\dfrac{R_2}{R_1}}{1-\bigg(\dfrac{f}{f_0}\bigg)^2+j3\dfrac{f}{f_0}}
+\]</span></p>
+<p>称<span class="math inline">\(f_0\)</span>为特征频率。令上式分母的模等于<span class="math inline">\(\sqrt 2\)</span>，可以解出通带截止频率为<span class="math inline">\(f_p\approx 0.37f_0\)</span>。</p>
+<h3 id="一阶反向输入低通滤波器">一阶反向输入低通滤波器</h3>
+<figure>
+<img src="14.jpg" alt="14.jpg"/>
+<figcaption aria-hidden="true">14.jpg</figcaption>
+</figure>
+<p>通带放大倍数为</p>
+<p><span class="math display">\[
+\dot A_{up} = -\dfrac{R_2}{R_1}
+\]</span></p>
+<p>电路的传输函数为</p>
+<p><span class="math display">\[
+A_u(s) =
+-\dfrac{R_2\parallel\dfrac{1}{sC}}{R_1}=\dfrac{R_2}{R_1}\dfrac{1}{1+sR_2C}
+\]</span></p>
+<p>用<span class="math inline">\(jw\)</span>取代<span class="math inline">\(s\)</span>，令<span class="math inline">\(f_0=\dfrac{1}{2\pi R_2C}\)</span></p>
+<p><span class="math display">\[
+\dot A_u = \dfrac{\dot A_{up}}{1+j\dfrac{f}{f_0}}
+\]</span></p>
+<p>截止频率<span class="math inline">\(f_p=f_0\)</span></p>
+<h3 id="二阶反向输入低通滤波器">二阶反向输入低通滤波器</h3>
+<figure>
+<img src="15.jpg" alt="15.jpg"/>
+<figcaption aria-hidden="true">15.jpg</figcaption>
+</figure>
+<p><span class="math display">\[
+\dot A_{up} = -\dfrac{R_f}{R_1}
+\]</span></p>
+<p>教材上并没有给出<span class="math inline">\(\dot
+A_u\)</span>的表达式和截止频率。</p>
+<p><span class="math display">\[
+f_0=\dfrac{1}{2\pi\sqrt{C_1C_2R_2R_f}}
+\]</span></p>
+<h3 id="二阶高通滤波器">二阶高通滤波器</h3>
+<figure>
+<img src="16.jpg" alt="16.jpg"/>
+<figcaption aria-hidden="true">16.jpg</figcaption>
+</figure>
+<p><span class="math display">\[
+\dot A_{up} = 1+\dfrac{R_f}{R_1}
+\]</span></p>
+<p><span class="math display">\[
+f_p = \dfrac{1}{2\pi RC}
+\]</span></p>
+<h3 id="带通滤波器">带通滤波器</h3>
+<p>将低通和高通串联，就得到带通。</p>
+<p>设前者的截止频率为<span class="math inline">\(f_{p1}\)</span>，后者的截止频率为<span class="math inline">\(f_{p2}\)</span>，则<span class="math inline">\(f_{p2}应该小于\)</span><span class="math inline">\(f_{p1}\)</span>，则通带为<span class="math inline">\((f_{p1}-f_{p2})\)</span></p>
+<figure>
+<img src="17.jpg" alt="17.jpg"/>
+<figcaption aria-hidden="true">17.jpg</figcaption>
+</figure>
+<p><span class="math display">\[
+\dot A_{uf} = 1+\dfrac{R_f}{R_1}
+\]</span></p>
+<p>当<span class="math inline">\(C_1=C_2=C,R_1=R,R_2=2R\)</span>，令<span class="math inline">\(f_0=\dfrac{1}{2\pi RC}\)</span>（中心频率）</p>
+<p><span class="math display">\[
+\dot A_u = \dfrac{1}{1+j\dfrac{1}{3-\dot
+A_{uf}}\bigg(\dfrac{f}{f_0}-\dfrac{f_0}{f}\bigg)}\dfrac{\dot
+A_{uf}}{3-\dot A_{uf}}
+\]</span></p>
+<p>当<span class="math inline">\(f=f_0\)</span></p>
+<p><span class="math display">\[
+\dot A_{up}=\dfrac{\dot A_{uf}}{|3-\dot A_{uf}|}
+\]</span></p>
+<p><span class="math display">\[
+f_{p1} = \dfrac{f_0}{2}\bigg(\sqrt{(3-\dot A_{uf})^2+4}-(3-\dot
+A_{uf})\bigg)
+\]</span></p>
+<p><span class="math display">\[
+f_{p2} = \dfrac{f_0}{2}\bigg(\sqrt{(3-\dot A_{uf})^2+4}+(3-\dot
+A_{uf})\bigg)
+\]</span></p>
+<h3 id="带阻滤波器">带阻滤波器</h3>
+<p>将输入电压同时作用于低通和高通，再将两个电路的输出电压求和，就可以得到带阻滤波器。<span class="math inline">\(f_{p1}&lt;f_{p2}\)</span>，阻带为<span class="math inline">\((f_{p2}-f_{p1})\)</span></p>
+<figure>
+<img src="18.jpg" alt="18.jpg"/>
+<figcaption aria-hidden="true">18.jpg</figcaption>
+</figure>
+<p><span class="math display">\[
+\dot A_{up} = 1+\dfrac{R_f}{R_1}
+\]</span></p>
+<h3 id="全通滤波器移相器">全通滤波器（移相器）</h3>
+<figure>
+<img src="19.jpg" alt="19.jpg"/>
+<figcaption aria-hidden="true">19.jpg</figcaption>
+</figure>
+<p><span class="math display">\[
+\dot A_u = \dfrac{1-jwRC}{1+jwRC}
+\]</span></p>
+<p>也即</p>
+<p><span class="math display">\[
+|\dot A_u| = 1
+\]</span></p>
+<p><span class="math display">\[
+\varphi = 180\degree-2arctan\dfrac{f}{f_0},f_0=\dfrac{1}{2\pi RC}
+\]</span></p>
+<h1 id="半导体器件">半导体器件</h1>
+<h2 id="半导体基础知识">半导体基础知识</h2>
+<p><strong>本征半导体</strong></p>
+<p>纯净的具有晶体结构的半导体称为本征半导体。例如硅和锗的纯净半导体。</p>
+<p>本征半导体中，共价键的价电子可以获得足够大的能量，挣脱共价键的束缚，游离出去，成为自由电子，并在共价键处留下带有一个单位的正电荷的空穴。这个过程称为本征激发。</p>
+<p>本征激发产生成对的自由电子和空穴，所以本征半导体中自由电子和空穴的数量相等。</p>
+<p>价电子的反向递补运动等价为空穴在半导体中自由移动。因此，在本征激发的作用下，本征半导体中出现了带负电的自由电子和带正电的空穴，二者都可以参与导电，统称为载流子。</p>
+<p><strong>杂质半导体</strong></p>
+<p>往本征半导体里掺入少量合适的杂质元素，便可得到杂质半导体。按掺入的杂质元素不同，可以分成N型半导体和P型半导体。</p>
+<p><strong>N型半导体</strong></p>
+<p>在本征半导体中掺入五价原子，即构成N型半导体。N型半导体中每掺杂一个杂质元素的原子，就提供一个自由电子，从而大量增加了自由电子的浓度。</p>
+<p>N型半导体中，自由电子的浓度大于空穴的浓度，故称自由电子为多数载流子，空穴为少数载流子，前者也称为多子，后者也称为少子，由于杂质原子可以提供电子，故称为施主原子。</p>
+<p><strong>P型半导体</strong></p>
+<p>在本征半导体中掺入三价原子，即构成P型半导体。P型半导体中每掺杂一个杂质元素的原子，就提供一个空穴，从而大量增加了空穴的浓度。</p>
+<p>P型半导体中，空穴为多子，自由电子为少子，主要靠空穴导电。因杂质原子中的空位吸收电子，故称之为受主原子。</p>
+<p><strong>漂移电流和扩散电流</strong></p>
+<p>漂移电流：在电场的作用下，自由电子会逆着电场方向漂移，而空穴则顺着电场方向漂移，这样产生的电流称为漂移电流，该电流的大小主要取决于载流子的浓度，迁移率和电场强度。</p>
+<p>扩散电流：半导体中载流子浓度不均匀分布时，载流子会从高浓度区向低浓度区扩散，从而形成扩散电流，该电流的大小正比于载流子的浓度差即浓度梯度的大小。</p>
+<p><strong>PN结</strong></p>
+<p>通过掺杂工艺，把本征半导体的一边做成 P 型半导体，另一边做成 N
+型半导体，则 P 型半导体和 N
+型半导体的交接面处会形成一个有特殊物理性质的薄层，称为 PN 结。</p>
+<p>在无外电场和其他激发作用下，参与扩散运动的多子数目等于参与漂移运动的少子数目，从而达到动态平衡，形成PN结。</p>
+<p>由于扩散到P区的自由电子与空穴复合，而扩散到N区的空穴与自由电子复合，所以在交界面附近多子的浓度下降，P区出现负离子区，N区出现正离子区，它们是不能移动的，称为空间电荷区（耗尽层），从而形成内电场。</p>
+<p>当外加电压极性不同时，PN结表现出截然不同的导电性能。</p>
+<p>当电源的正极接到PN结的P端，且电源的负极接到PN结的N端时，称PN结外加正向电压，也称正向接法或正向偏置。此时空间电荷区变窄，削弱内电场，使扩散运动加剧，漂移运动减弱。由于电源的作用，扩散运动将源源不断地进行，从而形成正向电流，PN结导通。</p>
+<p>当电源的正极接到PN结的N端，且电源的负极接到PN结的P端时，称PN结外加反向电压，也称反向接法或反向偏置。加强了内电场，阻止扩散运动，加剧漂移运动。但是少子数目极少，反向电流非常小，所以常常忽略不计，认为PN结外加反向电压时处于截止状态。</p>
+<p><strong>PN结的电流方程</strong></p>
+
+
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/%E5%A4%A7%E5%AD%A6/">大学</a>
+        
+            <a href="/tags/%E6%A8%A1%E7%94%B5/">模电</a>
+        
+            <a href="/tags/%E7%94%B5%E8%B7%AF/">电路</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css"integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js"integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8"crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js"integrity="sha384-vZTG03m&#43;2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl"crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.querySelector(`.article-content`), {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ]
+        });})
+</script>
+    
+</article>
+
+    <aside class="related-contents--wrapper">
+    
+    
+        <h2 class="section-title">相关文章</h2>
+        <div class="related-contents">
+            <div class="flex article-list--tile">
+                
+                    
+<article class="has-image">
+    <a href="/p/%E4%BF%A1%E5%8F%B7%E4%B8%8E%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+        
+        
+            <div class="article-image">
+                <img src="/p/%E4%BF%A1%E5%8F%B7%E4%B8%8E%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/cover.6163160e703c32915f7a51bca07e2884_hu1925d5b7c7f8a1062326c6e2b8e7c8b0_29169_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-YWMWDnA8MpFfelG8oH4ohA==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">信号与系统学习笔记</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/p/%E7%94%B5%E8%B7%AF%E5%9F%BA%E7%A1%80%E6%95%B4%E7%90%86/">
+        
+        
+            <div class="article-image">
+                <img src="/p/%E7%94%B5%E8%B7%AF%E5%9F%BA%E7%A1%80%E6%95%B4%E7%90%86/cover.a1d0b3ef6f832eeadb550a2f55192209_hu0536c6b8cad2f38cd8d175ab5c2d8577_29925_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-odCz72&#43;DLurbVQovVRkiCQ==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">电路基础整理</h2>
+        </div>
+    </a>
+</article>
+                
+            </div>
+        </div>
+    
+</aside>
+
+     
+    
+        
+    <script src="https://utteranc.es/client.js" 
+        repo="kegalas/blogComments"
+        issue-term="pathname"
+        
+        crossorigin="anonymous"
+        async
+        >
+</script>
+
+<style>
+    .utterances {
+        max-width: unset;
+    }
+</style>
+
+<script>
+    function setUtterancesTheme(theme) {
+        let utterances = document.querySelector('.utterances iframe');
+        if (utterances) {
+            utterances.contentWindow.postMessage(
+                {
+                    type: 'set-theme',
+                    theme: `github-${theme}`
+                },
+                'https://utteranc.es'
+            );
+        }
+    }
+
+    addEventListener('message', event => {
+        if (event.origin !== 'https://utteranc.es') return;
+        setUtterancesTheme(document.documentElement.dataset.scheme)
+    });
+
+    window.addEventListener('onColorSchemeChange', (e) => {
+        setUtterancesTheme(e.detail)
+    })
+</script>
+
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2023 KegalaS的个人博客
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.4.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    
+        <aside class="sidebar right-sidebar sticky">
+            <section class="widget archives">
+                <div class="widget-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+                </div>
+                <h2 class="widget-title section-title">目录</h2>
+                
+                <div class="widget--toc">
+                    <nav id="TableOfContents">
+  <ol>
+    <li><a href="#集成运算放大器">集成运算放大器</a>
+      <ol>
+        <li><a href="#基本分析方法">基本分析方法</a></li>
+        <li><a href="#电压传输特性">电压传输特性</a></li>
+        <li><a href="#基本运算电路">基本运算电路</a>
+          <ol>
+            <li><a href="#反向比例运算电路">反向比例运算电路</a></li>
+            <li><a href="#同相比例运算电路">同相比例运算电路</a></li>
+            <li><a href="#电压跟随器">电压跟随器</a></li>
+            <li><a href="#反向求和运算电路">反向求和运算电路</a></li>
+            <li><a href="#同相求和运算电路">同相求和运算电路</a></li>
+            <li><a href="#加减运算电路">加减运算电路</a></li>
+            <li><a href="#差分比例运算电路">差分比例运算电路</a></li>
+            <li><a href="#积分器">积分器</a></li>
+            <li><a href="#微分器">微分器</a></li>
+          </ol>
+        </li>
+        <li><a href="#滤波器">滤波器</a>
+          <ol>
+            <li><a href="#一阶同相输入低通滤波器">一阶同相输入低通滤波器</a></li>
+            <li><a href="#二阶同相输入低通滤波器">二阶同相输入低通滤波器</a></li>
+            <li><a href="#一阶反向输入低通滤波器">一阶反向输入低通滤波器</a></li>
+            <li><a href="#二阶反向输入低通滤波器">二阶反向输入低通滤波器</a></li>
+            <li><a href="#二阶高通滤波器">二阶高通滤波器</a></li>
+            <li><a href="#带通滤波器">带通滤波器</a></li>
+            <li><a href="#带阻滤波器">带阻滤波器</a></li>
+            <li><a href="#全通滤波器移相器">全通滤波器（移相器）</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+    <li><a href="#半导体器件">半导体器件</a>
+      <ol>
+        <li><a href="#半导体基础知识">半导体基础知识</a></li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+                </div>
+            </section>
+        </aside>
+    
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                defer="false"
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
