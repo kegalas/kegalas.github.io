@@ -169,3 +169,21 @@ int maxx = 0, minx = image.getWidth()-1, maxy = 0, miny = image.getHeight()-1;
 全部光栅化的代码可见**[这里](https://github.com/kegalas/oar/blob/97058860346436641decc719d6b72cc7055eb24c/src/raster.cpp)**
 
 另外，求重心坐标的代码我写到了geometry.cpp里，方便别处调用。链接在**[这里](https://github.com/kegalas/oar/blob/97058860346436641decc719d6b72cc7055eb24c/src/geometry.cpp)**（在文件末尾）
+
+另外，求重心坐标还有一种不那么复杂的公式，见**[计算机图形学基础学习笔记-数学基础](../计算机图形学基础学习笔记-数学基础/#重心坐标系)**
+
+注意，
+
+```cpp
+if(0.f<=alpha && alpha<=1.f &&
+               0.f<=beta  && beta <=1.f &&
+               0.f<=gamma && gamma<=1.f)
+```
+
+这一段代码也可以写作
+
+```cpp
+if(alpha < 0.f || beta < 0.f || gamma < 0.f) continue;
+```
+
+这也是对的。唯一需要小心的是精度问题，float的精度可能不足以把边界上的每一个点都画出来。如果你不在乎这一两个像素点就可以不用管，如果你在乎，那么我们可以修改为alpha<-(1e-5)这样的条件。

@@ -125,7 +125,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 6 分钟
+                    阅读时长: 20 分钟
                 </time>
             </div>
         
@@ -416,6 +416,495 @@ A_{uf})\bigg)
 <p>当电源的正极接到PN结的P端，且电源的负极接到PN结的N端时，称PN结外加正向电压，也称正向接法或正向偏置。此时空间电荷区变窄，削弱内电场，使扩散运动加剧，漂移运动减弱。由于电源的作用，扩散运动将源源不断地进行，从而形成正向电流，PN结导通。</p>
 <p>当电源的正极接到PN结的N端，且电源的负极接到PN结的P端时，称PN结外加反向电压，也称反向接法或反向偏置。加强了内电场，阻止扩散运动，加剧漂移运动。但是少子数目极少，反向电流非常小，所以常常忽略不计，认为PN结外加反向电压时处于截止状态。</p>
 <p><strong>PN结的电流方程</strong></p>
+<p>PN结所加端电压<span class="math inline">\(u\)</span>与流过它的电流<span class="math inline">\(i\)</span>的关系为</p>
+<p><span class="math display">\[
+i = I_S(e^{\frac{qu}{kT}}-1)
+\]</span></p>
+<p>其中<span class="math inline">\(I_S\)</span>为反向饱和电流，<span class="math inline">\(q\)</span>为电子的电量，<span class="math inline">\(k\)</span>为玻尔兹曼常数，<span class="math inline">\(T\)</span>为热力学温度，将<span class="math inline">\(kT/q\)</span>用<span class="math inline">\(U_T\)</span>取得，得到</p>
+<p><span class="math display">\[
+i = I_S(e^{u/U_T}-1)
+\]</span></p>
+<p>常温下，即<span class="math inline">\(T=300K\)</span>时，<span class="math inline">\(U_T\approx26\text{mV}\)</span>，称<span class="math inline">\(U_T\)</span>为温度的电压当量。</p>
+<p><strong>PN结的伏安特性、击穿特性</strong></p>
+<p>当施加正向电压，且<span class="math inline">\(u&gt;&gt;U_T\)</span>时，<span class="math inline">\(i\approx
+I_Se^{u/U_T}\)</span>，即指数变化。反向电压时，当<span class="math inline">\(|u|&gt;&gt;U_T\)</span>，<span class="math inline">\(i\approx -I_S\)</span>。画出图如下</p>
+<figure>
+<img src="20.jpg" alt="20.jpg"/>
+<figcaption aria-hidden="true">20.jpg</figcaption>
+</figure>
+<p><span class="math inline">\(u&gt;0\)</span>时为正向特性，<span class="math inline">\(u&lt;0\)</span>时为反向特性。</p>
+<p>当反向电压超过一定数值<span class="math inline">\(U_{(BR)}\)</span>后，反向电流急剧增加，称之为反向击穿。击穿可以分为齐纳击穿和雪崩击穿。</p>
+<p>在高掺杂的情况下，因为耗尽层的宽度很窄，不大的反向电压就可以在耗尽层形成很强的电场，从而直接破坏共价键，使价电子脱离共价键束缚，产生电子-空穴对，致使电流急剧加大，这种击穿称为<strong>齐纳击穿</strong>。齐纳击穿电压较低。</p>
+<p>如果掺杂浓度低，耗尽层宽度较宽，那么低反向电压下不会产生齐纳击穿。当反向电压较大，耗尽层的电场使少子加快漂移速度，从而与共价键中的价电子相碰撞，把价电子撞出共价键，产生电子-空穴对。新产生的电子与空穴被电场加速后又撞出其他价电子，载流子雪崩式地倍增，致使电流急剧增加，称为<strong>雪崩击穿</strong>。</p>
+<p><strong>PN结的电容特性</strong></p>
+<p>一定条件下，PN结具有电容效应，根据产生的原因不同分为势垒电容<span class="math inline">\(C_b\)</span>和扩散电容<span class="math inline">\(C_d\)</span></p>
+<p>PN结的结电容<span class="math inline">\(C_j=C_b+C_d\)</span></p>
+<p>一般两个电容都很小，对于低频信号呈现出很大的容抗，可以忽略不计。只有在信号频率较高时才考虑结电容的作用。</p>
+<h2 id="二极管">二极管</h2>
+<p>将PN结用外壳封装起来加上电极引线就构成了半导体二极管，简称二极管。P区的电极称为阳极，N区的称为阴极。</p>
+<h3 id="二极管的伏安特性">二极管的伏安特性</h3>
+<p>和PN结差不多，但是由于二极管存在半导体体电阻和引线电阻，所以当外加正向电压时，在电流相同的情况下，二极管的端电压大于PN结上的压降。并且二极管表面有漏电流，在外加反向电压时反向电流增大。</p>
+<figure>
+<img src="21.jpg" alt="21.jpg"/>
+<figcaption aria-hidden="true">21.jpg</figcaption>
+</figure>
+<p>实测发现，只有当正向电压足够大的时候，正向电流才指数增长。使得二极管开始导通的临界电压称为开启电压<span class="math inline">\(U_{on}\)</span>。施加反向电压足够大的反向电流为<span class="math inline">\(I_S\)</span>，太大则会击穿。</p>
+<p>硅管的典型导通电压为<span class="math inline">\(0.7V\)</span>，锗管的典型导通电压为<span class="math inline">\(0.2V\)</span>。</p>
+<p>二极管的特性对温度很敏感。</p>
+<h3 id="二极管的等效电路">二极管的等效电路</h3>
+<figure>
+<img src="22.jpg" alt="22.jpg"/>
+<figcaption aria-hidden="true">22.jpg</figcaption>
+</figure>
+<p>等效电路是理想二极管串联电压源<span class="math inline">\(U_{on}\)</span>和电阻<span class="math inline">\(r_D\)</span>，且<span class="math inline">\(r_D=\Delta U/\Delta I\)</span></p>
+<h3 id="稳压二极管">稳压二极管</h3>
+<p>稳压管在反向击穿时，在一定的电流范围内，端电压几乎不变，表现出稳压特性。</p>
+<figure>
+<img src="23.jpg" alt="23.jpg"/>
+<figcaption aria-hidden="true">23.jpg</figcaption>
+</figure>
+<ul>
+<li>稳定电压<span class="math inline">\(U_Z\)</span>是在规定电流下稳压管的反向击穿电压。</li>
+<li>稳定电流<span class="math inline">\(I_Z(I_{Zmin})\)</span>是稳压管工作在稳压状态时的参考电流。</li>
+<li>最大稳定电流<span class="math inline">\(I_{ZM}(I_{Zmax})\)</span>，电流超过这个值时，功耗会过大，超过额定功耗<span class="math inline">\(P_{ZM}\)</span>，可能烧坏PN结。</li>
+</ul>
+<h3 id="二极管应用电路">二极管应用电路</h3>
+<p><strong>整流电路</strong></p>
+<figure>
+<img src="24.jpg" alt="24.jpg"/>
+<figcaption aria-hidden="true">24.jpg</figcaption>
+</figure>
+<p><strong>限幅电路</strong></p>
+<figure>
+<img src="25.jpg" alt="25.jpg"/>
+<figcaption aria-hidden="true">25.jpg</figcaption>
+</figure>
+<p><strong>电平选择电路</strong></p>
+<figure>
+<img src="26.jpg" alt="26.jpg"/>
+<figcaption aria-hidden="true">26.jpg</figcaption>
+</figure>
+<h2 id="晶体三极管">晶体三极管</h2>
+<h3 id="基本类型">基本类型</h3>
+<figure>
+<img src="27.jpg" alt="27.jpg"/>
+<figcaption aria-hidden="true">27.jpg</figcaption>
+</figure>
+<p>NPN型三极管如上。</p>
+<figure>
+<img src="28.jpg" alt="28.jpg"/>
+<figcaption aria-hidden="true">28.jpg</figcaption>
+</figure>
+<p>PNP型三极管如上。</p>
+<p>使晶体管工作在放大状态的外部条件是，发射结正偏且集电结反偏。NPN型，就是<span class="math inline">\(U_{be}&gt;U_{on}\)</span>，并且<span class="math inline">\(U_{bc}&lt;0\)</span>。<span class="math inline">\(PNP\)</span>型就是<span class="math inline">\(U_{be}&lt;-U_{on}\)</span>且<span class="math inline">\(U_{bc}&gt;0\)</span>。</p>
+<p>晶体管的放大作用体现在小的基极电流可以控制大的集电极电流。</p>
+<h3 id="内部载流子运动与外部电流">内部载流子运动与外部电流</h3>
+<p>以NPN型为例</p>
+<figure>
+<img src="29.jpg" alt="29.jpg"/>
+<figcaption aria-hidden="true">29.jpg</figcaption>
+</figure>
+<p>内部看</p>
+<p><span class="math display">\[
+I_E = I_{EN}+I_{EP}=I_{CN}+I_{BN}+I_{EP}
+\]</span></p>
+<p><span class="math display">\[
+I_C=I_{CN}+I_{CBO}
+\]</span></p>
+<p><span class="math display">\[
+I_B = I_{BN}+I_{EP}-I_{CBO} = I&#39;_B-I_{CBO}
+\]</span></p>
+<p>从外部看</p>
+<p><span class="math display">\[
+I_E = I_C+I_B
+\]</span></p>
+<p>注意从外部看PNP型的方程一样，但是三个电流方向都相反。</p>
+<p><strong>共发射极放大倍数</strong></p>
+<p><span class="math display">\[
+\bar\beta = \dfrac{I_{CN}}{I&#39;_B}=\dfrac{I_C-I_{CBO}}{I_B+I_{CBO}}
+\]</span></p>
+<p>一般情况下<span class="math inline">\(I_B&gt;&gt;I_{CBO},\bar\beta&gt;&gt;1\)</span>，所以</p>
+<p><span class="math display">\[
+I_C\approx\bar\beta I_B,\quad I_E\approx(1+\bar\beta)I_B
+\]</span></p>
+<p>如果输入电压是动态电压，则</p>
+<p><span class="math display">\[
+\beta = \dfrac{\Delta i_C}{\Delta i_B}
+\]</span></p>
+<p>在<span class="math inline">\(|\Delta
+i_B|\)</span>不太大时，可以认为<span class="math inline">\(\beta\approx\bar\beta\)</span></p>
+<p><strong>共基极直流放大倍数</strong></p>
+<p><span class="math display">\[
+\bar\alpha = \dfrac{I_{CN}}{I_E}
+\]</span></p>
+<p>同样一般有</p>
+<p><span class="math display">\[
+I_C\approx \bar\alpha I_E
+\]</span></p>
+<p>我们可以得到关系式</p>
+<p><span class="math display">\[
+\bar\beta =
+\dfrac{\bar\alpha}{1-\bar\alpha},\quad\bar\alpha=\dfrac{\bar\beta}{1+\bar\beta}
+\]</span></p>
+<p>同样</p>
+<p><span class="math display">\[
+\alpha = \dfrac{\Delta i_C}{\Delta i_E} = \dfrac{\beta}{1+\beta}
+\]</span></p>
+<p>通常<span class="math inline">\(\beta&gt;&gt;1\)</span>，故<span class="math inline">\(\alpha\approx1\)</span>；而且与<span class="math inline">\(\beta\approx\bar\beta\)</span>相同，<span class="math inline">\(\alpha\approx\bar\alpha\)</span></p>
+<p>这两个放大倍数在NPN和PNP型处于放大区都可以用，注意电流方向即可。</p>
+<h3 id="共射特性曲线">共射特性曲线</h3>
+<p><strong>输入特性曲线</strong></p>
+<p>输入特性曲线描述在管降压<span class="math inline">\(U_{CE}\)</span>一定的情况下，基极电流<span class="math inline">\(i_B\)</span>与发射结降压<span class="math inline">\(U_{BE}\)</span>之间的函数关系，即</p>
+<p><span class="math display">\[
+i_B = f(U_{BE})\bigg|_{U_{CE}=常数}
+\]</span></p>
+<figure>
+<img src="30.jpg" alt="30.jpg"/>
+<figcaption aria-hidden="true">30.jpg</figcaption>
+</figure>
+<p><strong>输出特性曲线</strong></p>
+<p>输出特性曲线描述基极电流<span class="math inline">\(I_B\)</span>为一常量时，集电极电流<span class="math inline">\(i_C\)</span>与管降压<span class="math inline">\(U_{CE}\)</span>之间的函数关系，即</p>
+<p><span class="math display">\[
+i_C = f(U_{CE})\bigg|_{I_B=常数}
+\]</span></p>
+<figure>
+<img src="31.jpg" alt="31.jpg"/>
+<figcaption aria-hidden="true">31.jpg</figcaption>
+</figure>
+<p><em>截止区</em></p>
+<p>其特征是发射结电压小于开启电压且集电结反向偏置。对于共射电路，<span class="math inline">\(u_{BE}\leq U_{on}\)</span>且<span class="math inline">\(u_{CE}&gt;u_{BE}\)</span>。此时<span class="math inline">\(I_B=0\)</span>，近似认为<span class="math inline">\(i_c\approx0\)</span></p>
+<p><em>放大区</em></p>
+<p>其特征是发射结电压正向偏置且集电结反向偏置。对于共射电路，<span class="math inline">\(u_{BE}&gt;U_{on}\)</span>且<span class="math inline">\(u_{CE}\geq u_{BE}\)</span>。此时<span class="math inline">\(i_C\)</span>几乎仅仅决定于<span class="math inline">\(i_B\)</span>，而与<span class="math inline">\(u_{CE}\)</span>无关。<span class="math inline">\(I_C=\bar\beta I_B, \Delta i_C=\beta\Delta
+i_B\)</span></p>
+<p><em>饱和区</em></p>
+<p>其特征是发射极与集电极均正向偏置。对于共射电路，<span class="math inline">\(u_{BE}&gt;U_{on}\)</span>且<span class="math inline">\(u_{CE}&lt;u_{BE}\)</span>。此时<span class="math inline">\(i_C\)</span>不仅与<span class="math inline">\(i_B\)</span>有关，而且明显随<span class="math inline">\(u_{CE}\)</span>增大而增大，<span class="math inline">\(i_C\)</span>小于<span class="math inline">\(\bar\beta I_B\)</span></p>
+<h1 id="放大电路的分析方法">放大电路的分析方法</h1>
+<h2 id="放大的主要性能指标">放大的主要性能指标</h2>
+<p><strong>放大倍数</strong></p>
+<p>电压放大倍数<span class="math inline">\(\dot A_{uu}=\dot
+A_{u}=\dfrac{\dot U_o}{\dot U_i}\)</span></p>
+<p>电流放大倍数<span class="math inline">\(\dot A_{ii}=\dot
+A_{i}=\dfrac{\dot I_o}{\dot I_i}\)</span></p>
+<p>互阻放大倍数<span class="math inline">\(\dot A_{ui}=\dfrac{\dot
+U_o}{\dot I_i}\)</span></p>
+<p>互导放大倍数<span class="math inline">\(\dot A_{ui}=\dfrac{\dot
+I_o}{\dot U_i}\)</span></p>
+<p><strong>输入电阻</strong></p>
+<p><span class="math display">\[
+R_i = \dfrac{U_i}{I_i}
+\]</span></p>
+<p>输入电阻与信号源内阻无关。</p>
+<p><strong>输出电阻</strong></p>
+<p><span class="math display">\[
+R_o = \bigg(\dfrac{U_o&#39;}{U_o}-1\bigg)R_L
+\]</span></p>
+<p>其中<span class="math inline">\(U_o&#39;\)</span>为空载时输出电压的有效值，<span class="math inline">\(U_o\)</span>为带负载后输出电压的有效值，<span class="math inline">\(R_L\)</span>为负载电阻。但是，这个只是计算方法，输出电阻与负载无关。</p>
+<h2 id="静态工作点">静态工作点</h2>
+<p>以共射放大电路为例。</p>
+<figure>
+<img src="33.jpg" alt="33.jpg"/>
+<figcaption aria-hidden="true">33.jpg</figcaption>
+</figure>
+<p>当<span class="math inline">\(u_i=0\)</span>时，称放大电路处于静态。<span class="math inline">\(V_{BB}\)</span>使得<span class="math inline">\(U_{BE}&gt;U_{on}\)</span>并且与<span class="math inline">\(R_b\)</span>共同决定<span class="math inline">\(I_B\)</span>，<span class="math inline">\(V_{CC}\)</span>应该足够高，使得集电极反向偏置，从而保持在放大状态，此时<span class="math inline">\(I_C=\beta I_B\)</span>，并确定了<span class="math inline">\(U_{CE}=V_{CC}-I_CR_c\)</span></p>
+<p>图中的输入回路和输出回路以发射极为公共端，故称为共射放大电路。</p>
+<p>输入信号为零，直流电源单独作用时晶体管的<span class="math inline">\(I_{B},I_{C},U_{BE},U_{CE}\)</span>称为放大电路的静态工作点<span class="math inline">\(Q\)</span>，常记作<span class="math inline">\(I_{BQ},I_{CQ},U_{BEQ},U_{CEQ}\)</span>，通常认为<span class="math inline">\(U_{BEQ}\)</span>为已知量，硅管为<span class="math inline">\(0.7V\)</span>，锗管为<span class="math inline">\(0.2V\)</span>，并且认为<span class="math inline">\(\bar\beta=\beta\)</span></p>
+<p>令<span class="math inline">\(\dot
+U_i=0\)</span>，从上面的电路可以解出</p>
+<p><span class="math display">\[
+\left\{\begin{matrix}
+I_{BQ}=\dfrac{V_{BB}-U_{BEQ}}{R_b} \\
+I_{CQ}=\bar\beta I_{BQ}=\beta I_{BQ} \\
+U_{CEQ} = V_{CC}-I_{CQ}R_c
+\end{matrix}\right.
+\]</span></p>
+<h2 id="直流通路与交流通路">直流通路与交流通路</h2>
+<figure>
+<img src="32.jpg" alt="32.jpg"/>
+<figcaption aria-hidden="true">32.jpg</figcaption>
+</figure>
+<p><strong>直流通路是在直流电源作用下直流电流流经的通路,</strong>
+也就是静态电流流经的通路,用于研究静态工作点。对于直流通路,</p>
+<ol type="1">
+<li>电容视为开路;</li>
+<li>电感线圈视为短路(即忽略线圈电阻);</li>
+<li>信号源视为短路,但应保留其内阻。</li>
+</ol>
+<p><strong>交流通路是输入信号作用下交流信号流经的通路,</strong>
+用于研究动态参数。对于交流通路,</p>
+<ol type="1">
+<li>容量大的电容(如耦合电容)视为短路,</li>
+<li>无内阻的直流电源(如<span class="math inline">\(V_{CC}\)</span>)视为短路。</li>
+</ol>
+<h2 id="三极管等效电路">三极管等效电路</h2>
+<p><strong>晶体管等效</strong></p>
+<figure>
+<img src="34.jpg" alt="34.jpg"/>
+<figcaption aria-hidden="true">34.jpg</figcaption>
+</figure>
+<p>直流模型是在静态工作时的模型。必须在放大区才可以使用，并且要求<span class="math inline">\(\beta=\bar\beta\)</span></p>
+<p><strong>交流小信号模型</strong></p>
+<figure>
+<img src="35.jpg" alt="35.jpg"/>
+<figcaption aria-hidden="true">35.jpg</figcaption>
+</figure>
+<p>忽略<span class="math inline">\(r_{bc}\)</span>的影响后，</p>
+<figure>
+<img src="36.jpg" alt="36.jpg"/>
+<figcaption aria-hidden="true">36.jpg</figcaption>
+</figure>
+<p><span class="math display">\[
+r_{be} = r_{bb&#39;}+(1+\beta)\dfrac{U_T}{I_{CQ}}
+\]</span></p>
+<p><span class="math display">\[
+g_mU_{b&#39;e}=\beta I_b
+\]</span></p>
+<p>这里的<span class="math inline">\(r_{bb&#39;}\)</span>是基区体电阻，<span class="math inline">\(r_{b&#39;e}\)</span>是发射结电阻。部分题目会用到来求<span class="math inline">\(r_{be}\)</span></p>
+<p><strong>h参数等效模型</strong></p>
+<figure>
+<img src="37.jpg" alt="37.jpg"/>
+<figcaption aria-hidden="true">37.jpg</figcaption>
+</figure>
+<p>这是静态工作点一节中的电路的等效。<span class="math inline">\(r_{ce}\)</span>和<span class="math inline">\(R_c\)</span>并联，它很大，可以忽略。</p>
+<p>可以计算</p>
+<p><span class="math display">\[
+\dot A_u = \dfrac{\dot U_o}{\dot U_i} = -\dfrac{\beta R_c}{R_b+r_{be}}
+\]</span></p>
+<p><span class="math display">\[
+R_i = R_b+r_{be}
+\]</span></p>
+<p><span class="math display">\[
+R_o = R_c
+\]</span></p>
+<p>特别指出，放大电路的输入电阻与信号源内阻无关，输出电阻与负载无关。</p>
+<p>这个等效电路可以用来分析交流情况。</p>
+<h2 id="图解法">图解法</h2>
+<h3 id="静态工作点的分析">静态工作点的分析</h3>
+<figure>
+<img src="38.jpg" alt="38.jpg"/>
+<figcaption aria-hidden="true">38.jpg</figcaption>
+</figure>
+<p>如图，当<span class="math inline">\(\Delta
+u_I=0\)</span>时，静态工作点既应在晶体管的输入特性曲线上，又应满足</p>
+<p><span class="math display">\[
+u_{BE}=V_{BB}-i_BR_b
+\]</span></p>
+<p>在输出回路中，静态工作点既应在<span class="math inline">\(I_B=I_{BQ}\)</span>的那条输出特性曲线上，又应满足外电路的回路方程</p>
+<p><span class="math display">\[
+u_{CE} = V_{CC}-i_CR_c
+\]</span></p>
+<figure>
+<img src="39.jpg" alt="39.jpg"/>
+<figcaption aria-hidden="true">39.jpg</figcaption>
+</figure>
+<p>于是我们就可以从图中读出静态工作点的数据。如果<span class="math inline">\(I_B=I_{BQ}\)</span>的那条曲线没有，则应当补测。</p>
+<h3 id="电压放大倍数的分析">电压放大倍数的分析</h3>
+<figure>
+<img src="40.jpg" alt="40.jpg"/>
+<figcaption aria-hidden="true">40.jpg</figcaption>
+</figure>
+<p><span class="math display">\[
+u_{BE}=V_{BB}+\Delta u_I-i_BR_b
+\]</span></p>
+<p><span class="math display">\[
+A_u = \dfrac{\Delta u_{CE}}{\Delta u_I} = \dfrac{\Delta u_O}{\Delta u_I}
+\]</span></p>
+<h3 id="波形非线性失真的分析">波形非线性失真的分析</h3>
+<p>假设静态工作点设置合适并且信号输入幅值较小，则可以正常工作，如下</p>
+<figure>
+<img src="41.jpg" alt="41.jpg"/>
+<figcaption aria-hidden="true">41.jpg</figcaption>
+</figure>
+<p>如果<span class="math inline">\(Q\)</span>点过低，输入信号负半周期峰值的某段时间内，晶体管b-e间电压总量小于开启电压，晶体管截止。因此基极电流<span class="math inline">\(i_b\)</span>将产生底部失真，最后导致<span class="math inline">\(u_O\)</span>顶部失真。这种情况叫做<strong>截止失真</strong>。解决办法是加大<span class="math inline">\(V_{BB}\)</span></p>
+<figure>
+<img src="42.jpg" alt="42.jpg"/>
+<figcaption aria-hidden="true">42.jpg</figcaption>
+</figure>
+<p>如果<span class="math inline">\(Q\)</span>点过高，虽然<span class="math inline">\(i_B\)</span>本身不失真，但是在输出回路中，<span class="math inline">\(i_B\)</span>的正半周期可能会进入饱和区，导致了<span class="math inline">\(i_c\)</span>产生顶部失真，最后导致<span class="math inline">\(u_O\)</span>底部失真。这种情况叫做<strong>饱和失真</strong>。解决办法是增大<span class="math inline">\(R_b\)</span>而减小<span class="math inline">\(I_{BQ}\)</span>，从而减小<span class="math inline">\(I_{CQ}\)</span>；也可以减小<span class="math inline">\(R_c\)</span>，从而增大<span class="math inline">\(U_{CEQ}\)</span>；或者更换一只<span class="math inline">\(\beta\)</span>较小的管子，以便在<span class="math inline">\(I_{BQ}\)</span>相同的情况下减小<span class="math inline">\(I_{CQ}\)</span></p>
+<figure>
+<img src="43.jpg" alt="43.jpg"/>
+<figcaption aria-hidden="true">43.jpg</figcaption>
+</figure>
+<h2 id="三极管的三种接法">三极管的三种接法</h2>
+<h3 id="共射">共射</h3>
+<p>之前的例子都是共射电路，其特征是发射极为输出回路与输入回路的公共端（这个画出交流通路比较好判断，不要在原来的电路上判断）。</p>
+<p>静态工作点、放大倍数、输入输出阻抗见前。</p>
+<h3 id="共集">共集</h3>
+<p>即输出输入回路（交流通路上）以集电极为公共端。</p>
+<figure>
+<img src="44.jpg" alt="44.jpg"/>
+<figcaption aria-hidden="true">44.jpg</figcaption>
+</figure>
+<p><span class="math display">\[
+\left\{\begin{matrix}
+I_{BQ}=\dfrac{V_{BB}-U_{BEQ}}{R_b+(1+\beta)R_e} \\
+I_{EQ}=(1+\beta)I_{BQ} \\
+U_{CEQ} = V_{CC}-I_{EQ}R_e
+\end{matrix}\right.
+\]</span></p>
+<p><span class="math display">\[
+\dot A_u = \dfrac{(1+\beta)R_e}{R_b+r_{be}+(1+\beta)R_e}
+\]</span></p>
+<p>显然<span class="math inline">\(\dot A_u\)</span>在<span class="math inline">\(0\)</span>到<span class="math inline">\(1\)</span>之间，输入输出同向，输出小于输入。当<span class="math inline">\((1+\beta)R_e&gt;&gt;R_b+r_{be}\)</span>时，<span class="math inline">\(\dot A_u\approx 1\)</span>，即<span class="math inline">\(\dot U_o\approx\dot
+U_i\)</span>，故常称共集放大电路为射极跟随器。虽然电路没有电压放大能力但是输出电流<span class="math inline">\(I_e\)</span>远大于输入电流<span class="math inline">\(I_b\)</span>，仍有功率放大作用。</p>
+<figure>
+<img src="45.jpg" alt="45.jpg"/>
+<figcaption aria-hidden="true">45.jpg</figcaption>
+</figure>
+<p><span class="math display">\[
+R_i = R_b+r_{be}+(1+\beta)R_e
+\]</span></p>
+<p><span class="math display">\[
+R_o = R_e\parallel\dfrac{R_b+r_{be}}{1+\beta}
+\]</span></p>
+<h3 id="共基">共基</h3>
+<p>即输出输入回路（交流通路上）以基极为公共端。</p>
+<figure>
+<img src="46.jpg" alt="46.jpg"/>
+<figcaption aria-hidden="true">46.jpg</figcaption>
+</figure>
+<p><span class="math display">\[
+\left\{\begin{matrix}
+I_{EQ}=\dfrac{V_{BB}-U_{BEQ}}{R_e} \\
+I_{BQ}=\dfrac{I_{EQ}}{1+\beta} \\
+U_{CEQ} = U_{CQ}-U_{EQ}=V_{CC}-I_{CQ}R_c+U_{BEQ}
+\end{matrix}\right.
+\]</span></p>
+<p><span class="math display">\[
+\dot A_u = \dfrac{\beta R_c}{r_{be}+(1+\beta)R_e}
+\]</span></p>
+<p><span class="math display">\[
+R_i=R_e+\dfrac{r_{be}}{1+\beta}
+\]</span></p>
+<p><span class="math display">\[
+R_o=R_c
+\]</span></p>
+<p>由于共基电路的输入回路电流为<span class="math inline">\(i_E\)</span>，而输出回路电流为<span class="math inline">\(i_C\)</span>，所以无电流放大能力。但有足够的电压放大能力，从而实现功率放大。此外输入电压和输出电压同相。</p>
+<h3 id="三种接法的比较">三种接法的比较</h3>
+<ol type="1">
+<li>共射电路既能放大电流又能放大电压，输入电阻居三种电路之中，输出电阻较大,频带较窄。常作为低频电压放大电路的单元电路。</li>
+<li>共集电路只能放大电流不能放大电压，是三种接法中输入电阻最大、输出电阻最小的电路，并具有电压跟随的特点。常用于电压放大电路的输入级和输出级，在功率放大电路中也常采用射极输出的形式。</li>
+<li>共基电路只能放大电压不能放大电流，具有电流跟随的特点；输人电阻小，电压放大倍数、输出电阻与共射电路相当，是三种接法中高频特性最好的电路。常作为宽频带放大电路。</li>
+</ol>
+<h1 id="集成运放的内部电路">集成运放的内部电路</h1>
+<h2 id="多级放大电路的一般问题">多级放大电路的一般问题</h2>
+<h3 id="耦合方式">耦合方式</h3>
+<p><strong>直接耦合</strong></p>
+<p>将前一级的输出端直接连接到后一级的输入端。</p>
+<p>采用直接耦合方式使各级之间的直流通路相连，因静态工作点相互影响，这样就给电路的分析、设计和调试带来困难。计算静态工作点和放大倍数都要考虑前后级的影响。最大的问题是存在零点漂移现象。</p>
+<p>优点是具有良好的低频特性，可以放大变化缓慢的信号。由于没有大电容，易于集成在一片硅片上，构成集成放大电路。</p>
+<p><strong>阻容耦合</strong></p>
+<p>前级输出端通过电容接到后级输入端。</p>
+<p>阻容耦合的电路各级之间的直流通路各不相通，静态工作点相互独立，在求解和调试<span class="math inline">\(Q\)</span>点时可以按单级处理。而且，只要输入信号频率较高，耦合电容容量较大，前级的输出就可以几乎无损地传递到后级。</p>
+<p>缺点是低频特性差，不能放大缓慢变化的信号。以及不便于集成化。所以一般只有频率高、输出功率大等情况下才会采用阻容耦合。</p>
+<p><strong>变压器耦合</strong></p>
+<p>前级输出端通过变压器接到后级输入端或负载电阻上。</p>
+<p>静态工作点相互独立，在求解和调试<span class="math inline">\(Q\)</span>点时可以按单级处理。</p>
+<p>低频特性差，不能放大缓慢的信号。比阻容耦合还不能集成化。</p>
+<p>但其最大的特点是可以实现阻抗变换。</p>
+<p><strong>光电耦合</strong></p>
+<p>以光信号为媒介来实现电信号的耦合和传递，通过将发光二极管与光电三极管相互绝缘地组合在一起来实现。</p>
+<p>书上没有提到优缺点</p>
+<h3 id="多级放大电路的动态分析">多级放大电路的动态分析</h3>
+<p>无论什么耦合，放大电路中前级的输出电压就是后级的输入电压，即<span class="math inline">\(\dot U_{o1}=\dot U_{i2},\dot U_{o2}=\dot
+U_{i3},\cdots,\dot U_{o(N-1)}=\dot U_{iN}\)</span></p>
+<p>所以总体的放大倍数为</p>
+<p><span class="math display">\[
+\dot A_u = \dfrac{\dot U_{o1}}{\dot U_i}\cdot\dfrac{\dot U_{o2}}{\dot
+U_i2}\cdot\cdots\cdot\dfrac{\dot U_{o}}{\dot U_{iN}}=\dot
+A_{u1}\cdot\dot A_{u2}\cdot\dots\cdot\dot A_{uN} = \prod^{N}_{j=1}\dot
+A_{uj}
+\]</span></p>
+<p>输入电阻就是第一级的输入电阻，输出电阻就是最后一级的输出点租。</p>
+<p><span class="math display">\[
+R_i = R_{i1}, R_o = R_{oN}
+\]</span></p>
+<p>注意，当共集放大电路作为输入级时，它的输入电阻与其负载，即与第二级的输入电阻有关；共集放大电路作为输出级时，它的输出电阻与其信号源内阻，即倒数第二级的输出电阻有关。</p>
+<h2 id="差分放大电路">差分放大电路</h2>
+<p>共模信号：大小相等、极性相同的输入信号。</p>
+<p>差模信号：大小相等、极性相反的输入信号。</p>
+<p>差分放大电路对于共模信号有很强的抑制作用（不仅因为其电路参数对称，还因为其反馈作用），所以能克服零点漂移的问题。</p>
+<figure>
+<img src="47.jpg" alt="47.jpg"/>
+<figcaption aria-hidden="true">47.jpg</figcaption>
+</figure>
+<p>由于输入的是差模信号，电路参数对称，集电极电位的变化也是大小相等且方向相反的，即<span class="math inline">\(\Delta u_{c1}=-\Delta
+u_{c2}\)</span>，所以输出电压为<span class="math inline">\(\Delta
+u_o=\Delta u_{c1}-\Delta u_{c2}=2\Delta
+u_{c1}\)</span>，从而实现了电压放大。</p>
+<p>显然的，在差模信号作用下，<span class="math inline">\(R_e\)</span>中的电流变化为零，即<span class="math inline">\(R_e\)</span>对差模信号没有反馈作用，相当于短路。而<span class="math inline">\(R_e\)</span>对共模信号有负反馈作用，可以抑制零点漂移。</p>
+<h3 id="长尾式差分放大电路">长尾式差分放大电路</h3>
+<figure>
+<img src="48.jpg" alt="48.jpg"/>
+<figcaption aria-hidden="true">48.jpg</figcaption>
+</figure>
+<p>如图，<span class="math inline">\(R_e\)</span>接到一个<span class="math inline">\(-V_{EE}\)</span>上，故称长尾式电路。参数理想对称，即<span class="math inline">\(R_{b1}=R_{b2}=R_b,R_{e1}=R_{e2}=R_e\)</span>；<span class="math inline">\(T_1\)</span>与<span class="math inline">\(T_2\)</span>的特性相同，<span class="math inline">\(\beta_1=\beta_2=\beta,r_{be1}=r_{be2}=r_be\)</span></p>
+<p><strong>静态分析</strong></p>
+<p>当<span class="math inline">\(u_{I1}=u_{I2}=0\)</span>时，</p>
+<p><span class="math display">\[
+I_{R_e} = I_{EQ1} + I_{EQ2} = 2I_{EQ}
+\]</span></p>
+<p>根据基极回路方程</p>
+<p><span class="math display">\[
+I_{BQ}R_b + U_{BEQ} + 2I_{EQ}R_e = V_{EE}
+\]</span></p>
+<p>可以求出<span class="math inline">\(I_{BQ}\)</span>或<span class="math inline">\(I_{EQ}\)</span>从而解出静态工作点。通常，由于<span class="math inline">\(R_b\)</span>很小，很多情况下<span class="math inline">\(R_b\)</span>就是信号源内阻，而且<span class="math inline">\(I_{BQ}\)</span>也很小，所以<span class="math inline">\(R_b\)</span>上的电压可忽略不计，从而<span class="math inline">\(U_{EQ}\approx-U_{BEQ}\)</span>，因而</p>
+<p><span class="math display">\[
+I_{EQ}\approx\dfrac{V_{EE}-U_{BEQ}}{2R_e}
+\]</span></p>
+<p><span class="math display">\[
+I_{BQ} = \dfrac{I_{EQ}}{1+\beta}
+\]</span></p>
+<p><span class="math display">\[
+U_{CEQ} = U_{CQ}-U_{EQ}\approx V_{CC}-I_{CQ}R_c+U_{BEQ}
+\]</span></p>
+<p>由于<span class="math inline">\(U_{CQ1}=U_{CQ2}\)</span>，所以<span class="math inline">\(u_O=U_{CQ1}-U_{CQ2}=0\)</span></p>
+<p><strong>对共模信号的抑制作用</strong></p>
+<p>之前提到过由于参数对称，输入共模信号时集电极的电压也是共模的，从而输出电压为零。</p>
+<p>除此之外还有负反馈作用，见下图</p>
+<figure>
+<img src="49.jpg" alt="49.jpg"/>
+<figcaption aria-hidden="true">49.jpg</figcaption>
+</figure>
+<p><span class="math inline">\(R_e\)</span>越大，负反馈作用越强。但也不宜过大，应该受到<span class="math inline">\(V_{EE}\)</span>的限制，以防止<span class="math inline">\(I_{EQ}\)</span>过小。为了描述对共模信号的抑制能力，引入共模放大倍数<span class="math inline">\(A_c\)</span></p>
+<p><span class="math display">\[
+A_c = \dfrac{\Delta u_{Oc}}{\Delta u_{Ic}}
+\]</span></p>
+<p>理想情况下<span class="math inline">\(A_c = 0\)</span></p>
+<p><strong>对差模信号的放大作用</strong></p>
+<p>当给差分放大电路输入一个差模信号<span class="math inline">\(\Delta
+u_{Id}\)</span>时，由于电路参数的对称性，<span class="math inline">\(\Delta u_{Id}\)</span>经分压后，加在<span class="math inline">\(T_1\)</span>管一边的为<span class="math inline">\(+\Delta u_{Id}/2\)</span>，加在<span class="math inline">\(T_2\)</span>管一边的为<span class="math inline">\(-\Delta u_{Id}/2\)</span></p>
+<figure>
+<img src="50.jpg" alt="50.jpg"/>
+<figcaption aria-hidden="true">50.jpg</figcaption>
+</figure>
+<p><span class="math inline">\(E\)</span>点在差模信号下电位不变，相当于接地。负载电阻的中点电位在差模信号的作用下电位也不变，相当于接地。交流等效通路如图。</p>
+<p>差模放大倍数为</p>
+<p><span class="math display">\[
+A_d = \dfrac{\Delta u_{Od}}{\Delta u_{Id}}
+\]</span></p>
+<p>由交流等效电路可得<span class="math inline">\(\Delta u_{Id}=2\Delta
+i_{B1}(R_b+r_{be}),\Delta u_{Od}=-2\Delta
+i_{C1}\bigg(R_c\parallel\dfrac{R_L}{2}\bigg)\)</span>，所以</p>
+<p><span class="math display">\[
+A_d = \dfrac{\beta\bigg(R_c\parallel\dfrac{R_L}{2}\bigg)}{R_b+r_{be}}
+\]</span></p>
+<p>可见，用了两只晶体管，放大能力只相当于一只晶体管，牺牲了一只管子为代价换来了低温漂的效果。</p>
+<p>从等效电路也可以看出</p>
+<p><span class="math display">\[
+R_i = 2(R_b+r_{be})
+\]</span></p>
+<p><span class="math display">\[
+R_o = 2R_c
+\]</span></p>
+<p>为了综合考察对差模信号的放大能力和对共模信号的抑制能力，引入共模抑制比</p>
+<p><span class="math display">\[
+K_{CMR} = \bigg|\dfrac{A_d}{A_c}\bigg|
+\]</span></p>
+<p>理想情况下<span class="math inline">\(K_{CMR}=\infty\)</span></p>
+<h3 id="四种接法">四种接法</h3>
+<p><strong>双入双出</strong></p>
+<p>之前介绍的叫做双入双出接法。</p>
+<h1 id="反馈">反馈</h1>
 
 
 
@@ -726,8 +1215,63 @@ A_{uf})\bigg)
     <li><a href="#半导体器件">半导体器件</a>
       <ol>
         <li><a href="#半导体基础知识">半导体基础知识</a></li>
+        <li><a href="#二极管">二极管</a>
+          <ol>
+            <li><a href="#二极管的伏安特性">二极管的伏安特性</a></li>
+            <li><a href="#二极管的等效电路">二极管的等效电路</a></li>
+            <li><a href="#稳压二极管">稳压二极管</a></li>
+            <li><a href="#二极管应用电路">二极管应用电路</a></li>
+          </ol>
+        </li>
+        <li><a href="#晶体三极管">晶体三极管</a>
+          <ol>
+            <li><a href="#基本类型">基本类型</a></li>
+            <li><a href="#内部载流子运动与外部电流">内部载流子运动与外部电流</a></li>
+            <li><a href="#共射特性曲线">共射特性曲线</a></li>
+          </ol>
+        </li>
       </ol>
     </li>
+    <li><a href="#放大电路的分析方法">放大电路的分析方法</a>
+      <ol>
+        <li><a href="#放大的主要性能指标">放大的主要性能指标</a></li>
+        <li><a href="#静态工作点">静态工作点</a></li>
+        <li><a href="#直流通路与交流通路">直流通路与交流通路</a></li>
+        <li><a href="#三极管等效电路">三极管等效电路</a></li>
+        <li><a href="#图解法">图解法</a>
+          <ol>
+            <li><a href="#静态工作点的分析">静态工作点的分析</a></li>
+            <li><a href="#电压放大倍数的分析">电压放大倍数的分析</a></li>
+            <li><a href="#波形非线性失真的分析">波形非线性失真的分析</a></li>
+          </ol>
+        </li>
+        <li><a href="#三极管的三种接法">三极管的三种接法</a>
+          <ol>
+            <li><a href="#共射">共射</a></li>
+            <li><a href="#共集">共集</a></li>
+            <li><a href="#共基">共基</a></li>
+            <li><a href="#三种接法的比较">三种接法的比较</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+    <li><a href="#集成运放的内部电路">集成运放的内部电路</a>
+      <ol>
+        <li><a href="#多级放大电路的一般问题">多级放大电路的一般问题</a>
+          <ol>
+            <li><a href="#耦合方式">耦合方式</a></li>
+            <li><a href="#多级放大电路的动态分析">多级放大电路的动态分析</a></li>
+          </ol>
+        </li>
+        <li><a href="#差分放大电路">差分放大电路</a>
+          <ol>
+            <li><a href="#长尾式差分放大电路">长尾式差分放大电路</a></li>
+            <li><a href="#四种接法">四种接法</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+    <li><a href="#反馈">反馈</a></li>
   </ol>
 </nav>
                 </div>

@@ -293,6 +293,495 @@ A_{uf})\bigg)
 &lt;p&gt;当电源的正极接到PN结的P端，且电源的负极接到PN结的N端时，称PN结外加正向电压，也称正向接法或正向偏置。此时空间电荷区变窄，削弱内电场，使扩散运动加剧，漂移运动减弱。由于电源的作用，扩散运动将源源不断地进行，从而形成正向电流，PN结导通。&lt;/p&gt;
 &lt;p&gt;当电源的正极接到PN结的N端，且电源的负极接到PN结的P端时，称PN结外加反向电压，也称反向接法或反向偏置。加强了内电场，阻止扩散运动，加剧漂移运动。但是少子数目极少，反向电流非常小，所以常常忽略不计，认为PN结外加反向电压时处于截止状态。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;PN结的电流方程&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;PN结所加端电压&lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt;与流过它的电流&lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt;的关系为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+i = I_S(e^{\frac{qu}{kT}}-1)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(I_S\)&lt;/span&gt;为反向饱和电流，&lt;span class=&#34;math inline&#34;&gt;\(q\)&lt;/span&gt;为电子的电量，&lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt;为玻尔兹曼常数，&lt;span class=&#34;math inline&#34;&gt;\(T\)&lt;/span&gt;为热力学温度，将&lt;span class=&#34;math inline&#34;&gt;\(kT/q\)&lt;/span&gt;用&lt;span class=&#34;math inline&#34;&gt;\(U_T\)&lt;/span&gt;取得，得到&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+i = I_S(e^{u/U_T}-1)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;常温下，即&lt;span class=&#34;math inline&#34;&gt;\(T=300K\)&lt;/span&gt;时，&lt;span class=&#34;math inline&#34;&gt;\(U_T\approx26\text{mV}\)&lt;/span&gt;，称&lt;span class=&#34;math inline&#34;&gt;\(U_T\)&lt;/span&gt;为温度的电压当量。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;PN结的伏安特性、击穿特性&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;当施加正向电压，且&lt;span class=&#34;math inline&#34;&gt;\(u&amp;gt;&amp;gt;U_T\)&lt;/span&gt;时，&lt;span class=&#34;math inline&#34;&gt;\(i\approx
+I_Se^{u/U_T}\)&lt;/span&gt;，即指数变化。反向电压时，当&lt;span class=&#34;math inline&#34;&gt;\(|u|&amp;gt;&amp;gt;U_T\)&lt;/span&gt;，&lt;span class=&#34;math inline&#34;&gt;\(i\approx -I_S\)&lt;/span&gt;。画出图如下&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;20.jpg&#34; alt=&#34;20.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;20.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(u&amp;gt;0\)&lt;/span&gt;时为正向特性，&lt;span class=&#34;math inline&#34;&gt;\(u&amp;lt;0\)&lt;/span&gt;时为反向特性。&lt;/p&gt;
+&lt;p&gt;当反向电压超过一定数值&lt;span class=&#34;math inline&#34;&gt;\(U_{(BR)}\)&lt;/span&gt;后，反向电流急剧增加，称之为反向击穿。击穿可以分为齐纳击穿和雪崩击穿。&lt;/p&gt;
+&lt;p&gt;在高掺杂的情况下，因为耗尽层的宽度很窄，不大的反向电压就可以在耗尽层形成很强的电场，从而直接破坏共价键，使价电子脱离共价键束缚，产生电子-空穴对，致使电流急剧加大，这种击穿称为&lt;strong&gt;齐纳击穿&lt;/strong&gt;。齐纳击穿电压较低。&lt;/p&gt;
+&lt;p&gt;如果掺杂浓度低，耗尽层宽度较宽，那么低反向电压下不会产生齐纳击穿。当反向电压较大，耗尽层的电场使少子加快漂移速度，从而与共价键中的价电子相碰撞，把价电子撞出共价键，产生电子-空穴对。新产生的电子与空穴被电场加速后又撞出其他价电子，载流子雪崩式地倍增，致使电流急剧增加，称为&lt;strong&gt;雪崩击穿&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;PN结的电容特性&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;一定条件下，PN结具有电容效应，根据产生的原因不同分为势垒电容&lt;span class=&#34;math inline&#34;&gt;\(C_b\)&lt;/span&gt;和扩散电容&lt;span class=&#34;math inline&#34;&gt;\(C_d\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;PN结的结电容&lt;span class=&#34;math inline&#34;&gt;\(C_j=C_b+C_d\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;一般两个电容都很小，对于低频信号呈现出很大的容抗，可以忽略不计。只有在信号频率较高时才考虑结电容的作用。&lt;/p&gt;
+&lt;h2 id=&#34;二极管&#34;&gt;二极管&lt;/h2&gt;
+&lt;p&gt;将PN结用外壳封装起来加上电极引线就构成了半导体二极管，简称二极管。P区的电极称为阳极，N区的称为阴极。&lt;/p&gt;
+&lt;h3 id=&#34;二极管的伏安特性&#34;&gt;二极管的伏安特性&lt;/h3&gt;
+&lt;p&gt;和PN结差不多，但是由于二极管存在半导体体电阻和引线电阻，所以当外加正向电压时，在电流相同的情况下，二极管的端电压大于PN结上的压降。并且二极管表面有漏电流，在外加反向电压时反向电流增大。&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;21.jpg&#34; alt=&#34;21.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;21.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;实测发现，只有当正向电压足够大的时候，正向电流才指数增长。使得二极管开始导通的临界电压称为开启电压&lt;span class=&#34;math inline&#34;&gt;\(U_{on}\)&lt;/span&gt;。施加反向电压足够大的反向电流为&lt;span class=&#34;math inline&#34;&gt;\(I_S\)&lt;/span&gt;，太大则会击穿。&lt;/p&gt;
+&lt;p&gt;硅管的典型导通电压为&lt;span class=&#34;math inline&#34;&gt;\(0.7V\)&lt;/span&gt;，锗管的典型导通电压为&lt;span class=&#34;math inline&#34;&gt;\(0.2V\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;二极管的特性对温度很敏感。&lt;/p&gt;
+&lt;h3 id=&#34;二极管的等效电路&#34;&gt;二极管的等效电路&lt;/h3&gt;
+&lt;figure&gt;
+&lt;img src=&#34;22.jpg&#34; alt=&#34;22.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;22.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;等效电路是理想二极管串联电压源&lt;span class=&#34;math inline&#34;&gt;\(U_{on}\)&lt;/span&gt;和电阻&lt;span class=&#34;math inline&#34;&gt;\(r_D\)&lt;/span&gt;，且&lt;span class=&#34;math inline&#34;&gt;\(r_D=\Delta U/\Delta I\)&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;稳压二极管&#34;&gt;稳压二极管&lt;/h3&gt;
+&lt;p&gt;稳压管在反向击穿时，在一定的电流范围内，端电压几乎不变，表现出稳压特性。&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;23.jpg&#34; alt=&#34;23.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;23.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;ul&gt;
+&lt;li&gt;稳定电压&lt;span class=&#34;math inline&#34;&gt;\(U_Z\)&lt;/span&gt;是在规定电流下稳压管的反向击穿电压。&lt;/li&gt;
+&lt;li&gt;稳定电流&lt;span class=&#34;math inline&#34;&gt;\(I_Z(I_{Zmin})\)&lt;/span&gt;是稳压管工作在稳压状态时的参考电流。&lt;/li&gt;
+&lt;li&gt;最大稳定电流&lt;span class=&#34;math inline&#34;&gt;\(I_{ZM}(I_{Zmax})\)&lt;/span&gt;，电流超过这个值时，功耗会过大，超过额定功耗&lt;span class=&#34;math inline&#34;&gt;\(P_{ZM}\)&lt;/span&gt;，可能烧坏PN结。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;二极管应用电路&#34;&gt;二极管应用电路&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;整流电路&lt;/strong&gt;&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;24.jpg&#34; alt=&#34;24.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;24.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;&lt;strong&gt;限幅电路&lt;/strong&gt;&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;25.jpg&#34; alt=&#34;25.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;25.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;&lt;strong&gt;电平选择电路&lt;/strong&gt;&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;26.jpg&#34; alt=&#34;26.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;26.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;h2 id=&#34;晶体三极管&#34;&gt;晶体三极管&lt;/h2&gt;
+&lt;h3 id=&#34;基本类型&#34;&gt;基本类型&lt;/h3&gt;
+&lt;figure&gt;
+&lt;img src=&#34;27.jpg&#34; alt=&#34;27.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;27.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;NPN型三极管如上。&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;28.jpg&#34; alt=&#34;28.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;28.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;PNP型三极管如上。&lt;/p&gt;
+&lt;p&gt;使晶体管工作在放大状态的外部条件是，发射结正偏且集电结反偏。NPN型，就是&lt;span class=&#34;math inline&#34;&gt;\(U_{be}&amp;gt;U_{on}\)&lt;/span&gt;，并且&lt;span class=&#34;math inline&#34;&gt;\(U_{bc}&amp;lt;0\)&lt;/span&gt;。&lt;span class=&#34;math inline&#34;&gt;\(PNP\)&lt;/span&gt;型就是&lt;span class=&#34;math inline&#34;&gt;\(U_{be}&amp;lt;-U_{on}\)&lt;/span&gt;且&lt;span class=&#34;math inline&#34;&gt;\(U_{bc}&amp;gt;0\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;晶体管的放大作用体现在小的基极电流可以控制大的集电极电流。&lt;/p&gt;
+&lt;h3 id=&#34;内部载流子运动与外部电流&#34;&gt;内部载流子运动与外部电流&lt;/h3&gt;
+&lt;p&gt;以NPN型为例&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;29.jpg&#34; alt=&#34;29.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;29.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;内部看&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+I_E = I_{EN}+I_{EP}=I_{CN}+I_{BN}+I_{EP}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+I_C=I_{CN}+I_{CBO}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+I_B = I_{BN}+I_{EP}-I_{CBO} = I&amp;#39;_B-I_{CBO}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;从外部看&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+I_E = I_C+I_B
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;注意从外部看PNP型的方程一样，但是三个电流方向都相反。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;共发射极放大倍数&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\bar\beta = \dfrac{I_{CN}}{I&amp;#39;_B}=\dfrac{I_C-I_{CBO}}{I_B+I_{CBO}}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;一般情况下&lt;span class=&#34;math inline&#34;&gt;\(I_B&amp;gt;&amp;gt;I_{CBO},\bar\beta&amp;gt;&amp;gt;1\)&lt;/span&gt;，所以&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+I_C\approx\bar\beta I_B,\quad I_E\approx(1+\bar\beta)I_B
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;如果输入电压是动态电压，则&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\beta = \dfrac{\Delta i_C}{\Delta i_B}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;在&lt;span class=&#34;math inline&#34;&gt;\(|\Delta
+i_B|\)&lt;/span&gt;不太大时，可以认为&lt;span class=&#34;math inline&#34;&gt;\(\beta\approx\bar\beta\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;共基极直流放大倍数&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\bar\alpha = \dfrac{I_{CN}}{I_E}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;同样一般有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+I_C\approx \bar\alpha I_E
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;我们可以得到关系式&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\bar\beta =
+\dfrac{\bar\alpha}{1-\bar\alpha},\quad\bar\alpha=\dfrac{\bar\beta}{1+\bar\beta}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;同样&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\alpha = \dfrac{\Delta i_C}{\Delta i_E} = \dfrac{\beta}{1+\beta}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;通常&lt;span class=&#34;math inline&#34;&gt;\(\beta&amp;gt;&amp;gt;1\)&lt;/span&gt;，故&lt;span class=&#34;math inline&#34;&gt;\(\alpha\approx1\)&lt;/span&gt;；而且与&lt;span class=&#34;math inline&#34;&gt;\(\beta\approx\bar\beta\)&lt;/span&gt;相同，&lt;span class=&#34;math inline&#34;&gt;\(\alpha\approx\bar\alpha\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;这两个放大倍数在NPN和PNP型处于放大区都可以用，注意电流方向即可。&lt;/p&gt;
+&lt;h3 id=&#34;共射特性曲线&#34;&gt;共射特性曲线&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;输入特性曲线&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;输入特性曲线描述在管降压&lt;span class=&#34;math inline&#34;&gt;\(U_{CE}\)&lt;/span&gt;一定的情况下，基极电流&lt;span class=&#34;math inline&#34;&gt;\(i_B\)&lt;/span&gt;与发射结降压&lt;span class=&#34;math inline&#34;&gt;\(U_{BE}\)&lt;/span&gt;之间的函数关系，即&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+i_B = f(U_{BE})\bigg|_{U_{CE}=常数}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;30.jpg&#34; alt=&#34;30.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;30.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;&lt;strong&gt;输出特性曲线&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;输出特性曲线描述基极电流&lt;span class=&#34;math inline&#34;&gt;\(I_B\)&lt;/span&gt;为一常量时，集电极电流&lt;span class=&#34;math inline&#34;&gt;\(i_C\)&lt;/span&gt;与管降压&lt;span class=&#34;math inline&#34;&gt;\(U_{CE}\)&lt;/span&gt;之间的函数关系，即&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+i_C = f(U_{CE})\bigg|_{I_B=常数}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;31.jpg&#34; alt=&#34;31.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;31.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;&lt;em&gt;截止区&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;其特征是发射结电压小于开启电压且集电结反向偏置。对于共射电路，&lt;span class=&#34;math inline&#34;&gt;\(u_{BE}\leq U_{on}\)&lt;/span&gt;且&lt;span class=&#34;math inline&#34;&gt;\(u_{CE}&amp;gt;u_{BE}\)&lt;/span&gt;。此时&lt;span class=&#34;math inline&#34;&gt;\(I_B=0\)&lt;/span&gt;，近似认为&lt;span class=&#34;math inline&#34;&gt;\(i_c\approx0\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;放大区&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;其特征是发射结电压正向偏置且集电结反向偏置。对于共射电路，&lt;span class=&#34;math inline&#34;&gt;\(u_{BE}&amp;gt;U_{on}\)&lt;/span&gt;且&lt;span class=&#34;math inline&#34;&gt;\(u_{CE}\geq u_{BE}\)&lt;/span&gt;。此时&lt;span class=&#34;math inline&#34;&gt;\(i_C\)&lt;/span&gt;几乎仅仅决定于&lt;span class=&#34;math inline&#34;&gt;\(i_B\)&lt;/span&gt;，而与&lt;span class=&#34;math inline&#34;&gt;\(u_{CE}\)&lt;/span&gt;无关。&lt;span class=&#34;math inline&#34;&gt;\(I_C=\bar\beta I_B, \Delta i_C=\beta\Delta
+i_B\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;饱和区&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;其特征是发射极与集电极均正向偏置。对于共射电路，&lt;span class=&#34;math inline&#34;&gt;\(u_{BE}&amp;gt;U_{on}\)&lt;/span&gt;且&lt;span class=&#34;math inline&#34;&gt;\(u_{CE}&amp;lt;u_{BE}\)&lt;/span&gt;。此时&lt;span class=&#34;math inline&#34;&gt;\(i_C\)&lt;/span&gt;不仅与&lt;span class=&#34;math inline&#34;&gt;\(i_B\)&lt;/span&gt;有关，而且明显随&lt;span class=&#34;math inline&#34;&gt;\(u_{CE}\)&lt;/span&gt;增大而增大，&lt;span class=&#34;math inline&#34;&gt;\(i_C\)&lt;/span&gt;小于&lt;span class=&#34;math inline&#34;&gt;\(\bar\beta I_B\)&lt;/span&gt;&lt;/p&gt;
+&lt;h1 id=&#34;放大电路的分析方法&#34;&gt;放大电路的分析方法&lt;/h1&gt;
+&lt;h2 id=&#34;放大的主要性能指标&#34;&gt;放大的主要性能指标&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;放大倍数&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;电压放大倍数&lt;span class=&#34;math inline&#34;&gt;\(\dot A_{uu}=\dot
+A_{u}=\dfrac{\dot U_o}{\dot U_i}\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;电流放大倍数&lt;span class=&#34;math inline&#34;&gt;\(\dot A_{ii}=\dot
+A_{i}=\dfrac{\dot I_o}{\dot I_i}\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;互阻放大倍数&lt;span class=&#34;math inline&#34;&gt;\(\dot A_{ui}=\dfrac{\dot
+U_o}{\dot I_i}\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;互导放大倍数&lt;span class=&#34;math inline&#34;&gt;\(\dot A_{ui}=\dfrac{\dot
+I_o}{\dot U_i}\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;输入电阻&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+R_i = \dfrac{U_i}{I_i}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;输入电阻与信号源内阻无关。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;输出电阻&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+R_o = \bigg(\dfrac{U_o&amp;#39;}{U_o}-1\bigg)R_L
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(U_o&amp;#39;\)&lt;/span&gt;为空载时输出电压的有效值，&lt;span class=&#34;math inline&#34;&gt;\(U_o\)&lt;/span&gt;为带负载后输出电压的有效值，&lt;span class=&#34;math inline&#34;&gt;\(R_L\)&lt;/span&gt;为负载电阻。但是，这个只是计算方法，输出电阻与负载无关。&lt;/p&gt;
+&lt;h2 id=&#34;静态工作点&#34;&gt;静态工作点&lt;/h2&gt;
+&lt;p&gt;以共射放大电路为例。&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;33.jpg&#34; alt=&#34;33.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;33.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;当&lt;span class=&#34;math inline&#34;&gt;\(u_i=0\)&lt;/span&gt;时，称放大电路处于静态。&lt;span class=&#34;math inline&#34;&gt;\(V_{BB}\)&lt;/span&gt;使得&lt;span class=&#34;math inline&#34;&gt;\(U_{BE}&amp;gt;U_{on}\)&lt;/span&gt;并且与&lt;span class=&#34;math inline&#34;&gt;\(R_b\)&lt;/span&gt;共同决定&lt;span class=&#34;math inline&#34;&gt;\(I_B\)&lt;/span&gt;，&lt;span class=&#34;math inline&#34;&gt;\(V_{CC}\)&lt;/span&gt;应该足够高，使得集电极反向偏置，从而保持在放大状态，此时&lt;span class=&#34;math inline&#34;&gt;\(I_C=\beta I_B\)&lt;/span&gt;，并确定了&lt;span class=&#34;math inline&#34;&gt;\(U_{CE}=V_{CC}-I_CR_c\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;图中的输入回路和输出回路以发射极为公共端，故称为共射放大电路。&lt;/p&gt;
+&lt;p&gt;输入信号为零，直流电源单独作用时晶体管的&lt;span class=&#34;math inline&#34;&gt;\(I_{B},I_{C},U_{BE},U_{CE}\)&lt;/span&gt;称为放大电路的静态工作点&lt;span class=&#34;math inline&#34;&gt;\(Q\)&lt;/span&gt;，常记作&lt;span class=&#34;math inline&#34;&gt;\(I_{BQ},I_{CQ},U_{BEQ},U_{CEQ}\)&lt;/span&gt;，通常认为&lt;span class=&#34;math inline&#34;&gt;\(U_{BEQ}\)&lt;/span&gt;为已知量，硅管为&lt;span class=&#34;math inline&#34;&gt;\(0.7V\)&lt;/span&gt;，锗管为&lt;span class=&#34;math inline&#34;&gt;\(0.2V\)&lt;/span&gt;，并且认为&lt;span class=&#34;math inline&#34;&gt;\(\bar\beta=\beta\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;令&lt;span class=&#34;math inline&#34;&gt;\(\dot
+U_i=0\)&lt;/span&gt;，从上面的电路可以解出&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\left\{\begin{matrix}
+I_{BQ}=\dfrac{V_{BB}-U_{BEQ}}{R_b} \\
+I_{CQ}=\bar\beta I_{BQ}=\beta I_{BQ} \\
+U_{CEQ} = V_{CC}-I_{CQ}R_c
+\end{matrix}\right.
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h2 id=&#34;直流通路与交流通路&#34;&gt;直流通路与交流通路&lt;/h2&gt;
+&lt;figure&gt;
+&lt;img src=&#34;32.jpg&#34; alt=&#34;32.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;32.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;&lt;strong&gt;直流通路是在直流电源作用下直流电流流经的通路,&lt;/strong&gt;
+也就是静态电流流经的通路,用于研究静态工作点。对于直流通路,&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;电容视为开路;&lt;/li&gt;
+&lt;li&gt;电感线圈视为短路(即忽略线圈电阻);&lt;/li&gt;
+&lt;li&gt;信号源视为短路,但应保留其内阻。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;交流通路是输入信号作用下交流信号流经的通路,&lt;/strong&gt;
+用于研究动态参数。对于交流通路,&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;容量大的电容(如耦合电容)视为短路,&lt;/li&gt;
+&lt;li&gt;无内阻的直流电源(如&lt;span class=&#34;math inline&#34;&gt;\(V_{CC}\)&lt;/span&gt;)视为短路。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;三极管等效电路&#34;&gt;三极管等效电路&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;晶体管等效&lt;/strong&gt;&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;34.jpg&#34; alt=&#34;34.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;34.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;直流模型是在静态工作时的模型。必须在放大区才可以使用，并且要求&lt;span class=&#34;math inline&#34;&gt;\(\beta=\bar\beta\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;交流小信号模型&lt;/strong&gt;&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;35.jpg&#34; alt=&#34;35.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;35.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;忽略&lt;span class=&#34;math inline&#34;&gt;\(r_{bc}\)&lt;/span&gt;的影响后，&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;36.jpg&#34; alt=&#34;36.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;36.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+r_{be} = r_{bb&amp;#39;}+(1+\beta)\dfrac{U_T}{I_{CQ}}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+g_mU_{b&amp;#39;e}=\beta I_b
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;这里的&lt;span class=&#34;math inline&#34;&gt;\(r_{bb&amp;#39;}\)&lt;/span&gt;是基区体电阻，&lt;span class=&#34;math inline&#34;&gt;\(r_{b&amp;#39;e}\)&lt;/span&gt;是发射结电阻。部分题目会用到来求&lt;span class=&#34;math inline&#34;&gt;\(r_{be}\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;h参数等效模型&lt;/strong&gt;&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;37.jpg&#34; alt=&#34;37.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;37.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;这是静态工作点一节中的电路的等效。&lt;span class=&#34;math inline&#34;&gt;\(r_{ce}\)&lt;/span&gt;和&lt;span class=&#34;math inline&#34;&gt;\(R_c\)&lt;/span&gt;并联，它很大，可以忽略。&lt;/p&gt;
+&lt;p&gt;可以计算&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\dot A_u = \dfrac{\dot U_o}{\dot U_i} = -\dfrac{\beta R_c}{R_b+r_{be}}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+R_i = R_b+r_{be}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+R_o = R_c
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;特别指出，放大电路的输入电阻与信号源内阻无关，输出电阻与负载无关。&lt;/p&gt;
+&lt;p&gt;这个等效电路可以用来分析交流情况。&lt;/p&gt;
+&lt;h2 id=&#34;图解法&#34;&gt;图解法&lt;/h2&gt;
+&lt;h3 id=&#34;静态工作点的分析&#34;&gt;静态工作点的分析&lt;/h3&gt;
+&lt;figure&gt;
+&lt;img src=&#34;38.jpg&#34; alt=&#34;38.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;38.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;如图，当&lt;span class=&#34;math inline&#34;&gt;\(\Delta
+u_I=0\)&lt;/span&gt;时，静态工作点既应在晶体管的输入特性曲线上，又应满足&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+u_{BE}=V_{BB}-i_BR_b
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;在输出回路中，静态工作点既应在&lt;span class=&#34;math inline&#34;&gt;\(I_B=I_{BQ}\)&lt;/span&gt;的那条输出特性曲线上，又应满足外电路的回路方程&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+u_{CE} = V_{CC}-i_CR_c
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;39.jpg&#34; alt=&#34;39.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;39.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;于是我们就可以从图中读出静态工作点的数据。如果&lt;span class=&#34;math inline&#34;&gt;\(I_B=I_{BQ}\)&lt;/span&gt;的那条曲线没有，则应当补测。&lt;/p&gt;
+&lt;h3 id=&#34;电压放大倍数的分析&#34;&gt;电压放大倍数的分析&lt;/h3&gt;
+&lt;figure&gt;
+&lt;img src=&#34;40.jpg&#34; alt=&#34;40.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;40.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+u_{BE}=V_{BB}+\Delta u_I-i_BR_b
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+A_u = \dfrac{\Delta u_{CE}}{\Delta u_I} = \dfrac{\Delta u_O}{\Delta u_I}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;波形非线性失真的分析&#34;&gt;波形非线性失真的分析&lt;/h3&gt;
+&lt;p&gt;假设静态工作点设置合适并且信号输入幅值较小，则可以正常工作，如下&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;41.jpg&#34; alt=&#34;41.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;41.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;如果&lt;span class=&#34;math inline&#34;&gt;\(Q\)&lt;/span&gt;点过低，输入信号负半周期峰值的某段时间内，晶体管b-e间电压总量小于开启电压，晶体管截止。因此基极电流&lt;span class=&#34;math inline&#34;&gt;\(i_b\)&lt;/span&gt;将产生底部失真，最后导致&lt;span class=&#34;math inline&#34;&gt;\(u_O\)&lt;/span&gt;顶部失真。这种情况叫做&lt;strong&gt;截止失真&lt;/strong&gt;。解决办法是加大&lt;span class=&#34;math inline&#34;&gt;\(V_{BB}\)&lt;/span&gt;&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;42.jpg&#34; alt=&#34;42.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;42.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;如果&lt;span class=&#34;math inline&#34;&gt;\(Q\)&lt;/span&gt;点过高，虽然&lt;span class=&#34;math inline&#34;&gt;\(i_B\)&lt;/span&gt;本身不失真，但是在输出回路中，&lt;span class=&#34;math inline&#34;&gt;\(i_B\)&lt;/span&gt;的正半周期可能会进入饱和区，导致了&lt;span class=&#34;math inline&#34;&gt;\(i_c\)&lt;/span&gt;产生顶部失真，最后导致&lt;span class=&#34;math inline&#34;&gt;\(u_O\)&lt;/span&gt;底部失真。这种情况叫做&lt;strong&gt;饱和失真&lt;/strong&gt;。解决办法是增大&lt;span class=&#34;math inline&#34;&gt;\(R_b\)&lt;/span&gt;而减小&lt;span class=&#34;math inline&#34;&gt;\(I_{BQ}\)&lt;/span&gt;，从而减小&lt;span class=&#34;math inline&#34;&gt;\(I_{CQ}\)&lt;/span&gt;；也可以减小&lt;span class=&#34;math inline&#34;&gt;\(R_c\)&lt;/span&gt;，从而增大&lt;span class=&#34;math inline&#34;&gt;\(U_{CEQ}\)&lt;/span&gt;；或者更换一只&lt;span class=&#34;math inline&#34;&gt;\(\beta\)&lt;/span&gt;较小的管子，以便在&lt;span class=&#34;math inline&#34;&gt;\(I_{BQ}\)&lt;/span&gt;相同的情况下减小&lt;span class=&#34;math inline&#34;&gt;\(I_{CQ}\)&lt;/span&gt;&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;43.jpg&#34; alt=&#34;43.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;43.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;h2 id=&#34;三极管的三种接法&#34;&gt;三极管的三种接法&lt;/h2&gt;
+&lt;h3 id=&#34;共射&#34;&gt;共射&lt;/h3&gt;
+&lt;p&gt;之前的例子都是共射电路，其特征是发射极为输出回路与输入回路的公共端（这个画出交流通路比较好判断，不要在原来的电路上判断）。&lt;/p&gt;
+&lt;p&gt;静态工作点、放大倍数、输入输出阻抗见前。&lt;/p&gt;
+&lt;h3 id=&#34;共集&#34;&gt;共集&lt;/h3&gt;
+&lt;p&gt;即输出输入回路（交流通路上）以集电极为公共端。&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;44.jpg&#34; alt=&#34;44.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;44.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\left\{\begin{matrix}
+I_{BQ}=\dfrac{V_{BB}-U_{BEQ}}{R_b+(1+\beta)R_e} \\
+I_{EQ}=(1+\beta)I_{BQ} \\
+U_{CEQ} = V_{CC}-I_{EQ}R_e
+\end{matrix}\right.
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\dot A_u = \dfrac{(1+\beta)R_e}{R_b+r_{be}+(1+\beta)R_e}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;显然&lt;span class=&#34;math inline&#34;&gt;\(\dot A_u\)&lt;/span&gt;在&lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt;到&lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt;之间，输入输出同向，输出小于输入。当&lt;span class=&#34;math inline&#34;&gt;\((1+\beta)R_e&amp;gt;&amp;gt;R_b+r_{be}\)&lt;/span&gt;时，&lt;span class=&#34;math inline&#34;&gt;\(\dot A_u\approx 1\)&lt;/span&gt;，即&lt;span class=&#34;math inline&#34;&gt;\(\dot U_o\approx\dot
+U_i\)&lt;/span&gt;，故常称共集放大电路为射极跟随器。虽然电路没有电压放大能力但是输出电流&lt;span class=&#34;math inline&#34;&gt;\(I_e\)&lt;/span&gt;远大于输入电流&lt;span class=&#34;math inline&#34;&gt;\(I_b\)&lt;/span&gt;，仍有功率放大作用。&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;45.jpg&#34; alt=&#34;45.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;45.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+R_i = R_b+r_{be}+(1+\beta)R_e
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+R_o = R_e\parallel\dfrac{R_b+r_{be}}{1+\beta}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;共基&#34;&gt;共基&lt;/h3&gt;
+&lt;p&gt;即输出输入回路（交流通路上）以基极为公共端。&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;46.jpg&#34; alt=&#34;46.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;46.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\left\{\begin{matrix}
+I_{EQ}=\dfrac{V_{BB}-U_{BEQ}}{R_e} \\
+I_{BQ}=\dfrac{I_{EQ}}{1+\beta} \\
+U_{CEQ} = U_{CQ}-U_{EQ}=V_{CC}-I_{CQ}R_c+U_{BEQ}
+\end{matrix}\right.
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\dot A_u = \dfrac{\beta R_c}{r_{be}+(1+\beta)R_e}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+R_i=R_e+\dfrac{r_{be}}{1+\beta}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+R_o=R_c
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;由于共基电路的输入回路电流为&lt;span class=&#34;math inline&#34;&gt;\(i_E\)&lt;/span&gt;，而输出回路电流为&lt;span class=&#34;math inline&#34;&gt;\(i_C\)&lt;/span&gt;，所以无电流放大能力。但有足够的电压放大能力，从而实现功率放大。此外输入电压和输出电压同相。&lt;/p&gt;
+&lt;h3 id=&#34;三种接法的比较&#34;&gt;三种接法的比较&lt;/h3&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;共射电路既能放大电流又能放大电压，输入电阻居三种电路之中，输出电阻较大,频带较窄。常作为低频电压放大电路的单元电路。&lt;/li&gt;
+&lt;li&gt;共集电路只能放大电流不能放大电压，是三种接法中输入电阻最大、输出电阻最小的电路，并具有电压跟随的特点。常用于电压放大电路的输入级和输出级，在功率放大电路中也常采用射极输出的形式。&lt;/li&gt;
+&lt;li&gt;共基电路只能放大电压不能放大电流，具有电流跟随的特点；输人电阻小，电压放大倍数、输出电阻与共射电路相当，是三种接法中高频特性最好的电路。常作为宽频带放大电路。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h1 id=&#34;集成运放的内部电路&#34;&gt;集成运放的内部电路&lt;/h1&gt;
+&lt;h2 id=&#34;多级放大电路的一般问题&#34;&gt;多级放大电路的一般问题&lt;/h2&gt;
+&lt;h3 id=&#34;耦合方式&#34;&gt;耦合方式&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;直接耦合&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;将前一级的输出端直接连接到后一级的输入端。&lt;/p&gt;
+&lt;p&gt;采用直接耦合方式使各级之间的直流通路相连，因静态工作点相互影响，这样就给电路的分析、设计和调试带来困难。计算静态工作点和放大倍数都要考虑前后级的影响。最大的问题是存在零点漂移现象。&lt;/p&gt;
+&lt;p&gt;优点是具有良好的低频特性，可以放大变化缓慢的信号。由于没有大电容，易于集成在一片硅片上，构成集成放大电路。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;阻容耦合&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;前级输出端通过电容接到后级输入端。&lt;/p&gt;
+&lt;p&gt;阻容耦合的电路各级之间的直流通路各不相通，静态工作点相互独立，在求解和调试&lt;span class=&#34;math inline&#34;&gt;\(Q\)&lt;/span&gt;点时可以按单级处理。而且，只要输入信号频率较高，耦合电容容量较大，前级的输出就可以几乎无损地传递到后级。&lt;/p&gt;
+&lt;p&gt;缺点是低频特性差，不能放大缓慢变化的信号。以及不便于集成化。所以一般只有频率高、输出功率大等情况下才会采用阻容耦合。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;变压器耦合&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;前级输出端通过变压器接到后级输入端或负载电阻上。&lt;/p&gt;
+&lt;p&gt;静态工作点相互独立，在求解和调试&lt;span class=&#34;math inline&#34;&gt;\(Q\)&lt;/span&gt;点时可以按单级处理。&lt;/p&gt;
+&lt;p&gt;低频特性差，不能放大缓慢的信号。比阻容耦合还不能集成化。&lt;/p&gt;
+&lt;p&gt;但其最大的特点是可以实现阻抗变换。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;光电耦合&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;以光信号为媒介来实现电信号的耦合和传递，通过将发光二极管与光电三极管相互绝缘地组合在一起来实现。&lt;/p&gt;
+&lt;p&gt;书上没有提到优缺点&lt;/p&gt;
+&lt;h3 id=&#34;多级放大电路的动态分析&#34;&gt;多级放大电路的动态分析&lt;/h3&gt;
+&lt;p&gt;无论什么耦合，放大电路中前级的输出电压就是后级的输入电压，即&lt;span class=&#34;math inline&#34;&gt;\(\dot U_{o1}=\dot U_{i2},\dot U_{o2}=\dot
+U_{i3},\cdots,\dot U_{o(N-1)}=\dot U_{iN}\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;所以总体的放大倍数为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\dot A_u = \dfrac{\dot U_{o1}}{\dot U_i}\cdot\dfrac{\dot U_{o2}}{\dot
+U_i2}\cdot\cdots\cdot\dfrac{\dot U_{o}}{\dot U_{iN}}=\dot
+A_{u1}\cdot\dot A_{u2}\cdot\dots\cdot\dot A_{uN} = \prod^{N}_{j=1}\dot
+A_{uj}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;输入电阻就是第一级的输入电阻，输出电阻就是最后一级的输出点租。&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+R_i = R_{i1}, R_o = R_{oN}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;注意，当共集放大电路作为输入级时，它的输入电阻与其负载，即与第二级的输入电阻有关；共集放大电路作为输出级时，它的输出电阻与其信号源内阻，即倒数第二级的输出电阻有关。&lt;/p&gt;
+&lt;h2 id=&#34;差分放大电路&#34;&gt;差分放大电路&lt;/h2&gt;
+&lt;p&gt;共模信号：大小相等、极性相同的输入信号。&lt;/p&gt;
+&lt;p&gt;差模信号：大小相等、极性相反的输入信号。&lt;/p&gt;
+&lt;p&gt;差分放大电路对于共模信号有很强的抑制作用（不仅因为其电路参数对称，还因为其反馈作用），所以能克服零点漂移的问题。&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;47.jpg&#34; alt=&#34;47.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;47.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;由于输入的是差模信号，电路参数对称，集电极电位的变化也是大小相等且方向相反的，即&lt;span class=&#34;math inline&#34;&gt;\(\Delta u_{c1}=-\Delta
+u_{c2}\)&lt;/span&gt;，所以输出电压为&lt;span class=&#34;math inline&#34;&gt;\(\Delta
+u_o=\Delta u_{c1}-\Delta u_{c2}=2\Delta
+u_{c1}\)&lt;/span&gt;，从而实现了电压放大。&lt;/p&gt;
+&lt;p&gt;显然的，在差模信号作用下，&lt;span class=&#34;math inline&#34;&gt;\(R_e\)&lt;/span&gt;中的电流变化为零，即&lt;span class=&#34;math inline&#34;&gt;\(R_e\)&lt;/span&gt;对差模信号没有反馈作用，相当于短路。而&lt;span class=&#34;math inline&#34;&gt;\(R_e\)&lt;/span&gt;对共模信号有负反馈作用，可以抑制零点漂移。&lt;/p&gt;
+&lt;h3 id=&#34;长尾式差分放大电路&#34;&gt;长尾式差分放大电路&lt;/h3&gt;
+&lt;figure&gt;
+&lt;img src=&#34;48.jpg&#34; alt=&#34;48.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;48.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;如图，&lt;span class=&#34;math inline&#34;&gt;\(R_e\)&lt;/span&gt;接到一个&lt;span class=&#34;math inline&#34;&gt;\(-V_{EE}\)&lt;/span&gt;上，故称长尾式电路。参数理想对称，即&lt;span class=&#34;math inline&#34;&gt;\(R_{b1}=R_{b2}=R_b,R_{e1}=R_{e2}=R_e\)&lt;/span&gt;；&lt;span class=&#34;math inline&#34;&gt;\(T_1\)&lt;/span&gt;与&lt;span class=&#34;math inline&#34;&gt;\(T_2\)&lt;/span&gt;的特性相同，&lt;span class=&#34;math inline&#34;&gt;\(\beta_1=\beta_2=\beta,r_{be1}=r_{be2}=r_be\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;静态分析&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;当&lt;span class=&#34;math inline&#34;&gt;\(u_{I1}=u_{I2}=0\)&lt;/span&gt;时，&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+I_{R_e} = I_{EQ1} + I_{EQ2} = 2I_{EQ}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;根据基极回路方程&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+I_{BQ}R_b + U_{BEQ} + 2I_{EQ}R_e = V_{EE}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;可以求出&lt;span class=&#34;math inline&#34;&gt;\(I_{BQ}\)&lt;/span&gt;或&lt;span class=&#34;math inline&#34;&gt;\(I_{EQ}\)&lt;/span&gt;从而解出静态工作点。通常，由于&lt;span class=&#34;math inline&#34;&gt;\(R_b\)&lt;/span&gt;很小，很多情况下&lt;span class=&#34;math inline&#34;&gt;\(R_b\)&lt;/span&gt;就是信号源内阻，而且&lt;span class=&#34;math inline&#34;&gt;\(I_{BQ}\)&lt;/span&gt;也很小，所以&lt;span class=&#34;math inline&#34;&gt;\(R_b\)&lt;/span&gt;上的电压可忽略不计，从而&lt;span class=&#34;math inline&#34;&gt;\(U_{EQ}\approx-U_{BEQ}\)&lt;/span&gt;，因而&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+I_{EQ}\approx\dfrac{V_{EE}-U_{BEQ}}{2R_e}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+I_{BQ} = \dfrac{I_{EQ}}{1+\beta}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+U_{CEQ} = U_{CQ}-U_{EQ}\approx V_{CC}-I_{CQ}R_c+U_{BEQ}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;由于&lt;span class=&#34;math inline&#34;&gt;\(U_{CQ1}=U_{CQ2}\)&lt;/span&gt;，所以&lt;span class=&#34;math inline&#34;&gt;\(u_O=U_{CQ1}-U_{CQ2}=0\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;对共模信号的抑制作用&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;之前提到过由于参数对称，输入共模信号时集电极的电压也是共模的，从而输出电压为零。&lt;/p&gt;
+&lt;p&gt;除此之外还有负反馈作用，见下图&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;49.jpg&#34; alt=&#34;49.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;49.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(R_e\)&lt;/span&gt;越大，负反馈作用越强。但也不宜过大，应该受到&lt;span class=&#34;math inline&#34;&gt;\(V_{EE}\)&lt;/span&gt;的限制，以防止&lt;span class=&#34;math inline&#34;&gt;\(I_{EQ}\)&lt;/span&gt;过小。为了描述对共模信号的抑制能力，引入共模放大倍数&lt;span class=&#34;math inline&#34;&gt;\(A_c\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+A_c = \dfrac{\Delta u_{Oc}}{\Delta u_{Ic}}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;理想情况下&lt;span class=&#34;math inline&#34;&gt;\(A_c = 0\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;对差模信号的放大作用&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;当给差分放大电路输入一个差模信号&lt;span class=&#34;math inline&#34;&gt;\(\Delta
+u_{Id}\)&lt;/span&gt;时，由于电路参数的对称性，&lt;span class=&#34;math inline&#34;&gt;\(\Delta u_{Id}\)&lt;/span&gt;经分压后，加在&lt;span class=&#34;math inline&#34;&gt;\(T_1\)&lt;/span&gt;管一边的为&lt;span class=&#34;math inline&#34;&gt;\(+\Delta u_{Id}/2\)&lt;/span&gt;，加在&lt;span class=&#34;math inline&#34;&gt;\(T_2\)&lt;/span&gt;管一边的为&lt;span class=&#34;math inline&#34;&gt;\(-\Delta u_{Id}/2\)&lt;/span&gt;&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;50.jpg&#34; alt=&#34;50.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;50.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(E\)&lt;/span&gt;点在差模信号下电位不变，相当于接地。负载电阻的中点电位在差模信号的作用下电位也不变，相当于接地。交流等效通路如图。&lt;/p&gt;
+&lt;p&gt;差模放大倍数为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+A_d = \dfrac{\Delta u_{Od}}{\Delta u_{Id}}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;由交流等效电路可得&lt;span class=&#34;math inline&#34;&gt;\(\Delta u_{Id}=2\Delta
+i_{B1}(R_b+r_{be}),\Delta u_{Od}=-2\Delta
+i_{C1}\bigg(R_c\parallel\dfrac{R_L}{2}\bigg)\)&lt;/span&gt;，所以&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+A_d = \dfrac{\beta\bigg(R_c\parallel\dfrac{R_L}{2}\bigg)}{R_b+r_{be}}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;可见，用了两只晶体管，放大能力只相当于一只晶体管，牺牲了一只管子为代价换来了低温漂的效果。&lt;/p&gt;
+&lt;p&gt;从等效电路也可以看出&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+R_i = 2(R_b+r_{be})
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+R_o = 2R_c
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;为了综合考察对差模信号的放大能力和对共模信号的抑制能力，引入共模抑制比&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+K_{CMR} = \bigg|\dfrac{A_d}{A_c}\bigg|
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;理想情况下&lt;span class=&#34;math inline&#34;&gt;\(K_{CMR}=\infty\)&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;四种接法&#34;&gt;四种接法&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;双入双出&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;之前介绍的叫做双入双出接法。&lt;/p&gt;
+&lt;h1 id=&#34;反馈&#34;&gt;反馈&lt;/h1&gt;
 
 
 </description>
@@ -429,6 +918,14 @@ color_c\)&lt;/span&gt;。&lt;/p&gt;
 &lt;span id=&#34;cb3-26&#34;&gt;&lt;a href=&#34;#cb3-26&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;    &lt;span class=&#34;op&#34;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;全部光栅化的代码可见&lt;strong&gt;&lt;a href=&#34;https://github.com/kegalas/oar/blob/97058860346436641decc719d6b72cc7055eb24c/src/raster.cpp&#34;&gt;这里&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;另外，求重心坐标的代码我写到了geometry.cpp里，方便别处调用。链接在&lt;strong&gt;&lt;a href=&#34;https://github.com/kegalas/oar/blob/97058860346436641decc719d6b72cc7055eb24c/src/geometry.cpp&#34;&gt;这里&lt;/a&gt;&lt;/strong&gt;（在文件末尾）&lt;/p&gt;
+&lt;p&gt;另外，求重心坐标还有一种不那么复杂的公式，见&lt;strong&gt;&lt;a href=&#34;../计算机图形学基础学习笔记-数学基础/#重心坐标系&#34;&gt;计算机图形学基础学习笔记-数学基础&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;注意，&lt;/p&gt;
+&lt;div class=&#34;sourceCode&#34; id=&#34;cb4&#34;&gt;&lt;pre class=&#34;sourceCode cpp&#34;&gt;&lt;code class=&#34;sourceCode cpp&#34;&gt;&lt;span id=&#34;cb4-1&#34;&gt;&lt;a href=&#34;#cb4-1&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;&lt;span class=&#34;cf&#34;&gt;if&lt;/span&gt;&lt;span class=&#34;op&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;fl&#34;&gt;0.&lt;/span&gt;&lt;span class=&#34;bu&#34;&gt;f&lt;/span&gt;&lt;span class=&#34;op&#34;&gt;&amp;lt;=&lt;/span&gt;alpha &lt;span class=&#34;op&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; alpha&lt;span class=&#34;op&#34;&gt;&amp;lt;=&lt;/span&gt;&lt;span class=&#34;fl&#34;&gt;1.&lt;/span&gt;&lt;span class=&#34;bu&#34;&gt;f&lt;/span&gt; &lt;span class=&#34;op&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&#34;cb4-2&#34;&gt;&lt;a href=&#34;#cb4-2&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;               &lt;span class=&#34;fl&#34;&gt;0.&lt;/span&gt;&lt;span class=&#34;bu&#34;&gt;f&lt;/span&gt;&lt;span class=&#34;op&#34;&gt;&amp;lt;=&lt;/span&gt;beta  &lt;span class=&#34;op&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; beta &lt;span class=&#34;op&#34;&gt;&amp;lt;=&lt;/span&gt;&lt;span class=&#34;fl&#34;&gt;1.&lt;/span&gt;&lt;span class=&#34;bu&#34;&gt;f&lt;/span&gt; &lt;span class=&#34;op&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;/span&gt;
+&lt;span id=&#34;cb4-3&#34;&gt;&lt;a href=&#34;#cb4-3&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;               &lt;span class=&#34;fl&#34;&gt;0.&lt;/span&gt;&lt;span class=&#34;bu&#34;&gt;f&lt;/span&gt;&lt;span class=&#34;op&#34;&gt;&amp;lt;=&lt;/span&gt;gamma &lt;span class=&#34;op&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; gamma&lt;span class=&#34;op&#34;&gt;&amp;lt;=&lt;/span&gt;&lt;span class=&#34;fl&#34;&gt;1.&lt;/span&gt;&lt;span class=&#34;bu&#34;&gt;f&lt;/span&gt;&lt;span class=&#34;op&#34;&gt;)&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;这一段代码也可以写作&lt;/p&gt;
+&lt;div class=&#34;sourceCode&#34; id=&#34;cb5&#34;&gt;&lt;pre class=&#34;sourceCode cpp&#34;&gt;&lt;code class=&#34;sourceCode cpp&#34;&gt;&lt;span id=&#34;cb5-1&#34;&gt;&lt;a href=&#34;#cb5-1&#34; aria-hidden=&#34;true&#34; tabindex=&#34;-1&#34;&gt;&lt;/a&gt;&lt;span class=&#34;cf&#34;&gt;if&lt;/span&gt;&lt;span class=&#34;op&#34;&gt;(&lt;/span&gt;alpha &lt;span class=&#34;op&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;fl&#34;&gt;0.&lt;/span&gt;&lt;span class=&#34;bu&#34;&gt;f&lt;/span&gt; &lt;span class=&#34;op&#34;&gt;||&lt;/span&gt; beta &lt;span class=&#34;op&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;fl&#34;&gt;0.&lt;/span&gt;&lt;span class=&#34;bu&#34;&gt;f&lt;/span&gt; &lt;span class=&#34;op&#34;&gt;||&lt;/span&gt; gamma &lt;span class=&#34;op&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;fl&#34;&gt;0.&lt;/span&gt;&lt;span class=&#34;bu&#34;&gt;f&lt;/span&gt;&lt;span class=&#34;op&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;cf&#34;&gt;continue&lt;/span&gt;&lt;span class=&#34;op&#34;&gt;;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;这也是对的。唯一需要小心的是精度问题，float的精度可能不足以把边界上的每一个点都画出来。如果你不在乎这一两个像素点就可以不用管，如果你在乎，那么我们可以修改为alpha&amp;lt;-(1e-5)这样的条件。&lt;/p&gt;
 
 
 </description>
