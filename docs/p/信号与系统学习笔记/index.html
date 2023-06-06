@@ -121,7 +121,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 37 分钟
+                    阅读时长: 41 分钟
                 </time>
             </div>
         
@@ -343,6 +343,14 @@ y(t) = \int^t_{-\infty} x(\tau)h(t-\tau)d\tau = \int^\infty_0
 h(\tau)x(t-\tau)d\tau
 \]</span></p>
 <h3 id="稳定性-1">稳定性</h3>
+<p>一个稳定的离散LTI，要求</p>
+<p><span class="math display">\[
+\sum^{+\infty}_{k=-\infty}|h[k]| &lt; \infty
+\]</span></p>
+<p>一个稳定的连续LTI，要求</p>
+<p><span class="math display">\[
+\int^{+\infty}_{-\infty} |h(\tau)|d\tau &lt; \infty
+\]</span></p>
 <h3 id="lti的单位阶跃响应">LTI的单位阶跃响应</h3>
 <p>单位阶跃响应记作<span class="math inline">\(s\)</span>或<span class="math inline">\(g\)</span></p>
 <p><span class="math display">\[
@@ -601,6 +609,7 @@ g[k] = \sum^k_{i=-\infty}h[i]
 h[k] = g[k] - g[k-1]
 \]</span></p>
 <h2 id="用方框图描述lti">用方框图描述LTI</h2>
+<p>不做细致介绍（主要是我懒，但这玩意其实很浅显，做一两题就会列表达式了，会不会解题另说），注意级联的时候<span class="math inline">\(h(t)\)</span>之间用卷积，<span class="math inline">\(H(jw)\)</span>用乘号即可。有时会用上设中间变量的方法。</p>
 <h2 id="奇异函数">奇异函数</h2>
 <p><strong>对于连续情况</strong></p>
 <p><span class="math display">\[
@@ -1457,6 +1466,7 @@ Y_{zi} =
 <p>全响应就是两个相加，之后要求<span class="math inline">\(s\)</span>域上的则逆变换即可。</p>
 <p>相比之下，傅立叶变换只能求零状态而不能求零输入。</p>
 <h2 id="系统的s域框图">系统的<span class="math inline">\(s\)</span>域框图</h2>
+<p>不做细致介绍。</p>
 <h2 id="电路的s域模型">电路的<span class="math inline">\(s\)</span>域模型</h2>
 <p><em>电阻</em></p>
 <p><span class="math display">\[
@@ -1718,6 +1728,7 @@ H(z)=Y(z)\bigg/X(z)
 <p>和拉普拉斯变换也是一样的，这个冲激响应是零状态响应。如果有初始值，那么另外那部分就是零状态响应。</p>
 <p>也可以不求<span class="math inline">\(H(z)\)</span>直接求<span class="math inline">\(Y_{zs},Y_{zi}\)</span>，方法和拉普拉斯变换完全一致。</p>
 <h2 id="系统的z域框图">系统的<span class="math inline">\(z\)</span>域框图</h2>
+<p>不做细致介绍。</p>
 <h2 id="s域与z域的关系"><span class="math inline">\(s\)</span>域与<span class="math inline">\(z\)</span>域的关系</h2>
 <p><em>复变量<span class="math inline">\(s\)</span>与<span class="math inline">\(z\)</span>的关系</em></p>
 <p><span class="math display">\[
@@ -1767,6 +1778,158 @@ x[n+1] = zX(z)-zx[0]
 <p><span class="math display">\[
 x[n]-x[n-1]\leftrightarrow (1-z^{-1})X(z)-x[-1]
 \]</span></p>
+<h1 id="系统函数再探">系统函数再探</h1>
+<h2 id="零极点与冲激响应">零极点与冲激响应</h2>
+<p>LTI，不管是离散还是连续系统，我们前面对于系统函数<span class="math inline">\(H(\cdot)\)</span>零点和极点讨论的已经很多了。我们现在介绍一下零点极点和冲激响应的关系。</p>
+<p><strong>连续情况（即拉普拉斯变换下）</strong></p>
+<ol type="1">
+<li>零点影响<span class="math inline">\(h(t)\)</span>的幅度、相位</li>
+<li>极点决定<span class="math inline">\(h(t)\)</span>的函数形式（直观的说，常用变换对都是分母上比较复杂）：</li>
+</ol>
+<ul>
+<li>左半平面极点对应的<span class="math inline">\(h(t)\)</span>，随时间增加，是按指数函数规律衰减的。</li>
+<li>虚轴上一阶极点对应的<span class="math inline">\(h(t)\)</span>是阶跃函数或正弦函数，二阶及以上极点对应<span class="math inline">\(h(t)\)</span>是随时间增长而增大的。</li>
+<li>右半平面极点对应<span class="math inline">\(h(t)\)</span>都是随时间增加按指数规律增加的。</li>
+</ul>
+<p><strong>离散情况（即<span class="math inline">\(z\)</span>变换下）</strong></p>
+<ol type="1">
+<li><span class="math inline">\(H(z)\)</span>的极点在单位圆内，对应<span class="math inline">\(h(k)\)</span>按指数衰减。</li>
+<li>极点在单位圆上，一阶极点对应的<span class="math inline">\(h(k)\)</span>为阶跃序列或正弦序列。二阶及以上对应<span class="math inline">\(h(k)\)</span>增长。</li>
+<li>极点在单位圆外，对应<span class="math inline">\(h(k)\)</span>按指数增长。</li>
+</ol>
+<h2 id="因果性-4">因果性</h2>
+<p>见前。包括系统函数判断因果性和冲激响应判断因果性。</p>
+<h2 id="稳定性-4">稳定性</h2>
+<p>之前的定义和判断方法在这里仍然适用，这里介绍两个另外的判断方法。</p>
+<h3 id="稳定系统的s域判别方法">稳定系统的<span class="math inline">\(S\)</span>域判别方法</h3>
+<p>除去之前介绍的，收敛域要包括虚轴，还有以下两个。</p>
+<p><strong>必要条件</strong></p>
+<p>设</p>
+<p><span class="math display">\[
+H(s) = \dfrac{B(s)}{A(s)}
+\]</span></p>
+<p><span class="math display">\[
+A(s) = a_ns^n+A_{n-1}s^{n-1} + \cdots + a_1s + a_0
+\]</span></p>
+<p>若系统稳定，则</p>
+<p><span class="math display">\[
+a_{i} &gt; 0, i = 0,1,2,\cdots,n
+\]</span></p>
+<p><strong>充分必要条件</strong></p>
+<p>也即罗斯-霍尔维兹准则，R-H准则。</p>
+<figure>
+<img src="1.jpg" alt="1.jpg"/>
+<figcaption aria-hidden="true">1.jpg</figcaption>
+</figure>
+<p>其中第三行之后的有</p>
+<figure>
+<img src="2.jpg" alt="2.jpg"/>
+<figcaption aria-hidden="true">2.jpg</figcaption>
+</figure>
+<p>判断依据是，如果罗斯阵列的第一列元素（第一行至<span class="math inline">\(n+1\)</span>行）的符号相同，则<span class="math inline">\(H(s)\)</span>的极点全部在左半平面，系统稳定。</p>
+<p>其中有两个特例，当<span class="math inline">\(A(s)=s^2+\alpha
+s+\beta\)</span>时，充要条件是<span class="math inline">\(\alpha&gt;0,\beta&gt;0\)</span>。当<span class="math inline">\(A(s) = s^3+\alpha s^2+\beta
+s+\gamma\)</span>时，充要条件是<span class="math inline">\(\alpha&gt;0,\beta&gt;0,\gamma&gt;0,\alpha\beta&gt;\gamma\)</span>。</p>
+<h3 id="稳定系统的z域判别方法">稳定系统的<span class="math inline">\(z\)</span>域判别方法</h3>
+<p>除去之前介绍的，收敛域要包括单位圆，还有朱里准则。</p>
+<p><strong>充分必要条件（朱里准则）</strong></p>
+<p>设</p>
+<p><span class="math display">\[
+H(z) = \dfrac{B(z)}{A(z)}
+\]</span></p>
+<p><span class="math display">\[
+A(z) = a_nz^n+a_{n-1}z^{n-1}+\cdots+a_0
+\]</span></p>
+<figure>
+<img src="3.jpg" alt="3.jpg"/>
+<figcaption aria-hidden="true">3.jpg</figcaption>
+</figure>
+<p>按以上形式排列，则系统稳定的充要条件是：</p>
+<p><span class="math display">\[
+\left.\begin{matrix}
+A(1)=A(z)|_{z=1}&gt;0 \\
+(-1)^nA(-1)&gt;0 \\
+a_n&gt;|a_0| \\
+c_{n-1}&gt;|c_0| \\
+d_{n-2}&gt;|d_0| \\
+\vdots \\
+r_2&gt;|r_0|
+\end{matrix}\right\}
+\]</span></p>
+<p>注意这个排列中没有<span class="math inline">\(b\)</span>的项，不知道为什么。</p>
+<p>作为一个特例，当<span class="math inline">\(A(z)=z^2+\alpha
+z+\beta\)</span>时的充分必要条件是：<span class="math inline">\(|\alpha|&lt;1+\beta,|\beta|&lt;1\)</span></p>
+<h2 id="信号流图">信号流图</h2>
+<h3 id="连续情况">连续情况</h3>
+<p><strong>相关定义</strong></p>
+<ol type="1">
+<li>用点表示信号（变量）</li>
+</ol>
+<figure>
+<img src="4.jpg" alt="4.jpg"/>
+<figcaption aria-hidden="true">4.jpg</figcaption>
+</figure>
+<ol start="2" type="1">
+<li>用有向线段表示信号方向和传输函数</li>
+</ol>
+<figure>
+<img src="5.jpg" alt="5.jpg"/>
+<figcaption aria-hidden="true">5.jpg</figcaption>
+</figure>
+<ol start="3" type="1">
+<li>支路：两点间的有向线段称为一条支路</li>
+<li>通路：从某一节点触发，沿支路方向，连续经过节点和支路到达另一节点，所经过的路径称为通路</li>
+<li>开路：从一节点到达另一节点，并且节点不重复的通路称为开路</li>
+<li>环：从一节点出发，经过节点和支路又回到该节点的闭合通路称为环或回路（事实上来说应该是除了首尾节点外都不能重复，但是PPT上没讲，很奇怪）</li>
+<li>开路传输函数：组成一条开路的所有支路传输函数的乘积称为该条开路的传输函数<span class="math inline">\(p_i\)</span></li>
+<li>环传输函数：组成一个环的所有支路传输函数的乘积称为该环的环传输函数<span class="math inline">\(L_i\)</span></li>
+</ol>
+<p><strong>梅森公式</strong></p>
+<p>这个公式用于从信号流图求系统函数。</p>
+<p>设<span class="math inline">\(F(s)=\mathcal{L}[f(t)],Y_f(s)=\mathcal{L}[y_f(t)]\)</span>，即输入输出。则</p>
+<p><span class="math display">\[
+H(s) = \dfrac{Y_f(s)}{F(s)}=\dfrac{\sum^m_{i=1}p_i\Delta_i}{\Delta}
+\]</span></p>
+<p>其中<span class="math inline">\(\Delta\)</span>为流图行列式。</p>
+<p><span class="math display">\[
+\Delta = 1-\sum_j L_j + \sum_{m,n}L_m L_n-\sum_{p,q,r} L_p L_q
+L_r+\cdots
+\]</span></p>
+<p>其中，<span class="math inline">\(\sum_j
+L_j\)</span>是流图中所有环传输函数<span class="math inline">\(L_j\)</span>之和；<span class="math inline">\(\sum_{m,n}L_m
+L_n\)</span>是流图中所有两两不相接触的环传输函数乘积之和；<span class="math inline">\(\sum_{p,q,r} L_p L_q
+L_r\)</span>是流图中所有三个互不接触环的环传输函数乘积之和。</p>
+<p><span class="math inline">\(p_i\)</span>是由<span class="math inline">\(F(s)\)</span>到<span class="math inline">\(Y_f(s)\)</span>的第<span class="math inline">\(i\)</span>条开路的传输函数。<span class="math inline">\(\Delta_i\)</span>是除去第<span class="math inline">\(i\)</span>条开路（指开路上的所有节点和所连边），剩余流图的流图行列式。<span class="math inline">\(m\)</span>是从<span class="math inline">\(F(s)\)</span>到<span class="math inline">\(Y_f(s)\)</span>的所有开路数。</p>
+<h3 id="离散情况">离散情况</h3>
+<p>与连续情况几乎完全一致，除了把<span class="math inline">\(s\)</span>域上的分析变成<span class="math inline">\(z\)</span>域上的。</p>
+<h3 id="由hshz反推信号流图">由<span class="math inline">\(H(s),H(z)\)</span>反推信号流图</h3>
+<p>这是一个非常需要技巧的魔法，多做题吧。<span class="math inline">\(s\)</span>域和<span class="math inline">\(z\)</span>域无非是符号上的区别。给几个例子</p>
+<p><em>例1</em></p>
+<p><span class="math display">\[
+H(s) =
+\dfrac{b_1s+b_0}{s+a_0}=\dfrac{b_1+\dfrac{b_0}{s}}{1-(-\dfrac{a_0}{s})}
+\]</span></p>
+<p>通过梅森公式可以看出流图包含两条开路，一个环。但是显然解不是唯一的。</p>
+<figure>
+<img src="6.jpg" alt="6.jpg"/>
+<figcaption aria-hidden="true">6.jpg</figcaption>
+</figure>
+<figure>
+<img src="7.jpg" alt="7.jpg"/>
+<figcaption aria-hidden="true">7.jpg</figcaption>
+</figure>
+<p><em>例2</em></p>
+<p><span class="math display">\[
+H(s) = \dfrac{s+1}{(s^2+5s+6)(s+4)} =
+\dfrac{s+1}{(s^2+5s+6)}\cdot\dfrac{1}{s+4} =
+\dfrac{\dfrac{1}{s}+\dfrac{1}{s^2}}{1-(-\dfrac{5}{s}-\dfrac{6}{s^2})}\cdot\dfrac{\dfrac{1}{s}}{1-(-\dfrac{4}{s})}
+\]</span></p>
+<p>这是两个系统级联起来。</p>
+<figure>
+<img src="8.jpg" alt="8.jpg"/>
+<figcaption aria-hidden="true">8.jpg</figcaption>
+</figure>
+<p>那么并联的形式相信不难理解，无非就是裂项成多个式子。</p>
 
 
 
@@ -2190,6 +2353,25 @@ x[n]-x[n-1]\leftrightarrow (1-z^{-1})X(z)-x[-1]
         <li><a href="#系统的z域框图">系统的<span class="math inline">\(z\)</span>域框图</a></li>
         <li><a href="#s域与z域的关系"><span class="math inline">\(s\)</span>域与<span class="math inline">\(z\)</span>域的关系</a></li>
         <li><a href="#单边z变换">单边<span class="math inline">\(z\)</span>变换</a></li>
+      </ol>
+    </li>
+    <li><a href="#系统函数再探">系统函数再探</a>
+      <ol>
+        <li><a href="#零极点与冲激响应">零极点与冲激响应</a></li>
+        <li><a href="#因果性-4">因果性</a></li>
+        <li><a href="#稳定性-4">稳定性</a>
+          <ol>
+            <li><a href="#稳定系统的s域判别方法">稳定系统的<span class="math inline">\(S\)</span>域判别方法</a></li>
+            <li><a href="#稳定系统的z域判别方法">稳定系统的<span class="math inline">\(z\)</span>域判别方法</a></li>
+          </ol>
+        </li>
+        <li><a href="#信号流图">信号流图</a>
+          <ol>
+            <li><a href="#连续情况">连续情况</a></li>
+            <li><a href="#离散情况">离散情况</a></li>
+            <li><a href="#由hshz反推信号流图">由<span class="math inline">\(H(s),H(z)\)</span>反推信号流图</a></li>
+          </ol>
+        </li>
       </ol>
     </li>
   </ol>

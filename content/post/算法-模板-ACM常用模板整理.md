@@ -456,6 +456,8 @@ int main(){
 
 ## 欧拉筛
 
+TODO: 用模板元编程实现编译期算素数
+
 ```cpp
 //复杂度 n
 //欧拉筛
@@ -747,6 +749,8 @@ int main(){
 ```
 
 ## 用乘法逆元计算组合数
+
+TODO: 用模板元编程实现编译期算阶乘
 
 根据
 
@@ -2350,6 +2354,8 @@ int main(){
 
 ## 卡特兰数
 
+TODO: 用模板元编程实现编译期算卡特兰数
+
 第$n$个记作$C_n$
 
 $n$对括号形成的字符串，合法的情况数是$C_n$
@@ -2806,6 +2812,72 @@ int main(){
 
     return 0;
 }
+```
+
+# 堆
+
+## 对顶堆
+
+```cpp
+//维护一个序列的第k大数，每次操作logn
+
+#include <iostream>
+#include <algorithm>
+#include <queue>
+#include <vector>
+
+template<typename T>
+class KthLargest{
+private:
+    std::priority_queue<T,std::vector<T>,std::less<T> > big{};
+    std::priority_queue<T,std::vector<T>,std::greater<T> > small{};
+    int kth{};
+    int size{};
+    
+    void update(){
+        kth = std::min(kth,size);
+        while(kth<small.size()){
+            big.push(small.top());
+            small.pop();
+        }
+        while(kth>small.size()){
+            small.push(big.top());
+            big.pop();
+        }
+    }
+    
+public:
+    KthLargest():kth(1),size(0){}
+    
+    T findK(int k){
+        kth = k;
+        update();
+        return small.top();
+    }
+    
+    void eraseK(int k){
+        kth = k;
+        update();
+        small.pop();
+        size--;
+        update();
+    }
+    
+    void insert(T x){
+        size++;
+        if(small.empty() || x>=small.top()){
+            small.push(x);
+        }
+        else{
+            big.push(x);
+        }
+        update();
+    }
+    
+    int getSize(){
+        return size;
+    }
+};
 ```
 
 # 单调数据结构
@@ -3436,6 +3508,8 @@ template<
 与普通的set不同的是，可以插入多个相同的元素。这在一些情况下是有用的，而且它还是满足内部有序。
 
 可以用::count(x)来统计Key为x的元素的数量，普通的set也有这个方法，但是要么是0要么是1，与find功能可以说是重复。但是multiset可以统计数量。
+
+注意，用erase方法时，如果给出的是一个值，那么会把等于这个值的元素都删掉，如果给出迭代器，那么之后删一个。所以，只想删一个等于这个值的元素时，用erase(find(...))
 
 ## std::stack
 
