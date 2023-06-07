@@ -715,7 +715,7 @@ u_{c1}\)&lt;/span&gt;，从而实现了电压放大。&lt;/p&gt;
 &lt;img src=&#34;48.jpg&#34; alt=&#34;48.jpg&#34;/&gt;
 &lt;figcaption aria-hidden=&#34;true&#34;&gt;48.jpg&lt;/figcaption&gt;
 &lt;/figure&gt;
-&lt;p&gt;如图，&lt;span class=&#34;math inline&#34;&gt;\(R_e\)&lt;/span&gt;接到一个&lt;span class=&#34;math inline&#34;&gt;\(-V_{EE}\)&lt;/span&gt;上，故称长尾式电路。参数理想对称，即&lt;span class=&#34;math inline&#34;&gt;\(R_{b1}=R_{b2}=R_b,R_{e1}=R_{e2}=R_e\)&lt;/span&gt;；&lt;span class=&#34;math inline&#34;&gt;\(T_1\)&lt;/span&gt;与&lt;span class=&#34;math inline&#34;&gt;\(T_2\)&lt;/span&gt;的特性相同，&lt;span class=&#34;math inline&#34;&gt;\(\beta_1=\beta_2=\beta,r_{be1}=r_{be2}=r_be\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;如图，&lt;span class=&#34;math inline&#34;&gt;\(R_e\)&lt;/span&gt;接到一个&lt;span class=&#34;math inline&#34;&gt;\(-V_{EE}\)&lt;/span&gt;上，故称长尾式电路。参数理想对称，即&lt;span class=&#34;math inline&#34;&gt;\(R_{b1}=R_{b2}=R_b,R_{e1}=R_{e2}=R_e\)&lt;/span&gt;；&lt;span class=&#34;math inline&#34;&gt;\(T_1\)&lt;/span&gt;与&lt;span class=&#34;math inline&#34;&gt;\(T_2\)&lt;/span&gt;的特性相同，&lt;span class=&#34;math inline&#34;&gt;\(\beta_1=\beta_2=\beta,r_{be1}=r_{be2}=r_{be}\)&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;静态分析&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;当&lt;span class=&#34;math inline&#34;&gt;\(u_{I1}=u_{I2}=0\)&lt;/span&gt;时，&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
@@ -779,63 +779,398 @@ R_o = 2R_c
 K_{CMR} = \bigg|\dfrac{A_d}{A_c}\bigg|
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;理想情况下&lt;span class=&#34;math inline&#34;&gt;\(K_{CMR}=\infty\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;当然这些输入输出电阻、差模放大倍数等东西，都是从这个图中推出来的，如果某个题中的电路没有某个电阻什么的，要自己学会用这个方法推断。&lt;/p&gt;
 &lt;h3 id=&#34;四种接法&#34;&gt;四种接法&lt;/h3&gt;
 &lt;p&gt;&lt;strong&gt;双入双出&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;之前介绍的叫做双入双出接法。&lt;/p&gt;
-&lt;h1 id=&#34;反馈&#34;&gt;反馈&lt;/h1&gt;
+&lt;p&gt;&lt;strong&gt;双入单出&lt;/strong&gt;&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;51.jpg&#34; alt=&#34;51.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;51.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;其中右边的直流通路是用戴维南定理来算的，有&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
-U_t=\sum^{A_j}_{a=1}\rho^{a-1}\bigg(\dfrac{\sigma}{\sigma-1}\cdot
-c^{\frac{\sigma-1}{\sigma}}_{a,t+3+a}\bigg)
+V&amp;#39;_{CC} = \dfrac{R_L}{R_c+R_L}\cdot V_{CC}
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
-\beta_ac_a=w_a+R\cdot s^-_{a-1}-s_a
+R&amp;#39;_c = R_c\parallel R_L
 \]&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;现在有一个公式，需要你帮我查找一下他的信息，&lt;em&gt;ac_a=w_a+Rs^-&lt;/em&gt;{a-1}-s_a，他是关于预算约束的。s_a表示
-a 岁储蓄，Rs_a− 表示财务收入（资本回报节省时间）；w_a=1…Aj=a·(1
-−)·w+P_a是扣除转移支付和税收后的净劳动收入()，其中 w 是工资，P 是
-与年龄相关的福利：(_a=0,P_a&amp;gt;0)对应 a≥A^r（退休年龄）以及 (_a= 1, P_a=
-0) 对 应
-a&amp;lt;A^r;_a项是一个等价尺度。它考虑到了抚养子女的直接和间接成本。&lt;/p&gt;
-&lt;p&gt;一阶条件产量(i,j)，给出了三个等式，第一
-c_a=1…A_j-1=(R+)&lt;sup&gt;{-}c&lt;/sup&gt;{a+1}，第二
-s_a=1…A_j-1=w_a-c_a+Rs^-_{a-1}，第三 s_0=0&lt;/p&gt;
-&lt;p&gt;除比例因子外，所有地区的生产技术都是相同的，该比例因子表征全要素生
-产率（Γ）的水平，并由外生增长和收敛过程驱动。生产是通过将当地劳动力与
-国际贸易资本相结合，采用恒定规模回报（CRS）技术来实现的。我们使用科布-
-道格拉斯生产函数：Y=K&lt;sup&gt;L&lt;/sup&gt;{1-}
-。此外，假定生产资本以恒定的、统一的比率。
-边际要素生产率总量水平是外生的，且在每个地区都以恒定的速度增长。根
-据以下扩散定律，这一比率是美洲每年 2%的给定外生增长（i=1）的结果。应当
-是技术领导以及特定地区的外生追赶因素，反映了技术进步的国际传播公式：&lt;/p&gt;
-&lt;p&gt;=[1+^t]&lt;/p&gt;
-&lt;p&gt;我需要你帮我解释一下最后的这个公式&lt;/p&gt;
-&lt;p&gt;公共方面简化为社会保障部门;这是一个现收现付（PAYG）公共养老金计划，
-应该存在于世界所有地区。它由所有劳动收入的工资税（）提供资金，并向退
-休家庭支付养老金。区域现收现付系统根据固定收益规则运行：支付给退休个人
-的养老金 P 是当前平均（税后净额）工资的一小部分或替代率（）。我们假设
-采用时间平衡预算规则（i）：&lt;/p&gt;
+&lt;p&gt;现在输出回路不对称了，&lt;span class=&#34;math inline&#34;&gt;\(T_1\)&lt;/span&gt;管和&lt;span class=&#34;math inline&#34;&gt;\(T_2\)&lt;/span&gt;管的集电极电位&lt;span class=&#34;math inline&#34;&gt;\(U_{CQ1}\neq U_{CQ2}\)&lt;/span&gt;，从而&lt;span class=&#34;math inline&#34;&gt;\(U_{CEQ1}\neq U_{CEQ2}\)&lt;/span&gt;。由图可得&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
-\dfrac{\tau_i}{1-\tau_i}=\dfrac{\sum^{A_j}_{a=A^r_i}N_{a,i}}{\sum^{A^r_i-1}_{a=1}N_{a,i}}\cdot\kappa_i,\text{where}\
-N_a=\dfrac{J}{j=1} N_{a-1,j}
+U_{CQ1} = V&amp;#39;_{CC}-I_{CQ}R&amp;#39;_c
 \]&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;在基线情况下，法定退休年龄的区域年龄A_r和比率，则工资税率。&lt;/p&gt;
-&lt;p&gt;我需要你解释一下这个方程，查找一下他的信息&lt;/p&gt;
-&lt;p&gt;定义：鉴于每个区域的初始资本存量，K_i(0) (i= 1,..,6),储蓄在各人组
-J、年 龄组 A 和区域 I 的初始分配为{s_{j,a,i}(0)}i=1,..,6;j=1..J_i;
-a=1,..,A_j。外生人口前景 {N_{j,a,i}(t)}t≥1; i=1,..,6; j=1..J_i;
-a=1,..,A_j。技术进步 {_t}t≥1（对于所有 i=1,..,6）以及社
-会保障政策{A_t^r,&lt;em&gt;i,&lt;em&gt;i}t≥1满足方程（5）（对于所有
-i=1,..,6）,具有社会保 障的竞争世界均衡是要素价格的一组序列
-({w_i(t)}t≥1;i=1..6; {R_t}t≥1),数量的分配 ({s&lt;/em&gt;{j,a,i}(t),
-c&lt;/em&gt;{j,a,i}(t)}t≥1; j=1..J_i,a=1,..,A_j; {K_i(t)}t≥1 对于所有
-i=1,..,6)使得以下等 式成立：&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+U_{CQ2} = V_{CC}-I_{CQ}R_c
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;静态工作点和之前的计算方法一致。&lt;/p&gt;
+&lt;p&gt;在差模信号作用时，负载电阻只取得&lt;span class=&#34;math inline&#34;&gt;\(T_1\)&lt;/span&gt;管集电极电位的变化量，所以与双出电路相比，差模放大倍数的数值减小。画出等效电路如下，&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;52.jpg&#34; alt=&#34;52.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;52.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;易计算输出电压为&lt;span class=&#34;math inline&#34;&gt;\(\Delta u_{Od}=-\Delta
+i_C(R_c\parallel R_L)\)&lt;/span&gt;，输入电压为&lt;span class=&#34;math inline&#34;&gt;\(\Delta u_{Id}=2\Delta i_b(R_b+r_{be})\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;差模放大倍数变为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+A_d = \dfrac{\Delta u_{Od}}{\Delta u_{Id}} =
+-\dfrac{1}{2}\cdot\dfrac{\beta(R_c\parallel R_L)}{R_b+r_{be}}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;输入电阻仍然为&lt;span class=&#34;math inline&#34;&gt;\(R_i=2(R_b+r_{be})\)&lt;/span&gt;，输出电阻为&lt;span class=&#34;math inline&#34;&gt;\(R_o=R_c\)&lt;/span&gt;，是双端输出电路的一半。&lt;/p&gt;
+&lt;p&gt;分析&lt;span class=&#34;math inline&#34;&gt;\(A_c\)&lt;/span&gt;时，输入共模电压，我们注意到&lt;span class=&#34;math inline&#34;&gt;\(\Delta i_{Re} = 2\Delta i_E,\Delta u_e = 2\Delta
+i_ER_e\)&lt;/span&gt;，对于每只管子，可以认为是&lt;span class=&#34;math inline&#34;&gt;\(\Delta i_E\)&lt;/span&gt;流过阻值为&lt;span class=&#34;math inline&#34;&gt;\(2R_e\)&lt;/span&gt;的电阻造成的，如下&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;55.jpg&#34; alt=&#34;55.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;55.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;可以计算得到&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+A_c = \dfrac{\Delta u_{Oc}}{\Delta u_{Ic}} = -\dfrac{\beta(R_c\parallel
+R_L)}{R_b+r_{be}+2(1+\beta)R_e}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+K_{CMR} = \bigg|\dfrac{A_d}{A_c}\bigg| =
+\dfrac{R_b+r_{be}+2(1+\beta)R_e}{2(R_b+r_{be})}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;增大&lt;span class=&#34;math inline&#34;&gt;\(R_e\)&lt;/span&gt;，&lt;span class=&#34;math inline&#34;&gt;\(K_{CMR}\)&lt;/span&gt;越大，电路性能越好。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;单入双出&lt;/strong&gt;&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;53.jpg&#34; alt=&#34;53.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;53.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;这个也叫做射极耦合电路，因为&lt;span class=&#34;math inline&#34;&gt;\(T_2\)&lt;/span&gt;管的信号是从&lt;span class=&#34;math inline&#34;&gt;\(T_1\)&lt;/span&gt;管传来的。&lt;/p&gt;
+&lt;p&gt;将电路等效为右边，如果&lt;span class=&#34;math inline&#34;&gt;\(A_c\)&lt;/span&gt;不等于零，则输出电压不仅有差模信号产生的，还有共模信号产生的。&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\Delta u_{O} = A_d\Delta u_I + A_c\cdot\dfrac{\Delta u_I}{2}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;当然理想状况下&lt;span class=&#34;math inline&#34;&gt;\(A_c=0\)&lt;/span&gt;。单入双出和双入双出分析完全一样，不再介绍。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;单入单出&lt;/strong&gt;&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;54.jpg&#34; alt=&#34;54.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;54.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;对于单出电路，常把不输出信号一边的&lt;span class=&#34;math inline&#34;&gt;\(R_c\)&lt;/span&gt;省掉。对&lt;span class=&#34;math inline&#34;&gt;\(Q\)&lt;/span&gt;点、&lt;span class=&#34;math inline&#34;&gt;\(A_d\)&lt;/span&gt;、&lt;span class=&#34;math inline&#34;&gt;\(A_c\)&lt;/span&gt;、&lt;span class=&#34;math inline&#34;&gt;\(R_i\)&lt;/span&gt;、&lt;span class=&#34;math inline&#34;&gt;\(R_o\)&lt;/span&gt;的分析和双入单出一样，对于输入信号作用的分析和单入双出一样。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;总结&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;四种解法的特点：&lt;/p&gt;
 &lt;ol type=&#34;1&#34;&gt;
-&lt;li&gt;对于第三个方程，(for i=1,…,6 and j=1…J_i)&lt;/li&gt;
-&lt;li&gt;w_i=f_i-k_if’_i and R^+=f’_i^+(for all i=1,…,6)&lt;/li&gt;
-&lt;li&gt;L_i=^{A’&lt;em&gt;i-1}&lt;/em&gt;{a=1} N_{a,i} (for all i=1,…,6)&lt;/li&gt;
-&lt;li&gt;&lt;sup&gt;{6}&lt;em&gt;{i=1}[K_i-S_i]=0, where: S_i =
-^{J_i}&lt;/em&gt;{j=1}&lt;/sup&gt;{A_{ji-1}}&lt;em&gt;{a=1} N&lt;/em&gt;{ja}s_{ja} and
-K_ik_iL_i^+&lt;/li&gt;
+&lt;li&gt;输入电阻均为&lt;span class=&#34;math inline&#34;&gt;\(2(R_b+r_{be})\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(A_d,A_c,R_o\)&lt;/span&gt;与输出方式有关，双端输出时，&lt;span class=&#34;math inline&#34;&gt;\(A_d\)&lt;/span&gt;见前，&lt;span class=&#34;math inline&#34;&gt;\(A_c=0,R_o=2R_c\)&lt;/span&gt;；单端输出时&lt;span class=&#34;math inline&#34;&gt;\(A_d,A_c\)&lt;/span&gt;见前，&lt;span class=&#34;math inline&#34;&gt;\(R_o=R_c\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;单端输入时，差模信号输入的同时总伴随着共模输入。若输入信号为&lt;span class=&#34;math inline&#34;&gt;\(\Delta u_I\)&lt;/span&gt;，则&lt;span class=&#34;math inline&#34;&gt;\(\Delta u_{Id}=\Delta u_{I},\Delta u_{Ic}=+\Delta
+u_{I}/2\)&lt;/span&gt;，输出电压表达式见前。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;改进型差分放大电路&#34;&gt;改进型差分放大电路&lt;/h3&gt;
+&lt;p&gt;在差分放大电路中，提高&lt;span class=&#34;math inline&#34;&gt;\(R_e\)&lt;/span&gt;能抑制温漂，提高共模抑制比。&lt;/p&gt;
+&lt;p&gt;我们可以利用工作点稳定电路来取代&lt;span class=&#34;math inline&#34;&gt;\(R_e\)&lt;/span&gt;，得到下图的恒流源差分放大电路&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;56.jpg&#34; alt=&#34;56.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;56.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;电源&lt;span class=&#34;math inline&#34;&gt;\(V_{EE}\)&lt;/span&gt;可取几伏，电路参数应满足&lt;span class=&#34;math inline&#34;&gt;\(I_2&amp;gt;&amp;gt;I_{B3}\)&lt;/span&gt;。这样&lt;span class=&#34;math inline&#34;&gt;\(I_1\approx I_2\)&lt;/span&gt;，所以&lt;span class=&#34;math inline&#34;&gt;\(R_2\)&lt;/span&gt;上的电压为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+U_{R2}\approx\dfrac{R_2}{R_1+R_2}\cdot V_{EE}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+I_{C3}\approx I_{E3} = \dfrac{U_{R2}-U_{BE3}}{R_3}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;若&lt;span class=&#34;math inline&#34;&gt;\(U_{BE3}\)&lt;/span&gt;的变换可忽略不计，则&lt;span class=&#34;math inline&#34;&gt;\(I_{C3}\)&lt;/span&gt;基本不受温度影响。由于没有动态信号可以作用到&lt;span class=&#34;math inline&#34;&gt;\(T_3\)&lt;/span&gt;的基极和发射极，因此&lt;span class=&#34;math inline&#34;&gt;\(I_{C3}\)&lt;/span&gt;为恒流，发射极所接电路可以等效成一个恒流源。有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+I_{EQ1}=I_{EQ2}=\dfrac{I_{C3}}{2}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;当&lt;span class=&#34;math inline&#34;&gt;\(T_3\)&lt;/span&gt;管输出特性为理想特性时，&lt;span class=&#34;math inline&#34;&gt;\(T_3\)&lt;/span&gt;在放大区的输出特性曲线是横轴的平行线时，恒流源的内阻为无穷大，即相当于&lt;span class=&#34;math inline&#34;&gt;\(T_1,T_2\)&lt;/span&gt;接了一个无穷大的电阻，此时&lt;span class=&#34;math inline&#34;&gt;\(A_c=0,K_{CMR}=\infty\)&lt;/span&gt;&lt;/p&gt;
+&lt;h2 id=&#34;电流源电路&#34;&gt;电流源电路&lt;/h2&gt;
+&lt;h3 id=&#34;单管电流源电路&#34;&gt;单管电流源电路&lt;/h3&gt;
+&lt;figure&gt;
+&lt;img src=&#34;57.jpg&#34; alt=&#34;57.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;57.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;（题外话，这和改进型差分放大器中的下面接的那个电流源一模一样）&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+I_O = I_C\approx I_E =
+\bigg(\dfrac{R_2}{R_1+R_2}|U_{EE}|-U_{BE}\bigg)\bigg/R_3
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+R_O = r_{ce}\bigg(1+\dfrac{\beta R_3}{r_{be}+R_3+R_1\parallel
+R_2}\bigg)&amp;gt;&amp;gt;r_{ce}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;镜像电流源&#34;&gt;镜像电流源&lt;/h3&gt;
+&lt;figure&gt;
+&lt;img src=&#34;58.jpg&#34; alt=&#34;58.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;58.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;它由两只特性完全相同的管子构成，由于&lt;span class=&#34;math inline&#34;&gt;\(T_0\)&lt;/span&gt;的管压降&lt;span class=&#34;math inline&#34;&gt;\(U_{CE0}\)&lt;/span&gt;与其&lt;span class=&#34;math inline&#34;&gt;\(b-e\)&lt;/span&gt;间电压&lt;span class=&#34;math inline&#34;&gt;\(U_{BE0}\)&lt;/span&gt;相等，从而保证&lt;span class=&#34;math inline&#34;&gt;\(T_0\)&lt;/span&gt;工作在放大状态。所以&lt;span class=&#34;math inline&#34;&gt;\(I_{C0}=\beta_0I_{B0}\)&lt;/span&gt;，由于图中&lt;span class=&#34;math inline&#34;&gt;\(T_0,T_1\)&lt;/span&gt;的&lt;span class=&#34;math inline&#34;&gt;\(b-e\)&lt;/span&gt;间电压相等，所以有&lt;span class=&#34;math inline&#34;&gt;\(I_{B0}=I_{B1}=I_B\)&lt;/span&gt;；由于放大系数相等，所以&lt;span class=&#34;math inline&#34;&gt;\(I_{C0}=I_{C1}=I_C=\beta
+I_B\)&lt;/span&gt;。由于电流相等的关系，所以叫做镜像电流源，&lt;span class=&#34;math inline&#34;&gt;\(I_{C1}\)&lt;/span&gt;为输出电流。&lt;/p&gt;
+&lt;p&gt;电阻&lt;span class=&#34;math inline&#34;&gt;\(R\)&lt;/span&gt;中的电流称为基准电流，其表达式为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+I_R = \dfrac{V_{CC}-U_{BE}}{R} = I_C+2I_B = I_C +
+2\cdot\dfrac{I_C}{\beta}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;所以集电极电流&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+I_C = \dfrac{\beta}{\beta+2}I_R
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(\beta&amp;gt;&amp;gt;2\)&lt;/span&gt;时，输出电流&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+I_C \approx I_R = \dfrac{V_{CC}-U_{BE}}{R}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;镜像电流源具有一定的温度补偿作用，如下&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;59.jpg&#34; alt=&#34;59.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;59.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;这个电路不好用的地方在于，如果要求&lt;span class=&#34;math inline&#34;&gt;\(I_{C1}\)&lt;/span&gt;较大，&lt;span class=&#34;math inline&#34;&gt;\(I_R\)&lt;/span&gt;就要大，&lt;span class=&#34;math inline&#34;&gt;\(R\)&lt;/span&gt;的功耗也要很大。如果要求&lt;span class=&#34;math inline&#34;&gt;\(I_{C1}\)&lt;/span&gt;很小，那么&lt;span class=&#34;math inline&#34;&gt;\(R\)&lt;/span&gt;的数值就要很大。这两点在集成电路中都难以做到。&lt;/p&gt;
+&lt;h3 id=&#34;比例电流源&#34;&gt;比例电流源&lt;/h3&gt;
+&lt;figure&gt;
+&lt;img src=&#34;60.jpg&#34; alt=&#34;60.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;60.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+U_{BE0} + I_{E0}R_{e0} = U_{BE1} + I_{E1}R_{e1}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;根据晶体管发射结电压与发射极电流的近似关系可得&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+U_{BE}\approx U_T\ln \dfrac{I_E}{I_S}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;（上述公式是忽略基区电阻&lt;span class=&#34;math inline&#34;&gt;\(r_{bb&amp;#39;}\)&lt;/span&gt;上的电压时，晶体管发射极电流与&lt;span class=&#34;math inline&#34;&gt;\(b-e\)&lt;/span&gt;间电压的关系，&lt;span class=&#34;math inline&#34;&gt;\(I_E\approx
+I_S\exp({U_{BE}/U_T})\)&lt;/span&gt;，推导得到的）&lt;/p&gt;
+&lt;p&gt;由于两只管的特性完全相同，所以&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+U_{BE0}-U_{BE1}\approx U_T\ln\dfrac{I_{E0}}{I_{E1}}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;代入前式整理得&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+I_{E1}R_{e1}\approx I_{E0}R_{e0}+U_{T}\ln\dfrac{I_{E0}}{I_{E1}}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;当&lt;span class=&#34;math inline&#34;&gt;\(\beta&amp;gt;&amp;gt;2\)&lt;/span&gt;时，&lt;span class=&#34;math inline&#34;&gt;\(I_{C0}\approx I_{E0}\approx I_{R},I_{C1}\approx
+I_{E1}\)&lt;/span&gt;，所以&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+I_{C1}\approx\dfrac{R_{e0}}{R_{e1}}\cdot
+I_R+\dfrac{U_T}{R_{e1}}\ln\dfrac{I_R}{I_{C1}}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;在一定的取值范围内，如果对数项可以忽略，那么&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+I_{C1}\approx\dfrac{R_{e0}}{R_{e1}}\cdot I_R
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;当然我们可以很容易地算出&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+I_{R}\approx\dfrac{V_{CC}-U_{BE0}}{R+R_{e0}}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;微电流源&#34;&gt;微电流源&lt;/h3&gt;
+&lt;p&gt;如果不想用很大的电阻，又要使得输出电流较小，可以把&lt;span class=&#34;math inline&#34;&gt;\(R_{e0}\)&lt;/span&gt;直接舍弃掉，如下图&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;61.jpg&#34; alt=&#34;61.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;61.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;当&lt;span class=&#34;math inline&#34;&gt;\(\beta&amp;gt;&amp;gt;1\)&lt;/span&gt;时，有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+I_{C1}\approx I_{E1}=\dfrac{U_{BE0}-U_{BE1}}{R_e}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中这个电压差只有几十豪富，甚至更小。只需要几千欧的&lt;span class=&#34;math inline&#34;&gt;\(R_e\)&lt;/span&gt;就可以得到几十微安的输出电流。&lt;/p&gt;
+&lt;p&gt;两管完全相同，则&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+I_{C1}\approx \dfrac{U_T}{R_e}\ln\dfrac{I_R}{I_{C1}}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;在&lt;span class=&#34;math inline&#34;&gt;\(R_e\)&lt;/span&gt;已知的情况下，上式对&lt;span class=&#34;math inline&#34;&gt;\(I_{C1}\)&lt;/span&gt;是超越方程，可以通过图解法或累试法解出&lt;span class=&#34;math inline&#34;&gt;\(I_{C1}\)&lt;/span&gt;（做题意义上，题目会直接给出一些数据方便你求解）。&lt;/p&gt;
+&lt;p&gt;易算&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+I_{R}\approx \dfrac{V_{CC}-U_{BE0}}{R}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;改进型电流源&#34;&gt;改进型电流源&lt;/h3&gt;
+&lt;p&gt;上面三个电路很多分析结果都要&lt;span class=&#34;math inline&#34;&gt;\(\beta\)&lt;/span&gt;很大时才成立，也就是没考虑基极电流的影响。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;加射极输出器的电流源&lt;/strong&gt;&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;62.jpg&#34; alt=&#34;62.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;62.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;加了&lt;span class=&#34;math inline&#34;&gt;\(T_2\)&lt;/span&gt;后，利用放大作用，减小了&lt;span class=&#34;math inline&#34;&gt;\(I_{B0},I_{B1}\)&lt;/span&gt;对于&lt;span class=&#34;math inline&#34;&gt;\(I_R\)&lt;/span&gt;的分流。三个管特性要完全相同，即&lt;span class=&#34;math inline&#34;&gt;\(\beta_0=\beta_1=\beta_2=\beta\)&lt;/span&gt;，而由于&lt;span class=&#34;math inline&#34;&gt;\(U_{BE1}=U_{BE0},I_{B1}=I_{B0}=I_B\)&lt;/span&gt;，因此输出电流&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+I_{C1}=I_{C0} = I_R-I_{B2} =
+I_R-\dfrac{I_{E2}}{1+\beta}=I_R-\dfrac{2I_B}{1+\beta} =
+I_R-\dfrac{2I_{C1}}{(1+\beta)\beta}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;最后整理得&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+I_{C1} = \dfrac{I_R}{1+\dfrac{2}{(1+\beta)\beta}}\approx I_R
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;有时会加上图中的&lt;span class=&#34;math inline&#34;&gt;\(R_{e2}\)&lt;/span&gt;，用于提高&lt;span class=&#34;math inline&#34;&gt;\(T_2\)&lt;/span&gt;管的&lt;span class=&#34;math inline&#34;&gt;\(\beta\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;威尔逊电流源&lt;/strong&gt;&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;63.jpg&#34; alt=&#34;63.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;63.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;如上图，三个管子也是特性一致。由于&lt;span class=&#34;math inline&#34;&gt;\(c-e\)&lt;/span&gt;间等效电阻非常大，所以可以使&lt;span class=&#34;math inline&#34;&gt;\(I_{C2}\)&lt;/span&gt;高度稳定。&lt;span class=&#34;math inline&#34;&gt;\(\beta_0=\beta_1=\beta_2=\beta,I_{C1}=I_{C0}=I_C\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+I_{E2} = I_C + 2I_B = I_C + \dfrac{2I_C}{\beta}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;所以&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+I_C = \dfrac{\beta}{\beta+2}\cdot
+I_{E2}=\dfrac{\beta}{\beta+2}\cdot\dfrac{1+\beta}{\beta}I_{C2} =
+\dfrac{\beta+1}{\beta+2}\cdot I_{C2}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;在上图的&lt;span class=&#34;math inline&#34;&gt;\(B\)&lt;/span&gt;点有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+I_R = I_{B2}+I_C = \dfrac{I_{C2}}{\beta}+\dfrac{\beta+1}{\beta+2}\cdot
+I_{C2}=\dfrac{\beta^2+2\beta+2}{\beta^2+2\beta}\cdot I_{C2}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;整理得&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+I_{C2} = (1-\dfrac{2}{\beta^2+2\beta+2})I_R\approx I_R
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;多路电流源&#34;&gt;多路电流源&lt;/h3&gt;
+&lt;figure&gt;
+&lt;img src=&#34;64.jpg&#34; alt=&#34;64.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;64.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(I_R\)&lt;/span&gt;为基准电流，&lt;span class=&#34;math inline&#34;&gt;\(I_{C1},I_{C2},I_{C3}\)&lt;/span&gt;为三路输出电流。&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+U_{BE0}+I_{E0}R_{e0}=U_{BE1}+I_{E1}R_{e1}=U_{BE2}+I_{E2}R_{e2}=U_{BE3}+I_{E3}R_{e3}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;由于各管的&lt;span class=&#34;math inline&#34;&gt;\(U_{BE}\)&lt;/span&gt;大致相等，则&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+I_{E0}R_{e0}\approx I_{E1}R_{e1}\approx I_{E2}R_{e2}\approx I_{E3}R_{e3}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;当&lt;span class=&#34;math inline&#34;&gt;\(I_{E0}\)&lt;/span&gt;确定之后，只要选择合适的电阻，就可以得到所需的电流。注意这里有&lt;span class=&#34;math inline&#34;&gt;\(I_R\approx I_{C0}\approx
+I_{E0}\)&lt;/span&gt;，其他路有&lt;span class=&#34;math inline&#34;&gt;\(I_{Ci}\approx
+I_{Ei}\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;当然可能会遇到&lt;span class=&#34;math inline&#34;&gt;\(R_e\)&lt;/span&gt;全都等于零的情况，那么输出电流全部都等于&lt;span class=&#34;math inline&#34;&gt;\(I_R\)&lt;/span&gt;。&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;65.jpg&#34; alt=&#34;65.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;65.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;上图的叫做多集电极管，集电极电流之比等于它们的集电区面积之比&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\dfrac{I_{C1}}{I_{C0}}=\dfrac{S_1}{S_0},\dfrac{I_{C2}}{I_{C0}}=\dfrac{S_2}{S_0}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;有源负载共射放大电路&#34;&gt;有源负载共射放大电路&lt;/h3&gt;
+&lt;figure&gt;
+&lt;img src=&#34;66.jpg&#34; alt=&#34;66.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;66.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;如上图，&lt;span class=&#34;math inline&#34;&gt;\(T_1\)&lt;/span&gt;为放大管，&lt;span class=&#34;math inline&#34;&gt;\(T_2,T_3\)&lt;/span&gt;构成镜像电流源。&lt;span class=&#34;math inline&#34;&gt;\(T_2\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(T_1\)&lt;/span&gt;的有源负载。设&lt;span class=&#34;math inline&#34;&gt;\(T_2,T_3\)&lt;/span&gt;管特性相同，从而&lt;span class=&#34;math inline&#34;&gt;\(\beta_2=\beta_3=\beta,I_{C2}=I_{C3}\)&lt;/span&gt;。基准电流有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+I_R = \dfrac{V_{CC}-U_{EB3}}{R}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;根据前面镜像电流源的讨论，空载时&lt;span class=&#34;math inline&#34;&gt;\(T_1\)&lt;/span&gt;管有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+I_{CQ1} = I_{C2} = \dfrac{\beta}{\beta+2}\cdot I_R
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;可见设置&lt;span class=&#34;math inline&#34;&gt;\(I_{CQ1}\)&lt;/span&gt;只需要&lt;span class=&#34;math inline&#34;&gt;\(V_{CC}\)&lt;/span&gt;和&lt;span class=&#34;math inline&#34;&gt;\(R\)&lt;/span&gt;相配合。&lt;/p&gt;
+&lt;p&gt;应当指出，输入端&lt;span class=&#34;math inline&#34;&gt;\(u_I\)&lt;/span&gt;中应含有直流分量，为&lt;span class=&#34;math inline&#34;&gt;\(T_1\)&lt;/span&gt;提供静态基极电流&lt;span class=&#34;math inline&#34;&gt;\(I_{BQ1}=I_{CQ1}/\beta_1\)&lt;/span&gt;，而不与镜像电流源提供的&lt;span class=&#34;math inline&#34;&gt;\(I_{C2}\)&lt;/span&gt;产生冲突。带上负载电阻&lt;span class=&#34;math inline&#34;&gt;\(R_L\)&lt;/span&gt;后，由于分流作用，&lt;span class=&#34;math inline&#34;&gt;\(I_{CQ1}\)&lt;/span&gt;会有所变化。&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\dot A_u=-\dfrac{\beta_1(r_{ce1}\parallel r_{ce2}\parallel
+R_L)}{R_b+r_{be1}}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;若&lt;span class=&#34;math inline&#34;&gt;\(R_L &amp;lt;&amp;lt; (r_{ce1}\parallel
+r_{ce2})\)&lt;/span&gt;，则&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\dot A_u\approx -\dfrac{\beta_1 R_L}{R_b+r_{be1}}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h1 id=&#34;反馈&#34;&gt;反馈&lt;/h1&gt;
+&lt;h2 id=&#34;反馈的基本概念&#34;&gt;反馈的基本概念&lt;/h2&gt;
+&lt;p&gt;在电子电路中，将输出量的一部分或全部通过一定的电路形式作用到输入回路，来影响其输入量的措施称为反馈。&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;67.jpg&#34; alt=&#34;67.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;67.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;使得净输入量增大的反馈称为正反馈，减小的称为负反馈。由于净输入影响输出，所以也有使得输出变化增大的称为正反馈，减小的称为负反馈。&lt;/p&gt;
+&lt;p&gt;如果反馈量只含有直流量，则成为直流反馈。如果反馈量只含有交流量，则成为交流反馈。或者说，仅在直流通路中存在的反馈是直流反馈，仅在交流通路中存在的反馈是交流反馈。很多电路中二者都有。&lt;/p&gt;
+&lt;h2 id=&#34;反馈的判断&#34;&gt;反馈的判断&lt;/h2&gt;
+&lt;h3 id=&#34;有无反馈&#34;&gt;有无反馈&lt;/h3&gt;
+&lt;p&gt;如果放大电路中存在将输出回路与输入回路相连的通路，并且影响了净输入，则引入了反馈，否则没有引入。&lt;/p&gt;
+&lt;h3 id=&#34;反馈极性的判断&#34;&gt;反馈极性的判断&lt;/h3&gt;
+&lt;p&gt;我们用到了瞬时极性法。&lt;/p&gt;
+&lt;p&gt;规定电路输入信号在某一时刻对地的极性，并以此为依据，逐级判断电路中各相关点电流的流向和电位的极性，从而得到输出信号的极性。根据输出信号的极性判断反馈信号的极性；若反馈信号使基本放大电路的净输入增大，则为正反馈，反之为负反馈。&lt;/p&gt;
+&lt;p&gt;书上描述的并没有很详细。其实是将信号源断开，然后在输入端加上一个“上升”信号，记为”+“，然后推其他相关点的极性。&lt;/p&gt;
+&lt;p&gt;对于集成放大器，从同相输入端输入，则输出端与输入相同。从反相输入端输入，则输出端与输入相反。&lt;/p&gt;
+&lt;p&gt;对于三极管，无论是PNP还是NPN，基极和发射极相同，基极和集电极相反。&lt;/p&gt;
+&lt;p&gt;经过电阻不变。由于交流、直流分开讨论，所以不需要讨论电容。&lt;/p&gt;
+&lt;p&gt;对于集成放大器，如果反馈电路接到与输入不同的那一端，一般我们会考察那一端输入电压的变化。如果是反馈到相同的一端，一般我们会考察这一端输入电流的变化。对于三极管，我们可以考察净输入电压（&lt;span class=&#34;math inline&#34;&gt;\(U_{be},U_{eb}\)&lt;/span&gt;）或者净输入电流&lt;span class=&#34;math inline&#34;&gt;\(I_B,I_E\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;有一个好用的规律：从集成运放的输出端通过电阻、电容等反馈通路引回到其反相输入端的电路必然构成负反馈电路。从集成运放的输出端通过电阻、电容等反馈通路引回到其同相输入端的电路必然构成正反馈电路&lt;/p&gt;
+&lt;p&gt;不方便做笔记，这个靠做题和解析来弄明白。&lt;/p&gt;
+&lt;p&gt;特别指出，反馈量仅仅取决于输出量，与输入量无关。&lt;/p&gt;
+&lt;h3 id=&#34;直流反馈与交流反馈的判断&#34;&gt;直流反馈与交流反馈的判断&lt;/h3&gt;
+&lt;p&gt;画出直流通路和交流通路，存在于哪个电路中，就是哪种反馈。&lt;/p&gt;
+&lt;h3 id=&#34;电压负反馈与电流负反馈的判断&#34;&gt;电压负反馈与电流负反馈的判断&lt;/h3&gt;
+&lt;p&gt;令负反馈放大电路的输出电压&lt;span class=&#34;math inline&#34;&gt;\(u_O=0\)&lt;/span&gt;，然后判断反馈量。如果反馈量也立即归零，则为电压负反馈。否则为电流负反馈。&lt;/p&gt;
+&lt;p&gt;注意这里是反馈量&lt;span class=&#34;math inline&#34;&gt;\(u_F,i_F\)&lt;/span&gt;，不是某个器件上的电压电流，有可能那个器件上的电压电流并没有归零，但是，由于输出电压作用引起的电流电压值归零了，则是电压负反馈。它们还可能有其他东西作用，所以并不一定全部归零。&lt;/p&gt;
+&lt;p&gt;这个东西不能用于实验，强制接地将会导致集成运放烧坏。只能用于理论判断。&lt;/p&gt;
+&lt;h3 id=&#34;串联反馈与并联反馈的判断&#34;&gt;串联反馈与并联反馈的判断&lt;/h3&gt;
+&lt;p&gt;若反馈信号为电压量，与输入电压求差而获得净输入电压，则为串联反馈。若反馈信号为电流量，与输入电流求差获得净输入电流，则为并联反馈。&lt;/p&gt;
+&lt;h2 id=&#34;负反馈放大电路的四种基本组态&#34;&gt;负反馈放大电路的四种基本组态&lt;/h2&gt;
+&lt;p&gt;分为电压串联负反馈、电流串联负反馈、电压并联负反馈、电流并联负反馈。&lt;/p&gt;
+&lt;h2 id=&#34;负反馈放大电路的方块图及一般表达式&#34;&gt;负反馈放大电路的方块图及一般表达式&lt;/h2&gt;
+&lt;figure&gt;
+&lt;img src=&#34;68.jpg&#34; alt=&#34;68.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;68.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;任何负反馈都可以用这个图来表示。图中&lt;span class=&#34;math inline&#34;&gt;\(\dot
+X_i\)&lt;/span&gt;为输入量，&lt;span class=&#34;math inline&#34;&gt;\(\dot
+X_f\)&lt;/span&gt;为反馈量，&lt;span class=&#34;math inline&#34;&gt;\(\dot
+X_i&amp;#39;\)&lt;/span&gt;为净输入量，&lt;span class=&#34;math inline&#34;&gt;\(\dot
+X_o\)&lt;/span&gt;为输出量。另外箭头表示信号是单向流通的。&lt;/p&gt;
+&lt;p&gt;显然，由图&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\dot X_i&amp;#39; = \dot X_i-\dot X_f
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;在信号的中频段，&lt;span class=&#34;math inline&#34;&gt;\(\dot X_i,\dot
+X_i&amp;#39;,\dot X_f\)&lt;/span&gt;都为实数，所以可以写为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+|\dot X_i&amp;#39;| = |\dot X_i| - |\dot X_f|\quad \text{or}\quad X_i&amp;#39; =
+X_i-X_f
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;基本放大器传输增益（放大倍数）、开环增益、开环放大倍数&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\dot A = \dfrac{\dot X_o}{\dot X_i&amp;#39;}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;反馈网络的传输系数、反馈系数&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\dot F = \dfrac{\dot X_f}{\dot X_o}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;反馈放大器的传输增益、闭环增益、闭环放大倍数&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\dot A_f=\dfrac{\dot X_o}{\dot X_i}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;环路增益、环路放大倍数&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\dot T = \dot A\dot F = \dfrac{\dot X_f}{\dot X_i&amp;#39;}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;由此可以推出闭环增益的另一个表达式&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\dot A_f=\dfrac{\dot A}{1+\dot A\dot F}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;以上这些在中频段都可以把头上的点去掉。&lt;/p&gt;
+&lt;p&gt;注意到若&lt;span class=&#34;math inline&#34;&gt;\(\dot A\dot
+F&amp;lt;0\)&lt;/span&gt;，则&lt;span class=&#34;math inline&#34;&gt;\(|\dot A_f|&amp;gt;|\dot
+A|\)&lt;/span&gt;，则说明引入了正反馈。若&lt;span class=&#34;math inline&#34;&gt;\(\dot
+A\dot
+F=-1\)&lt;/span&gt;，则说明电路在没有输入的时候就有输出，称电路产生了自激震荡。正反馈时&lt;span class=&#34;math inline&#34;&gt;\(X_i&amp;#39;=X_i+X_f,A_f=\dfrac{A}{1-AF}\)&lt;/span&gt;（此时&lt;span class=&#34;math inline&#34;&gt;\(AF&amp;gt;0\)&lt;/span&gt;）&lt;/p&gt;
+&lt;h3 id=&#34;四种组态的方块图&#34;&gt;四种组态的方块图&lt;/h3&gt;
+&lt;figure&gt;
+&lt;img src=&#34;69.jpg&#34; alt=&#34;69.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;69.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;显然不同电路的输入输出反馈量不同，得到的各种放大倍数量纲都不同，功能也就不同。除了环路放大倍数的量纲，它们都为一。&lt;/p&gt;
+&lt;h2 id=&#34;深度负反馈&#34;&gt;深度负反馈&lt;/h2&gt;
+&lt;p&gt;方便我打字起见，后面不打字母上面的点了。&lt;/p&gt;
+&lt;p&gt;定义反馈深度为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+D = 1+AF = \dfrac{X_i}{X_i&amp;#39;}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;若&lt;span class=&#34;math inline&#34;&gt;\(D&amp;gt;&amp;gt;1\)&lt;/span&gt;即&lt;span class=&#34;math inline&#34;&gt;\(AF&amp;gt;&amp;gt;1\)&lt;/span&gt;时，有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+A_f \approx \dfrac{1}{F}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;此时引入了深度负反馈。又因为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+A_f = \dfrac{X_o}{X_i},\quad F=\dfrac{X_f}{X_o},\quad
+A_f\approx\dfrac{1}{F}=\dfrac{X_o}{X_f}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;所以有&lt;span class=&#34;math inline&#34;&gt;\(X_i\approx
+X_f\)&lt;/span&gt;。可见深度负反馈的实质是在近似分析中忽略净输入量。&lt;/p&gt;
+&lt;p&gt;求解深度负反馈放大电路放大倍数的一般步骤是&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;正确判断反馈组态&lt;/li&gt;
+&lt;li&gt;求解反馈系数&lt;/li&gt;
+&lt;li&gt;利用&lt;span class=&#34;math inline&#34;&gt;\(F\)&lt;/span&gt;求解&lt;span class=&#34;math inline&#34;&gt;\(A_f\)&lt;/span&gt;&lt;/li&gt;
 &lt;/ol&gt;
 
 
