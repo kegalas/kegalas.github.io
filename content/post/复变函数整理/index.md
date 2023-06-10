@@ -105,7 +105,7 @@ $$
 
 1. $Rez=(z+\overline{z})/2,Imz=(z-\overline z)/2i$
 2. $z\overline z=|z|^2$
-3. $\overline{z+w}=\overline z+\overline w,\overline{zw}=\overline z\cdot\overline w$
+3. $\overline{z+w}=\overline z+\overline w,\overline{zw}=\overline z\cdot\overline w,\overline{z/w}=\overline{z}/\overline{w}$
 4. $|zw|=|z||w|,|z/w|=|z|/|w|$
 5. $|z|=|\overline z|$
 6. $|Rez|\leq |z|,|Imz|\leq|z|$

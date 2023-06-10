@@ -121,7 +121,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 41 分钟
+                    阅读时长: 45 分钟
                 </time>
             </div>
         
@@ -489,7 +489,7 @@ a\delta&#39;&#39;(t)+b\delta&#39;(t)+c\delta(t)+r_0(t)\)</span>（其中<span cl
 h_1&#39;&#39;+a_1h_1&#39;+a_0h_1 = \delta
 \]</span></p>
 <p><span class="math display">\[
-h_1(0_-)=h_1&#39;(0-) = 0
+h_1(0_-)=h_1&#39;(0_-) = 0
 \]</span></p>
 <p>计算出<span class="math inline">\(h_1(0_+),h_1&#39;(0_+)\)</span>，然后我们使用之前提到的解法求出<span class="math inline">\(h_1\)</span>，不过显然这里特解为<span class="math inline">\(0\)</span>，和齐次解具有同样的形式。</p>
 <ol start="2" type="1">
@@ -505,7 +505,7 @@ b_2h_1&#39;&#39;+b_1h_1&#39;+b_0h_1\)</span>。不过注意这个<span class="ma
 g_1&#39;&#39;+a_1g_1&#39;+a_0g_1 = \varepsilon
 \]</span></p>
 <p><span class="math display">\[
-g_1(0_-)=g_1&#39;(0-) = 0
+g_1(0_-)=g_1&#39;(0_-) = 0
 \]</span></p>
 <p>计算出<span class="math inline">\(g_1(0_+),g_1&#39;(0_+)\)</span>，然后我们使用之前提到的解法求出<span class="math inline">\(g_1\)</span></p>
 <ol start="2" type="1">
@@ -1193,6 +1193,11 @@ R(\tau)\leftrightarrow \mathcal{E}(w)
 <li>对于一般周期信号，将幅度下降为<span class="math inline">\(\dfrac{1}{10}|F_n|_{\text{max}}\)</span>的频率定义为频带宽度</li>
 <li>系统的通频带<span class="math inline">\(&gt;\)</span>信号的带宽，才能不失真。</li>
 </ol>
+<h2 id="无失真传输">无失真传输</h2>
+<p>信号无失真传输是指系统的输出信号与输入信号相比，只有幅度的大小和出现时间的先后不同，而没有波形上的变化。</p>
+<p>其条件为</p>
+<p>对于系统的<span class="math inline">\(h(t)\)</span>，<span class="math inline">\(h(t)=K\delta(t-t_d)\)</span></p>
+<p>或者对于系统的<span class="math inline">\(H(jw)=Ke^{-jwt_d}\)</span></p>
 <h2 id="功率频谱">功率频谱</h2>
 <p><span class="math display">\[
 P = \lim_{T\to\infty}\dfrac{1}{T}\int_T f^2(t)dt =
@@ -1207,6 +1212,18 @@ P = \lim_{T\to\infty}\dfrac{1}{T}\int_T f^2(t)dt =
 R(\tau)\leftrightarrow\mathcal{P}(w)
 \]</span></p>
 <p>即功率信号的自相关函数与其功率谱是一对傅里叶变换。</p>
+<h2 id="物理可实现条件">物理可实现条件</h2>
+<p>一个系统要在物理上可以实现，要求</p>
+<p><strong>时域特性</strong></p>
+<p><span class="math inline">\(h(t)=0,t&lt;0\)</span>，也就是要求是因果系统。响应不应出现在激励之前。</p>
+<p><strong>频域特性</strong></p>
+<p><span class="math display">\[
+\int ^{+intfy}_{-\infty} |H(jw)^2|dw&lt;\infty\quad \text{and}\quad \int
+^{+intfy}_{-\infty} \dfrac{|\ln |H(jw)||}{1+w^2}dw&lt;\infty
+\]</span></p>
+<p>这称为佩利-维纳准则，这是一个必要条件。</p>
+<p>对于物理可实现系统,可以允许<span class="math inline">\(H(jw)\)</span>特性在某些不连续的频率点上为<span class="math inline">\(0\)</span>，但不允许在一个有限频带内为<span class="math inline">\(0\)</span>。</p>
+<p>佩利-维纳准则要求可实现的幅度特性其总的衰减不能过于迅速；</p>
 <h1 id="离散时间傅里叶变换">离散时间傅里叶变换</h1>
 <h1 id="信号与系统的时域和频域特性">信号与系统的时域和频域特性</h1>
 <h1 id="采样">采样</h1>
@@ -1225,9 +1242,9 @@ p(t) = \sum^{+\infty}_{n=-\infty}\delta(t-nT)
 X_p(jw) = \dfrac{1}{T}\sum^{+\infty}_{k=-\infty}X(j(w-kw_s))
 \]</span></p>
 <h2 id="采样定理">采样定理</h2>
-<p>设<span class="math inline">\(x(t)\)</span>是某一个带限信号，在<span class="math inline">\(|w|&gt;w_M\)</span>时，<span class="math inline">\(X(jw)=0\)</span>。如果<span class="math inline">\(w_s&gt;2w_M\)</span>，其中<span class="math inline">\(w_s=2\pi /T\)</span>，那么<span class="math inline">\(x(t)\)</span>就唯一地由其样本<span class="math inline">\(x(nT),n=0,\pm1,\pm2,\cdots\)</span>所确定</p>
+<p>设<span class="math inline">\(x(t)\)</span>是某一个带限信号，在<span class="math inline">\(|w|&gt;w_M\)</span>时，<span class="math inline">\(X(jw)=0\)</span>。如果采样频率<span class="math inline">\(w_s&gt;2w_M\)</span>，其中<span class="math inline">\(w_s=2\pi /T\)</span>，那么<span class="math inline">\(x(t)\)</span>就唯一地由其样本<span class="math inline">\(x(nT),n=0,\pm1,\pm2,\cdots\)</span>所确定</p>
 <p>在采样定理中，采样频率必须大于<span class="math inline">\(2w_M\)</span>，该频率<span class="math inline">\(2w_M\)</span>一般称为奈奎斯特速率。</p>
-<p>已知样本值，重建<span class="math inline">\(x(t)\)</span>的方法：产生一个周期冲激串，其冲激幅度就是这些依次而来的样本值；然后将该冲激串通过一个增益为<span class="math inline">\(T\)</span>，截止频率大于<span class="math inline">\(w_M\)</span>而小于<span class="math inline">\(w_s-w_m\)</span>的理想低筒滤波器，该滤波器的输出就是<span class="math inline">\(x(t)\)</span>。</p>
+<p>已知样本值，重建<span class="math inline">\(x(t)\)</span>的方法：产生一个周期冲激串，其冲激幅度就是这些依次而来的样本值；然后将该冲激串通过一个增益为<span class="math inline">\(T\)</span>，截止频率<span class="math inline">\(w_c\)</span>大于<span class="math inline">\(w_M\)</span>而小于<span class="math inline">\(w_s-w_M\)</span>的理想低通滤波器，该滤波器的输出就是<span class="math inline">\(x(t)\)</span>。</p>
 <p>这个滤波器的<span class="math inline">\(h(t)\)</span>为</p>
 <p><span class="math display">\[
 h(t) = T_s\dfrac{w_c}{\pi}Sa(w_ct)
@@ -1236,6 +1253,18 @@ h(t) = T_s\dfrac{w_c}{\pi}Sa(w_ct)
 <p>此时</p>
 <p><span class="math display">\[
 x(t) = \sum^{+\infty}_{n=-\infty}x(nT_s)Sa[\dfrac{w_s}{2}(t-nT_s)]
+\]</span></p>
+<p>注意，你可能会奇怪式子里面的<span class="math inline">\(T_s\dfrac{w_c}{\pi}\)</span>到哪里去了，实际上当<span class="math inline">\(w_c=0.5w_s\)</span>时，因为<span class="math inline">\(w_s=\dfrac{2\pi}{T_s}\)</span>，这个式子约分为<span class="math inline">\(0\)</span></p>
+<h3 id="奈奎斯特速率的运算性质">奈奎斯特速率的运算性质</h3>
+<p>假设<span class="math inline">\(f(t)\)</span>的最高频率为<span class="math inline">\(w_M\)</span></p>
+<p><span class="math inline">\(f(at)\)</span>，则对应<span class="math inline">\(w_M&#39;=|a|w_M,w_s=2w&#39;_M\)</span></p>
+<p><span class="math inline">\(f_1(t)+f_2(t)\)</span>，则对应<span class="math inline">\(w&#39;_M=\max{\{w_{m1},w_{m2}\}}\)</span></p>
+<p><span class="math inline">\(f_1(t)\ast f_2(t)\)</span>，则对应<span class="math inline">\(w&#39;_M=\min{\{w_{m1},w_{m2}\}}\)</span></p>
+<p><span class="math inline">\(f_1(t)f_2(t)\)</span>，则对应<span class="math inline">\(w&#39;_M=w_{m1}+w_{m2}\)</span></p>
+<h3 id="频率采样定理">频率采样定理</h3>
+<p>一个在时域区间<span class="math inline">\((-t_m,t_m)\)</span>以外为<span class="math inline">\(0\)</span>的时限信号<span class="math inline">\(f(t)\)</span>的频谱函数，可唯一地由其在均匀频率间隔<span class="math inline">\(f_s\)</span>上的样值点<span class="math inline">\(F(jnw_s)\)</span>确定。要求<span class="math inline">\(f_s&lt;1/(2t_m)\)</span>，或者说<span class="math inline">\(w_s&lt;2\pi/(2t_m)\)</span></p>
+<p><span class="math display">\[
+F(jw) = \sum^{+\infty}_{n=-\infty} F(j\dfrac{n\pi}{t_m})Sa(wt_m-n\pi)
 \]</span></p>
 <h1 id="拉普拉斯变换">拉普拉斯变换</h1>
 <p>一个信号<span class="math inline">\(x(t)\)</span>的拉普拉斯变换定义如下</p>
@@ -1259,7 +1288,7 @@ X(\sigma+jw) = \int^{+\infty}_{-\infty}x(t)e^{-(\sigma+jw)t}dt =
 <p><span class="math display">\[
 X(s) = \dfrac{N(s)}{D(s)}
 \]</span></p>
-<p>使得<span class="math inline">\(N(s)=0\)</span>的<span class="math inline">\(s\)</span>称为零点，使得<span class="math inline">\(D(s)=0\)</span>的<span class="math inline">\(s\)</span>称为极点。把这些点标记在复平面上。我们可以判断收敛域。</p>
+<p>使得<span class="math inline">\(N(s)=0\)</span>的<span class="math inline">\(s\)</span>称为零点，使得<span class="math inline">\(D(s)=0\)</span>的<span class="math inline">\(s\)</span>称为极点。把这些点标记在复平面上。我们可以判断收敛域。极点用叉号表示，零点用圈圈表示。</p>
 <h2 id="拉普拉斯变换的收敛域">拉普拉斯变换的收敛域</h2>
 <p>收敛域记作<span class="math inline">\(ROC\)</span></p>
 <ol type="1">
@@ -1461,7 +1490,7 @@ Y_{zs}(s) =
 <p>如果有零输入响应，那么</p>
 <p><span class="math display">\[
 Y_{zi} =
-\sum^N_{k=0}a_k\bigg[\sum^{k-1}_{p=0}s^{k-1-p}y^{(p)}(0^-)\bigg]\bigg/\bigg(\sum^N_{k=0}a_ks^k\bigg)
+-\sum^N_{k=0}a_k\bigg[\sum^{k-1}_{p=0}s^{k-1-p}y^{(p)}(0^-)\bigg]\bigg/\bigg(\sum^N_{k=0}a_ks^k\bigg)
 \]</span></p>
 <p>全响应就是两个相加，之后要求<span class="math inline">\(s\)</span>域上的则逆变换即可。</p>
 <p>相比之下，傅立叶变换只能求零状态而不能求零输入。</p>
@@ -1481,7 +1510,7 @@ u(t) = L\dfrac{di(t)}{dt}\leftrightarrow U(s) = sLI(s)-Li(0^-)
 <p><em>电容</em></p>
 <p><span class="math display">\[
 i(t) = C\dfrac{du(t)}{dt}\leftrightarrow
-U(s)=\dfrac{sC}{I(s)}+\dfrac{u(0^-)}{s}
+U(s)=\dfrac{1}{sC}I(s)+\dfrac{u(0^-)}{s}
 \]</span></p>
 <p>变换后变成了一个大小为<span class="math inline">\(1/(sC)\)</span>的电阻，和一个电压大小为<span class="math inline">\(u(0^-)/s\)</span>的电压源，方向：<span class="math inline">\(i\)</span>从电压源的正极流进，负极流出。也可以等效为电流源。</p>
 <p><em>电源</em></p>
@@ -1601,14 +1630,14 @@ a^nx[n]\leftrightarrow X(a^{-1}z),ROC=R的尺度变换
 \]</span></p>
 <p><em>时间翻转</em></p>
 <p><span class="math display">\[
-x[-n]\leftrightarrow X(a^{-1}z),ROC=R^{-1}
+x[-n]\leftrightarrow X(z^{-1}),ROC=R^{-1}
 \]</span></p>
 <p><em>时间扩展</em></p>
 <p><span class="math display">\[
 x_{(k)}[n] = \left\{\begin{matrix}
 x[r], &amp; n=rk\\
 0, &amp; n\neq rk
-\end{matrix}\right.\leftrightarrow X(z^k)
+\end{matrix}\right.\leftrightarrow X(z^k),ROC = R^{1/k}
 \]</span></p>
 <p><em>共轭</em></p>
 <p><span class="math display">\[
@@ -1689,7 +1718,7 @@ w_0)z^{-1}+r^2z^{-2}},|z|&gt;r
 \]</span></p>
 <p><span class="math display">\[
 r^n\sin(w_0n)u[n]\leftrightarrow\dfrac{r(\sin w_0)z^{-1}}{1-2r(\cos
-w_0)z^{-1}+r^2z^{-2}},|z|&gt;1
+w_0)z^{-1}+r^2z^{-2}},|z|&gt;r
 \]</span></p>
 <h2 id="利用z变换分析与表征线性时不变系统">利用<span class="math inline">\(z\)</span>变换分析与表征线性时不变系统</h2>
 <p>同前，<span class="math inline">\(z\)</span>变换也有</p>
@@ -1719,7 +1748,7 @@ Y(z)=H(z)X(z)
 \]</span></p>
 <p>如果有初始值，用后面的单边<span class="math inline">\(z\)</span>变换的性质可以求得</p>
 <p><span class="math display">\[
-\sum^N_{k=0}a_k[z^{-k}Y(z)+\sum^{k-1}_{i=0}y[i-k]z^{-i}=\sum^M_{k=0}b_kz^{-k}X(z)
+\sum^N_{k=0}a_k[z^{-k}Y(z)+\sum^{k-1}_{i=0}y[i-k]z^{-i}]=\sum^M_{k=0}b_kz^{-k}X(z)
 \]</span></p>
 <p>之后我们可以求得</p>
 <p><span class="math display">\[
@@ -1768,9 +1797,13 @@ x[n]\overset{\mathcal{UZ}}{\longleftrightarrow}X(z) =
 <p>不列出收敛域，任何单边<span class="math inline">\(z\)</span>变换的收敛域总是位于某个圆的外边。</p>
 <p><em>线性，<span class="math inline">\(z\)</span>域尺度变换，时间扩展，共轭（实际上我不知道这里是不是书籍的错误，到底是相同还是不同），累加，<span class="math inline">\(z\)</span>域微分，初值终值定理</em></p>
 <p>和双边的一样。</p>
+<p><em>时间延迟</em></p>
+<p><span class="math display">\[
+x[n-1] \leftrightarrow z^{-1}X(z)+x[-1]
+\]</span></p>
 <p><em>时移</em></p>
 <p><span class="math display">\[
-x[n+1] = zX(z)-zx[0]
+x[n+1] \leftrightarrow zX(z)-zx[0]
 \]</span></p>
 <p><em>卷积</em></p>
 <p>特别要求<span class="math inline">\(n&lt;0\)</span>时，<span class="math inline">\(x_1[n],x_2[n]\)</span>都为零。</p>
@@ -1930,6 +1963,81 @@ H(s) = \dfrac{s+1}{(s^2+5s+6)(s+4)} =
 <figcaption aria-hidden="true">8.jpg</figcaption>
 </figure>
 <p>那么并联的形式相信不难理解，无非就是裂项成多个式子。</p>
+<h1 id="系统的状态变量分析">系统的状态变量分析</h1>
+<h2 id="状态变量与状态方程">状态变量与状态方程</h2>
+<p>对于一般的<span class="math inline">\(n\)</span>阶多输入-多输出LTI连续系统，（<span class="math inline">\(f\)</span>有<span class="math inline">\(p\)</span>个，<span class="math inline">\(y\)</span>有<span class="math inline">\(q\)</span>个）</p>
+<figure>
+<img src="9.jpg" alt="9.jpg"/>
+<figcaption aria-hidden="true">9.jpg</figcaption>
+</figure>
+<p>其状态方程如下</p>
+<p><span class="math display">\[
+\left.\begin{matrix}
+\dot x_1 = a_{11}x_1+a_{12}x_2+\cdots+a_{1n}x_n +
+b_{11}f_1+b_{12}f_2+\cdots+b_{1p}f_p\\
+\dot x_2 = a_{21}x_1+a_{22}x_2+\cdots+a_{2n}x_n +
+b_{21}f_1+b_{22}f_2+\cdots+b_{2p}f_p \\
+\cdots \\
+\dot x_n = a_{n1}x_1+a_{n2}x_2+\cdots+a_{nn}x_n +
+b_{n1}f_1+b_{n2}f_2+\cdots+b_{np}f_p
+\end{matrix}\right\}
+\]</span></p>
+<p>其输出方程如下</p>
+<p><span class="math display">\[
+\left.\begin{matrix}
+y_1 = c_{11}x_1+c_{12}x_2+\cdots+c_{1n}x_n +
+d_{11}f_1+d_{12}f_2+\cdots+d_{1p}f_p\\
+y_2 = c_{21}x_1+c_{22}x_2+\cdots+c_{2n}x_n +
+d_{21}f_1+d_{22}f_2+\cdots+d_{2p}f_p \\
+\cdots \\
+y_q = c_{q1}x_1+c_{q2}x_2+\cdots+c_{qn}x_n +
+d_{q1}f_1+d_{q2}f_2+\cdots+d_{qp}f_p
+\end{matrix}\right\}
+\]</span></p>
+<p>其中<span class="math inline">\(x_i\)</span>为系统内部的状态变量，<span class="math inline">\(\dot x_i\)</span>表示<span class="math inline">\(x_i\)</span>的一阶导数，<span class="math inline">\(f_i\)</span>为输入信号，<span class="math inline">\(y_i\)</span>为输出信号。矩阵形式如下</p>
+<p><span class="math display">\[
+\dot{\bm x}(t) = \bm A\bm x(t) + \bm B\bm f(t)
+\]</span></p>
+<p><span class="math display">\[
+\bm y(t) = \bm C\bm x(t)+\bm D\bm f(t)
+\]</span></p>
+<p>这四个矩阵，在<span class="math inline">\(LTI\)</span>中都是常数矩阵，其中<span class="math inline">\(\bm A\)</span>为系统矩阵，<span class="math inline">\(\bm B\)</span>为控制矩阵，<span class="math inline">\(\bm C\)</span>为输出矩阵。</p>
+<p>离散的情况这些名称也相同，区别在于离散不用一阶导数，形式如下</p>
+<p><span class="math display">\[
+\bm x[n+1] = \bm A\bm x[n] + \bm B\bm f[n]
+\]</span></p>
+<p><span class="math display">\[
+\bm y[n] = \bm C\bm x[n]+\bm D\bm f[n]
+\]</span></p>
+<p>实际上用了一个前向差分。</p>
+<h2 id="从电路中建立状态方程">从电路中建立状态方程</h2>
+<p>显然，你的状态方程里是有导数的，这个导数只能来自于电感和电容。通常选择电容电压和电感电流作为状态变量。对接电容的独立节点列<span class="math inline">\(KCL\)</span>，对有电感的独立回路列<span class="math inline">\(KVL\)</span>，把这些方程整理成标准形式即可。</p>
+<h2 id="从微分方程和差分方程建立状态方程">从微分方程和差分方程建立状态方程</h2>
+<p>直接转化为信号流图，再建立，见下一节。</p>
+<h2 id="从信号流图建立状态方程">从信号流图建立状态方程</h2>
+<p>以连续系统的信号流图为例，输入输出应该可以很明显的看出来。</p>
+<figure>
+<img src="10.jpg" alt="10.jpg"/>
+<figcaption aria-hidden="true">10.jpg</figcaption>
+</figure>
+<p>然后中间的节点，<span class="math inline">\(s^{-1}\)</span>到达的节点标记为状态变量，假设标记为<span class="math inline">\(x_i\)</span>，则这个<span class="math inline">\(s^{-1}\)</span>的起始节点就是<span class="math inline">\(\dot
+x_i\)</span>。于是我们就找到了所有变量。然后我们根据流图算出变量之间的关系式，化为标准形式，就列出了状态方程。</p>
+<p>离散系统完全类似，只不过<span class="math inline">\(z^{-1}\)</span>的起始节点对应的是<span class="math inline">\(x_i[n+1]\)</span>（假设到达节点对应<span class="math inline">\(x_i[n]\)</span>）</p>
+<p>当然我们也有例外情况，就是一条边上不是常数、<span class="math inline">\(s^{-1}\)</span>这种简单的形式，比如是<span class="math inline">\(\dfrac{1}{s-2}\)</span>，那么，我们把这一小段拿出来当作一个系统看，输入是<span class="math inline">\(f_1(t)\)</span>，输出是<span class="math inline">\(y_1(t)\)</span>，就有</p>
+<p><span class="math display">\[
+\dfrac{Y_1(S)}{F_1(S)} = \dfrac{1}{s-2}
+\]</span></p>
+<p><span class="math display">\[
+sY_1(s)-2Y_1(s) = F_1(s)
+\]</span></p>
+<p><span class="math display">\[
+y_1&#39;(t)-2y_1(t)=f_1(t)
+\]</span></p>
+<p>显然，如果这条边接到的下一个节点没有别的入边，我们的输出<span class="math inline">\(y_1(t)\)</span>就是某个<span class="math inline">\(x_i(t)\)</span>，于是</p>
+<p><span class="math display">\[
+\dot x_i(t)-2x_i(t) = f_1(t)
+\]</span></p>
+<p>至于这个<span class="math inline">\(f_1(t)\)</span>则要去原来的信号流图中算出表达式。如果还有别的入边，那么<span class="math inline">\(x_i(t)\)</span>就要重新去信号流图里算了。</p>
 
 
 
@@ -2306,7 +2414,9 @@ H(s) = \dfrac{s+1}{(s^2+5s+6)(s+4)} =
         <li><a href="#帕塞瓦尔能量方程">帕塞瓦尔能量方程</a></li>
         <li><a href="#能量频谱">能量频谱</a></li>
         <li><a href="#频带宽度">频带宽度</a></li>
+        <li><a href="#无失真传输">无失真传输</a></li>
         <li><a href="#功率频谱">功率频谱</a></li>
+        <li><a href="#物理可实现条件">物理可实现条件</a></li>
       </ol>
     </li>
     <li><a href="#离散时间傅里叶变换">离散时间傅里叶变换</a></li>
@@ -2314,7 +2424,12 @@ H(s) = \dfrac{s+1}{(s^2+5s+6)(s+4)} =
     <li><a href="#采样">采样</a>
       <ol>
         <li><a href="#冲激串采样">冲激串采样</a></li>
-        <li><a href="#采样定理">采样定理</a></li>
+        <li><a href="#采样定理">采样定理</a>
+          <ol>
+            <li><a href="#奈奎斯特速率的运算性质">奈奎斯特速率的运算性质</a></li>
+            <li><a href="#频率采样定理">频率采样定理</a></li>
+          </ol>
+        </li>
       </ol>
     </li>
     <li><a href="#拉普拉斯变换">拉普拉斯变换</a>
@@ -2372,6 +2487,14 @@ H(s) = \dfrac{s+1}{(s^2+5s+6)(s+4)} =
             <li><a href="#由hshz反推信号流图">由<span class="math inline">\(H(s),H(z)\)</span>反推信号流图</a></li>
           </ol>
         </li>
+      </ol>
+    </li>
+    <li><a href="#系统的状态变量分析">系统的状态变量分析</a>
+      <ol>
+        <li><a href="#状态变量与状态方程">状态变量与状态方程</a></li>
+        <li><a href="#从电路中建立状态方程">从电路中建立状态方程</a></li>
+        <li><a href="#从微分方程和差分方程建立状态方程">从微分方程和差分方程建立状态方程</a></li>
+        <li><a href="#从信号流图建立状态方程">从信号流图建立状态方程</a></li>
       </ol>
     </li>
   </ol>

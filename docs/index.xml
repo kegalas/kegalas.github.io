@@ -1064,6 +1064,10 @@ r_{ce2})\)&lt;/span&gt;，则&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 \dot A_u\approx -\dfrac{\beta_1 R_L}{R_b+r_{be1}}
 \]&lt;/span&gt;&lt;/p&gt;
+&lt;h1 id=&#34;频率响应&#34;&gt;频率响应&lt;/h1&gt;
+&lt;p&gt;我们学院的模电学时很少，没有涉及这方面，主要介绍一下波特图的横纵坐标。可能会在放大倍数中用到&lt;/p&gt;
+&lt;h2 id=&#34;波特图&#34;&gt;波特图&lt;/h2&gt;
+&lt;p&gt;波特图由对数幅频特性和对数相频特性两部分组成，它们的横轴采用对数刻度&lt;span class=&#34;math inline&#34;&gt;\(\lg f\)&lt;/span&gt;，幅频特性的纵轴采用&lt;span class=&#34;math inline&#34;&gt;\(20\lg |\dot A_u|\)&lt;/span&gt;表示，单位是分贝&lt;span class=&#34;math inline&#34;&gt;\((dB)\)&lt;/span&gt;，相频特性的纵轴仍采用&lt;span class=&#34;math inline&#34;&gt;\(\varphi\)&lt;/span&gt;表示。这样不但开阔了视野，还能将放大倍数的乘除运算转换成加减运算。&lt;/p&gt;
 &lt;h1 id=&#34;反馈&#34;&gt;反馈&lt;/h1&gt;
 &lt;h2 id=&#34;反馈的基本概念&#34;&gt;反馈的基本概念&lt;/h2&gt;
 &lt;p&gt;在电子电路中，将输出量的一部分或全部通过一定的电路形式作用到输入回路，来影响其输入量的措施称为反馈。&lt;/p&gt;
@@ -1172,6 +1176,51 @@ X_f\)&lt;/span&gt;。可见深度负反馈的实质是在近似分析中忽略�
 &lt;li&gt;求解反馈系数&lt;/li&gt;
 &lt;li&gt;利用&lt;span class=&#34;math inline&#34;&gt;\(F\)&lt;/span&gt;求解&lt;span class=&#34;math inline&#34;&gt;\(A_f\)&lt;/span&gt;&lt;/li&gt;
 &lt;/ol&gt;
+&lt;h2 id=&#34;负反馈对放大电路性能的影响&#34;&gt;负反馈对放大电路性能的影响&lt;/h2&gt;
+&lt;h3 id=&#34;稳定放大系数&#34;&gt;稳定放大系数&lt;/h3&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\dfrac{dA_f}{A_f} = \dfrac{1}{1+AF}\dfrac{dA}{A}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;也就是说，负反馈放大电路放大倍数的相对变化量&lt;span class=&#34;math inline&#34;&gt;\(dA_f/A_f\)&lt;/span&gt;仅为其开环增益相对变化量的&lt;span class=&#34;math inline&#34;&gt;\((1+AF)\)&lt;/span&gt;分之一。也就是说&lt;span class=&#34;math inline&#34;&gt;\(A_f\)&lt;/span&gt;的稳定性是&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;的&lt;span class=&#34;math inline&#34;&gt;\((1+AF)\)&lt;/span&gt;倍。&lt;/p&gt;
+&lt;p&gt;但是，这是以损失了放大倍数为代价的，&lt;span class=&#34;math inline&#34;&gt;\(A_f\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;的&lt;span class=&#34;math inline&#34;&gt;\((1+AF)\)&lt;/span&gt;分之一。&lt;/p&gt;
+&lt;h3 id=&#34;对输入电阻的影响&#34;&gt;对输入电阻的影响&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;串联负反馈时&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+R_{if} = (1+AF)R_i
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;注意，有些输入电阻是有多个的，有些并联有些串联，这里引入串联负反馈，只影响在反馈环上的输入电阻，其他并联的输入电阻不变，将这些电阻最后全部并联起来再计算。之后也有类似的情况，不再讨论。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;并联负反馈时&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+R_{if} = \dfrac{R_{i}}{1+AF}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;对输出电阻的影响&#34;&gt;对输出电阻的影响&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;电压负反馈时&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+R_{of} = \dfrac{R_o}{1+AF}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;电流负反馈时&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+R_{of} = (1+AF)R_o
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;展宽频带&#34;&gt;展宽频带&lt;/h3&gt;
+&lt;p&gt;原来的频带，假设中频段放大倍数为&lt;span class=&#34;math inline&#34;&gt;\(A_m\)&lt;/span&gt;，则低频使得放大倍数为&lt;span class=&#34;math inline&#34;&gt;\(0.707A_m\)&lt;/span&gt;或&lt;span class=&#34;math inline&#34;&gt;\(A_m-3dB\)&lt;/span&gt;的频率叫做下限频率&lt;span class=&#34;math inline&#34;&gt;\(f_L\)&lt;/span&gt;。高频使得放大倍数为&lt;span class=&#34;math inline&#34;&gt;\(0.707A_m\)&lt;/span&gt;或&lt;span class=&#34;math inline&#34;&gt;\(A_m-3dB\)&lt;/span&gt;的频率叫做上限频率&lt;span class=&#34;math inline&#34;&gt;\(f_H\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+f_{Lf} = \dfrac{f_L}{1+A_mF}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;一般情况下，由于&lt;span class=&#34;math inline&#34;&gt;\(f_H&amp;gt;&amp;gt;f_L,f_{Hf}&amp;gt;&amp;gt;f_{Lf}\)&lt;/span&gt;，因此，近似有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+f_{bw} = f_H-f_L \approx f_H
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+f_{bwf} = f_{Hf}-f_{Lf}\approx f_{Hf}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;即引入负反馈使频带展宽到基本放大电路的&lt;span class=&#34;math inline&#34;&gt;\((1+AF)\)&lt;/span&gt;倍。&lt;/p&gt;
+&lt;h3 id=&#34;减小非线性失真&#34;&gt;减小非线性失真&lt;/h3&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+THD_f=\dfrac{THD}{1+AF}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;提高信噪比&#34;&gt;提高信噪比&lt;/h3&gt;
+&lt;p&gt;提高&lt;span class=&#34;math inline&#34;&gt;\((1+AF)\)&lt;/span&gt;倍。&lt;/p&gt;
 
 
 </description>
@@ -1717,7 +1766,7 @@ a\delta&amp;#39;&amp;#39;(t)+b\delta&amp;#39;(t)+c\delta(t)+r_0(t)\)&lt;/span&gt
 h_1&amp;#39;&amp;#39;+a_1h_1&amp;#39;+a_0h_1 = \delta
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
-h_1(0_-)=h_1&amp;#39;(0-) = 0
+h_1(0_-)=h_1&amp;#39;(0_-) = 0
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;计算出&lt;span class=&#34;math inline&#34;&gt;\(h_1(0_+),h_1&amp;#39;(0_+)\)&lt;/span&gt;，然后我们使用之前提到的解法求出&lt;span class=&#34;math inline&#34;&gt;\(h_1\)&lt;/span&gt;，不过显然这里特解为&lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt;，和齐次解具有同样的形式。&lt;/p&gt;
 &lt;ol start=&#34;2&#34; type=&#34;1&#34;&gt;
@@ -1733,7 +1782,7 @@ b_2h_1&amp;#39;&amp;#39;+b_1h_1&amp;#39;+b_0h_1\)&lt;/span&gt;。不过注意这
 g_1&amp;#39;&amp;#39;+a_1g_1&amp;#39;+a_0g_1 = \varepsilon
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
-g_1(0_-)=g_1&amp;#39;(0-) = 0
+g_1(0_-)=g_1&amp;#39;(0_-) = 0
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;计算出&lt;span class=&#34;math inline&#34;&gt;\(g_1(0_+),g_1&amp;#39;(0_+)\)&lt;/span&gt;，然后我们使用之前提到的解法求出&lt;span class=&#34;math inline&#34;&gt;\(g_1\)&lt;/span&gt;&lt;/p&gt;
 &lt;ol start=&#34;2&#34; type=&#34;1&#34;&gt;
@@ -2421,6 +2470,11 @@ R(\tau)\leftrightarrow \mathcal{E}(w)
 &lt;li&gt;对于一般周期信号，将幅度下降为&lt;span class=&#34;math inline&#34;&gt;\(\dfrac{1}{10}|F_n|_{\text{max}}\)&lt;/span&gt;的频率定义为频带宽度&lt;/li&gt;
 &lt;li&gt;系统的通频带&lt;span class=&#34;math inline&#34;&gt;\(&amp;gt;\)&lt;/span&gt;信号的带宽，才能不失真。&lt;/li&gt;
 &lt;/ol&gt;
+&lt;h2 id=&#34;无失真传输&#34;&gt;无失真传输&lt;/h2&gt;
+&lt;p&gt;信号无失真传输是指系统的输出信号与输入信号相比，只有幅度的大小和出现时间的先后不同，而没有波形上的变化。&lt;/p&gt;
+&lt;p&gt;其条件为&lt;/p&gt;
+&lt;p&gt;对于系统的&lt;span class=&#34;math inline&#34;&gt;\(h(t)\)&lt;/span&gt;，&lt;span class=&#34;math inline&#34;&gt;\(h(t)=K\delta(t-t_d)\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;或者对于系统的&lt;span class=&#34;math inline&#34;&gt;\(H(jw)=Ke^{-jwt_d}\)&lt;/span&gt;&lt;/p&gt;
 &lt;h2 id=&#34;功率频谱&#34;&gt;功率频谱&lt;/h2&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 P = \lim_{T\to\infty}\dfrac{1}{T}\int_T f^2(t)dt =
@@ -2435,6 +2489,18 @@ P = \lim_{T\to\infty}\dfrac{1}{T}\int_T f^2(t)dt =
 R(\tau)\leftrightarrow\mathcal{P}(w)
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;即功率信号的自相关函数与其功率谱是一对傅里叶变换。&lt;/p&gt;
+&lt;h2 id=&#34;物理可实现条件&#34;&gt;物理可实现条件&lt;/h2&gt;
+&lt;p&gt;一个系统要在物理上可以实现，要求&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;时域特性&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(h(t)=0,t&amp;lt;0\)&lt;/span&gt;，也就是要求是因果系统。响应不应出现在激励之前。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;频域特性&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\int ^{+intfy}_{-\infty} |H(jw)^2|dw&amp;lt;\infty\quad \text{and}\quad \int
+^{+intfy}_{-\infty} \dfrac{|\ln |H(jw)||}{1+w^2}dw&amp;lt;\infty
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;这称为佩利-维纳准则，这是一个必要条件。&lt;/p&gt;
+&lt;p&gt;对于物理可实现系统,可以允许&lt;span class=&#34;math inline&#34;&gt;\(H(jw)\)&lt;/span&gt;特性在某些不连续的频率点上为&lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt;，但不允许在一个有限频带内为&lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;佩利-维纳准则要求可实现的幅度特性其总的衰减不能过于迅速；&lt;/p&gt;
 &lt;h1 id=&#34;离散时间傅里叶变换&#34;&gt;离散时间傅里叶变换&lt;/h1&gt;
 &lt;h1 id=&#34;信号与系统的时域和频域特性&#34;&gt;信号与系统的时域和频域特性&lt;/h1&gt;
 &lt;h1 id=&#34;采样&#34;&gt;采样&lt;/h1&gt;
@@ -2453,9 +2519,9 @@ p(t) = \sum^{+\infty}_{n=-\infty}\delta(t-nT)
 X_p(jw) = \dfrac{1}{T}\sum^{+\infty}_{k=-\infty}X(j(w-kw_s))
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;h2 id=&#34;采样定理&#34;&gt;采样定理&lt;/h2&gt;
-&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(x(t)\)&lt;/span&gt;是某一个带限信号，在&lt;span class=&#34;math inline&#34;&gt;\(|w|&amp;gt;w_M\)&lt;/span&gt;时，&lt;span class=&#34;math inline&#34;&gt;\(X(jw)=0\)&lt;/span&gt;。如果&lt;span class=&#34;math inline&#34;&gt;\(w_s&amp;gt;2w_M\)&lt;/span&gt;，其中&lt;span class=&#34;math inline&#34;&gt;\(w_s=2\pi /T\)&lt;/span&gt;，那么&lt;span class=&#34;math inline&#34;&gt;\(x(t)\)&lt;/span&gt;就唯一地由其样本&lt;span class=&#34;math inline&#34;&gt;\(x(nT),n=0,\pm1,\pm2,\cdots\)&lt;/span&gt;所确定&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(x(t)\)&lt;/span&gt;是某一个带限信号，在&lt;span class=&#34;math inline&#34;&gt;\(|w|&amp;gt;w_M\)&lt;/span&gt;时，&lt;span class=&#34;math inline&#34;&gt;\(X(jw)=0\)&lt;/span&gt;。如果采样频率&lt;span class=&#34;math inline&#34;&gt;\(w_s&amp;gt;2w_M\)&lt;/span&gt;，其中&lt;span class=&#34;math inline&#34;&gt;\(w_s=2\pi /T\)&lt;/span&gt;，那么&lt;span class=&#34;math inline&#34;&gt;\(x(t)\)&lt;/span&gt;就唯一地由其样本&lt;span class=&#34;math inline&#34;&gt;\(x(nT),n=0,\pm1,\pm2,\cdots\)&lt;/span&gt;所确定&lt;/p&gt;
 &lt;p&gt;在采样定理中，采样频率必须大于&lt;span class=&#34;math inline&#34;&gt;\(2w_M\)&lt;/span&gt;，该频率&lt;span class=&#34;math inline&#34;&gt;\(2w_M\)&lt;/span&gt;一般称为奈奎斯特速率。&lt;/p&gt;
-&lt;p&gt;已知样本值，重建&lt;span class=&#34;math inline&#34;&gt;\(x(t)\)&lt;/span&gt;的方法：产生一个周期冲激串，其冲激幅度就是这些依次而来的样本值；然后将该冲激串通过一个增益为&lt;span class=&#34;math inline&#34;&gt;\(T\)&lt;/span&gt;，截止频率大于&lt;span class=&#34;math inline&#34;&gt;\(w_M\)&lt;/span&gt;而小于&lt;span class=&#34;math inline&#34;&gt;\(w_s-w_m\)&lt;/span&gt;的理想低筒滤波器，该滤波器的输出就是&lt;span class=&#34;math inline&#34;&gt;\(x(t)\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;已知样本值，重建&lt;span class=&#34;math inline&#34;&gt;\(x(t)\)&lt;/span&gt;的方法：产生一个周期冲激串，其冲激幅度就是这些依次而来的样本值；然后将该冲激串通过一个增益为&lt;span class=&#34;math inline&#34;&gt;\(T\)&lt;/span&gt;，截止频率&lt;span class=&#34;math inline&#34;&gt;\(w_c\)&lt;/span&gt;大于&lt;span class=&#34;math inline&#34;&gt;\(w_M\)&lt;/span&gt;而小于&lt;span class=&#34;math inline&#34;&gt;\(w_s-w_M\)&lt;/span&gt;的理想低通滤波器，该滤波器的输出就是&lt;span class=&#34;math inline&#34;&gt;\(x(t)\)&lt;/span&gt;。&lt;/p&gt;
 &lt;p&gt;这个滤波器的&lt;span class=&#34;math inline&#34;&gt;\(h(t)\)&lt;/span&gt;为&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 h(t) = T_s\dfrac{w_c}{\pi}Sa(w_ct)
@@ -2464,6 +2530,18 @@ h(t) = T_s\dfrac{w_c}{\pi}Sa(w_ct)
 &lt;p&gt;此时&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 x(t) = \sum^{+\infty}_{n=-\infty}x(nT_s)Sa[\dfrac{w_s}{2}(t-nT_s)]
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;注意，你可能会奇怪式子里面的&lt;span class=&#34;math inline&#34;&gt;\(T_s\dfrac{w_c}{\pi}\)&lt;/span&gt;到哪里去了，实际上当&lt;span class=&#34;math inline&#34;&gt;\(w_c=0.5w_s\)&lt;/span&gt;时，因为&lt;span class=&#34;math inline&#34;&gt;\(w_s=\dfrac{2\pi}{T_s}\)&lt;/span&gt;，这个式子约分为&lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;奈奎斯特速率的运算性质&#34;&gt;奈奎斯特速率的运算性质&lt;/h3&gt;
+&lt;p&gt;假设&lt;span class=&#34;math inline&#34;&gt;\(f(t)\)&lt;/span&gt;的最高频率为&lt;span class=&#34;math inline&#34;&gt;\(w_M\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(f(at)\)&lt;/span&gt;，则对应&lt;span class=&#34;math inline&#34;&gt;\(w_M&amp;#39;=|a|w_M,w_s=2w&amp;#39;_M\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(f_1(t)+f_2(t)\)&lt;/span&gt;，则对应&lt;span class=&#34;math inline&#34;&gt;\(w&amp;#39;_M=\max{\{w_{m1},w_{m2}\}}\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(f_1(t)\ast f_2(t)\)&lt;/span&gt;，则对应&lt;span class=&#34;math inline&#34;&gt;\(w&amp;#39;_M=\min{\{w_{m1},w_{m2}\}}\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(f_1(t)f_2(t)\)&lt;/span&gt;，则对应&lt;span class=&#34;math inline&#34;&gt;\(w&amp;#39;_M=w_{m1}+w_{m2}\)&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;频率采样定理&#34;&gt;频率采样定理&lt;/h3&gt;
+&lt;p&gt;一个在时域区间&lt;span class=&#34;math inline&#34;&gt;\((-t_m,t_m)\)&lt;/span&gt;以外为&lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt;的时限信号&lt;span class=&#34;math inline&#34;&gt;\(f(t)\)&lt;/span&gt;的频谱函数，可唯一地由其在均匀频率间隔&lt;span class=&#34;math inline&#34;&gt;\(f_s\)&lt;/span&gt;上的样值点&lt;span class=&#34;math inline&#34;&gt;\(F(jnw_s)\)&lt;/span&gt;确定。要求&lt;span class=&#34;math inline&#34;&gt;\(f_s&amp;lt;1/(2t_m)\)&lt;/span&gt;，或者说&lt;span class=&#34;math inline&#34;&gt;\(w_s&amp;lt;2\pi/(2t_m)\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+F(jw) = \sum^{+\infty}_{n=-\infty} F(j\dfrac{n\pi}{t_m})Sa(wt_m-n\pi)
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;h1 id=&#34;拉普拉斯变换&#34;&gt;拉普拉斯变换&lt;/h1&gt;
 &lt;p&gt;一个信号&lt;span class=&#34;math inline&#34;&gt;\(x(t)\)&lt;/span&gt;的拉普拉斯变换定义如下&lt;/p&gt;
@@ -2487,7 +2565,7 @@ X(\sigma+jw) = \int^{+\infty}_{-\infty}x(t)e^{-(\sigma+jw)t}dt =
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 X(s) = \dfrac{N(s)}{D(s)}
 \]&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;使得&lt;span class=&#34;math inline&#34;&gt;\(N(s)=0\)&lt;/span&gt;的&lt;span class=&#34;math inline&#34;&gt;\(s\)&lt;/span&gt;称为零点，使得&lt;span class=&#34;math inline&#34;&gt;\(D(s)=0\)&lt;/span&gt;的&lt;span class=&#34;math inline&#34;&gt;\(s\)&lt;/span&gt;称为极点。把这些点标记在复平面上。我们可以判断收敛域。&lt;/p&gt;
+&lt;p&gt;使得&lt;span class=&#34;math inline&#34;&gt;\(N(s)=0\)&lt;/span&gt;的&lt;span class=&#34;math inline&#34;&gt;\(s\)&lt;/span&gt;称为零点，使得&lt;span class=&#34;math inline&#34;&gt;\(D(s)=0\)&lt;/span&gt;的&lt;span class=&#34;math inline&#34;&gt;\(s\)&lt;/span&gt;称为极点。把这些点标记在复平面上。我们可以判断收敛域。极点用叉号表示，零点用圈圈表示。&lt;/p&gt;
 &lt;h2 id=&#34;拉普拉斯变换的收敛域&#34;&gt;拉普拉斯变换的收敛域&lt;/h2&gt;
 &lt;p&gt;收敛域记作&lt;span class=&#34;math inline&#34;&gt;\(ROC\)&lt;/span&gt;&lt;/p&gt;
 &lt;ol type=&#34;1&#34;&gt;
@@ -2689,7 +2767,7 @@ Y_{zs}(s) =
 &lt;p&gt;如果有零输入响应，那么&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 Y_{zi} =
-\sum^N_{k=0}a_k\bigg[\sum^{k-1}_{p=0}s^{k-1-p}y^{(p)}(0^-)\bigg]\bigg/\bigg(\sum^N_{k=0}a_ks^k\bigg)
+-\sum^N_{k=0}a_k\bigg[\sum^{k-1}_{p=0}s^{k-1-p}y^{(p)}(0^-)\bigg]\bigg/\bigg(\sum^N_{k=0}a_ks^k\bigg)
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;全响应就是两个相加，之后要求&lt;span class=&#34;math inline&#34;&gt;\(s\)&lt;/span&gt;域上的则逆变换即可。&lt;/p&gt;
 &lt;p&gt;相比之下，傅立叶变换只能求零状态而不能求零输入。&lt;/p&gt;
@@ -2709,7 +2787,7 @@ u(t) = L\dfrac{di(t)}{dt}\leftrightarrow U(s) = sLI(s)-Li(0^-)
 &lt;p&gt;&lt;em&gt;电容&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 i(t) = C\dfrac{du(t)}{dt}\leftrightarrow
-U(s)=\dfrac{sC}{I(s)}+\dfrac{u(0^-)}{s}
+U(s)=\dfrac{1}{sC}I(s)+\dfrac{u(0^-)}{s}
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;变换后变成了一个大小为&lt;span class=&#34;math inline&#34;&gt;\(1/(sC)\)&lt;/span&gt;的电阻，和一个电压大小为&lt;span class=&#34;math inline&#34;&gt;\(u(0^-)/s\)&lt;/span&gt;的电压源，方向：&lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt;从电压源的正极流进，负极流出。也可以等效为电流源。&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;电源&lt;/em&gt;&lt;/p&gt;
@@ -2829,14 +2907,14 @@ a^nx[n]\leftrightarrow X(a^{-1}z),ROC=R的尺度变换
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;时间翻转&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
-x[-n]\leftrightarrow X(a^{-1}z),ROC=R^{-1}
+x[-n]\leftrightarrow X(z^{-1}),ROC=R^{-1}
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;时间扩展&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 x_{(k)}[n] = \left\{\begin{matrix}
 x[r], &amp;amp; n=rk\\
 0, &amp;amp; n\neq rk
-\end{matrix}\right.\leftrightarrow X(z^k)
+\end{matrix}\right.\leftrightarrow X(z^k),ROC = R^{1/k}
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;共轭&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
@@ -2917,7 +2995,7 @@ w_0)z^{-1}+r^2z^{-2}},|z|&amp;gt;r
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 r^n\sin(w_0n)u[n]\leftrightarrow\dfrac{r(\sin w_0)z^{-1}}{1-2r(\cos
-w_0)z^{-1}+r^2z^{-2}},|z|&amp;gt;1
+w_0)z^{-1}+r^2z^{-2}},|z|&amp;gt;r
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;h2 id=&#34;利用z变换分析与表征线性时不变系统&#34;&gt;利用&lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;变换分析与表征线性时不变系统&lt;/h2&gt;
 &lt;p&gt;同前，&lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;变换也有&lt;/p&gt;
@@ -2947,7 +3025,7 @@ Y(z)=H(z)X(z)
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;如果有初始值，用后面的单边&lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;变换的性质可以求得&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
-\sum^N_{k=0}a_k[z^{-k}Y(z)+\sum^{k-1}_{i=0}y[i-k]z^{-i}=\sum^M_{k=0}b_kz^{-k}X(z)
+\sum^N_{k=0}a_k[z^{-k}Y(z)+\sum^{k-1}_{i=0}y[i-k]z^{-i}]=\sum^M_{k=0}b_kz^{-k}X(z)
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;之后我们可以求得&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
@@ -2996,9 +3074,13 @@ x[n]\overset{\mathcal{UZ}}{\longleftrightarrow}X(z) =
 &lt;p&gt;不列出收敛域，任何单边&lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;变换的收敛域总是位于某个圆的外边。&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;线性，&lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;域尺度变换，时间扩展，共轭（实际上我不知道这里是不是书籍的错误，到底是相同还是不同），累加，&lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;域微分，初值终值定理&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;和双边的一样。&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;时间延迟&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+x[n-1] \leftrightarrow z^{-1}X(z)+x[-1]
+\]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;时移&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
-x[n+1] = zX(z)-zx[0]
+x[n+1] \leftrightarrow zX(z)-zx[0]
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;卷积&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;特别要求&lt;span class=&#34;math inline&#34;&gt;\(n&amp;lt;0\)&lt;/span&gt;时，&lt;span class=&#34;math inline&#34;&gt;\(x_1[n],x_2[n]\)&lt;/span&gt;都为零。&lt;/p&gt;
@@ -3158,6 +3240,81 @@ H(s) = \dfrac{s+1}{(s^2+5s+6)(s+4)} =
 &lt;figcaption aria-hidden=&#34;true&#34;&gt;8.jpg&lt;/figcaption&gt;
 &lt;/figure&gt;
 &lt;p&gt;那么并联的形式相信不难理解，无非就是裂项成多个式子。&lt;/p&gt;
+&lt;h1 id=&#34;系统的状态变量分析&#34;&gt;系统的状态变量分析&lt;/h1&gt;
+&lt;h2 id=&#34;状态变量与状态方程&#34;&gt;状态变量与状态方程&lt;/h2&gt;
+&lt;p&gt;对于一般的&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;阶多输入-多输出LTI连续系统，（&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;有&lt;span class=&#34;math inline&#34;&gt;\(p\)&lt;/span&gt;个，&lt;span class=&#34;math inline&#34;&gt;\(y\)&lt;/span&gt;有&lt;span class=&#34;math inline&#34;&gt;\(q\)&lt;/span&gt;个）&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;9.jpg&#34; alt=&#34;9.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;9.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;其状态方程如下&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\left.\begin{matrix}
+\dot x_1 = a_{11}x_1+a_{12}x_2+\cdots+a_{1n}x_n +
+b_{11}f_1+b_{12}f_2+\cdots+b_{1p}f_p\\
+\dot x_2 = a_{21}x_1+a_{22}x_2+\cdots+a_{2n}x_n +
+b_{21}f_1+b_{22}f_2+\cdots+b_{2p}f_p \\
+\cdots \\
+\dot x_n = a_{n1}x_1+a_{n2}x_2+\cdots+a_{nn}x_n +
+b_{n1}f_1+b_{n2}f_2+\cdots+b_{np}f_p
+\end{matrix}\right\}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其输出方程如下&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\left.\begin{matrix}
+y_1 = c_{11}x_1+c_{12}x_2+\cdots+c_{1n}x_n +
+d_{11}f_1+d_{12}f_2+\cdots+d_{1p}f_p\\
+y_2 = c_{21}x_1+c_{22}x_2+\cdots+c_{2n}x_n +
+d_{21}f_1+d_{22}f_2+\cdots+d_{2p}f_p \\
+\cdots \\
+y_q = c_{q1}x_1+c_{q2}x_2+\cdots+c_{qn}x_n +
+d_{q1}f_1+d_{q2}f_2+\cdots+d_{qp}f_p
+\end{matrix}\right\}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(x_i\)&lt;/span&gt;为系统内部的状态变量，&lt;span class=&#34;math inline&#34;&gt;\(\dot x_i\)&lt;/span&gt;表示&lt;span class=&#34;math inline&#34;&gt;\(x_i\)&lt;/span&gt;的一阶导数，&lt;span class=&#34;math inline&#34;&gt;\(f_i\)&lt;/span&gt;为输入信号，&lt;span class=&#34;math inline&#34;&gt;\(y_i\)&lt;/span&gt;为输出信号。矩阵形式如下&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\dot{\bm x}(t) = \bm A\bm x(t) + \bm B\bm f(t)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\bm y(t) = \bm C\bm x(t)+\bm D\bm f(t)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;这四个矩阵，在&lt;span class=&#34;math inline&#34;&gt;\(LTI\)&lt;/span&gt;中都是常数矩阵，其中&lt;span class=&#34;math inline&#34;&gt;\(\bm A\)&lt;/span&gt;为系统矩阵，&lt;span class=&#34;math inline&#34;&gt;\(\bm B\)&lt;/span&gt;为控制矩阵，&lt;span class=&#34;math inline&#34;&gt;\(\bm C\)&lt;/span&gt;为输出矩阵。&lt;/p&gt;
+&lt;p&gt;离散的情况这些名称也相同，区别在于离散不用一阶导数，形式如下&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\bm x[n+1] = \bm A\bm x[n] + \bm B\bm f[n]
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\bm y[n] = \bm C\bm x[n]+\bm D\bm f[n]
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;实际上用了一个前向差分。&lt;/p&gt;
+&lt;h2 id=&#34;从电路中建立状态方程&#34;&gt;从电路中建立状态方程&lt;/h2&gt;
+&lt;p&gt;显然，你的状态方程里是有导数的，这个导数只能来自于电感和电容。通常选择电容电压和电感电流作为状态变量。对接电容的独立节点列&lt;span class=&#34;math inline&#34;&gt;\(KCL\)&lt;/span&gt;，对有电感的独立回路列&lt;span class=&#34;math inline&#34;&gt;\(KVL\)&lt;/span&gt;，把这些方程整理成标准形式即可。&lt;/p&gt;
+&lt;h2 id=&#34;从微分方程和差分方程建立状态方程&#34;&gt;从微分方程和差分方程建立状态方程&lt;/h2&gt;
+&lt;p&gt;直接转化为信号流图，再建立，见下一节。&lt;/p&gt;
+&lt;h2 id=&#34;从信号流图建立状态方程&#34;&gt;从信号流图建立状态方程&lt;/h2&gt;
+&lt;p&gt;以连续系统的信号流图为例，输入输出应该可以很明显的看出来。&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;10.jpg&#34; alt=&#34;10.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;10.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;然后中间的节点，&lt;span class=&#34;math inline&#34;&gt;\(s^{-1}\)&lt;/span&gt;到达的节点标记为状态变量，假设标记为&lt;span class=&#34;math inline&#34;&gt;\(x_i\)&lt;/span&gt;，则这个&lt;span class=&#34;math inline&#34;&gt;\(s^{-1}\)&lt;/span&gt;的起始节点就是&lt;span class=&#34;math inline&#34;&gt;\(\dot
+x_i\)&lt;/span&gt;。于是我们就找到了所有变量。然后我们根据流图算出变量之间的关系式，化为标准形式，就列出了状态方程。&lt;/p&gt;
+&lt;p&gt;离散系统完全类似，只不过&lt;span class=&#34;math inline&#34;&gt;\(z^{-1}\)&lt;/span&gt;的起始节点对应的是&lt;span class=&#34;math inline&#34;&gt;\(x_i[n+1]\)&lt;/span&gt;（假设到达节点对应&lt;span class=&#34;math inline&#34;&gt;\(x_i[n]\)&lt;/span&gt;）&lt;/p&gt;
+&lt;p&gt;当然我们也有例外情况，就是一条边上不是常数、&lt;span class=&#34;math inline&#34;&gt;\(s^{-1}\)&lt;/span&gt;这种简单的形式，比如是&lt;span class=&#34;math inline&#34;&gt;\(\dfrac{1}{s-2}\)&lt;/span&gt;，那么，我们把这一小段拿出来当作一个系统看，输入是&lt;span class=&#34;math inline&#34;&gt;\(f_1(t)\)&lt;/span&gt;，输出是&lt;span class=&#34;math inline&#34;&gt;\(y_1(t)\)&lt;/span&gt;，就有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\dfrac{Y_1(S)}{F_1(S)} = \dfrac{1}{s-2}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+sY_1(s)-2Y_1(s) = F_1(s)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+y_1&amp;#39;(t)-2y_1(t)=f_1(t)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;显然，如果这条边接到的下一个节点没有别的入边，我们的输出&lt;span class=&#34;math inline&#34;&gt;\(y_1(t)\)&lt;/span&gt;就是某个&lt;span class=&#34;math inline&#34;&gt;\(x_i(t)\)&lt;/span&gt;，于是&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\dot x_i(t)-2x_i(t) = f_1(t)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;至于这个&lt;span class=&#34;math inline&#34;&gt;\(f_1(t)\)&lt;/span&gt;则要去原来的信号流图中算出表达式。如果还有别的入边，那么&lt;span class=&#34;math inline&#34;&gt;\(x_i(t)\)&lt;/span&gt;就要重新去信号流图里算了。&lt;/p&gt;
 
 
 </description>
@@ -8863,7 +9020,8 @@ U_s^2}{2|Z_S|+2(R_S\cos\theta+X_S\sin\theta)}
 z)/2i\)&lt;/span&gt;&lt;/li&gt;
 &lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(z\overline z=|z|^2\)&lt;/span&gt;&lt;/li&gt;
 &lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(\overline{z+w}=\overline z+\overline
-w,\overline{zw}=\overline z\cdot\overline w\)&lt;/span&gt;&lt;/li&gt;
+w,\overline{zw}=\overline z\cdot\overline
+w,\overline{z/w}=\overline{z}/\overline{w}\)&lt;/span&gt;&lt;/li&gt;
 &lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(|zw|=|z||w|,|z/w|=|z|/|w|\)&lt;/span&gt;&lt;/li&gt;
 &lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(|z|=|\overline z|\)&lt;/span&gt;&lt;/li&gt;
 &lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(|Rez|\leq |z|,|Imz|\leq|z|\)&lt;/span&gt;&lt;/li&gt;

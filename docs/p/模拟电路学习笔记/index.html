@@ -125,7 +125,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 31 分钟
+                    阅读时长: 32 分钟
                 </time>
             </div>
         
@@ -1187,6 +1187,10 @@ r_{ce2})\)</span>，则</p>
 <p><span class="math display">\[
 \dot A_u\approx -\dfrac{\beta_1 R_L}{R_b+r_{be1}}
 \]</span></p>
+<h1 id="频率响应">频率响应</h1>
+<p>我们学院的模电学时很少，没有涉及这方面，主要介绍一下波特图的横纵坐标。可能会在放大倍数中用到</p>
+<h2 id="波特图">波特图</h2>
+<p>波特图由对数幅频特性和对数相频特性两部分组成，它们的横轴采用对数刻度<span class="math inline">\(\lg f\)</span>，幅频特性的纵轴采用<span class="math inline">\(20\lg |\dot A_u|\)</span>表示，单位是分贝<span class="math inline">\((dB)\)</span>，相频特性的纵轴仍采用<span class="math inline">\(\varphi\)</span>表示。这样不但开阔了视野，还能将放大倍数的乘除运算转换成加减运算。</p>
 <h1 id="反馈">反馈</h1>
 <h2 id="反馈的基本概念">反馈的基本概念</h2>
 <p>在电子电路中，将输出量的一部分或全部通过一定的电路形式作用到输入回路，来影响其输入量的措施称为反馈。</p>
@@ -1295,6 +1299,51 @@ X_f\)</span>。可见深度负反馈的实质是在近似分析中忽略净输�
 <li>求解反馈系数</li>
 <li>利用<span class="math inline">\(F\)</span>求解<span class="math inline">\(A_f\)</span></li>
 </ol>
+<h2 id="负反馈对放大电路性能的影响">负反馈对放大电路性能的影响</h2>
+<h3 id="稳定放大系数">稳定放大系数</h3>
+<p><span class="math display">\[
+\dfrac{dA_f}{A_f} = \dfrac{1}{1+AF}\dfrac{dA}{A}
+\]</span></p>
+<p>也就是说，负反馈放大电路放大倍数的相对变化量<span class="math inline">\(dA_f/A_f\)</span>仅为其开环增益相对变化量的<span class="math inline">\((1+AF)\)</span>分之一。也就是说<span class="math inline">\(A_f\)</span>的稳定性是<span class="math inline">\(A\)</span>的<span class="math inline">\((1+AF)\)</span>倍。</p>
+<p>但是，这是以损失了放大倍数为代价的，<span class="math inline">\(A_f\)</span>是<span class="math inline">\(A\)</span>的<span class="math inline">\((1+AF)\)</span>分之一。</p>
+<h3 id="对输入电阻的影响">对输入电阻的影响</h3>
+<p><strong>串联负反馈时</strong></p>
+<p><span class="math display">\[
+R_{if} = (1+AF)R_i
+\]</span></p>
+<p>注意，有些输入电阻是有多个的，有些并联有些串联，这里引入串联负反馈，只影响在反馈环上的输入电阻，其他并联的输入电阻不变，将这些电阻最后全部并联起来再计算。之后也有类似的情况，不再讨论。</p>
+<p><strong>并联负反馈时</strong></p>
+<p><span class="math display">\[
+R_{if} = \dfrac{R_{i}}{1+AF}
+\]</span></p>
+<h3 id="对输出电阻的影响">对输出电阻的影响</h3>
+<p><strong>电压负反馈时</strong></p>
+<p><span class="math display">\[
+R_{of} = \dfrac{R_o}{1+AF}
+\]</span></p>
+<p><strong>电流负反馈时</strong></p>
+<p><span class="math display">\[
+R_{of} = (1+AF)R_o
+\]</span></p>
+<h3 id="展宽频带">展宽频带</h3>
+<p>原来的频带，假设中频段放大倍数为<span class="math inline">\(A_m\)</span>，则低频使得放大倍数为<span class="math inline">\(0.707A_m\)</span>或<span class="math inline">\(A_m-3dB\)</span>的频率叫做下限频率<span class="math inline">\(f_L\)</span>。高频使得放大倍数为<span class="math inline">\(0.707A_m\)</span>或<span class="math inline">\(A_m-3dB\)</span>的频率叫做上限频率<span class="math inline">\(f_H\)</span>。</p>
+<p><span class="math display">\[
+f_{Lf} = \dfrac{f_L}{1+A_mF}
+\]</span></p>
+<p>一般情况下，由于<span class="math inline">\(f_H&gt;&gt;f_L,f_{Hf}&gt;&gt;f_{Lf}\)</span>，因此，近似有</p>
+<p><span class="math display">\[
+f_{bw} = f_H-f_L \approx f_H
+\]</span></p>
+<p><span class="math display">\[
+f_{bwf} = f_{Hf}-f_{Lf}\approx f_{Hf}
+\]</span></p>
+<p>即引入负反馈使频带展宽到基本放大电路的<span class="math inline">\((1+AF)\)</span>倍。</p>
+<h3 id="减小非线性失真">减小非线性失真</h3>
+<p><span class="math display">\[
+THD_f=\dfrac{THD}{1+AF}
+\]</span></p>
+<h3 id="提高信噪比">提高信噪比</h3>
+<p>提高<span class="math inline">\((1+AF)\)</span>倍。</p>
 
 
 
@@ -1673,6 +1722,11 @@ X_f\)</span>。可见深度负反馈的实质是在近似分析中忽略净输�
         </li>
       </ol>
     </li>
+    <li><a href="#频率响应">频率响应</a>
+      <ol>
+        <li><a href="#波特图">波特图</a></li>
+      </ol>
+    </li>
     <li><a href="#反馈">反馈</a>
       <ol>
         <li><a href="#反馈的基本概念">反馈的基本概念</a></li>
@@ -1692,6 +1746,16 @@ X_f\)</span>。可见深度负反馈的实质是在近似分析中忽略净输�
           </ol>
         </li>
         <li><a href="#深度负反馈">深度负反馈</a></li>
+        <li><a href="#负反馈对放大电路性能的影响">负反馈对放大电路性能的影响</a>
+          <ol>
+            <li><a href="#稳定放大系数">稳定放大系数</a></li>
+            <li><a href="#对输入电阻的影响">对输入电阻的影响</a></li>
+            <li><a href="#对输出电阻的影响">对输出电阻的影响</a></li>
+            <li><a href="#展宽频带">展宽频带</a></li>
+            <li><a href="#减小非线性失真">减小非线性失真</a></li>
+            <li><a href="#提高信噪比">提高信噪比</a></li>
+          </ol>
+        </li>
       </ol>
     </li>
   </ol>
