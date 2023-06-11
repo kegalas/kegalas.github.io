@@ -601,7 +601,6 @@ h[k]-4h[k-1]+3h[k-2]=3\delta[k]-\delta[k-1]
 <p>或者我们还是用老办法，求出<span class="math inline">\(h_1[k]-4h_1[k-1]+3h_1[k-2]=\delta[k]\)</span>，中<span class="math inline">\(h_1[k]\)</span>的表达式（需要用<span class="math inline">\(h[0],h[-1]\)</span>求出参数），然后在根据线性性质求出<span class="math inline">\(h[k]\)</span></p>
 <h3 id="差分方程求单位阶跃响应">差分方程求单位阶跃响应</h3>
 <p>阶跃响应和差分方程的全解是一个形式。我们求出全解即可。注意隐含条件（二阶下）是<span class="math inline">\(g[-1]=g[-2]=0\)</span>，我们可以求出<span class="math inline">\(g[0],g[1]\)</span>，代入求出参数。</p>
-<p>作为区分，激励为<span class="math inline">\(\delta[k]\)</span>时要求出<span class="math inline">\(h[0],h[-1]\)</span>，激励为<span class="math inline">\(\varepsilon[k]\)</span>时要求出<span class="math inline">\(h[1],h[0]\)</span></p>
 <p>或者由差分特性</p>
 <p><span class="math display">\[
 g[k] = \sum^k_{i=-\infty}h[i]
@@ -660,7 +659,7 @@ f(t)\delta&#39;(t) = f(0)\delta&#39;(t)-f&#39;(0)\delta(t)
 \delta(at) = \dfrac{1}{|a|}\delta(t)
 \]</span></p>
 <p><span class="math display">\[
-\delta^n(at) = \dfrac{1}{|a|}\dfrac{1}{a^n}\delta^n(t)
+\delta^{(n)}(at) = \dfrac{1}{|a|}\dfrac{1}{a^n}\delta^{(n)}(t)
 \]</span></p>
 <p><span class="math display">\[
 \delta^{(n)}(-t)=(-1)^n\delta^{(n)}(t)
@@ -1220,8 +1219,8 @@ R(\tau)\leftrightarrow\mathcal{P}(w)
 <p><span class="math inline">\(h(t)=0,t&lt;0\)</span>，也就是要求是因果系统。响应不应出现在激励之前。</p>
 <p><strong>频域特性</strong></p>
 <p><span class="math display">\[
-\int ^{+intfy}_{-\infty} |H(jw)^2|dw&lt;\infty\quad \text{and}\quad \int
-^{+intfy}_{-\infty} \dfrac{|\ln |H(jw)||}{1+w^2}dw&lt;\infty
+\int ^{+\infty}_{-\infty} |H(jw)^2|dw&lt;\infty\quad \text{and}\quad
+\int ^{+\infty}_{-\infty} \dfrac{|\ln |H(jw)||}{1+w^2}dw&lt;\infty
 \]</span></p>
 <p>这称为佩利-维纳准则，这是一个必要条件。</p>
 <p>对于物理可实现系统,可以允许<span class="math inline">\(H(jw)\)</span>特性在某些不连续的频率点上为<span class="math inline">\(0\)</span>，但不允许在一个有限频带内为<span class="math inline">\(0\)</span>。</p>
@@ -1399,16 +1398,16 @@ x(0^+)=\lim_{s\to\infty} sX(s)
 -\dfrac{t^{n-1}}{(n-1)!}\varepsilon(-t)\leftrightarrow\dfrac{1}{s^n},Re\{s\}&lt;0
 \]</span></p>
 <p><span class="math display">\[
-e^{-at}\varepsilon(t)\leftrightarrow\dfrac{1}{s+a},,Re\{s\}&gt;-a
+e^{-at}\varepsilon(t)\leftrightarrow\dfrac{1}{s+a},Re\{s\}&gt;-a
 \]</span></p>
 <p><span class="math display">\[
--e^{-at}\varepsilon(-t)\leftrightarrow\dfrac{1}{s+a},,Re\{s\}&lt;-a
+-e^{-at}\varepsilon(-t)\leftrightarrow\dfrac{1}{s+a},Re\{s\}&lt;-a
 \]</span></p>
 <p><span class="math display">\[
-\dfrac{t^{n-1}}{(n-1)!}e^{-at}\varepsilon(t)\leftrightarrow\dfrac{1}{(s+a)^n},,Re\{s\}&gt;-a
+\dfrac{t^{n-1}}{(n-1)!}e^{-at}\varepsilon(t)\leftrightarrow\dfrac{1}{(s+a)^n},Re\{s\}&gt;-a
 \]</span></p>
 <p><span class="math display">\[
--\dfrac{t^{n-1}}{(n-1)!}e^{-at}\varepsilon(-t)\leftrightarrow\dfrac{1}{(s+a)^n},,Re\{s\}&lt;-a
+-\dfrac{t^{n-1}}{(n-1)!}e^{-at}\varepsilon(-t)\leftrightarrow\dfrac{1}{(s+a)^n},Re\{s\}&lt;-a
 \]</span></p>
 <p><span class="math display">\[
 \delta(t-T)\leftrightarrow e^{-sT}, s\in C
