@@ -442,6 +442,7 @@ P\cos(\beta t) + Q\sin(\beta t)
 <li>激励为<span class="math inline">\(\delta,\varepsilon\)</span>等时，由于我们的特解是零状态响应中的部分，所以都是在<span class="math inline">\(0_+\)</span>时的取值，我们直接把激励在<span class="math inline">\(0_+\)</span>的值写在等号右边，然后设定<span class="math inline">\(y_p=p\)</span>（常数），解出<span class="math inline">\(p\)</span>即可。显然，<span class="math inline">\(p\)</span>的值会是<span class="math inline">\(\varepsilon\text{的系数}/y\text{的系数}\)</span>（因为<span class="math inline">\(y\)</span>现在是常数，任意阶导数为<span class="math inline">\(0\)</span>）。如果是<span class="math inline">\(e^t\varepsilon(t)\)</span>这种形式又怎么办呢，还是老话，我们求特解是<span class="math inline">\(0_+\)</span>时的值，此时看做激励为<span class="math inline">\(e^t\)</span>，然后用上面的特解。</li>
 </ol>
 <p>注意，如果题目给的条件是<span class="math inline">\(y(0),y&#39;(0)\)</span>等条件，我们需要在全解中去求齐次解中设的参数。如果题目给的条件是<span class="math inline">\(y_{zi},y&#39;_{zi}\)</span>等条件，我们在齐次解中求参数即可。</p>
+<p>题目中也可能只给出<span class="math inline">\(y(0^-),y&#39;(0^-)\)</span>的条件，这显然就是给零输入条件。如果你还要求出零状态响应和全解，你必须在这之前求出<span class="math inline">\(y(0^+),y&#39;(0^+)\)</span>，才能带进去求零状态响应的参数，求解方法见后。</p>
 <p>如果给的激励包含多种情况？我自己的思考是，求出冲激响应即可，然后根据线性性质，将激励分别与冲激响应卷积，再相加。</p>
 <p>还有一种办法是求频率响应<span class="math inline">\(H(jw)\)</span>来求零状态响应，见后。</p>
 <h3 id="系统的初始值">系统的初始值</h3>
@@ -491,11 +492,12 @@ h_1&#39;&#39;+a_1h_1&#39;+a_0h_1 = \delta
 <p><span class="math display">\[
 h_1(0_-)=h_1&#39;(0_-) = 0
 \]</span></p>
-<p>计算出<span class="math inline">\(h_1(0_+),h_1&#39;(0_+)\)</span>，然后我们使用之前提到的解法求出<span class="math inline">\(h_1\)</span>，不过显然这里特解为<span class="math inline">\(0\)</span>，和齐次解具有同样的形式。</p>
+<p>计算出<span class="math inline">\(h_1(0_+),h_1&#39;(0_+)\)</span>，然后我们使用之前提到的解法求出<span class="math inline">\(h_1\)</span>，不过显然这里特解为<span class="math inline">\(0\)</span>，和齐次解具有同样的形式。冲激响应求的是一种零状态响应，虽然它和齐次解有同样的形式。</p>
 <ol start="2" type="1">
 <li>根据线性性质和微分特性，可知<span class="math inline">\(h =
 b_2h_1&#39;&#39;+b_1h_1&#39;+b_0h_1\)</span>。不过注意这个<span class="math inline">\(b_i\)</span>是常数，如果我们等式右边是<span class="math inline">\(b_2f&#39;&#39;+b_0f+q\)</span>，这个<span class="math inline">\(q\)</span>不是<span class="math inline">\(f\)</span>的导数（其他情况类似），则我们的<span class="math inline">\(h=b_2h_1&#39;&#39;+b_0h_1+q*h_1\)</span>。当然你也可以全部都做卷积，只是不是把<span class="math inline">\(b_2,b_1,b_0\)</span>拿来做卷积，而是把整体的<span class="math inline">\(b_2f&#39;&#39;,b_1f&#39;,b_0f\)</span>拿来做卷积。如果<span class="math inline">\(f=h\)</span>，卷积的结果就是<span class="math inline">\(b_2h_1&#39;&#39;+b_1h_1&#39;+b_0h_1\)</span></li>
 </ol>
+<p>当然我强烈推荐你用拉普拉斯变换来算。</p>
 <h3 id="微分方程求阶跃响应">微分方程求阶跃响应</h3>
 <p>类似的，还是上面那个例子</p>
 <ol type="1">
@@ -507,7 +509,7 @@ g_1&#39;&#39;+a_1g_1&#39;+a_0g_1 = \varepsilon
 <p><span class="math display">\[
 g_1(0_-)=g_1&#39;(0_-) = 0
 \]</span></p>
-<p>计算出<span class="math inline">\(g_1(0_+),g_1&#39;(0_+)\)</span>，然后我们使用之前提到的解法求出<span class="math inline">\(g_1\)</span></p>
+<p>计算出<span class="math inline">\(g_1(0_+),g_1&#39;(0_+)\)</span>，然后我们使用之前提到的解法求出<span class="math inline">\(g_1\)</span>。阶跃响应求的是一种零状态响应，它有特解和齐次解。</p>
 <ol start="2" type="1">
 <li>根据线性性质和微分特性，可知<span class="math inline">\(g =
 b_2g_1&#39;&#39;+b_1g_1&#39;+b_0g_1\)</span></li>
@@ -1289,6 +1291,7 @@ X(\sigma+jw) = \int^{+\infty}_{-\infty}x(t)e^{-(\sigma+jw)t}dt =
 X(s) = \dfrac{N(s)}{D(s)}
 \]</span></p>
 <p>使得<span class="math inline">\(N(s)=0\)</span>的<span class="math inline">\(s\)</span>称为零点，使得<span class="math inline">\(D(s)=0\)</span>的<span class="math inline">\(s\)</span>称为极点。把这些点标记在复平面上。我们可以判断收敛域。极点用叉号表示，零点用圈圈表示。</p>
+<p>也可以通过零-极点图来反过来求拉普拉斯变换，这时你需要设<span class="math inline">\(X(s)=\dfrac{KN(s)}{D(s)}\)</span>，保留一个常系数<span class="math inline">\(K\)</span>。然后根据题目的已知条件解出<span class="math inline">\(K\)</span>。</p>
 <h2 id="拉普拉斯变换的收敛域">拉普拉斯变换的收敛域</h2>
 <p>收敛域记作<span class="math inline">\(ROC\)</span></p>
 <ol type="1">
@@ -1490,7 +1493,7 @@ Y_{zs}(s) =
 <p>如果有零输入响应，那么</p>
 <p><span class="math display">\[
 Y_{zi} =
--\sum^N_{k=0}a_k\bigg[\sum^{k-1}_{p=0}s^{k-1-p}y^{(p)}(0^-)\bigg]\bigg/\bigg(\sum^N_{k=0}a_ks^k\bigg)
+\sum^N_{k=0}a_k\bigg[\sum^{k-1}_{p=0}s^{k-1-p}y^{(p)}(0^-)\bigg]\bigg/\bigg(\sum^N_{k=0}a_ks^k\bigg)
 \]</span></p>
 <p>全响应就是两个相加，之后要求<span class="math inline">\(s\)</span>域上的则逆变换即可。</p>
 <p>相比之下，傅立叶变换只能求零状态而不能求零输入。</p>
@@ -1587,7 +1590,7 @@ X(re^{jw}) = \mathcal{F}\{x[n]r^{-n}\}
 \]</span></p>
 <p>类似于在虚轴<span class="math inline">\(jw\)</span>上的拉普拉斯变换就是傅里叶变换，在复平面的单位圆上进行的<span class="math inline">\(z\)</span>变换，就是傅里叶变换。</p>
 <h2 id="z变换的有理分式情况"><span class="math inline">\(z\)</span>变换的有理分式情况</h2>
-<p>和拉普拉斯变换一样。同时也有极点和零点的概念。</p>
+<p>和拉普拉斯变换一样。同时也有极点和零点的概念。记住，求零点极点时，分子分母的<span class="math inline">\(z\)</span>不要出现负幂项，全部转成正幂项再来求。</p>
 <h2 id="z变换的收敛域"><span class="math inline">\(z\)</span>变换的收敛域</h2>
 <p>收敛域记作<span class="math inline">\(ROC\)</span></p>
 <ol type="1">
@@ -1736,7 +1739,7 @@ Y(z)=H(z)X(z)
 <h3 id="稳定性-3">稳定性</h3>
 <p>一个线性时不变系统，当且仅当它的系统函数<span class="math inline">\(H(z)\)</span>的收敛域包括单位圆<span class="math inline">\(|z|=1\)</span>时，该系统就是稳定的。</p>
 <p>一个具有有理系统函数的因果线性时不变系统，当且仅当<span class="math inline">\(H(z)\)</span>的全部极点都位于单位圆内时，即全部极点的模均小于<span class="math inline">\(1\)</span>时，该系统就是稳定的。</p>
-<h3 id="有线性常系数差分方程表征的线性时不变系统">有线性常系数差分方程表征的线性时不变系统</h3>
+<h3 id="由线性常系数差分方程表征的线性时不变系统">由线性常系数差分方程表征的线性时不变系统</h3>
 <p>和拉普拉斯变换解微分方程基本一样。</p>
 <p>差分方程的形式如下</p>
 <p><span class="math display">\[
@@ -2462,7 +2465,7 @@ y_1&#39;(t)-2y_1(t)=f_1(t)
           <ol>
             <li><a href="#因果性-3">因果性</a></li>
             <li><a href="#稳定性-3">稳定性</a></li>
-            <li><a href="#有线性常系数差分方程表征的线性时不变系统">有线性常系数差分方程表征的线性时不变系统</a></li>
+            <li><a href="#由线性常系数差分方程表征的线性时不变系统">由线性常系数差分方程表征的线性时不变系统</a></li>
           </ol>
         </li>
         <li><a href="#系统的z域框图">系统的<span class="math inline">\(z\)</span>域框图</a></li>
