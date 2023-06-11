@@ -650,8 +650,6 @@ $$
 
 阶跃响应和差分方程的全解是一个形式。我们求出全解即可。注意隐含条件（二阶下）是$g[-1]=g[-2]=0$，我们可以求出$g[0],g[1]$，代入求出参数。
 
-作为区分，激励为$\delta[k]$时要求出$h[0],h[-1]$，激励为$\varepsilon[k]$时要求出$h[1],h[0]$
-
 或者由差分特性
 
 $$
@@ -734,7 +732,7 @@ $$
 $$
 
 $$
-\delta^n(at) = \dfrac{1}{|a|}\dfrac{1}{a^n}\delta^n(t)
+\delta^{(n)}(at) = \dfrac{1}{|a|}\dfrac{1}{a^n}\delta^{(n)}(t)
 $$
 
 $$
@@ -1555,7 +1553,7 @@ $h(t)=0,t<0$，也就是要求是因果系统。响应不应出现在激励之�
 **频域特性**
 
 $$
-\int ^{+intfy}_{-\infty} |H(jw)^2|dw<\infty\quad \text{and}\quad \int ^{+intfy}_{-\infty} \dfrac{|\ln |H(jw)||}{1+w^2}dw<\infty
+\int ^{+\infty}_{-\infty} |H(jw)^2|dw<\infty\quad \text{and}\quad \int ^{+\infty}_{-\infty} \dfrac{|\ln |H(jw)||}{1+w^2}dw<\infty
 $$
 
 这称为佩利-维纳准则，这是一个必要条件。
@@ -1824,19 +1822,19 @@ $$
 $$
 
 $$
-e^{-at}\varepsilon(t)\leftrightarrow\dfrac{1}{s+a},,Re\{s\}>-a
+e^{-at}\varepsilon(t)\leftrightarrow\dfrac{1}{s+a},Re\{s\}>-a
 $$
 
 $$
--e^{-at}\varepsilon(-t)\leftrightarrow\dfrac{1}{s+a},,Re\{s\}<-a
+-e^{-at}\varepsilon(-t)\leftrightarrow\dfrac{1}{s+a},Re\{s\}<-a
 $$
 
 $$
-\dfrac{t^{n-1}}{(n-1)!}e^{-at}\varepsilon(t)\leftrightarrow\dfrac{1}{(s+a)^n},,Re\{s\}>-a
+\dfrac{t^{n-1}}{(n-1)!}e^{-at}\varepsilon(t)\leftrightarrow\dfrac{1}{(s+a)^n},Re\{s\}>-a
 $$
 
 $$
--\dfrac{t^{n-1}}{(n-1)!}e^{-at}\varepsilon(-t)\leftrightarrow\dfrac{1}{(s+a)^n},,Re\{s\}<-a
+-\dfrac{t^{n-1}}{(n-1)!}e^{-at}\varepsilon(-t)\leftrightarrow\dfrac{1}{(s+a)^n},Re\{s\}<-a
 $$
 
 $$
