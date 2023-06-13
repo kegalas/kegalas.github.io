@@ -587,7 +587,7 @@ transfer）：原理和态度的迁移。这一类迁移是教育的核心。&lt
 &lt;p&gt;&lt;strong&gt;陈述性记忆&lt;/strong&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;间脑（丘脑）：连接大脑皮层，是短期记忆向长期记忆过度的关键脑区。&lt;/li&gt;
-&lt;li&gt;前额皮层工：作记忆，长时情节记忆和抽象的语义记忆。&lt;/li&gt;
+&lt;li&gt;前额皮层：工作记忆，长时情节记忆和抽象的语义记忆。&lt;/li&gt;
 &lt;li&gt;海马(内侧颞叶)： 短期(几分钟到数周)
 空间方位和情节性事件记忆。海马相当于大脑中的图书管理员，将信息长期储存于大脑皮层。&lt;/li&gt;
 &lt;/ul&gt;
@@ -942,7 +942,7 @@ transfer）：原理和态度的迁移。这一类迁移是教育的核心。&lt
 &lt;/ol&gt;
 &lt;p&gt;以下是集成运算放大器的一些参数：&lt;/p&gt;
 &lt;ol type=&#34;1&#34;&gt;
-&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(u_{id}=u_{i+}-u_{i-}\)&lt;/span&gt;：差模输出电压&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(u_{id}=u_{i+}-u_{i-}\)&lt;/span&gt;：差模输入电压&lt;/li&gt;
 &lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(A_{uo}\)&lt;/span&gt;：集成运放的开环电压放大倍数&lt;/li&gt;
 &lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(R_i\)&lt;/span&gt;：集成运放的输入电阻&lt;/li&gt;
 &lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(R_o\)&lt;/span&gt;：集成运放的输出电阻&lt;/li&gt;
@@ -1018,6 +1018,8 @@ u_O = R_f\cdot
 u_O =
 R_f\bigg(\dfrac{u_{I3}}{R_3}+\dfrac{u_{I4}}{R_4}-\dfrac{u_{I1}}{R_1}-\dfrac{u_{I2}}{R_2}\bigg)
 \]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;要求&lt;span class=&#34;math inline&#34;&gt;\(R_1\parallel R_2\parallel
+R_f=R_3\parallel R_4\parallel R_5\)&lt;/span&gt;&lt;/p&gt;
 &lt;h3 id=&#34;差分比例运算电路&#34;&gt;差分比例运算电路&lt;/h3&gt;
 &lt;p&gt;是加减运算电路的一种特例，其只有两个输入，且参数对称&lt;/p&gt;
 &lt;figure&gt;
@@ -1180,6 +1182,43 @@ A_{uf})\bigg)
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 \varphi = 180\degree-2arctan\dfrac{f}{f_0},f_0=\dfrac{1}{2\pi RC}
 \]&lt;/span&gt;&lt;/p&gt;
+&lt;h2 id=&#34;滤波器判断&#34;&gt;滤波器判断&lt;/h2&gt;
+&lt;p&gt;为了避免积分、微分运算，把电路转变为拉普拉斯变换下的等效电路是必要的。&lt;/p&gt;
+&lt;p&gt;通过拉普拉斯变换，我们可以更容易地得到输入-输出关系，或者就是求出系统函数（传递函数）。通过系统函数我们可以方便地判断滤波器的类型。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;一阶还是二阶&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;传递函数中，分子分母的多项式，如果其中一个最高含有&lt;span class=&#34;math inline&#34;&gt;\(s^2\)&lt;/span&gt;项，则是二阶。如果两个都最高只含&lt;span class=&#34;math inline&#34;&gt;\(s\)&lt;/span&gt;项，就是一阶。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;二阶低通&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;传递函数常见为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+H(s) = \dfrac{H(0)w_0^2}{s^2+\dfrac{w_0}{Q}s+w_02}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其零极点图，包含了两个共轭的极点。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;二阶高通&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;传递函数常见为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+H(s) = \dfrac{H(\infty)s^2}{s^2+\dfrac{w_0}{Q}s+w_02}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其零极点图，包含了两个共轭的极点，一个取值为零的二阶零点。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;二阶带通&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;传递函数常见为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+H(s) = \dfrac{H(w_0)\dfrac{w_0}{Q}s}{s^2+\dfrac{w_0}{Q}s+w_02}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其零极点图，包含了一个取值为&lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt;的零点，两个共轭极点。&lt;span class=&#34;math inline&#34;&gt;\(Q\)&lt;/span&gt;为品质因数，越大，带宽越窄，选频性能越好。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;二阶带阻&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;传递函数常见为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+H(s) = \dfrac{H(0)(s^2+w_0^2)}{s^2+\dfrac{w_0}{Q}s+w_02}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其零极点图，两个零点，两个共轭极点。&lt;span class=&#34;math inline&#34;&gt;\(Q\)&lt;/span&gt;越大，陷波特性越尖锐。这两个零点是共轭的，在&lt;span class=&#34;math inline&#34;&gt;\(jw\)&lt;/span&gt;轴上。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;二阶全通&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;传递函数常见为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+H(s) = \dfrac{H(0)(s^2-\dfrac{w_0}{Q}s+w_0^2)}{s^2+\dfrac{w_0}{Q}s+w_02}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其零极点图，两个共轭零点，两个共轭极点。构成一个矩形。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;一阶&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;不知道为什么书上没讲一阶电路判断。但是根据传递函数多少也能看明白。&lt;/p&gt;
 &lt;h1 id=&#34;半导体器件&#34;&gt;半导体器件&lt;/h1&gt;
 &lt;h2 id=&#34;半导体基础知识&#34;&gt;半导体基础知识&lt;/h2&gt;
 &lt;p&gt;&lt;strong&gt;本征半导体&lt;/strong&gt;&lt;/p&gt;
@@ -1249,6 +1288,7 @@ I_Se^{u/U_T}\)&lt;/span&gt;，即指数变化。反向电压时，当&lt;span cl
 &lt;figcaption aria-hidden=&#34;true&#34;&gt;22.jpg&lt;/figcaption&gt;
 &lt;/figure&gt;
 &lt;p&gt;等效电路是理想二极管串联电压源&lt;span class=&#34;math inline&#34;&gt;\(U_{on}\)&lt;/span&gt;和电阻&lt;span class=&#34;math inline&#34;&gt;\(r_D\)&lt;/span&gt;，且&lt;span class=&#34;math inline&#34;&gt;\(r_D=\Delta U/\Delta I\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;在做题算直流电阻的时候，直接把某个点的电压除以电流即可。算交流电阻时，用&lt;span class=&#34;math inline&#34;&gt;\(U_T\)&lt;/span&gt;除以该点的电流即可。&lt;/p&gt;
 &lt;h3 id=&#34;稳压二极管&#34;&gt;稳压二极管&lt;/h3&gt;
 &lt;p&gt;稳压管在反向击穿时，在一定的电流范围内，端电压几乎不变，表现出稳压特性。&lt;/p&gt;
 &lt;figure&gt;
@@ -1369,7 +1409,7 @@ i_C = f(U_{CE})\bigg|_{I_B=常数}
 &lt;p&gt;其特征是发射结电压正向偏置且集电结反向偏置。对于共射电路，&lt;span class=&#34;math inline&#34;&gt;\(u_{BE}&amp;gt;U_{on}\)&lt;/span&gt;且&lt;span class=&#34;math inline&#34;&gt;\(u_{CE}\geq u_{BE}\)&lt;/span&gt;。此时&lt;span class=&#34;math inline&#34;&gt;\(i_C\)&lt;/span&gt;几乎仅仅决定于&lt;span class=&#34;math inline&#34;&gt;\(i_B\)&lt;/span&gt;，而与&lt;span class=&#34;math inline&#34;&gt;\(u_{CE}\)&lt;/span&gt;无关。&lt;span class=&#34;math inline&#34;&gt;\(I_C=\bar\beta I_B, \Delta i_C=\beta\Delta
 i_B\)&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;饱和区&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;其特征是发射极与集电极均正向偏置。对于共射电路，&lt;span class=&#34;math inline&#34;&gt;\(u_{BE}&amp;gt;U_{on}\)&lt;/span&gt;且&lt;span class=&#34;math inline&#34;&gt;\(u_{CE}&amp;lt;u_{BE}\)&lt;/span&gt;。此时&lt;span class=&#34;math inline&#34;&gt;\(i_C\)&lt;/span&gt;不仅与&lt;span class=&#34;math inline&#34;&gt;\(i_B\)&lt;/span&gt;有关，而且明显随&lt;span class=&#34;math inline&#34;&gt;\(u_{CE}\)&lt;/span&gt;增大而增大，&lt;span class=&#34;math inline&#34;&gt;\(i_C\)&lt;/span&gt;小于&lt;span class=&#34;math inline&#34;&gt;\(\bar\beta I_B\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其特征是发射极与集电极均正向偏置。对于共射电路，&lt;span class=&#34;math inline&#34;&gt;\(u_{BE}&amp;gt;U_{on}\)&lt;/span&gt;且&lt;span class=&#34;math inline&#34;&gt;\(u_{CE}&amp;lt;u_{BE}\)&lt;/span&gt;。此时&lt;span class=&#34;math inline&#34;&gt;\(i_C\)&lt;/span&gt;不仅与&lt;span class=&#34;math inline&#34;&gt;\(i_B\)&lt;/span&gt;有关，而且明显随&lt;span class=&#34;math inline&#34;&gt;\(u_{CE}\)&lt;/span&gt;增大而增大，&lt;span class=&#34;math inline&#34;&gt;\(i_C\)&lt;/span&gt;小于&lt;span class=&#34;math inline&#34;&gt;\(\bar\beta I_B\)&lt;/span&gt;。此时&lt;span class=&#34;math inline&#34;&gt;\(u_{CE}=U_{CE(sat)}\)&lt;/span&gt;，通常为&lt;span class=&#34;math inline&#34;&gt;\(0.2\sim 0.3\text{V}\)&lt;/span&gt;&lt;/p&gt;
 &lt;h1 id=&#34;放大电路的分析方法&#34;&gt;放大电路的分析方法&lt;/h1&gt;
 &lt;h2 id=&#34;放大的主要性能指标&#34;&gt;放大的主要性能指标&lt;/h2&gt;
 &lt;p&gt;&lt;strong&gt;放大倍数&lt;/strong&gt;&lt;/p&gt;
@@ -1428,13 +1468,13 @@ U_{CEQ} = V_{CC}-I_{CQ}R_c
 &lt;li&gt;无内阻的直流电源(如&lt;span class=&#34;math inline&#34;&gt;\(V_{CC}\)&lt;/span&gt;)视为短路。&lt;/li&gt;
 &lt;/ol&gt;
 &lt;h2 id=&#34;三极管等效电路&#34;&gt;三极管等效电路&lt;/h2&gt;
-&lt;p&gt;&lt;strong&gt;晶体管等效&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;晶体管等效（在做题中几乎无用）&lt;/strong&gt;&lt;/p&gt;
 &lt;figure&gt;
 &lt;img src=&#34;34.jpg&#34; alt=&#34;34.jpg&#34;/&gt;
 &lt;figcaption aria-hidden=&#34;true&#34;&gt;34.jpg&lt;/figcaption&gt;
 &lt;/figure&gt;
 &lt;p&gt;直流模型是在静态工作时的模型。必须在放大区才可以使用，并且要求&lt;span class=&#34;math inline&#34;&gt;\(\beta=\bar\beta\)&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;交流小信号模型&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;交流小信号模型（在做题中，注意&lt;span class=&#34;math inline&#34;&gt;\(r_{be}\)&lt;/span&gt;是怎么求的）&lt;/strong&gt;&lt;/p&gt;
 &lt;figure&gt;
 &lt;img src=&#34;35.jpg&#34; alt=&#34;35.jpg&#34;/&gt;
 &lt;figcaption aria-hidden=&#34;true&#34;&gt;35.jpg&lt;/figcaption&gt;
@@ -1450,8 +1490,8 @@ r_{be} = r_{bb&amp;#39;}+(1+\beta)\dfrac{U_T}{I_{CQ}}
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 g_mU_{b&amp;#39;e}=\beta I_b
 \]&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;这里的&lt;span class=&#34;math inline&#34;&gt;\(r_{bb&amp;#39;}\)&lt;/span&gt;是基区体电阻，&lt;span class=&#34;math inline&#34;&gt;\(r_{b&amp;#39;e}\)&lt;/span&gt;是发射结电阻。部分题目会用到来求&lt;span class=&#34;math inline&#34;&gt;\(r_{be}\)&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;h参数等效模型&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;这里的&lt;span class=&#34;math inline&#34;&gt;\(r_{bb&amp;#39;}\)&lt;/span&gt;是基区体电阻，&lt;span class=&#34;math inline&#34;&gt;\(r_{b&amp;#39;e}\)&lt;/span&gt;是发射结电阻。部分题目会用到来求&lt;span class=&#34;math inline&#34;&gt;\(r_{be}\)&lt;/span&gt;。&lt;span class=&#34;math inline&#34;&gt;\(r_{bb&amp;#39;}\)&lt;/span&gt;一般在几十到几百欧，题目没说就取&lt;span class=&#34;math inline&#34;&gt;\(200\)&lt;/span&gt;欧。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;h参数等效模型（最主要用这个分析题目）&lt;/strong&gt;&lt;/p&gt;
 &lt;figure&gt;
 &lt;img src=&#34;37.jpg&#34; alt=&#34;37.jpg&#34;/&gt;
 &lt;figcaption aria-hidden=&#34;true&#34;&gt;37.jpg&lt;/figcaption&gt;
@@ -1516,6 +1556,24 @@ A_u = \dfrac{\Delta u_{CE}}{\Delta u_I} = \dfrac{\Delta u_O}{\Delta u_I}
 &lt;img src=&#34;43.jpg&#34; alt=&#34;43.jpg&#34;/&gt;
 &lt;figcaption aria-hidden=&#34;true&#34;&gt;43.jpg&lt;/figcaption&gt;
 &lt;/figure&gt;
+&lt;p&gt;&lt;strong&gt;计算最大不失真参数&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;如果将晶体管理想化，即认为在管压降总量&lt;span class=&#34;math inline&#34;&gt;\(u_{CE}\)&lt;/span&gt;最小值大于饱和管压降&lt;span class=&#34;math inline&#34;&gt;\(U_{CES}\)&lt;/span&gt;（即管子不饱和），且基极电流总量&lt;span class=&#34;math inline&#34;&gt;\(i_{B}\)&lt;/span&gt;大于&lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt;（即管子不截肢）的情况下，非线性失真可以忽略不计，那么就可以得出放大电路的最大不失真电压&lt;span class=&#34;math inline&#34;&gt;\(U_{om}\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;从图2.3.7(b)可以计算，其方法是以&lt;span class=&#34;math inline&#34;&gt;\(U_{CEQ}\)&lt;/span&gt;为中心，取&lt;span class=&#34;math inline&#34;&gt;\(V_{CC}-U_{CEQ}\)&lt;/span&gt;和&lt;span class=&#34;math inline&#34;&gt;\(V_{CEQ}-U_{CES}\)&lt;/span&gt;这两段距离中较小的数值，并除以&lt;span class=&#34;math inline&#34;&gt;\(\sqrt{2}\)&lt;/span&gt;，则得到其有效值&lt;span class=&#34;math inline&#34;&gt;\(U_{om}\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;为了使&lt;span class=&#34;math inline&#34;&gt;\(U_{om}\)&lt;/span&gt;尽可能大，应该将&lt;span class=&#34;math inline&#34;&gt;\(Q\)&lt;/span&gt;点放置在放大区内负载线的终点，即横坐标&lt;span class=&#34;math inline&#34;&gt;\(\dfrac{V_{CC}+U_{CES}}{2}\)&lt;/span&gt;的位置，此时的&lt;span class=&#34;math inline&#34;&gt;\(U_{om}=\dfrac{V_{CC}-U_{CEQ}}{\sqrt{2}}\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;或者你需要计算其他电路中的参数，按照此时的设置，&lt;span class=&#34;math inline&#34;&gt;\(U_{CEQ}=\dfrac{V_{CC}+U_{CES}}{2}\)&lt;/span&gt;，用这个东西去计算&lt;span class=&#34;math inline&#34;&gt;\(I_{CQ},I_{BQ},I_{EQ}\)&lt;/span&gt;等等都是可以的。&lt;/p&gt;
+&lt;h3 id=&#34;直流交流负载线&#34;&gt;直流、交流负载线&lt;/h3&gt;
+&lt;p&gt;直流通路所确定的负载线&lt;span class=&#34;math inline&#34;&gt;\(u_{CE}=V_{CC}-i_CR_c\)&lt;/span&gt;称为直流负载线，而动态信号遵循的负载线称为交流负载线。&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;70.jpg&#34; alt=&#34;70.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;70.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;交流负载线有两个特点&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;输入电压为零时，其实就是静态工作点，所以负载线必过&lt;span class=&#34;math inline&#34;&gt;\(Q\)&lt;/span&gt;点&lt;/li&gt;
+&lt;li&gt;由于集电极电流&lt;span class=&#34;math inline&#34;&gt;\(i_c\)&lt;/span&gt;仅取决于基极动态电流&lt;span class=&#34;math inline&#34;&gt;\(i_b\)&lt;/span&gt;，而动态管压降&lt;span class=&#34;math inline&#34;&gt;\(u_{ce}\)&lt;/span&gt;等于&lt;span class=&#34;math inline&#34;&gt;\(i_c\)&lt;/span&gt;与&lt;span class=&#34;math inline&#34;&gt;\(R_{c}\parallel
+R_L\)&lt;/span&gt;之积，所以它的斜率为&lt;span class=&#34;math inline&#34;&gt;\(-1/(R_c\parallel R_L)\)&lt;/span&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;但其实也不一定要找出斜率。我们可以再找一个不同于&lt;span class=&#34;math inline&#34;&gt;\(Q\)&lt;/span&gt;的点即可。&lt;/p&gt;
 &lt;h2 id=&#34;三极管的三种接法&#34;&gt;三极管的三种接法&lt;/h2&gt;
 &lt;h3 id=&#34;共射&#34;&gt;共射&lt;/h3&gt;
 &lt;p&gt;之前的例子都是共射电路，其特征是发射极为输出回路与输入回路的公共端（这个画出交流通路比较好判断，不要在原来的电路上判断）。&lt;/p&gt;

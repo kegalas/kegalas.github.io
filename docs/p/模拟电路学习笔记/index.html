@@ -125,7 +125,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 32 分钟
+                    阅读时长: 35 分钟
                 </time>
             </div>
         
@@ -151,7 +151,7 @@
 </ol>
 <p>以下是集成运算放大器的一些参数：</p>
 <ol type="1">
-<li><span class="math inline">\(u_{id}=u_{i+}-u_{i-}\)</span>：差模输出电压</li>
+<li><span class="math inline">\(u_{id}=u_{i+}-u_{i-}\)</span>：差模输入电压</li>
 <li><span class="math inline">\(A_{uo}\)</span>：集成运放的开环电压放大倍数</li>
 <li><span class="math inline">\(R_i\)</span>：集成运放的输入电阻</li>
 <li><span class="math inline">\(R_o\)</span>：集成运放的输出电阻</li>
@@ -227,6 +227,8 @@ u_O = R_f\cdot
 u_O =
 R_f\bigg(\dfrac{u_{I3}}{R_3}+\dfrac{u_{I4}}{R_4}-\dfrac{u_{I1}}{R_1}-\dfrac{u_{I2}}{R_2}\bigg)
 \]</span></p>
+<p>要求<span class="math inline">\(R_1\parallel R_2\parallel
+R_f=R_3\parallel R_4\parallel R_5\)</span></p>
 <h3 id="差分比例运算电路">差分比例运算电路</h3>
 <p>是加减运算电路的一种特例，其只有两个输入，且参数对称</p>
 <figure>
@@ -389,6 +391,43 @@ A_{uf})\bigg)
 <p><span class="math display">\[
 \varphi = 180\degree-2arctan\dfrac{f}{f_0},f_0=\dfrac{1}{2\pi RC}
 \]</span></p>
+<h2 id="滤波器判断">滤波器判断</h2>
+<p>为了避免积分、微分运算，把电路转变为拉普拉斯变换下的等效电路是必要的。</p>
+<p>通过拉普拉斯变换，我们可以更容易地得到输入-输出关系，或者就是求出系统函数（传递函数）。通过系统函数我们可以方便地判断滤波器的类型。</p>
+<p><strong>一阶还是二阶</strong></p>
+<p>传递函数中，分子分母的多项式，如果其中一个最高含有<span class="math inline">\(s^2\)</span>项，则是二阶。如果两个都最高只含<span class="math inline">\(s\)</span>项，就是一阶。</p>
+<p><strong>二阶低通</strong></p>
+<p>传递函数常见为</p>
+<p><span class="math display">\[
+H(s) = \dfrac{H(0)w_0^2}{s^2+\dfrac{w_0}{Q}s+w_02}
+\]</span></p>
+<p>其零极点图，包含了两个共轭的极点。</p>
+<p><strong>二阶高通</strong></p>
+<p>传递函数常见为</p>
+<p><span class="math display">\[
+H(s) = \dfrac{H(\infty)s^2}{s^2+\dfrac{w_0}{Q}s+w_02}
+\]</span></p>
+<p>其零极点图，包含了两个共轭的极点，一个取值为零的二阶零点。</p>
+<p><strong>二阶带通</strong></p>
+<p>传递函数常见为</p>
+<p><span class="math display">\[
+H(s) = \dfrac{H(w_0)\dfrac{w_0}{Q}s}{s^2+\dfrac{w_0}{Q}s+w_02}
+\]</span></p>
+<p>其零极点图，包含了一个取值为<span class="math inline">\(0\)</span>的零点，两个共轭极点。<span class="math inline">\(Q\)</span>为品质因数，越大，带宽越窄，选频性能越好。</p>
+<p><strong>二阶带阻</strong></p>
+<p>传递函数常见为</p>
+<p><span class="math display">\[
+H(s) = \dfrac{H(0)(s^2+w_0^2)}{s^2+\dfrac{w_0}{Q}s+w_02}
+\]</span></p>
+<p>其零极点图，两个零点，两个共轭极点。<span class="math inline">\(Q\)</span>越大，陷波特性越尖锐。这两个零点是共轭的，在<span class="math inline">\(jw\)</span>轴上。</p>
+<p><strong>二阶全通</strong></p>
+<p>传递函数常见为</p>
+<p><span class="math display">\[
+H(s) = \dfrac{H(0)(s^2-\dfrac{w_0}{Q}s+w_0^2)}{s^2+\dfrac{w_0}{Q}s+w_02}
+\]</span></p>
+<p>其零极点图，两个共轭零点，两个共轭极点。构成一个矩形。</p>
+<p><strong>一阶</strong></p>
+<p>不知道为什么书上没讲一阶电路判断。但是根据传递函数多少也能看明白。</p>
 <h1 id="半导体器件">半导体器件</h1>
 <h2 id="半导体基础知识">半导体基础知识</h2>
 <p><strong>本征半导体</strong></p>
@@ -458,6 +497,7 @@ I_Se^{u/U_T}\)</span>，即指数变化。反向电压时，当<span class="math
 <figcaption aria-hidden="true">22.jpg</figcaption>
 </figure>
 <p>等效电路是理想二极管串联电压源<span class="math inline">\(U_{on}\)</span>和电阻<span class="math inline">\(r_D\)</span>，且<span class="math inline">\(r_D=\Delta U/\Delta I\)</span></p>
+<p>在做题算直流电阻的时候，直接把某个点的电压除以电流即可。算交流电阻时，用<span class="math inline">\(U_T\)</span>除以该点的电流即可。</p>
 <h3 id="稳压二极管">稳压二极管</h3>
 <p>稳压管在反向击穿时，在一定的电流范围内，端电压几乎不变，表现出稳压特性。</p>
 <figure>
@@ -578,7 +618,7 @@ i_C = f(U_{CE})\bigg|_{I_B=常数}
 <p>其特征是发射结电压正向偏置且集电结反向偏置。对于共射电路，<span class="math inline">\(u_{BE}&gt;U_{on}\)</span>且<span class="math inline">\(u_{CE}\geq u_{BE}\)</span>。此时<span class="math inline">\(i_C\)</span>几乎仅仅决定于<span class="math inline">\(i_B\)</span>，而与<span class="math inline">\(u_{CE}\)</span>无关。<span class="math inline">\(I_C=\bar\beta I_B, \Delta i_C=\beta\Delta
 i_B\)</span></p>
 <p><em>饱和区</em></p>
-<p>其特征是发射极与集电极均正向偏置。对于共射电路，<span class="math inline">\(u_{BE}&gt;U_{on}\)</span>且<span class="math inline">\(u_{CE}&lt;u_{BE}\)</span>。此时<span class="math inline">\(i_C\)</span>不仅与<span class="math inline">\(i_B\)</span>有关，而且明显随<span class="math inline">\(u_{CE}\)</span>增大而增大，<span class="math inline">\(i_C\)</span>小于<span class="math inline">\(\bar\beta I_B\)</span></p>
+<p>其特征是发射极与集电极均正向偏置。对于共射电路，<span class="math inline">\(u_{BE}&gt;U_{on}\)</span>且<span class="math inline">\(u_{CE}&lt;u_{BE}\)</span>。此时<span class="math inline">\(i_C\)</span>不仅与<span class="math inline">\(i_B\)</span>有关，而且明显随<span class="math inline">\(u_{CE}\)</span>增大而增大，<span class="math inline">\(i_C\)</span>小于<span class="math inline">\(\bar\beta I_B\)</span>。此时<span class="math inline">\(u_{CE}=U_{CE(sat)}\)</span>，通常为<span class="math inline">\(0.2\sim 0.3\text{V}\)</span></p>
 <h1 id="放大电路的分析方法">放大电路的分析方法</h1>
 <h2 id="放大的主要性能指标">放大的主要性能指标</h2>
 <p><strong>放大倍数</strong></p>
@@ -637,13 +677,13 @@ U_{CEQ} = V_{CC}-I_{CQ}R_c
 <li>无内阻的直流电源(如<span class="math inline">\(V_{CC}\)</span>)视为短路。</li>
 </ol>
 <h2 id="三极管等效电路">三极管等效电路</h2>
-<p><strong>晶体管等效</strong></p>
+<p><strong>晶体管等效（在做题中几乎无用）</strong></p>
 <figure>
 <img src="34.jpg" alt="34.jpg"/>
 <figcaption aria-hidden="true">34.jpg</figcaption>
 </figure>
 <p>直流模型是在静态工作时的模型。必须在放大区才可以使用，并且要求<span class="math inline">\(\beta=\bar\beta\)</span></p>
-<p><strong>交流小信号模型</strong></p>
+<p><strong>交流小信号模型（在做题中，注意<span class="math inline">\(r_{be}\)</span>是怎么求的）</strong></p>
 <figure>
 <img src="35.jpg" alt="35.jpg"/>
 <figcaption aria-hidden="true">35.jpg</figcaption>
@@ -659,8 +699,8 @@ r_{be} = r_{bb&#39;}+(1+\beta)\dfrac{U_T}{I_{CQ}}
 <p><span class="math display">\[
 g_mU_{b&#39;e}=\beta I_b
 \]</span></p>
-<p>这里的<span class="math inline">\(r_{bb&#39;}\)</span>是基区体电阻，<span class="math inline">\(r_{b&#39;e}\)</span>是发射结电阻。部分题目会用到来求<span class="math inline">\(r_{be}\)</span></p>
-<p><strong>h参数等效模型</strong></p>
+<p>这里的<span class="math inline">\(r_{bb&#39;}\)</span>是基区体电阻，<span class="math inline">\(r_{b&#39;e}\)</span>是发射结电阻。部分题目会用到来求<span class="math inline">\(r_{be}\)</span>。<span class="math inline">\(r_{bb&#39;}\)</span>一般在几十到几百欧，题目没说就取<span class="math inline">\(200\)</span>欧。</p>
+<p><strong>h参数等效模型（最主要用这个分析题目）</strong></p>
 <figure>
 <img src="37.jpg" alt="37.jpg"/>
 <figcaption aria-hidden="true">37.jpg</figcaption>
@@ -725,6 +765,24 @@ A_u = \dfrac{\Delta u_{CE}}{\Delta u_I} = \dfrac{\Delta u_O}{\Delta u_I}
 <img src="43.jpg" alt="43.jpg"/>
 <figcaption aria-hidden="true">43.jpg</figcaption>
 </figure>
+<p><strong>计算最大不失真参数</strong></p>
+<p>如果将晶体管理想化，即认为在管压降总量<span class="math inline">\(u_{CE}\)</span>最小值大于饱和管压降<span class="math inline">\(U_{CES}\)</span>（即管子不饱和），且基极电流总量<span class="math inline">\(i_{B}\)</span>大于<span class="math inline">\(0\)</span>（即管子不截肢）的情况下，非线性失真可以忽略不计，那么就可以得出放大电路的最大不失真电压<span class="math inline">\(U_{om}\)</span></p>
+<p>从图2.3.7(b)可以计算，其方法是以<span class="math inline">\(U_{CEQ}\)</span>为中心，取<span class="math inline">\(V_{CC}-U_{CEQ}\)</span>和<span class="math inline">\(V_{CEQ}-U_{CES}\)</span>这两段距离中较小的数值，并除以<span class="math inline">\(\sqrt{2}\)</span>，则得到其有效值<span class="math inline">\(U_{om}\)</span></p>
+<p>为了使<span class="math inline">\(U_{om}\)</span>尽可能大，应该将<span class="math inline">\(Q\)</span>点放置在放大区内负载线的终点，即横坐标<span class="math inline">\(\dfrac{V_{CC}+U_{CES}}{2}\)</span>的位置，此时的<span class="math inline">\(U_{om}=\dfrac{V_{CC}-U_{CEQ}}{\sqrt{2}}\)</span></p>
+<p>或者你需要计算其他电路中的参数，按照此时的设置，<span class="math inline">\(U_{CEQ}=\dfrac{V_{CC}+U_{CES}}{2}\)</span>，用这个东西去计算<span class="math inline">\(I_{CQ},I_{BQ},I_{EQ}\)</span>等等都是可以的。</p>
+<h3 id="直流交流负载线">直流、交流负载线</h3>
+<p>直流通路所确定的负载线<span class="math inline">\(u_{CE}=V_{CC}-i_CR_c\)</span>称为直流负载线，而动态信号遵循的负载线称为交流负载线。</p>
+<figure>
+<img src="70.jpg" alt="70.jpg"/>
+<figcaption aria-hidden="true">70.jpg</figcaption>
+</figure>
+<p>交流负载线有两个特点</p>
+<ol type="1">
+<li>输入电压为零时，其实就是静态工作点，所以负载线必过<span class="math inline">\(Q\)</span>点</li>
+<li>由于集电极电流<span class="math inline">\(i_c\)</span>仅取决于基极动态电流<span class="math inline">\(i_b\)</span>，而动态管压降<span class="math inline">\(u_{ce}\)</span>等于<span class="math inline">\(i_c\)</span>与<span class="math inline">\(R_{c}\parallel
+R_L\)</span>之积，所以它的斜率为<span class="math inline">\(-1/(R_c\parallel R_L)\)</span></li>
+</ol>
+<p>但其实也不一定要找出斜率。我们可以再找一个不同于<span class="math inline">\(Q\)</span>的点即可。</p>
 <h2 id="三极管的三种接法">三极管的三种接法</h2>
 <h3 id="共射">共射</h3>
 <p>之前的例子都是共射电路，其特征是发射极为输出回路与输入回路的公共端（这个画出交流通路比较好判断，不要在原来的电路上判断）。</p>
@@ -1649,6 +1707,7 @@ THD_f=\dfrac{THD}{1+AF}
             <li><a href="#全通滤波器移相器">全通滤波器（移相器）</a></li>
           </ol>
         </li>
+        <li><a href="#滤波器判断">滤波器判断</a></li>
       </ol>
     </li>
     <li><a href="#半导体器件">半导体器件</a>
@@ -1682,6 +1741,7 @@ THD_f=\dfrac{THD}{1+AF}
             <li><a href="#静态工作点的分析">静态工作点的分析</a></li>
             <li><a href="#电压放大倍数的分析">电压放大倍数的分析</a></li>
             <li><a href="#波形非线性失真的分析">波形非线性失真的分析</a></li>
+            <li><a href="#直流交流负载线">直流、交流负载线</a></li>
           </ol>
         </li>
         <li><a href="#三极管的三种接法">三极管的三种接法</a>
