@@ -125,7 +125,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 15 分钟
+                    阅读时长: 30 分钟
                 </time>
             </div>
         
@@ -922,6 +922,562 @@ N\leq 2^n
 <li>变址寻址：操作数地址由变址寄存器和指令提供的地址偏移量决定，操作数在主存单元中。</li>
 <li>堆栈寻址：该寻址方式通常由指令操作码指定，用在涉及堆栈操作的指令中，所寻址的操作数在堆栈中。</li>
 </ol>
+<h1 id="中央处理器">中央处理器</h1>
+<h2 id="cpu的功能和结构">CPU的功能和结构</h2>
+<h3 id="cpu的功能">CPU的功能</h3>
+<p>CPU主要由控制器+运算器+寄存器组构成。</p>
+<p>CPU具有以下四方面功能</p>
+<ul>
+<li>指令控制</li>
+<li>操作控制</li>
+<li>时间控制</li>
+<li>数据加工</li>
+</ul>
+<p>CPU的主要功能是执行存储在主存中的指令序列,也即执行程序，具体操作如下:</p>
+<ol type="1">
+<li>取得指令：cpu从主存中取指令，存在指令寄存器中</li>
+<li>执行指令</li>
+<li>确定下条指令的地址：可能是顺序地址，或者分支跳转地址</li>
+<li>重复1~3，直到执行完毕</li>
+</ol>
+<p>其中，控制器CU的功能为：从存储器中取指令、对指令译码、产生控制信号并控制计算机系统各部件有序地执行，从而实现这条指令的功能。</p>
+<p>控制器组成为：PC，IR，AR，DR，指令译码器，操作控制信号形成部件，时序信号产生器。</p>
+<h3 id="指令周期">指令周期</h3>
+<p>CPU执行一条指令所用的时间即为指令周期，在指令周期内CPU完成一组操作。</p>
+<p>一个周期分为三个子周期：取指令子周期、执行指令子周期（分为取数子周期、执行子周期、存数字周期）、中断子周期。</p>
+<figure>
+<img src="2.jpg" alt="2.jpg"/>
+<figcaption aria-hidden="true">2.jpg</figcaption>
+</figure>
+<h3 id="微操作">微操作</h3>
+<p><strong>概念</strong></p>
+<p>在CISC系统中，指令周期内的CPU行为常常被分解为一系列微操作<span class="math inline">\((\mu op)\)</span></p>
+<p>微操作是CPU可以进行的基本或原子操作。它是CPU可实现的、不可分解的操作。以含有一个寄存器传递（移进、移出）操作为标志。</p>
+<p>每一个微操作是通过控制器将控制信号发送到相关部件上引起部件动作而完成的。</p>
+<ul>
+<li>这些控制微操作完成的控制信号称为微命令。</li>
+<li>微命令是由控制器产生的。</li>
+</ul>
+<p><strong>流程</strong></p>
+<p><em>时序信号</em></p>
+<p>CPU执行微操作有严格的时间顺序性，这种时间关系是由计算机的时序系统来控制的。CPU执行微操作序列中的时序信号：</p>
+<ul>
+<li>指令周期：执行一条指令所用的时间</li>
+<li>CPU周期：完成一个子周期所用的时间</li>
+<li>节拍周期：完成一个微操作所用的时间</li>
+</ul>
+<p>通常利用时序电路为控制器提供所需的时序信号。</p>
+<ol type="1">
+<li>节拍周期</li>
+</ol>
+<p>最基本的时序信号为节拍，它可由顺序脉冲发生器（也称脉冲分配器或节拍脉冲发生器）产生。</p>
+<p>节拍周期<span class="math inline">\(T\)</span>：完成各种CPU微操作所需时间的最大者，常作为定义CPU时钟周期<span class="math inline">\(T_{clk}\)</span>或时钟频率<span class="math inline">\(f_{clk}\)</span>的依据。</p>
+<p><span class="math display">\[
+T = (1\sim n)\times T_{clk} = (1\sim n)/f_{clk}
+\]</span></p>
+<p>节拍脉冲发生器分为两类：计数型=计数器+译码器；移位型=移位寄存器+译码器。</p>
+<ol start="2" type="1">
+<li>CPU周期（机器周期）</li>
+</ol>
+<p>完成一个子周期所用的时间。一般指CPU与内存交换一次信息所需要的时间。若干个节拍组成一个CPU周期。</p>
+<p>CPU周期可以设计为定长 CPU周期与不定长CPU周期两种。</p>
+<ol start="3" type="1">
+<li>指令周期</li>
+</ol>
+<p>执行一条指令所用的时间。若干个CPU周期组成一个指令周期，指令周期也可以设计为定长指令周期与不定长指令周期两种。</p>
+<p><em>取指令与中断子周期微操作流程</em></p>
+<p>当一条指令在该系统上执行时，可以被看作是一组微操作的执行。</p>
+<p>每条指令对应的一组微操作，称为该指令的微操作流程或微操作序列。</p>
+<ol type="1">
+<li>取指令周期</li>
+</ol>
+<p>一个简单的取指令周期可由3个节拍、4个微操作组成</p>
+<pre><code>T1: AR&lt;-PC    //PC的内容传送到AR
+T2: DR&lt;-Memory[AR], Mread //读取主存到DR
+    PC&lt;-PC+I  //PC自增到下一条指令，其中I为指令长度
+T3: IR&lt;-DR    //DR的内容传送到IR</code></pre>
+<p>组合微操作：</p>
+<pre><code>T1: AR&lt;-PC
+T2: DR&lt;-Memory[AR], Mread
+T3: PC&lt;-PC+I
+    IR&lt;-DR</code></pre>
+<p>组合微操作的规则：遵守操作发生的顺序、必须避免冲突</p>
+<p>所有指令的取指令操作相同，故取指令周期称为公操作。</p>
+<ol start="2" type="1">
+<li>中断周期</li>
+</ol>
+<p>在执行周期结束时有一个检测，用来确定被允许的中断是否已出现，若是，中断周期产生。</p>
+<p>中断周期也是公操作。</p>
+<p>中断周期微操作序列举例：</p>
+<pre><code>T1: DR&lt;-PC   //将PC的内容传到DR保护
+T2: AR&lt;-Save_Address   //中断断点信息保护区的存储单元地址传送到AR
+    PC&lt;-Routine_Address   //中断服务程序首地址送入PC
+T3: Memory[AR]&lt;-DR, Mwrite   //将老PC的内容保存于主存（如堆栈）中</code></pre>
+<ol start="3" type="1">
+<li>执行周期</li>
+</ol>
+<ul>
+<li>MOV R1, R0</li>
+</ul>
+<p>实现将寄存器R0的内容传送至寄存器R1中。</p>
+<pre><code>T1: R1&lt;-R0</code></pre>
+<ul>
+<li>MOV R0, X</li>
+</ul>
+<p>实现将存储单元X中的内容传送至寄存器R0中。</p>
+<pre><code>T1: AR&lt;-IR //IR = X
+T2: DR&lt;-Memory[AR], Mread
+T3: R0&lt;-DR</code></pre>
+<ul>
+<li>MOV (R1), R0</li>
+</ul>
+<p>将寄存器R0的内容传送至由寄存器R1间接寻址的存储单元中。</p>
+<pre><code>T1: AR&lt;-R1
+T2: DR&lt;-R0
+T3: Memory[AR]&lt;-DR, Mwrite</code></pre>
+<ul>
+<li>ADD R1, R0</li>
+</ul>
+<p>将寄存器R0的内容与寄存器R1的内容相加并将结果存入R1。</p>
+<pre><code>T1: Y&lt;-R0
+T2: Z&lt;-R1+Y
+T3: R1&lt;-Z</code></pre>
+<ul>
+<li>SUB R0, (X)</li>
+</ul>
+<p>实现寄存器R0中的被减数减去存储器地址X间接寻址的存储单元中的减数、将差值传送至寄存器R0中。</p>
+<pre><code>T1: AR&lt;-IR //IR = X
+T2: DR&lt;-Memory[AR], Mread
+T3: AR&lt;-DR
+T4: DR&lt;-Memory[AR], Mread
+T5: Y&lt;-R0
+T6: Z&lt;-Y﹣DR
+T7: R0&lt;-Z</code></pre>
+<ul>
+<li>IN R0, P</li>
+</ul>
+<p>从I/O地址为P的I/O设备(接口)中输入数据并存入寄存器R0中。</p>
+<pre><code>T1: AR&lt;-IR //IR = P
+T2: DR&lt;-IO[AR], IOread
+T3: R0&lt;-DR</code></pre>
+<ul>
+<li>OUT P, R0</li>
+</ul>
+<p>将寄存器R0中的数据输出到I/O地址为P的I/O设备(接口)中。</p>
+<pre><code>T1: AR&lt;-IR //IR = P
+T2: DR&lt;-R0
+T3: IO[AR]&lt;-DR, IOwrite</code></pre>
+<ul>
+<li>JUMP X</li>
+</ul>
+<p>无条件跳转指令，实现将程序执行地址从当前跳转指令所在位置转移到存储器地址为X处。</p>
+<pre><code>T1: PC&lt;-IR</code></pre>
+<ul>
+<li>JZ offs</li>
+</ul>
+<p>采用相对寻址的条件跳转指令。当条件为真（即零标志ZF=1）时，程序发生跳转；条件为假（即零标志ZF=0）时，程序顺序执行下条指令。跳转地址=PC+offs，offs为带符号地址偏移量。</p>
+<pre><code>If(ZF==1) then
+{
+    T1: Y&lt;-IR
+    T2: Z&lt;-PC+Y
+    T3: PC&lt;-Z
+}</code></pre>
+<ul>
+<li>PUSH R0</li>
+</ul>
+<p>实现将寄存器R0中的数据压入到堆栈中。</p>
+<pre><code>T1: SP&lt;-SP-n // SP指向新栈顶，n为一次压栈的字节数
+    DR&lt;-R0
+T2: AR&lt;-SP
+T3: Memory[AR]&lt;-DR, Mwrite</code></pre>
+<ul>
+<li>POP R0</li>
+</ul>
+<p>实现将堆栈栈顶的数据弹出至寄存器R0中。</p>
+<pre><code>T1: AR&lt;-SP
+T2: DR&lt;-Memory[AR], Mread
+T3: R0&lt;-DR
+    SP&lt;-SP+n   //将SP指向新栈顶，n为一次弹出的字节数</code></pre>
+<ul>
+<li>CALL(X)</li>
+</ul>
+<p>子程序调用指令。将程序执行地址从当前调用指令所在位置转移到以存储器地址X间接寻址的存储单元处，并保存返回地址。</p>
+<pre><code>T1：SP&lt;-SP-n
+    DR&lt;-PC
+T2：AR&lt;-SP
+T3：Memory[AR]&lt;-DR, Mwrite
+T4：AR&lt;-IR
+T5：DR&lt;-Memory[AR], Mread
+T6：PC&lt;-DR</code></pre>
+<ul>
+<li>RET</li>
+</ul>
+<p>子程序返回指令，实现从堆栈栈顶处获得子程序调用时保存的返回主程序的地址。</p>
+<pre><code>T1: AR&lt;-SP
+T2: DR&lt;-Memory[AR], Mread
+T3: PC&lt;-DR
+    SP&lt;-SP+n</code></pre>
+<h3 id="控制器的组成">控制器的组成</h3>
+<p>控制器应完成的任务：</p>
+<ul>
+<li>产生微命令（即控制信号）</li>
+<li>按节拍产生微命令</li>
+</ul>
+<p>在设计控制器前需要：</p>
+<ul>
+<li>定义计算机基本硬件组成和基本指令系统</li>
+<li>基于定义的硬件结构，针对每条指令，描述CPU完成的微操作</li>
+<li>确定控制单元应该完成的功能，即何时产生何种微命令</li>
+</ul>
+<p>有两种方法：</p>
+<ul>
+<li>硬布线控制设计法</li>
+<li>微程序控制或微码控制设计法</li>
+</ul>
+<h2 id="硬布线控制器设计">硬布线控制器设计</h2>
+<p>硬布线控制器设计法将控制单元看作一个顺序逻辑电路或有限状态机，它可以产生规定顺序的控制信号，这些信号与提供给控制单元的指令相对应。</p>
+<p>它的设计目标是：使用最少的元器件，达到最快的操作速度。</p>
+<p><strong>RISC-V</strong></p>
+<p>对于RISC-V，其为单周期实现。</p>
+<p><strong>类x86</strong></p>
+<p>对于类x86系统，其为多周期实现。有两种设计方法：</p>
+<ul>
+<li>采用一级时序，即只利用节拍信号。一条指令执行的全过程是用一个从取指令到执行指令的完整微操作序列来描述的，而且对这个微操作序列也是从头至尾分配节拍的。</li>
+<li>采用两级时序，即利用节拍和CPU周期两种时间信号。按照CPU周期来描述一条指令的微操作序列。</li>
+</ul>
+<p>我们要从微操作序列得出微命令序列。例如把AR&lt;-PC转换为<span class="math inline">\(PC_{out},AR_{in}\)</span></p>
+<p>由控制单元产生并加载到CPU内外的全部控制信号均可用下述形式表述：</p>
+<p>两级时序：</p>
+<p><span class="math display">\[
+C_i = \sum(M_m\cdot T_n\cdot I_j\cdot F_k)
+\]</span></p>
+<p>在执行指令<span class="math inline">\(I_j\)</span>时，若状态<span class="math inline">\(F_k\)</span>满足要求，则在第<span class="math inline">\(m\)</span>个CPU周期<span class="math inline">\(M_m\)</span>的第<span class="math inline">\(n\)</span>个节拍<span class="math inline">\(T_n\)</span>，控制单元发出<span class="math inline">\(C_i\)</span>控制命令。</p>
+<p>一级时序：</p>
+<p><span class="math display">\[
+C_i = \sum(T_n\cdot I_j\cdot F_k)
+\]</span></p>
+<p>总结：</p>
+<ul>
+<li>每个控制信号的逻辑表达式就是一个与或逻辑方程式。</li>
+<li>用一个与或逻辑电路就可以实现该控制信号的生成。</li>
+<li>将所有控制信号的与或逻辑电路组合在一起就构成了硬布线控制单元。</li>
+<li>时间信息（单周期实现不需要）、指令信息、状态信息是硬布线控制单元的输入，控制信号是硬布线控制单元的输出。</li>
+<li>特点：</li>
+</ul>
+<ol type="1">
+<li>一旦完成设计，改变控制器的行为的唯一方法就是重新设计电路（修改不灵活）</li>
+<li>在现代复杂处理器中，需要定义庞大的方程组（与或组合电路实现困难）</li>
+</ol>
+<h2 id="微程序控制器设计">微程序控制器设计</h2>
+<p>用软件方法组织和控制数据处理系统的信息传送，并最终用硬件实现。依据微程序顺序产生一条指令执行时所需的全部控制信号。相当于把控制信号存储起来，因此又称存储控制逻辑方法。</p>
+<p>对在一个时间单位（节拍）内出现的一组微操作进行描述的语句称作微指令。</p>
+<p>一个微指令序列称作微程序或固件。</p>
+<p>通过一组微指令产生的控制信号，使一条指令中的所有微操作得以实现，从而实现一条指令的功能。</p>
+<p>一条（机器）指令对应一个微程序，该微程序包含从取指令到执行指令一个完整微操作序列对应的全部微指令，它被存入一个称为控制存储器的ROM中。</p>
+<p>微指令周期：一条微指令执行的时间（包括从控制存储器中取得微指令和执行微指令所用时间）。</p>
+<h3 id="微指令格式">微指令格式</h3>
+<p><strong>水平型微指令</strong></p>
+<p>多个控制信号同时有效-&gt;多个微操作同时发生</p>
+<figure>
+<img src="3.jpg" alt="3.jpg"/>
+<figcaption aria-hidden="true">3.jpg</figcaption>
+</figure>
+<p><strong>垂直型微指令</strong></p>
+<p>类似于机器指令，利用微操作码的不同编码来表示不同的微操作功能。</p>
+<figure>
+<img src="4.jpg" alt="4.jpg"/>
+<figcaption aria-hidden="true">4.jpg</figcaption>
+</figure>
+<h3 id="微程序控制器的一般结构和工作原理">微程序控制器的一般结构和工作原理</h3>
+<figure>
+<img src="5.jpg" alt="5.jpg"/>
+<figcaption aria-hidden="true">5.jpg</figcaption>
+</figure>
+<h3 id="微指令地址的生成">微指令地址的生成</h3>
+<ol type="1">
+<li>两地址格式</li>
+<li>单地址格式</li>
+<li>可变格式</li>
+</ol>
+<h3 id="微指令控制域编码">微指令控制域编码</h3>
+<ol type="1">
+<li>水平型微指令控制域的编码：</li>
+</ol>
+<ul>
+<li>直接表示法</li>
+<li>译码法</li>
+<li>字段译码法</li>
+</ul>
+<ol start="2" type="1">
+<li>垂直型微指令控制域的编码</li>
+</ol>
+<h3 id="微程序设计及示例">微程序设计及示例</h3>
+<p><strong>微程序结构</strong></p>
+<p>在设计微程序时，通常采用如下两种典型结构</p>
+<ol type="1">
+<li>一条指令对应一段完整的微程序</li>
+<li>将微程序中的公共部分设计成微子程序进行公共调用</li>
+</ol>
+<p><strong>编写微程序</strong></p>
+<h2 id="cpu性能测量与提高">CPU性能测量与提高</h2>
+<h3 id="cpu性能测量">CPU性能测量</h3>
+<p>CPU主频<span class="math inline">\(f_{CLK}\)</span>：CPU使用的时钟的频率，单位为赫兹。</p>
+<p>CPU时钟周期<span class="math inline">\(T_{CLK}\)</span>：时钟频率的倒数。</p>
+<p>一般而言，主频高代表速度快。</p>
+<p><strong>CPU时间</strong></p>
+<p>运行一个程序所花费的时间</p>
+<p>响应时间：CPU时间与等待时间（包括用于磁盘访问、存储器访问、I/O操作、操作系统开销等时间）的总和。</p>
+<p>假设时钟周期为<span class="math inline">\(T_{CLK}\)</span>，执行某程序时，CPU需要使用<span class="math inline">\(N\)</span>个时钟周期，那么，CPU执行该程序所用时间为</p>
+<p><span class="math display">\[
+T_{CPU}=N\times T_{CLK} = N/f_{CLK}
+\]</span></p>
+<p><strong>CPI与IPC</strong></p>
+<p>CPI是每条指令执行所用的时钟数的平均值。</p>
+<p>IPC是每时钟周期执行的指令数。</p>
+<p>设某个程序要用<span class="math inline">\(N\)</span>个时钟周期，该程序汇总的指令数为<span class="math inline">\(I\)</span>，其CPI记为<span class="math inline">\(CPI\)</span>，则</p>
+<p><span class="math display">\[
+N = I\times CPI
+\]</span></p>
+<p><span class="math display">\[
+T_{CPU} = I\times CPI\times T_{CLK} = \dfrac{I\times CPI}{f_{CLK}}
+\]</span></p>
+<p>有三方面的因素使得程序的CPI可能不同于CPU执行的CPI：</p>
+<ol type="1">
+<li>Cache行为发生变化</li>
+<li>指令混合发生变化</li>
+<li>分支预测发生变化</li>
+</ol>
+<p>影响CPU性能的三个关键因素：</p>
+<ul>
+<li>CPI</li>
+<li>时钟频率</li>
+<li>指令数</li>
+</ul>
+<p><strong>MIPS</strong></p>
+<p>CPU每秒钟执行的百万指令数。</p>
+<p><span class="math display">\[
+MIPS = \dfrac{I}{T\times 10^6} = \dfrac{f_{CLK}}{CPI\times 10^6}
+\]</span></p>
+<p>其中<span class="math inline">\(T\)</span>为程序的执行时间。</p>
+<p>MIPS的局限：</p>
+<ul>
+<li>不能对指令集不同的计算机使用MIPS进行比较：MIPS只说明了指令执行速率，而没有考虑指令的能力</li>
+<li>计算机对所有程序没有单一的MIPS值：对于同一个计算机上的不同程序，MIPS是变化的</li>
+<li>MIPS会与性能反向变化</li>
+</ul>
+<p><strong>Flops</strong></p>
+<p>CPU每秒完成的浮点运算次数</p>
+<p><span class="math display">\[
+FLOPS = \dfrac{M}{T}
+\]</span></p>
+<p>其中<span class="math inline">\(M\)</span>为浮点运算次数，<span class="math inline">\(T\)</span>为执行时间。</p>
+<p>FLOPS可以用于不同计算机之间的比较。</p>
+<p>就像MB，GB，TB。FLOPS也有MFLOPS，GFLOPS，PFLOPS等等</p>
+<h3 id="cpu性能提高">CPU性能提高</h3>
+<ol type="1">
+<li>采用更先进的硅加工制造技术</li>
+<li>缩短指令执行路径长度。减少执行指令的时钟周期数：优化微操作、微程序；双总线、三总线；增加特定硬件，实现并行</li>
+<li>简化组织结构来缩短时钟周期。例如RISC</li>
+<li>采用并行处理技术。指令级和处理器级并行</li>
+</ol>
+<h3 id="多核与多线程技术">多核与多线程技术</h3>
+<h1 id="流水线技术">流水线技术</h1>
+<h2 id="流水线处理的概念">流水线处理的概念</h2>
+<h3 id="流水线的处理方式">流水线的处理方式</h3>
+<p>若将一重复的处理过程分解为若干子过程，每个子过程都可在专用设备构成的流水线功能段上实现，并可与其它子过程同时执行，这种技术称为流水技术。</p>
+<h3 id="流水线的类型">流水线的类型</h3>
+<p><strong>按流水线位于计算机系统的层次划分</strong></p>
+<ol type="1">
+<li>系统级流水线/宏流水线：在多个系统中有多个处理机串行构成的流水线</li>
+<li>处理器级流水线：在处理器内部由多个部件构成的流水线。——指令流水线</li>
+<li>部件级流水线：在处理器中某部件内部由多个子部件构成的流水线。</li>
+</ol>
+<p><strong>按功能强弱划分</strong></p>
+<ol type="1">
+<li>单功能流水线</li>
+<li>多功能流水线</li>
+</ol>
+<p><strong>按是否有反馈回路划分</strong></p>
+<ol type="1">
+<li>线性流水线</li>
+<li>非线性流水线-流水线调度</li>
+</ol>
+<p><strong>按流水线输出端任务流出顺序与输入端任务流入顺序是否相同划分</strong></p>
+<ol type="1">
+<li>顺序流动流水线（入出顺序相同）</li>
+<li>异步流动流水线（入出顺序不同）</li>
+</ol>
+<p><strong>按流水线一次处理对象的数量划分</strong></p>
+<ol type="1">
+<li>标量流水线</li>
+<li>超标量流水线</li>
+<li>向量流水线</li>
+<li>超长指令字流水线</li>
+</ol>
+<h2 id="设计运算流水线的一般方法">设计运算流水线的一般方法</h2>
+<ol type="1">
+<li>寻找一个适当的、可分解为多步骤的、连续运行的算法，该算法的每一步骤应是时间均衡的、可以由硬件电路实现的。</li>
+<li>将实现算法每一步骤的硬件电路作为流水线的一段，并按照步骤顺序将各段连接起来。</li>
+<li>在流水线各段之间放置快速缓冲寄存器来分离各段，并利用缓冲寄存器逐段传送处理数据（部分或全部结果）。所有缓冲寄存器受同一时钟控制。</li>
+</ol>
+<h2 id="指令流水线">指令流水线</h2>
+<h3 id="基本的指令流水线">基本的指令流水线</h3>
+<p>指令流水线是利用执行指令时存在的直接并行性实现多条指令重叠执行的一种技术。</p>
+<p>指令流水线对于程序员是不可见的，它由程序编译器和CPU内部程序控制单元自动管理。</p>
+<p>如果流水线各段采用同步方式控制各段间信息的<strong>同步</strong>推进，则流水线同步控制时钟的周期应选定为</p>
+<p><span class="math display">\[
+T_{CLK} = \max_i\{\tau_i\}
+\]</span></p>
+<p>其中<span class="math inline">\(\tau_i\)</span>是该指令的运行时间。由于时钟周期取决于最长指令的运行时间，所以其他指令运行完后就要等待，造成浪费，速度减慢。所以要将指令的执行步骤再分解，使每一步骤所用时间尽可能均衡，并依此设计一个多级的指令流水线。</p>
+<p>例如，将指令处理分为以下四步</p>
+<ol type="1">
+<li>指令获取（IF）：从主存或cache中获取指令并对指令进行译码</li>
+<li>操作数加载（OL）：从主存或cache中获取操作数放入寄存器中</li>
+<li>执行指令（EX）：利用ALU等执行部件，对寄存器中的操作数进行处理，结果存于寄存器中</li>
+<li>写操作数（WO、OS）：将寄存器中的结果存入主存或cache中</li>
+</ol>
+<h3 id="指令流水线策略">指令流水线策略</h3>
+<ol type="1">
+<li>采用深度指令流水线结构</li>
+</ol>
+<p>将指令的执行过程进一步细化，使流水线的级（段）数变多，而每一级的工作更少（有可能一个时钟周期完成）、时间更均衡。</p>
+<ol start="2" type="1">
+<li>多条流水线结构</li>
+</ol>
+<h2 id="流水线性能测量">流水线性能测量</h2>
+<h3 id="时空图">时空图</h3>
+<p>装入时间=(流水线级数-1)<span class="math inline">\(\times\)</span>时钟周期<span class="math inline">\(\tau\)</span>；<span class="math inline">\(\tau=(1\sim n)\times T_{CLK}\)</span></p>
+<h3 id="吞吐率">吞吐率</h3>
+<p>吞吐率：指单位时间内流水线所完成的任务数或输出结果的数量，它是衡量流水线速度的重要指标。</p>
+<p>最大吞吐率<span class="math inline">\(TP_{max}\)</span>：流水线在达到稳定状态后所得到的吞吐率。</p>
+<p>假设流水线各段运行时间相等，为<span class="math inline">\(1\)</span>个时钟周期<span class="math inline">\(T_{CLK}\)</span>，则：</p>
+<p><span class="math display">\[
+TP_{max} = 1/T_{CLK}
+\]</span></p>
+<p>假设流水线各段运行时间不等，第<span class="math inline">\(i\)</span>段时间为<span class="math inline">\(\tau_i\)</span>，则：</p>
+<p><span class="math display">\[
+TP_{max} = 1/\max_i\{\tau_i\}
+\]</span></p>
+<p>所以瓶颈在于最慢的一段。消除瓶颈的办法有：</p>
+<ul>
+<li>细分瓶颈段（首选）（例如把他拆分成两个阶段）</li>
+<li>重复设置瓶颈段（即物理上再增加一个一样的，和原来的并联）</li>
+</ul>
+<p><strong>实际吞吐率</strong></p>
+<p>之前说的吞吐率是当待执行任务无限多时，取得的极限。若流水线由m段组成，完成n个任务的吞吐率称为实际吞吐率，记作<span class="math inline">\(TP\)</span>。</p>
+<p>假设流水线各段运行时间相等，为<span class="math inline">\(1\)</span>个时钟周期<span class="math inline">\(T_{CLK}\)</span>，在不出现流水线断流的情况下，完成<span class="math inline">\(n\)</span>个任务所用时间为</p>
+<p><span class="math display">\[
+T_n(m) = (m+(n-1))\tau = (m+(n-1))T_{CLK}
+\]</span></p>
+<p>实际吞吐率为</p>
+<p><span class="math display">\[
+TP = \dfrac{n}{T_n(m)} = \dfrac{n}{(m+(n-1))\times T_{CLK}} =
+\dfrac{TP_{max}}{1+\dfrac{m-1}{n}}
+\]</span></p>
+<p>假设流水线各段运行时间不等，第<span class="math inline">\(i\)</span>段时间为<span class="math inline">\(\tau_i\)</span> ，则完成<span class="math inline">\(n\)</span>个任务所用时间为</p>
+<p><span class="math display">\[
+T_n(m) = \sum^m_{i=1}\tau_i + (n-1)\times \max_i\{\tau_i\}
+\]</span></p>
+<p>实际吞吐率为</p>
+<p><span class="math display">\[
+TP = \dfrac{n}{\sum^m_{i=1}\tau_i + (n-1)\times \max_i\{\tau_i\}}
+\]</span></p>
+<p>对于指令流水线而言，吞吐率TP就是每秒执行的指令数，所以也可以用MIPS指标表示吞吐率，即</p>
+<p><span class="math display">\[
+TP = MIPS = f_{CLK}/CPI
+\]</span></p>
+<p>对于单流水线系统，它的<span class="math inline">\(CPI\)</span>是<span class="math inline">\(1\)</span>，所以<span class="math inline">\(TP_{max} = f_{CLK}\)</span></p>
+<h3 id="加速比">加速比</h3>
+<p>若流水线为<span class="math inline">\(m\)</span>段，加速比<span class="math inline">\(S\)</span>定义为等功能的非流水线执行时间<span class="math inline">\(T(1)\)</span>与流水线执行时间<span class="math inline">\(T(m)\)</span>之比，即</p>
+<p><span class="math display">\[
+S = S_n(m) = T_n(1)/T_n(m)
+\]</span></p>
+<p>若每段运行时间均为<span class="math inline">\(\tau\)</span>，在不流水情况下，总时间为<span class="math inline">\(T_n(1)=nm\tau\)</span></p>
+<p>在流水但不出现断流的情况下，完成n个任务所需时间为<span class="math inline">\(T_n(m)=m\tau+(n-1)\tau\)</span>，因此</p>
+<p><span class="math display">\[
+S_n(m) = \dfrac{mn}{m+n-1} = \dfrac{m}{1+\dfrac{m-1}{n}}
+\]</span></p>
+<p>从上式可以看出，增大流水线的级数和送入流水线的指令数均可以加速流水线的运行速度。</p>
+<h3 id="效率">效率</h3>
+<p>效率：流水线中各功能段（或设备）的利用率。</p>
+<p>由于流水线有通过（填充）时间和排空时间，还有各种引起断流的状况，所以流水线的各段并非一直满负荷工作，效率<span class="math inline">\(E&lt;1\)</span>。</p>
+<p>通常用流水线各段处于工作时间的时空区（面积）与流水线中各段总的时空区（面积）之比来衡量流水线的效率。</p>
+<p><span class="math display">\[
+E = \dfrac{n个任务占用的时空区}{m个段总的时空区}
+\]</span></p>
+<p>假设流水线各段运行时间相等为<span class="math inline">\(\tau\)</span>，则整个流水线效率<span class="math inline">\(e\)</span>为：</p>
+<p><span class="math display">\[
+E = \dfrac{mn\tau}{m(m+n-1)\tau} = \dfrac{n}{m+n-1} =
+\dfrac{1}{1+\dfrac{m-1}{n}}
+\]</span></p>
+<h2 id="指令流水线的性能提高">指令流水线的性能提高</h2>
+<h3 id="流水线的基本性能问题">流水线的基本性能问题</h3>
+<p>限制指令流水线性能提高的因素：</p>
+<ul>
+<li>流水线的深度受限于流水线的延迟、流水线段的时间不均衡和流水线的额外开销。</li>
+<li>指令执行时可能存在的“相关”或“冒险”问题。</li>
+</ul>
+<p>冒险：指相邻或相近的两条指令因存在某种关联，后一条指令不能在原指定的时钟周期开始执行。</p>
+<p>冒险分为三类：</p>
+<ul>
+<li>结构冒险：资源冲突</li>
+<li>数据冒险：一条指令需要用到前面某条指令的结果</li>
+<li>控制冒险：分支等转移类指令/其他能够改变PC值的指令</li>
+</ul>
+<p>前两个是局部性相关，后一个是全局性相关</p>
+<h3 id="结构冒险">结构冒险</h3>
+<p>有两种情况会导致结构冒险：</p>
+<p><strong>部分功能单元没有充分流水</strong></p>
+<p>解决办法：将流水线设计的更合理。</p>
+<p><strong>资源冲突</strong></p>
+<p>当两个以上流水线段需要同时使用同一个硬件资源时，发生冲突。</p>
+<p>解决办法：</p>
+<ol type="1">
+<li>增加资源副本。如哈佛结构、两个ALU</li>
+<li>改变资源以便它们能并发的使用。不相关的数据尽量使用不同的寄存器；寄存器重命名</li>
+<li>通过延迟（或暂停）流水线的冲突段或在冲突段插入流水线气泡（气泡在流水线中只占资源不做实际操作），使各段“轮流”使用资源。</li>
+</ol>
+<h3 id="数据冒险">数据冒险</h3>
+<p>指令在流水线中重叠执行有可能改变指令读/写操作数的顺序</p>
+<p>当一条指令的结果还未有效生成，该结果就被作为后续指令的操作数时，数据冒险出现。</p>
+<p>解决办法：</p>
+<ol type="1">
+<li>增加专用硬件（推后法）。增加流水线互锁（pipeline
+interlock）硬件。当互锁硬件发现数据相关时，使流水线工作停顿下来，直到冒险消失为止。</li>
+<li>采用直通/转发技术</li>
+<li>乱序，流水线（指令）调度：利用编译器（RISC），硬件（CISC）。编译器可以对指令重新排序或插入空操作指令</li>
+<li>对寄存器读写做特别设计</li>
+</ol>
+<h3 id="控制冒险">控制冒险</h3>
+<p>使程序执行顺序发生改变的转移指令有两类：</p>
+<ul>
+<li>无条件转移指令（如无条件跳转、调用、返回指令等）</li>
+<li>条件分支转移指令（为零跳转、循环控制指令等）</li>
+</ul>
+<p>处理办法：</p>
+<ol type="1">
+<li>冻结流水线</li>
+<li>静态分支预测</li>
+<li>动态分支预测</li>
+<li>延迟分支</li>
+</ol>
+<h3 id="冒险影响性能">冒险影响性能</h3>
+<p>冒险可能引起流水线停顿, 停顿也称为流水线气泡。</p>
+<p>有停顿的流水线的CPI为：CPI = 理想流水线CPI+(结构冒险停顿 +
+数据冒险停顿 + 控制冒险停顿) / 指令数</p>
+<p>有停顿的流水线的加速比为：</p>
+<p><span class="math display">\[
+加速比=\dfrac{流水线深度}{1+平均每条指令的流水线停顿周期}
+\]</span></p>
+<h2 id="多发射处理器">多发射处理器</h2>
+<p>多发射(Multiple
+Issue)是在一个时钟周期内启动多个指令并行执行的处理器实现方案。</p>
+<p>实现多发射处理器主要有两种方法:</p>
+<ul>
+<li>静态多发射——编译时由编译器决定</li>
+<li>动态多发射——执行过程中由处理器决定</li>
+</ul>
+<h2 id="指令级并行">指令级并行</h2>
 
 
 
@@ -1347,6 +1903,71 @@ N\leq 2^n
           </ol>
         </li>
         <li><a href="#寻址">寻址</a></li>
+      </ol>
+    </li>
+    <li><a href="#中央处理器">中央处理器</a>
+      <ol>
+        <li><a href="#cpu的功能和结构">CPU的功能和结构</a>
+          <ol>
+            <li><a href="#cpu的功能">CPU的功能</a></li>
+            <li><a href="#指令周期">指令周期</a></li>
+            <li><a href="#微操作">微操作</a></li>
+            <li><a href="#控制器的组成">控制器的组成</a></li>
+          </ol>
+        </li>
+        <li><a href="#硬布线控制器设计">硬布线控制器设计</a></li>
+        <li><a href="#微程序控制器设计">微程序控制器设计</a>
+          <ol>
+            <li><a href="#微指令格式">微指令格式</a></li>
+            <li><a href="#微程序控制器的一般结构和工作原理">微程序控制器的一般结构和工作原理</a></li>
+            <li><a href="#微指令地址的生成">微指令地址的生成</a></li>
+            <li><a href="#微指令控制域编码">微指令控制域编码</a></li>
+            <li><a href="#微程序设计及示例">微程序设计及示例</a></li>
+          </ol>
+        </li>
+        <li><a href="#cpu性能测量与提高">CPU性能测量与提高</a>
+          <ol>
+            <li><a href="#cpu性能测量">CPU性能测量</a></li>
+            <li><a href="#cpu性能提高">CPU性能提高</a></li>
+            <li><a href="#多核与多线程技术">多核与多线程技术</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+    <li><a href="#流水线技术">流水线技术</a>
+      <ol>
+        <li><a href="#流水线处理的概念">流水线处理的概念</a>
+          <ol>
+            <li><a href="#流水线的处理方式">流水线的处理方式</a></li>
+            <li><a href="#流水线的类型">流水线的类型</a></li>
+          </ol>
+        </li>
+        <li><a href="#设计运算流水线的一般方法">设计运算流水线的一般方法</a></li>
+        <li><a href="#指令流水线">指令流水线</a>
+          <ol>
+            <li><a href="#基本的指令流水线">基本的指令流水线</a></li>
+            <li><a href="#指令流水线策略">指令流水线策略</a></li>
+          </ol>
+        </li>
+        <li><a href="#流水线性能测量">流水线性能测量</a>
+          <ol>
+            <li><a href="#时空图">时空图</a></li>
+            <li><a href="#吞吐率">吞吐率</a></li>
+            <li><a href="#加速比">加速比</a></li>
+            <li><a href="#效率">效率</a></li>
+          </ol>
+        </li>
+        <li><a href="#指令流水线的性能提高">指令流水线的性能提高</a>
+          <ol>
+            <li><a href="#流水线的基本性能问题">流水线的基本性能问题</a></li>
+            <li><a href="#结构冒险">结构冒险</a></li>
+            <li><a href="#数据冒险">数据冒险</a></li>
+            <li><a href="#控制冒险">控制冒险</a></li>
+            <li><a href="#冒险影响性能">冒险影响性能</a></li>
+          </ol>
+        </li>
+        <li><a href="#多发射处理器">多发射处理器</a></li>
+        <li><a href="#指令级并行">指令级并行</a></li>
       </ol>
     </li>
   </ol>

@@ -6,7 +6,375 @@
         <description>Recent content on KegalaS的个人博客</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Sun, 11 Jun 2023 15:11:44 +0800</lastBuildDate><atom:link href="https://kegalas.top/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Fri, 16 Jun 2023 19:47:47 +0800</lastBuildDate><atom:link href="https://kegalas.top/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>最优化理论学习笔记</title>
+        <link>https://kegalas.top/p/%E6%9C%80%E4%BC%98%E5%8C%96%E7%90%86%E8%AE%BA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</link>
+        <pubDate>Fri, 16 Jun 2023 19:47:47 +0800</pubDate>
+        
+        <guid>https://kegalas.top/p/%E6%9C%80%E4%BC%98%E5%8C%96%E7%90%86%E8%AE%BA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</guid>
+        <description>&lt;img src="https://kegalas.top/p/%E6%9C%80%E4%BC%98%E5%8C%96%E7%90%86%E8%AE%BA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/cover.jpg" alt="Featured image of post 最优化理论学习笔记" /&gt;
+
+&lt;h1 id=&#34;读前警示&#34;&gt;读前警示&lt;/h1&gt;
+&lt;p&gt;出于Obsidian不支持，也出于我打字方便、教科书也没用加粗的原因，从某一段开始的瞬间，很多地方都不会使用粗体来表示向量。这其实无所谓，我们可以把标量看做一维向量。我们的大部分讨论都是在向量之上的，除了部分参数是标量。大部分矩阵是大写字母。&lt;/p&gt;
+&lt;p&gt;阅读时应结合前后文理解一个符号是什么意思。&lt;/p&gt;
+&lt;h1 id=&#34;数学基础概念定义&#34;&gt;数学基础概念、定义&lt;/h1&gt;
+&lt;h2 id=&#34;向量内积&#34;&gt;向量内积&lt;/h2&gt;
+&lt;p&gt;在&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;维线性空间&lt;span class=&#34;math inline&#34;&gt;\(R^n\)&lt;/span&gt;中，&lt;span class=&#34;math inline&#34;&gt;\(\bm a
+= [a_1,a_2,\cdots,a_n]^T\in R^n,\bm b = [b_1,b_2,\cdots,b_n]^T\in
+R^n\)&lt;/span&gt;，则&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\bm a^T b = a_1b_1+a_2b_2+\cdots,a_nb_n
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;称作向量&lt;span class=&#34;math inline&#34;&gt;\(\bm a,\bm b\)&lt;/span&gt;的内积。&lt;/p&gt;
+&lt;p&gt;内积满足交换律，线性，以及正定性：&lt;span class=&#34;math inline&#34;&gt;\(\bm a^T
+\bm a\geq 0\)&lt;/span&gt;，当且仅当&lt;span class=&#34;math inline&#34;&gt;\(\bm a=\bm
+0\)&lt;/span&gt;时，取等号。&lt;/p&gt;
+&lt;p&gt;其他各种性质都在线性代数中学过了，这里只是简单回顾。&lt;/p&gt;
+&lt;h2 id=&#34;向量范数&#34;&gt;向量范数&lt;/h2&gt;
+&lt;p&gt;称一个从向量空间&lt;span class=&#34;math inline&#34;&gt;\(R^n\)&lt;/span&gt;到实数域&lt;span class=&#34;math inline&#34;&gt;\(R\)&lt;/span&gt;的非负函数&lt;span class=&#34;math inline&#34;&gt;\(||\cdot||\)&lt;/span&gt;为范数，如果它满足：&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;正定性：对于所有的&lt;span class=&#34;math inline&#34;&gt;\(\bm v\in
+R^n\)&lt;/span&gt;，有&lt;span class=&#34;math inline&#34;&gt;\(||\bm v||\geq
+0\)&lt;/span&gt;，且&lt;span class=&#34;math inline&#34;&gt;\(||\bm
+v||=0\)&lt;/span&gt;当且仅当&lt;span class=&#34;math inline&#34;&gt;\(\bm v=0\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;齐次性：对于所有的&lt;span class=&#34;math inline&#34;&gt;\(\bm v\in
+R^n\)&lt;/span&gt;和&lt;span class=&#34;math inline&#34;&gt;\(\alpha\in R\)&lt;/span&gt;，有&lt;span class=&#34;math inline&#34;&gt;\(||\alpha\bm v||=|\alpha|||\bm v||\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;三角不等式：对于所有的&lt;span class=&#34;math inline&#34;&gt;\(\bm v,\bm w\in
+R^n\)&lt;/span&gt;，有&lt;span class=&#34;math inline&#34;&gt;\(||\bm v+\bm w||\leq ||\bm
+v||+||\bm w||\)&lt;/span&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;对于&lt;span class=&#34;math inline&#34;&gt;\(\bm v =
+(v_1,v_2,\cdots,v_n)^T\)&lt;/span&gt;，常见的向量范数为&lt;span class=&#34;math inline&#34;&gt;\(\mathscr{l}_n\)&lt;/span&gt;范数&lt;span class=&#34;math inline&#34;&gt;\((p&amp;gt;=1)\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+||v||_p = (|v_1|^p+|v_2|^p+\cdots+|v_3|^p)^{1/p}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;当&lt;span class=&#34;math inline&#34;&gt;\(p=\infty\)&lt;/span&gt;时，&lt;span class=&#34;math inline&#34;&gt;\(\mathscr{l}_\infty\)&lt;/span&gt;定义为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+||v||_\infty = \max_i|v_i|
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;一些地方也可以见到&lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt;-范数，其表示分量中不为零的个数。&lt;/p&gt;
+&lt;p&gt;最常见的是&lt;span class=&#34;math inline&#34;&gt;\(2\)&lt;/span&gt;-范数，又称欧几里得范数，常常&lt;span class=&#34;math inline&#34;&gt;\(||\cdot||\)&lt;/span&gt;省略角标不写表示&lt;span class=&#34;math inline&#34;&gt;\(2\)&lt;/span&gt;-范数。&lt;/p&gt;
+&lt;h2 id=&#34;二次型&#34;&gt;二次型&lt;/h2&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;维二次函数可以表示如下&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+f(x_1,x_2,\cdots,x_n)=a_{11}x_1^2+a_{12}x_1x_2+\cdots+a_{1n}x_1x_n+a_{21}x_2x_1+\cdots+a_{nn}x^2_n
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其可以表示为向量矩阵形式&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\sum^n_{i=1}\sum^n_{j=1}a_{ij}x_ix_j=\bm x^T A \bm x
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;这个&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;矩阵是个实对称矩阵，其元素&lt;span class=&#34;math inline&#34;&gt;\(a_{ij}=a_{ji}\)&lt;/span&gt;，是对应的&lt;span class=&#34;math inline&#34;&gt;\(x_ix_j\)&lt;/span&gt;项系数的一半（原式子出于简单起见没有把同类项合并）。&lt;/p&gt;
+&lt;h2 id=&#34;正定矩阵&#34;&gt;正定矩阵&lt;/h2&gt;
+&lt;p&gt;如果正定二次型&lt;span class=&#34;math inline&#34;&gt;\(f(\bm x)=\bm x^TA\bm
+x\)&lt;/span&gt;，对于一组不全为零的数&lt;span class=&#34;math inline&#34;&gt;\(x_1,x_2,\cdots,x_n\)&lt;/span&gt;，恒有&lt;span class=&#34;math inline&#34;&gt;\(f(x_1,x_2,\cdots,x_n)&amp;gt;0\)&lt;/span&gt;，则称&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;正定，&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;为正定矩阵。若换成&lt;span class=&#34;math inline&#34;&gt;\(\geq\)&lt;/span&gt;，则称为半正定矩阵，若换成&lt;span class=&#34;math inline&#34;&gt;\(\leq\)&lt;/span&gt;，则称为半负定矩阵。&lt;/p&gt;
+&lt;p&gt;有两个判定定理&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;正定的充要条件为&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;的特征值都大于&lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;正定的充要条件为&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;的所有顺序主子式都大于&lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;方向导数&#34;&gt;方向导数&lt;/h2&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(f:R^n\to R\)&lt;/span&gt;在点&lt;span class=&#34;math inline&#34;&gt;\(\bm x\)&lt;/span&gt;处可微，&lt;span class=&#34;math inline&#34;&gt;\(\bm p\)&lt;/span&gt;是固定不变的非零向量，&lt;span class=&#34;math inline&#34;&gt;\(\bm e\)&lt;/span&gt;是方向&lt;span class=&#34;math inline&#34;&gt;\(\bm p\)&lt;/span&gt;上的单位向量，则称极限&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\dfrac{\partial f(\bm x)}{\partial \bm p} = \lim_{t\to 0^+}\dfrac{f(\bm
+x+t\bm e)-f(\bm x)}{t}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;为函数&lt;span class=&#34;math inline&#34;&gt;\(f(x)\)&lt;/span&gt;在点&lt;span class=&#34;math inline&#34;&gt;\(\bm x\)&lt;/span&gt;处沿&lt;span class=&#34;math inline&#34;&gt;\(\bm
+p\)&lt;/span&gt;方向的方向导数，记为&lt;span class=&#34;math inline&#34;&gt;\(\dfrac{\partial f(\bm x)}{\partial\bm
+p}\)&lt;/span&gt;。当其大于零时，函数在该点沿此方向上升，小于零时沿此方向下降。&lt;/p&gt;
+&lt;h2 id=&#34;梯度&#34;&gt;梯度&lt;/h2&gt;
+&lt;p&gt;给定函数设&lt;span class=&#34;math inline&#34;&gt;\(f:R^n\to R\)&lt;/span&gt;，且&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;在点&lt;span class=&#34;math inline&#34;&gt;\(\bm
+x\)&lt;/span&gt;的一个领域内有意义，若存在向量&lt;span class=&#34;math inline&#34;&gt;\(\bm
+g\in R^n\)&lt;/span&gt;满足&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\lim_{\bm p\to \bm 0}\dfrac{f(\bm x+\bm p)-f(\bm x)-\bm g^T\bm p}{||\bm
+p||}=0
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中这个范数可以是任意向量范数，就称&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;在点&lt;span class=&#34;math inline&#34;&gt;\(\bm
+x\)&lt;/span&gt;可微，此时&lt;span class=&#34;math inline&#34;&gt;\(\bm g\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;在点&lt;span class=&#34;math inline&#34;&gt;\(\bm
+x\)&lt;/span&gt;处的梯度，记作&lt;span class=&#34;math inline&#34;&gt;\(\nabla
+f(x)\)&lt;/span&gt;。可以计算，若令&lt;span class=&#34;math inline&#34;&gt;\(\bm p=\epsilon
+\bm e_i\)&lt;/span&gt;，&lt;span class=&#34;math inline&#34;&gt;\(\bm e_i\)&lt;/span&gt;是第&lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt;个分量为&lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt;的单位向量，可知&lt;span class=&#34;math inline&#34;&gt;\(\nabla f(x)\)&lt;/span&gt;的第&lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt;个分量即为&lt;span class=&#34;math inline&#34;&gt;\(\dfrac{\partial f(x)}{\partial
+x_i}\)&lt;/span&gt;。因此&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\nabla f(x) = \bigg[\dfrac{\partial f(x)}{\partial x_1},\dfrac{\partial
+f(x)}{\partial x_2},\cdots,\dfrac{\partial f(x)}{\partial x_n}\bigg]^T
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;一个非常浅显的事实是，一维向量函数的梯度就是它的一阶导数。&lt;/p&gt;
+&lt;p&gt;梯度方向是函数在该点上升的最快方向，反方向是最速下降方向。&lt;/p&gt;
+&lt;p&gt;梯度与方向导数的关系为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\dfrac{\partial f(\bm x)}{\partial \bm p}=\nabla f(\bm x)^T\bm e
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(\bm e\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(\bm p\)&lt;/span&gt;方向上的单位向量。&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(\bigg|\dfrac{\partial f(\bm x)}{\partial
+\bm p}\bigg|\leq |\nabla f(\bm x)^T|\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;梯度有几条显然的性质：&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;若&lt;span class=&#34;math inline&#34;&gt;\(\nabla f(\bm x)^T\bm
+p&amp;lt;0\)&lt;/span&gt;，则&lt;span class=&#34;math inline&#34;&gt;\(\bm
+p\)&lt;/span&gt;的方向是函数&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;在&lt;span class=&#34;math inline&#34;&gt;\(\bm x\)&lt;/span&gt;处的下降方向&lt;/li&gt;
+&lt;li&gt;若&lt;span class=&#34;math inline&#34;&gt;\(\nabla f(\bm x)^T\bm
+p&amp;gt;0\)&lt;/span&gt;，则&lt;span class=&#34;math inline&#34;&gt;\(\bm
+p\)&lt;/span&gt;的方向是函数&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;在&lt;span class=&#34;math inline&#34;&gt;\(\bm x\)&lt;/span&gt;处的上升方向&lt;/li&gt;
+&lt;li&gt;梯度正交的方向变化率为零&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;海瑟矩阵&#34;&gt;海瑟矩阵&lt;/h2&gt;
+&lt;p&gt;用一个简单的比方，梯度和海瑟矩阵的关系，就相当于一阶导数和二阶导数的关系。&lt;/p&gt;
+&lt;p&gt;给定函数&lt;span class=&#34;math inline&#34;&gt;\(f:R^n\to
+R\)&lt;/span&gt;，若其在点&lt;span class=&#34;math inline&#34;&gt;\(\bm
+x\)&lt;/span&gt;处的二阶偏导数&lt;span class=&#34;math inline&#34;&gt;\(\dfrac{\partial^2
+f(\bm x)}{\partial \bm x_i\partial \bm
+x_j},i,j=1,2,\cdots,n\)&lt;/span&gt;都存在，则&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\nabla^2f(\bm x) =
+\begin{bmatrix}
+\dfrac{\partial^2 f(\bm x)}{\partial x_1^2} &amp;amp; \dfrac{\partial^2
+f(\bm x)}{\partial x_1\partial x_2} &amp;amp; \dfrac{\partial^2 f(\bm
+x)}{\partial x_1\partial x_3} &amp;amp; \cdots &amp;amp; \dfrac{\partial^2 f(\bm
+x)}{\partial x_1\partial x_n}\\
+\dfrac{\partial^2 f(\bm x)}{\partial x_2\partial x_1} &amp;amp;
+\dfrac{\partial^2 f(\bm x)}{\partial x_2^2} &amp;amp; \dfrac{\partial^2
+f(\bm x)}{\partial x_2\partial x_3} &amp;amp; \cdots &amp;amp; \dfrac{\partial^2
+f(\bm x)}{\partial x_2\partial x_n}\\
+\vdots &amp;amp; \vdots &amp;amp; \vdots &amp;amp;  &amp;amp; \vdots\\
+\dfrac{\partial^2 f(\bm x)}{\partial x_n\partial x_1} &amp;amp;
+\dfrac{\partial^2 f(\bm x)}{\partial x_n\partial x_2} &amp;amp;
+\dfrac{\partial^2 f(\bm x)}{\partial x_n\partial x_3} &amp;amp;  &amp;amp;
+\dfrac{\partial^2 f(\bm x)}{\partial x_n^2}
+\end{bmatrix}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;称为&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;在点&lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;处的海瑟矩阵。&lt;/p&gt;
+&lt;h2 id=&#34;泰勒展开&#34;&gt;泰勒展开&lt;/h2&gt;
+&lt;p&gt;给定函数&lt;span class=&#34;math inline&#34;&gt;\(f:R^n\to
+R\)&lt;/span&gt;，具有二阶连续偏导数，则&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+f(\bm x+\bm p) = f(\bm x) + \nabla f(\bm x)^T\bm p + \dfrac{1}{2}\bm
+p^T\nabla^2 f(\bm x)^T\bm p + o(||\bm p||^2)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(o(||p||^2)\)&lt;/span&gt;当&lt;span class=&#34;math inline&#34;&gt;\(||p||^2\to 0\)&lt;/span&gt;时，是关于&lt;span class=&#34;math inline&#34;&gt;\(||p||^2\)&lt;/span&gt;的高阶无穷小量。&lt;/p&gt;
+&lt;h2 id=&#34;邻域&#34;&gt;邻域&lt;/h2&gt;
+&lt;p&gt;对于任意给定的实数&lt;span class=&#34;math inline&#34;&gt;\(\delta&amp;gt;0\)&lt;/span&gt;，满足不等式&lt;span class=&#34;math inline&#34;&gt;\(||\bm x-\bm x_0||&amp;lt;\delta\)&lt;/span&gt;的&lt;span class=&#34;math inline&#34;&gt;\(\bm x\)&lt;/span&gt;的集合称为点&lt;span class=&#34;math inline&#34;&gt;\(\bm x_0\)&lt;/span&gt;的邻域，记为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+N(\bm x_0,\delta) = \{\bm x|\ ||\bm x-\bm x_0||&amp;lt;\delta,\delta&amp;gt;0\}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h2 id=&#34;极小点&#34;&gt;极小点&lt;/h2&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(f:D\subseteq R^n\to
+R\)&lt;/span&gt;，若存在点&lt;span class=&#34;math inline&#34;&gt;\(\bm x^*\in
+D\)&lt;/span&gt;和数&lt;span class=&#34;math inline&#34;&gt;\(\delta&amp;gt;0\)&lt;/span&gt;，&lt;span class=&#34;math inline&#34;&gt;\(\forall \bm x\in N(\bm x^*,\delta)\cap
+D\)&lt;/span&gt;，都有&lt;span class=&#34;math inline&#34;&gt;\(f(\bm x^*)\leq f(\bm
+x)\)&lt;/span&gt;，则称&lt;span class=&#34;math inline&#34;&gt;\(\bm x^*\)&lt;/span&gt;为&lt;span class=&#34;math inline&#34;&gt;\(f(\bm x)\)&lt;/span&gt;的（非严格）局部极小点。&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(f:D\subseteq R^n\to
+R\)&lt;/span&gt;，若存在点&lt;span class=&#34;math inline&#34;&gt;\(\bm x^*\in
+D\)&lt;/span&gt;和数&lt;span class=&#34;math inline&#34;&gt;\(\delta&amp;gt;0\)&lt;/span&gt;，&lt;span class=&#34;math inline&#34;&gt;\(\forall \bm x\in N(\bm x^*,\delta)\cap
+D\)&lt;/span&gt;，但&lt;span class=&#34;math inline&#34;&gt;\(\bm x\neq \bm
+x^*\)&lt;/span&gt;，都有&lt;span class=&#34;math inline&#34;&gt;\(f(\bm x^*)&amp;lt; f(\bm
+x)\)&lt;/span&gt;，则称&lt;span class=&#34;math inline&#34;&gt;\(\bm x^*\)&lt;/span&gt;为&lt;span class=&#34;math inline&#34;&gt;\(f(\bm x)\)&lt;/span&gt;的严格局部极小点。&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(f:D\subseteq R^n\to
+R\)&lt;/span&gt;，若存在点&lt;span class=&#34;math inline&#34;&gt;\(\bm x^*\in
+D\)&lt;/span&gt;和数&lt;span class=&#34;math inline&#34;&gt;\(\delta&amp;gt;0\)&lt;/span&gt;，&lt;span class=&#34;math inline&#34;&gt;\(\forall \bm x\in D\)&lt;/span&gt;，都有&lt;span class=&#34;math inline&#34;&gt;\(f(\bm x^*)\leq f(\bm x)\)&lt;/span&gt;，则称&lt;span class=&#34;math inline&#34;&gt;\(\bm x^*\)&lt;/span&gt;为&lt;span class=&#34;math inline&#34;&gt;\(f(\bm x)\)&lt;/span&gt;的（非严格）全局极小点。&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(f:D\subseteq R^n\to
+R\)&lt;/span&gt;，若存在点&lt;span class=&#34;math inline&#34;&gt;\(\bm x^*\in
+D\)&lt;/span&gt;和数&lt;span class=&#34;math inline&#34;&gt;\(\delta&amp;gt;0\)&lt;/span&gt;，&lt;span class=&#34;math inline&#34;&gt;\(\forall \bm x\in D\)&lt;/span&gt;，但&lt;span class=&#34;math inline&#34;&gt;\(\bm x\neq \bm x^*\)&lt;/span&gt;，都有&lt;span class=&#34;math inline&#34;&gt;\(f(\bm x^*)\leq f(\bm x)\)&lt;/span&gt;，则称&lt;span class=&#34;math inline&#34;&gt;\(\bm x^*\)&lt;/span&gt;为&lt;span class=&#34;math inline&#34;&gt;\(f(\bm x)\)&lt;/span&gt;的严格全局极小点。&lt;/p&gt;
+&lt;p&gt;如果&lt;span class=&#34;math inline&#34;&gt;\(\bm x^*\)&lt;/span&gt;是极小点并且是&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;的内点，则&lt;span class=&#34;math inline&#34;&gt;\(\nabla f(\bm
+x^*)=0\)&lt;/span&gt;。这是一个必要非充分条件。&lt;/p&gt;
+&lt;p&gt;但如果&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;有连续二阶偏导数，&lt;span class=&#34;math inline&#34;&gt;\(\bm x^*\)&lt;/span&gt;是一个驻点，并且&lt;span class=&#34;math inline&#34;&gt;\(\nabla^2 f(\bm x^*)\)&lt;/span&gt;是正定的，则&lt;span class=&#34;math inline&#34;&gt;\(\bm x^*\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(f(\bm x)\)&lt;/span&gt;的严格局部极小点。&lt;/p&gt;
+&lt;h2 id=&#34;驻点&#34;&gt;驻点&lt;/h2&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(f:D\subseteq R^n\to R\)&lt;/span&gt;，&lt;span class=&#34;math inline&#34;&gt;\(\bm x^*\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;的内点，若&lt;span class=&#34;math inline&#34;&gt;\(\nabla f(\bm x^*)=0\)&lt;/span&gt;，则称&lt;span class=&#34;math inline&#34;&gt;\(\bm x^*\)&lt;/span&gt;为&lt;span class=&#34;math inline&#34;&gt;\(f(\bm x)\)&lt;/span&gt;的驻点。&lt;/p&gt;
+&lt;h2 id=&#34;锥&#34;&gt;锥&lt;/h2&gt;
+&lt;p&gt;设集合&lt;span class=&#34;math inline&#34;&gt;\(C\subset R^n\)&lt;/span&gt;，若对&lt;span class=&#34;math inline&#34;&gt;\(\forall\bm x\in C\)&lt;/span&gt;以及&lt;span class=&#34;math inline&#34;&gt;\(\forall \lambda\geq 0\)&lt;/span&gt;均有&lt;span class=&#34;math inline&#34;&gt;\(\lambda\bm x\in C\)&lt;/span&gt;，则称&lt;span class=&#34;math inline&#34;&gt;\(C\)&lt;/span&gt;为锥&lt;/p&gt;
+&lt;h2 id=&#34;凸组合&#34;&gt;凸组合&lt;/h2&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(\bm x_1,\bm x_2,\cdots,\bm
+x_l\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(R^n\)&lt;/span&gt;中的&lt;span class=&#34;math inline&#34;&gt;\(l\)&lt;/span&gt;个已知点。若对于某点&lt;span class=&#34;math inline&#34;&gt;\(\bm x\in R^n\)&lt;/span&gt;，存在常数&lt;span class=&#34;math inline&#34;&gt;\(\lambda_1,\lambda_2,\cdots,\lambda_l\geq
+0\)&lt;/span&gt;，且&lt;span class=&#34;math inline&#34;&gt;\(\sum\lambda_i=1\)&lt;/span&gt;，使得&lt;span class=&#34;math inline&#34;&gt;\(\bm x=\sum\lambda_i\bm x_i\)&lt;/span&gt;，则称&lt;span class=&#34;math inline&#34;&gt;\(\bm x\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(\bm
+x_1,\bm x_2,\cdots,\bm x_l\)&lt;/span&gt;的凸组合。如果&lt;span class=&#34;math inline&#34;&gt;\(\lambda_1,\lambda_2,\cdots,\lambda_l&amp;gt;0\)&lt;/span&gt;且&lt;span class=&#34;math inline&#34;&gt;\(\sum\lambda_i=1\)&lt;/span&gt;，则称为严格凸组合。&lt;/p&gt;
+&lt;h2 id=&#34;凸集&#34;&gt;凸集&lt;/h2&gt;
+&lt;p&gt;对于&lt;span class=&#34;math inline&#34;&gt;\(C\subset
+R^n\)&lt;/span&gt;中的任意两个点&lt;span class=&#34;math inline&#34;&gt;\(\bm x_1, \bm
+x_2\)&lt;/span&gt;，如果连接两个点的线段在&lt;span class=&#34;math inline&#34;&gt;\(C\)&lt;/span&gt;内，则称&lt;span class=&#34;math inline&#34;&gt;\(C\)&lt;/span&gt;为凸集。即&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\bm x_1,\bm x_2\in C\Rightarrow\theta \bm x_1+(1-\theta)\bm x_2\in
+C,\forall 0\leq\theta\leq 1
+\]&lt;/span&gt; &lt;strong&gt;定理1&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;任意一组凸集的交仍然是凸集。&lt;/p&gt;
+&lt;p&gt;特别的，规定空集是凸集。容易验证，空间&lt;span class=&#34;math inline&#34;&gt;\(R^n\)&lt;/span&gt;、半空间、超平面、直线、点、球都是凸集。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;凸集分离定理&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(C_1,C_2\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(R^n\)&lt;/span&gt;中两个非空的集合，&lt;span class=&#34;math inline&#34;&gt;\(H=\{\bm x|\bm p^T\bm
+x=\alpha\}\)&lt;/span&gt;为超平面，如果对&lt;span class=&#34;math inline&#34;&gt;\(\forall\bm x\in C_1\)&lt;/span&gt;都有&lt;span class=&#34;math inline&#34;&gt;\(\bm p^T\bm x\geq \alpha\)&lt;/span&gt;，对&lt;span class=&#34;math inline&#34;&gt;\(\forall x\in C_2\)&lt;/span&gt;都有&lt;span class=&#34;math inline&#34;&gt;\(\bm p^T\bm x\leq
+\alpha\)&lt;/span&gt;（或二者正好相反），则称超平面&lt;span class=&#34;math inline&#34;&gt;\(H\)&lt;/span&gt;分离集合&lt;span class=&#34;math inline&#34;&gt;\(C_1,C_2\)&lt;/span&gt;&lt;/p&gt;
+&lt;h2 id=&#34;半空间&#34;&gt;半空间&lt;/h2&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(\bm a\in R^n,\bm a\neq\bm 0,b\in
+R\)&lt;/span&gt;，则集合&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\{\bm x|\bm a^T\bm x&amp;gt;b,\bm x\in R^n\}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;称为&lt;span class=&#34;math inline&#34;&gt;\(R^n\)&lt;/span&gt;的半空间。&lt;/p&gt;
+&lt;p&gt;有限个半空间的交&lt;span class=&#34;math inline&#34;&gt;\(\{\bm x|\bm A\bm x\leq
+\bm b\}\)&lt;/span&gt;称为多面集，其中&lt;span class=&#34;math inline&#34;&gt;\(\bm
+A\)&lt;/span&gt;为&lt;span class=&#34;math inline&#34;&gt;\(m\times n\)&lt;/span&gt;矩阵，&lt;span class=&#34;math inline&#34;&gt;\(\bm b\)&lt;/span&gt;为&lt;span class=&#34;math inline&#34;&gt;\(m\)&lt;/span&gt;维向量。&lt;/p&gt;
+&lt;h2 id=&#34;凸函数&#34;&gt;凸函数&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;广义实值函数&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;令&lt;span class=&#34;math inline&#34;&gt;\(\bar
+R\xlongequal{\text{def}}R\cup\{\pm\infty\}\)&lt;/span&gt;为广义实数空间，则映射&lt;span class=&#34;math inline&#34;&gt;\(f:R^n\to\bar R\)&lt;/span&gt;为广义实值函数。&lt;/p&gt;
+&lt;p&gt;规定&lt;span class=&#34;math inline&#34;&gt;\(-\infty&amp;lt;a&amp;lt;+\infty,\forall a\in
+R\)&lt;/span&gt;，以及&lt;span class=&#34;math inline&#34;&gt;\((+\infty)+(+\infty)=+\infty,(+\infty)+a=+\infty,\forall
+a\in R\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;适当函数&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;给定广义实值函数&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;和非空集合&lt;span class=&#34;math inline&#34;&gt;\(\mathcal{X}\)&lt;/span&gt;，如果存在&lt;span class=&#34;math inline&#34;&gt;\(x\in\mathcal{X}\)&lt;/span&gt;使得&lt;span class=&#34;math inline&#34;&gt;\(f(x)&amp;lt;+\infty\)&lt;/span&gt;，并且对任意的&lt;span class=&#34;math inline&#34;&gt;\(x\in\mathcal{X}\)&lt;/span&gt;，都有&lt;span class=&#34;math inline&#34;&gt;\(f(x)&amp;gt;-\infty\)&lt;/span&gt;，那么称函数&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;关于集合&lt;span class=&#34;math inline&#34;&gt;\(\mathcal{X}\)&lt;/span&gt;是适当的。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;凸函数&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设函数&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;为适当函数，如果&lt;span class=&#34;math inline&#34;&gt;\(\text{dom} f\)&lt;/span&gt;是凸集，且&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+f(\theta x+(1-\theta)y)\leq \theta f(x)+(1-\theta)f(y)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;对所有&lt;span class=&#34;math inline&#34;&gt;\(x,y\in\text{dom}f,0\leq\theta\leq
+1\)&lt;/span&gt;都成立，则称&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;是凸函数。&lt;/p&gt;
+&lt;p&gt;如果&lt;span class=&#34;math inline&#34;&gt;\(f(\theta x+(1-\theta)y)&amp;lt; \theta
+f(x)+(1-\theta)f(y)\)&lt;/span&gt;，则称为严格凸函数。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;性质1&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(f_1,f_2\)&lt;/span&gt;是凸集&lt;span class=&#34;math inline&#34;&gt;\(C\)&lt;/span&gt;上的凸函数，则函数&lt;span class=&#34;math inline&#34;&gt;\(f_1+f_2\)&lt;/span&gt;在&lt;span class=&#34;math inline&#34;&gt;\(S\)&lt;/span&gt;上也是凸函数。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;性质2&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;是凸集&lt;span class=&#34;math inline&#34;&gt;\(C\)&lt;/span&gt;上的凸函数，则对任意的&lt;span class=&#34;math inline&#34;&gt;\(a\geq 0\)&lt;/span&gt;，函数&lt;span class=&#34;math inline&#34;&gt;\(af\)&lt;/span&gt;也是凸函数。&lt;/p&gt;
+&lt;h2 id=&#34;凸函数判定&#34;&gt;凸函数判定&lt;/h2&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;是凸函数，当且仅当对任意的&lt;span class=&#34;math inline&#34;&gt;\(x\in\text{dom}f,v\in R^n,g:R\to R\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+g(t)=f(x+tv),\text{dom} g = \{t|x+tv\in\text{dom} f\}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;是凸函数。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;一阶条件&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;对于定义在凸集上的可微函数&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;，&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;是凸函数当且仅当&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+f(y)\geq f(x)+\nabla f(x)^T(y-x),\forall x,y\in\text{dom}f
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;严格凸函数则要求&lt;span class=&#34;math inline&#34;&gt;\(&amp;gt;\)&lt;/span&gt;号。物理意义是：任意点处的切线增量不超过函数的增量。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;梯度单调性&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;为可微函数，则&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;为凸函数当且仅当&lt;span class=&#34;math inline&#34;&gt;\(\text{dom}f\)&lt;/span&gt;为凸集且&lt;span class=&#34;math inline&#34;&gt;\(\nabla f\)&lt;/span&gt;为单调映射，即&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+(\nabla f(x)-\nabla f(y))^T(x-y)\geq 0,\forall x,y\in\text{dom}f
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;二阶条件&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;为定义在凸集上的二阶连续可微函数，则&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;是凸函数当且仅当&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\nabla^2 f(x)\succeq 0,\forall x\in\text{dom}f
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;如果&lt;span class=&#34;math inline&#34;&gt;\(\succ\)&lt;/span&gt;，则是严格凸函数。&lt;/p&gt;
+&lt;p&gt;或者，凸函数的充要条件是&lt;span class=&#34;math inline&#34;&gt;\(\nabla^2
+f(x)\)&lt;/span&gt;在&lt;span class=&#34;math inline&#34;&gt;\(\text{dom}f\)&lt;/span&gt;上的任意点均半正定。&lt;/p&gt;
+&lt;h1 id=&#34;线性规划&#34;&gt;线性规划&lt;/h1&gt;
+&lt;h2 id=&#34;图解法&#34;&gt;图解法&lt;/h2&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;确定可行域&lt;/li&gt;
+&lt;li&gt;确定目标函数的等值线及优化方向&lt;/li&gt;
+&lt;li&gt;平行移动目标函数等值线，通过观察得到线性规划的最优解&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;高中已经学过很多次这个东西了，不再详细介绍。&lt;/p&gt;
+&lt;p&gt;注意到，图解法只适用于有两个变量的情况，更高维的情况下，要用单纯形法。&lt;/p&gt;
+&lt;h2 id=&#34;一般形式&#34;&gt;一般形式&lt;/h2&gt;
+&lt;p&gt;一般形式如下&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\min f(x_1+x_2+\cdots+x_n) = c_1x_1+c_2x_2+\cdots+c_nx_n
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+s.t.
+\left\{\begin{matrix}
+a_{11}x_1+a_{12}x_2+\cdots+a_{1n}x_n = b_1\\
+a_{21}x_1+a_{22}x_2+\cdots+a_{2n}x_n = b_2 \\
+\vdots \\
+a_{m1}x_1+a_{m2}x_2+\cdots+a_{mn}x_n = b_m\\
+x_1,x_2,\cdots,x_n\geq 0
+\end{matrix}\right.
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;一共包含&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;个决策变量，&lt;span class=&#34;math inline&#34;&gt;\(m\)&lt;/span&gt;个约束条件。其中对目标函数既可以求最大也可以求最小，约束条件可以是&lt;span class=&#34;math inline&#34;&gt;\(=,\leq,\geq\)&lt;/span&gt;。决策变量&lt;span class=&#34;math inline&#34;&gt;\(x_i\)&lt;/span&gt;通常非负，也有其他情况。&lt;span class=&#34;math inline&#34;&gt;\(c_j\)&lt;/span&gt;称为价值系数，&lt;span class=&#34;math inline&#34;&gt;\(b_j\)&lt;/span&gt;称为资源系数，&lt;span class=&#34;math inline&#34;&gt;\(a_{ij}\)&lt;/span&gt;称为约束系数、技术系数。&lt;/p&gt;
+&lt;p&gt;利用矩阵，可以写作&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\min f(x) = Cx
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+s.t.
+\left\{\begin{matrix}
+Ax=b\\
+x\geq 0
+\end{matrix}\right.
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h2 id=&#34;标准形式&#34;&gt;标准形式&lt;/h2&gt;
+&lt;p&gt;标准形式有四个特征&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;目标函数求&lt;span class=&#34;math inline&#34;&gt;\(\min\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;约束条件两端用&lt;span class=&#34;math inline&#34;&gt;\(=\)&lt;/span&gt;连接&lt;/li&gt;
+&lt;li&gt;所有&lt;span class=&#34;math inline&#34;&gt;\(b_i\)&lt;/span&gt;非负&lt;/li&gt;
+&lt;li&gt;所有&lt;span class=&#34;math inline&#34;&gt;\(x_i\)&lt;/span&gt;非负&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;接下来介绍如何转换其他形式到标准形式（注意按顺序来）&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;目标函数求最小值&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;例如&lt;span class=&#34;math inline&#34;&gt;\(\min
+z=x_1-2x_2+3x_3\)&lt;/span&gt;，等价于&lt;span class=&#34;math inline&#34;&gt;\(\max
+z&amp;#39;=-x_1+2x_2-3x_3\)&lt;/span&gt;，其中&lt;span class=&#34;math inline&#34;&gt;\(z&amp;#39;=-z\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;约束函数求最小值&lt;/strong&gt;&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;例如&lt;span class=&#34;math inline&#34;&gt;\(-2x_1+6x_2-x_3\leq3\)&lt;/span&gt;，将其转化为&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+-2x_1+6x_2-x_3+x_s=3
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(x_s\)&lt;/span&gt;表示决策中尚未使用的那部分资源，所以称之为松弛变量。&lt;span class=&#34;math inline&#34;&gt;\(x_s\geq 0\)&lt;/span&gt;&lt;/p&gt;
+&lt;ol start=&#34;2&#34; type=&#34;1&#34;&gt;
+&lt;li&gt;例如&lt;span class=&#34;math inline&#34;&gt;\(-2x_1+6x_2-x_3\ge3\)&lt;/span&gt;，将其转化为&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+-2x_1+6x_2-x_3-x_s=3
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(x_s\)&lt;/span&gt;表示决策中超过了实际需要的部分，影次常称它为剩余变量。&lt;span class=&#34;math inline&#34;&gt;\(x_s\geq 0\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;由上可见，既把函数从不等式转变成了等式，并且新添加的变量也是非负的，也不影响原来的目标函数。统一整个计算过程。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&lt;span class=&#34;math inline&#34;&gt;\(b_i\)&lt;/span&gt;非负&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;这个只需要将约束条件两端取反即可。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&lt;span class=&#34;math inline&#34;&gt;\(x_i\)&lt;/span&gt;非负&lt;/strong&gt;&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;若&lt;span class=&#34;math inline&#34;&gt;\(x_i\leq 0\)&lt;/span&gt;，则令&lt;span class=&#34;math inline&#34;&gt;\(x&amp;#39;_i=-x_i\)&lt;/span&gt;，此时&lt;span class=&#34;math inline&#34;&gt;\(x&amp;#39;_i\geq 0\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;若&lt;span class=&#34;math inline&#34;&gt;\(x_i\)&lt;/span&gt;无约束，则令&lt;span class=&#34;math inline&#34;&gt;\(x_i =
+x_i&amp;#39;-x_i&amp;#39;&amp;#39;,x_i&amp;#39;\geq0,x_i&amp;#39;&amp;#39;\geq0\)&lt;/span&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;注意这里的变换要把变换也代入目标函数中&lt;/p&gt;
+&lt;h2 id=&#34;线性规划解的基本性质&#34;&gt;线性规划解的基本性质&lt;/h2&gt;
+&lt;p&gt;对于线性规划问题来说，可行解实际上是由约束条件构成的线性方程组的解。并且还满足非负约束条件，即决策变量都取非负值。&lt;/p&gt;
+&lt;p&gt;我们假定线性规划问题的系数矩阵&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;的秩总等于其行数，&lt;span class=&#34;math inline&#34;&gt;\(rank(A)=m\)&lt;/span&gt;。这意味着系数矩阵&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;的各行是线性无关的，这也表明约束方程中的各个方程是相互独立的。&lt;/p&gt;
+&lt;p&gt;由于&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;的秩为&lt;span class=&#34;math inline&#34;&gt;\(m\)&lt;/span&gt;，所以其必有一个&lt;span class=&#34;math inline&#34;&gt;\(m\times m\)&lt;/span&gt;的子矩阵为&lt;span class=&#34;math inline&#34;&gt;\(B\)&lt;/span&gt;，其行列式不为零。&lt;/p&gt;
+&lt;p&gt;我们将&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;的任意一个这样的子矩阵&lt;span class=&#34;math inline&#34;&gt;\(B\)&lt;/span&gt;称为线性规划问题的一个基。&lt;/p&gt;
+&lt;p&gt;显然&lt;span class=&#34;math inline&#34;&gt;\(B=[p_1,p_2,\cdots,p_m]\)&lt;/span&gt;，其中的每一个为基向量，与基向量对应的变量&lt;span class=&#34;math inline&#34;&gt;\(x_j\)&lt;/span&gt;称为基变量，&lt;span class=&#34;math inline&#34;&gt;\(x_B =
+[x_1,x_2,\cdots,x_m]^T\)&lt;/span&gt;，其余称为非基变量，&lt;span class=&#34;math inline&#34;&gt;\(x_N=[x_{m+1},x_{m+2},\cdots,x_n]^T\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;可以得到一个解&lt;span class=&#34;math inline&#34;&gt;\(x=[x_B^T,x_N^T]^T=[x_1,x_2,\cdots,x_m,0,\cdots,0]^T\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;称&lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;为该约束方程的基解，其中&lt;span class=&#34;math inline&#34;&gt;\(x_b=B^{-1}b\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;对于满足非负约束条件的&lt;span class=&#34;math inline&#34;&gt;\(x\geq
+0\)&lt;/span&gt;（所有分量都大于等于&lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt;）的基解称为可行解，对应的基称为可行基。&lt;/p&gt;
+&lt;p&gt;基可行解的非零分量个数小于&lt;span class=&#34;math inline&#34;&gt;\(m\)&lt;/span&gt;时，称为退化解。也就是说，不是所有基解都是可行解。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定理1&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;线性规划问题的基可行解是其可行域的顶点。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;定理2&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;若可行域有界，线性规划问题的目标函数则一定在其可行域的极点上达到最优。&lt;/p&gt;
+&lt;h2 id=&#34;单纯形法&#34;&gt;单纯形法&lt;/h2&gt;
+&lt;p&gt;前面提到，可行解一定在凸集的顶点上，但是，这个顶点的数量很可能非常大。单纯形法就是在这些顶点中优化的算法&lt;/p&gt;
+&lt;p&gt;基本思路&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;首先将线性规划问题化成标准形式&lt;/li&gt;
+&lt;li&gt;求出初始基本可行解&lt;/li&gt;
+&lt;li&gt;判断其是否为最优解&lt;/li&gt;
+&lt;li&gt;如果不是最优，则迭代到其相邻的基本可行解，并再次检验&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;单纯形法把寻优的目标集中在所有基本可行解（即可行域顶点）中。从一个初始的基本可行解出发，寻找一条达到最优基本可行解的最佳路径。&lt;/p&gt;
+
+
+</description>
+        </item>
+        <item>
+        <title>数字电路学习笔记</title>
+        <link>https://kegalas.top/p/%E6%95%B0%E5%AD%97%E7%94%B5%E8%B7%AF%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</link>
+        <pubDate>Fri, 16 Jun 2023 19:42:38 +0800</pubDate>
+        
+        <guid>https://kegalas.top/p/%E6%95%B0%E5%AD%97%E7%94%B5%E8%B7%AF%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</guid>
+        <description>&lt;img src="https://kegalas.top/p/%E6%95%B0%E5%AD%97%E7%94%B5%E8%B7%AF%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/cover.jpg" alt="Featured image of post 数字电路学习笔记" /&gt;
+
+
+
+</description>
+        </item>
+        <item>
         <title>脑科学基础学习笔记</title>
         <link>https://kegalas.top/p/%E8%84%91%E7%A7%91%E5%AD%A6%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</link>
         <pubDate>Sun, 11 Jun 2023 15:11:44 +0800</pubDate>
@@ -1557,7 +1925,7 @@ A_u = \dfrac{\Delta u_{CE}}{\Delta u_I} = \dfrac{\Delta u_O}{\Delta u_I}
 &lt;figcaption aria-hidden=&#34;true&#34;&gt;43.jpg&lt;/figcaption&gt;
 &lt;/figure&gt;
 &lt;p&gt;&lt;strong&gt;计算最大不失真参数&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;如果将晶体管理想化，即认为在管压降总量&lt;span class=&#34;math inline&#34;&gt;\(u_{CE}\)&lt;/span&gt;最小值大于饱和管压降&lt;span class=&#34;math inline&#34;&gt;\(U_{CES}\)&lt;/span&gt;（即管子不饱和），且基极电流总量&lt;span class=&#34;math inline&#34;&gt;\(i_{B}\)&lt;/span&gt;大于&lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt;（即管子不截肢）的情况下，非线性失真可以忽略不计，那么就可以得出放大电路的最大不失真电压&lt;span class=&#34;math inline&#34;&gt;\(U_{om}\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;如果将晶体管理想化，即认为在管压降总量&lt;span class=&#34;math inline&#34;&gt;\(u_{CE}\)&lt;/span&gt;最小值大于饱和管压降&lt;span class=&#34;math inline&#34;&gt;\(U_{CES}\)&lt;/span&gt;（即管子不饱和），且基极电流总量&lt;span class=&#34;math inline&#34;&gt;\(i_{B}\)&lt;/span&gt;大于&lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt;（即管子不截止）的情况下，非线性失真可以忽略不计，那么就可以得出放大电路的最大不失真电压&lt;span class=&#34;math inline&#34;&gt;\(U_{om}\)&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;从图2.3.7(b)可以计算，其方法是以&lt;span class=&#34;math inline&#34;&gt;\(U_{CEQ}\)&lt;/span&gt;为中心，取&lt;span class=&#34;math inline&#34;&gt;\(V_{CC}-U_{CEQ}\)&lt;/span&gt;和&lt;span class=&#34;math inline&#34;&gt;\(V_{CEQ}-U_{CES}\)&lt;/span&gt;这两段距离中较小的数值，并除以&lt;span class=&#34;math inline&#34;&gt;\(\sqrt{2}\)&lt;/span&gt;，则得到其有效值&lt;span class=&#34;math inline&#34;&gt;\(U_{om}\)&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;为了使&lt;span class=&#34;math inline&#34;&gt;\(U_{om}\)&lt;/span&gt;尽可能大，应该将&lt;span class=&#34;math inline&#34;&gt;\(Q\)&lt;/span&gt;点放置在放大区内负载线的终点，即横坐标&lt;span class=&#34;math inline&#34;&gt;\(\dfrac{V_{CC}+U_{CES}}{2}\)&lt;/span&gt;的位置，此时的&lt;span class=&#34;math inline&#34;&gt;\(U_{om}=\dfrac{V_{CC}-U_{CEQ}}{\sqrt{2}}\)&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;或者你需要计算其他电路中的参数，按照此时的设置，&lt;span class=&#34;math inline&#34;&gt;\(U_{CEQ}=\dfrac{V_{CC}+U_{CES}}{2}\)&lt;/span&gt;，用这个东西去计算&lt;span class=&#34;math inline&#34;&gt;\(I_{CQ},I_{BQ},I_{EQ}\)&lt;/span&gt;等等都是可以的。&lt;/p&gt;
@@ -1664,7 +2032,7 @@ U_i2}\cdot\cdots\cdot\dfrac{\dot U_{o}}{\dot U_{iN}}=\dot
 A_{u1}\cdot\dot A_{u2}\cdot\dots\cdot\dot A_{uN} = \prod^{N}_{j=1}\dot
 A_{uj}
 \]&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;输入电阻就是第一级的输入电阻，输出电阻就是最后一级的输出点租。&lt;/p&gt;
+&lt;p&gt;输入电阻就是第一级的输入电阻，输出电阻就是最后一级的输出电阻。&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 R_i = R_{i1}, R_o = R_{oN}
 \]&lt;/span&gt;&lt;/p&gt;
@@ -1736,7 +2104,7 @@ A_d = \dfrac{\Delta u_{Od}}{\Delta u_{Id}}
 i_{B1}(R_b+r_{be}),\Delta u_{Od}=-2\Delta
 i_{C1}\bigg(R_c\parallel\dfrac{R_L}{2}\bigg)\)&lt;/span&gt;，所以&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
-A_d = \dfrac{\beta\bigg(R_c\parallel\dfrac{R_L}{2}\bigg)}{R_b+r_{be}}
+A_d = -\dfrac{\beta\bigg(R_c\parallel\dfrac{R_L}{2}\bigg)}{R_b+r_{be}}
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;可见，用了两只晶体管，放大能力只相当于一只晶体管，牺牲了一只管子为代价换来了低温漂的效果。&lt;/p&gt;
 &lt;p&gt;从等效电路也可以看出&lt;/p&gt;
@@ -1935,7 +2303,7 @@ I_{R}\approx\dfrac{V_{CC}-U_{BE0}}{R+R_{e0}}
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 I_{C1}\approx I_{E1}=\dfrac{U_{BE0}-U_{BE1}}{R_e}
 \]&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;其中这个电压差只有几十豪富，甚至更小。只需要几千欧的&lt;span class=&#34;math inline&#34;&gt;\(R_e\)&lt;/span&gt;就可以得到几十微安的输出电流。&lt;/p&gt;
+&lt;p&gt;其中这个电压差只有几十毫伏，甚至更小。只需要几千欧的&lt;span class=&#34;math inline&#34;&gt;\(R_e\)&lt;/span&gt;就可以得到几十微安的输出电流。&lt;/p&gt;
 &lt;p&gt;两管完全相同，则&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 I_{C1}\approx \dfrac{U_T}{R_e}\ln\dfrac{I_R}{I_{C1}}
@@ -5086,6 +5454,562 @@ N\leq 2^n
 &lt;li&gt;变址寻址：操作数地址由变址寄存器和指令提供的地址偏移量决定，操作数在主存单元中。&lt;/li&gt;
 &lt;li&gt;堆栈寻址：该寻址方式通常由指令操作码指定，用在涉及堆栈操作的指令中，所寻址的操作数在堆栈中。&lt;/li&gt;
 &lt;/ol&gt;
+&lt;h1 id=&#34;中央处理器&#34;&gt;中央处理器&lt;/h1&gt;
+&lt;h2 id=&#34;cpu的功能和结构&#34;&gt;CPU的功能和结构&lt;/h2&gt;
+&lt;h3 id=&#34;cpu的功能&#34;&gt;CPU的功能&lt;/h3&gt;
+&lt;p&gt;CPU主要由控制器+运算器+寄存器组构成。&lt;/p&gt;
+&lt;p&gt;CPU具有以下四方面功能&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;指令控制&lt;/li&gt;
+&lt;li&gt;操作控制&lt;/li&gt;
+&lt;li&gt;时间控制&lt;/li&gt;
+&lt;li&gt;数据加工&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;CPU的主要功能是执行存储在主存中的指令序列,也即执行程序，具体操作如下:&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;取得指令：cpu从主存中取指令，存在指令寄存器中&lt;/li&gt;
+&lt;li&gt;执行指令&lt;/li&gt;
+&lt;li&gt;确定下条指令的地址：可能是顺序地址，或者分支跳转地址&lt;/li&gt;
+&lt;li&gt;重复1~3，直到执行完毕&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;其中，控制器CU的功能为：从存储器中取指令、对指令译码、产生控制信号并控制计算机系统各部件有序地执行，从而实现这条指令的功能。&lt;/p&gt;
+&lt;p&gt;控制器组成为：PC，IR，AR，DR，指令译码器，操作控制信号形成部件，时序信号产生器。&lt;/p&gt;
+&lt;h3 id=&#34;指令周期&#34;&gt;指令周期&lt;/h3&gt;
+&lt;p&gt;CPU执行一条指令所用的时间即为指令周期，在指令周期内CPU完成一组操作。&lt;/p&gt;
+&lt;p&gt;一个周期分为三个子周期：取指令子周期、执行指令子周期（分为取数子周期、执行子周期、存数字周期）、中断子周期。&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;2.jpg&#34; alt=&#34;2.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;2.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;h3 id=&#34;微操作&#34;&gt;微操作&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;概念&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;在CISC系统中，指令周期内的CPU行为常常被分解为一系列微操作&lt;span class=&#34;math inline&#34;&gt;\((\mu op)\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;微操作是CPU可以进行的基本或原子操作。它是CPU可实现的、不可分解的操作。以含有一个寄存器传递（移进、移出）操作为标志。&lt;/p&gt;
+&lt;p&gt;每一个微操作是通过控制器将控制信号发送到相关部件上引起部件动作而完成的。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;这些控制微操作完成的控制信号称为微命令。&lt;/li&gt;
+&lt;li&gt;微命令是由控制器产生的。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;流程&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;时序信号&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;CPU执行微操作有严格的时间顺序性，这种时间关系是由计算机的时序系统来控制的。CPU执行微操作序列中的时序信号：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;指令周期：执行一条指令所用的时间&lt;/li&gt;
+&lt;li&gt;CPU周期：完成一个子周期所用的时间&lt;/li&gt;
+&lt;li&gt;节拍周期：完成一个微操作所用的时间&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;通常利用时序电路为控制器提供所需的时序信号。&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;节拍周期&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;最基本的时序信号为节拍，它可由顺序脉冲发生器（也称脉冲分配器或节拍脉冲发生器）产生。&lt;/p&gt;
+&lt;p&gt;节拍周期&lt;span class=&#34;math inline&#34;&gt;\(T\)&lt;/span&gt;：完成各种CPU微操作所需时间的最大者，常作为定义CPU时钟周期&lt;span class=&#34;math inline&#34;&gt;\(T_{clk}\)&lt;/span&gt;或时钟频率&lt;span class=&#34;math inline&#34;&gt;\(f_{clk}\)&lt;/span&gt;的依据。&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+T = (1\sim n)\times T_{clk} = (1\sim n)/f_{clk}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;节拍脉冲发生器分为两类：计数型=计数器+译码器；移位型=移位寄存器+译码器。&lt;/p&gt;
+&lt;ol start=&#34;2&#34; type=&#34;1&#34;&gt;
+&lt;li&gt;CPU周期（机器周期）&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;完成一个子周期所用的时间。一般指CPU与内存交换一次信息所需要的时间。若干个节拍组成一个CPU周期。&lt;/p&gt;
+&lt;p&gt;CPU周期可以设计为定长 CPU周期与不定长CPU周期两种。&lt;/p&gt;
+&lt;ol start=&#34;3&#34; type=&#34;1&#34;&gt;
+&lt;li&gt;指令周期&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;执行一条指令所用的时间。若干个CPU周期组成一个指令周期，指令周期也可以设计为定长指令周期与不定长指令周期两种。&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;取指令与中断子周期微操作流程&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;当一条指令在该系统上执行时，可以被看作是一组微操作的执行。&lt;/p&gt;
+&lt;p&gt;每条指令对应的一组微操作，称为该指令的微操作流程或微操作序列。&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;取指令周期&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;一个简单的取指令周期可由3个节拍、4个微操作组成&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;T1: AR&amp;lt;-PC    //PC的内容传送到AR
+T2: DR&amp;lt;-Memory[AR], Mread //读取主存到DR
+    PC&amp;lt;-PC+I  //PC自增到下一条指令，其中I为指令长度
+T3: IR&amp;lt;-DR    //DR的内容传送到IR&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;组合微操作：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;T1: AR&amp;lt;-PC
+T2: DR&amp;lt;-Memory[AR], Mread
+T3: PC&amp;lt;-PC+I
+    IR&amp;lt;-DR&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;组合微操作的规则：遵守操作发生的顺序、必须避免冲突&lt;/p&gt;
+&lt;p&gt;所有指令的取指令操作相同，故取指令周期称为公操作。&lt;/p&gt;
+&lt;ol start=&#34;2&#34; type=&#34;1&#34;&gt;
+&lt;li&gt;中断周期&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;在执行周期结束时有一个检测，用来确定被允许的中断是否已出现，若是，中断周期产生。&lt;/p&gt;
+&lt;p&gt;中断周期也是公操作。&lt;/p&gt;
+&lt;p&gt;中断周期微操作序列举例：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;T1: DR&amp;lt;-PC   //将PC的内容传到DR保护
+T2: AR&amp;lt;-Save_Address   //中断断点信息保护区的存储单元地址传送到AR
+    PC&amp;lt;-Routine_Address   //中断服务程序首地址送入PC
+T3: Memory[AR]&amp;lt;-DR, Mwrite   //将老PC的内容保存于主存（如堆栈）中&lt;/code&gt;&lt;/pre&gt;
+&lt;ol start=&#34;3&#34; type=&#34;1&#34;&gt;
+&lt;li&gt;执行周期&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;MOV R1, R0&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;实现将寄存器R0的内容传送至寄存器R1中。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;T1: R1&amp;lt;-R0&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;MOV R0, X&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;实现将存储单元X中的内容传送至寄存器R0中。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;T1: AR&amp;lt;-IR //IR = X
+T2: DR&amp;lt;-Memory[AR], Mread
+T3: R0&amp;lt;-DR&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;MOV (R1), R0&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;将寄存器R0的内容传送至由寄存器R1间接寻址的存储单元中。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;T1: AR&amp;lt;-R1
+T2: DR&amp;lt;-R0
+T3: Memory[AR]&amp;lt;-DR, Mwrite&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;ADD R1, R0&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;将寄存器R0的内容与寄存器R1的内容相加并将结果存入R1。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;T1: Y&amp;lt;-R0
+T2: Z&amp;lt;-R1+Y
+T3: R1&amp;lt;-Z&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;SUB R0, (X)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;实现寄存器R0中的被减数减去存储器地址X间接寻址的存储单元中的减数、将差值传送至寄存器R0中。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;T1: AR&amp;lt;-IR //IR = X
+T2: DR&amp;lt;-Memory[AR], Mread
+T3: AR&amp;lt;-DR
+T4: DR&amp;lt;-Memory[AR], Mread
+T5: Y&amp;lt;-R0
+T6: Z&amp;lt;-Y﹣DR
+T7: R0&amp;lt;-Z&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;IN R0, P&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;从I/O地址为P的I/O设备(接口)中输入数据并存入寄存器R0中。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;T1: AR&amp;lt;-IR //IR = P
+T2: DR&amp;lt;-IO[AR], IOread
+T3: R0&amp;lt;-DR&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;OUT P, R0&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;将寄存器R0中的数据输出到I/O地址为P的I/O设备(接口)中。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;T1: AR&amp;lt;-IR //IR = P
+T2: DR&amp;lt;-R0
+T3: IO[AR]&amp;lt;-DR, IOwrite&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;JUMP X&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;无条件跳转指令，实现将程序执行地址从当前跳转指令所在位置转移到存储器地址为X处。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;T1: PC&amp;lt;-IR&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;JZ offs&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;采用相对寻址的条件跳转指令。当条件为真（即零标志ZF=1）时，程序发生跳转；条件为假（即零标志ZF=0）时，程序顺序执行下条指令。跳转地址=PC+offs，offs为带符号地址偏移量。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;If(ZF==1) then
+{
+    T1: Y&amp;lt;-IR
+    T2: Z&amp;lt;-PC+Y
+    T3: PC&amp;lt;-Z
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;PUSH R0&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;实现将寄存器R0中的数据压入到堆栈中。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;T1: SP&amp;lt;-SP-n // SP指向新栈顶，n为一次压栈的字节数
+    DR&amp;lt;-R0
+T2: AR&amp;lt;-SP
+T3: Memory[AR]&amp;lt;-DR, Mwrite&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;POP R0&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;实现将堆栈栈顶的数据弹出至寄存器R0中。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;T1: AR&amp;lt;-SP
+T2: DR&amp;lt;-Memory[AR], Mread
+T3: R0&amp;lt;-DR
+    SP&amp;lt;-SP+n   //将SP指向新栈顶，n为一次弹出的字节数&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;CALL(X)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;子程序调用指令。将程序执行地址从当前调用指令所在位置转移到以存储器地址X间接寻址的存储单元处，并保存返回地址。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;T1：SP&amp;lt;-SP-n
+    DR&amp;lt;-PC
+T2：AR&amp;lt;-SP
+T3：Memory[AR]&amp;lt;-DR, Mwrite
+T4：AR&amp;lt;-IR
+T5：DR&amp;lt;-Memory[AR], Mread
+T6：PC&amp;lt;-DR&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;RET&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;子程序返回指令，实现从堆栈栈顶处获得子程序调用时保存的返回主程序的地址。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;T1: AR&amp;lt;-SP
+T2: DR&amp;lt;-Memory[AR], Mread
+T3: PC&amp;lt;-DR
+    SP&amp;lt;-SP+n&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;控制器的组成&#34;&gt;控制器的组成&lt;/h3&gt;
+&lt;p&gt;控制器应完成的任务：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;产生微命令（即控制信号）&lt;/li&gt;
+&lt;li&gt;按节拍产生微命令&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;在设计控制器前需要：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;定义计算机基本硬件组成和基本指令系统&lt;/li&gt;
+&lt;li&gt;基于定义的硬件结构，针对每条指令，描述CPU完成的微操作&lt;/li&gt;
+&lt;li&gt;确定控制单元应该完成的功能，即何时产生何种微命令&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;有两种方法：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;硬布线控制设计法&lt;/li&gt;
+&lt;li&gt;微程序控制或微码控制设计法&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;硬布线控制器设计&#34;&gt;硬布线控制器设计&lt;/h2&gt;
+&lt;p&gt;硬布线控制器设计法将控制单元看作一个顺序逻辑电路或有限状态机，它可以产生规定顺序的控制信号，这些信号与提供给控制单元的指令相对应。&lt;/p&gt;
+&lt;p&gt;它的设计目标是：使用最少的元器件，达到最快的操作速度。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;RISC-V&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;对于RISC-V，其为单周期实现。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;类x86&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;对于类x86系统，其为多周期实现。有两种设计方法：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;采用一级时序，即只利用节拍信号。一条指令执行的全过程是用一个从取指令到执行指令的完整微操作序列来描述的，而且对这个微操作序列也是从头至尾分配节拍的。&lt;/li&gt;
+&lt;li&gt;采用两级时序，即利用节拍和CPU周期两种时间信号。按照CPU周期来描述一条指令的微操作序列。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;我们要从微操作序列得出微命令序列。例如把AR&amp;lt;-PC转换为&lt;span class=&#34;math inline&#34;&gt;\(PC_{out},AR_{in}\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;由控制单元产生并加载到CPU内外的全部控制信号均可用下述形式表述：&lt;/p&gt;
+&lt;p&gt;两级时序：&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+C_i = \sum(M_m\cdot T_n\cdot I_j\cdot F_k)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;在执行指令&lt;span class=&#34;math inline&#34;&gt;\(I_j\)&lt;/span&gt;时，若状态&lt;span class=&#34;math inline&#34;&gt;\(F_k\)&lt;/span&gt;满足要求，则在第&lt;span class=&#34;math inline&#34;&gt;\(m\)&lt;/span&gt;个CPU周期&lt;span class=&#34;math inline&#34;&gt;\(M_m\)&lt;/span&gt;的第&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;个节拍&lt;span class=&#34;math inline&#34;&gt;\(T_n\)&lt;/span&gt;，控制单元发出&lt;span class=&#34;math inline&#34;&gt;\(C_i\)&lt;/span&gt;控制命令。&lt;/p&gt;
+&lt;p&gt;一级时序：&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+C_i = \sum(T_n\cdot I_j\cdot F_k)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;总结：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;每个控制信号的逻辑表达式就是一个与或逻辑方程式。&lt;/li&gt;
+&lt;li&gt;用一个与或逻辑电路就可以实现该控制信号的生成。&lt;/li&gt;
+&lt;li&gt;将所有控制信号的与或逻辑电路组合在一起就构成了硬布线控制单元。&lt;/li&gt;
+&lt;li&gt;时间信息（单周期实现不需要）、指令信息、状态信息是硬布线控制单元的输入，控制信号是硬布线控制单元的输出。&lt;/li&gt;
+&lt;li&gt;特点：&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;一旦完成设计，改变控制器的行为的唯一方法就是重新设计电路（修改不灵活）&lt;/li&gt;
+&lt;li&gt;在现代复杂处理器中，需要定义庞大的方程组（与或组合电路实现困难）&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;微程序控制器设计&#34;&gt;微程序控制器设计&lt;/h2&gt;
+&lt;p&gt;用软件方法组织和控制数据处理系统的信息传送，并最终用硬件实现。依据微程序顺序产生一条指令执行时所需的全部控制信号。相当于把控制信号存储起来，因此又称存储控制逻辑方法。&lt;/p&gt;
+&lt;p&gt;对在一个时间单位（节拍）内出现的一组微操作进行描述的语句称作微指令。&lt;/p&gt;
+&lt;p&gt;一个微指令序列称作微程序或固件。&lt;/p&gt;
+&lt;p&gt;通过一组微指令产生的控制信号，使一条指令中的所有微操作得以实现，从而实现一条指令的功能。&lt;/p&gt;
+&lt;p&gt;一条（机器）指令对应一个微程序，该微程序包含从取指令到执行指令一个完整微操作序列对应的全部微指令，它被存入一个称为控制存储器的ROM中。&lt;/p&gt;
+&lt;p&gt;微指令周期：一条微指令执行的时间（包括从控制存储器中取得微指令和执行微指令所用时间）。&lt;/p&gt;
+&lt;h3 id=&#34;微指令格式&#34;&gt;微指令格式&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;水平型微指令&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;多个控制信号同时有效-&amp;gt;多个微操作同时发生&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;3.jpg&#34; alt=&#34;3.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;3.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;&lt;strong&gt;垂直型微指令&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;类似于机器指令，利用微操作码的不同编码来表示不同的微操作功能。&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;4.jpg&#34; alt=&#34;4.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;4.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;h3 id=&#34;微程序控制器的一般结构和工作原理&#34;&gt;微程序控制器的一般结构和工作原理&lt;/h3&gt;
+&lt;figure&gt;
+&lt;img src=&#34;5.jpg&#34; alt=&#34;5.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;5.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;h3 id=&#34;微指令地址的生成&#34;&gt;微指令地址的生成&lt;/h3&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;两地址格式&lt;/li&gt;
+&lt;li&gt;单地址格式&lt;/li&gt;
+&lt;li&gt;可变格式&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;微指令控制域编码&#34;&gt;微指令控制域编码&lt;/h3&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;水平型微指令控制域的编码：&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;直接表示法&lt;/li&gt;
+&lt;li&gt;译码法&lt;/li&gt;
+&lt;li&gt;字段译码法&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol start=&#34;2&#34; type=&#34;1&#34;&gt;
+&lt;li&gt;垂直型微指令控制域的编码&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;微程序设计及示例&#34;&gt;微程序设计及示例&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;微程序结构&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;在设计微程序时，通常采用如下两种典型结构&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;一条指令对应一段完整的微程序&lt;/li&gt;
+&lt;li&gt;将微程序中的公共部分设计成微子程序进行公共调用&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;编写微程序&lt;/strong&gt;&lt;/p&gt;
+&lt;h2 id=&#34;cpu性能测量与提高&#34;&gt;CPU性能测量与提高&lt;/h2&gt;
+&lt;h3 id=&#34;cpu性能测量&#34;&gt;CPU性能测量&lt;/h3&gt;
+&lt;p&gt;CPU主频&lt;span class=&#34;math inline&#34;&gt;\(f_{CLK}\)&lt;/span&gt;：CPU使用的时钟的频率，单位为赫兹。&lt;/p&gt;
+&lt;p&gt;CPU时钟周期&lt;span class=&#34;math inline&#34;&gt;\(T_{CLK}\)&lt;/span&gt;：时钟频率的倒数。&lt;/p&gt;
+&lt;p&gt;一般而言，主频高代表速度快。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;CPU时间&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;运行一个程序所花费的时间&lt;/p&gt;
+&lt;p&gt;响应时间：CPU时间与等待时间（包括用于磁盘访问、存储器访问、I/O操作、操作系统开销等时间）的总和。&lt;/p&gt;
+&lt;p&gt;假设时钟周期为&lt;span class=&#34;math inline&#34;&gt;\(T_{CLK}\)&lt;/span&gt;，执行某程序时，CPU需要使用&lt;span class=&#34;math inline&#34;&gt;\(N\)&lt;/span&gt;个时钟周期，那么，CPU执行该程序所用时间为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+T_{CPU}=N\times T_{CLK} = N/f_{CLK}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;CPI与IPC&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;CPI是每条指令执行所用的时钟数的平均值。&lt;/p&gt;
+&lt;p&gt;IPC是每时钟周期执行的指令数。&lt;/p&gt;
+&lt;p&gt;设某个程序要用&lt;span class=&#34;math inline&#34;&gt;\(N\)&lt;/span&gt;个时钟周期，该程序汇总的指令数为&lt;span class=&#34;math inline&#34;&gt;\(I\)&lt;/span&gt;，其CPI记为&lt;span class=&#34;math inline&#34;&gt;\(CPI\)&lt;/span&gt;，则&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+N = I\times CPI
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+T_{CPU} = I\times CPI\times T_{CLK} = \dfrac{I\times CPI}{f_{CLK}}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;有三方面的因素使得程序的CPI可能不同于CPU执行的CPI：&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;Cache行为发生变化&lt;/li&gt;
+&lt;li&gt;指令混合发生变化&lt;/li&gt;
+&lt;li&gt;分支预测发生变化&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;影响CPU性能的三个关键因素：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;CPI&lt;/li&gt;
+&lt;li&gt;时钟频率&lt;/li&gt;
+&lt;li&gt;指令数&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;MIPS&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;CPU每秒钟执行的百万指令数。&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+MIPS = \dfrac{I}{T\times 10^6} = \dfrac{f_{CLK}}{CPI\times 10^6}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(T\)&lt;/span&gt;为程序的执行时间。&lt;/p&gt;
+&lt;p&gt;MIPS的局限：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;不能对指令集不同的计算机使用MIPS进行比较：MIPS只说明了指令执行速率，而没有考虑指令的能力&lt;/li&gt;
+&lt;li&gt;计算机对所有程序没有单一的MIPS值：对于同一个计算机上的不同程序，MIPS是变化的&lt;/li&gt;
+&lt;li&gt;MIPS会与性能反向变化&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Flops&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;CPU每秒完成的浮点运算次数&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+FLOPS = \dfrac{M}{T}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(M\)&lt;/span&gt;为浮点运算次数，&lt;span class=&#34;math inline&#34;&gt;\(T\)&lt;/span&gt;为执行时间。&lt;/p&gt;
+&lt;p&gt;FLOPS可以用于不同计算机之间的比较。&lt;/p&gt;
+&lt;p&gt;就像MB，GB，TB。FLOPS也有MFLOPS，GFLOPS，PFLOPS等等&lt;/p&gt;
+&lt;h3 id=&#34;cpu性能提高&#34;&gt;CPU性能提高&lt;/h3&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;采用更先进的硅加工制造技术&lt;/li&gt;
+&lt;li&gt;缩短指令执行路径长度。减少执行指令的时钟周期数：优化微操作、微程序；双总线、三总线；增加特定硬件，实现并行&lt;/li&gt;
+&lt;li&gt;简化组织结构来缩短时钟周期。例如RISC&lt;/li&gt;
+&lt;li&gt;采用并行处理技术。指令级和处理器级并行&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;多核与多线程技术&#34;&gt;多核与多线程技术&lt;/h3&gt;
+&lt;h1 id=&#34;流水线技术&#34;&gt;流水线技术&lt;/h1&gt;
+&lt;h2 id=&#34;流水线处理的概念&#34;&gt;流水线处理的概念&lt;/h2&gt;
+&lt;h3 id=&#34;流水线的处理方式&#34;&gt;流水线的处理方式&lt;/h3&gt;
+&lt;p&gt;若将一重复的处理过程分解为若干子过程，每个子过程都可在专用设备构成的流水线功能段上实现，并可与其它子过程同时执行，这种技术称为流水技术。&lt;/p&gt;
+&lt;h3 id=&#34;流水线的类型&#34;&gt;流水线的类型&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;按流水线位于计算机系统的层次划分&lt;/strong&gt;&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;系统级流水线/宏流水线：在多个系统中有多个处理机串行构成的流水线&lt;/li&gt;
+&lt;li&gt;处理器级流水线：在处理器内部由多个部件构成的流水线。——指令流水线&lt;/li&gt;
+&lt;li&gt;部件级流水线：在处理器中某部件内部由多个子部件构成的流水线。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;按功能强弱划分&lt;/strong&gt;&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;单功能流水线&lt;/li&gt;
+&lt;li&gt;多功能流水线&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;按是否有反馈回路划分&lt;/strong&gt;&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;线性流水线&lt;/li&gt;
+&lt;li&gt;非线性流水线-流水线调度&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;按流水线输出端任务流出顺序与输入端任务流入顺序是否相同划分&lt;/strong&gt;&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;顺序流动流水线（入出顺序相同）&lt;/li&gt;
+&lt;li&gt;异步流动流水线（入出顺序不同）&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;按流水线一次处理对象的数量划分&lt;/strong&gt;&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;标量流水线&lt;/li&gt;
+&lt;li&gt;超标量流水线&lt;/li&gt;
+&lt;li&gt;向量流水线&lt;/li&gt;
+&lt;li&gt;超长指令字流水线&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;设计运算流水线的一般方法&#34;&gt;设计运算流水线的一般方法&lt;/h2&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;寻找一个适当的、可分解为多步骤的、连续运行的算法，该算法的每一步骤应是时间均衡的、可以由硬件电路实现的。&lt;/li&gt;
+&lt;li&gt;将实现算法每一步骤的硬件电路作为流水线的一段，并按照步骤顺序将各段连接起来。&lt;/li&gt;
+&lt;li&gt;在流水线各段之间放置快速缓冲寄存器来分离各段，并利用缓冲寄存器逐段传送处理数据（部分或全部结果）。所有缓冲寄存器受同一时钟控制。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;指令流水线&#34;&gt;指令流水线&lt;/h2&gt;
+&lt;h3 id=&#34;基本的指令流水线&#34;&gt;基本的指令流水线&lt;/h3&gt;
+&lt;p&gt;指令流水线是利用执行指令时存在的直接并行性实现多条指令重叠执行的一种技术。&lt;/p&gt;
+&lt;p&gt;指令流水线对于程序员是不可见的，它由程序编译器和CPU内部程序控制单元自动管理。&lt;/p&gt;
+&lt;p&gt;如果流水线各段采用同步方式控制各段间信息的&lt;strong&gt;同步&lt;/strong&gt;推进，则流水线同步控制时钟的周期应选定为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+T_{CLK} = \max_i\{\tau_i\}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(\tau_i\)&lt;/span&gt;是该指令的运行时间。由于时钟周期取决于最长指令的运行时间，所以其他指令运行完后就要等待，造成浪费，速度减慢。所以要将指令的执行步骤再分解，使每一步骤所用时间尽可能均衡，并依此设计一个多级的指令流水线。&lt;/p&gt;
+&lt;p&gt;例如，将指令处理分为以下四步&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;指令获取（IF）：从主存或cache中获取指令并对指令进行译码&lt;/li&gt;
+&lt;li&gt;操作数加载（OL）：从主存或cache中获取操作数放入寄存器中&lt;/li&gt;
+&lt;li&gt;执行指令（EX）：利用ALU等执行部件，对寄存器中的操作数进行处理，结果存于寄存器中&lt;/li&gt;
+&lt;li&gt;写操作数（WO、OS）：将寄存器中的结果存入主存或cache中&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;指令流水线策略&#34;&gt;指令流水线策略&lt;/h3&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;采用深度指令流水线结构&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;将指令的执行过程进一步细化，使流水线的级（段）数变多，而每一级的工作更少（有可能一个时钟周期完成）、时间更均衡。&lt;/p&gt;
+&lt;ol start=&#34;2&#34; type=&#34;1&#34;&gt;
+&lt;li&gt;多条流水线结构&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;流水线性能测量&#34;&gt;流水线性能测量&lt;/h2&gt;
+&lt;h3 id=&#34;时空图&#34;&gt;时空图&lt;/h3&gt;
+&lt;p&gt;装入时间=(流水线级数-1)&lt;span class=&#34;math inline&#34;&gt;\(\times\)&lt;/span&gt;时钟周期&lt;span class=&#34;math inline&#34;&gt;\(\tau\)&lt;/span&gt;；&lt;span class=&#34;math inline&#34;&gt;\(\tau=(1\sim n)\times T_{CLK}\)&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;吞吐率&#34;&gt;吞吐率&lt;/h3&gt;
+&lt;p&gt;吞吐率：指单位时间内流水线所完成的任务数或输出结果的数量，它是衡量流水线速度的重要指标。&lt;/p&gt;
+&lt;p&gt;最大吞吐率&lt;span class=&#34;math inline&#34;&gt;\(TP_{max}\)&lt;/span&gt;：流水线在达到稳定状态后所得到的吞吐率。&lt;/p&gt;
+&lt;p&gt;假设流水线各段运行时间相等，为&lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt;个时钟周期&lt;span class=&#34;math inline&#34;&gt;\(T_{CLK}\)&lt;/span&gt;，则：&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+TP_{max} = 1/T_{CLK}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;假设流水线各段运行时间不等，第&lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt;段时间为&lt;span class=&#34;math inline&#34;&gt;\(\tau_i\)&lt;/span&gt;，则：&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+TP_{max} = 1/\max_i\{\tau_i\}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;所以瓶颈在于最慢的一段。消除瓶颈的办法有：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;细分瓶颈段（首选）（例如把他拆分成两个阶段）&lt;/li&gt;
+&lt;li&gt;重复设置瓶颈段（即物理上再增加一个一样的，和原来的并联）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;实际吞吐率&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;之前说的吞吐率是当待执行任务无限多时，取得的极限。若流水线由m段组成，完成n个任务的吞吐率称为实际吞吐率，记作&lt;span class=&#34;math inline&#34;&gt;\(TP\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;假设流水线各段运行时间相等，为&lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt;个时钟周期&lt;span class=&#34;math inline&#34;&gt;\(T_{CLK}\)&lt;/span&gt;，在不出现流水线断流的情况下，完成&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;个任务所用时间为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+T_n(m) = (m+(n-1))\tau = (m+(n-1))T_{CLK}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;实际吞吐率为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+TP = \dfrac{n}{T_n(m)} = \dfrac{n}{(m+(n-1))\times T_{CLK}} =
+\dfrac{TP_{max}}{1+\dfrac{m-1}{n}}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;假设流水线各段运行时间不等，第&lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt;段时间为&lt;span class=&#34;math inline&#34;&gt;\(\tau_i\)&lt;/span&gt; ，则完成&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;个任务所用时间为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+T_n(m) = \sum^m_{i=1}\tau_i + (n-1)\times \max_i\{\tau_i\}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;实际吞吐率为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+TP = \dfrac{n}{\sum^m_{i=1}\tau_i + (n-1)\times \max_i\{\tau_i\}}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;对于指令流水线而言，吞吐率TP就是每秒执行的指令数，所以也可以用MIPS指标表示吞吐率，即&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+TP = MIPS = f_{CLK}/CPI
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;对于单流水线系统，它的&lt;span class=&#34;math inline&#34;&gt;\(CPI\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt;，所以&lt;span class=&#34;math inline&#34;&gt;\(TP_{max} = f_{CLK}\)&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;加速比&#34;&gt;加速比&lt;/h3&gt;
+&lt;p&gt;若流水线为&lt;span class=&#34;math inline&#34;&gt;\(m\)&lt;/span&gt;段，加速比&lt;span class=&#34;math inline&#34;&gt;\(S\)&lt;/span&gt;定义为等功能的非流水线执行时间&lt;span class=&#34;math inline&#34;&gt;\(T(1)\)&lt;/span&gt;与流水线执行时间&lt;span class=&#34;math inline&#34;&gt;\(T(m)\)&lt;/span&gt;之比，即&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+S = S_n(m) = T_n(1)/T_n(m)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;若每段运行时间均为&lt;span class=&#34;math inline&#34;&gt;\(\tau\)&lt;/span&gt;，在不流水情况下，总时间为&lt;span class=&#34;math inline&#34;&gt;\(T_n(1)=nm\tau\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;在流水但不出现断流的情况下，完成n个任务所需时间为&lt;span class=&#34;math inline&#34;&gt;\(T_n(m)=m\tau+(n-1)\tau\)&lt;/span&gt;，因此&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+S_n(m) = \dfrac{mn}{m+n-1} = \dfrac{m}{1+\dfrac{m-1}{n}}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;从上式可以看出，增大流水线的级数和送入流水线的指令数均可以加速流水线的运行速度。&lt;/p&gt;
+&lt;h3 id=&#34;效率&#34;&gt;效率&lt;/h3&gt;
+&lt;p&gt;效率：流水线中各功能段（或设备）的利用率。&lt;/p&gt;
+&lt;p&gt;由于流水线有通过（填充）时间和排空时间，还有各种引起断流的状况，所以流水线的各段并非一直满负荷工作，效率&lt;span class=&#34;math inline&#34;&gt;\(E&amp;lt;1\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;通常用流水线各段处于工作时间的时空区（面积）与流水线中各段总的时空区（面积）之比来衡量流水线的效率。&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+E = \dfrac{n个任务占用的时空区}{m个段总的时空区}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;假设流水线各段运行时间相等为&lt;span class=&#34;math inline&#34;&gt;\(\tau\)&lt;/span&gt;，则整个流水线效率&lt;span class=&#34;math inline&#34;&gt;\(e\)&lt;/span&gt;为：&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+E = \dfrac{mn\tau}{m(m+n-1)\tau} = \dfrac{n}{m+n-1} =
+\dfrac{1}{1+\dfrac{m-1}{n}}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h2 id=&#34;指令流水线的性能提高&#34;&gt;指令流水线的性能提高&lt;/h2&gt;
+&lt;h3 id=&#34;流水线的基本性能问题&#34;&gt;流水线的基本性能问题&lt;/h3&gt;
+&lt;p&gt;限制指令流水线性能提高的因素：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;流水线的深度受限于流水线的延迟、流水线段的时间不均衡和流水线的额外开销。&lt;/li&gt;
+&lt;li&gt;指令执行时可能存在的“相关”或“冒险”问题。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;冒险：指相邻或相近的两条指令因存在某种关联，后一条指令不能在原指定的时钟周期开始执行。&lt;/p&gt;
+&lt;p&gt;冒险分为三类：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;结构冒险：资源冲突&lt;/li&gt;
+&lt;li&gt;数据冒险：一条指令需要用到前面某条指令的结果&lt;/li&gt;
+&lt;li&gt;控制冒险：分支等转移类指令/其他能够改变PC值的指令&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;前两个是局部性相关，后一个是全局性相关&lt;/p&gt;
+&lt;h3 id=&#34;结构冒险&#34;&gt;结构冒险&lt;/h3&gt;
+&lt;p&gt;有两种情况会导致结构冒险：&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;部分功能单元没有充分流水&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;解决办法：将流水线设计的更合理。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;资源冲突&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;当两个以上流水线段需要同时使用同一个硬件资源时，发生冲突。&lt;/p&gt;
+&lt;p&gt;解决办法：&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;增加资源副本。如哈佛结构、两个ALU&lt;/li&gt;
+&lt;li&gt;改变资源以便它们能并发的使用。不相关的数据尽量使用不同的寄存器；寄存器重命名&lt;/li&gt;
+&lt;li&gt;通过延迟（或暂停）流水线的冲突段或在冲突段插入流水线气泡（气泡在流水线中只占资源不做实际操作），使各段“轮流”使用资源。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;数据冒险&#34;&gt;数据冒险&lt;/h3&gt;
+&lt;p&gt;指令在流水线中重叠执行有可能改变指令读/写操作数的顺序&lt;/p&gt;
+&lt;p&gt;当一条指令的结果还未有效生成，该结果就被作为后续指令的操作数时，数据冒险出现。&lt;/p&gt;
+&lt;p&gt;解决办法：&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;增加专用硬件（推后法）。增加流水线互锁（pipeline
+interlock）硬件。当互锁硬件发现数据相关时，使流水线工作停顿下来，直到冒险消失为止。&lt;/li&gt;
+&lt;li&gt;采用直通/转发技术&lt;/li&gt;
+&lt;li&gt;乱序，流水线（指令）调度：利用编译器（RISC），硬件（CISC）。编译器可以对指令重新排序或插入空操作指令&lt;/li&gt;
+&lt;li&gt;对寄存器读写做特别设计&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;控制冒险&#34;&gt;控制冒险&lt;/h3&gt;
+&lt;p&gt;使程序执行顺序发生改变的转移指令有两类：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;无条件转移指令（如无条件跳转、调用、返回指令等）&lt;/li&gt;
+&lt;li&gt;条件分支转移指令（为零跳转、循环控制指令等）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;处理办法：&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;冻结流水线&lt;/li&gt;
+&lt;li&gt;静态分支预测&lt;/li&gt;
+&lt;li&gt;动态分支预测&lt;/li&gt;
+&lt;li&gt;延迟分支&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;冒险影响性能&#34;&gt;冒险影响性能&lt;/h3&gt;
+&lt;p&gt;冒险可能引起流水线停顿, 停顿也称为流水线气泡。&lt;/p&gt;
+&lt;p&gt;有停顿的流水线的CPI为：CPI = 理想流水线CPI+(结构冒险停顿 +
+数据冒险停顿 + 控制冒险停顿) / 指令数&lt;/p&gt;
+&lt;p&gt;有停顿的流水线的加速比为：&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+加速比=\dfrac{流水线深度}{1+平均每条指令的流水线停顿周期}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h2 id=&#34;多发射处理器&#34;&gt;多发射处理器&lt;/h2&gt;
+&lt;p&gt;多发射(Multiple
+Issue)是在一个时钟周期内启动多个指令并行执行的处理器实现方案。&lt;/p&gt;
+&lt;p&gt;实现多发射处理器主要有两种方法:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;静态多发射——编译时由编译器决定&lt;/li&gt;
+&lt;li&gt;动态多发射——执行过程中由处理器决定&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;指令级并行&#34;&gt;指令级并行&lt;/h2&gt;
 
 
 </description>

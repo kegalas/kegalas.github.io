@@ -766,7 +766,7 @@ A_u = \dfrac{\Delta u_{CE}}{\Delta u_I} = \dfrac{\Delta u_O}{\Delta u_I}
 <figcaption aria-hidden="true">43.jpg</figcaption>
 </figure>
 <p><strong>计算最大不失真参数</strong></p>
-<p>如果将晶体管理想化，即认为在管压降总量<span class="math inline">\(u_{CE}\)</span>最小值大于饱和管压降<span class="math inline">\(U_{CES}\)</span>（即管子不饱和），且基极电流总量<span class="math inline">\(i_{B}\)</span>大于<span class="math inline">\(0\)</span>（即管子不截肢）的情况下，非线性失真可以忽略不计，那么就可以得出放大电路的最大不失真电压<span class="math inline">\(U_{om}\)</span></p>
+<p>如果将晶体管理想化，即认为在管压降总量<span class="math inline">\(u_{CE}\)</span>最小值大于饱和管压降<span class="math inline">\(U_{CES}\)</span>（即管子不饱和），且基极电流总量<span class="math inline">\(i_{B}\)</span>大于<span class="math inline">\(0\)</span>（即管子不截止）的情况下，非线性失真可以忽略不计，那么就可以得出放大电路的最大不失真电压<span class="math inline">\(U_{om}\)</span></p>
 <p>从图2.3.7(b)可以计算，其方法是以<span class="math inline">\(U_{CEQ}\)</span>为中心，取<span class="math inline">\(V_{CC}-U_{CEQ}\)</span>和<span class="math inline">\(V_{CEQ}-U_{CES}\)</span>这两段距离中较小的数值，并除以<span class="math inline">\(\sqrt{2}\)</span>，则得到其有效值<span class="math inline">\(U_{om}\)</span></p>
 <p>为了使<span class="math inline">\(U_{om}\)</span>尽可能大，应该将<span class="math inline">\(Q\)</span>点放置在放大区内负载线的终点，即横坐标<span class="math inline">\(\dfrac{V_{CC}+U_{CES}}{2}\)</span>的位置，此时的<span class="math inline">\(U_{om}=\dfrac{V_{CC}-U_{CEQ}}{\sqrt{2}}\)</span></p>
 <p>或者你需要计算其他电路中的参数，按照此时的设置，<span class="math inline">\(U_{CEQ}=\dfrac{V_{CC}+U_{CES}}{2}\)</span>，用这个东西去计算<span class="math inline">\(I_{CQ},I_{BQ},I_{EQ}\)</span>等等都是可以的。</p>
@@ -873,7 +873,7 @@ U_i2}\cdot\cdots\cdot\dfrac{\dot U_{o}}{\dot U_{iN}}=\dot
 A_{u1}\cdot\dot A_{u2}\cdot\dots\cdot\dot A_{uN} = \prod^{N}_{j=1}\dot
 A_{uj}
 \]</span></p>
-<p>输入电阻就是第一级的输入电阻，输出电阻就是最后一级的输出点租。</p>
+<p>输入电阻就是第一级的输入电阻，输出电阻就是最后一级的输出电阻。</p>
 <p><span class="math display">\[
 R_i = R_{i1}, R_o = R_{oN}
 \]</span></p>
@@ -945,7 +945,7 @@ A_d = \dfrac{\Delta u_{Od}}{\Delta u_{Id}}
 i_{B1}(R_b+r_{be}),\Delta u_{Od}=-2\Delta
 i_{C1}\bigg(R_c\parallel\dfrac{R_L}{2}\bigg)\)</span>，所以</p>
 <p><span class="math display">\[
-A_d = \dfrac{\beta\bigg(R_c\parallel\dfrac{R_L}{2}\bigg)}{R_b+r_{be}}
+A_d = -\dfrac{\beta\bigg(R_c\parallel\dfrac{R_L}{2}\bigg)}{R_b+r_{be}}
 \]</span></p>
 <p>可见，用了两只晶体管，放大能力只相当于一只晶体管，牺牲了一只管子为代价换来了低温漂的效果。</p>
 <p>从等效电路也可以看出</p>
@@ -1144,7 +1144,7 @@ I_{R}\approx\dfrac{V_{CC}-U_{BE0}}{R+R_{e0}}
 <p><span class="math display">\[
 I_{C1}\approx I_{E1}=\dfrac{U_{BE0}-U_{BE1}}{R_e}
 \]</span></p>
-<p>其中这个电压差只有几十豪富，甚至更小。只需要几千欧的<span class="math inline">\(R_e\)</span>就可以得到几十微安的输出电流。</p>
+<p>其中这个电压差只有几十毫伏，甚至更小。只需要几千欧的<span class="math inline">\(R_e\)</span>就可以得到几十微安的输出电流。</p>
 <p>两管完全相同，则</p>
 <p><span class="math display">\[
 I_{C1}\approx \dfrac{U_T}{R_e}\ln\dfrac{I_R}{I_{C1}}
@@ -1468,6 +1468,28 @@ THD_f=\dfrac{THD}{1+AF}
         <h2 class="section-title">相关文章</h2>
         <div class="related-contents">
             <div class="flex article-list--tile">
+                
+                    
+<article class="has-image">
+    <a href="/p/%E6%95%B0%E5%AD%97%E7%94%B5%E8%B7%AF%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+        
+        
+            <div class="article-image">
+                <img src="/p/%E6%95%B0%E5%AD%97%E7%94%B5%E8%B7%AF%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/cover.19de2b4fde034cebe2b155ba8473d5a7_hua3505806866a19c5f5a93f876aae8123_184422_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-Gd4rT94DTOvisVW6hHPVpw==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">数字电路学习笔记</h2>
+        </div>
+    </a>
+</article>
                 
                     
 <article class="has-image">

@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='最优化理论、算法的学习笔记'><title>最优化理论学习笔记</title>
+
+<link rel='canonical' href='https://kegalas.top/p/%E6%9C%80%E4%BC%98%E5%8C%96%E7%90%86%E8%AE%BA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/'>
+
+<link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='最优化理论学习笔记'>
+<meta property='og:description' content='最优化理论、算法的学习笔记'>
+<meta property='og:url' content='https://kegalas.top/p/%E6%9C%80%E4%BC%98%E5%8C%96%E7%90%86%E8%AE%BA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/'>
+<meta property='og:site_name' content='KegalaS的个人博客'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='大学' /><meta property='article:tag' content='数学' /><meta property='article:tag' content='最优化' /><meta property='article:published_time' content='2023-06-16T19:47:47&#43;08:00'/><meta property='article:modified_time' content='2023-06-16T19:47:47&#43;08:00'/><meta property='og:image' content='https://kegalas.top/p/%E6%9C%80%E4%BC%98%E5%8C%96%E7%90%86%E8%AE%BA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/cover.jpg' />
+<meta name="twitter:title" content="最优化理论学习笔记">
+<meta name="twitter:description" content="最优化理论、算法的学习笔记"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://kegalas.top/p/%E6%9C%80%E4%BC%98%E5%8C%96%E7%90%86%E8%AE%BA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/cover.jpg' />
+    <link rel="shortcut icon" href="favicon-16x16.png" />
+
+    </head>
+    <body class="
+    article-page has-toc
+">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex 
+    
+        extended
+    
+">
+    
+        <div id="article-toolbar">
+            <a href="/" class="back-home">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="15 6 9 12 15 18" />
+</svg>
+
+
+
+                <span>返回</span>
+            </a>
+        </div>
+    
+<main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/p/%E6%9C%80%E4%BC%98%E5%8C%96%E7%90%86%E8%AE%BA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+                <img src="/p/%E6%9C%80%E4%BC%98%E5%8C%96%E7%90%86%E8%AE%BA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/cover_hu54576080547634ea0a125cfdafb2aa8f_63775_800x0_resize_q75_box.jpg"
+                        srcset="/p/%E6%9C%80%E4%BC%98%E5%8C%96%E7%90%86%E8%AE%BA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/cover_hu54576080547634ea0a125cfdafb2aa8f_63775_800x0_resize_q75_box.jpg 800w, /p/%E6%9C%80%E4%BC%98%E5%8C%96%E7%90%86%E8%AE%BA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/cover_hu54576080547634ea0a125cfdafb2aa8f_63775_1600x0_resize_q75_box.jpg 1600w"
+                        width="800" 
+                        height="510" 
+                        loading="lazy"
+                        alt="Featured image of post 最优化理论学习笔记" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/%E6%95%B0%E5%AD%A6/" >
+                数学
+            </a>
+        
+    </header>
+    
+
+    <h2 class="article-title">
+        <a href="/p/%E6%9C%80%E4%BC%98%E5%8C%96%E7%90%86%E8%AE%BA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">最优化理论学习笔记</a>
+    </h2>
+
+    
+    <h3 class="article-subtitle">
+        最优化理论、算法的学习笔记
+    </h3>
+    
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Jun 16, 2023</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 13 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+</div>
+</header>
+
+    <section class="article-content">
+    
+
+<h1 id="读前警示">读前警示</h1>
+<p>出于Obsidian不支持，也出于我打字方便、教科书也没用加粗的原因，从某一段开始的瞬间，很多地方都不会使用粗体来表示向量。这其实无所谓，我们可以把标量看做一维向量。我们的大部分讨论都是在向量之上的，除了部分参数是标量。大部分矩阵是大写字母。</p>
+<p>阅读时应结合前后文理解一个符号是什么意思。</p>
+<h1 id="数学基础概念定义">数学基础概念、定义</h1>
+<h2 id="向量内积">向量内积</h2>
+<p>在<span class="math inline">\(n\)</span>维线性空间<span class="math inline">\(R^n\)</span>中，<span class="math inline">\(\bm a
+= [a_1,a_2,\cdots,a_n]^T\in R^n,\bm b = [b_1,b_2,\cdots,b_n]^T\in
+R^n\)</span>，则</p>
+<p><span class="math display">\[
+\bm a^T b = a_1b_1+a_2b_2+\cdots,a_nb_n
+\]</span></p>
+<p>称作向量<span class="math inline">\(\bm a,\bm b\)</span>的内积。</p>
+<p>内积满足交换律，线性，以及正定性：<span class="math inline">\(\bm a^T
+\bm a\geq 0\)</span>，当且仅当<span class="math inline">\(\bm a=\bm
+0\)</span>时，取等号。</p>
+<p>其他各种性质都在线性代数中学过了，这里只是简单回顾。</p>
+<h2 id="向量范数">向量范数</h2>
+<p>称一个从向量空间<span class="math inline">\(R^n\)</span>到实数域<span class="math inline">\(R\)</span>的非负函数<span class="math inline">\(||\cdot||\)</span>为范数，如果它满足：</p>
+<ol type="1">
+<li>正定性：对于所有的<span class="math inline">\(\bm v\in
+R^n\)</span>，有<span class="math inline">\(||\bm v||\geq
+0\)</span>，且<span class="math inline">\(||\bm
+v||=0\)</span>当且仅当<span class="math inline">\(\bm v=0\)</span></li>
+<li>齐次性：对于所有的<span class="math inline">\(\bm v\in
+R^n\)</span>和<span class="math inline">\(\alpha\in R\)</span>，有<span class="math inline">\(||\alpha\bm v||=|\alpha|||\bm v||\)</span></li>
+<li>三角不等式：对于所有的<span class="math inline">\(\bm v,\bm w\in
+R^n\)</span>，有<span class="math inline">\(||\bm v+\bm w||\leq ||\bm
+v||+||\bm w||\)</span></li>
+</ol>
+<p>对于<span class="math inline">\(\bm v =
+(v_1,v_2,\cdots,v_n)^T\)</span>，常见的向量范数为<span class="math inline">\(\mathscr{l}_n\)</span>范数<span class="math inline">\((p&gt;=1)\)</span></p>
+<p><span class="math display">\[
+||v||_p = (|v_1|^p+|v_2|^p+\cdots+|v_3|^p)^{1/p}
+\]</span></p>
+<p>当<span class="math inline">\(p=\infty\)</span>时，<span class="math inline">\(\mathscr{l}_\infty\)</span>定义为</p>
+<p><span class="math display">\[
+||v||_\infty = \max_i|v_i|
+\]</span></p>
+<p>一些地方也可以见到<span class="math inline">\(0\)</span>-范数，其表示分量中不为零的个数。</p>
+<p>最常见的是<span class="math inline">\(2\)</span>-范数，又称欧几里得范数，常常<span class="math inline">\(||\cdot||\)</span>省略角标不写表示<span class="math inline">\(2\)</span>-范数。</p>
+<h2 id="二次型">二次型</h2>
+<p><span class="math inline">\(n\)</span>维二次函数可以表示如下</p>
+<p><span class="math display">\[
+f(x_1,x_2,\cdots,x_n)=a_{11}x_1^2+a_{12}x_1x_2+\cdots+a_{1n}x_1x_n+a_{21}x_2x_1+\cdots+a_{nn}x^2_n
+\]</span></p>
+<p>其可以表示为向量矩阵形式</p>
+<p><span class="math display">\[
+\sum^n_{i=1}\sum^n_{j=1}a_{ij}x_ix_j=\bm x^T A \bm x
+\]</span></p>
+<p>这个<span class="math inline">\(A\)</span>矩阵是个实对称矩阵，其元素<span class="math inline">\(a_{ij}=a_{ji}\)</span>，是对应的<span class="math inline">\(x_ix_j\)</span>项系数的一半（原式子出于简单起见没有把同类项合并）。</p>
+<h2 id="正定矩阵">正定矩阵</h2>
+<p>如果正定二次型<span class="math inline">\(f(\bm x)=\bm x^TA\bm
+x\)</span>，对于一组不全为零的数<span class="math inline">\(x_1,x_2,\cdots,x_n\)</span>，恒有<span class="math inline">\(f(x_1,x_2,\cdots,x_n)&gt;0\)</span>，则称<span class="math inline">\(f\)</span>正定，<span class="math inline">\(A\)</span>为正定矩阵。若换成<span class="math inline">\(\geq\)</span>，则称为半正定矩阵，若换成<span class="math inline">\(\leq\)</span>，则称为半负定矩阵。</p>
+<p>有两个判定定理</p>
+<ol type="1">
+<li><span class="math inline">\(A\)</span>正定的充要条件为<span class="math inline">\(A\)</span>的特征值都大于<span class="math inline">\(0\)</span></li>
+<li><span class="math inline">\(A\)</span>正定的充要条件为<span class="math inline">\(A\)</span>的所有顺序主子式都大于<span class="math inline">\(0\)</span></li>
+</ol>
+<h2 id="方向导数">方向导数</h2>
+<p>设<span class="math inline">\(f:R^n\to R\)</span>在点<span class="math inline">\(\bm x\)</span>处可微，<span class="math inline">\(\bm p\)</span>是固定不变的非零向量，<span class="math inline">\(\bm e\)</span>是方向<span class="math inline">\(\bm p\)</span>上的单位向量，则称极限</p>
+<p><span class="math display">\[
+\dfrac{\partial f(\bm x)}{\partial \bm p} = \lim_{t\to 0^+}\dfrac{f(\bm
+x+t\bm e)-f(\bm x)}{t}
+\]</span></p>
+<p>为函数<span class="math inline">\(f(x)\)</span>在点<span class="math inline">\(\bm x\)</span>处沿<span class="math inline">\(\bm
+p\)</span>方向的方向导数，记为<span class="math inline">\(\dfrac{\partial f(\bm x)}{\partial\bm
+p}\)</span>。当其大于零时，函数在该点沿此方向上升，小于零时沿此方向下降。</p>
+<h2 id="梯度">梯度</h2>
+<p>给定函数设<span class="math inline">\(f:R^n\to R\)</span>，且<span class="math inline">\(f\)</span>在点<span class="math inline">\(\bm
+x\)</span>的一个领域内有意义，若存在向量<span class="math inline">\(\bm
+g\in R^n\)</span>满足</p>
+<p><span class="math display">\[
+\lim_{\bm p\to \bm 0}\dfrac{f(\bm x+\bm p)-f(\bm x)-\bm g^T\bm p}{||\bm
+p||}=0
+\]</span></p>
+<p>其中这个范数可以是任意向量范数，就称<span class="math inline">\(f\)</span>在点<span class="math inline">\(\bm
+x\)</span>可微，此时<span class="math inline">\(\bm g\)</span>是<span class="math inline">\(f\)</span>在点<span class="math inline">\(\bm
+x\)</span>处的梯度，记作<span class="math inline">\(\nabla
+f(x)\)</span>。可以计算，若令<span class="math inline">\(\bm p=\epsilon
+\bm e_i\)</span>，<span class="math inline">\(\bm e_i\)</span>是第<span class="math inline">\(i\)</span>个分量为<span class="math inline">\(1\)</span>的单位向量，可知<span class="math inline">\(\nabla f(x)\)</span>的第<span class="math inline">\(i\)</span>个分量即为<span class="math inline">\(\dfrac{\partial f(x)}{\partial
+x_i}\)</span>。因此</p>
+<p><span class="math display">\[
+\nabla f(x) = \bigg[\dfrac{\partial f(x)}{\partial x_1},\dfrac{\partial
+f(x)}{\partial x_2},\cdots,\dfrac{\partial f(x)}{\partial x_n}\bigg]^T
+\]</span></p>
+<p>一个非常浅显的事实是，一维向量函数的梯度就是它的一阶导数。</p>
+<p>梯度方向是函数在该点上升的最快方向，反方向是最速下降方向。</p>
+<p>梯度与方向导数的关系为</p>
+<p><span class="math display">\[
+\dfrac{\partial f(\bm x)}{\partial \bm p}=\nabla f(\bm x)^T\bm e
+\]</span></p>
+<p>其中<span class="math inline">\(\bm e\)</span>是<span class="math inline">\(\bm p\)</span>方向上的单位向量。</p>
+<p><span class="math inline">\(\bigg|\dfrac{\partial f(\bm x)}{\partial
+\bm p}\bigg|\leq |\nabla f(\bm x)^T|\)</span></p>
+<p>梯度有几条显然的性质：</p>
+<ol type="1">
+<li>若<span class="math inline">\(\nabla f(\bm x)^T\bm
+p&lt;0\)</span>，则<span class="math inline">\(\bm
+p\)</span>的方向是函数<span class="math inline">\(f\)</span>在<span class="math inline">\(\bm x\)</span>处的下降方向</li>
+<li>若<span class="math inline">\(\nabla f(\bm x)^T\bm
+p&gt;0\)</span>，则<span class="math inline">\(\bm
+p\)</span>的方向是函数<span class="math inline">\(f\)</span>在<span class="math inline">\(\bm x\)</span>处的上升方向</li>
+<li>梯度正交的方向变化率为零</li>
+</ol>
+<h2 id="海瑟矩阵">海瑟矩阵</h2>
+<p>用一个简单的比方，梯度和海瑟矩阵的关系，就相当于一阶导数和二阶导数的关系。</p>
+<p>给定函数<span class="math inline">\(f:R^n\to
+R\)</span>，若其在点<span class="math inline">\(\bm
+x\)</span>处的二阶偏导数<span class="math inline">\(\dfrac{\partial^2
+f(\bm x)}{\partial \bm x_i\partial \bm
+x_j},i,j=1,2,\cdots,n\)</span>都存在，则</p>
+<p><span class="math display">\[
+\nabla^2f(\bm x) =
+\begin{bmatrix}
+\dfrac{\partial^2 f(\bm x)}{\partial x_1^2} &amp; \dfrac{\partial^2
+f(\bm x)}{\partial x_1\partial x_2} &amp; \dfrac{\partial^2 f(\bm
+x)}{\partial x_1\partial x_3} &amp; \cdots &amp; \dfrac{\partial^2 f(\bm
+x)}{\partial x_1\partial x_n}\\
+\dfrac{\partial^2 f(\bm x)}{\partial x_2\partial x_1} &amp;
+\dfrac{\partial^2 f(\bm x)}{\partial x_2^2} &amp; \dfrac{\partial^2
+f(\bm x)}{\partial x_2\partial x_3} &amp; \cdots &amp; \dfrac{\partial^2
+f(\bm x)}{\partial x_2\partial x_n}\\
+\vdots &amp; \vdots &amp; \vdots &amp;  &amp; \vdots\\
+\dfrac{\partial^2 f(\bm x)}{\partial x_n\partial x_1} &amp;
+\dfrac{\partial^2 f(\bm x)}{\partial x_n\partial x_2} &amp;
+\dfrac{\partial^2 f(\bm x)}{\partial x_n\partial x_3} &amp;  &amp;
+\dfrac{\partial^2 f(\bm x)}{\partial x_n^2}
+\end{bmatrix}
+\]</span></p>
+<p>称为<span class="math inline">\(f\)</span>在点<span class="math inline">\(x\)</span>处的海瑟矩阵。</p>
+<h2 id="泰勒展开">泰勒展开</h2>
+<p>给定函数<span class="math inline">\(f:R^n\to
+R\)</span>，具有二阶连续偏导数，则</p>
+<p><span class="math display">\[
+f(\bm x+\bm p) = f(\bm x) + \nabla f(\bm x)^T\bm p + \dfrac{1}{2}\bm
+p^T\nabla^2 f(\bm x)^T\bm p + o(||\bm p||^2)
+\]</span></p>
+<p>其中<span class="math inline">\(o(||p||^2)\)</span>当<span class="math inline">\(||p||^2\to 0\)</span>时，是关于<span class="math inline">\(||p||^2\)</span>的高阶无穷小量。</p>
+<h2 id="邻域">邻域</h2>
+<p>对于任意给定的实数<span class="math inline">\(\delta&gt;0\)</span>，满足不等式<span class="math inline">\(||\bm x-\bm x_0||&lt;\delta\)</span>的<span class="math inline">\(\bm x\)</span>的集合称为点<span class="math inline">\(\bm x_0\)</span>的邻域，记为</p>
+<p><span class="math display">\[
+N(\bm x_0,\delta) = \{\bm x|\ ||\bm x-\bm x_0||&lt;\delta,\delta&gt;0\}
+\]</span></p>
+<h2 id="极小点">极小点</h2>
+<p>设<span class="math inline">\(f:D\subseteq R^n\to
+R\)</span>，若存在点<span class="math inline">\(\bm x^*\in
+D\)</span>和数<span class="math inline">\(\delta&gt;0\)</span>，<span class="math inline">\(\forall \bm x\in N(\bm x^*,\delta)\cap
+D\)</span>，都有<span class="math inline">\(f(\bm x^*)\leq f(\bm
+x)\)</span>，则称<span class="math inline">\(\bm x^*\)</span>为<span class="math inline">\(f(\bm x)\)</span>的（非严格）局部极小点。</p>
+<p>设<span class="math inline">\(f:D\subseteq R^n\to
+R\)</span>，若存在点<span class="math inline">\(\bm x^*\in
+D\)</span>和数<span class="math inline">\(\delta&gt;0\)</span>，<span class="math inline">\(\forall \bm x\in N(\bm x^*,\delta)\cap
+D\)</span>，但<span class="math inline">\(\bm x\neq \bm
+x^*\)</span>，都有<span class="math inline">\(f(\bm x^*)&lt; f(\bm
+x)\)</span>，则称<span class="math inline">\(\bm x^*\)</span>为<span class="math inline">\(f(\bm x)\)</span>的严格局部极小点。</p>
+<p>设<span class="math inline">\(f:D\subseteq R^n\to
+R\)</span>，若存在点<span class="math inline">\(\bm x^*\in
+D\)</span>和数<span class="math inline">\(\delta&gt;0\)</span>，<span class="math inline">\(\forall \bm x\in D\)</span>，都有<span class="math inline">\(f(\bm x^*)\leq f(\bm x)\)</span>，则称<span class="math inline">\(\bm x^*\)</span>为<span class="math inline">\(f(\bm x)\)</span>的（非严格）全局极小点。</p>
+<p>设<span class="math inline">\(f:D\subseteq R^n\to
+R\)</span>，若存在点<span class="math inline">\(\bm x^*\in
+D\)</span>和数<span class="math inline">\(\delta&gt;0\)</span>，<span class="math inline">\(\forall \bm x\in D\)</span>，但<span class="math inline">\(\bm x\neq \bm x^*\)</span>，都有<span class="math inline">\(f(\bm x^*)\leq f(\bm x)\)</span>，则称<span class="math inline">\(\bm x^*\)</span>为<span class="math inline">\(f(\bm x)\)</span>的严格全局极小点。</p>
+<p>如果<span class="math inline">\(\bm x^*\)</span>是极小点并且是<span class="math inline">\(D\)</span>的内点，则<span class="math inline">\(\nabla f(\bm
+x^*)=0\)</span>。这是一个必要非充分条件。</p>
+<p>但如果<span class="math inline">\(f\)</span>有连续二阶偏导数，<span class="math inline">\(\bm x^*\)</span>是一个驻点，并且<span class="math inline">\(\nabla^2 f(\bm x^*)\)</span>是正定的，则<span class="math inline">\(\bm x^*\)</span>是<span class="math inline">\(f(\bm x)\)</span>的严格局部极小点。</p>
+<h2 id="驻点">驻点</h2>
+<p>设<span class="math inline">\(f:D\subseteq R^n\to R\)</span>，<span class="math inline">\(\bm x^*\)</span>是<span class="math inline">\(D\)</span>的内点，若<span class="math inline">\(\nabla f(\bm x^*)=0\)</span>，则称<span class="math inline">\(\bm x^*\)</span>为<span class="math inline">\(f(\bm x)\)</span>的驻点。</p>
+<h2 id="锥">锥</h2>
+<p>设集合<span class="math inline">\(C\subset R^n\)</span>，若对<span class="math inline">\(\forall\bm x\in C\)</span>以及<span class="math inline">\(\forall \lambda\geq 0\)</span>均有<span class="math inline">\(\lambda\bm x\in C\)</span>，则称<span class="math inline">\(C\)</span>为锥</p>
+<h2 id="凸组合">凸组合</h2>
+<p>设<span class="math inline">\(\bm x_1,\bm x_2,\cdots,\bm
+x_l\)</span>是<span class="math inline">\(R^n\)</span>中的<span class="math inline">\(l\)</span>个已知点。若对于某点<span class="math inline">\(\bm x\in R^n\)</span>，存在常数<span class="math inline">\(\lambda_1,\lambda_2,\cdots,\lambda_l\geq
+0\)</span>，且<span class="math inline">\(\sum\lambda_i=1\)</span>，使得<span class="math inline">\(\bm x=\sum\lambda_i\bm x_i\)</span>，则称<span class="math inline">\(\bm x\)</span>是<span class="math inline">\(\bm
+x_1,\bm x_2,\cdots,\bm x_l\)</span>的凸组合。如果<span class="math inline">\(\lambda_1,\lambda_2,\cdots,\lambda_l&gt;0\)</span>且<span class="math inline">\(\sum\lambda_i=1\)</span>，则称为严格凸组合。</p>
+<h2 id="凸集">凸集</h2>
+<p>对于<span class="math inline">\(C\subset
+R^n\)</span>中的任意两个点<span class="math inline">\(\bm x_1, \bm
+x_2\)</span>，如果连接两个点的线段在<span class="math inline">\(C\)</span>内，则称<span class="math inline">\(C\)</span>为凸集。即</p>
+<p><span class="math display">\[
+\bm x_1,\bm x_2\in C\Rightarrow\theta \bm x_1+(1-\theta)\bm x_2\in
+C,\forall 0\leq\theta\leq 1
+\]</span> <strong>定理1</strong></p>
+<p>任意一组凸集的交仍然是凸集。</p>
+<p>特别的，规定空集是凸集。容易验证，空间<span class="math inline">\(R^n\)</span>、半空间、超平面、直线、点、球都是凸集。</p>
+<p><strong>凸集分离定理</strong></p>
+<p>设<span class="math inline">\(C_1,C_2\)</span>是<span class="math inline">\(R^n\)</span>中两个非空的集合，<span class="math inline">\(H=\{\bm x|\bm p^T\bm
+x=\alpha\}\)</span>为超平面，如果对<span class="math inline">\(\forall\bm x\in C_1\)</span>都有<span class="math inline">\(\bm p^T\bm x\geq \alpha\)</span>，对<span class="math inline">\(\forall x\in C_2\)</span>都有<span class="math inline">\(\bm p^T\bm x\leq
+\alpha\)</span>（或二者正好相反），则称超平面<span class="math inline">\(H\)</span>分离集合<span class="math inline">\(C_1,C_2\)</span></p>
+<h2 id="半空间">半空间</h2>
+<p>设<span class="math inline">\(\bm a\in R^n,\bm a\neq\bm 0,b\in
+R\)</span>，则集合</p>
+<p><span class="math display">\[
+\{\bm x|\bm a^T\bm x&gt;b,\bm x\in R^n\}
+\]</span></p>
+<p>称为<span class="math inline">\(R^n\)</span>的半空间。</p>
+<p>有限个半空间的交<span class="math inline">\(\{\bm x|\bm A\bm x\leq
+\bm b\}\)</span>称为多面集，其中<span class="math inline">\(\bm
+A\)</span>为<span class="math inline">\(m\times n\)</span>矩阵，<span class="math inline">\(\bm b\)</span>为<span class="math inline">\(m\)</span>维向量。</p>
+<h2 id="凸函数">凸函数</h2>
+<p><strong>广义实值函数</strong></p>
+<p>令<span class="math inline">\(\bar
+R\xlongequal{\text{def}}R\cup\{\pm\infty\}\)</span>为广义实数空间，则映射<span class="math inline">\(f:R^n\to\bar R\)</span>为广义实值函数。</p>
+<p>规定<span class="math inline">\(-\infty&lt;a&lt;+\infty,\forall a\in
+R\)</span>，以及<span class="math inline">\((+\infty)+(+\infty)=+\infty,(+\infty)+a=+\infty,\forall
+a\in R\)</span></p>
+<p><strong>适当函数</strong></p>
+<p>给定广义实值函数<span class="math inline">\(f\)</span>和非空集合<span class="math inline">\(\mathcal{X}\)</span>，如果存在<span class="math inline">\(x\in\mathcal{X}\)</span>使得<span class="math inline">\(f(x)&lt;+\infty\)</span>，并且对任意的<span class="math inline">\(x\in\mathcal{X}\)</span>，都有<span class="math inline">\(f(x)&gt;-\infty\)</span>，那么称函数<span class="math inline">\(f\)</span>关于集合<span class="math inline">\(\mathcal{X}\)</span>是适当的。</p>
+<p><strong>凸函数</strong></p>
+<p>设函数<span class="math inline">\(f\)</span>为适当函数，如果<span class="math inline">\(\text{dom} f\)</span>是凸集，且</p>
+<p><span class="math display">\[
+f(\theta x+(1-\theta)y)\leq \theta f(x)+(1-\theta)f(y)
+\]</span></p>
+<p>对所有<span class="math inline">\(x,y\in\text{dom}f,0\leq\theta\leq
+1\)</span>都成立，则称<span class="math inline">\(f\)</span>是凸函数。</p>
+<p>如果<span class="math inline">\(f(\theta x+(1-\theta)y)&lt; \theta
+f(x)+(1-\theta)f(y)\)</span>，则称为严格凸函数。</p>
+<p><strong>性质1</strong></p>
+<p>设<span class="math inline">\(f_1,f_2\)</span>是凸集<span class="math inline">\(C\)</span>上的凸函数，则函数<span class="math inline">\(f_1+f_2\)</span>在<span class="math inline">\(S\)</span>上也是凸函数。</p>
+<p><strong>性质2</strong></p>
+<p>设<span class="math inline">\(f\)</span>是凸集<span class="math inline">\(C\)</span>上的凸函数，则对任意的<span class="math inline">\(a\geq 0\)</span>，函数<span class="math inline">\(af\)</span>也是凸函数。</p>
+<h2 id="凸函数判定">凸函数判定</h2>
+<p><span class="math inline">\(f\)</span>是凸函数，当且仅当对任意的<span class="math inline">\(x\in\text{dom}f,v\in R^n,g:R\to R\)</span></p>
+<p><span class="math display">\[
+g(t)=f(x+tv),\text{dom} g = \{t|x+tv\in\text{dom} f\}
+\]</span></p>
+<p>是凸函数。</p>
+<p><strong>一阶条件</strong></p>
+<p>对于定义在凸集上的可微函数<span class="math inline">\(f\)</span>，<span class="math inline">\(f\)</span>是凸函数当且仅当</p>
+<p><span class="math display">\[
+f(y)\geq f(x)+\nabla f(x)^T(y-x),\forall x,y\in\text{dom}f
+\]</span></p>
+<p>严格凸函数则要求<span class="math inline">\(&gt;\)</span>号。物理意义是：任意点处的切线增量不超过函数的增量。</p>
+<p><strong>梯度单调性</strong></p>
+<p>设<span class="math inline">\(f\)</span>为可微函数，则<span class="math inline">\(f\)</span>为凸函数当且仅当<span class="math inline">\(\text{dom}f\)</span>为凸集且<span class="math inline">\(\nabla f\)</span>为单调映射，即</p>
+<p><span class="math display">\[
+(\nabla f(x)-\nabla f(y))^T(x-y)\geq 0,\forall x,y\in\text{dom}f
+\]</span></p>
+<p><strong>二阶条件</strong></p>
+<p>设<span class="math inline">\(f\)</span>为定义在凸集上的二阶连续可微函数，则<span class="math inline">\(f\)</span>是凸函数当且仅当</p>
+<p><span class="math display">\[
+\nabla^2 f(x)\succeq 0,\forall x\in\text{dom}f
+\]</span></p>
+<p>如果<span class="math inline">\(\succ\)</span>，则是严格凸函数。</p>
+<p>或者，凸函数的充要条件是<span class="math inline">\(\nabla^2
+f(x)\)</span>在<span class="math inline">\(\text{dom}f\)</span>上的任意点均半正定。</p>
+<h1 id="线性规划">线性规划</h1>
+<h2 id="图解法">图解法</h2>
+<ol type="1">
+<li>确定可行域</li>
+<li>确定目标函数的等值线及优化方向</li>
+<li>平行移动目标函数等值线，通过观察得到线性规划的最优解</li>
+</ol>
+<p>高中已经学过很多次这个东西了，不再详细介绍。</p>
+<p>注意到，图解法只适用于有两个变量的情况，更高维的情况下，要用单纯形法。</p>
+<h2 id="一般形式">一般形式</h2>
+<p>一般形式如下</p>
+<p><span class="math display">\[
+\min f(x_1+x_2+\cdots+x_n) = c_1x_1+c_2x_2+\cdots+c_nx_n
+\]</span></p>
+<p><span class="math display">\[
+s.t.
+\left\{\begin{matrix}
+a_{11}x_1+a_{12}x_2+\cdots+a_{1n}x_n = b_1\\
+a_{21}x_1+a_{22}x_2+\cdots+a_{2n}x_n = b_2 \\
+\vdots \\
+a_{m1}x_1+a_{m2}x_2+\cdots+a_{mn}x_n = b_m\\
+x_1,x_2,\cdots,x_n\geq 0
+\end{matrix}\right.
+\]</span></p>
+<p>一共包含<span class="math inline">\(n\)</span>个决策变量，<span class="math inline">\(m\)</span>个约束条件。其中对目标函数既可以求最大也可以求最小，约束条件可以是<span class="math inline">\(=,\leq,\geq\)</span>。决策变量<span class="math inline">\(x_i\)</span>通常非负，也有其他情况。<span class="math inline">\(c_j\)</span>称为价值系数，<span class="math inline">\(b_j\)</span>称为资源系数，<span class="math inline">\(a_{ij}\)</span>称为约束系数、技术系数。</p>
+<p>利用矩阵，可以写作</p>
+<p><span class="math display">\[
+\min f(x) = Cx
+\]</span></p>
+<p><span class="math display">\[
+s.t.
+\left\{\begin{matrix}
+Ax=b\\
+x\geq 0
+\end{matrix}\right.
+\]</span></p>
+<h2 id="标准形式">标准形式</h2>
+<p>标准形式有四个特征</p>
+<ol type="1">
+<li>目标函数求<span class="math inline">\(\min\)</span></li>
+<li>约束条件两端用<span class="math inline">\(=\)</span>连接</li>
+<li>所有<span class="math inline">\(b_i\)</span>非负</li>
+<li>所有<span class="math inline">\(x_i\)</span>非负</li>
+</ol>
+<p>接下来介绍如何转换其他形式到标准形式（注意按顺序来）</p>
+<p><strong>目标函数求最小值</strong></p>
+<p>例如<span class="math inline">\(\min
+z=x_1-2x_2+3x_3\)</span>，等价于<span class="math inline">\(\max
+z&#39;=-x_1+2x_2-3x_3\)</span>，其中<span class="math inline">\(z&#39;=-z\)</span></p>
+<p><strong>约束函数求最小值</strong></p>
+<ol type="1">
+<li>例如<span class="math inline">\(-2x_1+6x_2-x_3\leq3\)</span>，将其转化为</li>
+</ol>
+<p><span class="math display">\[
+-2x_1+6x_2-x_3+x_s=3
+\]</span></p>
+<p><span class="math inline">\(x_s\)</span>表示决策中尚未使用的那部分资源，所以称之为松弛变量。<span class="math inline">\(x_s\geq 0\)</span></p>
+<ol start="2" type="1">
+<li>例如<span class="math inline">\(-2x_1+6x_2-x_3\ge3\)</span>，将其转化为</li>
+</ol>
+<p><span class="math display">\[
+-2x_1+6x_2-x_3-x_s=3
+\]</span></p>
+<p><span class="math inline">\(x_s\)</span>表示决策中超过了实际需要的部分，影次常称它为剩余变量。<span class="math inline">\(x_s\geq 0\)</span></p>
+<p>由上可见，既把函数从不等式转变成了等式，并且新添加的变量也是非负的，也不影响原来的目标函数。统一整个计算过程。</p>
+<p><strong><span class="math inline">\(b_i\)</span>非负</strong></p>
+<p>这个只需要将约束条件两端取反即可。</p>
+<p><strong><span class="math inline">\(x_i\)</span>非负</strong></p>
+<ol type="1">
+<li>若<span class="math inline">\(x_i\leq 0\)</span>，则令<span class="math inline">\(x&#39;_i=-x_i\)</span>，此时<span class="math inline">\(x&#39;_i\geq 0\)</span></li>
+<li>若<span class="math inline">\(x_i\)</span>无约束，则令<span class="math inline">\(x_i =
+x_i&#39;-x_i&#39;&#39;,x_i&#39;\geq0,x_i&#39;&#39;\geq0\)</span></li>
+</ol>
+<p>注意这里的变换要把变换也代入目标函数中</p>
+<h2 id="线性规划解的基本性质">线性规划解的基本性质</h2>
+<p>对于线性规划问题来说，可行解实际上是由约束条件构成的线性方程组的解。并且还满足非负约束条件，即决策变量都取非负值。</p>
+<p>我们假定线性规划问题的系数矩阵<span class="math inline">\(A\)</span>的秩总等于其行数，<span class="math inline">\(rank(A)=m\)</span>。这意味着系数矩阵<span class="math inline">\(A\)</span>的各行是线性无关的，这也表明约束方程中的各个方程是相互独立的。</p>
+<p>由于<span class="math inline">\(A\)</span>的秩为<span class="math inline">\(m\)</span>，所以其必有一个<span class="math inline">\(m\times m\)</span>的子矩阵为<span class="math inline">\(B\)</span>，其行列式不为零。</p>
+<p>我们将<span class="math inline">\(A\)</span>的任意一个这样的子矩阵<span class="math inline">\(B\)</span>称为线性规划问题的一个基。</p>
+<p>显然<span class="math inline">\(B=[p_1,p_2,\cdots,p_m]\)</span>，其中的每一个为基向量，与基向量对应的变量<span class="math inline">\(x_j\)</span>称为基变量，<span class="math inline">\(x_B =
+[x_1,x_2,\cdots,x_m]^T\)</span>，其余称为非基变量，<span class="math inline">\(x_N=[x_{m+1},x_{m+2},\cdots,x_n]^T\)</span>。</p>
+<p>可以得到一个解<span class="math inline">\(x=[x_B^T,x_N^T]^T=[x_1,x_2,\cdots,x_m,0,\cdots,0]^T\)</span></p>
+<p>称<span class="math inline">\(x\)</span>为该约束方程的基解，其中<span class="math inline">\(x_b=B^{-1}b\)</span></p>
+<p>对于满足非负约束条件的<span class="math inline">\(x\geq
+0\)</span>（所有分量都大于等于<span class="math inline">\(0\)</span>）的基解称为可行解，对应的基称为可行基。</p>
+<p>基可行解的非零分量个数小于<span class="math inline">\(m\)</span>时，称为退化解。也就是说，不是所有基解都是可行解。</p>
+<p><strong>定理1</strong></p>
+<p>线性规划问题的基可行解是其可行域的顶点。</p>
+<p><strong>定理2</strong></p>
+<p>若可行域有界，线性规划问题的目标函数则一定在其可行域的极点上达到最优。</p>
+<h2 id="单纯形法">单纯形法</h2>
+<p>前面提到，可行解一定在凸集的顶点上，但是，这个顶点的数量很可能非常大。单纯形法就是在这些顶点中优化的算法</p>
+<p>基本思路</p>
+<ol type="1">
+<li>首先将线性规划问题化成标准形式</li>
+<li>求出初始基本可行解</li>
+<li>判断其是否为最优解</li>
+<li>如果不是最优，则迭代到其相邻的基本可行解，并再次检验</li>
+</ol>
+<p>单纯形法把寻优的目标集中在所有基本可行解（即可行域顶点）中。从一个初始的基本可行解出发，寻找一条达到最优基本可行解的最佳路径。</p>
+
+
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/%E5%A4%A7%E5%AD%A6/">大学</a>
+        
+            <a href="/tags/%E6%95%B0%E5%AD%A6/">数学</a>
+        
+            <a href="/tags/%E6%9C%80%E4%BC%98%E5%8C%96/">最优化</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css"integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js"integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8"crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js"integrity="sha384-vZTG03m&#43;2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl"crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.querySelector(`.article-content`), {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ]
+        });})
+</script>
+    
+</article>
+
+    <aside class="related-contents--wrapper">
+    
+    
+        <h2 class="section-title">相关文章</h2>
+        <div class="related-contents">
+            <div class="flex article-list--tile">
+                
+                    
+<article class="">
+    <a href="/p/%E5%A4%8D%E5%8F%98%E5%87%BD%E6%95%B0%E6%95%B4%E7%90%86/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">复变函数整理</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/p/%E6%A6%82%E7%8E%87%E8%AE%BA%E4%B8%8E%E6%95%B0%E7%90%86%E7%BB%9F%E8%AE%A1%E6%95%B4%E7%90%86/">
+        
+        
+            <div class="article-image">
+                <img src="/p/%E6%A6%82%E7%8E%87%E8%AE%BA%E4%B8%8E%E6%95%B0%E7%90%86%E7%BB%9F%E8%AE%A1%E6%95%B4%E7%90%86/cover.8fa55b693c3d793670200f41ff6f26bf_hu60f44b771e1522f4fa1d5246713b9a75_57927_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-j6VbaTw9eTZwIA9B/28mvw==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">概率论与数理统计整理</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/p/%E7%A6%BB%E6%95%A3%E6%95%B0%E5%AD%A6%E6%95%B4%E7%90%86/">
+        
+        
+            <div class="article-image">
+                <img src="/p/%E7%A6%BB%E6%95%A3%E6%95%B0%E5%AD%A6%E6%95%B4%E7%90%86/cover.8058b9da40e37eadf1c7ce2ecf305e93_huf80a3777f066c3f01437aeed10211fe1_29240_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-gFi52kDjfq3xx84uzzBekw==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">离散数学整理</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/p/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0%E6%95%B4%E7%90%86/">
+        
+        
+            <div class="article-image">
+                <img src="/p/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0%E6%95%B4%E7%90%86/cover.393667604ec380a7df6254826bbb2062_hu670730d9bdf70a44294ca8d2a00a2ced_185066_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-OTZnYE7DgKffYlSCa7sgYg==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">线性代数整理</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/p/%E6%88%91%E7%9A%84%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E4%B8%8B%E5%86%8C%E8%B5%84%E6%96%99%E6%95%B4%E7%90%86/">
+        
+        
+            <div class="article-image">
+                <img src="/p/%E6%88%91%E7%9A%84%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E4%B8%8B%E5%86%8C%E8%B5%84%E6%96%99%E6%95%B4%E7%90%86/8-51.eb2fd26757434998c74bb25f2a91edc6_hu1c49316b400cd781c785bbdbc8d18c16_11689_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-6y/SZ1dDSZjHS7JfKpHtxg==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">我的高等数学下册资料整理</h2>
+        </div>
+    </a>
+</article>
+                
+            </div>
+        </div>
+    
+</aside>
+
+     
+    
+        
+    <script src="https://utteranc.es/client.js" 
+        repo="kegalas/blogComments"
+        issue-term="pathname"
+        
+        crossorigin="anonymous"
+        async
+        >
+</script>
+
+<style>
+    .utterances {
+        max-width: unset;
+    }
+</style>
+
+<script>
+    function setUtterancesTheme(theme) {
+        let utterances = document.querySelector('.utterances iframe');
+        if (utterances) {
+            utterances.contentWindow.postMessage(
+                {
+                    type: 'set-theme',
+                    theme: `github-${theme}`
+                },
+                'https://utteranc.es'
+            );
+        }
+    }
+
+    addEventListener('message', event => {
+        if (event.origin !== 'https://utteranc.es') return;
+        setUtterancesTheme(document.documentElement.dataset.scheme)
+    });
+
+    window.addEventListener('onColorSchemeChange', (e) => {
+        setUtterancesTheme(e.detail)
+    })
+</script>
+
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2023 KegalaS的个人博客
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.4.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    
+        <aside class="sidebar right-sidebar sticky">
+            <section class="widget archives">
+                <div class="widget-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+                </div>
+                <h2 class="widget-title section-title">目录</h2>
+                
+                <div class="widget--toc">
+                    <nav id="TableOfContents">
+  <ol>
+    <li><a href="#读前警示">读前警示</a></li>
+    <li><a href="#数学基础概念定义">数学基础概念、定义</a>
+      <ol>
+        <li><a href="#向量内积">向量内积</a></li>
+        <li><a href="#向量范数">向量范数</a></li>
+        <li><a href="#二次型">二次型</a></li>
+        <li><a href="#正定矩阵">正定矩阵</a></li>
+        <li><a href="#方向导数">方向导数</a></li>
+        <li><a href="#梯度">梯度</a></li>
+        <li><a href="#海瑟矩阵">海瑟矩阵</a></li>
+        <li><a href="#泰勒展开">泰勒展开</a></li>
+        <li><a href="#邻域">邻域</a></li>
+        <li><a href="#极小点">极小点</a></li>
+        <li><a href="#驻点">驻点</a></li>
+        <li><a href="#锥">锥</a></li>
+        <li><a href="#凸组合">凸组合</a></li>
+        <li><a href="#凸集">凸集</a></li>
+        <li><a href="#半空间">半空间</a></li>
+        <li><a href="#凸函数">凸函数</a></li>
+        <li><a href="#凸函数判定">凸函数判定</a></li>
+      </ol>
+    </li>
+    <li><a href="#线性规划">线性规划</a>
+      <ol>
+        <li><a href="#图解法">图解法</a></li>
+        <li><a href="#一般形式">一般形式</a></li>
+        <li><a href="#标准形式">标准形式</a></li>
+        <li><a href="#线性规划解的基本性质">线性规划解的基本性质</a></li>
+        <li><a href="#单纯形法">单纯形法</a></li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+                </div>
+            </section>
+        </aside>
+    
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                defer="false"
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
