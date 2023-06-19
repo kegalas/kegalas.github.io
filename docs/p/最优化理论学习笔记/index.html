@@ -125,7 +125,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 13 分钟
+                    阅读时长: 25 分钟
                 </time>
             </div>
         
@@ -408,7 +408,7 @@ x_1,x_2,\cdots,x_n\geq 0
 <p>一共包含<span class="math inline">\(n\)</span>个决策变量，<span class="math inline">\(m\)</span>个约束条件。其中对目标函数既可以求最大也可以求最小，约束条件可以是<span class="math inline">\(=,\leq,\geq\)</span>。决策变量<span class="math inline">\(x_i\)</span>通常非负，也有其他情况。<span class="math inline">\(c_j\)</span>称为价值系数，<span class="math inline">\(b_j\)</span>称为资源系数，<span class="math inline">\(a_{ij}\)</span>称为约束系数、技术系数。</p>
 <p>利用矩阵，可以写作</p>
 <p><span class="math display">\[
-\min f(x) = Cx
+\min f(x) = c^Tx
 \]</span></p>
 <p><span class="math display">\[
 s.t.
@@ -481,6 +481,438 @@ x_i&#39;-x_i&#39;&#39;,x_i&#39;\geq0,x_i&#39;&#39;\geq0\)</span></li>
 <li>如果不是最优，则迭代到其相邻的基本可行解，并再次检验</li>
 </ol>
 <p>单纯形法把寻优的目标集中在所有基本可行解（即可行域顶点）中。从一个初始的基本可行解出发，寻找一条达到最优基本可行解的最佳路径。</p>
+<h3 id="确定初始基本可行解">确定初始基本可行解</h3>
+<p>确定初始的基本可行解等价于确定初始的可行基，一旦初始的可行基确定了，那么对应的初始基本可行解也就唯一确定.</p>
+<p>方便起见，不妨设<span class="math inline">\(A\)</span>中的千<span class="math inline">\(m\)</span>个系数列向量恰好构成一个可行基，即<span class="math inline">\(A=(B|N)\)</span></p>
+<p>其中<span class="math inline">\(B=[p_1,p_2,\cdots,p_m]\)</span>为基变量<span class="math inline">\(x_1,x_2,\cdots,x_m\)</span>的系数列向量构成的可行基。</p>
+<p><span class="math inline">\(N =
+[p_{m+1},p_{m+2},\cdots,p_n]\)</span>为非基变量<span class="math inline">\(x_{m+1},x_{m+2},\cdots,x_n\)</span>的系数列向量构成的矩阵。</p>
+<p>即原始问题为</p>
+<p><span class="math display">\[
+\min z = c^Tx
+\]</span></p>
+<p><span class="math display">\[
+s.t.\left\{\begin{matrix}
+Ax=b \\
+x\geq 0
+\end{matrix}\right.
+\]</span></p>
+<p>化为</p>
+<p><span class="math display">\[
+\min z = [c_B^T,c_N^T][x_B^T,x_N^T]^T
+\]</span></p>
+<p><span class="math display">\[
+s.t.\left\{\begin{matrix}
+[B,N][x_B^T,x_N^T]^T=b \\
+x_B,x_N\geq 0
+\end{matrix}\right.
+\]</span></p>
+<p>乘法后得</p>
+<p><span class="math display">\[
+\min z = c_B^Tx_B+c_N^Tx_N
+\]</span></p>
+<p><span class="math display">\[
+s.t.\left\{\begin{matrix}
+Bx_B+Nx_N=b \\
+x_B,x_N\geq 0
+\end{matrix}\right.
+\]</span></p>
+<p>计算出<span class="math inline">\(x_B =
+B^{-1}b-B^{-1}Nx_N\)</span>，代入目标函数中，得到</p>
+<p><span class="math display">\[
+\min z = c_B^TB^{-1}b-(c_B^TB^{-1}N-c_N^T)x_N
+\]</span></p>
+<p><span class="math display">\[
+s.t.\left\{\begin{matrix}
+x_B = B^{-1}b-B^{-1}Nx_N \\
+x_B,x_N\geq 0
+\end{matrix}\right.
+\]</span></p>
+<p>令<span class="math inline">\(x_N=\bm 0\)</span>，则<span class="math inline">\(x_B=B^{-1}b\)</span></p>
+<p>所以初始的基本可行解为<span class="math inline">\(x=[x_B^T,0]^T\)</span></p>
+<h3 id="判断现行的基本可行解是否最优">判断现行的基本可行解是否最优</h3>
+<p>假如求得一个基本可行解为<span class="math inline">\(x=[x_B^T,0]^T\)</span>，那么</p>
+<p><span class="math display">\[
+z = cx = [c_B^T,c_N^T][(B^{-1}b)^T,0]^T=c_B^TB^{-1}b
+\]</span></p>
+<p>如果检验向量<span class="math inline">\(\sigma_N\)</span>满足</p>
+<p><span class="math display">\[
+\sigma_N^T = c_N^T - c_B^TB^{-1}N\geq 0
+\]</span></p>
+<p>这个基本可行解就是最优解。检验向量的各个分量称为检验数。上面的<span class="math inline">\(\geq0\)</span>是指每个分量都<span class="math inline">\(\geq 0\)</span></p>
+<p><strong>特殊情况1</strong></p>
+<p>如果<span class="math inline">\(\sigma_N^T\geq
+0\)</span>，其中存在一个检验数<span class="math inline">\(\sigma_{m+k}=0\)</span>，则线性规划问题有无穷多最优解</p>
+<p><strong>特殊情况2</strong></p>
+<p><span class="math inline">\(\sigma_N^T\)</span>，其中存在一个检验数<span class="math inline">\(\sigma_{m+k}&lt;0\)</span>，且该检验数所对应的非基变量的系数列向量的全部系数都为负数或零，则线性规划问题无有界最优解。</p>
+<h3 id="基本可行解的改进基变换">基本可行解的改进——基变换</h3>
+<p>如果现行的基本可行解<span class="math inline">\(x\)</span>不是最优解，即在检验向量<span class="math inline">\(σ_N^T=c_N^T－c_B^TB^{-1}N\)</span>中存在负的检验数，则需在原基本可行解<span class="math inline">\(x\)</span>的基础上寻找一个新的基本可行解，并使目标函数值有所改善。</p>
+<p>具体做法是：</p>
+<ol type="1">
+<li>先从检验数为负的非基变量中确定一个换入变量，使它从非基变量变成基变量，</li>
+<li>再从原来的基变量中确定一个换出变量，使它从基变量变成非基变量。由此得到一个新的基本可行解。</li>
+</ol>
+<p><strong>换入变量的确定-最大减小原则</strong></p>
+<p>假设检验向量<span class="math inline">\(\sigma_N^T =
+c_N^T-c_B^TB^{-1}N =
+[\sigma_{m+1},\sigma_{m+2},\cdots,\sigma_n]\)</span>。若其中有两个以上的检验数为负，那么为了使目标函数值下降最快，就要选取最小负检验数所对应的非基变量为换入变量。</p>
+<p>即若<span class="math inline">\(\sigma_{m+k}\)</span>是最小的，那么就要把<span class="math inline">\(x_{m+k}\)</span>换入。</p>
+<p><strong>换出变量的确定-最小比值原则</strong></p>
+<p>如果确定<span class="math inline">\(x_{m+k}\)</span>为换入变量，方程<span class="math inline">\(x_B = B^{-1}b-B^{-1}Nx_N\Rightarrow x_B =
+B^{-1}b-B^{-1}p_{m+k}x_{m+k}\)</span></p>
+<p>其中<span class="math inline">\(p_{m+k}\)</span>为<span class="math inline">\(A\)</span>中与<span class="math inline">\(x_{m+k}\)</span>对应的系数列向量。我们要在<span class="math inline">\(x_B =
+(x_1,x_2,\cdots,x_m)^T\)</span>中确定一个基变量为换出变量，可以按最小比值原则确定换出变量。</p>
+<p><span class="math display">\[
+\theta =
+\min\bigg\{\dfrac{(B^{-1}b)_i}{(B^{-1}p_{m+k})_i}\bigg|(B^{-1}p_{m+k})_i&gt;0,1\leq
+i\leq m\bigg\} = \dfrac{(B^{-1}b)_l}{(B^{-1}p_{m+k})_l}
+\]</span></p>
+<p>则选择对应的<span class="math inline">\(x_l\)</span>作为换出变量。这里的角标是因为<span class="math inline">\(B^{-1}b\)</span>和<span class="math inline">\(B^{-1}p_{m+k}\)</span>都是<span class="math inline">\(m\)</span>维向量。</p>
+<h3 id="用初等变换求改进了的基本可行解旋转运算">用初等变换求改进了的基本可行解——旋转运算</h3>
+<p>假设<span class="math inline">\(B\)</span>是可行基，则</p>
+<p><span class="math display">\[
+Ax = b\Rightarrow[B,N][x_B^T,x_N^T]^T = b\Rightarrow
+[I,B^{-1}N][x_B^T,x_N^T]^T = B^{-1}b
+\]</span></p>
+<p>令非基变量<span class="math inline">\(x_N=\bm
+0\)</span>，则基变量<span class="math inline">\(x_B =
+B^{-1}b\)</span>，基本可行解为<span class="math inline">\(x=[(B^{-1}b)^T,0]^T\)</span></p>
+<p>用逆阵<span class="math inline">\(B^{-1}\)</span>左乘约束方程组的两端，等价于对方程组施以一系列的初等“行变换”。变换的结果是将系数矩阵<span class="math inline">\(A\)</span>中的可行基<span class="math inline">\(B\)</span>变换成单位矩阵<span class="math inline">\(I\)</span>，把非基变量系数列向量构成的矩阵<span class="math inline">\(N\)</span>变换成<span class="math inline">\(B^{-1}N\)</span>，把向量<span class="math inline">\(b\)</span>变换成<span class="math inline">\(B^{-1}b\)</span></p>
+<p>变换前后的方程组同解。</p>
+<p>且改进了的基本可行解<span class="math inline">\(X&#39;\)</span>只是在<span class="math inline">\(X\)</span>的基变量的基础上用一个换入变量替代其中一个换出变量，其它的基变量仍然保持不变。这些基变量的系数列向量是单位矩阵<span class="math inline">\(I\)</span>中的单位向量。为了求得改进的基本可行解<span class="math inline">\(X&#39;\)</span>，只需对增广矩阵</p>
+<p><span class="math display">\[
+[I,B^{-1}N,B^{-1}b]
+\]</span></p>
+<p>施行初等行变换，将换入变量的系数列向量变换成换出变量所对应的单位向量即可。</p>
+<h3 id="表格单纯形法">表格单纯形法</h3>
+<figure>
+<img src="1.jpg" alt="1.jpg"/>
+<figcaption aria-hidden="true">1.jpg</figcaption>
+</figure>
+<h2 id="对偶问题原理">对偶问题原理</h2>
+<p>假设全是列向量。</p>
+<p>设原问题<span class="math inline">\(P\)</span>为</p>
+<p><span class="math display">\[
+\min f(x) = c^Tx
+\]</span></p>
+<p><span class="math display">\[
+s.t.
+\left\{\begin{matrix}
+Ax\geq b\\
+x\geq 0
+\end{matrix}\right.
+\]</span></p>
+<p>则其对偶问题<span class="math inline">\(D\)</span>为</p>
+<p><span class="math display">\[
+\max g(y) = b^Ty
+\]</span></p>
+<p><span class="math display">\[
+s.t.
+\left\{\begin{matrix}
+A^Ty\leq c\\
+y\geq 0
+\end{matrix}\right.
+\]</span></p>
+<h3 id="对偶关系表">对偶关系表</h3>
+<figure>
+<img src="2.jpg" alt="2.jpg"/>
+<figcaption aria-hidden="true">2.jpg</figcaption>
+</figure>
+<h3 id="对偶关系定理">对偶关系定理</h3>
+<p><strong>弱对偶定理</strong></p>
+<p>对偶问题(max)的任何可行解<span class="math inline">\(Y^*\)</span>，其目标函数值总是不大于原问题(min)任何可行解<span class="math inline">\(X^*\)</span>的目标函数值。</p>
+<p><strong>对偶定理</strong></p>
+<p>假如原问题或对偶问题之一具有有限的最优解，则另一问题也具有有限的最优解，且两者响应的目标函数值相等。假如一个问题的目标函数值是无界的，则另一问题没有可行解。</p>
+<p><strong>互补松弛定理</strong></p>
+<p>假设<span class="math inline">\(X^*,Y^*\)</span>分别是原问题和对偶问题的可行解，<span class="math inline">\(U^*\)</span>是原问题剩余变量的值，<span class="math inline">\(V^*\)</span>是对偶问题松弛变量的值，则<span class="math inline">\(X^*,Y^*\)</span>分别为原问题和对偶问题的最优解的充要条件是</p>
+<p><span class="math display">\[
+X^*V^*+Y^*U^* = 0
+\]</span></p>
+<p>这个定理还表述为如下两个形式</p>
+<ol type="1">
+<li>假如一个问题的某个变量取正数，则相应问题的另外一个约束条件必取等式</li>
+<li>一个问题中的约束条件取不等式，则相应于另一个问题中的变量为零</li>
+</ol>
+<p>说起来有些抽象，做题理解。</p>
+<h1 id="一维搜索法">一维搜索法</h1>
+<h2 id="概念">概念</h2>
+<p>对于一维无约束优化问题</p>
+<p><span class="math display">\[
+\min f(\alpha)
+\]</span></p>
+<p>求解极小点和极小值的数值迭代方法即为一维搜索方法。</p>
+<p>极小点的必要条件和充分条件见前。注意我们可以用充分条件求解最小值，但是并不是所有情况都能使用，比如函数不一定二阶可微。所以我们常使用迭代法。</p>
+<h2 id="基本步骤">基本步骤</h2>
+<ol type="1">
+<li>确定搜索区间<span class="math inline">\([a,b]\)</span></li>
+<li>在区间内寻找最小点</li>
+</ol>
+<p>优化算法的基本迭代公式为：</p>
+<p><span class="math display">\[
+x^{k+1} = x^{k} + \alpha^kd^k
+\]</span></p>
+<p>其中<span class="math inline">\(\alpha^k\)</span>为搜索步长，<span class="math inline">\(d^k\)</span>为搜索方向。<span class="math inline">\(x^0\)</span>为人工给出的初始估计。</p>
+<h2 id="终止条件">终止条件</h2>
+<p><strong>两次迭代的绝对误差</strong></p>
+<p><span class="math display">\[
+|f(x^{k+1})-f(x^k)|&lt;\varepsilon,\quad ||x^{k+1}-x^k||&lt;\varepsilon
+\]</span></p>
+<p><strong>两次迭代的相对误差</strong></p>
+<p><span class="math display">\[
+\dfrac{|f(x^{k+1})-f(x^k)|}{|f(x^k)|}&lt;\varepsilon,\quad
+\dfrac{||x^{k+1}-x^k||}{||x^k||}&lt;\varepsilon
+\]</span></p>
+<p><strong>目标函数梯度的模足够小</strong></p>
+<p><span class="math display">\[
+||\nabla f(x^k)||&lt;\varepsilon
+\]</span></p>
+<h2 id="搜索区间的确定">搜索区间的确定</h2>
+<h3 id="单谷峰函数">单谷（峰）函数</h3>
+<p>我们选取的区间使得函数是单股（峰的），这样我们有以下定理（单谷为例）</p>
+<p>设<span class="math inline">\(f(x)\)</span>在<span class="math inline">\([a,b]\)</span>上单谷，<span class="math inline">\(x^*\in[a,b]\)</span>是其极小点，<span class="math inline">\(x_1&lt;x_2\)</span>是<span class="math inline">\([a,b]\)</span>上任意两点。则：</p>
+<ul>
+<li>若<span class="math inline">\(f(x_1)\geq f(x_2)\)</span>，则<span class="math inline">\(x^*\in[x_1,b]\)</span></li>
+<li>否则<span class="math inline">\(x^*[a,x_2]*\)</span></li>
+</ul>
+<h3 id="进退算法成功-失败法">进退算法（成功-失败法）</h3>
+<p>求取区间。</p>
+<ol type="1">
+<li>选取初始点<span class="math inline">\(a\)</span>和步长<span class="math inline">\(h\)</span></li>
+<li>计算并比较<span class="math inline">\(f(a),f(a+h)\)</span>。</li>
+</ol>
+<p>若<span class="math inline">\(f(a)\geq
+f(a+h)\)</span>，则步长加倍，计算<span class="math inline">\(f(a+3h)\)</span>。若<span class="math inline">\(f(a+h)\leq f(a+3h)\)</span>，则令<span class="math inline">\(a_1=a,a_2=a+3h\)</span>，停止运算；否则步长加倍，并重复以上（计算<span class="math inline">\(a+3h\)</span>和<span class="math inline">\(a+7h\)</span>）。</p>
+<p>若<span class="math inline">\(f(a)&lt;
+f(a+h)\)</span>，则步长变为<span class="math inline">\(-h\)</span>，计算<span class="math inline">\(f(a-h)\)</span>。若<span class="math inline">\(f(a-h)\geq f(a)\)</span>，则令<span class="math inline">\(a_1=a-h,a_2=a+h\)</span>，停止运算；否则步长加倍，继续后退（计算<span class="math inline">\(a-h\)</span>和<span class="math inline">\(a-3h\)</span>）。</p>
+<h2 id="二分法">二分法</h2>
+<p>已知区间<span class="math inline">\([a,b]\)</span>，且<span class="math inline">\(f(x)\)</span>在其中可微，求极小点</p>
+<ol type="1">
+<li>计算<span class="math inline">\(x_0=\dfrac{a+b}{2}\)</span></li>
+<li>若<span class="math inline">\(f&#39;(x_0)&lt;0\)</span>，令<span class="math inline">\(a = x_0\)</span>，转步骤<span class="math inline">\(3\)</span>。若<span class="math inline">\(f&#39;(x_0)&gt;0\)</span>，令<span class="math inline">\(b = x_0\)</span>，转步骤<span class="math inline">\(3\)</span>。若<span class="math inline">\(f&#39;(x_0)=0\)</span>，停止，<span class="math inline">\(x^*=x_0\)</span>。</li>
+<li>若<span class="math inline">\(|b-a|&lt;\varepsilon\)</span>，则<span class="math inline">\(x^*=\dfrac{a+b}{2}\)</span>，停止，否则转步骤<span class="math inline">\(1\)</span></li>
+</ol>
+<p><strong>优点</strong></p>
+<p>计算量少，而且总能收敛到一个局部极小点</p>
+<p><strong>缺点</strong></p>
+<p>收敛速度慢</p>
+<h2 id="牛顿切线法">牛顿切线法</h2>
+<ol type="1">
+<li>给定初始点<span class="math inline">\(x_0,\varepsilon&gt;0,k=0\)</span></li>
+<li>计算<span class="math inline">\(f&#39;(x_k),f&#39;&#39;(x_k)\)</span></li>
+<li>若<span class="math inline">\(|f&#39;(x_k)|&lt;\varepsilon\)</span>，停止，<span class="math inline">\(x^*=x_k\)</span>，否则转步骤<span class="math inline">\(4\)</span></li>
+<li>计算</li>
+</ol>
+<p><span class="math display">\[
+x_{k+1} = x_k - \dfrac{f&#39;(x_k)}{f&#39;&#39;(x_k)}
+\]</span></p>
+<p>令<span class="math inline">\(k = k+1\)</span>，转步骤<span class="math inline">\(2\)</span></p>
+<p><strong>优点</strong></p>
+<p>收敛快，局部二阶收敛</p>
+<p><strong>缺点</strong></p>
+<p>计算二阶导数工作量大。对初始点要求高，需要初始点离极小点不太远，否则有可能使极小化发散或收敛到非极小点；局部收敛。</p>
+<h2 id="黄金分割法">黄金分割法</h2>
+<ol type="1">
+<li>给定区间<span class="math inline">\([a,b],\varepsilon&gt;0\)</span></li>
+<li>计算<span class="math inline">\(x_1 = a+0.382(b-a),x_2 =
+a+0.618(b-a),f(x_1),f(x_2)\)</span></li>
+<li>如果<span class="math inline">\(f(x_1)&lt;f(x_2)\)</span>，则<span class="math inline">\(b = x_2，x_2 = x_1,f_2=f_1,x_1 = a+0.382(b-a),f_1
+= f(x_1)\)</span>。否则<span class="math inline">\(a=x_1,x_1=x_2,f_1=f_2,x_2=a+0.618(b-a),f_2=f(x_2)\)</span></li>
+<li>判断<span class="math inline">\(|a-b|&lt;\varepsilon\)</span>，则跳转<span class="math inline">\(5\)</span>，否则跳转<span class="math inline">\(4\)</span></li>
+<li><span class="math inline">\(x^*=0.5(a+b),f^*=f(x^*)\)</span>，终止。</li>
+</ol>
+<p><strong>优点</strong></p>
+<p>不要求函数可微，计算量小，程序简单</p>
+<p><strong>缺点</strong></p>
+<p>收敛慢</p>
+<h2 id="抛物线插值法">抛物线插值法</h2>
+<p>以二次插值法为例</p>
+<ol type="1">
+<li>设置初始区间<span class="math inline">\([x_1,x_3]\)</span>，和一中间点<span class="math inline">\(x_2\)</span>，一般为区间中点，设置<span class="math inline">\(\varepsilon&gt;0\)</span></li>
+<li>计算<span class="math inline">\(f_1,f_2,f_3\)</span>，计算</li>
+</ol>
+<p><span class="math display">\[
+\overline{x} = \dfrac{1}{2}(x_1+x_3-\dfrac{c_1}{c_2})
+\]</span></p>
+<p>其中</p>
+<p><span class="math display">\[
+c_1 = \dfrac{f_1-f_3}{x_1-x_3}, c_2 =
+\dfrac{\dfrac{f_1-f_2}{x_1-x_2}-c_1}{x_2-x_3}
+\]</span></p>
+<p>计算<span class="math inline">\(f(\overline{x})\)</span></p>
+<ol start="3" type="1">
+<li>若<span class="math inline">\(\overline{x}&lt;x_2\)</span>，则新区间为<span class="math inline">\([x_1,x_2]\)</span>，否则新区间为<span class="math inline">\([x_2,x_3]\)</span>。如果<span class="math inline">\(|x_2-\overline{x}|&lt;\varepsilon\)</span>，停止迭代，进入<span class="math inline">\(4\)</span>。新中间点为<span class="math inline">\(\overline{x}\)</span>，返回<span class="math inline">\(2\)</span></li>
+<li><span class="math inline">\(x^*=\overline{x},f^*=f(\overline{x})\)</span>，终止。</li>
+</ol>
+<p><strong>优点</strong></p>
+<p>不要求函数可微，计算量小，程序简单，比黄金分割法快</p>
+<p><strong>缺点</strong></p>
+<p>不如黄金分割法可靠</p>
+<h1 id="无约束最优化方法">无约束最优化方法</h1>
+<p>本章和上章一样都是无约束问题，但是本章的函数是<span class="math inline">\(f:R^N\to R\)</span></p>
+<h2 id="搜索步长准则">搜索步长准则</h2>
+<h3 id="armijo准则">Armijo准则</h3>
+<p>设<span class="math inline">\(d^k\)</span>是<span class="math inline">\(x^k\)</span>处的下降方向，若</p>
+<p><span class="math display">\[
+f(x^k+\alpha d^k)\leq f(x^k)+c_1\alpha \nabla f(x^k)^Td^k
+\]</span></p>
+<p>则称步长<span class="math inline">\(\alpha\)</span>满足Armijo准则，其中<span class="math inline">\(c_1\in
+(0,1)\)</span>是一个常数（通常很小，1e-3）</p>
+<p>它有一些缺点，例如<span class="math inline">\(\alpha=0\)</span>显然满足条件</p>
+<h3 id="goldstein准则">Goldstein准则</h3>
+<p><span class="math display">\[
+f(x^k+\alpha d^k)\leq f(x^k)+c\alpha \nabla f(x^k)^Td^k
+\]</span></p>
+<p><span class="math display">\[
+f(x^k+\alpha d^k)\geq f(x^k)+(1-c)\alpha \nabla f(x^k)^Td^k
+\]</span></p>
+<p>则称步长<span class="math inline">\(\alpha\)</span>满足Goldstein准则，其中<span class="math inline">\(c\in (0,\dfrac{1}{2})\)</span>是一个常数。</p>
+<p>它克服了Armijo的困难。第一个公式保证了其有足够的下降，第二个公式保证了步长足够大。</p>
+<h2 id="最速下降法">最速下降法</h2>
+<p>迭代格式为</p>
+<p><span class="math display">\[
+x^{k+1} = x^k - \alpha_k\nabla f(x^k)
+\]</span></p>
+<p>显然，这个方法就是选取方向<span class="math inline">\(d^k = -\nabla
+f(x^k)\)</span>，也就是最快下降方法。我们通常会记<span class="math inline">\(g(x) = \nabla f(x)\)</span>。</p>
+<p>终止准则为<span class="math inline">\(||g(x^{k+1})||\leq
+\varepsilon\)</span></p>
+<p><span class="math inline">\(\alpha_k\)</span>可以设定为常数，也可以用线搜索算法确定。设定为常数时不会有锯齿状况，只有线搜索出来的最优步长会锯齿。</p>
+<p>最优步长为</p>
+<p><span class="math display">\[
+t_k = \arg\min_t f(x^k-t\Delta f(x^k))
+\]</span></p>
+<p>线搜索得到<span class="math inline">\(\alpha_k\)</span>的方法为回退法。其满足Armijo准则。首先给定初值<span class="math inline">\(\hat{\alpha}\)</span>，回退发同步不断以指数方式缩小试探步长，找到第一个满足Armijo准则的点。</p>
+<ul>
+<li>选择初始步长<span class="math inline">\(\hat{\alpha}\)</span>,参数<span class="math inline">\(\gamma,c\in(0,1)\)</span>（经验上来说，选择<span class="math inline">\(\gamma\)</span>接近<span class="math inline">\(1\)</span>比如0.95，<span class="math inline">\(c\)</span>很小，比如1e-3），初始化<span class="math inline">\(\alpha\leftarrow\hat{\alpha}\)</span></li>
+<li>当<span class="math inline">\(f(x^k+\alpha
+d^k)&gt;f(x^k)+c\alpha\nabla f(x^k)^T d^k\)</span>时，令<span class="math inline">\(\alpha\leftarrow \gamma\alpha\)</span></li>
+<li>输出<span class="math inline">\(a_k = \alpha\)</span></li>
+</ul>
+<p><strong>正定二次函数情况</strong></p>
+<p>如果<span class="math inline">\(f(x) =
+\dfrac{1}{2}x^TAx-b^Tx\)</span></p>
+<p>则最优步长为</p>
+<p><span class="math display">\[
+\alpha_k = \dfrac{||\nabla(f^k)||^2}{\nabla f(x^k)^TA\nabla f(x^k)}
+\]</span></p>
+<p>也可以写作</p>
+<p><span class="math display">\[
+\alpha_k = \dfrac{g_k^Tg_k}{g_k^TAg_k}
+\]</span></p>
+<p><strong>优点</strong></p>
+<p>算法简单、计算量小、占用内存小</p>
+<p><strong>缺点</strong></p>
+<p>收敛速度慢，前后两次的搜索方向是正交的（仅限于最优步长情况），容易困在局部最优，还可能被困在鞍点</p>
+<h2 id="随机梯度降">随机梯度降</h2>
+<p>我们的优化目标变为了</p>
+<p><span class="math display">\[
+\min f(x) = \dfrac{1}{N}\sum^N_{i=1}f_i(x)
+\]</span></p>
+<p>其中<span class="math inline">\(f_i(x)\)</span>对应第<span class="math inline">\(i\)</span>个样本的损失函数。</p>
+<p>按照最速下降法的要求，</p>
+<p><span class="math display">\[
+x^{k+1} = x^k - \alpha_k\nabla f(x^k)
+\]</span></p>
+<p>我们的梯度为</p>
+<p><span class="math display">\[
+\nabla f(x^k) = \dfrac{1}{N}\sum^N_{i=1}\nabla f_i(x^k)
+\]</span></p>
+<p>通常，这个量会很大，我们不能简单的得到梯度。于是我们用到了随机梯度降</p>
+<p><span class="math display">\[
+x^{k+1} = x^k - \alpha_k\nabla f_{S_k}(x^k)
+\]</span></p>
+<p>其中<span class="math inline">\(s_k\)</span>是从<span class="math inline">\(\{1,2,\cdots,N\}\)</span>中随机等可能的抽取的一个样本。<span class="math inline">\(\alpha_k\)</span>是步长，在人工智能算法中也叫做学习率。</p>
+<p>可以推断得到</p>
+<p><span class="math display">\[
+E_{S_k}[\nabla f_{S_k}(x^k)|x^k] = \nabla f(x^k)
+\]</span></p>
+<p><strong>优缺点</strong></p>
+<p>同下</p>
+<h2 id="小批量随机梯度降">小批量随机梯度降</h2>
+<p>即抽取元素比较少的集合<span class="math inline">\(B_k\in
+\{1,2,\cdots,N\}\)</span></p>
+<p><span class="math display">\[
+x^{k+1} = x^k - \dfrac{\alpha_k}{|B_k|}\sum_{s\in B_k}\nabla f_{s}(x^k)
+\]</span></p>
+<p>其中<span class="math inline">\(|B_k|\)</span>为元素个数，又叫batch-size。大小为1时就是随机梯度降，大小和训练样本数据一样大时，算法就是梯度下降。</p>
+<p><strong>优点</strong></p>
+<p>同梯度降</p>
+<p><strong>缺点</strong></p>
+<p>学习率选取较为困难，容易收敛到局部最优，还可能被困在鞍点</p>
+<h2 id="动量法">动量法</h2>
+<p><span class="math display">\[
+v^{k+1} = \mu_k v^k - \alpha_k\nabla f_{S_k}(x^k)
+\]</span></p>
+<p><span class="math display">\[
+x^{k+1} = x^k + v^{k+1}
+\]</span></p>
+<p>其中<span class="math inline">\(\mu_k\in [0,1)\)</span>，通常取<span class="math inline">\(\mu_k\geq 0.5\)</span>，代表具有较大的惯性。<span class="math inline">\(\mu_k=0\)</span>时退化成随机梯度降。</p>
+<p><strong>优点</strong></p>
+<p>和上一次梯度方向一致时，能很好的加速。能够跳出局部最优。在梯度改变方向的时候，能减少迭代次数</p>
+<h2 id="nesterov算法">Nesterov算法</h2>
+<p><span class="math display">\[
+v^{k+1} = \mu_k v^k - \alpha_k\nabla f_{S_k}(x^k+\mu_k v^k)
+\]</span></p>
+<p><span class="math display">\[
+x^{k+1} = x^k + v^{k+1}
+\]</span></p>
+<p>即提前预估了下一次参数所在的位置。</p>
+<h2 id="adagrad">AdaGrad</h2>
+<p>该方法可以自发调整参数。</p>
+<p>令<span class="math inline">\(g^k = \nabla f_{S_k}(x^k)\)</span></p>
+<p>引入向量</p>
+<p><span class="math display">\[
+G^k = \sum^k_{i=1}g^i\odot g^i
+\]</span></p>
+<p>其中<span class="math inline">\(\odot\)</span>代表向量的对应分量相乘，然后再组合成新的向量。</p>
+<p>迭代格式为</p>
+<p><span class="math display">\[
+x^{k+1} = x^k-\dfrac{\alpha}{\sqrt{G^k+\varepsilon}}\odot g^k
+\]</span></p>
+<p><span class="math display">\[
+G^{k+1} = G^k  + g^{k+1}\odot g^{k+1}
+\]</span></p>
+<p>这里<span class="math inline">\(\alpha\)</span>为初始步长，<span class="math inline">\(\varepsilon&gt;0\)</span>是防止除零操作。</p>
+<p><strong>缺点</strong></p>
+<p>随着迭代次数的增加，<span class="math inline">\(G^k\)</span>越来越大，使得<span class="math inline">\(\dfrac{\alpha}{\sqrt{G^k+\varepsilon}}\to
+0\)</span>，梯度消失</p>
+<h3 id="rmsprop">RMSProp</h3>
+<p>为了解决学习率趋于<span class="math inline">\(0\)</span>的问题，引入一个<span class="math inline">\(\rho\in[0,1)\)</span></p>
+<p><span class="math display">\[
+x^{k+1} = x^k-\dfrac{\alpha}{\sqrt{M^k+\varepsilon}}\odot g^k
+\]</span></p>
+<p><span class="math display">\[
+M^{k+1} = \rho M^k  + (1-\rho) g^{k+1}\odot g^{k+1}
+\]</span></p>
+<h3 id="adadelta">AdaDelta</h3>
+<p>令</p>
+<p><span class="math display">\[
+g&#39;_k = \sqrt{\dfrac{\Delta x^k+\varepsilon}{M^k+\varepsilon}}\odot
+g^k
+\]</span> 迭代如下</p>
+<p><span class="math display">\[
+x^{k+1} = x^k-g&#39;_k
+\]</span></p>
+<p><span class="math display">\[
+M^{k+1} = \rho M^k  + (1-\rho) g^{k+1}\odot g^{k+1}
+\]</span></p>
+<p><span class="math display">\[
+\Delta x^{k+1} = \rho \Delta x^k + (1-\rho)g&#39;_k\odot g&#39;_k
+\]</span></p>
+<h3 id="adam">Adam</h3>
+<h2 id="牛顿法">牛顿法</h2>
+<h2 id="修正牛顿法">修正牛顿法</h2>
+<h2 id="拟牛顿法">拟牛顿法</h2>
+<h3 id="dfp更新公式">DFP更新公式</h3>
+<h2 id="共轭方向法">共轭方向法</h2>
+<h2 id="共轭梯度法">共轭梯度法</h2>
+<h2 id="fr共轭梯度法">FR共轭梯度法</h2>
+<h2 id="坐标轮换法">坐标轮换法</h2>
+<h2 id="单形替换法">单形替换法</h2>
+<h1 id="有约束最优化方法">有约束最优化方法</h1>
+<h2 id="外点罚函数法">外点罚函数法</h2>
+<h2 id="内点罚函数法">内点罚函数法</h2>
+<h2 id="混合罚函数法">混合罚函数法</h2>
 
 
 
@@ -841,7 +1273,79 @@ x_i&#39;-x_i&#39;&#39;,x_i&#39;\geq0,x_i&#39;&#39;\geq0\)</span></li>
         <li><a href="#一般形式">一般形式</a></li>
         <li><a href="#标准形式">标准形式</a></li>
         <li><a href="#线性规划解的基本性质">线性规划解的基本性质</a></li>
-        <li><a href="#单纯形法">单纯形法</a></li>
+        <li><a href="#单纯形法">单纯形法</a>
+          <ol>
+            <li><a href="#确定初始基本可行解">确定初始基本可行解</a></li>
+            <li><a href="#判断现行的基本可行解是否最优">判断现行的基本可行解是否最优</a></li>
+            <li><a href="#基本可行解的改进基变换">基本可行解的改进——基变换</a></li>
+            <li><a href="#用初等变换求改进了的基本可行解旋转运算">用初等变换求改进了的基本可行解——旋转运算</a></li>
+            <li><a href="#表格单纯形法">表格单纯形法</a></li>
+          </ol>
+        </li>
+        <li><a href="#对偶问题原理">对偶问题原理</a>
+          <ol>
+            <li><a href="#对偶关系表">对偶关系表</a></li>
+            <li><a href="#对偶关系定理">对偶关系定理</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+    <li><a href="#一维搜索法">一维搜索法</a>
+      <ol>
+        <li><a href="#概念">概念</a></li>
+        <li><a href="#基本步骤">基本步骤</a></li>
+        <li><a href="#终止条件">终止条件</a></li>
+        <li><a href="#搜索区间的确定">搜索区间的确定</a>
+          <ol>
+            <li><a href="#单谷峰函数">单谷（峰）函数</a></li>
+            <li><a href="#进退算法成功-失败法">进退算法（成功-失败法）</a></li>
+          </ol>
+        </li>
+        <li><a href="#二分法">二分法</a></li>
+        <li><a href="#牛顿切线法">牛顿切线法</a></li>
+        <li><a href="#黄金分割法">黄金分割法</a></li>
+        <li><a href="#抛物线插值法">抛物线插值法</a></li>
+      </ol>
+    </li>
+    <li><a href="#无约束最优化方法">无约束最优化方法</a>
+      <ol>
+        <li><a href="#搜索步长准则">搜索步长准则</a>
+          <ol>
+            <li><a href="#armijo准则">Armijo准则</a></li>
+            <li><a href="#goldstein准则">Goldstein准则</a></li>
+          </ol>
+        </li>
+        <li><a href="#最速下降法">最速下降法</a></li>
+        <li><a href="#随机梯度降">随机梯度降</a></li>
+        <li><a href="#小批量随机梯度降">小批量随机梯度降</a></li>
+        <li><a href="#动量法">动量法</a></li>
+        <li><a href="#nesterov算法">Nesterov算法</a></li>
+        <li><a href="#adagrad">AdaGrad</a>
+          <ol>
+            <li><a href="#rmsprop">RMSProp</a></li>
+            <li><a href="#adadelta">AdaDelta</a></li>
+            <li><a href="#adam">Adam</a></li>
+          </ol>
+        </li>
+        <li><a href="#牛顿法">牛顿法</a></li>
+        <li><a href="#修正牛顿法">修正牛顿法</a></li>
+        <li><a href="#拟牛顿法">拟牛顿法</a>
+          <ol>
+            <li><a href="#dfp更新公式">DFP更新公式</a></li>
+          </ol>
+        </li>
+        <li><a href="#共轭方向法">共轭方向法</a></li>
+        <li><a href="#共轭梯度法">共轭梯度法</a></li>
+        <li><a href="#fr共轭梯度法">FR共轭梯度法</a></li>
+        <li><a href="#坐标轮换法">坐标轮换法</a></li>
+        <li><a href="#单形替换法">单形替换法</a></li>
+      </ol>
+    </li>
+    <li><a href="#有约束最优化方法">有约束最优化方法</a>
+      <ol>
+        <li><a href="#外点罚函数法">外点罚函数法</a></li>
+        <li><a href="#内点罚函数法">内点罚函数法</a></li>
+        <li><a href="#混合罚函数法">混合罚函数法</a></li>
       </ol>
     </li>
   </ol>

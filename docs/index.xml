@@ -285,7 +285,7 @@ x_1,x_2,\cdots,x_n\geq 0
 &lt;p&gt;一共包含&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;个决策变量，&lt;span class=&#34;math inline&#34;&gt;\(m\)&lt;/span&gt;个约束条件。其中对目标函数既可以求最大也可以求最小，约束条件可以是&lt;span class=&#34;math inline&#34;&gt;\(=,\leq,\geq\)&lt;/span&gt;。决策变量&lt;span class=&#34;math inline&#34;&gt;\(x_i\)&lt;/span&gt;通常非负，也有其他情况。&lt;span class=&#34;math inline&#34;&gt;\(c_j\)&lt;/span&gt;称为价值系数，&lt;span class=&#34;math inline&#34;&gt;\(b_j\)&lt;/span&gt;称为资源系数，&lt;span class=&#34;math inline&#34;&gt;\(a_{ij}\)&lt;/span&gt;称为约束系数、技术系数。&lt;/p&gt;
 &lt;p&gt;利用矩阵，可以写作&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
-\min f(x) = Cx
+\min f(x) = c^Tx
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
 s.t.
@@ -358,6 +358,438 @@ x_i&amp;#39;-x_i&amp;#39;&amp;#39;,x_i&amp;#39;\geq0,x_i&amp;#39;&amp;#39;\geq0\
 &lt;li&gt;如果不是最优，则迭代到其相邻的基本可行解，并再次检验&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;单纯形法把寻优的目标集中在所有基本可行解（即可行域顶点）中。从一个初始的基本可行解出发，寻找一条达到最优基本可行解的最佳路径。&lt;/p&gt;
+&lt;h3 id=&#34;确定初始基本可行解&#34;&gt;确定初始基本可行解&lt;/h3&gt;
+&lt;p&gt;确定初始的基本可行解等价于确定初始的可行基，一旦初始的可行基确定了，那么对应的初始基本可行解也就唯一确定.&lt;/p&gt;
+&lt;p&gt;方便起见，不妨设&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;中的千&lt;span class=&#34;math inline&#34;&gt;\(m\)&lt;/span&gt;个系数列向量恰好构成一个可行基，即&lt;span class=&#34;math inline&#34;&gt;\(A=(B|N)\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(B=[p_1,p_2,\cdots,p_m]\)&lt;/span&gt;为基变量&lt;span class=&#34;math inline&#34;&gt;\(x_1,x_2,\cdots,x_m\)&lt;/span&gt;的系数列向量构成的可行基。&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(N =
+[p_{m+1},p_{m+2},\cdots,p_n]\)&lt;/span&gt;为非基变量&lt;span class=&#34;math inline&#34;&gt;\(x_{m+1},x_{m+2},\cdots,x_n\)&lt;/span&gt;的系数列向量构成的矩阵。&lt;/p&gt;
+&lt;p&gt;即原始问题为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\min z = c^Tx
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+s.t.\left\{\begin{matrix}
+Ax=b \\
+x\geq 0
+\end{matrix}\right.
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;化为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\min z = [c_B^T,c_N^T][x_B^T,x_N^T]^T
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+s.t.\left\{\begin{matrix}
+[B,N][x_B^T,x_N^T]^T=b \\
+x_B,x_N\geq 0
+\end{matrix}\right.
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;乘法后得&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\min z = c_B^Tx_B+c_N^Tx_N
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+s.t.\left\{\begin{matrix}
+Bx_B+Nx_N=b \\
+x_B,x_N\geq 0
+\end{matrix}\right.
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;计算出&lt;span class=&#34;math inline&#34;&gt;\(x_B =
+B^{-1}b-B^{-1}Nx_N\)&lt;/span&gt;，代入目标函数中，得到&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\min z = c_B^TB^{-1}b-(c_B^TB^{-1}N-c_N^T)x_N
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+s.t.\left\{\begin{matrix}
+x_B = B^{-1}b-B^{-1}Nx_N \\
+x_B,x_N\geq 0
+\end{matrix}\right.
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;令&lt;span class=&#34;math inline&#34;&gt;\(x_N=\bm 0\)&lt;/span&gt;，则&lt;span class=&#34;math inline&#34;&gt;\(x_B=B^{-1}b\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;所以初始的基本可行解为&lt;span class=&#34;math inline&#34;&gt;\(x=[x_B^T,0]^T\)&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;判断现行的基本可行解是否最优&#34;&gt;判断现行的基本可行解是否最优&lt;/h3&gt;
+&lt;p&gt;假如求得一个基本可行解为&lt;span class=&#34;math inline&#34;&gt;\(x=[x_B^T,0]^T\)&lt;/span&gt;，那么&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+z = cx = [c_B^T,c_N^T][(B^{-1}b)^T,0]^T=c_B^TB^{-1}b
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;如果检验向量&lt;span class=&#34;math inline&#34;&gt;\(\sigma_N\)&lt;/span&gt;满足&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\sigma_N^T = c_N^T - c_B^TB^{-1}N\geq 0
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;这个基本可行解就是最优解。检验向量的各个分量称为检验数。上面的&lt;span class=&#34;math inline&#34;&gt;\(\geq0\)&lt;/span&gt;是指每个分量都&lt;span class=&#34;math inline&#34;&gt;\(\geq 0\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;特殊情况1&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;如果&lt;span class=&#34;math inline&#34;&gt;\(\sigma_N^T\geq
+0\)&lt;/span&gt;，其中存在一个检验数&lt;span class=&#34;math inline&#34;&gt;\(\sigma_{m+k}=0\)&lt;/span&gt;，则线性规划问题有无穷多最优解&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;特殊情况2&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(\sigma_N^T\)&lt;/span&gt;，其中存在一个检验数&lt;span class=&#34;math inline&#34;&gt;\(\sigma_{m+k}&amp;lt;0\)&lt;/span&gt;，且该检验数所对应的非基变量的系数列向量的全部系数都为负数或零，则线性规划问题无有界最优解。&lt;/p&gt;
+&lt;h3 id=&#34;基本可行解的改进基变换&#34;&gt;基本可行解的改进——基变换&lt;/h3&gt;
+&lt;p&gt;如果现行的基本可行解&lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;不是最优解，即在检验向量&lt;span class=&#34;math inline&#34;&gt;\(σ_N^T=c_N^T－c_B^TB^{-1}N\)&lt;/span&gt;中存在负的检验数，则需在原基本可行解&lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;的基础上寻找一个新的基本可行解，并使目标函数值有所改善。&lt;/p&gt;
+&lt;p&gt;具体做法是：&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;先从检验数为负的非基变量中确定一个换入变量，使它从非基变量变成基变量，&lt;/li&gt;
+&lt;li&gt;再从原来的基变量中确定一个换出变量，使它从基变量变成非基变量。由此得到一个新的基本可行解。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;换入变量的确定-最大减小原则&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;假设检验向量&lt;span class=&#34;math inline&#34;&gt;\(\sigma_N^T =
+c_N^T-c_B^TB^{-1}N =
+[\sigma_{m+1},\sigma_{m+2},\cdots,\sigma_n]\)&lt;/span&gt;。若其中有两个以上的检验数为负，那么为了使目标函数值下降最快，就要选取最小负检验数所对应的非基变量为换入变量。&lt;/p&gt;
+&lt;p&gt;即若&lt;span class=&#34;math inline&#34;&gt;\(\sigma_{m+k}\)&lt;/span&gt;是最小的，那么就要把&lt;span class=&#34;math inline&#34;&gt;\(x_{m+k}\)&lt;/span&gt;换入。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;换出变量的确定-最小比值原则&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;如果确定&lt;span class=&#34;math inline&#34;&gt;\(x_{m+k}\)&lt;/span&gt;为换入变量，方程&lt;span class=&#34;math inline&#34;&gt;\(x_B = B^{-1}b-B^{-1}Nx_N\Rightarrow x_B =
+B^{-1}b-B^{-1}p_{m+k}x_{m+k}\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(p_{m+k}\)&lt;/span&gt;为&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;中与&lt;span class=&#34;math inline&#34;&gt;\(x_{m+k}\)&lt;/span&gt;对应的系数列向量。我们要在&lt;span class=&#34;math inline&#34;&gt;\(x_B =
+(x_1,x_2,\cdots,x_m)^T\)&lt;/span&gt;中确定一个基变量为换出变量，可以按最小比值原则确定换出变量。&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\theta =
+\min\bigg\{\dfrac{(B^{-1}b)_i}{(B^{-1}p_{m+k})_i}\bigg|(B^{-1}p_{m+k})_i&amp;gt;0,1\leq
+i\leq m\bigg\} = \dfrac{(B^{-1}b)_l}{(B^{-1}p_{m+k})_l}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;则选择对应的&lt;span class=&#34;math inline&#34;&gt;\(x_l\)&lt;/span&gt;作为换出变量。这里的角标是因为&lt;span class=&#34;math inline&#34;&gt;\(B^{-1}b\)&lt;/span&gt;和&lt;span class=&#34;math inline&#34;&gt;\(B^{-1}p_{m+k}\)&lt;/span&gt;都是&lt;span class=&#34;math inline&#34;&gt;\(m\)&lt;/span&gt;维向量。&lt;/p&gt;
+&lt;h3 id=&#34;用初等变换求改进了的基本可行解旋转运算&#34;&gt;用初等变换求改进了的基本可行解——旋转运算&lt;/h3&gt;
+&lt;p&gt;假设&lt;span class=&#34;math inline&#34;&gt;\(B\)&lt;/span&gt;是可行基，则&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+Ax = b\Rightarrow[B,N][x_B^T,x_N^T]^T = b\Rightarrow
+[I,B^{-1}N][x_B^T,x_N^T]^T = B^{-1}b
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;令非基变量&lt;span class=&#34;math inline&#34;&gt;\(x_N=\bm
+0\)&lt;/span&gt;，则基变量&lt;span class=&#34;math inline&#34;&gt;\(x_B =
+B^{-1}b\)&lt;/span&gt;，基本可行解为&lt;span class=&#34;math inline&#34;&gt;\(x=[(B^{-1}b)^T,0]^T\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;用逆阵&lt;span class=&#34;math inline&#34;&gt;\(B^{-1}\)&lt;/span&gt;左乘约束方程组的两端，等价于对方程组施以一系列的初等“行变换”。变换的结果是将系数矩阵&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;中的可行基&lt;span class=&#34;math inline&#34;&gt;\(B\)&lt;/span&gt;变换成单位矩阵&lt;span class=&#34;math inline&#34;&gt;\(I\)&lt;/span&gt;，把非基变量系数列向量构成的矩阵&lt;span class=&#34;math inline&#34;&gt;\(N\)&lt;/span&gt;变换成&lt;span class=&#34;math inline&#34;&gt;\(B^{-1}N\)&lt;/span&gt;，把向量&lt;span class=&#34;math inline&#34;&gt;\(b\)&lt;/span&gt;变换成&lt;span class=&#34;math inline&#34;&gt;\(B^{-1}b\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;变换前后的方程组同解。&lt;/p&gt;
+&lt;p&gt;且改进了的基本可行解&lt;span class=&#34;math inline&#34;&gt;\(X&amp;#39;\)&lt;/span&gt;只是在&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;的基变量的基础上用一个换入变量替代其中一个换出变量，其它的基变量仍然保持不变。这些基变量的系数列向量是单位矩阵&lt;span class=&#34;math inline&#34;&gt;\(I\)&lt;/span&gt;中的单位向量。为了求得改进的基本可行解&lt;span class=&#34;math inline&#34;&gt;\(X&amp;#39;\)&lt;/span&gt;，只需对增广矩阵&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+[I,B^{-1}N,B^{-1}b]
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;施行初等行变换，将换入变量的系数列向量变换成换出变量所对应的单位向量即可。&lt;/p&gt;
+&lt;h3 id=&#34;表格单纯形法&#34;&gt;表格单纯形法&lt;/h3&gt;
+&lt;figure&gt;
+&lt;img src=&#34;1.jpg&#34; alt=&#34;1.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;1.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;h2 id=&#34;对偶问题原理&#34;&gt;对偶问题原理&lt;/h2&gt;
+&lt;p&gt;假设全是列向量。&lt;/p&gt;
+&lt;p&gt;设原问题&lt;span class=&#34;math inline&#34;&gt;\(P\)&lt;/span&gt;为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\min f(x) = c^Tx
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+s.t.
+\left\{\begin{matrix}
+Ax\geq b\\
+x\geq 0
+\end{matrix}\right.
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;则其对偶问题&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\max g(y) = b^Ty
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+s.t.
+\left\{\begin{matrix}
+A^Ty\leq c\\
+y\geq 0
+\end{matrix}\right.
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;对偶关系表&#34;&gt;对偶关系表&lt;/h3&gt;
+&lt;figure&gt;
+&lt;img src=&#34;2.jpg&#34; alt=&#34;2.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;2.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;h3 id=&#34;对偶关系定理&#34;&gt;对偶关系定理&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;弱对偶定理&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;对偶问题(max)的任何可行解&lt;span class=&#34;math inline&#34;&gt;\(Y^*\)&lt;/span&gt;，其目标函数值总是不大于原问题(min)任何可行解&lt;span class=&#34;math inline&#34;&gt;\(X^*\)&lt;/span&gt;的目标函数值。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;对偶定理&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;假如原问题或对偶问题之一具有有限的最优解，则另一问题也具有有限的最优解，且两者响应的目标函数值相等。假如一个问题的目标函数值是无界的，则另一问题没有可行解。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;互补松弛定理&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;假设&lt;span class=&#34;math inline&#34;&gt;\(X^*,Y^*\)&lt;/span&gt;分别是原问题和对偶问题的可行解，&lt;span class=&#34;math inline&#34;&gt;\(U^*\)&lt;/span&gt;是原问题剩余变量的值，&lt;span class=&#34;math inline&#34;&gt;\(V^*\)&lt;/span&gt;是对偶问题松弛变量的值，则&lt;span class=&#34;math inline&#34;&gt;\(X^*,Y^*\)&lt;/span&gt;分别为原问题和对偶问题的最优解的充要条件是&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+X^*V^*+Y^*U^* = 0
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;这个定理还表述为如下两个形式&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;假如一个问题的某个变量取正数，则相应问题的另外一个约束条件必取等式&lt;/li&gt;
+&lt;li&gt;一个问题中的约束条件取不等式，则相应于另一个问题中的变量为零&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;说起来有些抽象，做题理解。&lt;/p&gt;
+&lt;h1 id=&#34;一维搜索法&#34;&gt;一维搜索法&lt;/h1&gt;
+&lt;h2 id=&#34;概念&#34;&gt;概念&lt;/h2&gt;
+&lt;p&gt;对于一维无约束优化问题&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\min f(\alpha)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;求解极小点和极小值的数值迭代方法即为一维搜索方法。&lt;/p&gt;
+&lt;p&gt;极小点的必要条件和充分条件见前。注意我们可以用充分条件求解最小值，但是并不是所有情况都能使用，比如函数不一定二阶可微。所以我们常使用迭代法。&lt;/p&gt;
+&lt;h2 id=&#34;基本步骤&#34;&gt;基本步骤&lt;/h2&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;确定搜索区间&lt;span class=&#34;math inline&#34;&gt;\([a,b]\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;在区间内寻找最小点&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;优化算法的基本迭代公式为：&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+x^{k+1} = x^{k} + \alpha^kd^k
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(\alpha^k\)&lt;/span&gt;为搜索步长，&lt;span class=&#34;math inline&#34;&gt;\(d^k\)&lt;/span&gt;为搜索方向。&lt;span class=&#34;math inline&#34;&gt;\(x^0\)&lt;/span&gt;为人工给出的初始估计。&lt;/p&gt;
+&lt;h2 id=&#34;终止条件&#34;&gt;终止条件&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;两次迭代的绝对误差&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+|f(x^{k+1})-f(x^k)|&amp;lt;\varepsilon,\quad ||x^{k+1}-x^k||&amp;lt;\varepsilon
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;两次迭代的相对误差&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\dfrac{|f(x^{k+1})-f(x^k)|}{|f(x^k)|}&amp;lt;\varepsilon,\quad
+\dfrac{||x^{k+1}-x^k||}{||x^k||}&amp;lt;\varepsilon
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;目标函数梯度的模足够小&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+||\nabla f(x^k)||&amp;lt;\varepsilon
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h2 id=&#34;搜索区间的确定&#34;&gt;搜索区间的确定&lt;/h2&gt;
+&lt;h3 id=&#34;单谷峰函数&#34;&gt;单谷（峰）函数&lt;/h3&gt;
+&lt;p&gt;我们选取的区间使得函数是单股（峰的），这样我们有以下定理（单谷为例）&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(f(x)\)&lt;/span&gt;在&lt;span class=&#34;math inline&#34;&gt;\([a,b]\)&lt;/span&gt;上单谷，&lt;span class=&#34;math inline&#34;&gt;\(x^*\in[a,b]\)&lt;/span&gt;是其极小点，&lt;span class=&#34;math inline&#34;&gt;\(x_1&amp;lt;x_2\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\([a,b]\)&lt;/span&gt;上任意两点。则：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;若&lt;span class=&#34;math inline&#34;&gt;\(f(x_1)\geq f(x_2)\)&lt;/span&gt;，则&lt;span class=&#34;math inline&#34;&gt;\(x^*\in[x_1,b]\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;否则&lt;span class=&#34;math inline&#34;&gt;\(x^*[a,x_2]*\)&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;进退算法成功-失败法&#34;&gt;进退算法（成功-失败法）&lt;/h3&gt;
+&lt;p&gt;求取区间。&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;选取初始点&lt;span class=&#34;math inline&#34;&gt;\(a\)&lt;/span&gt;和步长&lt;span class=&#34;math inline&#34;&gt;\(h\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;计算并比较&lt;span class=&#34;math inline&#34;&gt;\(f(a),f(a+h)\)&lt;/span&gt;。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;若&lt;span class=&#34;math inline&#34;&gt;\(f(a)\geq
+f(a+h)\)&lt;/span&gt;，则步长加倍，计算&lt;span class=&#34;math inline&#34;&gt;\(f(a+3h)\)&lt;/span&gt;。若&lt;span class=&#34;math inline&#34;&gt;\(f(a+h)\leq f(a+3h)\)&lt;/span&gt;，则令&lt;span class=&#34;math inline&#34;&gt;\(a_1=a,a_2=a+3h\)&lt;/span&gt;，停止运算；否则步长加倍，并重复以上（计算&lt;span class=&#34;math inline&#34;&gt;\(a+3h\)&lt;/span&gt;和&lt;span class=&#34;math inline&#34;&gt;\(a+7h\)&lt;/span&gt;）。&lt;/p&gt;
+&lt;p&gt;若&lt;span class=&#34;math inline&#34;&gt;\(f(a)&amp;lt;
+f(a+h)\)&lt;/span&gt;，则步长变为&lt;span class=&#34;math inline&#34;&gt;\(-h\)&lt;/span&gt;，计算&lt;span class=&#34;math inline&#34;&gt;\(f(a-h)\)&lt;/span&gt;。若&lt;span class=&#34;math inline&#34;&gt;\(f(a-h)\geq f(a)\)&lt;/span&gt;，则令&lt;span class=&#34;math inline&#34;&gt;\(a_1=a-h,a_2=a+h\)&lt;/span&gt;，停止运算；否则步长加倍，继续后退（计算&lt;span class=&#34;math inline&#34;&gt;\(a-h\)&lt;/span&gt;和&lt;span class=&#34;math inline&#34;&gt;\(a-3h\)&lt;/span&gt;）。&lt;/p&gt;
+&lt;h2 id=&#34;二分法&#34;&gt;二分法&lt;/h2&gt;
+&lt;p&gt;已知区间&lt;span class=&#34;math inline&#34;&gt;\([a,b]\)&lt;/span&gt;，且&lt;span class=&#34;math inline&#34;&gt;\(f(x)\)&lt;/span&gt;在其中可微，求极小点&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;计算&lt;span class=&#34;math inline&#34;&gt;\(x_0=\dfrac{a+b}{2}\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;若&lt;span class=&#34;math inline&#34;&gt;\(f&amp;#39;(x_0)&amp;lt;0\)&lt;/span&gt;，令&lt;span class=&#34;math inline&#34;&gt;\(a = x_0\)&lt;/span&gt;，转步骤&lt;span class=&#34;math inline&#34;&gt;\(3\)&lt;/span&gt;。若&lt;span class=&#34;math inline&#34;&gt;\(f&amp;#39;(x_0)&amp;gt;0\)&lt;/span&gt;，令&lt;span class=&#34;math inline&#34;&gt;\(b = x_0\)&lt;/span&gt;，转步骤&lt;span class=&#34;math inline&#34;&gt;\(3\)&lt;/span&gt;。若&lt;span class=&#34;math inline&#34;&gt;\(f&amp;#39;(x_0)=0\)&lt;/span&gt;，停止，&lt;span class=&#34;math inline&#34;&gt;\(x^*=x_0\)&lt;/span&gt;。&lt;/li&gt;
+&lt;li&gt;若&lt;span class=&#34;math inline&#34;&gt;\(|b-a|&amp;lt;\varepsilon\)&lt;/span&gt;，则&lt;span class=&#34;math inline&#34;&gt;\(x^*=\dfrac{a+b}{2}\)&lt;/span&gt;，停止，否则转步骤&lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;优点&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;计算量少，而且总能收敛到一个局部极小点&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;缺点&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;收敛速度慢&lt;/p&gt;
+&lt;h2 id=&#34;牛顿切线法&#34;&gt;牛顿切线法&lt;/h2&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;给定初始点&lt;span class=&#34;math inline&#34;&gt;\(x_0,\varepsilon&amp;gt;0,k=0\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;计算&lt;span class=&#34;math inline&#34;&gt;\(f&amp;#39;(x_k),f&amp;#39;&amp;#39;(x_k)\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;若&lt;span class=&#34;math inline&#34;&gt;\(|f&amp;#39;(x_k)|&amp;lt;\varepsilon\)&lt;/span&gt;，停止，&lt;span class=&#34;math inline&#34;&gt;\(x^*=x_k\)&lt;/span&gt;，否则转步骤&lt;span class=&#34;math inline&#34;&gt;\(4\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;计算&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+x_{k+1} = x_k - \dfrac{f&amp;#39;(x_k)}{f&amp;#39;&amp;#39;(x_k)}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;令&lt;span class=&#34;math inline&#34;&gt;\(k = k+1\)&lt;/span&gt;，转步骤&lt;span class=&#34;math inline&#34;&gt;\(2\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;优点&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;收敛快，局部二阶收敛&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;缺点&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;计算二阶导数工作量大。对初始点要求高，需要初始点离极小点不太远，否则有可能使极小化发散或收敛到非极小点；局部收敛。&lt;/p&gt;
+&lt;h2 id=&#34;黄金分割法&#34;&gt;黄金分割法&lt;/h2&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;给定区间&lt;span class=&#34;math inline&#34;&gt;\([a,b],\varepsilon&amp;gt;0\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;计算&lt;span class=&#34;math inline&#34;&gt;\(x_1 = a+0.382(b-a),x_2 =
+a+0.618(b-a),f(x_1),f(x_2)\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;如果&lt;span class=&#34;math inline&#34;&gt;\(f(x_1)&amp;lt;f(x_2)\)&lt;/span&gt;，则&lt;span class=&#34;math inline&#34;&gt;\(b = x_2，x_2 = x_1,f_2=f_1,x_1 = a+0.382(b-a),f_1
+= f(x_1)\)&lt;/span&gt;。否则&lt;span class=&#34;math inline&#34;&gt;\(a=x_1,x_1=x_2,f_1=f_2,x_2=a+0.618(b-a),f_2=f(x_2)\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;判断&lt;span class=&#34;math inline&#34;&gt;\(|a-b|&amp;lt;\varepsilon\)&lt;/span&gt;，则跳转&lt;span class=&#34;math inline&#34;&gt;\(5\)&lt;/span&gt;，否则跳转&lt;span class=&#34;math inline&#34;&gt;\(4\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(x^*=0.5(a+b),f^*=f(x^*)\)&lt;/span&gt;，终止。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;优点&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;不要求函数可微，计算量小，程序简单&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;缺点&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;收敛慢&lt;/p&gt;
+&lt;h2 id=&#34;抛物线插值法&#34;&gt;抛物线插值法&lt;/h2&gt;
+&lt;p&gt;以二次插值法为例&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;设置初始区间&lt;span class=&#34;math inline&#34;&gt;\([x_1,x_3]\)&lt;/span&gt;，和一中间点&lt;span class=&#34;math inline&#34;&gt;\(x_2\)&lt;/span&gt;，一般为区间中点，设置&lt;span class=&#34;math inline&#34;&gt;\(\varepsilon&amp;gt;0\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;计算&lt;span class=&#34;math inline&#34;&gt;\(f_1,f_2,f_3\)&lt;/span&gt;，计算&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\overline{x} = \dfrac{1}{2}(x_1+x_3-\dfrac{c_1}{c_2})
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+c_1 = \dfrac{f_1-f_3}{x_1-x_3}, c_2 =
+\dfrac{\dfrac{f_1-f_2}{x_1-x_2}-c_1}{x_2-x_3}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;计算&lt;span class=&#34;math inline&#34;&gt;\(f(\overline{x})\)&lt;/span&gt;&lt;/p&gt;
+&lt;ol start=&#34;3&#34; type=&#34;1&#34;&gt;
+&lt;li&gt;若&lt;span class=&#34;math inline&#34;&gt;\(\overline{x}&amp;lt;x_2\)&lt;/span&gt;，则新区间为&lt;span class=&#34;math inline&#34;&gt;\([x_1,x_2]\)&lt;/span&gt;，否则新区间为&lt;span class=&#34;math inline&#34;&gt;\([x_2,x_3]\)&lt;/span&gt;。如果&lt;span class=&#34;math inline&#34;&gt;\(|x_2-\overline{x}|&amp;lt;\varepsilon\)&lt;/span&gt;，停止迭代，进入&lt;span class=&#34;math inline&#34;&gt;\(4\)&lt;/span&gt;。新中间点为&lt;span class=&#34;math inline&#34;&gt;\(\overline{x}\)&lt;/span&gt;，返回&lt;span class=&#34;math inline&#34;&gt;\(2\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(x^*=\overline{x},f^*=f(\overline{x})\)&lt;/span&gt;，终止。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;优点&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;不要求函数可微，计算量小，程序简单，比黄金分割法快&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;缺点&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;不如黄金分割法可靠&lt;/p&gt;
+&lt;h1 id=&#34;无约束最优化方法&#34;&gt;无约束最优化方法&lt;/h1&gt;
+&lt;p&gt;本章和上章一样都是无约束问题，但是本章的函数是&lt;span class=&#34;math inline&#34;&gt;\(f:R^N\to R\)&lt;/span&gt;&lt;/p&gt;
+&lt;h2 id=&#34;搜索步长准则&#34;&gt;搜索步长准则&lt;/h2&gt;
+&lt;h3 id=&#34;armijo准则&#34;&gt;Armijo准则&lt;/h3&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(d^k\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(x^k\)&lt;/span&gt;处的下降方向，若&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+f(x^k+\alpha d^k)\leq f(x^k)+c_1\alpha \nabla f(x^k)^Td^k
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;则称步长&lt;span class=&#34;math inline&#34;&gt;\(\alpha\)&lt;/span&gt;满足Armijo准则，其中&lt;span class=&#34;math inline&#34;&gt;\(c_1\in
+(0,1)\)&lt;/span&gt;是一个常数（通常很小，1e-3）&lt;/p&gt;
+&lt;p&gt;它有一些缺点，例如&lt;span class=&#34;math inline&#34;&gt;\(\alpha=0\)&lt;/span&gt;显然满足条件&lt;/p&gt;
+&lt;h3 id=&#34;goldstein准则&#34;&gt;Goldstein准则&lt;/h3&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+f(x^k+\alpha d^k)\leq f(x^k)+c\alpha \nabla f(x^k)^Td^k
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+f(x^k+\alpha d^k)\geq f(x^k)+(1-c)\alpha \nabla f(x^k)^Td^k
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;则称步长&lt;span class=&#34;math inline&#34;&gt;\(\alpha\)&lt;/span&gt;满足Goldstein准则，其中&lt;span class=&#34;math inline&#34;&gt;\(c\in (0,\dfrac{1}{2})\)&lt;/span&gt;是一个常数。&lt;/p&gt;
+&lt;p&gt;它克服了Armijo的困难。第一个公式保证了其有足够的下降，第二个公式保证了步长足够大。&lt;/p&gt;
+&lt;h2 id=&#34;最速下降法&#34;&gt;最速下降法&lt;/h2&gt;
+&lt;p&gt;迭代格式为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+x^{k+1} = x^k - \alpha_k\nabla f(x^k)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;显然，这个方法就是选取方向&lt;span class=&#34;math inline&#34;&gt;\(d^k = -\nabla
+f(x^k)\)&lt;/span&gt;，也就是最快下降方法。我们通常会记&lt;span class=&#34;math inline&#34;&gt;\(g(x) = \nabla f(x)\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;终止准则为&lt;span class=&#34;math inline&#34;&gt;\(||g(x^{k+1})||\leq
+\varepsilon\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(\alpha_k\)&lt;/span&gt;可以设定为常数，也可以用线搜索算法确定。设定为常数时不会有锯齿状况，只有线搜索出来的最优步长会锯齿。&lt;/p&gt;
+&lt;p&gt;最优步长为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+t_k = \arg\min_t f(x^k-t\Delta f(x^k))
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;线搜索得到&lt;span class=&#34;math inline&#34;&gt;\(\alpha_k\)&lt;/span&gt;的方法为回退法。其满足Armijo准则。首先给定初值&lt;span class=&#34;math inline&#34;&gt;\(\hat{\alpha}\)&lt;/span&gt;，回退发同步不断以指数方式缩小试探步长，找到第一个满足Armijo准则的点。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;选择初始步长&lt;span class=&#34;math inline&#34;&gt;\(\hat{\alpha}\)&lt;/span&gt;,参数&lt;span class=&#34;math inline&#34;&gt;\(\gamma,c\in(0,1)\)&lt;/span&gt;（经验上来说，选择&lt;span class=&#34;math inline&#34;&gt;\(\gamma\)&lt;/span&gt;接近&lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt;比如0.95，&lt;span class=&#34;math inline&#34;&gt;\(c\)&lt;/span&gt;很小，比如1e-3），初始化&lt;span class=&#34;math inline&#34;&gt;\(\alpha\leftarrow\hat{\alpha}\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;当&lt;span class=&#34;math inline&#34;&gt;\(f(x^k+\alpha
+d^k)&amp;gt;f(x^k)+c\alpha\nabla f(x^k)^T d^k\)&lt;/span&gt;时，令&lt;span class=&#34;math inline&#34;&gt;\(\alpha\leftarrow \gamma\alpha\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;输出&lt;span class=&#34;math inline&#34;&gt;\(a_k = \alpha\)&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;正定二次函数情况&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;如果&lt;span class=&#34;math inline&#34;&gt;\(f(x) =
+\dfrac{1}{2}x^TAx-b^Tx\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;则最优步长为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\alpha_k = \dfrac{||\nabla(f^k)||^2}{\nabla f(x^k)^TA\nabla f(x^k)}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;也可以写作&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\alpha_k = \dfrac{g_k^Tg_k}{g_k^TAg_k}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;优点&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;算法简单、计算量小、占用内存小&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;缺点&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;收敛速度慢，前后两次的搜索方向是正交的（仅限于最优步长情况），容易困在局部最优，还可能被困在鞍点&lt;/p&gt;
+&lt;h2 id=&#34;随机梯度降&#34;&gt;随机梯度降&lt;/h2&gt;
+&lt;p&gt;我们的优化目标变为了&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\min f(x) = \dfrac{1}{N}\sum^N_{i=1}f_i(x)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(f_i(x)\)&lt;/span&gt;对应第&lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt;个样本的损失函数。&lt;/p&gt;
+&lt;p&gt;按照最速下降法的要求，&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+x^{k+1} = x^k - \alpha_k\nabla f(x^k)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;我们的梯度为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\nabla f(x^k) = \dfrac{1}{N}\sum^N_{i=1}\nabla f_i(x^k)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;通常，这个量会很大，我们不能简单的得到梯度。于是我们用到了随机梯度降&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+x^{k+1} = x^k - \alpha_k\nabla f_{S_k}(x^k)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(s_k\)&lt;/span&gt;是从&lt;span class=&#34;math inline&#34;&gt;\(\{1,2,\cdots,N\}\)&lt;/span&gt;中随机等可能的抽取的一个样本。&lt;span class=&#34;math inline&#34;&gt;\(\alpha_k\)&lt;/span&gt;是步长，在人工智能算法中也叫做学习率。&lt;/p&gt;
+&lt;p&gt;可以推断得到&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+E_{S_k}[\nabla f_{S_k}(x^k)|x^k] = \nabla f(x^k)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;优缺点&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;同下&lt;/p&gt;
+&lt;h2 id=&#34;小批量随机梯度降&#34;&gt;小批量随机梯度降&lt;/h2&gt;
+&lt;p&gt;即抽取元素比较少的集合&lt;span class=&#34;math inline&#34;&gt;\(B_k\in
+\{1,2,\cdots,N\}\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+x^{k+1} = x^k - \dfrac{\alpha_k}{|B_k|}\sum_{s\in B_k}\nabla f_{s}(x^k)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(|B_k|\)&lt;/span&gt;为元素个数，又叫batch-size。大小为1时就是随机梯度降，大小和训练样本数据一样大时，算法就是梯度下降。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;优点&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;同梯度降&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;缺点&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;学习率选取较为困难，容易收敛到局部最优，还可能被困在鞍点&lt;/p&gt;
+&lt;h2 id=&#34;动量法&#34;&gt;动量法&lt;/h2&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+v^{k+1} = \mu_k v^k - \alpha_k\nabla f_{S_k}(x^k)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+x^{k+1} = x^k + v^{k+1}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(\mu_k\in [0,1)\)&lt;/span&gt;，通常取&lt;span class=&#34;math inline&#34;&gt;\(\mu_k\geq 0.5\)&lt;/span&gt;，代表具有较大的惯性。&lt;span class=&#34;math inline&#34;&gt;\(\mu_k=0\)&lt;/span&gt;时退化成随机梯度降。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;优点&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;和上一次梯度方向一致时，能很好的加速。能够跳出局部最优。在梯度改变方向的时候，能减少迭代次数&lt;/p&gt;
+&lt;h2 id=&#34;nesterov算法&#34;&gt;Nesterov算法&lt;/h2&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+v^{k+1} = \mu_k v^k - \alpha_k\nabla f_{S_k}(x^k+\mu_k v^k)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+x^{k+1} = x^k + v^{k+1}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;即提前预估了下一次参数所在的位置。&lt;/p&gt;
+&lt;h2 id=&#34;adagrad&#34;&gt;AdaGrad&lt;/h2&gt;
+&lt;p&gt;该方法可以自发调整参数。&lt;/p&gt;
+&lt;p&gt;令&lt;span class=&#34;math inline&#34;&gt;\(g^k = \nabla f_{S_k}(x^k)\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;引入向量&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+G^k = \sum^k_{i=1}g^i\odot g^i
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(\odot\)&lt;/span&gt;代表向量的对应分量相乘，然后再组合成新的向量。&lt;/p&gt;
+&lt;p&gt;迭代格式为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+x^{k+1} = x^k-\dfrac{\alpha}{\sqrt{G^k+\varepsilon}}\odot g^k
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+G^{k+1} = G^k  + g^{k+1}\odot g^{k+1}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;这里&lt;span class=&#34;math inline&#34;&gt;\(\alpha\)&lt;/span&gt;为初始步长，&lt;span class=&#34;math inline&#34;&gt;\(\varepsilon&amp;gt;0\)&lt;/span&gt;是防止除零操作。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;缺点&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;随着迭代次数的增加，&lt;span class=&#34;math inline&#34;&gt;\(G^k\)&lt;/span&gt;越来越大，使得&lt;span class=&#34;math inline&#34;&gt;\(\dfrac{\alpha}{\sqrt{G^k+\varepsilon}}\to
+0\)&lt;/span&gt;，梯度消失&lt;/p&gt;
+&lt;h3 id=&#34;rmsprop&#34;&gt;RMSProp&lt;/h3&gt;
+&lt;p&gt;为了解决学习率趋于&lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt;的问题，引入一个&lt;span class=&#34;math inline&#34;&gt;\(\rho\in[0,1)\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+x^{k+1} = x^k-\dfrac{\alpha}{\sqrt{M^k+\varepsilon}}\odot g^k
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+M^{k+1} = \rho M^k  + (1-\rho) g^{k+1}\odot g^{k+1}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;adadelta&#34;&gt;AdaDelta&lt;/h3&gt;
+&lt;p&gt;令&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+g&amp;#39;_k = \sqrt{\dfrac{\Delta x^k+\varepsilon}{M^k+\varepsilon}}\odot
+g^k
+\]&lt;/span&gt; 迭代如下&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+x^{k+1} = x^k-g&amp;#39;_k
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+M^{k+1} = \rho M^k  + (1-\rho) g^{k+1}\odot g^{k+1}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\Delta x^{k+1} = \rho \Delta x^k + (1-\rho)g&amp;#39;_k\odot g&amp;#39;_k
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;adam&#34;&gt;Adam&lt;/h3&gt;
+&lt;h2 id=&#34;牛顿法&#34;&gt;牛顿法&lt;/h2&gt;
+&lt;h2 id=&#34;修正牛顿法&#34;&gt;修正牛顿法&lt;/h2&gt;
+&lt;h2 id=&#34;拟牛顿法&#34;&gt;拟牛顿法&lt;/h2&gt;
+&lt;h3 id=&#34;dfp更新公式&#34;&gt;DFP更新公式&lt;/h3&gt;
+&lt;h2 id=&#34;共轭方向法&#34;&gt;共轭方向法&lt;/h2&gt;
+&lt;h2 id=&#34;共轭梯度法&#34;&gt;共轭梯度法&lt;/h2&gt;
+&lt;h2 id=&#34;fr共轭梯度法&#34;&gt;FR共轭梯度法&lt;/h2&gt;
+&lt;h2 id=&#34;坐标轮换法&#34;&gt;坐标轮换法&lt;/h2&gt;
+&lt;h2 id=&#34;单形替换法&#34;&gt;单形替换法&lt;/h2&gt;
+&lt;h1 id=&#34;有约束最优化方法&#34;&gt;有约束最优化方法&lt;/h1&gt;
+&lt;h2 id=&#34;外点罚函数法&#34;&gt;外点罚函数法&lt;/h2&gt;
+&lt;h2 id=&#34;内点罚函数法&#34;&gt;内点罚函数法&lt;/h2&gt;
+&lt;h2 id=&#34;混合罚函数法&#34;&gt;混合罚函数法&lt;/h2&gt;
 
 
 </description>
@@ -431,7 +863,7 @@ B\)&lt;/span&gt;写为&lt;span class=&#34;math inline&#34;&gt;\(AB\)&lt;/span&gt
 &lt;p&gt;需要注意：&lt;/p&gt;
 &lt;ol type=&#34;1&#34;&gt;
 &lt;li&gt;要保留原来的运算顺序，例如原来&lt;span class=&#34;math inline&#34;&gt;\(A+BC\)&lt;/span&gt;，变换后要变成&lt;span class=&#34;math inline&#34;&gt;\(A&amp;#39;(B&amp;#39;+C&amp;#39;)\)&lt;/span&gt;&lt;/li&gt;
-&lt;li&gt;不属于单个变量上的反号应保持不变，例如&lt;span class=&#34;math inline&#34;&gt;\((AC)&amp;#39;\)&lt;/span&gt;变换为&lt;span class=&#34;math inline&#34;&gt;\((A&amp;#39;+C&amp;#39;)&amp;#39;&amp;#39;\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;不属于单个变量上的反号应保持不变，例如&lt;span class=&#34;math inline&#34;&gt;\((AC)&amp;#39;\)&lt;/span&gt;变换为&lt;span class=&#34;math inline&#34;&gt;\((A&amp;#39;+C&amp;#39;)&amp;#39;\)&lt;/span&gt;&lt;/li&gt;
 &lt;/ol&gt;
 &lt;h3 id=&#34;对偶定理&#34;&gt;对偶定理&lt;/h3&gt;
 &lt;p&gt;若两个逻辑式相等，则它们的对偶式也相等。&lt;/p&gt;
