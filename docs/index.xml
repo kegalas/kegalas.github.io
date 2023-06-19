@@ -370,6 +370,425 @@ x_i&amp;#39;-x_i&amp;#39;&amp;#39;,x_i&amp;#39;\geq0,x_i&amp;#39;&amp;#39;\geq0\
         <guid>https://kegalas.top/p/%E6%95%B0%E5%AD%97%E7%94%B5%E8%B7%AF%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</guid>
         <description>&lt;img src="https://kegalas.top/p/%E6%95%B0%E5%AD%97%E7%94%B5%E8%B7%AF%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/cover.jpg" alt="Featured image of post 数字电路学习笔记" /&gt;
 
+&lt;h1 id=&#34;数制和编码&#34;&gt;数制和编码&lt;/h1&gt;
+&lt;h2 id=&#34;十进制二进制八进制十六进制及其转换&#34;&gt;十进制、二进制、八进制、十六进制及其转换&lt;/h2&gt;
+&lt;p&gt;过于简单，不多介绍。可以在计组笔记里找到&lt;/p&gt;
+&lt;h2 id=&#34;反码补码和补码运算&#34;&gt;反码、补码和补码运算&lt;/h2&gt;
+&lt;p&gt;也可以在计组笔记中找到。&lt;/p&gt;
+&lt;h2 id=&#34;十进制代码&#34;&gt;十进制代码&lt;/h2&gt;
+&lt;p&gt;每四位二进制对应一个十进制数。&lt;/p&gt;
+&lt;p&gt;主要有8421(BCD)、2421、5211、余3码、余3循环码。&lt;/p&gt;
+&lt;p&gt;8421，2421，5211是三种恒权代码，另外两个不是。&lt;/p&gt;
+&lt;p&gt;其中余3码就是在BCD码上加&lt;span class=&#34;math inline&#34;&gt;\(3\)&lt;/span&gt;得到的。余3循环码的特点是相邻的两个代码之间仅有一位状态不同。至于余3循环码怎么得到，看格雷码&lt;/p&gt;
+&lt;p&gt;需要注意的是他们的禁止码是哪些，在后面的时序逻辑电路可能会用到。按照从小到大的顺序写出&lt;span class=&#34;math inline&#34;&gt;\(0\sim
+9\)&lt;/span&gt;对应的码，没写出来的就是禁止码。为什么要从小到大？比如2421码，最高位和第二低位都是2，我们要优先选择低位的。&lt;/p&gt;
+&lt;h2 id=&#34;格雷码&#34;&gt;格雷码&lt;/h2&gt;
+&lt;p&gt;格雷码的形式如下，假设为四位格雷码，最开始是0000.
+则最右边的一位变化为0110的顺序，第二位为00111100的顺序，第三位为0000111111110000.以此类推。注意第四位只循环了半个周期，四位格雷码就表示完毕了。&lt;/p&gt;
+&lt;p&gt;格雷码的特点是相邻的两个代码之间只有一位发生变化。在代码转换的过程中不会产生过渡噪声。&lt;/p&gt;
+&lt;p&gt;四位余3码就是从第四个格雷码开始取10个，即从0010开始到1010。&lt;/p&gt;
+&lt;h2 id=&#34;ascii码&#34;&gt;ASCII码&lt;/h2&gt;
+&lt;p&gt;略。&lt;/p&gt;
+&lt;h1 id=&#34;逻辑代数基础&#34;&gt;逻辑代数基础&lt;/h1&gt;
+&lt;h2 id=&#34;三个基本运算&#34;&gt;三个基本运算&lt;/h2&gt;
+&lt;p&gt;分别是与(AND)&lt;span class=&#34;math inline&#34;&gt;\((\cdot)\)&lt;/span&gt;、或(OR)&lt;span class=&#34;math inline&#34;&gt;\((+)\)&lt;/span&gt;、非(NOR)&lt;span class=&#34;math inline&#34;&gt;\((&amp;#39;或\overline{ })\)&lt;/span&gt;，电路符号如下&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;1.jpg&#34; alt=&#34;1.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;1.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;当然，这三个运算可以复合出一些操作。与非(NAND)、或非(NOR)、与或非(AND-NOR)、异或(XOR)，同或(XNOR)。符号如下&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;2.jpg&#34; alt=&#34;2.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;2.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;其中异或有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+A\oplus B = A\cdot B&amp;#39;+A&amp;#39;\cdot B
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;同或有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+A\odot B = A\cdot B + A&amp;#39;\cdot B&amp;#39;
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;二者互为反运算，&lt;span class=&#34;math inline&#34;&gt;\(A\oplus B = (A\odot
+B)&amp;#39;,A\odot B=(A\oplus B)&amp;#39;\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;注意，与运算可以把&lt;span class=&#34;math inline&#34;&gt;\(A\cdot
+B\)&lt;/span&gt;写为&lt;span class=&#34;math inline&#34;&gt;\(AB\)&lt;/span&gt;。关于运算优先级，虽然书上没说，但是应该是非&amp;gt;与&amp;gt;或。&lt;/p&gt;
+&lt;h2 id=&#34;逻辑代数的基本公式和常用公式&#34;&gt;逻辑代数的基本公式和常用公式&lt;/h2&gt;
+&lt;figure&gt;
+&lt;img src=&#34;3.jpg&#34; alt=&#34;3.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;3.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;要证明这些公式，可以列真值表。然后这些公式就可以用来证明别的公式了，比如下面的。&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;4.jpg&#34; alt=&#34;4.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;4.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;h2 id=&#34;逻辑代数的基本定理&#34;&gt;逻辑代数的基本定理&lt;/h2&gt;
+&lt;h3 id=&#34;代入定理&#34;&gt;代入定理&lt;/h3&gt;
+&lt;p&gt;在任何一个包含变量A的逻辑等式中，若以另外一个逻辑式代入式中所有A的位置，则等式仍然成立。&lt;/p&gt;
+&lt;h3 id=&#34;反演定理&#34;&gt;反演定理&lt;/h3&gt;
+&lt;p&gt;对于任意一个逻辑式&lt;span class=&#34;math inline&#34;&gt;\(Y\)&lt;/span&gt;，若将所有的&lt;span class=&#34;math inline&#34;&gt;\(\cdot\)&lt;/span&gt;换成&lt;span class=&#34;math inline&#34;&gt;\(+\)&lt;/span&gt;，所有的&lt;span class=&#34;math inline&#34;&gt;\(+\)&lt;/span&gt;换成&lt;span class=&#34;math inline&#34;&gt;\(\cdot\)&lt;/span&gt;，&lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt;换成&lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt;，&lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt;换成&lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt;，原变量换成反变量，反变量换成原变量，得到的结果就是&lt;span class=&#34;math inline&#34;&gt;\(Y&amp;#39;\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;需要注意：&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;要保留原来的运算顺序，例如原来&lt;span class=&#34;math inline&#34;&gt;\(A+BC\)&lt;/span&gt;，变换后要变成&lt;span class=&#34;math inline&#34;&gt;\(A&amp;#39;(B&amp;#39;+C&amp;#39;)\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;不属于单个变量上的反号应保持不变，例如&lt;span class=&#34;math inline&#34;&gt;\((AC)&amp;#39;\)&lt;/span&gt;变换为&lt;span class=&#34;math inline&#34;&gt;\((A&amp;#39;+C&amp;#39;)&amp;#39;&amp;#39;\)&lt;/span&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;对偶定理&#34;&gt;对偶定理&lt;/h3&gt;
+&lt;p&gt;若两个逻辑式相等，则它们的对偶式也相等。&lt;/p&gt;
+&lt;p&gt;对偶式是：对于任意一个逻辑式&lt;span class=&#34;math inline&#34;&gt;\(Y\)&lt;/span&gt;，若将所有的&lt;span class=&#34;math inline&#34;&gt;\(\cdot\)&lt;/span&gt;换成&lt;span class=&#34;math inline&#34;&gt;\(+\)&lt;/span&gt;，所有的&lt;span class=&#34;math inline&#34;&gt;\(+\)&lt;/span&gt;换成&lt;span class=&#34;math inline&#34;&gt;\(\cdot\)&lt;/span&gt;，&lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt;换成&lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt;，&lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt;换成&lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt;，得到的结果就是&lt;span class=&#34;math inline&#34;&gt;\(Y^D\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;想要证明两个逻辑式相等，可以转换为证明它们的对偶式相等。有时候这更简单。&lt;/p&gt;
+&lt;h2 id=&#34;完备集&#34;&gt;完备集&lt;/h2&gt;
+&lt;p&gt;对于一个代数系统，若仅用它所定义的一组运算符号就能解决所有的运算问题，则称这一组符号是一个完备的集合，简称完备集。&lt;/p&gt;
+&lt;p&gt;对于逻辑代数，与、或、非毫无疑问是一个完备集。但它并不是最小的。与非、或非、与或非，它们三个都是能够单独组合实现与、或、非功能的。它们是最小的完备集。&lt;/p&gt;
+&lt;h2 id=&#34;逻辑函数&#34;&gt;逻辑函数&lt;/h2&gt;
+&lt;p&gt;如果以逻辑变量作为输入，以运算结果作为输出，那么当输入变量的取值确定之后，输出的取值便确定了，因此输入输出之间是一种函数关系。&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+Y = F(A,B,C,\cdots)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;常用形式&#34;&gt;常用形式&lt;/h3&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;与或式。&lt;span class=&#34;math inline&#34;&gt;\(F=AB+CD\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;或与式。&lt;span class=&#34;math inline&#34;&gt;\(F=(A+B)(C+D)\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;与非与非式。&lt;span class=&#34;math inline&#34;&gt;\(F=\overline{\overline{AB}\cdot\overline{CD}}\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;或非或非式。&lt;span class=&#34;math inline&#34;&gt;\(F=\overline{\overline{A+B}+\overline{C+D}}\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;与或非式。&lt;span class=&#34;math inline&#34;&gt;\(F=\overline{{AB}\cdot{CD}}\)&lt;/span&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;任何逻辑函数都能转换成以上五种形式。它的作用在于，如果电路元件只给你某某元件，你要把原来的表达式转换为上述五种式子，再去套用元件。多用德摩根律。&lt;/p&gt;
+&lt;h3 id=&#34;描述方法&#34;&gt;描述方法&lt;/h3&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;真值表&lt;/li&gt;
+&lt;li&gt;逻辑函数式&lt;/li&gt;
+&lt;li&gt;逻辑图（电路图）&lt;/li&gt;
+&lt;li&gt;波形图&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;两种标准式&#34;&gt;两种标准式&lt;/h3&gt;
+&lt;h4 id=&#34;最小项&#34;&gt;最小项&lt;/h4&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;个变量的最小项&lt;span class=&#34;math inline&#34;&gt;\(m\)&lt;/span&gt;是含&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;个变量的“乘积项”，其中每个变量都以原变量或反变量的形式出现恰好一次。&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;个变量的最小项有&lt;span class=&#34;math inline&#34;&gt;\(2^n\)&lt;/span&gt;个。&lt;/p&gt;
+&lt;p&gt;输入变量的每一组取值都使一个对应的最小项等于&lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt;。为了方便，例如&lt;span class=&#34;math inline&#34;&gt;\(A=1,B=0,C=1\)&lt;/span&gt;时，该最小项写作&lt;span class=&#34;math inline&#34;&gt;\(AB&amp;#39;C\)&lt;/span&gt;。如果看成二进制数&lt;span class=&#34;math inline&#34;&gt;\(101\)&lt;/span&gt;，则最小项标记为&lt;span class=&#34;math inline&#34;&gt;\(m_{101}=m_5\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;最小项的性质有&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;在输入变量的任何取值下必有一个最小项，且仅有一个最小项的值为&lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;全体最小项的和为&lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;任意两个最小项的乘积为&lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;具有相邻性的两个最小项之和可以合并成一项并消去一对因子&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id=&#34;最大项&#34;&gt;最大项&lt;/h4&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;个变量的最大项&lt;span class=&#34;math inline&#34;&gt;\(M\)&lt;/span&gt;是含&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;个变量的“和”，其中每个变量都以原变量或反变量的形式出现恰好一次。&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;个变量的最小项有&lt;span class=&#34;math inline&#34;&gt;\(2^M\)&lt;/span&gt;个。&lt;/p&gt;
+&lt;p&gt;与最小项正好相,反输入变量的每一组取值都使一个对应的最大项等于&lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt;。&lt;span class=&#34;math inline&#34;&gt;\(A=1,B=0,C=1\)&lt;/span&gt;时最大项写作&lt;span class=&#34;math inline&#34;&gt;\(A&amp;#39;+B+C&amp;#39;\)&lt;/span&gt;，记作&lt;span class=&#34;math inline&#34;&gt;\(M_{101}=M_5\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;最大项的性质有&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;在输入变量的任何取值下必有一个最大项，且仅有一个最大项的值为&lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;全体最大项的积为&lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;任意两个最大项的和为&lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;只有一个变量不同的两个最大项的乘积等于各相同变量之和&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;最后，可以发现&lt;span class=&#34;math inline&#34;&gt;\(M_i=m_i&amp;#39;\)&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;逻辑函数的最小项之和形式&#34;&gt;逻辑函数的最小项之和形式&lt;/h3&gt;
+&lt;p&gt;首先将给定的逻辑函数式化为若干乘积项之和的形式，亦称“积之和”形式。然后，再利用基本公式&lt;span class=&#34;math inline&#34;&gt;\(A+A&amp;#39;=1\)&lt;/span&gt;将每个乘积项中缺少的因子补全，这样就可以将与或的形式化为最小项之和的标准形式。&lt;/p&gt;
+&lt;p&gt;例如&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+Y = ABC&amp;#39;+BC
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+Y = ABC&amp;#39;+(A+A&amp;#39;)BC = ABC&amp;#39;+ABC+A&amp;#39;BC=m_3+m_6+m_7
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;也可以写作&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+Y(A,B,C)=\sum m(3,6,7)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;逻辑函数的最大项之积形式&#34;&gt;### 逻辑函数的最大项之积形式&lt;/h3&gt;
+&lt;p&gt;利用公式&lt;span class=&#34;math inline&#34;&gt;\(AA&amp;#39;=0\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;例如&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+Y = A&amp;#39;B+AC = (A&amp;#39;B+A)(A&amp;#39;B+C) = (A+B)(A&amp;#39;+C)(B+C)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+Y = (A+B+CC&amp;#39;)(A&amp;#39;+BB&amp;#39;+C)(AA&amp;#39;+B+C) =
+(A+B+C)(A+B+C&amp;#39;)(A&amp;#39;+B+C)(A&amp;#39;+B&amp;#39;+C)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+Y(A,B,C,D) = \prod M(0,1,4,6)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;或者，我们可以先求&lt;span class=&#34;math inline&#34;&gt;\(Y&amp;#39;\)&lt;/span&gt;，并且写出&lt;span class=&#34;math inline&#34;&gt;\(Y&amp;#39;\)&lt;/span&gt;的最小项，再把&lt;span class=&#34;math inline&#34;&gt;\(Y&amp;#39;\)&lt;/span&gt;求反得到最大项。或者得出&lt;span class=&#34;math inline&#34;&gt;\(Y\)&lt;/span&gt;的最小项，利用&lt;span class=&#34;math inline&#34;&gt;\(m_i\)&lt;/span&gt;和&lt;span class=&#34;math inline&#34;&gt;\(M_i\)&lt;/span&gt;的互补关系直接写出结果。&lt;/p&gt;
+&lt;p&gt;互补关系指的是，例如&lt;span class=&#34;math inline&#34;&gt;\(3\)&lt;/span&gt;个变量的表达式，&lt;span class=&#34;math inline&#34;&gt;\(Y\)&lt;/span&gt;最小式之和为&lt;span class=&#34;math inline&#34;&gt;\(\sum m(0,1,4,5)\)&lt;/span&gt;，则&lt;span class=&#34;math inline&#34;&gt;\(Y\)&lt;/span&gt;最大项之积为&lt;span class=&#34;math inline&#34;&gt;\(\prod
+M(2,3,6,7)\)&lt;/span&gt;，把剩下没用的都放到最大项里了。这个的证明可以在离散数学笔记中找到。&lt;/p&gt;
+&lt;h2 id=&#34;逻辑函数的化简&#34;&gt;逻辑函数的化简&lt;/h2&gt;
+&lt;h3 id=&#34;公式化简法&#34;&gt;公式化简法&lt;/h3&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;并项法，使用&lt;span class=&#34;math inline&#34;&gt;\(AB+AB&amp;#39;=A\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;吸收法，使用&lt;span class=&#34;math inline&#34;&gt;\(A+AB=A\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;消项法，使用&lt;span class=&#34;math inline&#34;&gt;\(AB+A&amp;#39;C+BCDE =
+AB+A&amp;#39;C\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;消因子法，使用&lt;span class=&#34;math inline&#34;&gt;\(A+A&amp;#39;B =
+A+B\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;配项法，使用&lt;span class=&#34;math inline&#34;&gt;\(A+A=A,A+A&amp;#39;=1\)&lt;/span&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;卡诺图法&#34;&gt;卡诺图法&lt;/h3&gt;
+&lt;p&gt;介绍不方便，看教材。&lt;/p&gt;
+&lt;p&gt;注意事项：横轴和纵轴是格雷码排列的。但是填进去的时候，按照坐标的字面量填入最小项。而不是什么转换为格雷码对应的十进制数，再填入对应的十进制表示的最小项。&lt;/p&gt;
+&lt;p&gt;如果表达式里有这一项，就填入1，没有就填入0。例如有&lt;span class=&#34;math inline&#34;&gt;\(ABCD\)&lt;/span&gt;就填入坐标为&lt;span class=&#34;math inline&#34;&gt;\(11,11\)&lt;/span&gt;的那一格，也就是第三行第三列，填入&lt;span class=&#34;math inline&#34;&gt;\(m_{15}\)&lt;/span&gt;，填入&lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt;，没有这一项就填入&lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;如果你得到的是最大项，那么在卡诺图对应的位置填入&lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt;，其他位置填入&lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;合并规律&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;用尽可能大的圈，去套&lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt;，不可套&lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt;，但是可以重叠（不要多余，每个圈里面至少有一格只被套过一次）、可以越过边界到达相对的边界一边。&lt;/p&gt;
+&lt;p&gt;不方便说，多做题。&lt;/p&gt;
+&lt;h2 id=&#34;具有无关项的逻辑函数及其化简&#34;&gt;具有无关项的逻辑函数及其化简&lt;/h2&gt;
+&lt;p&gt;对于输入变量的每一组取值组合，逻辑函数都有确定的值，则这类逻辑函数称为完全描述的逻辑函数。&lt;/p&gt;
+&lt;p&gt;对于输入变量的某些取值组合，逻辑函数值不确定（可以为1，也可以为0），或者不存在，这类逻辑函数称为非完全描述的逻辑函数。&lt;/p&gt;
+&lt;p&gt;无关项在卡诺图里填&lt;span class=&#34;math inline&#34;&gt;\(\times\)&lt;/span&gt;，在真值表里填&lt;span class=&#34;math inline&#34;&gt;\(\times\)&lt;/span&gt;，在逻辑函数中用约束项表示&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;5.jpg&#34; alt=&#34;5.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;5.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;在逻辑函数中，一般最小项的约束条件为&lt;span class=&#34;math inline&#34;&gt;\(\sum
+d(\cdots) = 0\)&lt;/span&gt;。最大项的约束条件为&lt;span class=&#34;math inline&#34;&gt;\(\prod d(\cdots) = 1\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;在卡诺图化简中，带有&lt;span class=&#34;math inline&#34;&gt;\(\times\)&lt;/span&gt;的可以圈也可以不圈。&lt;/p&gt;
+&lt;h1 id=&#34;组合逻辑电路&#34;&gt;组合逻辑电路&lt;/h1&gt;
+&lt;h2 id=&#34;概述&#34;&gt;概述&lt;/h2&gt;
+&lt;p&gt;数字电路可以分为两类：组合逻辑电路、时序逻辑电路&lt;/p&gt;
+&lt;p&gt;组合逻辑电路的输出仅仅取决于该时刻的输入。&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;6.jpg&#34; alt=&#34;6.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;6.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;输入输出关系可以表示为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\left\{\begin{matrix}
+y_1=f_1(a_1,\cdots,a_n) \\
+y_2=f_2(a_1,\cdots,a_n)  \\
+\vdots \\
+y_m=f_m(a_1,\cdots,a_n)
+\end{matrix}\right.
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;写成向量形式为&lt;span class=&#34;math inline&#34;&gt;\(Y=F(A)\)&lt;/span&gt;&lt;/p&gt;
+&lt;h2 id=&#34;分析方法&#34;&gt;分析方法&lt;/h2&gt;
+&lt;p&gt;根据电路图写表达式、列真值表，判断功能&lt;/p&gt;
+&lt;h2 id=&#34;设计方法&#34;&gt;设计方法&lt;/h2&gt;
+&lt;p&gt;把想做的功能抽象出来，写成表达式，化简表达式，画电路图。&lt;/p&gt;
+&lt;h2 id=&#34;常用组合逻辑电路模块&#34;&gt;常用组合逻辑电路模块&lt;/h2&gt;
+&lt;h3 id=&#34;普通编码器&#34;&gt;8-3普通编码器&lt;/h3&gt;
+&lt;figure&gt;
+&lt;img src=&#34;7.jpg&#34; alt=&#34;7.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;7.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;功能就是，把某一位输入变成二进制位输出，比如&lt;span class=&#34;math inline&#34;&gt;\(I_6=1\)&lt;/span&gt;，则输出&lt;span class=&#34;math inline&#34;&gt;\(110\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;它普通就普通在，任意时刻只允许一个输入。&lt;/p&gt;
+&lt;h3 id=&#34;优先编码器&#34;&gt;8-3优先编码器&lt;/h3&gt;
+&lt;p&gt;可以有多个输入，但是按照内部的优先级顺序，会进行选择什么输出。注意这些圆点代表非门，或者说低电平有效。&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;8.jpg&#34; alt=&#34;8.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;8.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;h3 id=&#34;译码器&#34;&gt;3-8译码器&lt;/h3&gt;
+&lt;p&gt;就是8-3编码器反过来&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;9.jpg&#34; alt=&#34;9.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;9.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;figure&gt;
+&lt;img src=&#34;10.jpg&#34; alt=&#34;10.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;10.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;h3 id=&#34;进制译码器&#34;&gt;2-10进制译码器&lt;/h3&gt;
+&lt;p&gt;也就是BCD翻译为10进制数字&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;11.jpg&#34; alt=&#34;11.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;11.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;h3 id=&#34;七段字符管&#34;&gt;七段字符管&lt;/h3&gt;
+&lt;figure&gt;
+&lt;img src=&#34;12.jpg&#34; alt=&#34;12.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;12.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;h3 id=&#34;数据选择器&#34;&gt;数据选择器&lt;/h3&gt;
+&lt;p&gt;从一组输入中选出一个进行输出。&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;13.jpg&#34; alt=&#34;13.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;13.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;figure&gt;
+&lt;img src=&#34;14.jpg&#34; alt=&#34;14.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;14.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;h3 id=&#34;加法器&#34;&gt;加法器&lt;/h3&gt;
+&lt;h4 id=&#34;一位半加器&#34;&gt;一位半加器&lt;/h4&gt;
+&lt;figure&gt;
+&lt;img src=&#34;15.jpg&#34; alt=&#34;15.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;15.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\left\{\begin{matrix}
+S = A&amp;#39;B+AB&amp;#39; = A\oplus B \\
+CO = AB
+\end{matrix}\right.
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;不考虑低位的进位，称为半加。 &lt;span class=&#34;math inline&#34;&gt;\(S\)&lt;/span&gt;为本位加的结果，&lt;span class=&#34;math inline&#34;&gt;\(CO\)&lt;/span&gt;为进位&lt;/p&gt;
+&lt;h4 id=&#34;一位全加器串行加法器超前进位加法器&#34;&gt;一位全加器、串行加法器、超前进位加法器&lt;/h4&gt;
+&lt;p&gt;见计组笔记。&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\left\{\begin{matrix}
+S = A\oplus B\oplus CI \\
+CO = AB + (A\oplus B)CI
+\end{matrix}\right.
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h2 id=&#34;组合逻辑电路中的竞争-冒险&#34;&gt;组合逻辑电路中的竞争-冒险&lt;/h2&gt;
+&lt;p&gt;在组合电路中，某一输入变量经不同途径传输后，到达电路中某一会合点的时间有先有后，这种现象称为竞争。由于竞争而使电路输出发生瞬时错误的现象称为冒险。&lt;/p&gt;
+&lt;p&gt;将门电路两个输入信号同时向相反的逻辑电平跳变的现象称为竞争。&lt;/p&gt;
+&lt;p&gt;应当指出，有竞争不代表一定会产生尖峰脉冲。&lt;/p&gt;
+&lt;h3 id=&#34;判断有无竞争&#34;&gt;判断有无竞争&lt;/h3&gt;
+&lt;p&gt;只要输出端的逻辑函数在一定条件下能化简成&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+Y = A+A&amp;#39;\quad or\quad Y = AA&amp;#39;
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;则一定有竞争。&lt;/p&gt;
+&lt;p&gt;例如&lt;span class=&#34;math inline&#34;&gt;\(Y=AB+A&amp;#39;C\)&lt;/span&gt;，在&lt;span class=&#34;math inline&#34;&gt;\(B=C=1\)&lt;/span&gt;时有&lt;span class=&#34;math inline&#34;&gt;\(Y=A+A&amp;#39;\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;或者在卡诺图上看。如果两卡诺圈相切，而相切处未被其他卡诺圈包围，则有竞争。&lt;/p&gt;
+&lt;p&gt;两个输入变量以上的竞争就难以判断了，最有效的办法是做实验。利用示波器观察，如果有毛刺，就有冒险。&lt;/p&gt;
+&lt;h3 id=&#34;消除竞争-冒险的方法&#34;&gt;消除竞争-冒险的方法&lt;/h3&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;接入滤波电容&lt;/li&gt;
+&lt;li&gt;引入选通脉冲&lt;/li&gt;
+&lt;li&gt;修改逻辑设计&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;修改逻辑设计需要增加冗余项。&lt;/p&gt;
+&lt;p&gt;例如，&lt;span class=&#34;math inline&#34;&gt;\(Y = AB+A&amp;#39;C =
+AB+A&amp;#39;C+BC\)&lt;/span&gt;，此时，当&lt;span class=&#34;math inline&#34;&gt;\(B=C=1\)&lt;/span&gt;时，无论&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;取什么值，都有&lt;span class=&#34;math inline&#34;&gt;\(Y=1\)&lt;/span&gt;&lt;/p&gt;
+&lt;h1 id=&#34;半导体存储电路&#34;&gt;半导体存储电路&lt;/h1&gt;
+&lt;h2 id=&#34;sr锁存器&#34;&gt;SR锁存器&lt;/h2&gt;
+&lt;figure&gt;
+&lt;img src=&#34;16.jpg&#34; alt=&#34;16.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;16.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;figure&gt;
+&lt;img src=&#34;17.jpg&#34; alt=&#34;17.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;17.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;注意我们约定不同时给SR输入有效。有些地方的SR锁存器是低电平有效，无论什么情况，记住：两个都无效时，保存原有的输出。S（Set）有效时，输出变为&lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt;，R（Reset）有效时，输出变为&lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt;。&lt;/p&gt;
+&lt;h2 id=&#34;触发器&#34;&gt;触发器&lt;/h2&gt;
+&lt;h3 id=&#34;电平触发&#34;&gt;电平触发&lt;/h3&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;只有当CLK为有效时，触发器才接受输入信号&lt;/li&gt;
+&lt;li&gt;在CLK=1的全部时间里，SR状态的变化都有可能引起输出状态的改变。在CLK回到0之后，触发器保存的是CLK回到0之前瞬间的状态。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;显然，如果CLK=1时SR多次变化，输出也会多次变化。抗干扰能力弱。&lt;/p&gt;
+&lt;h3 id=&#34;边沿触发&#34;&gt;边沿触发&lt;/h3&gt;
+&lt;p&gt;触发器的次态仅取决于时钟信号的上升沿（或者下降沿）到达时的逻辑状态。抗干扰能力强。&lt;/p&gt;
+&lt;h3 id=&#34;脉冲触发&#34;&gt;脉冲触发&lt;/h3&gt;
+&lt;p&gt;当CLK的有效电平消失以后，输出状态才改变。所以也叫延迟触发。&lt;/p&gt;
+&lt;h3 id=&#34;sr触发器&#34;&gt;SR触发器&lt;/h3&gt;
+&lt;figure&gt;
+&lt;img src=&#34;18.jpg&#34; alt=&#34;18.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;18.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\left\{\begin{matrix}
+Q^* = S+R&amp;#39;Q \\
+SR = 0(约束)
+\end{matrix}\right.
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;jk触发器&#34;&gt;JK触发器&lt;/h3&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+Q^* = JQ&amp;#39; + K&amp;#39;Q
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;也就是&lt;span class=&#34;math inline&#34;&gt;\(J=K=0\)&lt;/span&gt;时，输出不变，&lt;span class=&#34;math inline&#34;&gt;\(J=1,K=0\)&lt;/span&gt;时输出变&lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt;，&lt;span class=&#34;math inline&#34;&gt;\(J=0,K=1\)&lt;/span&gt;时输出变&lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt;，&lt;span class=&#34;math inline&#34;&gt;\(J=K=1\)&lt;/span&gt;时，输出翻转。&lt;/p&gt;
+&lt;p&gt;只是比SR多了一个翻转的功能而已。&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;19.jpg&#34; alt=&#34;19.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;19.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;由于JK可以实现SR和T，所以现在一般生产JK触发器和D触发器较多。&lt;/p&gt;
+&lt;p&gt;注意到上面的时钟信号输入端口有个三角形，和之前的不一样。之前没有三角形的代表电平有效，这里有三角的代表上升沿有效。如果还有个非门在前面，则代表下降沿有效。这张图的JK触发器是下降沿有效。&lt;/p&gt;
+&lt;h3 id=&#34;t触发器&#34;&gt;T触发器&lt;/h3&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+Q^* = TQ&amp;#39;+T&amp;#39;Q
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;也就是说&lt;span class=&#34;math inline&#34;&gt;\(T=0\)&lt;/span&gt;时保持，&lt;span class=&#34;math inline&#34;&gt;\(T=1\)&lt;/span&gt;时翻转。&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;20.jpg&#34; alt=&#34;20.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;20.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;h3 id=&#34;d触发器&#34;&gt;D触发器&lt;/h3&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+Q^*=D
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;也就是说输出等于输入。&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;21.jpg&#34; alt=&#34;21.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;21.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;h2 id=&#34;触发器功能的描述方法&#34;&gt;触发器功能的描述方法&lt;/h2&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;状态转移真值表&lt;/li&gt;
+&lt;li&gt;次态卡诺图与特征方程&lt;/li&gt;
+&lt;li&gt;状态转移图&lt;/li&gt;
+&lt;li&gt;激励表&lt;/li&gt;
+&lt;li&gt;波形图&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h1 id=&#34;时序逻辑电路&#34;&gt;时序逻辑电路&lt;/h1&gt;
+&lt;h2 id=&#34;概述-1&#34;&gt;概述&lt;/h2&gt;
+&lt;figure&gt;
+&lt;img src=&#34;22.jpg&#34; alt=&#34;22.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;22.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;figure&gt;
+&lt;img src=&#34;23.jpg&#34; alt=&#34;23.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;23.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;写成向量形式得到&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+Y = F(X,Q)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+Z = G(X,Q)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+Q^* = H(Z,Q)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;第一个方程称为输出方程，第二个为驱动方程，第三个为状态方程。&lt;/p&gt;
+&lt;p&gt;在时序电路中区分出同步时序电路和异步时序电路。由于课时问题，我们学院只讲同步时序。&lt;/p&gt;
+&lt;p&gt;根据输出信号的特点分为米利型和穆尔型。米利型：输出信号取决于存储电路和输入变量。穆尔型：输出电路仅仅取决于存储电路。&lt;/p&gt;
+&lt;h2 id=&#34;分析方法-1&#34;&gt;分析方法&lt;/h2&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;从给定的逻辑图中写出每个触发器的驱动方程&lt;/li&gt;
+&lt;li&gt;驱动方程代入相应触发器的特性方程，得出每个触发器的状态方程，从而得到状态方程组&lt;/li&gt;
+&lt;li&gt;根据逻辑图写出输出方程&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;表示方法&#34;&gt;表示方法&lt;/h3&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;状态转换表&lt;/li&gt;
+&lt;li&gt;状态转换图。输入写斜线上，输出写斜线下，没有输入就空着。&lt;/li&gt;
+&lt;li&gt;状态机流程图&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;可自启动电路&#34;&gt;可自启动电路&lt;/h2&gt;
+&lt;p&gt;时序电路中的所有无效状态经过有限个CP脉冲后都能进入有效状态环，则称它是可自启动的。&lt;/p&gt;
+&lt;h2 id=&#34;设计方法-1&#34;&gt;设计方法&lt;/h2&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;逻辑抽象，得出电路的状态转换图或状态转换表&lt;/li&gt;
+&lt;li&gt;状态化简。如果两个电路状态在相同的输入下有相同的输出，并且转换到同一个次态中，则为等价。可以合并为一个。&lt;/li&gt;
+&lt;li&gt;状态分配&lt;/li&gt;
+&lt;li&gt;选定触发器，求出状态方程、驱动方程、输出方程&lt;/li&gt;
+&lt;li&gt;画出逻辑图&lt;/li&gt;
+&lt;li&gt;检查能否自启动&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;常用的时序逻辑电路&#34;&gt;常用的时序逻辑电路&lt;/h2&gt;
+&lt;h3 id=&#34;移位寄存器&#34;&gt;移位寄存器&lt;/h3&gt;
+&lt;h3 id=&#34;同步计数器&#34;&gt;同步计数器&lt;/h3&gt;
+&lt;figure&gt;
+&lt;img src=&#34;24.jpg&#34; alt=&#34;24.jpg&#34;/&gt;
+&lt;figcaption aria-hidden=&#34;true&#34;&gt;24.jpg&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;PT是计数允许端，CP是时钟信号。Cr是异步清零，ABCD是在LD有效时的置数输入。Oc是进位端。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;任意进制计数器的构成方法&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;已有N进制计数器，需要M进制计数器&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;M&amp;lt;N时&lt;/em&gt;&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;置零法&lt;/li&gt;
+&lt;li&gt;置数法&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;em&gt;M&amp;gt;N&lt;/em&gt;时&lt;/p&gt;
+&lt;p&gt;将多片N进制计数器组合起来，构成M进制计数器。可以分为串行进位方式、并行进位方式、整体置零方式。&lt;/p&gt;
+&lt;h3 id=&#34;集成寄存器&#34;&gt;集成寄存器&lt;/h3&gt;
 
 
 </description>
@@ -5207,7 +5626,7 @@ N = B^E\cdot M
 &lt;h2 id=&#34;检错与纠错码&#34;&gt;检错与纠错码&lt;/h2&gt;
 &lt;h3 id=&#34;校验码的码距&#34;&gt;校验码的码距&lt;/h3&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
-d_{min} \geq t+e+1, 且e&amp;gt;t
+d_{min} \geq t+e+1, 且e\geq t
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(d_{min}\)&lt;/span&gt;为编码码距，&lt;span class=&#34;math inline&#34;&gt;\(t\)&lt;/span&gt;为可纠错的位数，&lt;span class=&#34;math inline&#34;&gt;\(e\)&lt;/span&gt;为可检错的位数&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(d_{min}\geq
@@ -5216,7 +5635,7 @@ d_{min} \geq t+e+1, 且e&amp;gt;t
 &lt;h3 id=&#34;海明码&#34;&gt;海明码&lt;/h3&gt;
 &lt;p&gt;设信息码为&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;位，欲检测&lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt;位错误，增添&lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt;位校验位，组成&lt;span class=&#34;math inline&#34;&gt;\(m=n+k\)&lt;/span&gt;位的校验码，应满足&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
-2^k\geq n+k-1
+2^k\geq n+k+1
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;h3 id=&#34;crc码&#34;&gt;CRC码&lt;/h3&gt;
 &lt;h1 id=&#34;运算方法与运算器&#34;&gt;运算方法与运算器&lt;/h1&gt;
