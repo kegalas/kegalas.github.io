@@ -125,7 +125,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 25 分钟
+                    阅读时长: 30 分钟
                 </time>
             </div>
         
@@ -631,7 +631,7 @@ X^*V^*+Y^*U^* = 0
 <p>这个定理还表述为如下两个形式</p>
 <ol type="1">
 <li>假如一个问题的某个变量取正数，则相应问题的另外一个约束条件必取等式</li>
-<li>一个问题中的约束条件取不等式，则相应于另一个问题中的变量为零</li>
+<li>一个问题中的约束条件不取等式，则相应于另一个问题中的变量为零</li>
 </ol>
 <p>说起来有些抽象，做题理解。</p>
 <h1 id="一维搜索法">一维搜索法</h1>
@@ -779,7 +779,7 @@ f(x^k)\)</span>，也就是最快下降方法。我们通常会记<span class="m
 <p><span class="math inline">\(\alpha_k\)</span>可以设定为常数，也可以用线搜索算法确定。设定为常数时不会有锯齿状况，只有线搜索出来的最优步长会锯齿。</p>
 <p>最优步长为</p>
 <p><span class="math display">\[
-t_k = \arg\min_t f(x^k-t\Delta f(x^k))
+t_k = \arg\min_t f(x^k-t\nabla f(x^k))
 \]</span></p>
 <p>线搜索得到<span class="math inline">\(\alpha_k\)</span>的方法为回退法。其满足Armijo准则。首先给定初值<span class="math inline">\(\hat{\alpha}\)</span>，回退发同步不断以指数方式缩小试探步长，找到第一个满足Armijo准则的点。</p>
 <ul>
@@ -790,7 +790,7 @@ d^k)&gt;f(x^k)+c\alpha\nabla f(x^k)^T d^k\)</span>时，令<span class="math inl
 </ul>
 <p><strong>正定二次函数情况</strong></p>
 <p>如果<span class="math inline">\(f(x) =
-\dfrac{1}{2}x^TAx-b^Tx\)</span></p>
+\dfrac{1}{2}x^TAx+b^Tx+c\)</span></p>
 <p>则最优步长为</p>
 <p><span class="math display">\[
 \alpha_k = \dfrac{||\nabla(f^k)||^2}{\nabla f(x^k)^TA\nabla f(x^k)}
@@ -900,19 +900,198 @@ M^{k+1} = \rho M^k  + (1-\rho) g^{k+1}\odot g^{k+1}
 \Delta x^{k+1} = \rho \Delta x^k + (1-\rho)g&#39;_k\odot g&#39;_k
 \]</span></p>
 <h3 id="adam">Adam</h3>
+<p>可以算是RMSProp和动量方法的缝合方法，Adam不直接使用随机梯度作为基础的更新方向，而是选择了一个动量项进行更新：</p>
+<p><span class="math display">\[
+S^k = \rho_1 S^{k-1} + (1-\rho_1)g^k
+\]</span></p>
+<p>与此同时又和RMSProp相似：</p>
+<p><span class="math display">\[
+M^k = \rho_2 M^{k-1} + (1-\rho_2) g^k\odot g^k
+\]</span></p>
+<p>并不使用这两个量进行更新，而是先修正</p>
+<p><span class="math display">\[
+\hat S^k = \dfrac{S^k}{1-\rho_1^k}, \hat M^k = \dfrac{M^k}{1-\rho_2^k}
+\]</span></p>
+<p>这里<span class="math inline">\(\rho_1^k,\rho_2^k\)</span>是其<span class="math inline">\(k\)</span>次方。然后使用如下公式更新：</p>
+<p><span class="math display">\[
+x^{k+1} = x^k - \dfrac{\alpha}{\sqrt{\hat M^k+\varepsilon}}\odot \hat
+S^k
+\]</span></p>
+<p>这里的参数<span class="math inline">\(\rho_1\)</span>通常选为<span class="math inline">\(0.9\)</span>，<span class="math inline">\(\rho_2\)</span>通常选为<span class="math inline">\(0.999\)</span>，全局步长<span class="math inline">\(\alpha = 0.001\)</span></p>
 <h2 id="牛顿法">牛顿法</h2>
+<p>牛顿法和一维搜索里面的那个基本就是一样的。</p>
+<p><span class="math display">\[
+x^{k+1} = x^k - \dfrac{\nabla f(x^k)}{\nabla ^2f(x^k)}
+\]</span></p>
+<p>它的步长恒为<span class="math inline">\(1\)</span>，停止条件为<span class="math inline">\(||\nabla f(x^k)||&lt;\varepsilon\)</span></p>
 <h2 id="修正牛顿法">修正牛顿法</h2>
+<p>第一个修正是修正在其步长上，我们不再使用固定步长<span class="math inline">\(1\)</span>，而是像梯度下降法一样，使用线搜索方法确定一个步长。</p>
+<p>第二个修正是在海瑟矩阵上。海瑟矩阵在高维的时候既不容易计算也不容易储存，并且如果海瑟矩阵不正定，下降方向可能会很差。为此，我们求解下降方向<span class="math inline">\(d^k\)</span>时，首先确定矩阵<span class="math inline">\(E^k\)</span>使得矩阵<span class="math inline">\(B^k\xlongequal{\text{def}}\nabla^2f(x^k)+E^k\)</span>正定且条件数较小，之后求解修正的牛顿方程<span class="math inline">\(B^k d^k=-\nabla f(x^k)\)</span>得到方向<span class="math inline">\(d^k\)</span>。</p>
+<p>迭代方程还是<span class="math inline">\(x^{k+1}=x^k+\alpha_kd^k\)</span></p>
 <h2 id="拟牛顿法">拟牛顿法</h2>
+<p>拟牛顿算法直接放弃计算海瑟矩阵，而是找到一个具有类似性质的、方便维护的矩阵去替代。</p>
 <h3 id="dfp更新公式">DFP更新公式</h3>
+<p>定义矩阵<span class="math inline">\(H^0=I\)</span>，其更新公式为</p>
+<p><span class="math display">\[
+H^{k+1} = H^k + \dfrac{s^k(s^k)^T}{(y^k)^Ts^k} -
+\dfrac{H^ky^k(H^ky^k)^T}{(y^k)^TH^ky^k}
+\]</span></p>
+<p>其中<span class="math inline">\(s^k = x^{k+1}-x^k, y^ k=
+g^{k+1}-g^{k}\)</span></p>
+<p>优化算法的迭代公式是</p>
+<p><span class="math display">\[
+x^{k+1} = x^k - \alpha_kH^k\nabla f(x^k)
+\]</span></p>
+<p>其中<span class="math inline">\(\alpha_k\)</span>用线搜索确定。注意这里的<span class="math inline">\(H\)</span>直接就具有海瑟逆矩阵的性质，不用写到分母上了。</p>
 <h2 id="共轭方向法">共轭方向法</h2>
+<p>思想：为了克服锯齿现象，假设能够选定下一次迭代的搜索方向直指极小点<span class="math inline">\(X^*\)</span>
+，那么对于二元二次函数只需依次沿搜索方向<span class="math inline">\(d^0,d^1\)</span>进行两次精确一维搜索就可以求到极小点<span class="math inline">\(X^*\)</span>。此时两个方向需要满足<span class="math inline">\((d^0)^T A d^1\)</span>（假设二元二次函数为<span class="math inline">\(f(x)=\dfrac{1}{2}x^tAx+bx+c\)</span>）</p>
+<p><strong>定义1</strong></p>
+<p>设<span class="math inline">\(A\in R^{n\times
+m}\)</span>是对称正定矩阵，<span class="math inline">\(p_1,p_2\in
+R^n\)</span>，如果<span class="math inline">\(p_1^TAp_2=0\)</span>，则称这两个向量是<span class="math inline">\(A\)</span>共轭（<span class="math inline">\(A\)</span>正交）的。</p>
+<p>如果有限个非零向量<span class="math inline">\(p_1,p_2,\cdots,p_m\)</span>，它们任意两个不同的向量都是<span class="math inline">\(A\)</span>共轭的，则称这一组向量为<span class="math inline">\(A\)</span>共轭方向组，也称它们是一组<span class="math inline">\(A\)</span>的共轭方向。</p>
+<p>注意特殊情况，当<span class="math inline">\(A=I\)</span>时，这些向量就是普通的正交向量。</p>
+<p><strong>定理1</strong></p>
+<p>如果<span class="math inline">\(R^n\)</span>中的非零向量<span class="math inline">\(p_1,p_2,\cdots,p_m(m\leq n)\)</span>是<span class="math inline">\(A\)</span>共轭向量组，则这<span class="math inline">\(m\)</span>个向量是线性无关的。</p>
+<p><strong>定理2</strong></p>
+<p>设<span class="math inline">\(n\)</span>元函数<span class="math inline">\(f(x)=\dfrac{1}{2}x^tAx+bx+c\)</span>且<span class="math inline">\(A=A^T\)</span>正定，又设<span class="math inline">\(n\)</span>维向量组<span class="math inline">\(p_1,p_2,\cdots,p_n\)</span>是<span class="math inline">\(A\)</span>共轭向量组，从任意点<span class="math inline">\(x^1\)</span>出发，依次以该向量组为搜索方向进行精确一维搜索，则</p>
+<ol type="1">
+<li><span class="math inline">\(\nabla f(x^{k+1})\)</span>与<span class="math inline">\(p_1,p_2,\cdots,p_k\)</span>正交</li>
+<li>最多迭代<span class="math inline">\(n\)</span>次必达到二次函数的极小点。</li>
+</ol>
+<p>在下降迭代法中，若取下降方向是共轭方向，所得到的方法我们称为共轭方向法。</p>
 <h2 id="共轭梯度法">共轭梯度法</h2>
+<p>共轭方向的选择很多，但是效果不一样。共轭梯度法是一种好的选择共轭方向的办法。</p>
+<p>初始方向为</p>
+<p><span class="math display">\[
+d^0 = -\nabla f(x^0)
+\]</span></p>
+<p>它的方向的更新公式是</p>
+<p><span class="math display">\[
+d^{k+1} = -\nabla f(x^{k+1}) + \rho_k d^k
+\]</span></p>
+<p><span class="math display">\[
+\rho_k = \dfrac{\nabla f(x^{k+1}) Ad^k}{(d^k)^TAd^k}
+\]</span></p>
+<p>总的优化迭代公式仍然是</p>
+<p><span class="math display">\[
+x^{k+1} = x^k + \alpha_k d^k
+\]</span></p>
+<p>步长仍然用线搜索确定。</p>
 <h2 id="fr共轭梯度法">FR共轭梯度法</h2>
-<h2 id="坐标轮换法">坐标轮换法</h2>
-<h2 id="单形替换法">单形替换法</h2>
+<p>简单地说，就是</p>
+<p><span class="math display">\[
+\rho_k = \dfrac{||g^{k+1}||^2}{||g^k||^2}
+\]</span></p>
+<p>其他不变。在正定二次函数中，这两个计算<span class="math inline">\(\rho^k\)</span>的方法是等价的。但是这个函数看着更简单好用一些。</p>
 <h1 id="有约束最优化方法">有约束最优化方法</h1>
+<p>对于</p>
+<p><span class="math display">\[
+\min f(x)
+\]</span></p>
+<p><span class="math display">\[
+s.t.
+\left\{\begin{matrix}
+g_i(x)\geq 0,i=1,2,\cdots,m\\
+h_j(x)=0,j=1,2,\cdots,l
+\end{matrix}\right.
+\]</span></p>
+<p>这样的有不等式和等式约束的优化问题。我们用罚函数法。其本质思想是把处于可行域之外的点，加一个惩罚项，让它搜索路径向着可行域前进。对于可行域内的点则不做惩罚。</p>
 <h2 id="外点罚函数法">外点罚函数法</h2>
+<p><strong>等式约束的二次罚函数</strong></p>
+<p><span class="math display">\[
+P_E(x,\sigma) = f(x) + \dfrac{1}{2}\sigma\sum^l_{j=1}h_j^2(x)
+\]</span></p>
+<p>等式右边第二项称为惩罚项，其中<span class="math inline">\(\sigma&gt;0\)</span>称为罚因子。（这里这个<span class="math inline">\(\dfrac{1}{2}\)</span>有些教材有有些没有，我不知道为什么，但我觉得没有明显影响）</p>
+<p><strong>不等式约束的二次罚函数</strong></p>
+<p><span class="math display">\[
+P_I(x,\sigma) = f(x) + \dfrac{1}{2}\sigma\sum^m_{i=1}\min\{g_i(x),0\}^2
+\]</span></p>
+<p>也不难理解，总之我们要使在可行域内的惩罚项设置为<span class="math inline">\(0\)</span>。注意这里是<span class="math inline">\(\min\)</span>，因为我们的不等式约束是<span class="math inline">\(\geq0\)</span>型，如果是<span class="math inline">\(\leq0\)</span>型，要么改变不等式，要么改成<span class="math inline">\(\max\)</span></p>
+<p>如果约束既有不等式的又有等式的，那么直接把惩罚项加起来即可。</p>
+<p><strong>计算机迭代办法</strong></p>
+<ol type="1">
+<li>给定<span class="math inline">\(\sigma_0&gt;0,x^0,k=0\)</span>。罚因子增长函数<span class="math inline">\(\rho&gt;1\)</span></li>
+<li>当未达到收敛准则时，进行以下计算</li>
+</ol>
+<ul>
+<li>求解<span class="math inline">\(\displaystyle {x^{k+1} = \arg \min_x
+P(x,\sigma_k)}\)</span></li>
+<li>选取<span class="math inline">\(\sigma_{k+1} =
+\rho\sigma_{k}\)</span></li>
+<li><span class="math inline">\(k = k+1\)</span></li>
+</ul>
+<p><strong>解析法求解</strong></p>
+<p>我们令</p>
+<p><span class="math display">\[
+\dfrac{\partial P(x,\sigma)}{\partial x_i} = 0
+\]</span></p>
+<p>对于所有的<span class="math inline">\(x\)</span>的分量<span class="math inline">\(x_i\)</span>成立。然后我们求出所有<span class="math inline">\(x_i\)</span>的表达式</p>
+<p><span class="math display">\[
+x_i = F_i(\sigma)
+\]</span></p>
+<p>则我们的最优解就是</p>
+<p><span class="math display">\[
+x^*_i = \lim_{\sigma\to+\infty}F_i(\sigma)
+\]</span></p>
 <h2 id="内点罚函数法">内点罚函数法</h2>
+<p>只适用于不等式优化的，其罚函数有两种</p>
+<p><span class="math display">\[
+P_I(x,\sigma) = f(x) + \sigma\sum^m_{i=1}\dfrac{1}{g_i(x)}
+\]</span></p>
+<p>和</p>
+<p><span class="math display">\[
+P_I(x,\sigma) = f(x) - \sigma\sum^m_{i=1}\ln(g_i(x))
+\]</span></p>
+<p>显然，我们需要选择的初始点要在可行域内，而外点罚函数不需要。</p>
+<p><strong>计算机迭代办法</strong></p>
+<ol type="1">
+<li>给定<span class="math inline">\(\sigma_0&gt;0,x^0,k=0\)</span>。罚因子增长函数<span class="math inline">\(\rho\in(0,1)\)</span></li>
+<li>当未达到收敛准则时，进行以下计算</li>
+</ol>
+<ul>
+<li>求解<span class="math inline">\(\displaystyle {x^{k+1} = \arg \min_x
+P(x,\sigma_k)}\)</span></li>
+<li>选取<span class="math inline">\(\sigma_{k+1} =
+\rho\sigma_{k}\)</span></li>
+<li><span class="math inline">\(k = k+1\)</span></li>
+</ul>
+<p><strong>解析法求解</strong></p>
+<p>我们令</p>
+<p><span class="math display">\[
+\dfrac{\partial P(x,\sigma)}{\partial x_i} = 0
+\]</span></p>
+<p>对于所有的<span class="math inline">\(x\)</span>的分量<span class="math inline">\(x_i\)</span>成立。然后我们求出所有<span class="math inline">\(x_i\)</span>的表达式</p>
+<p><span class="math display">\[
+x_i = F_i(\sigma)
+\]</span></p>
+<p>则我们的最优解就是</p>
+<p><span class="math display">\[
+x^*_i = \lim_{\sigma\to0}F_i(\sigma)
+\]</span></p>
 <h2 id="混合罚函数法">混合罚函数法</h2>
+<p>我们知道，外点罚函数可以用于等式和不等式优化，而内点罚函数可以用于不等式优化。我们可以进行一个缝合，把等式约束的用外点罚函数，把不等式优化的用内点罚函数。</p>
+<p>罚函数的统一形式为</p>
+<p><span class="math display">\[
+P(x,\sigma) = f(x) + E(x,\sigma) + I(x,\sigma)
+\]</span></p>
+<p>其中<span class="math inline">\(E(x,\sigma)\)</span>只有一种选择</p>
+<p><span class="math display">\[
+E(x,\sigma) = \dfrac{1}{\sqrt{\sigma}}\sum^l_{j=1}h_j^2(x)
+\]</span></p>
+<p><span class="math inline">\(I(x,\sigma)\)</span>则有三种选择</p>
+<p><span class="math display">\[
+I(x,\sigma) = \dfrac{1}{\sqrt{\sigma}}\sum^m_{i=1}\min\{g_i^2(x),0\}
+\]</span></p>
+<p><span class="math display">\[
+I(x,\sigma) = \sigma\sum^m_{i=1}\dfrac{1}{g_i(x)}
+\]</span></p>
+<p><span class="math display">\[
+I(x,\sigma) = -\sigma\sum^m_{i=1}\ln(g_i(x))
+\]</span></p>
+<p>进行组合即可。</p>
+<p>注意内点罚函数需要起始点在可行域内。</p>
 
 
 
@@ -1337,8 +1516,6 @@ M^{k+1} = \rho M^k  + (1-\rho) g^{k+1}\odot g^{k+1}
         <li><a href="#共轭方向法">共轭方向法</a></li>
         <li><a href="#共轭梯度法">共轭梯度法</a></li>
         <li><a href="#fr共轭梯度法">FR共轭梯度法</a></li>
-        <li><a href="#坐标轮换法">坐标轮换法</a></li>
-        <li><a href="#单形替换法">单形替换法</a></li>
       </ol>
     </li>
     <li><a href="#有约束最优化方法">有约束最优化方法</a>
