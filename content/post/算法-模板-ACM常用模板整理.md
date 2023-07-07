@@ -1600,6 +1600,57 @@ int main(){
 }
 ```
 
+## 动态维护二分图判定
+
+只判定一次可以用涂色法。动态加边可以用扩展域并查集（可撤销）来实现。
+
+```cpp
+std::stack<pii> stk;
+
+class DSU{
+public:
+    int fa[MAXN*2], rk[MAXN*2];
+    
+    void init(int n){
+        for(int i=1;i<=n;i++) fa[i] = i, rk[i] = 1;
+    }
+    
+    int find(int x){
+        return fa[x]==x ? x : find(fa[x]);
+    }
+    
+    void merge(int x, int y){
+        x = find(x), y = find(y);
+        if(x==y) return;
+        if(rk[x]>rk[y]) std::swap(x,y);
+        fa[x] = y;
+        stk.push({x,rk[x]==rk[y]});//保存操作记录，也可以用stack以外的数据结构
+        if(rk[x]==rk[y]) rk[y]++;
+    }
+    
+    void erase(pii p){
+        rk[find(p.first)]-=p.second;
+        fa[p.first] = p.first;
+    }
+};
+
+bool add(int x, int y){
+    //设总共n个点，每次添加一条边<x,y>，注意没有边也算二分图
+    dsu.merge(x,y+n);
+    dsu.merge(y,x+n);
+    if(dsu.find(x)==dsu.find(x+n) || dsu.find(y)==dsu.find(y+n)){
+        //说明不是二分图
+        return false;
+    }
+    else{
+        //说明是二分图
+        return true;
+    }
+}
+//删边的时候，需要注意用一个pii删（调用erase函数），first保存了<x,y>这条边的x（y可以用find函数找出来），second保存了秩的数据，在删边时有用。至于删完是不是二分图，我没有找到办法。我做过的题目都是，添加了这条边后不再是二分图，输出某个结果，然后撤销这条边（之后显然是二分图）。要不就是只有加边的。直接删去任意一条边的题目并没有遇到过。
+
+```
+
 ## 网络流
 
 ### 最大流
@@ -2350,6 +2401,184 @@ int main(){
 }
 ```
 
+## 扫描线算法
+
+```cpp
+//Luogu P5490
+//复杂度 nlogn
+#include <iostream>
+#include <algorithm>
+
+using ll = long long;
+
+int const MAXN = 2000005;
+
+struct Line{
+    ll l,r,h;
+    int tag;
+    Line(){}
+    Line(ll l, ll r, ll h, int tag):l(l),r(r),h(h),tag(tag){}
+    
+    bool operator<(Line const & rhs) const{
+        return h<rhs.h;
+    }  
+}line[MAXN*2];
+
+ll st[MAXN*4+2];//对于一颗线段树，n个数所组成的树最多有4n-5个节点，开大了一点
+ll posX[MAXN*2];
+ll len[MAXN*4+2];
+
+void update(int l, int r, int s, int t, int p, ll c){//c表示加减的数值
+    if(posX[t+1]<=l || r<=posX[s]) return;
+    if(l<=posX[s] && posX[t+1]<=r){
+        st[p] += c;
+        if(st[p]){
+            len[p] = posX[t+1] - posX[s];
+        }
+        else{
+            len[p] = len[p*2] + len[p*2+1];
+        }
+        
+        return;
+    }
+    
+    int m = s + ((t-s)>>1);
+    if(l<=posX[m]) update(l, r, s, m, p*2, c);
+    if(r>posX[m])  update(l, r, m+1, t, p*2+1, c);
+    if(st[p]){
+        len[p] = posX[t+1] - posX[s];
+    }
+    else{
+        len[p] = len[p*2] + len[p*2+1];
+    }
+}
+
+int main(){
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(0);
+
+	int n;
+	std::cin>>n;//矩形个数
+	ll x1,x2,y1,y2;
+	
+	for(int i=1;i<=n;i++){
+	    std::cin>>x1>>y1>>x2>>y2;//输入每个矩形的左下角和右上角
+	    posX[2*i-1] = x1, posX[2*i] = x2;
+	    line[2*i-1] = Line(x1,x2,y1,1), line[2*i] = Line(x1,x2,y2,-1);
+	}
+	
+	n*=2;//方便起见
+	
+	std::sort(line+1,line+n+1);
+	std::sort(posX+1,posX+n+1);
+	
+	int sumSeg = std::unique(posX+1, posX+1+n) - posX - 1 - 1;//去重求出线段总数
+    ll ans = 0;
+    
+    for(int i=1;i<n;i++){//最后一条边不用管
+        update(line[i].l, line[i].r, 1, sumSeg, 1, line[i].tag);
+        ans += len[1] * (line[i+1].h - line[i].h);
+    }
+    
+    std::cout<<ans<<"\n";//输出矩形的并集的总面积
+
+    return 0;
+}
+
+```
+
+## 二维数点
+
+```cpp
+//Luogu P2163
+//时间复杂度 nlogn
+#include <iostream>
+#include <algorithm>
+
+int const MAXN = 500005;
+
+struct Point{
+    int x,y;
+    int tag;//用于区分实际的点和查询时的虚点  
+    
+    bool operator<(Point const & p){
+        if(x!=p.x) return x<p.x;
+        if(y!=p.y) return y<p.y;
+        return tag<p.tag;
+    }
+}pts[MAXN*5];//实点和查询矩阵的点都放在这里面
+
+int b[MAXN*5];
+int bit[MAXN];
+int ans[MAXN][5];
+int tot[MAXN];
+
+inline int lowbit(int n){
+    return n&(-n);
+}
+
+void update(int p, int k, int n){
+    for(;p<=n;p+=lowbit(p)){
+        bit[p]+=k;
+    }
+}
+
+int query(int p){
+    int ret=0;
+    for(;p;p-=lowbit(p)){
+        ret+=bit[p];
+    }
+    return ret;
+}
+
+inline int lsh(int x, int cnt){//离散化函数
+    return std::lower_bound(b+1,b+cnt+1,x)-b;
+}
+
+int main(){
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(0);
+
+	int n,m;
+	std::cin>>n>>m;//点数，查询数
+
+    for(int i=1;i<=n;i++){
+        std::cin>>pts[i].x>>pts[i].y;//所有实点的坐标
+        pts[i].tag = 0;
+    }
+    
+    for(int i=1;i<=m;i++){
+        int x1,x2,y1,y2;
+        std::cin>>x1>>y1>>x2>>y2;//查询的长方形的左下角和右上角
+        
+        pts[++n].x = x1-1, pts[n].y = y1-1, pts[n].tag = i;
+        pts[++n].x = x2, pts[n].y = y2, pts[n].tag = i;
+        pts[++n].x = x2, pts[n].y = y1-1, pts[n].tag = i;
+        pts[++n].x = x1-1, pts[n].y = y2, pts[n].tag = i;
+    }
+    
+    std::sort(pts+1,pts+1+n);
+    for(int i=1;i<=n;i++) b[i] = pts[i].y;
+    std::sort(b+1,b+1+n);
+    int cnt = std::unique(b+1,b+1+n) - b - 1;//把所有y离散化
+    
+    for(int i=1;i<=n;i++){
+        if(pts[i].tag){
+            ans[pts[i].tag][++tot[pts[i].tag]] = query(lsh(pts[i].y, cnt));
+        }
+        else{
+            update(lsh(pts[i].y, cnt), 1, cnt);
+        }
+    }
+    
+    for(int i=1;i<=m;i++){
+        std::cout<<ans[i][4]-ans[i][3]-ans[i][2]+ans[i][1]<<"\n";
+    }
+
+    return 0;
+}
+```
+
 # 组合数学
 
 ## 卡特兰数
@@ -2666,55 +2895,50 @@ int main(){
 
 ```cpp
 //复杂度 很小
-//并查集
+//并查集 Luogu3367
+const int MAXN = 10005;
 
-#include <iostream>
-using namespace std;
-
-const int MAXN = 1005;
-
-int find_sets[MAXN];
-
-int findf(int x){
-    return find_sets[x]==x ? x : find_sets[x] = findf(find_sets[x]);
-}
-
-void unionSet(int x, int y){
-    x = findf(x);
-    y = findf(y);
-    find_sets[x] = y;
-}
-
-int main(){
-    int n;
-    cin>>n;
-    //点数
-    for(int i=1;i<=n;i++){
-        find_sets[i]=i;
+class DSU{
+public:
+    int fa[MAXN], rk[MAXN];
+    
+    void init(int n){
+        for(int i=1;i<=n;i++) fa[i] = i, rk[i] = 1;
     }
-    int m;
-    cin>>m;
-    //边数
-    for(int i=1;i<=m;i++){
-        int a,b;
-        cin>>a>>b;
-        find_sets[b] = a;
+    
+    int find(int x){
+        //没有路径压缩的find，在需要删除操作时，不能使用路径压缩，只能按秩合并保证复杂度
+        return fa[x]==x ? x : find(fa[x]);
     }
-    cout<<findf(5)<<" "<<findf(8)<<endl;
-    unionSet(5,8);
-    cout<<findf(5)<<" "<<findf(8)<<endl;
-    return 0;
-}
-
-/*
-8 6
-1 2
-1 3
-3 4
-3 5
-6 7
-7 8
-*/
+    
+    int findc(int x){
+        //带路径压缩的find
+        return fa[x]==x ? x : (fa[x] = findc(fa[x]));
+    }
+    
+    void merge(int x, int y){
+        //按秩合并，如果不需要则直接 fa[find(x)] = find(y);
+        x = find(x), y = find(y);
+        if(x==y) return;
+        if(rk[x]>rk[y]) std::swap(x,y);
+        fa[x] = y;
+        if(rk[x]==rk[y]) rk[y]++;
+    }
+    
+    void mergec(int x, int y){
+        //按秩合并+路径压缩，如果不需要则直接 fa[findc(x)] = findc(y);
+        x = findc(x), y = findc(y);
+        if(x==y) return;
+        if(rk[x]>rk[y]) std::swap(x,y);
+        fa[y] = x;
+        if(rk[x]==rk[y]) rk[y]++;
+    }
+    
+    void erase(int x){
+        --rk[find(x)];
+        fa[x] = x;
+    }
+};
 ```
 
 ## 线段树
@@ -2722,96 +2946,203 @@ int main(){
 ```cpp
 //复杂度 单次查询 logn 单次修改 logn
 //luogu 3372
-#include <iostream>
-#include <cstdio>
+//线段树维护的数据要求满足结合律，比如区间和，区间最大区间最小，区间gcd
+//区间修改一般支持加、乘、赋值
+int const MAXN = 100005;
+using LL = long long;
 
-using namespace std;
+struct Node
+{
+    int s,t;//该端点的起点和终点下标
+    LL tag, v;
+};
 
-typedef long long ll;
+Node st[MAXN*4+2];
+LL arr[MAXN];
 
-const int MAXN = 100005;
-
-ll st[MAXN*4+2];//对于一颗线段树，n个数所组成的树最多有4n-5个节点，开大了一点
-ll tag[MAXN*4+2];
-ll arr[MAXN];
-
-void build(int s, int t, int p){//区间左端点、右端点、区间编号
-    if(s==t){
-        st[p] = arr[s];
+void build(int s, int t, int p){
+    st[p].s = s;
+    st[p].t = t;
+    if(s==t) {
+        st[p].v = arr[s];
+        st[p].tag = 0;
         return;
     }
-    int m = s+((t-s)>>1);//写成(s+t)>>1可能会爆
+    int m = s+((t-s)>>1);
     build(s,m,p*2);
     build(m+1,t,p*2+1);
-    st[p] = st[p*2]+st[p*2+1];
+    st[p].v = st[p*2].v + st[p*2+1].v;
+    st[p].tag = 0;
 }
 
-void update(int l, int r, int s, int t, int p, ll c){//c表示加减的数值
-    if(l<=s&&t<=r){
-        st[p]+=(t-s+1)*c;
-        tag[p]+=c;
+void spreadTag(int p){
+    if(st[p].tag){
+        int s = st[p].s, t = st[p].t;
+        int m = s+((t-s)>>1);
+        st[p*2].v     += (m-s+1)*st[p].tag;
+        st[p*2+1].v   += (t-m)*st[p].tag;
+        st[p*2].tag   += st[p].tag;
+        st[p*2+1].tag += st[p].tag;
+        st[p].tag=0;
+    }
+}
+
+void update(int l, int r, int p, LL k){
+    int s = st[p].s, t = st[p].t;
+    if(l<=s && t<=r){
+        st[p].v   += (t-s+1) * k;
+        st[p].tag += k;
         return;
     }
-    ll m = s + ((t-s)>>1);
-    if(tag[p]&&s!=t){
-        st[p*2]   += (m-s+1)*tag[p];
-        st[p*2+1] += (t-m)*tag[p];
-        tag[p*2]  += tag[p];
-        tag[p*2+1]+= tag[p];
-        tag[p]=0;
-    }
-    if(l<=m) update(l, r, s, m, p*2, c);
-    if(r>m)  update(l, r, m+1, t, p*2+1, c);
-    st[p] = st[p*2] + st[p*2+1];
+    spreadTag(p);
+    
+    int m = s+((t-s)>>1);
+    if(l<=m) update(l, r, p*2, k);
+    if(r>m)  update(l, r, p*2+1, k);
+    st[p].v = st[p*2].v + st[p*2+1].v;
 }
 
-ll query(int l, int r, int s, int t, int p){
-    //查询[l,r]的和
-    if(l<=s&&t<=r){
-        return st[p];
-    }
-    ll sum=0;
-    ll m = s+((t-s)>>1);
-    if(tag[p]){
-        st[p*2]   += (m-s+1)*tag[p];
-        st[p*2+1] += (t-m)*tag[p];
-        tag[p*2]  += tag[p];
-        tag[p*2+1]+= tag[p];
-        tag[p]=0;
-    }
-    if(l<=m) sum+=query(l,r,s,m,p*2);
-    if(r>m)  sum+=query(l,r,m+1,t,p*2+1);
-    return sum;
+LL query(int l, int r, int p){
+    int s = st[p].s, t = st[p].t;
+    if(l<=s && t<=r) return st[p].v;
+    
+    spreadTag(p);
+    int m = s+((t-s)>>1);
+    LL ret = 0;
+    if(l<=m) ret+=query(l,r,p*2);
+    if(r>m)  ret+=query(l,r,p*2+1);
+    
+    return ret;
 }
+```
 
-int main(){
-    int n,m;
-    scanf("%d%d",&n,&m);
-    //数组长度，查询次数
-    for(int i=1;i<=n;i++){
-        scanf("%ld",&arr[i]);   
+## 珂朵莉树
+
+```CPP
+//珂朵莉树，区间推平问题
+//方便给某个区间赋值，区间加数，维护区间第k大值，区间和等等
+//数据随机的情况下，复杂度为nloglogn
+//珂朵莉树的每一个节点都是一个区间，这个区间内的值相同。
+struct Node{
+    int l,r;
+    mutable LL v;//这里修改成自己需要的数据类型，在[l,r]内都等于这个值
+    Node(int l, int r, LL v):l(l),r(r),v(v){}
+    bool operator<(Node const & x) const {return l<x.l;}
+};
+
+class ODT{
+public:
+    std::set<Node> tree;
+    
+    auto split(int pos){
+        auto it = tree.lower_bound(Node(pos,0,0));
+        
+        if(it!=tree.end() && it->l==pos)
+            return it;
+        it--;
+        int l = it->l, r = it->r;
+        LL v = it->v;
+        tree.erase(it);
+        tree.insert(Node(l,pos-1,v));
+        return tree.insert(Node(pos,r,v)).first;
     }
-    build(1,n,1);
-
-    for(int i=1;i<=m;i++){
-        int ope;
-        cin>>ope;
-        if(ope==1){
-            int x,y,z;
-            scanf("%d%d%d",&x,&y,&z);
-            //[x,y]加上z
-            update(x, y, 1, n, 1, z);
+    
+    void assign(int l, int r, int v){
+        //给区间赋值
+        auto end = split(r+1), begin = split(l);//必须要注意顺序
+        tree.erase(begin,end);
+        tree.insert(Node(l,r,v));
+    }
+    
+    void perf(int l, int r){//其他操作的模板函数
+        auto end = split(r+1), begin = split(l);
+        for(auto it=begin;it!=end;it++){
+            //这里是操作
+            //这些操作都很暴力，例如k大值，就把区间全部枚举排序一遍去找
+            //例如区间和，就枚举区间加起来，注意是加it->v * (it->r-it->l+1)
+            //例如区间加数，就枚举区间给所有的it->v都加一个数
         }
-        else{
-            int x,y;
-            scanf("%d%d",&x,&y);
-            //查询[x,y]的和
-            cout<<query(x, y, 1, n, 1)<<endl;
+    }
+};
+
+//珂朵莉树的初始化不能用assign，设范围为[1,w]，初值全部为0，则
+ODT odt;
+odt.tree.insert(Node(1,w,0));
+```
+
+## 分块
+
+分块是根号算法，比线段树略差，但是不需要满足结合律，也不需要维护、传递tag。
+
+```cpp
+//luogu 3372 和线段树区间加，维护区间和一样
+//复杂度n sqrt(n)
+//在块内时对块操作，跨块时中间对块操作，两边多余部分暴力处理
+LL arr[MAXN];
+
+class BA{
+public:
+    int st[MAXN],ed[MAXN],size[MAXN],bel[MAXN];//每一段的开始下标、结束下标、段大小；每个元素属于哪个段
+    int sq;
+    LL sum[MAXN];//保存第i个块的和
+    LL tag[MAXN];
+    
+    void init(int n){
+        sq = std::sqrt(n);
+        for(int i=1;i<=sq;i++){
+            st[i] = n / sq * (i-1) + 1;
+            ed[i] = n / sq * i;
+            size[i] = ed[i] - st[i] + 1;
+        }
+        ed[sq] = n;//最后一段可能长度不够n/sq
+        size[sq] = ed[sq] - st[sq] + 1;
+        
+        for(int i=1;i<=sq;i++)
+            for(int j=st[i];j<=ed[i];j++)
+                bel[j] = i, sum[i] += arr[j];
+    }
+    
+    void update(int l, int r, LL k){
+        if(bel[l]==bel[r]){
+            for(int i=l;i<=r;i++){
+                arr[i]+=k;
+                sum[bel[i]] += k;
+            }
+            return;
+        }
+        
+        for(int i=l;i<=ed[bel[l]];i++){
+            arr[i]+=k;
+            sum[bel[i]]+=k;
+        }
+        for(int i=st[bel[r]];i<=r;i++){
+            arr[i]+=k;
+            sum[bel[i]]+=k;
+        }
+        for(int i=bel[l]+1;i<bel[r];i++){
+            tag[i] += k;
         }
     }
+    
+    LL query(int l, int r){
+        LL ret = 0;
+        if(bel[l]==bel[r]){
+            for(int i=l;i<=r;i++)
+                ret += arr[i] + tag[bel[i]];
+            return ret;
+        }
+        
+        for(int i=l;i<=ed[bel[l]];i++)
+            ret += arr[i] + tag[bel[i]];
+        for(int i=st[bel[r]];i<=r;i++)
+            ret += arr[i] + tag[bel[i]]; 
+        for(int i=bel[l]+1;i<bel[r];i++)
+            ret += sum[i] + tag[i] * size[i];
+        return ret;
+    }
+};
 
-    return 0;
-}
+BA ba;//注意，开了大数组，要声明在main函数外面，或者可以去用动态分配内存
 ```
 
 # 堆
@@ -3460,6 +3791,8 @@ auto it = mp.begin();
 mp.erase(it);
 ```
 
+当然也可以提供两个迭代器，删除这之间的所有元素（左闭右开区间）
+
 ### ::find
 
 寻找key等于给定值的元素，返回迭代器。如果没有找到则返回end迭代器。复杂度：对数。
@@ -3498,6 +3831,23 @@ template<
 ### 使用方法
 
 自定义比较函数,empty,size,clear,erase,find,lower_bound,upper_bound都与map相同。
+
+### ::insert
+
+map可以用\[\]进行插入，但是set只能用insert函数。
+
+```cpp
+std::set<int> st;
+st.insert(1);
+```
+
+返回值是一个pair，first是迭代器，指向被插入进去的元素（如果插入不成功则指向没插进去的元素），second是bool，插入成功时为true，否则为false。
+
+### 修改内部元素
+
+有时候，我们需要修改内部元素。由于例如begin函数返回的迭代器是const的，我们无法直接修改数据。但我们可以给变量添加mutable修饰。这样我们就可以不用拿出来一个元素再插回去。例子可见珂朵莉树。
+
+注意，如果你修改的数据和排序依据有关，set不会维护内部有序。要维护还得是拿出来再插入进去。
 
 ## std::unordered_set
 
