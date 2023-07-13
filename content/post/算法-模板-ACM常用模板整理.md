@@ -58,152 +58,6 @@ int main(){
 
 ```
 
-# 排序
-
-只给出归并排序，有可能在求逆序对的时候用得上。其他时候排序用sort函数即可。
-
-## 归并排序
-
-```c
-//复杂度nlogn
-#include <stdio.h>
-
-void merge(long *num,long *tmp, int left, int mid_index ,int right){
-
-    int first=left, second = mid_index+1, tmp_index = left;
-    while(first<mid_index+1&&second<right+1){
-        if(*(num+first)<*(num+second)){
-            tmp[tmp_index] = *(num+first);
-            tmp_index++;
-            first++;
-        }
-        else{
-            tmp[tmp_index] = *(num+second);
-            tmp_index++;
-            second++;
-        }
-    }
-    while(first<mid_index+1){
-        tmp[tmp_index++] = *(num+first);
-        first++;
-    }
-    while(second<right+1){
-        tmp[tmp_index++] = *(num+second);
-        second++;
-    }
-    int i;
-    for(i=left;i<=right;i++){
-        num[i]=tmp[i];
-    }
-
-    return;
-}
-
-void merge_sort(long *num,long *tmp, int left, int right){
-    int mid_index;
-    if(left<right){
-        mid_index = left + (right-left)/2;//这样写疑似可以避免int溢出
-        merge_sort(num,tmp,left,mid_index);
-        merge_sort(num,tmp,mid_index+1,right);
-        merge(num,tmp,left,mid_index,right);
-    } 
-    return;
-}
-
-int main(){
-    int num_count;
-    long num[20000];
-    long tmp[20000];
-    scanf("%d",&num_count);
-    int i;
-    for(i=1;i<=num_count;i++){
-        scanf("%d",&num[i]);
-    }
-
-    merge_sort(num,tmp,1,num_count);
-
-    for(i=1;i<=num_count;i++){
-        printf("%d ",num[i]);
-    }
-
-    return 0;
-}
-```
-
-# 技巧
-
-## 快速幂
-
-```cpp
-//复杂度logn
-#include <iostream>
-
-using namespace std;
-
-long long binpow(long long n, long long p){
-    long long res = 1;
-    while(p>0){
-        if(p&1){
-            res = res * n;
-        }
-        n *= n;
-        p>>=1;
-    }
-    return res;
-
-}
-
-
-int main(){
-    long long n,p;
-    cin>>n>>p;
-
-    cout<<binpow(n,p)<<endl;
-
-    return 0;
-}
-```
-
-## 离散化
-
-有两种，一种是unique函数版，一种是树状数组求逆序对里使用的，都可以，区别是，那个对于相同的数字根据先后顺序确定大小，这个则是一样大
-
-```cpp
-//复杂度nlogn
-//离散化 例如将1,500,40,1000保持相对大小不变，离散化为1,3,2,4
-#include <iostream>
-#include <vector>
-#include <algorithm>
-
-using namespace std;
-
-vector<int> arr,assi;
-
-int main(){
-    int n;
-    cin>>n;
-    for(int i=1;i<=n;i++){
-        int a;
-        cin>>a;
-        arr.push_back(a);
-        assi.push_back(a);
-    }
-    sort(assi.begin(),assi.end());
-    assi.erase(unique(assi.begin(),assi.end()),assi.end());
-
-    for(int i=0;i<n;i++){
-        arr[i] = upper_bound(assi.begin(),assi.end(),arr[i])-assi.begin();
-    }
-
-    for(int i=0;i<n;i++){
-        cout<<arr[i]<<" ";
-    }
-    cout<<endl;
-
-    return 0;
-}
-```
-
 # 字符串
 
 ## KMP
@@ -211,18 +65,15 @@ int main(){
 ```cpp
 //复杂度n
 //kmp,luogu3375
-#include <iostream>
-#include <vector>
-#include <string>
-
-std::vector<int> prefixFunc(std::string str){
+std::vector<int> prefixFunc(std::string const & str){
     //输入一个字符串，输出该字符串的前缀函数表
+    //如果输入不是字符串而是一个数组，也可以很方便的修改为vector
     int n = str.length();
     std::vector<int> ans(n);
 
-    for(int i=1;i<n;i++){
-        int j = ans[i-1];
-        while(j>0 && str[i]!=str[j]) j = ans[j-1];
+    for(int i=1, j=0;i<n;i++){
+        //ans[0]=0，因为只看真前缀和真后缀
+        while(j && str[i]!=str[j]) j = ans[j-1];
         if(str[i]==str[j]) j++;
         ans[i] = j;
     }
@@ -230,31 +81,21 @@ std::vector<int> prefixFunc(std::string str){
     return ans;
 }
 
-int main(){
-    std::string str1,str2;
-    std::cin>>str1>>str2;
-
-    std::vector<int> pf = prefixFunc(str2+"#"+str1);
-    //注意这个#号，代表的意思是不会在str2与str1中出现的字符，作为分隔符
-    int n = str2.length();
-    int m = str1.length();
-    for(int i=n+1;i<n+m+1;i++){
-        if(pf[i]==n){
-            std::cout<<i-2*n+1<<"\n";
-            //输出str2在str1中出现的位置
-            //注意下标从0开始，计算在str1中出现的位置时要减去str2和分隔符
-            //另外这个i是匹配到的子串的最右侧
+std::vector<int> KMP(std::string const & s, std::string const & p){
+    //输入主串和模式串，返回所有匹配的开始下标，下标从0开始
+    std::vector<int> vec;
+    std::vector<int> pf = prefixFunc(p);
+    int ns = s.size(), np = p.size();
+    for(int i=0, j=0;i<ns;i++){
+        while(j && s[i]!=p[j]) j = pf[j-1];
+        if(s[i]==p[j]) j++;
+        if(j==np){
+            vec.push_back(i-j+2);
+            j = pf[j-1];
         }
     }
-
-    //下面不是kmp的一部分，是洛谷3375的要求
-    pf = prefixFunc(str2);
-    for(auto x:pf){
-        std::cout<<x<<" ";
-    }
-    std::cout<<"\n";
-
-    return 0;
+    
+    return vec;
 }
 ```
 
@@ -326,17 +167,22 @@ int main(){
 //复杂度 文本串长度+模板串长度之和
 //AC自动机，luogu P3808
 
-#include <iostream>
-#include <queue>
-
-const int MAXN = 1000005;
-
-namespace AC{
+class AC{
+public:
 	int trie[MAXN][26], total;
 	int end[MAXN],fail[MAXN];
 
-	void insert(std::string str){
-        //插入模式串
+    void init(int m){
+        for(int i=0;i<=m;i++){
+            end[i] = 0;
+            fail[i] = 0;
+            for(int j=0;j<26;j++) trie[i][j] = 0;
+        }
+        total = 0;
+    }
+
+	void insert(std::string const & str){
+	    //插入模式串
 		int u = 0;
 		for(auto c:str){
 			if(!trie[u][c-'a']){
@@ -347,10 +193,9 @@ namespace AC{
 		end[u]++;
 	}
 
-	std::queue<int> qu;
-
 	void buildFail(){
-        //建造所有fail指针
+	    //构建fail指针
+	    std::queue<int> qu;
 		for(int i=0;i<26;i++){
 			if(trie[0][i]) qu.push(trie[0][i]);
 		}
@@ -371,12 +216,12 @@ namespace AC{
 		}
 	}
 
-	int query(std::string str){
-        //查询应当根据题目来修改，这里是p3808的
+	int query(std::string const & str){
+	    //查询主串str中出现了几个模式串
 		int u = 0, res = 0;
 		for(auto c:str){
 			u = trie[u][c-'a'];
-			for(int j = u;j&&end[j]!=-1;j=fail[j]){
+			for(int j = u ; j && end[j] != -1 ; j = fail[j]){
 				res += end[j];
 				end[j] = -1;
 			}
@@ -384,23 +229,87 @@ namespace AC{
 
 		return res;
 	}
-}
-
-int main(){
-	int n;
-	std::cin>>n;
-	std::string str;
-	for(int i=1;i<=n;i++){
-		std::cin>>str;
-		AC::insert(str);
-	}
-	AC::buildFail();
-	std::cin>>str;
-	std::cout<<AC::query(str)<<"\n";
-
-	return 0;
-}
+};
 ````
+
+## 最小表示法
+
+例如S = bcda, 则S的循环同构有cdab, dabc, abcd，其中字典序最小的是abcd，最小表示法就是求这个字典序最小的。当然题目里面可能是算数组里面字典序最小的。
+
+```cpp
+//最小表示法
+//luogu P1368
+//复杂度 O(n)
+int arr[MAXN];
+
+int minStr(int n){//数组下标从0开始，共n个；返回最小表示的开始下标
+    int i=0, j=1, k=0;
+    while(i<n && j<n && k<n){
+        if(arr[(i+k)%n]==arr[(j+k)%n]){
+            k++;
+        }
+        else if(arr[(i+k)%n]>arr[(j+k)%n]){//最大表示法时就把这一段和下一段换一下
+            i += k+1;
+            k = 0;
+        }
+        else{
+            j += k+1;
+            k = 0;
+        }
+        
+        if(i==j) j++;
+    }
+    
+    return std::min(i,j);
+}
+```
+
+## Manacher
+
+```CPP
+//manacher 算法
+//luogu P3805
+//复杂度O(n)
+std::vector<int> getD1(std::string const & str){
+    //返回字符串以某一位为中心的，最长的（奇数长度）回文子串的长度半径
+    //例如abcba中，d1[2] = 3
+    int n = str.size();
+    std::vector<int> d(n);
+    for(int i=0,l=0,r=-1;i<n;i++){
+        int j = l+r-i;
+        int dj = j>=0?d[j]:0;
+        d[i] = std::max(std::min(dj,j-l+1),0);
+        
+        if(j-dj<l){
+            while(i-d[i]>=0 && i+d[i]<n && str[i-d[i]]==str[i+d[i]])
+                d[i]++;
+            l = i-d[i]+1, r = i+d[i]-1;
+        }
+    }
+    
+    return d;
+}
+
+std::vector<int> getD2(std::string const & str){
+    //返回字符串以某一位的左边间隙为中心的，最长的（偶数长度）回文子串的长度半径
+    //例如abba中，d2[2] = 2
+    int n = str.size();
+    std::vector<int> d(n);
+    for(int i=0,l=0,r=-1;i<n;i++){
+        int j = l+r-i;
+        int dj = j>=0?d[j]:0;
+        d[i] = std::max(std::min(dj,j-l),0);
+        
+        if(j-dj-1<l){
+            while(i-d[i]-1>=0 && i+d[i]<n && str[i-d[i]-1]==str[i+d[i]])
+                d[i]++;
+            l = i-d[i], r = i+d[i]-1;
+        }
+    }
+    
+    return d;
+}
+```
 
 # 数论
 
@@ -2759,7 +2668,7 @@ int main(){
 
 ```cpp
 //复杂度 单次查询 logn 单次修改 logn
-//树状数组
+//树状数组，维护的是数组的前缀和，有大量的应用
 //luogu P3374
 
 #include <iostream>
@@ -3072,7 +2981,7 @@ odt.tree.insert(Node(1,w,0));
 
 ## 分块
 
-分块是根号算法，比线段树略差，但是不需要满足结合律，也不需要维护、传递tag。
+分块是根号算法，比线段树略差，但是不需要满足结合律，也不需要传递tag。
 
 ```cpp
 //luogu 3372 和线段树区间加，维护区间和一样
@@ -3144,6 +3053,92 @@ public:
 
 BA ba;//注意，开了大数组，要声明在main函数外面，或者可以去用动态分配内存
 ```
+
+## 平衡树（pbds实现）
+
+平衡树在ACM中用的极少，就不手搓了，大部分情况下都可以用set和pbds搞定。
+
+```cpp
+#include<ext/pb_ds/assoc_container.hpp>
+#include<ext/pb_ds/tree_policy.hpp> //仅限g++可以使用
+
+namespace pbds = __gnu_pbds;
+
+pbds::tree<LL, pbds::null_type, std::less<LL>, 
+           pbds::rb_tree_tag, pbds::tree_order_statistics_node_update> tr;
+```
+
+声明如上，还是挺复杂的，但是ACM可以带资料所以不成问题。需要注意只能在g++上用，ACM赛场大多都有g++所以不是问题。
+
+**模板参数解释**
+
+LL是存储数据的类型；
+
+pbds::null_type是映射规则（低版本g++为pbds::null_mapped_type，如果存入类型为std::map\<Key,Value\>则要填入Value）；
+
+std::less\<LL\>则是我们选择大根还是小根；可选参数，默认为less
+
+pbds::rb_tree_tag 则是我们选择的树的类型。总共有三种平衡树在pbds里，红黑树、splay、ov，但是后两个容易超时，一般不用。可选参数，默认为红黑树
+
+pbds::tree_order_statistics_node_update是节点更新方法，如果使用order_of_key和find_by_key方法，则要用它。可选参数，但默认是null_node_update。
+
+**方法**
+
+```cpp
+tr.insert(x); //插入一个元素x，返回std::pair<point_iterator, bool>
+//若成功，则是插入之后的迭代器和true，否则是x的迭代器和false
+tr.erase(x);  //成功返回true，也可以把迭代器作为参数
+tr.order_of_key(x);  //返回x的排名，0为第一名，x不一定要在树里
+tr.find_by_order(k); //返回排名为k的元素的迭代器，0为第一名
+tr.lower_bound(x);   //返回迭代器，这个函数不用多说了吧，和经常见到的一样
+tr.upper_bound(x);   //返回迭代器
+tr.join(b);          //将b树并入当前树，两棵树的类型要一样，不能有重复元素，b树将会被删除
+tr.split(x,b);       //小于等于x的保留在当前树，其他分给b树
+tr.empty();
+tr.size();
+```
+
+以上操作均为O(logn)复杂度，除了最后两个是O(1)
+
+**注意事项**
+
+tree里面的元素是唯一的，有点类似与set。但我们并没有multi-tree去使用，做例如洛谷上的平衡树模板题，他要求元素可重复。此时我们有以下奇技淫巧
+
+```cpp
+LL n;
+std::cin>>n;
+
+for(int i=1;i<=n;i++){
+	int ope;
+	LL x;
+	std::cin>>ope>>x;
+	
+	if(ope==1) tr.insert((x<<20)+i);
+	else if(ope==2) tr.erase(tr.lower_bound(x<<20));
+	else if(ope==3) std::cout<<tr.order_of_key(x<<20)+1<<"\n";
+	else if(ope==4) std::cout<<((*tr.find_by_order(x-1))>>20)<<"\n";
+	else if(ope==5){
+	    auto it = tr.lower_bound(x<<20);
+	    it--;
+	    std::cout<<((*it)>>20)<<"\n";
+	}
+	else{
+	    auto it = tr.upper_bound((x<<20)+n);
+    	std::cout<<((*it)>>20)<<"\n";
+	}
+}
+```
+
+假设有$n$个操作，共$6$种
+
+1. 插入$x$
+2. 删除$x$
+3. 查询$x$的排名（比$x$小的数的个数$+1$）
+4. 查询排名为$x$的数
+5. 求小于$x$的最大的数
+6. 求大于$x$的最小的数
+
+看代码，我们将$x$左移20位，加上了操作序号，这样我们就可以实现可重复插入。只需要我们再最后把数字右移20位回来即可。erase注意是加入迭代器去erase，因为我们并没有等于x\<\<20的数字。最后一个操作，要$+n$，来处理所有的相等的$x$
 
 # 堆
 
@@ -3568,6 +3563,263 @@ $$
 
 $Q^{-1}$是$Q$在模$998244353$意义下的乘法逆元
 
+# 杂项
+
+## 快速幂
+
+```cpp
+//复杂度logn
+#include <iostream>
+
+using namespace std;
+
+long long binpow(long long n, long long p){
+    long long res = 1;
+    while(p>0){
+        if(p&1){
+            res = res * n;
+        }
+        n *= n;
+        p>>=1;
+    }
+    return res;
+
+}
+
+
+int main(){
+    long long n,p;
+    cin>>n>>p;
+
+    cout<<binpow(n,p)<<endl;
+
+    return 0;
+}
+```
+
+## 离散化
+
+有两种，一种是unique函数版，一种是树状数组求逆序对里使用的，都可以，区别是，那个对于相同的数字根据先后顺序确定大小，这个则是一样大
+
+```cpp
+//复杂度nlogn
+//离散化 例如将1,500,40,1000保持相对大小不变，离散化为1,3,2,4
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+vector<int> arr,assi;
+
+int main(){
+    int n;
+    cin>>n;
+    for(int i=1;i<=n;i++){
+        int a;
+        cin>>a;
+        arr.push_back(a);
+        assi.push_back(a);
+    }
+    sort(assi.begin(),assi.end());
+    assi.erase(unique(assi.begin(),assi.end()),assi.end());
+
+    for(int i=0;i<n;i++){
+        arr[i] = upper_bound(assi.begin(),assi.end(),arr[i])-assi.begin();
+    }
+
+    for(int i=0;i<n;i++){
+        cout<<arr[i]<<" ";
+    }
+    cout<<endl;
+
+    return 0;
+}
+```
+
+## 莫队算法
+
+```cpp
+//对于序列上的区域离线询问问题，如果[l,r]的答案能够O(1)拓展得到
+//[l-1,r],[l+1,r],[l,r-1],[l,r+1]的答案，那么就可以在O(n sqrt(n))中解决所有询问
+//SPOJ DQUERY
+int nowAns, ans[MAXQ];
+int sq;//分块数sq = sqrt(n)
+
+struct Query{
+    int l,r,id;//询问区间和询问下标
+    bool operator<(Query const & x)const{
+        if(l/sq != x.l/sq)//根据归属于哪个块排序
+            return l<x.l;
+        if(l/sq & 1)      //玄学奇偶排序
+            return r<x.r;
+        return r>x.r;
+    }  
+}Q[MAXQ];
+
+int l=1,r=0;//初始化询问区间
+
+inline void update(int p){
+    //update here
+}
+
+void solve(){
+    sq = std::sqrt(n);
+    //输入数据（总数n个数据）、查询（总数q个查询）
+    std::sort(Q,Q+q);
+    for(int i=0;i<q;i++){
+        while(l>Q[i].l)
+	        update(--l);
+	    while(r<Q[i].r)
+	        update(++r);
+	    while(l<Q[i].l)
+	        update(l++);
+	    while(r>Q[i].r)
+	        update(r--);
+	    //注意上述顺序，扩张区间是先移动再更新，缩减区间是先更新再移动
+	    //四个update可能会有不一样，具体题目具体讨论
+	    ans[Q[i].id] = nowAns;
+    }
+}
+
+```
+
+## 表达式求值
+
+```cpp
+inline bool isOper(char c){
+    return c=='+'||c=='-'||c=='*'||c=='/';
+}
+
+inline bool isDigit(char c){
+    return c>='0' && c<='9';
+}
+
+inline int priority(char oper){
+    if(oper=='+' || oper=='-') return 1;
+    if(oper=='*' || oper=='/') return 2;
+    return -1;
+}
+
+std::string toRPN(std::string expr){
+    std::string ret;
+    
+    std::stack<char> oper;
+    int esize = expr.size();
+    for(int i=0;i<esize;i++){
+        char& c = expr[i];
+        if(c==' ') continue;
+        else if(isOper(c)){
+            if(c=='-' && (i==0 || expr[i-1]=='(')){
+                //判断一元运算符负号，这里采用了加个0-前缀的方法，如果题目要求输出RPN其实是做不到的
+                //TODO: 把toRPN返回一个vector，实现真正的RPN
+                ret.push_back('0');
+                ret.push_back(' ');
+            }
+            while(!oper.empty() && priority(oper.top())>=priority(c)){
+                //如果是右结合运算符，则要改成大于，如果只有一部分是右结合运算符，分类讨论
+                ret.push_back(oper.top());
+                ret.push_back(' ');
+                oper.pop();
+            }
+            oper.push(c);
+        }
+        else if(c=='('){
+            oper.push(c);
+        }
+        else if(c==')'){
+            while(oper.top()!='('){
+                ret.push_back(oper.top());
+                ret.push_back(' ');
+                oper.pop();
+            }
+            oper.pop();
+        }
+        else{
+            while(i<esize && isDigit(expr[i])){
+                ret.push_back(expr[i++]);
+            }
+            ret.push_back(' ');
+            i--;
+        }
+    }
+    
+    while(!oper.empty()){
+        ret.push_back(oper.top());
+        ret.push_back(' ');
+        oper.pop();
+    }
+    
+    return ret;
+}
+
+void processOper(std::stack<int> & st, char oper){
+    int r = st.top();
+    st.pop();
+    int l = st.top();
+    st.pop();
+    
+    switch(oper){
+        case '+':
+            st.push(l+r);
+            break;
+        case '-':
+            st.push(l-r);
+            break;
+        case '*':
+            st.push(l*r);
+            break;
+        case '/':
+            st.push(l/r);
+            break;
+    }
+}
+
+int RPNCalc(std::string expr){
+    int ret = 0;
+
+    std::stack<int> number;
+    int esize = expr.size();
+    for(int i=0;i<esize;i++){
+        char& c = expr[i];
+        if(c==' ') continue;
+        else if(isOper(c)){
+            processOper(number, c);
+        }
+        else{
+            int res = 0;
+            while(i<esize && isDigit(expr[i])){
+                res = res*10 + expr[i++] - '0';
+            }
+            i--;
+            number.push(res);
+        }
+    }
+    
+    ret = number.top();
+
+    return ret;
+}
+
+int exprCalc(std::string expr){
+    int ret = RPNCalc(toRPN(expr));
+    return ret;
+}
+
+int main(){
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(0);
+
+	std::string str;
+	std::cin>>str;
+	
+	std::cout<<toRPN(str)<<"\n";
+	std::cout<<exprCalc(str)<<"\n";
+
+    return 0;
+}
+```
+
 # C++ STL用法
 
 ## std::swap
@@ -3813,6 +4065,10 @@ auto it = mp.lower_bound(1);
 
 可以看作是无序的map，通常由哈希表实现。这意味着map中和排序有关的函数都不能使用。
 
+**警告**
+
+unordered_map可能不能用auto x:mp或者迭代器遍历。它的遍历可能是遍历bucket，而不是遍历元素。但是只是查找是可以的。
+
 ## std::set 
 
 set是关联容器，含有Key类型对象的已排序集，通常用红黑树实现。
@@ -3852,6 +4108,10 @@ st.insert(1);
 ## std::unordered_set
 
 用哈希实现，没有内部排序。
+
+**警告**
+
+可能跟unordered_map一样不能遍历。
 
 ## std::multiset
 
