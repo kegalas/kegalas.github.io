@@ -67,6 +67,7 @@ int main(){
 //kmp,luogu3375
 std::vector<int> prefixFunc(std::string const & str){
     //输入一个字符串，输出该字符串的前缀函数表
+    //前缀函数pi[i]是满足s[0...x-1]==s[i-x+1...i]的最大的x
     //如果输入不是字符串而是一个数组，也可以很方便的修改为vector
     int n = str.length();
     std::vector<int> ans(n);
@@ -308,6 +309,107 @@ std::vector<int> getD2(std::string const & str){
     }
     
     return d;
+}
+```
+
+## Z函数
+
+```cpp
+//Z函数，复杂度O(n)
+//luogu P5410
+std::vector<int> zFunc(std::string const & str){
+    //求出一个字符串的z函数，即满足z[i]是s[0...x-1]==s[i...i+x-1]的最大的x
+    //特别的z[0]=0
+    int n = str.size();
+    std::vector<int> z(n);
+    
+    for(int i=1,l=0,r=0;i<n;i++){
+        if(z[i-l]<r-i+1)
+            z[i] = z[i-l];
+        else{
+            z[i] = std::max(r-i+1,0);
+            while(i+z[i]<n && str[z[i]]==str[i+z[i]])
+                z[i]++;
+            l = i, r = i + z[i] - 1;
+        }
+    }
+    
+    return z;
+}
+```
+
+## 后缀数组
+
+首先是$O(n\log^2n)$的，没有用到基数排序（因为我不排除会求某种只给出偏序关系的后缀数组）
+
+```cpp
+//求后缀树组，复杂度O(nlog^2n)
+//luogu p3809
+int rk[MAXN<<1],sa[MAXN],tarr[MAXN<<1];
+//rk[i]表示后缀i（从1开始，后缀i代表字符串从i开始的子串）的排名，sa[i]表示所有后缀第i小的编号，排名和编号都从1开始
+
+void getSA(std::string const & s){
+    int n = s.size();
+    if(n==1){
+        rk[1] = sa[1] = 1;
+        return;
+    }
+    
+    for(int i=1;i<=n;i++)
+        sa[i] = i, rk[i] = s[i-1];
+    
+    for(int w=1;w<n;w<<=1){
+        auto rp = [&](int x){return std::make_pair(rk[x],rk[x+w]);};
+        std::sort(sa+1,sa+n+1,[&](int x, int y){return rp(x)<rp(y);});
+        for(int i=1,p=0;i<=n;i++)
+            tarr[sa[i]] = rp(sa[i-1])==rp(sa[i]) ? p:++p;
+        std::copy(tarr+1,tarr+n+1,rk+1);
+    }
+}
+```
+
+再给出$O(n\log n)$的
+
+```cpp
+//求后缀树组，复杂度O(nlogn)
+//luogu p3809
+int rk[MAXN<<1],sa[MAXN],tarr[MAXN<<1],cnt[MAXN],rkt[MAXN];
+//rk[i]表示后缀i（从1开始，后缀i代表字符串从i开始的子串）的排名，sa[i]表示所有后缀第i小的编号，排名和编号都从1开始
+
+void getSA(std::string const & s){
+    int n = s.size();
+    if(n==1){
+        rk[1] = sa[1] = 1;
+        return;
+    }
+    
+    int m = 128;
+    for(int i=1;i<=n;i++)
+        ++cnt[rk[i]=s[i-1]];
+    for(int i=1;i<=m;i++)
+        cnt[i] += cnt[i-1];
+    for(int i=n;i>=1;i--)
+        sa[cnt[rk[i]]--] = i;
+    
+    for(int w=1;;w<<=1){
+        for(int i=n;i>n-w;i--)
+            tarr[n-i+1] = i;
+        for(int i=1,p=w;i<=n;i++)
+            if(sa[i]>w) tarr[++p]=sa[i]-w;
+        std::fill(cnt+1,cnt+m+1,0);
+        for(int i=1;i<=n;i++)
+            cnt[rkt[i] = rk[tarr[i]]]++;
+        for(int i=1;i<=m;i++)
+            cnt[i]+=cnt[i-1];
+        for(int i=n;i>=1;i--)
+            sa[cnt[rkt[i]]--] = tarr[i];
+        m = 0;
+        auto rp = [&](int x){return std::make_pair(rk[x],rk[x+w]);};
+        for(int i=1;i<=n;i++)
+            tarr[sa[i]] = rp(sa[i-1])==rp(sa[i]) ? m:++m;
+        std::copy(tarr+1,tarr+n+1,rk+1);
+        if(n==m) break;
+    }
 }
 ```
 
@@ -3984,6 +4086,43 @@ std::memset(a,0,sizeof(a));
 ```
 
 注意，赋的值不能随便取，这个函数是一个字节一个字节地去赋值的。如果取1并不会得到全部赋值为1的效果，通常只会取0和-1。
+
+## std::copy
+
+将一个范围的值复制给另一个范围，复杂度：准确赋值 (last - first) 次
+
+```cpp
+int a[10],b[10];
+std::copy(a,a+10,b);//源起点，源终点，目的地起点
+```
+
+需要注意的点是，不要数组越界，包括源不要越界，目标的大小也要足够复制。类型要一致。以及，目标起点的地址不能在源之内，否则行为是未定义的。
+
+## std::fill
+
+将给定值填写到整个范围中，复杂度：准确赋值 std::distance(first, last) 次。
+
+```cpp
+std::vector<int> v{0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+std::fill(v.begin(), v.end(), -1);
+```
+
+之后v变成全-1的vector。
+
+可以对C数组使用指针，和memset不一样的是，memset是字节赋值，fill并不会把4字节的int每一个字节都赋值一次。
+
+注意，如果你对结构体数组使用，你不能直接像memset一样全部memset为0。你要创建一个你认为的初始化应该有的值，再fill进去。
+
+```cpp
+struct A{
+    int a,b;
+}a[100];
+
+std::memset(a,0,sizeof(a));
+//std::fill(a,a+100,0);//出错
+A tmp = {0,0};
+std::fill(a,a+100,tmp);
+```
 
 ## std::map
 
