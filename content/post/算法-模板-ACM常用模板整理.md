@@ -35,6 +35,7 @@ markup: pandoc
 
 using LL = long long;
 using ULL = unsigned long long;
+using LD = long double;
 using i128 = __int128;
 using pii = std::pair<int,int>;
 using pll = std::pair<LL,LL>;
@@ -104,61 +105,92 @@ std::vector<int> KMP(std::string const & s, std::string const & p){
 
 ```cpp
 //复杂度 插入或查找一次 模板串长度
-#include <iostream>
-#include <cstdio>
-#include <cstring>
-
-#define MAXN 500005
-
-using namespace std;
-
-int nxt[MAXN][26];
-int cnt;
-
-void init(){
-    memset(nxt,0,sizeof(nxt));
-    cnt = 1;
-}
-
-void insert(string s){
-    int cur = 1;
-    for(auto c:s){
-        if(!nxt[cur][c-'a']){
-            nxt[cur][c-'a']=++cnt;
+//luogu p8306
+class Trie{
+public:
+    int nxt[MAXM][26];
+    int cnt;
+    
+    void init(){
+        for(int i=0;i<=cnt;i++) for(int j=0;j<26;j++) nxt[i][j] = 0;
+        cnt = 0;//起始节点编号为0
+    }
+    
+    void insert(std::string const & s){
+        int cur = 0;
+        for(auto c:s){
+            if(!nxt[cur][c-'a']){
+                nxt[cur][c-'a']=++cnt;
+            }
+            cur = nxt[cur][c-'a'];
         }
-        cur = nxt[cur][c-'a'];
     }
+    
+    bool find_prefix(std::string const & s){
+        int cur=0;
+        for(auto c:s){
+            if (!nxt[cur][c-'a']){
+               return false;
+            }            
+            cur = nxt[cur][c-'a'];
+        }
+        return true;
+    }
+};
+
+Trie trie;
+```
+
+## 字符串哈希
+
+主要是用于判断两个字符串是否相等。通常我们的Hash函数会把字符串看成是某个进制下的自然数。把这个自然数对某个大质数取模得到Hash值。
+
+求Hash的复杂度是$O(n)$，如果我们要比较一大群字符串里有多少不同的，我们不应该两两比较，而要把它们的Hash全部记录下来，再去排序Hash、比较。
+
+这种哈希函数的性质为：
+
+1. 设已知字符串$S$的Hash值为$H(S)$，那么添加一个字符$c$后的新字符串的Hash值为$H(S+c)=(H(S)*base+value[c])\%MOD$。其中$value[c]$表示$c$代表的数值，如果用char类型直接把$c$转换为int或者ULL什么的就行了
+2. 已知$H(S)$和$H(S+T)$，则$H(T)=(H(S+T)-H(S)*base^{length(T)})\%MOD$，直观理解的话，就是在$base$进制下，在S后面补$0$，把$S$左端和$S+T$左端对齐，相减得到$H(T)$。利用这个性质可以方便地先预处理字符串所有前缀的Hash，然后查询连续子串的Hash。
+
+```cpp
+//自然溢出法，相当于对2^64取模的单哈希，是比较容易被特殊数据卡掉的
+using ULL = unsigned long long;
+ULL H(std::string const & str){
+    ULL ret = 0;
+    ULL const base = 131;//ascii也就128个字符，质数131作为底数足够
+    
+    for(auto c:str){
+        ret = ret*base+(ULL)c;
+    }
+    return ret;
+}
+```
+
+```cpp
+//双哈希法，两个字符串的两个哈希必须分别相同，才会被考虑为相同的字符串
+//比起单哈希，更不容易被卡
+ULL const MOD1 = 998244353;
+ULL const MOD2 = 1e9+7;
+ULL const base = 131;
+
+struct Data{//把字符串的两个哈希捆起来，便于排序比较等操作
+    ULL x,y;
+};
+
+ULL H1(std::string const & str){
+    ULL ret = 0;
+    for(auto c:str){
+        ret = (ret*base+(ULL)c)%MOD1;
+    }
+    return ret;
 }
 
-bool find_prefix(string s){
-    int cur=1;
-    for(auto c:s){
-        if (!nxt[cur][c - 'a'])
-        {
-            return false;
-        }            
-        cur = nxt[cur][c - 'a'];
+ULL H2(std::string const & str){
+    ULL ret = 0;
+    for(auto c:str){
+        ret = (ret*base+(ULL)c)%MOD2;
     }
-    return true;
-}
-
-int main(){
-
-    int n;
-    cin>>n;
-    for(int i=1;i<=n;i++){
-        string s1;
-        cin>>s1;
-        insert(s1);
-    }
-    while(1){
-        string s1;
-        cin>>s1;
-        cout<<find_prefix(s1)<<endl;
-    }
-
-
-    return 0;
+    return ret;
 }
 ```
 
@@ -411,6 +443,242 @@ void getSA(std::string const & s){
         if(n==m) break;
     }
 }
+```
+
+## 后缀自动机
+
+```cpp
+//后缀自动机，构建SAM的复杂度为O(n)，空间复杂度为O(|S|n)，|S|为字符集的大小
+//luogu p3804
+//SAM是动态构建的，每次插入一个字符即可
+struct State{
+    int fa,len,next[26];//似乎有些编译器next是保留字，需要注意
+};
+
+class SAM{
+public:
+    State st[MAXN<<1];//SAM总状态数不会超过2n-1，总转移数不超过3n-4
+    int cnt = 1, last = 1;
+    //起始节点编号为1
+    
+    void insert(int ch){
+        ch = ch-'a';
+        int cur = ++cnt;
+        int p = 0;
+        st[cur].len = st[last].len + 1;
+        for(p=last;p&&!st[p].next[ch];p=st[p].fa)
+            st[p].next[ch] = cur;
+        int q = st[p].next[ch];
+        if(q==0){
+            st[cur].fa = 1;
+        }
+        else if(st[p].len + 1 == st[q].len){
+            st[cur].fa = q;
+        }
+        else{
+            int r = ++cnt;
+            st[r] = st[q];
+            st[r].len = st[p].len + 1;
+            for(;p&&st[p].next[ch]==q;p=st[p].fa){
+                st[p].next[ch]=r;
+            }
+            st[cur].fa = st[q].fa = r;
+        }
+        last = cur;
+    }
+};
+
+SAM sam;
+//有一个性质，每个状态i对应的子串数量是st[i].len-st[st[i].fa].lengthv
+//算法并没有维护endpos等效类的大小，需要自己去树形dp
+```
+
+## 广义后缀自动机
+
+```cpp
+//广义后缀自动机，其实就是插入多个字符串的后缀自动机，但只能离线build
+//luogu p6139
+struct State{
+    int fa,len,next[26];//似乎有些编译器next是保留字，需要注意
+};
+
+class GSA{
+public:
+    State st[MAXN<<1];
+    int cnt = 1;//起始节点编号为1
+    
+    int insert(int last, int ch){
+        //传入的是即将插入的字符的父节点编号，以及该字符
+        //只用在build里，不要直接把字符串插入，应该先insertTrie在build
+        int cur = st[last].next[ch];
+        int p = 0;
+        st[cur].len = st[last].len + 1;
+        
+        for(p=st[last].fa;p && !st[p].next[ch];p=st[p].fa)
+            st[p].next[ch] = cur;
+        
+        int q = st[p].next[ch];
+        if(q==0){
+            st[cur].fa = 1;
+        }
+        else if(st[p].len+1==st[q].len){
+            st[cur].fa = q;
+        }
+        else{
+            int r = ++cnt;
+            st[r].fa = st[q].fa;
+            for(int i=0;i<26;i++)
+                if(st[st[q].next[i]].len)
+                    st[r].next[i] = st[q].next[i];
+            st[r].len = st[p].len+1;
+            for(;p && st[p].next[ch]==q;p=st[p].fa)
+                st[p].next[ch] = r;
+            st[cur].fa = st[q].fa = r;
+        }
+        return cur;
+        //返回插入节点编号
+    }
+    
+    void build(){
+        std::queue<pii> qu;
+        for(int i=0;i<26;i++){
+            if(st[1].next[i]) qu.push({1,i});
+        }
+        while(!qu.empty()){
+            int fa = qu.front().first;
+            int ch = qu.front().second;
+            qu.pop();
+            int p = insert(fa,ch);
+            for(int i=0;i<26;i++){
+                if(st[p].next[i]) qu.push({p,i});
+            }
+        }
+    }
+    
+    void insertTrie(std::string const & str){
+        int cur = 1;
+        for(auto c:str){
+            if(!st[cur].next[c-'a']){
+                st[cur].next[c-'a']=++cnt;
+            }
+            cur = st[cur].next[c-'a'];
+        }
+    }
+};
+
+GSA gsa;
+
+int main(){
+    int n;
+    std::cin>>n;
+    
+    for(int i=1;i<=n;i++){
+        std::string str;
+        std::cin>>str;
+        gsa.insertTrie(str);
+    }
+    gsa.build();
+
+    return 0;
+}
+```
+
+## 回文字动机
+
+```cpp
+//回文字动机，复杂度：线性
+//luogu p5496
+struct State{
+    int len, fail, next[26];
+};
+
+class PAM{
+public:
+    int last,cnt,pos;
+    State st[MAXN];//最多有n+2个状态和n个转移
+    std::string str;
+    
+    void init(std::string const & s){
+        last = 1,pos = -1;
+        cnt = 2;//起始两个根为1奇根，2偶根，len分别为-1和0
+        st[1].len = -1, st[2].len = 0, st[2].fail = 1;
+        str = s;
+    }
+    
+    int up(int p){
+        while(str[pos-1-st[p].len]!=str[pos])
+            p = st[p].fail;
+        return p;
+    }
+    
+    void insert(int ch){
+        pos++;
+        ch = ch-'a';
+        int p = up(last);
+        int & q = st[p].next[ch];
+        if(!q){
+            q=++cnt;
+            st[q].len = st[p].len+2;
+            st[q].fail = p==1 ? 2 : st[up(st[p].fail)].next[ch];
+        }
+        last = q;
+    }
+};
+
+PAM pam;
+
+int main(){
+    std::string str
+	std::cin>>str;
+	pam.init(str);
+    for(auto c:str){
+        pam.insert(c);
+    }
+
+    return 0;
+}
+```
+
+## 序列自动机
+
+```cpp
+//序列自动机，复杂度 O(n|S|)
+//luogu p5826
+//字符集很大时需要用可持久化线段树维护next
+struct State{
+    int next[26];  
+};
+
+class SQA{
+public:
+    State st[MAXN];
+    
+    void build(std::string const & str){
+        int nxt[26];
+        std::fill(nxt,nxt+26,0);
+        int n = str.size();
+        
+        for(int i=n-1;i>=0;i--){
+            nxt[str[i]-'a'] = i+2;//1号节点是起始空节点
+            for(int ch=0;ch<26;ch++){
+                st[i+1].next[ch] = nxt[ch];
+            }
+        }
+    }
+    
+    bool query(std::string const & str){
+        //查询str是否是子序列（可以不连续）
+        int p = 1, n=str.size();
+        for(int i=0;i<n;i++){
+            p = st[p].next[str[i]-'a'];
+            if(p==0) return false;
+        }
+        
+        return true;
+    }
+};
+
+SQA sqa;
 ```
 
 # 数论
@@ -1666,9 +1934,7 @@ bool add(int x, int y){
 
 ### 最大流
 
-#### Ford-Fulkerson
-
-##### DFS实现的Ford-Fulkerson
+#### DFS实现的Ford-Fulkerson
 
 ```cpp
 //luogu 3376
@@ -1739,7 +2005,7 @@ int main(){
 }
 ```
 
-##### EdmondsKarp
+#### EdmondsKarp
 
 ```cpp
 //luogu P3376
@@ -1822,7 +2088,7 @@ int main(){
 }
 ```
 
-##### Dinic
+#### Dinic
 
 ```cpp
 //luogu P3376
@@ -1847,9 +2113,10 @@ std::vector<std::vector<int> > graph(MAXN);//vector版的链式前向星
 std::vector<int> cur(MAXN);
 int level[MAXN];
 
-bool BFS(int const & s, int const & t){//BFS分层
+bool BFS(int s, int t){//BFS分层
     std::memset(level, -1, sizeof(level));
     level[s] = 0;
+    cur.assign(MAXN,0);//初始化当前弧
     std::queue<int> qu;
     qu.push(s);
 
@@ -1877,8 +2144,9 @@ LL DFS(int const & p, LL const & flow, int const & s, int const & t){
     LL surplus = flow;//剩余流量
 
     int size = graph[p].size();
-    for(int & i=cur[p];i<size && surplus;i++){//这里i是引用，是当前弧优化
+    for(int i=cur[p];i<size && surplus;i++){
         int eg = graph[p][i];
+        cur[p] = i;//更新当前弧
         int to = edges[eg].v;
         LL vol = edges[eg].w;
         if(vol>0 && level[to]==level[p]+1){
@@ -1895,7 +2163,6 @@ LL DFS(int const & p, LL const & flow, int const & s, int const & t){
 LL Dinic(int const & p, LL const & flow, int const & s, int const & t){
     LL ans = 0;
     while(BFS(s,t)){
-        cur.assign(MAXN,0);
         ans += DFS(p,flow,s,t);
     }
     return ans;
@@ -1920,51 +2187,410 @@ int main(){
 }
 ```
 
-## 连通性相关
+### 最小费用最大流
 
-### 强连通分量
+#### EK+SPFA
 
-#### Tarjan算法
+```cpp
+//luogu P3381
+//EK+SPFA的实现，复杂度为O(nmf)，即点数、边数、最大流
+#include <iostream>
+#include <cstring>
+#include <vector>
+#include <queue>
+
+typedef long long LL;
+typedef std::pair<LL,LL> pll;
+
+const int MAXN = 5005;
+const LL INF = 0xffffffff;
+
+struct Edge{
+    int v;LL w;LL c;//指向的点，容量，费用
+    Edge(int v_, LL w_, LL c_):v(v_),w(w_),c(c_){}
+};
+
+std::vector<Edge> edges;
+std::vector<std::vector<int> > graph(MAXN);//vector版的链式前向星
+int last[MAXN];
+LL flow[MAXN];
+LL dis[MAXN];
+bool inq[MAXN];
+
+bool SPFA(int s, int t){
+    std::queue<int> qu;
+    qu.push(s);
+    
+    std::memset(last,-1,sizeof(last));
+    std::memset(dis,127,sizeof(dis));
+    std::memset(inq,0,sizeof(inq));
+
+    flow[s] = INF;
+    dis[s] = 0;
+    inq[s] = 1;
+    
+    while(!qu.empty()){
+        int p = qu.front();
+        qu.pop();
+        inq[p] = 0;
+
+        int size = graph[p].size();
+        for(int i=0;i<size;i++){
+            int eg = graph[p][i];
+            int to = edges[eg].v;
+            LL vol = edges[eg].w;
+            if(vol>0 && dis[to]>dis[p]+edges[eg].c){
+                last[to] = eg;
+                flow[to] = std::min(flow[p], vol);
+                dis[to] = dis[p]+edges[eg].c;
+                if(!inq[to]){
+                    qu.push(to);
+                    inq[to] = 1;
+                }
+            }
+        }
+    }
+    return last[t] != -1;
+}
+
+pll MCMF(int s, int t){
+    LL maxflow = 0, mincost = 0;
+
+    while(SPFA(s,t)){
+        maxflow += flow[t];
+        mincost += dis[t] * flow[t];
+        for(int i=t;i!=s;i=edges[last[i]^1].v){
+            edges[last[i]].w -= flow[t];
+            edges[last[i]^1].w += flow[t];
+        }
+    }
+
+    return {maxflow,mincost};
+}
+
+int main(){
+    int n,m,s,t;//点数，边数，源点，汇点
+    std::cin>>n>>m>>s>>t;
+
+    for(int i=1;i<=m;i++){
+        int u,v;LL w,c;
+        std::cin>>u>>v>>w>>c;
+        graph[u].push_back(edges.size());
+        edges.push_back(Edge(v,w,c));
+        graph[v].push_back(edges.size());
+        edges.push_back(Edge(u,0,-c));
+    }
+
+    pll ans = MCMF(s,t);
+    std::cout<<ans.first<<" "<<ans.second<<"\n";
+
+    return 0;
+}
+
+```
+
+#### Dinic+SPFA
+
+```cpp
+//luogu P3381
+//Dinic+SPFA的实现，复杂度为O(nmf)，即点数、边数、最大流
+#include <iostream>
+#include <cstring>
+#include <vector>
+#include <queue>
+
+typedef long long LL;
+typedef std::pair<LL,LL> pll;
+
+const int MAXN = 5005;
+const LL INF = 0xffffffff;
+
+struct Edge{
+    int v;LL w,c;//指向的点，容量，费用
+    Edge(int v_, LL w_, LL c_):v(v_),w(w_),c(c_){}
+};
+
+std::vector<Edge> edges;
+std::vector<std::vector<int> > graph(MAXN);//vector版的链式前向星
+std::vector<int> cur(MAXN);
+LL dis[MAXN];
+bool inq[MAXN];
+
+bool SPFA(int s, int t){//BFS分层
+    std::fill(dis,dis+MAXN,INF);
+    std::memset(inq, 0, sizeof(inq));
+
+    dis[s] = 0;
+    inq[s] = 1;
+
+    cur.assign(MAXN,0);//初始化当前弧
+    std::queue<int> qu;
+    qu.push(s);
+
+    while(!qu.empty()){
+        int p = qu.front();
+        qu.pop();
+        inq[p] = 0;
+        
+        int size = graph[p].size();
+        for(int i=0;i<size;i++){
+            int eg = graph[p][i];
+            int to = edges[eg].v;
+            LL vol = edges[eg].w;
+            if(vol>0 && dis[to] > dis[p]+edges[eg].c){
+                dis[to] = dis[p]+edges[eg].c;
+                if(!inq[to]){
+                    qu.push(to);
+                    inq[to] = 1;
+                }
+            }
+        }
+    }
+
+    return dis[t] != INF;
+}
+
+LL DFS(int const & p, LL const & flow, int const & s, int const & t){
+    if(p==t) return flow;
+
+    LL surplus = flow;//剩余流量
+    inq[p] = 1;//由于在SPFA中都会清零，可以复用
+
+    int size = graph[p].size();
+    for(int i=cur[p];i<size && surplus;i++){
+        int eg = graph[p][i];
+        cur[p] = i;//更新当前弧
+        int to = edges[eg].v;
+        LL vol = edges[eg].w;
+        if(!inq[to] && vol>0 && dis[to]==dis[p]+edges[eg].c){
+            LL cx = DFS(to, std::min(vol, surplus), s, t);
+            surplus -= cx;
+            edges[eg].w -= cx;
+            edges[eg^1].w += cx;
+        }
+    }
+    inq[p] = 0;
+
+    return flow - surplus;
+}
+
+pll MCMF(int const & p, LL const & flow, int const & s, int const & t){
+    LL maxflow = 0, mincost = 0;
+    while(SPFA(s,t)){
+        LL ret = DFS(p,flow,s,t);
+        maxflow += ret;
+        mincost += ret * dis[t];
+    }
+    return {maxflow,mincost};
+}
+
+int main(){
+    int n,m,s,t;//点数，边数，源点，汇点
+    std::cin>>n>>m>>s>>t;
+
+    for(int i=1;i<=m;i++){
+        int u,v;LL w,c;
+        std::cin>>u>>v>>w>>c;
+        graph[u].push_back(edges.size());
+        edges.push_back(Edge(v,w,c));
+        graph[v].push_back(edges.size());
+        edges.push_back(Edge(u,0,-c));
+    }
+    pll ans = MCMF(s,INF,s,t);
+    std::cout<<ans.first<<" "<<ans.second<<"\n";
+
+    return 0;
+}
+
+```
+
+### 上下界流
+
+#### 无源汇上下界可行流
+
+```cpp
+//loj 115
+//前面的Dinic算法省略
+LL in[MAXN];
+
+int main() {
+    int n, m, s, t; //点数，边数，源点，汇点
+    std::cin >> n >> m;
+    s = n + 1;//虚拟源点
+    t = n + 2;//虚拟汇点
+
+    std::vector<LL> ans;
+
+    for (int i = 1; i <= m; i++) {
+        int u, v;
+        LL w1, w2;//下界，上界
+        std::cin >> u >> v >> w1 >> w2;
+        ans.push_back(w1);
+        graph[u].push_back(edges.size());
+        edges.push_back(Edge(v, w2 - w1));//只用建立差网络即可
+        graph[v].push_back(edges.size());
+        edges.push_back(Edge(u, 0));
+
+        in[u] -= w1;
+        in[v] += w1;
+    }
+
+    for (int i = 1; i <= n; i++) {
+        if (in[i] > 0) {//在下界网络中，有净流入的节点，要从源点连一条边，大小等于净流入
+            graph[s].push_back(edges.size());
+            edges.push_back(Edge(i, in[i]));
+            graph[i].push_back(edges.size());
+            edges.push_back(Edge(s, 0));
+        } else {//有净流出的节点，要向汇点连一条边，大小等于净流出
+            graph[i].push_back(edges.size());
+            edges.push_back(Edge(t, -in[i]));
+            graph[t].push_back(edges.size());
+            edges.push_back(Edge(i, 0));
+        }
+    }
+
+    Dinic(s, INF, s, t);
+
+    for (auto x : graph[s]) {
+        if (edges[x].w != 0) {
+            //如果源点的附加边没有满流，说明不存在可行流
+            //也可以换成判断汇点没有满流，二者等价
+            std::cout << "NO\n";
+            return 0;
+        }
+    }
+
+    std::cout << "YES\n";
+
+    for (int i = 1; i < 2 * m; i += 2) {
+        //反向边就是这条边的流量，再加之前输入的下界得到每条边的流量
+        ans[i / 2] += edges[i].w;
+    }
+
+    for (auto x : ans) {
+        std::cout << x << "\n";
+    }
+
+    return 0;
+}
+```
+
+#### 有源汇上下界可行流
+
+比起无源汇的情况，我们可以把图中的汇点向源点连一条下界0，上界无限大的边。然后就变成无源汇图了。处理的时候，新建附加源点汇点$S',T'$，原来的$S,T$就变成了普通点，思路一致。
+
+若有解，则$S$到$T$的可行流流量等于$T$到$S$的附加边的流量。
+
+#### 有源汇上下界最大流
+
+在有源汇上下界可行流有解的时候，$S$到$T$的可行流量就是$T$到$S$的附加边的流量。然后我们删去所有添加的附加边，包括$S',T'$连的以及$T-S$附加边，再在跑完的网络上再跑一次Dinic，得到的流加上可行流就是最后的答案。
+
+具体实践上，我们不需要真的把边删了，$S',T'$所连的边根本不会影响结果，可以不用管，至于$T-S$这条边，我们获取了流量之后，直接把正向、反向边置零即可。
+
+```cpp
+//loj 116
+//前面的Dinic算法省略
+LL in[MAXN];
+
+int main() {
+    int n, m, s, t; //点数，边数，源点，汇点
+    std::cin >> n >> m >> s >> t;
+
+    for (int i = 1; i <= m; i++) {
+        int u, v;
+        LL w1, w2;
+        std::cin >> u >> v >> w1 >> w2;
+        graph[u].push_back(edges.size());
+        edges.push_back(Edge(v, w2 - w1));
+        graph[v].push_back(edges.size());
+        edges.push_back(Edge(u, 0));
+
+        in[u] -= w1;
+        in[v] += w1;
+    }
+
+    graph[t].push_back(edges.size());
+    edges.push_back(Edge(s, INF * 4ll));
+    graph[s].push_back(edges.size());
+    edges.push_back(Edge(t, 0));
+    //T-S的边
+    int s2 = n + 1, t2 = n + 2;
+
+    for (int i = 1; i <= n; i++) {
+        if (in[i] > 0) {
+            graph[s2].push_back(edges.size());
+            edges.push_back(Edge(i, in[i]));
+            graph[i].push_back(edges.size());
+            edges.push_back(Edge(s2, 0));
+        } else {
+            graph[i].push_back(edges.size());
+            edges.push_back(Edge(t2, -in[i]));
+            graph[t2].push_back(edges.size());
+            edges.push_back(Edge(i, 0));
+        }
+    }
+
+    Dinic(s2, INF, s2, t2);
+
+    for (auto x : graph[s2]) {
+        if (edges[x].w != 0) {
+            std::cout << "please go home to sleep\n";
+            return 0;
+        }
+    }
+
+    LL flow = edges[2 * m + 1].w;
+    edges[2 * m].w = 0, edges[2 * m + 1].w = 0;
+    std::cout << Dinic(s, INF, s, t) + flow << "\n";
+
+    return 0;
+}
+```
+
+#### 有源汇上下界最小流
+
+和上面几乎一模一样，只需在拆掉附加边后，从汇点到源点跑一次Dinic，然后flow删去这个结果就得到最小流。Loj 117。
+
+## 割边
+
+### Tarjan算法
 
 ```cpp
 //复杂度 n+m
+//tarjan求割边，不考虑重边，如果有重边那么一定不是割边
+//luogu p1656
 #include <iostream>
 #include <vector>
 #include <stack>
+#include <algorithm>
 
 using namespace std;
 
-const int MAXN = 5005;
-const int MAXM = 10005;
+const int MAXN = 20005;
+const int MAXM = 100005;
 
-int dfn[MAXN], low[MAXN], instk[MAXN], scc[MAXN], cnt=0, cscc=0;
-//scc代表每个店所属的强连通分量的编号
+int dfn[MAXN], low[MAXN], cnt=0, fa[MAXN];//fa记录父节点
+//dfn为对一个图进行dfs时，dfs的顺序序号
+//low[x]为以下所有符合要求的节点的dfn中的最小值
+//1.以x为根的子树的所有节点
+//2.通过非dfs生成树上的边能够到达该子树的所有节点
 vector<int> edges[MAXN];
-stack<int> stk;
+vector<pair<int, int>> bridges;//存储割边
 
 void tarjan(int u){
     low[u] = dfn[u] = ++cnt;
-    instk[u] = 1;
-    stk.push(u);
     for(int i=0;i<edges[u].size();i++){
         int v = edges[u][i];
         if(!dfn[v]){
+            fa[v] = u;
             tarjan(v);
-            low[u] = min(low[u],low[v]);
+            low[u] = min(low[u],low[v]);            
+            if(low[v]>dfn[u])//边u-v是割边的充要条件
+                bridges.emplace_back(u,v);
         }
-        else if(instk[v]){
+        else if(fa[u]!=v){
             low[u] = min(low[u], dfn[v]);
         }
-    }
-    if(low[u]==dfn[u]){
-        int top;
-        cscc++;
-        do{
-            top = stk.top();
-            stk.pop();
-            instk[top] = 0;
-            scc[top] = cscc;
-        }while(top!=u);
     }
 }
 
@@ -1977,16 +2603,25 @@ int main(){
         cin>>a>>b;
         //起点，终点
         edges[a].push_back(b);
+        edges[b].push_back(a);
+		//无向图
     }
     for(int i=1;i<=n;i++){
         if(!dfn[i])
             tarjan(i);
     }
-    for(int i=1;i<=n;i++){
-        cout<<scc[i]<<endl;
+    
+    for(auto& x:bridges){
+        if(x.first>x.second) std::swap(x.first,x.second);
     }
+    std::sort(bridges.begin(),bridges.end());
+    for(int i=0;i<bridges.size();i++){
+        cout<<bridges[i].first<<" "<<bridges[i].second<<endl;
+        //输出割边
+    }    
     return 0;
 }
+
 ```
 
 ## 割点
@@ -2007,6 +2642,7 @@ const int MAXN = 20005;
 const int MAXM = 100005;
 
 int dfn[MAXN], low[MAXN], cnt=0;
+//含义见割边模板
 vector<int> edges[MAXN];
 vector<int> cut;//存储割点
 
@@ -2019,6 +2655,7 @@ void tarjan(int u, bool root = true){
             tarjan(v,false);
             low[u] = min(low[u],low[v]);
             tot += (low[v]>=dfn[u]);//统计满足的点的个数
+            //一个点x是割点的充要条件是，它至少一个子节点y满足dfn[x]>=low[y]，特别的，对于根节点，需要至少两个这样的子节点
         }
         else{
             low[u] = min(low[u], dfn[v]);
@@ -2053,67 +2690,171 @@ int main(){
     }
     return 0;
 }
+
 ```
 
-## 割边
+## 强连通分量
 
 ### Tarjan算法
 
 ```cpp
-//复杂度 n+m
-//tarjan求割边
+//强连通分量，复杂度 n+m
+//luogu P2863
 #include <iostream>
 #include <vector>
 #include <stack>
-#include <algorithm>
 
-using namespace std;
+const int MAXN = 10005;
+const int MAXM = 50005;
 
-const int MAXN = 20005;
-const int MAXM = 100005;
-
-int dfn[MAXN], low[MAXN], cnt=0, fa[MAXN];//fa记录父节点
-vector<int> edges[MAXN];
-vector<pair<int, int>> bridges;//存储割边
+int dfn[MAXN], low[MAXN], instk[MAXN], scci[MAXN], cnt=0, cscc=0;
+std::vector<int> edges[MAXN];
+std::stack<int> stk;
+std::vector<int> scc[MAXN];
+//dfn是dfs时的顺序的序号
+//stk中存入两类点，访问到节点x时
+//1.搜索树上x的祖先节点
+//2.已经访问过，并且存在一条路径到达x祖先的节点
+//low[x]定义为满足以下两个条件的节点的最小dfn
+//1.该点在stk中
+//2.存在一条从subtree(x)出发的有向边，以该点为终点
+//scci[x]代表，x这个结点在第几个分量中
+//cscc代表有几个分量
+//scc[j]中表示，第j个分量的所有节点
 
 void tarjan(int u){
     low[u] = dfn[u] = ++cnt;
+    instk[u] = 1;
+    stk.push(u);
     for(int i=0;i<edges[u].size();i++){
         int v = edges[u][i];
         if(!dfn[v]){
-            fa[v] = u;
             tarjan(v);
-            low[u] = min(low[u],low[v]);            
-            if(low[v]>dfn[u])
-                bridges.emplace_back(u,v);
+            low[u] = std::min(low[u],low[v]);
         }
-        else if(fa[u]!=v){
-            low[u] = min(low[u], dfn[v]);
+        else if(instk[v]){
+            low[u] = std::min(low[u], dfn[v]);
         }
+    }
+    if(low[u]==dfn[u]){
+        int top;
+        cscc++;
+        do{
+            top = stk.top();
+            stk.pop();
+            instk[top] = 0;
+            scci[top] = cscc;
+            scc[cscc].push_back(top);
+        }while(top!=u);
     }
 }
 
 int main(){
     int n,m;
-    cin>>n>>m;
-    //点数，边数
+    std::cin>>n>>m;
+    
     for(int i=1;i<=m;i++){
         int a,b;
-        cin>>a>>b;
-        //起点，终点
-        edges[a].push_back(b);
-        edges[b].push_back(a);
-		//无向图
+        std::cin>>a>>b;
+        edges[a].push_back(b);//有向边
     }
+    
     for(int i=1;i<=n;i++){
-        if(!dfn[i])
-            tarjan(i);
+        if(!dfn[i]) tarjan(i);//注意遍历所有dfn为零的点
     }
-    cout<<bridges.size()<<endl;
-    for(int i=0;i<bridges.size();i++){
-        cout<<bridges[i].first<<" "<<bridges[i].second<<endl;
-        //输出割边
+    int ans = 0;
+    for(int i=1;i<=cscc;i++){
+        if(scc[i].size()>1) ans++;
     }
+    std::cout<<ans<<"\n";
+    return 0;
+}
+```
+
+## 2-SAT问题
+
+```cpp
+//2-SAT算法，复杂度n+m
+//luogu P4782
+#include <iostream>
+#include <vector>
+#include <stack>
+
+const int MAXN = 2e6+5;
+
+int dfn[MAXN], low[MAXN], instk[MAXN], scci[MAXN], cnt=0, cscc=0;
+std::vector<int> edges[MAXN];
+std::stack<int> stk;
+std::vector<int> scc[MAXN];
+//含义见强连通分量tarjan算法
+bool ans[MAXN];
+
+void tarjan(int u){
+    low[u] = dfn[u] = ++cnt;
+    instk[u] = 1;
+    stk.push(u);
+    for(int i=0;i<edges[u].size();i++){
+        int v = edges[u][i];
+        if(!dfn[v]){
+            tarjan(v);
+            low[u] = std::min(low[u],low[v]);
+        }
+        else if(instk[v]){
+            low[u] = std::min(low[u], dfn[v]);
+        }
+    }
+    if(low[u]==dfn[u]){
+        int top;
+        cscc++;
+        do{
+            top = stk.top();
+            stk.pop();
+            instk[top] = 0;
+            scci[top] = cscc;
+            scc[cscc].push_back(top);
+        }while(top!=u);
+    }
+}
+
+int main(){
+    int n,m;
+    std::cin>>n>>m;
+    //n个点，m个条件
+    
+    while(m--){
+        int i,j;
+        bool a,b;
+        std::cin>>i>>a>>j>>b;
+        //本题的条件为，i为a或（不是异或）j为b，其他题按情况处理
+        //每个点x拆为两个点y和y+n,y代表x为0，y+n代表x为1
+        
+        //每条边x->y代表着，如果x，那么一定有y
+        //本题如“i为假或j为真”可以拆为两个条件，这个条件满足（为真）时
+        //i为真则j一定为真
+        //j为假则i一定为假
+        edges[i+(!a)*n].push_back(j+b*n);
+        edges[j+(!b)*n].push_back(i+a*n);//逆否命题
+    }
+    
+    for(int i=1;i<=2*n;i++){
+        if(!dfn[i]) tarjan(i);//注意遍历所有dfn为零的点
+    }
+    
+    for(int i=1;i<=n;i++){
+        if(scci[i]==scci[i+n]){//如果i和i+n在一个强连通分量，则不可满足
+            std::cout<<"IMPOSSIBLE\n";
+            return 0;
+        }
+        else if(scci[i]>scci[i+n])
+            ans[i] = 1;
+        else
+            ans[i] = 0;
+    }
+    std::cout<<"POSSIBLE\n";
+    for(int i=1;i<=n;i++){
+        std::cout<<ans[i]<<" ";
+    }
+
     return 0;
 }
 ```
@@ -3242,6 +3983,83 @@ for(int i=1;i<=n;i++){
 
 看代码，我们将$x$左移20位，加上了操作序号，这样我们就可以实现可重复插入。只需要我们再最后把数字右移20位回来即可。erase注意是加入迭代器去erase，因为我们并没有等于x\<\<20的数字。最后一个操作，要$+n$，来处理所有的相等的$x$
 
+## 01字典树
+
+```cpp
+//01字典树，复杂度线性
+//HDU4825
+int const MAXN = 3500005;
+int const MAXBIT = 35;//注意题目给的数据范围，这里2^32以下可以处理
+
+class Trie{
+public:
+    int nxt[MAXN][2];
+    int cnt;
+    LL num[MAXN];
+    
+    void init(){
+        for(int i=0;i<=cnt;i++) for(int j=0;j<2;j++) nxt[i][j] = 0;
+        for(int i=0;i<=cnt;i++) num[i] = 0;
+        cnt = 0;
+    }
+    
+    void insert(LL n){
+        //插入一个自然数
+        int cur = 0;
+        for(LL i=MAXBIT;i>=0;i--){
+            LL bit = (n>>i)&1;
+            if(!nxt[cur][bit]){
+                nxt[cur][bit] = ++cnt;
+            }
+            cur = nxt[cur][bit];
+        }
+        num[cur] = n;
+    }
+    
+    LL find_max(LL x){
+        //查询x与数组内的所有数的异或的最大值
+        int cur=0;
+        for(int i=MAXBIT;i>=0;i--){
+            LL bit = (x>>i)&1;
+            if(nxt[cur][bit^1])//尽量走与当前位不同的路径，最小值应改为走相同的
+                cur = nxt[cur][bit^1];
+            else
+                cur = nxt[cur][bit];
+        }
+        return x^num[cur];
+    }
+};
+
+Trie trie;
+```
+
+可以通过01Trie来计算连续区间的异或最大值。要用到一个性质：
+
+$$
+a\oplus b\oplus b = a
+$$
+
+也就是说，我们可以把异或前缀全部插入到Trie里，然后以第i个数为结尾的区间的最大异或值就是find_max(pre[i])。注意特殊处理长度为1的区间。
+
+```cpp
+LL ans = 0;
+arr[0] = 0;
+
+for(int i=1;i<=n;i++){
+	std::cin>>arr[i];
+	ans = std::max(ans,arr[i]);
+	arr[i] ^= arr[i-1]; 
+}
+
+trie.insert(0);//注意要先插入一个0
+for(int i=1;i<=n;i++){
+	ans = std::max(ans,trie.find_max(arr[i]));
+	trie.insert(arr[i]);
+}
+
+std::cout<<ans<<"\n";
+```
+
 # 堆
 
 ## 对顶堆
@@ -3984,7 +4802,16 @@ int maxv = std::max(a,b);
 int minv = std::min(a,b);
 ```
 
-同样，两个参数类型相同。自定义比较方法同sort。
+同样，两个参数类型相同。自定义比较方法同sort。如果要比较三四个元素，可以使用initializer_list，例如std::max({1,2,3,4,5});
+
+## std::max_element,std::min_element
+
+返回一个范围内的最大（最小元素）的迭代器（指针）。复杂度，准确比较max(N-1,0)次
+
+```cpp
+std::vector<int> v{3,1,-14,9};
+std::cout<<*std::max_element(v.begin(),v.end())<<"\n";
+```
 
 ## std::abs
 
@@ -4208,6 +5035,8 @@ auto it = mp.lower_bound(1);
 
 unordered_map可能不能用auto x:mp或者迭代器遍历。它的遍历可能是遍历bucket，而不是遍历元素。但是只是查找是可以的。
 
+这里的bucket是指哈希桶，也就是用拉链法实现的hash表。
+
 ## std::set 
 
 set是关联容器，含有Key类型对象的已排序集，通常用红黑树实现。
@@ -4374,9 +5203,31 @@ vec.back();//访问最后一个元素
 
 在末尾原位构造元素，复杂度：常数
 
+### ::resize
+
+重新指定vector的大小，会改变size()，resize有两个参数(new_size, value)，第一个为要分配的大小，第二个为指定的初始值（可以忽略，此时调用默认构造函数）。注意只有加大size时，新增的元素会被赋值。
+
+### ::reserve
+
+给vector预留空间，但不会改变size()的大小。参数只有一个，为预留的元素个数。
+
+如果dfs中参数引用的vector会导致RE，可以试试预留足够的大小。
+
 ### std::vector\<bool\>
 
 这是一个特化的vector，它每一个元素所占的空间是一位，而不是sizeof(bool)（通常是一字节）。
+
+不建议使用，除非非常了解会发生什么。
+
+operator[]返回的不是bool类型，返回的是一个proxy reference。
+
+```cpp
+std::vector<bool> c{false,true,true};
+bool a = c[0];//经过了强制类型转换
+auto b = c[0];//没有转换，本身b就是引用了
+a = true;//c是0 1 1
+b = true;//c是1 1 1
+```
 
 ## std::bitset
 
