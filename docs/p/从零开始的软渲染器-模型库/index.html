@@ -121,7 +121,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 2 分钟
+                    阅读时长: 3 分钟
                 </time>
             </div>
         
@@ -145,7 +145,7 @@ v 0.608654 -0.568839 -0.416318
 v 0.424663 -0.649937 -0.567418
 ...</code></pre>
 <p>以v开头，后面带三个小数。注意这个坐标是模型相对于自己原点的坐标，而不是我们渲染过程中的世界坐标。它不会提供总数，只会一条一条地提供。</p>
-<p>读取的时候需要注意自己统计总数，另外还要记录序号（写在数组里没有这个问题）。以及序号从一开始计数。</p>
+<p>读取的时候需要注意自己统计总数，另外还要记录序号（写在数组里没有这个问题）。以及序号从<span class="math inline">\(1\)</span>开始计数。</p>
 <p><strong>纹理坐标</strong></p>
 <p>例如</p>
 <pre><code>vt  0.617 0.575 0.000
@@ -164,7 +164,7 @@ vn  -0.359 0.279 0.891
 <p>注意可能并不是单位向量，我没有找到限制必须是单位向量的规定。</p>
 <p><strong>注意</strong></p>
 <p>上面这三种数据总数不一定是一样的，它们之间的关联也不是一定是序号对应的。大部分时候不一样，也不对应。它们只是描述了一组这样的数据而已，具体到三角面上，才会体现如何使用这些数据。</p>
-<p>使用这些数据时，序号就变得重要了起来。再次提醒序号从一开始计数。</p>
+<p>使用这些数据时，序号就变得重要了起来。再次提醒序号从<span class="math inline">\(1\)</span>开始计数。</p>
 <p><strong>三角面信息</strong></p>
 <p>例如</p>
 <pre><code>f 1206/1252/1206 1207/1254/1207 1205/1255/1205
@@ -177,6 +177,84 @@ f 1206/1252/1206 1086/1257/1086 1087/1253/1087
 <p>第三组，描述了三个顶点的法向量坐标，也是序号。</p>
 <p>我们目前了解以上信息即可。</p>
 <h1 id="model.h">model.h</h1>
+<p>首先我们需要定义一下model里面要有什么内容。</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="bu">std::</span>vector<span class="op">&lt;</span>geo<span class="op">::</span>vec3f<span class="op">&gt;</span> vertices<span class="op">{};</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="bu">std::</span>vector<span class="op">&lt;</span>geo<span class="op">::</span>vec2f<span class="op">&gt;</span> tex_coords<span class="op">{};</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="bu">std::</span>vector<span class="op">&lt;</span>geo<span class="op">::</span>vec3f<span class="op">&gt;</span> norms<span class="op">{};</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="bu">std::</span>vector<span class="op">&lt;</span><span class="dt">size_t</span><span class="op">&gt;</span> face_vi<span class="op">{};</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="bu">std::</span>vector<span class="op">&lt;</span><span class="dt">size_t</span><span class="op">&gt;</span> face_ti<span class="op">{};</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="bu">std::</span>vector<span class="op">&lt;</span><span class="dt">size_t</span><span class="op">&gt;</span> face_ni<span class="op">{};</span></span></code></pre></div>
+<p>我们需要三维的顶点坐标、二维的纹理uv坐标，以及三维的顶点法向量坐标。同时也需要记录每个三角面它的顶点坐标序号，纹理坐标序号以及法向量坐标序号。</p>
+<p>再看看我们可能需要什么方法：</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>Model<span class="op">(</span><span class="bu">std::</span>string<span class="op"> </span><span class="at">const</span> <span class="op">&amp;</span> dir<span class="op">);</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="op">~</span>Model<span class="op">();</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="dt">size_t</span> getFaceSize<span class="op">();</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>geo<span class="op">::</span>vec3f getVert<span class="op">(</span><span class="dt">size_t</span> faceid<span class="op">,</span> <span class="dt">size_t</span> nth<span class="op">);</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="dt">bool</span> getTriangle<span class="op">(</span><span class="bu">std::</span>array<span class="op">&lt;</span>geo<span class="op">::</span>vec3f<span class="op">,</span><span class="dv">3</span><span class="op">&gt;</span> <span class="op">&amp;</span> dist<span class="op">,</span> <span class="dt">size_t</span> faceid<span class="op">);</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="dt">bool</span> getNorm<span class="op">(</span><span class="bu">std::</span>array<span class="op">&lt;</span>geo<span class="op">::</span>vec3f<span class="op">,</span><span class="dv">3</span><span class="op">&gt;</span> <span class="op">&amp;</span> dist<span class="op">,</span> <span class="dt">size_t</span> faceid<span class="op">);</span></span></code></pre></div>
+<p>一个构造函数和一个析构函数不用多说。</p>
+<p>之后我们可能需要提供获取三角面数量的函数、获取（某个特定）顶点坐标的函数，获取一个三角面上所有顶点坐标的函数，以及获得三角面上所有顶点法向量的函数。</p>
+<p>之后我们还会在读取材质纹理的地方需要提供纹理坐标的函数。这里先略过。</p>
+<p>全部代码可见<strong><a href="https://github.com/kegalas/oar/blob/5f4cd5fc90df31b357b3580cf063b4bc83ad779a/src/model.h">链接</a></strong></p>
+<h1 id="model.cpp">model.cpp</h1>
+<p>现在我们来看看具体要怎么实现</p>
+<h2 id="构造函数">构造函数</h2>
+<div class="sourceCode" id="cb7"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>Model<span class="op">::</span>Model<span class="op">(</span><span class="bu">std::</span>string<span class="op"> </span><span class="at">const</span> <span class="op">&amp;</span> dir<span class="op">){</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>ifstream<span class="op"> </span>in<span class="op">;</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    in<span class="op">.</span>open<span class="op">(</span>dir<span class="op">,</span><span class="bu">std::</span>ifstream<span class="bu">::</span>in<span class="op">);</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span><span class="op">(</span>in<span class="op">.</span>fail<span class="op">())</span> <span class="cf">return</span><span class="op">;</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>string<span class="op"> </span>line<span class="op">;</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span><span class="op">(!</span>in<span class="op">.</span>eof<span class="op">()){</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>        <span class="bu">std::</span>getline<span class="op">(</span>in<span class="op">,</span>line<span class="op">);</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>        <span class="bu">std::</span>istringstream<span class="op"> </span>iss<span class="op">(</span>line<span class="op">);</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>        <span class="dt">char</span> discard<span class="op">;</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span><span class="op">(</span>line<span class="op">.</span>compare<span class="op">(</span><span class="dv">0</span><span class="op">,</span><span class="dv">2</span><span class="op">,</span><span class="st">&#34;v &#34;</span><span class="op">)==</span><span class="dv">0</span><span class="op">){</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>            iss<span class="op">&gt;&gt;</span>discard<span class="op">;</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>            geo<span class="op">::</span>vec3f v<span class="op">;</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span><span class="op">(</span><span class="dt">int</span> i<span class="op">=</span><span class="dv">0</span><span class="op">;</span>i<span class="op">&lt;</span><span class="dv">3</span><span class="op">;</span>i<span class="op">++)</span> iss<span class="op">&gt;&gt;</span>v<span class="op">[</span>i<span class="op">];</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>            vertices<span class="op">.</span>push_back<span class="op">(</span>v<span class="op">);</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span> <span class="cf">if</span><span class="op">(</span>line<span class="op">.</span>compare<span class="op">(</span><span class="dv">0</span><span class="op">,</span><span class="dv">3</span><span class="op">,</span><span class="st">&#34;vt &#34;</span><span class="op">)==</span><span class="dv">0</span><span class="op">){</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>            iss<span class="op">&gt;&gt;</span>discard<span class="op">&gt;&gt;</span>discard<span class="op">;</span></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>            geo<span class="op">::</span>vec2f vt<span class="op">;</span></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span><span class="op">(</span><span class="dt">int</span> i<span class="op">=</span><span class="dv">0</span><span class="op">;</span>i<span class="op">&lt;</span><span class="dv">2</span><span class="op">;</span>i<span class="op">++)</span> iss<span class="op">&gt;&gt;</span>vt<span class="op">[</span>i<span class="op">];</span></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>            tex_coords<span class="op">.</span>push_back<span class="op">(</span>vt<span class="op">);</span></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span> <span class="cf">if</span> <span class="op">(</span>line<span class="op">.</span>compare<span class="op">(</span><span class="dv">0</span><span class="op">,</span><span class="dv">3</span><span class="op">,</span><span class="st">&#34;vn &#34;</span><span class="op">)==</span><span class="dv">0</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>            iss<span class="op">&gt;&gt;</span>discard<span class="op">&gt;&gt;</span>discard<span class="op">;</span></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>            geo<span class="op">::</span>vec3f vn<span class="op">;</span></span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span><span class="op">(</span><span class="dt">int</span> i<span class="op">=</span><span class="dv">0</span><span class="op">;</span>i<span class="op">&lt;</span><span class="dv">3</span><span class="op">;</span>i<span class="op">++)</span> iss<span class="op">&gt;&gt;</span>vn<span class="op">[</span>i<span class="op">];</span></span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>            norms<span class="op">.</span>push_back<span class="op">(</span>vn<span class="op">);</span></span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span> <span class="cf">if</span><span class="op">(</span>line<span class="op">.</span>compare<span class="op">(</span><span class="dv">0</span><span class="op">,</span><span class="dv">2</span><span class="op">,</span><span class="st">&#34;f &#34;</span><span class="op">)==</span><span class="dv">0</span><span class="op">){</span></span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>            iss<span class="op">&gt;&gt;</span>discard<span class="op">;</span></span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>            <span class="dt">size_t</span> fv<span class="op">,</span>ft<span class="op">,</span>fn<span class="op">;</span></span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>            <span class="cf">while</span><span class="op">(</span>iss<span class="op">&gt;&gt;</span>fv<span class="op">&gt;&gt;</span>discard<span class="op">&gt;&gt;</span>ft<span class="op">&gt;&gt;</span>discard<span class="op">&gt;&gt;</span>fn<span class="op">){</span></span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a>                face_vi<span class="op">.</span>push_back<span class="op">(</span>fv<span class="op">-</span><span class="dv">1</span><span class="op">);</span></span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a>                face_ti<span class="op">.</span>push_back<span class="op">(</span>ft<span class="op">-</span><span class="dv">1</span><span class="op">);</span></span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a>                face_ni<span class="op">.</span>push_back<span class="op">(</span>fn<span class="op">-</span><span class="dv">1</span><span class="op">);</span></span>
+<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a>            <span class="op">}</span></span>
+<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>cerr<span class="op">&lt;&lt;</span><span class="st">&#34;v: &#34;</span><span class="op">&lt;&lt;</span>vertices<span class="op">.</span>size<span class="op">()&lt;&lt;</span><span class="st">&#34; t: &#34;</span><span class="op">&lt;&lt;</span>tex_coords<span class="op">.</span>size<span class="op">()&lt;&lt;</span><span class="st">&#34; n: &#34;</span><span class="op">&lt;&lt;</span>norms<span class="op">.</span>size<span class="op">()&lt;&lt;</span><span class="st">&#34;</span><span class="sc">\n</span><span class="st">&#34;</span><span class="op">;</span></span>
+<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>cerr<span class="op">&lt;&lt;</span><span class="st">&#34;f: &#34;</span><span class="op">&lt;&lt;</span>face_ni<span class="op">.</span>size<span class="op">()/</span><span class="dv">3</span><span class="op">&lt;&lt;</span><span class="st">&#34;</span><span class="sc">\n</span><span class="st">&#34;</span><span class="op">;</span></span>
+<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>这其实没什么好多说的，把之前说过的OBJ文件格式理解一下，去实际看看obj文件里面怎么写的。如果掌握了ifstream，字符串的操作，整个操作就会了。</p>
+<p>需要注意的是，obj里面提供的序号是从<span class="math inline">\(1\)</span>开始的，而我这里用的是往vector里push_back元素的办法，方便起见把所有序号都减<span class="math inline">\(1\)</span>。</p>
+<h2 id="获取坐标信息的函数">获取坐标信息的函数</h2>
+<p>这一部分其实非常容易理解和实现，就把我们读入的数据，按照下标获取，然后返回即可。全部代码可见<strong><a href="https://github.com/kegalas/oar/blob/5f4cd5fc90df31b357b3580cf063b4bc83ad779a/src/model.cpp">链接</a></strong></p>
+<h1 id="效果测试">效果测试</h1>
+<p>用<strong><a href="https://github.com/kegalas/oar/blob/5f4cd5fc90df31b357b3580cf063b4bc83ad779a/src/main.cpp">这个链接</a></strong>
+中的代码（需要去下载模型文件放到代码中的指定文件夹，见<strong><a href="https://github.com/kegalas/oar/blob/1eddb36577cd9403dfc0c763c8a738d21c2bd59c/obj/african_head.obj">链接</a></strong>
+），我们可以得到如下的效果图</p>
+<figure>
+<img src="1.jpg" alt="1.jpg"/>
+<figcaption aria-hidden="true">1.jpg</figcaption>
+</figure>
+<p>看上去还好，细看的话发现眼镜、嘴巴、耳朵一塌糊涂，这实际上是因为三角形的前后关系导致覆盖而出现的结果，在下一部分我们将介绍Z-buffer算法来解决这个问题。</p>
 
 
 
@@ -519,6 +597,13 @@ f 1206/1252/1206 1086/1257/1086 1087/1253/1087
   <ol>
     <li><a href="#obj格式简介">OBJ格式简介</a></li>
     <li><a href="#model.h">model.h</a></li>
+    <li><a href="#model.cpp">model.cpp</a>
+      <ol>
+        <li><a href="#构造函数">构造函数</a></li>
+        <li><a href="#获取坐标信息的函数">获取坐标信息的函数</a></li>
+      </ol>
+    </li>
+    <li><a href="#效果测试">效果测试</a></li>
   </ol>
 </nav>
                 </div>
