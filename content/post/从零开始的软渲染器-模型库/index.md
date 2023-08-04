@@ -187,8 +187,50 @@ Model::Model(std::string const & dir){
 
 # 效果测试
 
-用**[这个链接](https://github.com/kegalas/oar/blob/5f4cd5fc90df31b357b3580cf063b4bc83ad779a/src/main.cpp)** 中的代码（需要去下载模型文件放到代码中的指定文件夹，见**[链接](https://github.com/kegalas/oar/blob/1eddb36577cd9403dfc0c763c8a738d21c2bd59c/obj/african_head.obj)** ），我们可以得到如下的效果图
+```cpp
+#include "tga_image.h"
+#include "raster.h"
+#include "model.h"
+#include <ctime>
+#include <cstdlib>
 
-![1.jpg](1.jpg)
+int const width = 1500;
+int const height = 1500;//设置输出图片的长宽
 
-看上去还好，细看的话发现眼镜、嘴巴、耳朵一塌糊涂，这实际上是因为三角形的前后关系导致覆盖而出现的结果，在下一部分我们将介绍Z-buffer算法来解决这个问题。
+int main(){
+    Model model("../obj/african_head.obj");//读取我们的模型
+    TGAImage image(width,height,TGAType::rgb);//新建一个图对象
+    int nface = model.getFaceSize();//获取三角面的总数
+    std::array<geo::vec4f,3> vert;//读取顶点坐标
+    std::array<geo::OARColor,3> color;//设置顶点颜色
+    std::array<geo::vec2i,3> screen;//把顶点的空间坐标转化到屏幕像素坐标上
+
+    for(int i=0;i<nface;i++){
+        model.getTriangle(vert, i);//把序号为i的三角形的顶点全部读入vert
+        for(int j=0;j<3;j++){
+            color[j] = geo::OARColor(255,255,255,255);//设置颜色为全白
+            screen[j] = ras::world2screen(vert[j],width,height);//转换坐标，函数定义见下
+        }
+        ras::triangle(image,screen,color);//绘制三角形i号
+    }
+    image.writeToFile("./af.tga");//写入图像文件
+
+    return 0;
+}
+```
+
+我们使用以上代码来测试我们的效果，具体步骤解释都写在上面的注释里了。
+
+```cpp
+geo::vec2i ras::world2screen(geo::vec4f v, int width, int height){
+    return geo::vec2i(int((v.x+1.f)*width*.5f+.5f), int((v.y+1.f)*height*.5f+.5f));
+}
+```
+
+我们的坐标转换函数如上，我们之后将会详细解释（TODO）。
+
+结果如下：
+
+![1.png](1.png)
+
+虽然我们没有看清他的面容（因为我们把每个三角形都设置成全白了），但是至少整个形状正确了。稍后我们将介绍光照，来让他的面容展现出来。
