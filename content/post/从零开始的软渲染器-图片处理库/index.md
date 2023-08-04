@@ -426,3 +426,5 @@ bool TGAImage::setFragment(std::uint16_t const x, std::uint16_t const y, geo::OA
 主要注意下标要乘以像素占用的字节大小，以及颜色顺序为BGRA。
 
 完整的代码在<u>**[这里](https://github.com/kegalas/oar/blob/97058860346436641decc719d6b72cc7055eb24c/src/tga_image.cpp)**</u>
+
+# TODO: 给出使用实例

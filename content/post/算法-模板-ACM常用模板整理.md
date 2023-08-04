@@ -33,7 +33,7 @@ markup: pandoc
 #define htl(i,x,y) for(int i=x;i>=y;i--)
 #define mms(x) memset(x, 0, sizeof(x))
 #define pb push_back
-#define mkp make_pair
+#define mkp std::make_pair
 #define fi first
 #define se second
 
@@ -116,6 +116,8 @@ std::vector<int> KMP(std::string const & s, std::string const & p){
     
     return vec;
 }
+
+//我们可以通过把模式串和主串拼在一起，p+#+s，然后求这个字符串的前缀函数表（#代表不在主串、模式串字符集内的一个符号），然后pi[i]如果等于模式串的长度，那么i是匹配模式串的子串的起点。
 ```
 
 ## 字典树(Trie)
@@ -171,6 +173,7 @@ Trie trie;
 
 ```cpp
 //自然溢出法，相当于对2^64取模的单哈希，是比较容易被特殊数据卡掉的
+//luogu P3370
 using ULL = unsigned long long;
 ULL H(std::string const & str){
     ULL ret = 0;
@@ -186,6 +189,7 @@ ULL H(std::string const & str){
 ```cpp
 //双哈希法，两个字符串的两个哈希必须分别相同，才会被考虑为相同的字符串
 //比起单哈希，更不容易被卡
+//luogu P3370
 ULL const MOD1 = 998244353;
 ULL const MOD2 = 1e9+7;
 ULL const base = 131;
@@ -216,6 +220,9 @@ ULL H2(std::string const & str){
 ```cpp
 //复杂度 文本串长度+模板串长度之和
 //AC自动机，luogu P3808
+//AC自动机会把Trie修改掉，并不是插入时候的字典树了，实际上变成了一张图+fail指针。
+//trie数组表示从当前状态添加一个字符后到达的状态，fail数组表示，目前为止匹配，但是添加下一个字符后不匹配了，跳转至最长的后缀状态（不包括添加的下一个字符）。可以反复跳转。
+//注意，一个状态是可行状态，当且仅当它自己可行，或者fail指针指向的状态可行，或者fail[fail]可行，以此类推
 
 class AC{
 public:
@@ -367,8 +374,9 @@ std::vector<int> getD2(std::string const & str){
 //Z函数，复杂度O(n)
 //luogu P5410
 std::vector<int> zFunc(std::string const & str){
-    //求出一个字符串的z函数，即满足z[i]是s[0...x-1]==s[i...i+x-1]的最大的x
-    //特别的z[0]=0
+    //求出一个字符串的z函数，即满足z[i]是s[0...x-1]==s[i...i+x-1]的最大的x，这个子串也叫做LCP
+    //特别的z[0]=0，也有些题目是等于串长，需要自行调整
+    //kmp里面添加字符集外字符的操作在这里也可以用
     int n = str.size();
     std::vector<int> z(n);
     
@@ -395,7 +403,7 @@ std::vector<int> zFunc(std::string const & str){
 //求后缀树组，复杂度O(nlog^2n)
 //luogu p3809
 int rk[MAXN<<1],sa[MAXN],tarr[MAXN<<1];
-//rk[i]表示后缀i（从1开始，后缀i代表字符串从i开始的子串）的排名，sa[i]表示所有后缀第i小的编号，排名和编号都从1开始
+//rk[i]表示后缀i（从1开始，后缀i代表字符串从i开始到结束的子串）的排名，sa[i]表示所有后缀第i小的起点序号，排名和编号都从1开始
 
 void getSA(std::string const & s){
     int n = s.size();
@@ -423,7 +431,7 @@ void getSA(std::string const & s){
 //求后缀树组，复杂度O(nlogn)
 //luogu p3809
 int rk[MAXN<<1],sa[MAXN],tarr[MAXN<<1],cnt[MAXN],rkt[MAXN];
-//rk[i]表示后缀i（从1开始，后缀i代表字符串从i开始的子串）的排名，sa[i]表示所有后缀第i小的编号，排名和编号都从1开始
+//rk[i]表示后缀i（从1开始，后缀i代表字符串从i开始到结束的子串）的排名，sa[i]表示所有后缀第i小的起点序号，排名和编号都从1开始
 
 void getSA(std::string const & s){
     int n = s.size();
@@ -471,12 +479,24 @@ void getSA(std::string const & s){
 struct State{
     int fa,len,next[26];//似乎有些编译器next是保留字，需要注意
 };
+//endpos(p)为模式串p在s中所有出现的结束位置的集合，例如aababc中，ab出现了两次，结束位置是{3,5}。endpos等价类即，endpos相同的子串构成的集合。例如b和ab都是结束在{3,5}，则它们是等价类。这说明它们总是一起出现，可以归到一个节点，并且长度小的一定是长度大的的后缀。
+//next[ch]表示接受ch后的状态；fa表示该状态在parent tree上的父节点；len表示该状态对应的endpos等价类中最长串的长度。
+//假设b是a的fa，a等价类的最长字符串为s，则b的最长字符串为，s的所有后缀中，不在等价类a里的，最长的字符串。
+
+//SAM可以接受字符串的所有后缀，但是它包含了所有子串的信息。也就是从任意一个状态开始的路径，都是字符串的子串。
+//可行状态是last状态，以及fa[last]、fa[fa[last]]直到根节点（空字符串）。
+
+//除了等价类的最长字符串长度len，我们也可以计算minlen。等价类里所有字符串的长度恰好覆盖[minlen,len]之间的每一个整数。除了根节点，st[i].minlen = st[fa[i]].len+1;
+//每个状态i对应的子串数量是st[i].len-st[st[i].fa].len
+
+//算法并没有维护endpos等效类中，字符串出现的位置个数，需要自己去树形dp。
+//注意，aababb中，ab的等价类为{3,5}，根据ab前面一个字符不同可以划分不同的等价类，例如aab和bab划分为{3},{5}。但是a的等价类为{1,2,4}，因为第一个的前面一个字符是空字符，只能划分出两个，即aa{2},ba{4}，树形DP需要在parent tree上注意缺少的这一部分。在建SAM时预处理dp[cur] = 1
 
 class SAM{
 public:
     State st[MAXN<<1];//SAM总状态数不会超过2n-1，总转移数不超过3n-4
     int cnt = 1, last = 1;
-    //起始节点编号为1
+    //起始节点编号为1；last表示加入新字符前整个字符串所在的等价类
     
     void insert(int ch){
         ch = ch-'a';
@@ -485,14 +505,19 @@ public:
         st[cur].len = st[last].len + 1;
         for(p=last;p&&!st[p].next[ch];p=st[p].fa)
             st[p].next[ch] = cur;
+        //对于每一个father状态，如果不存在ch的转移边，则连到cur
         int q = st[p].next[ch];
         if(q==0){
+            //加入了从未加入的字符
             st[cur].fa = 1;
         }
         else if(st[p].len + 1 == st[q].len){
+            //p到q是连续的转移
             st[cur].fa = q;
         }
         else{
+            //不连续的转移
+            //会新增一个节点r,拥有q的所有出边，father与q相同
             int r = ++cnt;
             st[r] = st[q];
             st[r].len = st[p].len + 1;
@@ -506,8 +531,6 @@ public:
 };
 
 SAM sam;
-//有一个性质，每个状态i对应的子串数量是st[i].len-st[st[i].fa].lengthv
-//算法并没有维护endpos等效类的大小，需要自己去树形dp
 ```
 
 ## 广义后缀自动机
@@ -515,6 +538,7 @@ SAM sam;
 ```cpp
 //广义后缀自动机，其实就是插入多个字符串的后缀自动机，但只能离线build
 //luogu p6139
+//后缀自动机的性质都可以用过来
 struct State{
     int fa,len,next[26];//似乎有些编译器next是保留字，需要注意
 };
@@ -526,7 +550,7 @@ public:
     
     int insert(int last, int ch){
         //传入的是即将插入的字符的父节点编号，以及该字符
-        //只用在build里，不要直接把字符串插入，应该先insertTrie在build
+        //只用在build里，不要直接把字符串插入，应该先insertTrie再build
         int cur = st[last].next[ch];
         int p = 0;
         st[cur].len = st[last].len + 1;
@@ -609,9 +633,15 @@ struct State{
     int len, fail, next[26];
 };
 
+//PAM的每一个状态代表原字符串的一个回文子串，每一个转移代表从当前状态字符串的前后同时加一个相同字符后的状态。可以接受其所有回文子串。除了奇根都是可行状态（当然不能为空时偶根不可行）
+//fail指针指向该状态的最长回文真后缀。例如ayawaya就指向aba。总体和AC自动机的fail转移很像，都是没有ch的转移，则看fail有没有ch的转移，若fail没有则看fail[fail]的，以此类推。
+//回文串分为奇长度和偶长度的，所以PAM有奇根和偶根，偶根的fail指向奇根，奇根不可能失配。
+//PAM和SAM一样是动态构建的。
+
 class PAM{
 public:
     int last,cnt,pos;
+    //last代表上个前缀的最长回文后缀的状态
     State st[MAXN];//最多有n+2个状态和n个转移
     std::string str;
     
@@ -666,6 +696,8 @@ struct State{
     int next[26];  
 };
 
+//SQA接受字符串的所有子序列（不需要连续，可以为空）
+
 class SQA{
 public:
     State st[MAXN];
@@ -700,42 +732,13 @@ SQA sqa;
 
 # 数论
 
-## 扩展欧几里得
-
-```cpp
-//复杂度 logn
-//求解ax+by=gcd(a,b)的一组解
-//扩展欧几里得
-#include <iostream>
-
-using namespace std;
-
-int exgcd(int a,int b,int& x,int& y){
-    if(b==0){
-        x = 1;
-        y = 0;//此时ax+by=gcd(a,b)中b=0，任何数与0的最大公约数是他本身，所以ax+0y=a，x=1 y=0
-        return a;
-    }
-    int d = exgcd(b,a%b,y,x);
-    y -= (a/b)*x;
-    return d;
-}
-
-int main(){
-    int a,b,x,y,z;
-    cin>>a>>b;
-    z = exgcd(a,b,x,y);
-    cout<<x<<" "<<y<<" "<<z<<endl;
-    //x,y的意义见开头，z即是最大公约数
-    return 0;
-}
-
-```
-
 ## 欧几里得算法
 
 ```cpp
 //复杂度 logn
+//luogu B3736
+//gcd是可重复贡献的，gcd(x,x)=x，可以用st表维护区间gcd
+//x*y=gcd(x,y)*lcm(x,y)，lcm是最小公倍数
 #include <iostream>
 
 inline int gcd(int a,int b){
@@ -743,9 +746,71 @@ inline int gcd(int a,int b){
 }
 
 int main(){
-    int a,b;
-    std::cin>>a>>b;
-    std::cout<<gcd(a,b);
+    int x,y,z;
+    std::cin>>x>>y>>z;
+    std::cout<<gcd(gcd(x,y),z)<<"\n";
+    
+    return 0;
+}
+
+```
+
+## 扩展欧几里得
+
+```cpp
+//复杂度 logn
+//求解ax+by=c的一组解，c不是gcd(a,b)的倍数则无解
+//扩展欧几里得
+//luogu P5656
+#include <iostream>
+#include <cmath>
+
+using LL = long long;
+
+LL exgcd(LL a,LL b,LL& x,LL& y){
+    //求出的是ax+by=gcd(a,b)的一组解，等于c的需要转换一下
+    if(b==0){
+        x = 1;
+        y = 0;//此时ax+by=gcd(a,b)中b=0，任何数与0的最大公约数是他本身，所以ax+0y=a，x=1 y=0
+        return a;
+    }
+    LL d = exgcd(b,a%b,y,x);
+    y -= (a/b)*x;
+    return d;
+}
+
+int main(){
+    int T;
+    std::cin>>T;
+    while(T--){
+        LL a,b,c;
+        std::cin>>a>>b>>c;
+        LL x0=0, y0=0;
+        LL d = exgcd(a,b,x0,y0);//d=gcd(a,b)
+        if(c%d!=0){//c不是gcd(a,b)的倍数则无解
+            std::cout<<"-1\n";
+            continue;
+        }
+        LL x1 = x0*c/d, y1 = y0*c/d;//ax+by=gcd(a,b)的一组解转化为ax+by=c的一组解
+        //通解的形式为x=x1+s*dx, y=y1-s*dy
+        //其中s为任意整数，dx=b/d, dy = a/d;
+        LL dx = b/d, dy = a/d;
+        LL l = std::ceil((-x1+1.0)/dx);
+        LL r = std::floor((y1-1.0)/dy);
+        //x>0,y>0时，s的取值为[l,r]中的整数，若l>r，则说明不存在正整数解
+        if(l>r){
+            std::cout<<x1+l*dx<<" ";//所有解中x的最小正整数值
+            std::cout<<y1-r*dy<<"\n";//所有解中y的最小正整数值
+        }
+        else{
+            std::cout<<r-l+1<<" ";//正整数解的个数
+            std::cout<<x1+l*dx<<" ";//正整数解中x的最小值
+            std::cout<<y1-r*dy<<" ";//正整数解中y的最小值
+            std::cout<<x1+r*dx<<" ";//正整数解中x的最大值
+            std::cout<<y1-l*dy<<"\n";//正整数解中y的最大值
+        }
+        
+    }
     return 0;
 }
 ```
@@ -756,34 +821,22 @@ TODO: 用模板元编程实现编译期算素数
 
 ```cpp
 //复杂度 n
-//欧拉筛
-#include <iostream>
-#include <cstring>
-#define MAXN 50005
+//欧拉筛, luogu p3383
 
+int const MAXN = 1e8+5;
 
-using namespace std;
+std::vector<int> prime;
+bool isnp[MAXN];
 
-int main(){
-    int n, prime[MAXN], cnt=0;
-    bool is_not_prime[MAXN];
-    cin>>n;
-    //2~n中有多少个素数
-    memset(is_not_prime, 0, sizeof(prime));
-
-    for (int i = 2;i<=n;i++){
-        if(!is_not_prime[i])    prime[++cnt] = i;
-        for(int j = 1;j<=cnt&&i*prime[j]<=n;j++){
-            is_not_prime[i*prime[j]] = 1;
-            if(i%prime[j]==0) break;
+void sieve(int n){
+    for(int i=2;i<=n;i++){
+        if(!isnp[i]) prime.push_back(i);
+        for(auto p:prime){
+            if(i*p>n) break;
+            isnp[i*p] = 1;
+            if(i%p==0) break;
         }
     }
-
-    for(int i = 1;i<=cnt;i++){
-        cout<<prime[i]<<" ";
-        //输出素数
-    }
-    return 0;
 }
 ```
 
@@ -792,58 +845,65 @@ int main(){
 ```cpp
 //对数 n 进行 k 轮测试的时间复杂度是 klog^3(n)
 //miller-rabin
+//loj 143
+//通过测试的有可能是素数，不通过的一定不是素数
 #include <iostream>
 #include <ctime>
 #include <cstdio>
+#include <cstdint>
 
-using namespace std;
+using LL = __int128;//本题数据范围过大，防止运算中爆掉
 
-const int test_time = 10;
+LL const test_time = 10;
 
-int qPowMod(int a, int m, int n){
-    if(m==0) return 1;
-    if(m==1) return (a%n);
-    long long ans = 1; //不打ll会溢出
-    while(m){
-        if(m&1){
-            ans = ans%n*a%n;
+LL qPowMod(LL n, LL p, LL m){
+    LL res = 1;
+    while(p>0){
+        if(p&1){
+            res = (res * n)%m;
         }
-        a = (long long)a%n*a%n;//这里不打ll会溢出导致判断错误
-        m>>=1;
+        n = (n*n)%m;
+        p>>=1;
     }
-    return ans;
+    return res;
 }
 
-bool millerRabin(int n) {
+bool millerRabin(LL n) {
     if (n < 3 || n % 2 == 0) return n == 2;
-    int a = n - 1, b = 0;
+    LL a = n - 1, b = 0;
     while (a % 2 == 0) a /= 2, ++b;
     // test_time 为测试次数,建议设为不小于 8
     // 的整数以保证正确率,但也不宜过大,否则会影响效率
-    for (int i = 1, j; i <= test_time; ++i) {
-        int x = rand() % (n - 2) + 2, v = qPowMod(x, a, n);
+    for (LL i = 1, j; i <= test_time; ++i) {
+        LL x = rand() % (n - 2) + 2;
+        LL v = qPowMod(x, a, n);
         if (v == 1) continue;
         for (j = 0; j < b; ++j) {
             if (v == n - 1) break;
-            v = (long long)v * v % n;
+            v = v * v % n;
         }
-        if (j >= b) return 0;
+        if (j == b) return 0;
     }
     return 1;
 }
 
 int main(){
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(0);
+    
     srand(time(NULL));
-    int n;
-    cin>>n;
-    if(millerRabin(n)){
-        cout<<"Probably a prime"<<endl;
-    }
-    else{
-        cout<<"A composite"<<endl;
+    long long n;
+    while(std::cin>>n){
+        if(millerRabin(n)){
+            std::cout<<"Y\n";
+        }
+        else{
+            std::cout<<"N\n";
+        }
     }
     return 0;
 }
+
 ```
 
 ## 乘法逆元
@@ -993,19 +1053,16 @@ x \equiv a_k(mod\quad r_k)
 \end{matrix}\right.
 $$
 
+其中$r_i$两两互质，如果不满足则需要扩展CRT
+
 ```cpp
-//复杂度 klogn
-#include <iostream>
-
-using namespace std;
-
+//中国剩余定理 复杂度 klogk
+//luogu p1495
 typedef long long ll;
 
 const int MAXN = 10005;
 
-long long a[MAXN],r[MAXN];
-
-long long exgcd(ll a, ll b, ll &x, ll &y){
+ll exgcd(ll a, ll b, ll &x, ll &y){
     if(!b){
         x=1;
         y=0;
@@ -1018,30 +1075,37 @@ long long exgcd(ll a, ll b, ll &x, ll &y){
     return d;
 }
 
-int main(){
-    int k;
-    cin>>k;
-    //共有k个方程
-    for(int i=1;i<=k;i++){
-        cin>>a[i]>>r[i];
-		//x≡ai(mod ri)
-    }
-    
-    ll n=1,ans=0;
-    for(int i=1;i<=k;i++){
-        n = n * r[i];
-    }
-    for(int i=1;i<=k;i++){
-        ll m = n/r[i];
-        ll x,y;
-        exgcd(m,r[i],x,y);
-        ans = (ans+a[i]*m*x%n)%n;
-    }
-    
-    cout<<ans<<endl;
-    //输出x的值
-    return 0;
+ll exgcd_inv(ll a, ll b){
+    ll x,y;
+    ll d = exgcd(a,b,x,y);
+    return (x+b)%b;
 }
+
+class CRT{
+public:
+    ll ax[MAXN],rx[MAXN];//每个方程的形式为x≡ai(mod ri)，要求ri互质
+    int k=0;//k个方程
+    
+    void add(ll a, ll r){
+        ax[++k] = a;
+        rx[k] = r;
+    }
+    
+    ll solve(){
+        ll n=1, ans=0;
+        for(int i=1;i<=k;i++){
+            n = n * rx[i];
+        }
+        for(int i=1;i<=k;i++){
+            ll m = n/rx[i];
+            ans = (ans+ax[i]*m*exgcd_inv(m,rx[i]))%n;
+        }
+        
+        return ans;
+    }
+};
+
+CRT crt;
 ```
 
 ## 用乘法逆元计算组合数
@@ -1115,6 +1179,32 @@ int main(){
 }
 ```
 
+## 积性函数
+
+积性函数是数论函数的一种。数论函数则是定义域为正整数的函数。
+
+若函数$f(n)$满足$f(1)=1$且$\forall x,y\in N^*,gcd(x,y)=1$都有$f(xy)=f(x)f(y)$，则$f(n)$为积性函数
+
+如果不要求$gcd(x,y)=1$也有这个性质的函数叫完全积性函数。同理可知加性函数的定义。
+
+**性质**
+
+1. 若$f(x),g(x)$均为积性函数，则以下函数也是积性函数
+    1. $h(x)=f(x^p)$
+    2. $h(x)=f^p(x)$
+    3. $h(x)=f(x)g(x)$
+    4. $h(x)=\sum_{d|x}f(d)g(x/d)$（即狄利克雷卷积）
+    5. 其逆元
+2. 若$f$是积性函数，且在算术基本定理中$n=\prod^{m}_{i=1}p_i^{c_i}$，则$f(n)=\prod^{m}_{i=1}f(p_i^{c_i})$。如果$f$是完全积性函数，则$f(n)=\prod^{m}_{i=1}f(p_i)^{c_i}$
+
+**例子**
+
+1. $\varepsilon(n)=[n=1]$，单位函数，括号是艾弗森括号，是完全积性。
+2. $id_k(n)=n^k$，幂函数，是完全积性。$k=1$是恒等函数$id(n)=n$，$k=0$是常数函数$1(n)=1$
+3. $\sigma_k(n)=\sum_{d/n}d^k$，除数函数。当$k=1$时，为因数和函数$\sigma(n)$，当$k=0$时为因数个数函数$\sigma_0(n)$
+4. 欧拉函数
+5. 莫比乌斯函数
+
 ## 欧拉函数
 
 $1\sim N$中与$N$互质的数的个数被称为欧拉函数，记为$\varphi(N)$
@@ -1123,6 +1213,12 @@ $1\sim N$中与$N$互质的数的个数被称为欧拉函数，记为$\varphi(N)
 
 $$
 \varphi(N)=N\times\dfrac{p_1-1}{p_1}\times\dfrac{p_2-1}{p_2}\times\cdots\times\dfrac{p_m-1}{p_m}
+$$
+
+欧拉函数也可以写成艾弗森括号的形式为
+
+$$
+\sum^n_{i=1}[\gcd(i,n)=1]
 $$
 
 ```cpp
@@ -1144,35 +1240,410 @@ int phi(int n){
 
 1. $\forall n>1$，$1\sim n$中与$n$互质的数的和为$n\times\varphi(n)/2$
 2. 若$a,b$互质，则$\varphi(ab)=\varphi(a)\varphi(b)$。也就是说欧拉函数是积性函数
-3. 若$f$是积性函数，且在算术基本定理中$n=\prod^{m}_{i=1}p_i^{c_i}$，则$f(n)=\prod^{m}_{i=1}f(p_i^{c_i})$
-4. 设$p$为质数，若$p|n$且$p^2|n$，则$\varphi(n)=\varphi(n/p)\times p$
-5. 设$p$为质数，若$p|n$但不满足$p^2|n$，则$\varphi(n)=\varphi(n/p)\times (p-1)$
-6. $\sum_{d|n}\varphi(d)=n$
-7. 若$p$是质数，则$\varphi(p^n)=p^{n-1}(p-1)$
-8. 若$a|x$，则$\varphi(ax)=a\varphi(x)$
+3. 设$p$为质数，若$p|n$且$p^2|n$，则$\varphi(n)=\varphi(n/p)\times p$
+4. 设$p$为质数，若$p|n$但不满足$p^2|n$，则$\varphi(n)=\varphi(n/p)\times (p-1)$
+5. $\sum_{d|n}\varphi(d)=n$
+6. 若$p$是质数，则$\varphi(p^n)=p^{n-1}(p-1)$
+7. 若$a|x$，则$\varphi(ax)=a\varphi(x)$
 
 ```cpp
 //求1-N的所有欧拉函数值，使用筛法，埃氏筛复杂度NloglogN，线性筛复杂度N，这里是线性筛
+std::vector<int> prime;
+bool isnp[MAXN];
+int phi[MAXN];
+
 void euler(int n){
-    std::memset(vis,0,sizeof(vis));
-    cnt = 0;
-    
+    phi[1] = 1;
     for(int i=2;i<=n;i++){
-        if(vis[i]==0){
-            vis[i] = i, prime[++cnt] = i;
+        if(!isnp[i]){
+            prime.push_back(i);
             phi[i] = i-1;
         }
-        
-        for(int j=1;j<=cnt;j++){
-            if(prime[j]>vis[i] || prime[j]>n/i) break;
-            vis[i*prime[j]] = prime[j];
-            phi[i*prime[j]] = phi[i]*(i%prime[j]?prime[j]-1:prime[j]);
+        for(auto p:prime){
+            if(i*p>n) break;
+            isnp[i*p] = 1;
+            
+            if(i%p==0){
+                phi[i*p] = phi[i] * p;
+                break;
+            }
+            else{
+                phi[i*p] = phi[i] * phi[p];
+            }
         }
     }
 }
 ```
 
+## 狄利克雷卷积
+
+两个数论函数$f(n),g(n)$的狄利克雷卷积定义为
+
+$$
+(f\ast g)(n) = \sum_{xy=n}f(x)g(y)
+$$
+
+也可以写作
+
+$$
+(f\ast g)(n) = \sum_{d|n}f(d)g(n/d)
+$$
+
+**性质**
+
+1. 两个积性函数的卷积还是积性函数
+2. $(f\ast 1)(n) = \sum_{d|n}f(d)$
+3. $(id_k\ast 1)(n)=\sum_{d|n}d^k=\sigma_k$
+4. $\varphi\ast 1=id$
+5. 满足交换率、结合律、对加法的分配律
+6. 等式性质，$f=g$的充要条件是$f\ast h = g\ast h$，其中数论函数$h(1)\neq 0$
+7. 幺元是$\varepsilon$，即$f\ast \varepsilon=f$
+8. 逆元，即满足$f\ast g=\varepsilon$的函数$g$为（显然$f(1)\neq 0$才有逆元）
+
+$$
+g(x)=\dfrac{\varepsilon(x)-\sum_{d|x,d\neq 1}f(d)g(x/d)}{f(1)}
+$$
+9. 积性函数一定有逆元，且逆元也是积性函数。
+
+## 莫比乌斯反演
+
+莫比乌斯函数是常数函数$1$的逆元。即
+
+$$
+\mu(n) = \left\{\begin{matrix}
+1, & n=1 \\
+(-1)^m  & n=p_1p_2\cdots p_m\\
+0  & \text{otherwise}
+\end{matrix}\right.
+$$
+
+其中第二个条件就是$n$质因数分解后每个因子的次数是$1$
+
+莫比乌斯反演公式即为
+
+$$
+g(n)=\sum_{d|n}f(d)\Leftrightarrow f(n) = \sum_{d|n}\mu(d)g(n/d)
+$$
+
+用狄利克雷卷积来写就是
+
+$$
+f\ast 1=g\Leftrightarrow f=g\ast \mu
+$$
+
+还有一种形式（倍数形式，之前的叫因数形式）是
+
+$$
+g(n) = \sum_{n|N}f(N)\Leftrightarrow f(n) = \sum_{n|N}\mu(N/n)g(N)
+$$
+
+**性质**
+
+1. 是积性函数
+2. $\sum_{d|n}\mu(d)=\varepsilon(n),\mu\ast 1=\varepsilon$
+3. $\sum_{d|\gcd(i,j)}\mu(d)=[\gcd(i,j)=1]$ 
+
+```cpp
+//线性筛求莫比乌斯函数，复杂度n
+int mu[MAXN];
+std::vector<int> prime;
+bool isnp[MAXN];
+
+void mobius(int n){
+    mu[1] = 1;
+    for(int i=2;i<=n;i++){
+        if(!isnp[i]){
+            prime.push_back(i);
+            mu[i] = -1;
+        }
+        
+        for(auto p:prime){
+            if(i*p>n) break;
+            isnp[i*p] = 1;
+            if(i%p==0){
+                mu[i*p] = 0;
+                break;
+            }
+            else{
+                mu[i*p] = mu[i] * mu[p];
+            }
+        }
+    }
+}
+```
+
+## 数论分块
+
+在计算形如
+
+$$
+\sum^n_{i=1}f(i)g(\left \lfloor \dfrac{n}{i} \right \rfloor )
+$$
+
+的式子时，注意到$\left \lfloor \dfrac{n}{i} \right \rfloor$的取值个数会比$n$小很多，我们可以将取值相同的合在一起计算。如果可以在$O(1)$内计算$f(l)+\cdots+f(r)$（比如等差数列求和公式）或者有$f$的前缀和时，数论分块可以在$O(\sqrt{n})$计算和式的值。
+
+**定理1**
+
+$$
+\forall a,b,c\in Z, \left \lfloor \dfrac{a}{bc} \right \rfloor=\left \lfloor \dfrac{\left \lfloor \dfrac{a}{b} \right \rfloor}{c} \right \rfloor
+$$
+
+**定理2**
+
+当$i$取正整数且$i\leq n$时，$\left \lfloor \dfrac{n}{i} \right \rfloor$的不同取值的数量不超过$\left \lfloor 2\sqrt n \right \rfloor$
+
+**定理3**
+
+使得式子
+
+$$
+\left \lfloor \dfrac{n}{i} \right \rfloor = \left \lfloor \dfrac{n}{j} \right \rfloor
+$$
+
+成立的最大的满足$i\leq j\leq n$的$j$值是$\left \lfloor \dfrac{n}{\left \lfloor \dfrac{n}{i} \right \rfloor} \right \rfloor$。也就是这个分块的右端点。
+
+```cpp
+//UVA 11526
+//数论分块模板 复杂度sqrt n
+//要求计算i=1~n, ans = ans+n/i
+void solve(){
+    LL n;
+    std::cin>>n;
+    LL ans = 0;
+    
+    LL l = 1, r = 0;
+    
+    while(l<=n){
+        r = n/(n/l);
+        ans += (r-l+1) * (n/l);
+        l = r+1;  
+    }
+    std::cout<<ans<<"\n";
+}
+```
+
+注意如果不是$\left \lfloor \dfrac{n}{i} \right \rfloor$而是某个$\left \lfloor \dfrac{k}{i} \right \rfloor$，要注意特判判$k/l$等于$0$，以及$r$要特判不能超过$n$。
+
+当有多个取整$\left \lfloor \dfrac{a_1}{i} \right \rfloor,\left \lfloor \dfrac{a_2}{i} \right \rfloor,\cdots$ 时，我们取的右端点就变成每一个块的右端点的最小值。
+
+## 杜教筛
+
+杜教筛可以在$O(n^{2/3})$的时间复杂度下求得一类数论函数（不一定需要积性）$f(n)$的前缀和。
+
+我们需要找到一个数论函数$g(n)$，使得$g(n)$和$f\ast g(n)$的前缀和都很容易求出（最好在$O(1)$），那我们就能以低于线性复杂度的算法求出$f(n)$的前缀和$S(n)$。证明略，结论为：
+
+$$
+g(1)S(n) = \sum^n_{i=1}(f\ast g)(i)-\sum^n_{i=2}g(i)S(\left \lfloor \dfrac{n}{i} \right \rfloor)
+$$
+
+**筛莫比乌斯函数**
+
+之前我们学到$\mu\ast 1=\varepsilon$，所以我们自然的令$g(n)=1$，得到
+
+$$
+S(n)=\sum^n_{i=1}\varepsilon(i)-\sum^n_{i=2}S(\left \lfloor \dfrac{n}{i} \right \rfloor) = 1-\sum^n_{i=2}S(\left \lfloor \dfrac{n}{i} \right \rfloor)
+$$
+
+此时如果我们直接用数论分块去算$S(n)$，我们的算法复杂度是$O(n^{3/4})$，但是如果我们用线性筛预处理前$n^{2/3}$的$S(n)$的值，就可以优化复杂度到$O(n^{2/3})$，通常我们还会开一个哈希表去维护大于$n^{2/3}$的值来优化。
+
+**筛欧拉函数**
+
+同样取$g(n)=1$，有$\varphi(n)\ast 1=id$
+
+$$
+S(n) = \sum^n_{i=1}id-\sum^n_{i=2}S(\left \lfloor \dfrac{n}{i} \right \rfloor) = \dfrac{n(1+n)}{2}-\sum^n_{i=2}S(\left \lfloor \dfrac{n}{i} \right \rfloor)
+$$
+
+跟之前可以说没什么区别。
+
+给出求欧拉函数和莫比乌斯函数前缀和的例子代码。这里筛法一次把两个函数都筛了，其他不难理解。注意要用unordered_map以及数论分块的时候$l$从$2$开始。以及洛谷上这题数据范围为2^31，要筛出大概前170w个数。我筛了200w也过了，分类讨论，前200w直接返回，大于200w的如果在map里就返回，否则递归计算后放入map里。
+
+```cpp
+//杜教筛 复杂度n^(2/3)
+//luogu p4213
+int const MAXN = 2000005;
+
+int mu[MAXN];
+LL phi[MAXN];
+std::vector<int> prime;
+bool isnp[MAXN];
+LL sum_mu[MAXN],sum_phi[MAXN];
+std::unordered_map<LL,LL> mp_mu,mp_phi;
+
+void sieve(int n=MAXN-1){
+    mu[1] = 1;
+    phi[1] = 1;
+    for(int i=2;i<=n;i++){
+        if(!isnp[i]){
+            prime.push_back(i);
+            mu[i] = -1;
+            phi[i] = i-1;
+        }
+        
+        for(auto p:prime){
+            if(i*p>n) break;
+            isnp[i*p] = 1;
+            if(i%p==0){
+                mu[i*p] = 0;
+                phi[i*p] = phi[i] * p;
+                break;
+            }
+            else{
+                mu[i*p] = mu[i] * mu[p];
+                phi[i*p] = phi[i] * phi[p];
+            }
+        }
+    }
+    for(int i=1;i<=n;i++){
+        sum_mu[i] = sum_mu[i-1]+mu[i];
+        sum_phi[i] = sum_phi[i-1]+phi[i];
+    }
+}
+
+LL sum1(LL n){
+    if(n<MAXN){
+        return sum_phi[n];
+    }
+    if(mp_phi.count(n)){
+        return mp_phi[n];
+    }
+    LL l=2, r=0;
+    LL ret = n*(1+n)/2;
+    while(l<=n){
+        r = n/(n/l);
+        ret -= (r-l+1)*sum1(n/l);
+        l = r+1;
+    }
+    mp_phi[n] = ret;
+    return ret;
+}
+
+LL sum2(LL n){
+    if(n<MAXN){
+        return sum_mu[n];
+    }
+    if(mp_mu.count(n)){
+        return mp_mu[n];
+    }
+    LL l=2, r=0;
+    LL ret = 1;
+    while(l<=n){
+        r = n/(n/l);
+        ret -= (r-l+1)*sum2(n/l);
+        l = r+1;
+    }
+    mp_mu[n] = ret;
+    return ret;
+}
+
+void solve(){
+    LL n;
+    std::cin>>n;
+    std::cout<<sum1(n)<<" "<<sum2(n)<<"\n";
+    
+}
+
+int main(){
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(0);
+
+    sieve();
+
+	int T;
+	std::cin>>T;
+	//T=1;
+	while(T--){
+	    solve();
+	}
+
+    return 0;
+}
+```
+
 # 图论
+
+## 存图
+
+### 邻接矩阵
+
+```cpp
+int graph[MAXN][MAXN];
+//加边删边、访问很方便，a->b，权值为w，则graph[a][b]=w
+//空间占用大，并且不能存重边
+```
+
+### 邻接表（vector版）
+
+```cpp
+struct Edge{
+    int v,w;//下一点，权
+};
+
+std::vector<Edge> edges[MAXN];
+
+//加边u->v,权值w
+edges[u].push_back(w);
+//访问只能遍历u所连的出边
+for(auto x:edges[u]){
+    std::cout<<x.v<<" "<<x.w<<"\n";
+}
+
+//缺点是，删边难，以及清空边复杂度过高。快速清边见链式前向星传统数组版
+```
+
+### 链式前向星（vector版）
+
+```cpp
+struct Edge{
+    int v;LL w;//指向的点，容量
+    Edge(int v_, LL w_):v(v_),w(w_){}
+};
+
+std::vector<Edge> edges;
+std::vector<std::vector<int> > graph(MAXN);
+//常用于网络流，例如加u->v，权值为w，及其反向边v->w，权值为0
+graph[u].push_back(edges.size());
+edges.push_back(Edge(v,w));
+graph[v].push_back(edges.size());
+edges.push_back(Edge(u,0));
+//遍历u的边时
+for(auto x:graph[u]){
+    auto e=edges[x];
+    auto v=e.v, w=e.w;
+    //e的反向边就是edges[x^1]
+}
+
+//清空某个点连出的所有边时，graph[u].clear()，不需要管edges的size
+//清楚整个图时edges.clear()，graph要对每个下标clear
+//这种清楚方式复杂度比传统数组版高很多，需要反复建图时不推荐使用。
+```
+
+### 链式前向星（传统数组版）
+
+```cpp
+struct Edge{
+    int v,w,next;//指向的点，边权，下一条边
+};
+
+Edge edges[MAXM];
+int head[MAXN],cnt;
+
+inline void add(int u, int v, int w){
+    edges[++cnt].w = w;
+    edges[cnt].v = v;
+    edges[cnt].next = head[u];//把下一条边设置为当前起点的第一条边
+    head[u] = cnt;//该边称为当前起点的第一条边
+}
+
+//遍历，与vector版不同，vector版按加入先后顺序遍历，而这里是反向顺序遍历。绝大多数情况不影响
+//例如遍历1号节点所连的边
+for(int e=head[1];e;e=edges[e].next){
+    std::cout<<edges[e].v<<" "<<edges[e].w<<"\n";
+}
+
+//当需要清空某个点的所有连出边时, head[u] = 0，不需要管cnt
+//清空全图时，cnt = 0, 对于所有点head = 0， 由于还可以用memset，比vector版更是快了不少
+```
 
 ## 最短路
 
@@ -1953,6 +2424,11 @@ int main(){
 }
 ```
 
+## 二分图定理
+
+Konig定理：一个二分图中的最大匹配数等于这个图中的最小点覆盖数。
+
+最大独立集=点数-最小点覆盖。
 ## 动态维护二分图判定
 
 只判定一次可以用涂色法。动态加边可以用扩展域并查集（可撤销）来实现。
@@ -2260,6 +2736,10 @@ int main(){
     return 0;
 }
 ```
+
+### 最大流最小割定理
+
+网络流的最大流等于其所有割的最小容量。
 
 ### 最小费用最大流
 
@@ -2931,6 +3411,88 @@ int main(){
 
     return 0;
 }
+```
+
+## 树的直径
+
+```cpp
+//树的直径，复杂度n
+//poj1985，输出树上最长路径的长度，即树的直径
+//两遍dfs版可以求出路径上的点，但树形dp的可以处理负边权问题
+std::vector<pii> edges[MAXN];//first是v，second是w
+int dis[MAXN];
+int far;
+
+void dfs(int u, int fa){
+    int size = edges[u].size();
+    for(int i=0;i<size;i++){
+        pii e = edges[u][i];
+        int v = e.first, w = e.second;
+        if(v==fa) continue;
+        dis[v] = dis[u]+w;
+        if(dis[v]>dis[far]) far=v;
+        dfs(v,u);
+    }
+}
+
+void solve(){
+    int n,m;
+    std::cin>>n>>m;
+    for(int i=1;i<=m;i++){
+        int u,v,w;
+        char trash;//poj 1985的输入数据问题
+        std::cin>>u>>v>>w>>trash;
+        edges[u].push_back(std::make_pair(v,w));
+        edges[v].push_back(std::make_pair(u,w));
+    }
+    dfs(1,0);
+    dis[far] = 0;
+    dfs(far,0);
+    std::cout<<dis[far]<<"\n";
+}
+```
+
+```cpp
+//树的直径，复杂度n
+//poj1985，输出树上最长路径的长度，即树的直径
+//两遍dfs版可以求出路径上的点，但树形dp的可以处理负边权问题
+std::vector<pii> edges[MAXN];//first是v，second是w
+int dis[MAXN];
+bool vis[MAXN];
+int ans;
+
+void dp(int u){
+    vis[u] = 1;
+    int size = edges[u].size();
+    for(int i=0;i<size;i++){
+        pii e = edges[u][i];
+        int v = e.first, w = e.second;
+        if(vis[v]) continue;
+        dp(v);
+        ans = std::max(ans,dis[u]+dis[v]+w);
+        dis[u] = std::max(dis[u],dis[v]+w);
+    }
+}
+
+void solve(){
+    int n,m;
+    std::cin>>n>>m;
+    for(int i=1;i<=m;i++){
+        int u,v,w;
+        char trash;//poj 1985的输入数据问题
+        std::cin>>u>>v>>w>>trash;
+        edges[u].push_back(std::make_pair(v,w));
+        edges[v].push_back(std::make_pair(u,w));
+    }
+    dp(1);
+    std::cout<<ans<<"\n";
+}
+```
+
+## 虚树
+
+```cpp
+
 ```
 
 # 计算几何
@@ -3655,6 +4217,53 @@ $$
 F_{n+1}=\sum_{0\leq i\leq n}\binom{n-i}{i}
 $$
 
+## 和式性质
+
+### 基本性质
+
+$$
+\sum_{k\in K}ca_k=c\sum_{k\in K}a_k
+$$
+
+$$
+\sum_{k\in K}(a_k+b_k)=\sum_{k\in K}a_k+\sum_{k\in K}b_k
+$$
+
+$$
+\sum_{k\in K}a_k = \sum_{p(k)\in K}a_{p(k)}
+$$
+
+此处$p(k)$是$k$的任意排列。
+
+### 多重和式分配律
+
+$$
+\sum_{j\in J,k\in K}a_jb_k = (\sum_{j\in J}a_j)(\sum_{k\in K}b_k)
+$$
+
+### 多重和式次序交换
+
+$$
+\sum_{j\in J}\sum_{k\in K}a_{j,k} = \sum_{j\in J,k\in K}a_{j,k} = \sum_{k\in K}\sum_{j\in J}a_{j,k}
+$$
+
+当$J,K$相互独立时成立。
+
+$$
+\sum_{j\in J}\sum_{k\in K(j)}a_{j,k} = \sum_{k\in K'}\sum_{j\in J'(k)}a_{j,k}
+$$
+
+这里$J,K$不独立，并且要满足
+
+$$
+[j\in J][k\in K(j)]=[k\in K'][j\in J'(k)]
+$$
+例如
+
+$$
+\sum_{j=1}^n\sum_{k=j}^na_{j,k}=\sum_{i\leq j\leq k\leq n}a_{j,k}=\sum_{k=1}^n\sum_{j=1}^ka_{j,k}
+$$
+
 ## 卡特兰数
 
 TODO: 用模板元编程实现编译期算卡特兰数
@@ -3728,6 +4337,40 @@ int main(){
     return 0;
 }
 ```
+
+## 生成函数
+
+给出一些常见封闭形式（目前只会普通生成函数来应对组合问题，之后更新指数生成函数应对排列问题）：
+
+$$
+\sum_{n\geq 0}x^n = \dfrac{1}{1-x}
+$$
+
+$$
+\sum_{n\geq 0}p^nx^n=\dfrac{1}{1-px}
+$$
+
+$$
+\sum_{n\geq 1}x^n = \dfrac{x}{1-x}
+$$
+
+$$
+\sum_{n\geq 0}x^{cn} = \dfrac{1}{1-x^c}
+$$
+
+$$
+1+2x+3x^2+\cdots = \sum_{n\geq 0}(n-1)x^n = \dfrac{1}{(1-x)^2} 
+$$
+
+$$
+\sum_{n\geq 0}\binom{m}{n}x^n = (1+x)^m
+$$
+
+$$
+\sum_{n\geq 0}\binom{m+n-1}{n}x^n = \dfrac{1}{(1-x)^{m}}
+$$
+
+其他有限项生成函数应该用等比数列求和公式，转化成分式形式。之后再来进行生成函数的计算。
 
 ## 稳定婚姻问题
 
@@ -3827,7 +4470,7 @@ int main(){
 }
 ```
 
-# 树
+# 数据结构 
 
 ## 树状数组
 
@@ -4382,8 +5025,6 @@ for(int i=1;i<=n;i++){
 std::cout<<ans<<"\n";
 ```
 
-# 堆
-
 ## 对顶堆
 
 ```cpp
@@ -4447,8 +5088,6 @@ public:
     }
 };
 ```
-
-# 单调数据结构
 
 ## 单调栈
 
@@ -4670,6 +5309,7 @@ while(l+1<r){
 if(judge(l)) std::cout<<l<<"\n";
 else std::cout<<r<<"\n";
 ```
+
 judge函数应该根据题意写出。
 
 如果是浮点数的二分，则不推荐使用EPS进行精度判断（有可能会丢精度）。而是使用计数器，一般迭代100次就能保证符合题目要求。复杂度显然logn
@@ -4787,6 +5427,96 @@ int main(){
 }
 ```
 
+## 最长上升子序列
+
+```cpp
+//最长上升子序列 复杂度nlogn
+//luogu B3637
+#include <iostream>
+#include <algorithm>
+#include <cstring>
+
+const int MAXN = 100005;
+
+int arr[MAXN];
+int dp[MAXN];
+//dp[i]表示长度为i的上升子序列的最后一个元素的最小值
+//例如1 2 5 3 4 1。
+//最开始dp[1]=1，arr[2]=2>dp[1]，所以插入dp[2]=2;arr[3]同理，得到dp={1,2,5};到arr[4]=3时，我们找到第一个大于等于3的元素，即dp[3]，替换他，得到dp={1,2,3};接下来到arr[5]=4，现在4>3，可以插入末尾得到dp={1,2,3,4}，显然我们刚刚的操作把5换成3，让后面的数更有可能直接加入到数组末尾了。最后arr[6]=1，由于我们求的是最长上升子序列，而不是最长不下降，所以替换不影响。
+//注意dp里面的数字并不是最长的序列，例如我们加一个0进去，dp={0,2,3,4}，但是0是在最后的，不存在0,2,3,4这个序列。我们只能计算长度。
+
+int main(){
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(0);
+    
+    int n;
+    std::cin>>n;
+    for(int i=1;i<=n;i++){
+        std::cin>>arr[i];
+    }
+    
+    std::memset(dp,0x3f,sizeof(dp));
+    
+    int maxv = dp[0];
+    for(int i=1;i<=n;i++){
+        *std::lower_bound(dp,dp+n,arr[i]) = arr[i];
+        //换成最长不下降子序列时，用upper_bound
+    }
+    int ans = 0;
+    while(dp[ans]!=maxv) ans++;
+    std::cout<<ans<<"\n";
+
+    return 0;
+}
+
+```
+
+## Dilworth定理
+
+把一个序列分为若干不上升子序列，其序列总数的最小值等于最长上升子序列的长度
+
+## 最长公共子序列
+
+```cpp
+//最长公共子序列，复杂度nm
+//hdu 1159
+//luogu p1439因为是排列，可以转化为LIS问题，复杂度是nlogn。但hdu1159没有这种性质，复杂度到不了nlogn
+#include <iostream>
+#include <cstring>
+#include <string>
+#define MAXN 505
+
+int dp[MAXN][MAXN];
+
+int lcs(std::string const & s1, std::string const & s2){
+    int n1=s1.size(),n2=s2.size();
+    std::memset(dp,0,sizeof(dp));
+    
+    for(int i=1;i<=n1;i++){
+        for(int j=1;j<=n2;j++){
+            if(s1[i-1]==s2[j-1])
+                dp[i][j] = dp[i-1][j-1]+1;
+            else
+                dp[i][j] = std::max(dp[i][j-1],dp[i-1][j]);
+        }
+    }
+    return dp[n1][n2];
+}
+
+int main(){
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(0);
+    
+    std::string s1,s2;
+    
+    while(std::cin>>s1>>s2){
+        std::cout<<lcs(s1,s2)<<"\n";
+    }
+    
+    return 0;
+}
+```
+
 # 概率论
 
 ## 处理分数期望、概率
@@ -4811,12 +5541,12 @@ $Q^{-1}$是$Q$在模$998244353$意义下的乘法逆元
 
 ```cpp
 //复杂度logn
-#include <iostream>
+//快速幂
+//luogu P1226
+using LL = long long;
 
-using namespace std;
-
-long long binpow(long long n, long long p){
-    long long res = 1;
+LL qPow(LL n, LL p){
+    LL res = 1;
     while(p>0){
         if(p&1){
             res = res * n;
@@ -4825,17 +5555,18 @@ long long binpow(long long n, long long p){
         p>>=1;
     }
     return res;
-
 }
 
-
-int main(){
-    long long n,p;
-    cin>>n>>p;
-
-    cout<<binpow(n,p)<<endl;
-
-    return 0;
+LL qPowMod(LL n, LL p, LL m){
+    LL res = 1;
+    while(p>0){
+        if(p&1){
+            res = (res * n)%m;
+        }
+        n = (n*n)%m;
+        p>>=1;
+    }
+    return res;
 }
 ```
 

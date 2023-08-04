@@ -121,7 +121,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 3 分钟
+                    阅读时长: 4 分钟
                 </time>
             </div>
         
@@ -247,14 +247,46 @@ f 1206/1252/1206 1086/1257/1086 1087/1253/1087
 <h2 id="获取坐标信息的函数">获取坐标信息的函数</h2>
 <p>这一部分其实非常容易理解和实现，就把我们读入的数据，按照下标获取，然后返回即可。全部代码可见<strong><a href="https://github.com/kegalas/oar/blob/5f4cd5fc90df31b357b3580cf063b4bc83ad779a/src/model.cpp">链接</a></strong></p>
 <h1 id="效果测试">效果测试</h1>
-<p>用<strong><a href="https://github.com/kegalas/oar/blob/5f4cd5fc90df31b357b3580cf063b4bc83ad779a/src/main.cpp">这个链接</a></strong>
-中的代码（需要去下载模型文件放到代码中的指定文件夹，见<strong><a href="https://github.com/kegalas/oar/blob/1eddb36577cd9403dfc0c763c8a738d21c2bd59c/obj/african_head.obj">链接</a></strong>
-），我们可以得到如下的效果图</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&#34;tga_image.h&#34;</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&#34;raster.h&#34;</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&#34;model.h&#34;</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;ctime&gt;</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;cstdlib&gt;</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> <span class="at">const</span> width <span class="op">=</span> <span class="dv">1500</span><span class="op">;</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> <span class="at">const</span> height <span class="op">=</span> <span class="dv">1500</span><span class="op">;</span><span class="co">//设置输出图片的长宽</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">(){</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    Model model<span class="op">(</span><span class="st">&#34;../obj/african_head.obj&#34;</span><span class="op">);</span><span class="co">//读取我们的模型</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    TGAImage image<span class="op">(</span>width<span class="op">,</span>height<span class="op">,</span>TGAType<span class="op">::</span>rgb<span class="op">);</span><span class="co">//新建一个图对象</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> nface <span class="op">=</span> model<span class="op">.</span>getFaceSize<span class="op">();</span><span class="co">//获取三角面的总数</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>array<span class="op">&lt;</span>geo<span class="op">::</span>vec4f<span class="op">,</span><span class="dv">3</span><span class="op">&gt;</span> vert<span class="op">;</span><span class="co">//读取顶点坐标</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>array<span class="op">&lt;</span>geo<span class="op">::</span>OARColor<span class="op">,</span><span class="dv">3</span><span class="op">&gt;</span> color<span class="op">;</span><span class="co">//设置顶点颜色</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>array<span class="op">&lt;</span>geo<span class="op">::</span>vec2i<span class="op">,</span><span class="dv">3</span><span class="op">&gt;</span> screen<span class="op">;</span><span class="co">//把顶点的空间坐标转化到屏幕像素坐标上</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span><span class="op">(</span><span class="dt">int</span> i<span class="op">=</span><span class="dv">0</span><span class="op">;</span>i<span class="op">&lt;</span>nface<span class="op">;</span>i<span class="op">++){</span></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>        model<span class="op">.</span>getTriangle<span class="op">(</span>vert<span class="op">,</span> i<span class="op">);</span><span class="co">//把序号为i的三角形的顶点全部读入vert</span></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span><span class="op">(</span><span class="dt">int</span> j<span class="op">=</span><span class="dv">0</span><span class="op">;</span>j<span class="op">&lt;</span><span class="dv">3</span><span class="op">;</span>j<span class="op">++){</span></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>            color<span class="op">[</span>j<span class="op">]</span> <span class="op">=</span> geo<span class="op">::</span>OARColor<span class="op">(</span><span class="dv">255</span><span class="op">,</span><span class="dv">255</span><span class="op">,</span><span class="dv">255</span><span class="op">,</span><span class="dv">255</span><span class="op">);</span><span class="co">//设置颜色为全白</span></span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>            screen<span class="op">[</span>j<span class="op">]</span> <span class="op">=</span> ras<span class="op">::</span>world2screen<span class="op">(</span>vert<span class="op">[</span>j<span class="op">],</span>width<span class="op">,</span>height<span class="op">);</span><span class="co">//转换坐标，函数定义见下</span></span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>        ras<span class="op">::</span>triangle<span class="op">(</span>image<span class="op">,</span>screen<span class="op">,</span>color<span class="op">);</span><span class="co">//绘制三角形i号</span></span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>    image<span class="op">.</span>writeToFile<span class="op">(</span><span class="st">&#34;./af.tga&#34;</span><span class="op">);</span><span class="co">//写入图像文件</span></span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>我们使用以上代码来测试我们的效果，具体步骤解释都写在上面的注释里了。</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>geo<span class="op">::</span>vec2i ras<span class="op">::</span>world2screen<span class="op">(</span>geo<span class="op">::</span>vec4f v<span class="op">,</span> <span class="dt">int</span> width<span class="op">,</span> <span class="dt">int</span> height<span class="op">){</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> geo<span class="op">::</span>vec2i<span class="op">(</span><span class="dt">int</span><span class="op">((</span>v<span class="op">.</span>x<span class="op">+</span><span class="fl">1.</span><span class="bu">f</span><span class="op">)*</span>width<span class="op">*</span><span class="fl">.5</span><span class="bu">f</span><span class="op">+</span><span class="fl">.5</span><span class="bu">f</span><span class="op">),</span> <span class="dt">int</span><span class="op">((</span>v<span class="op">.</span>y<span class="op">+</span><span class="fl">1.</span><span class="bu">f</span><span class="op">)*</span>height<span class="op">*</span><span class="fl">.5</span><span class="bu">f</span><span class="op">+</span><span class="fl">.5</span><span class="bu">f</span><span class="op">));</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>我们的坐标转换函数如上，我们之后将会详细解释（TODO）。</p>
+<p>结果如下：</p>
 <figure>
-<img src="1.jpg" alt="1.jpg"/>
-<figcaption aria-hidden="true">1.jpg</figcaption>
+<img src="1.png" alt="1.png"/>
+<figcaption aria-hidden="true">1.png</figcaption>
 </figure>
-<p>看上去还好，细看的话发现眼镜、嘴巴、耳朵一塌糊涂，这实际上是因为三角形的前后关系导致覆盖而出现的结果，在下一部分我们将介绍Z-buffer算法来解决这个问题。</p>
+<p>虽然我们没有看清他的面容（因为我们把每个三角形都设置成全白了），但是至少整个形状正确了。稍后我们将介绍光照，来让他的面容展现出来。</p>
 
 
 
@@ -319,28 +351,6 @@ f 1206/1252/1206 1086/1257/1086 1087/1253/1087
         <h2 class="section-title">相关文章</h2>
         <div class="related-contents">
             <div class="flex article-list--tile">
-                
-                    
-<article class="has-image">
-    <a href="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-z-buffer/">
-        
-        
-            <div class="article-image">
-                <img src="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-z-buffer/cover.4931495eb81ef9e9607a2265a3ab5944_huefaede8fa769a1822bd7ca8a439b248c_38510_250x150_fill_q75_box_smart1.jpg" 
-                        width="250" 
-                        height="150" 
-                        loading="lazy" 
-                        data-key="" 
-                        data-hash="md5-STFJXrge&#43;elgeiJlo6tZRA==">
-                
-            </div>
-        
-
-        <div class="article-details">
-            <h2 class="article-title">从零开始的软渲染器 Z-Buffer</h2>
-        </div>
-    </a>
-</article>
                 
                     
 <article class="has-image">
@@ -426,6 +436,18 @@ f 1206/1252/1206 1086/1257/1086 1087/1253/1087
 
         <div class="article-details">
             <h2 class="article-title">从零开始的软渲染器 导航</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="">
+    <a href="/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%8A%A8%E7%94%BB%E4%B8%8E%E6%A8%A1%E6%8B%9F/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">计算机图形学基础学习笔记-动画与模拟</h2>
         </div>
     </a>
 </article>
