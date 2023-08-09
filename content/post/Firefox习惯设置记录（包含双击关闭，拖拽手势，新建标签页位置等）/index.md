@@ -70,6 +70,7 @@ browser.search.openintab改为true
 [https://addons.mozilla.org/zh-CN/firefox/addon/drag-to-go/](https://addons.mozilla.org/zh-CN/firefox/addon/drag-to-go/)，它的设置更为复杂，可以把拖拽的四个方向的动作分开算，但是不知道为什么，拖拽文字搜索居然不可以设置background。而且拖拽的时候虽然确实能拖拽，但是鼠标指针显示的还是“禁止”的那个图样，让我很不爽。
 
 [https://addons.mozilla.org/zh-CN/firefox/addon/fire-drag/](https://addons.mozilla.org/zh-CN/firefox/addon/fire-drag/)，它总体而言和第一个差不多。缺点也是有几个页面用不了。
+
 # 恢复最近关闭页面的按钮
 
 简单的可以用[https://addons.mozilla.org/zh-CN/firefox/addon/%E6%81%A2%E5%A4%8D%E6%A0%87%E7%AD%BE%E9%A1%B5/](https://addons.mozilla.org/zh-CN/firefox/addon/%E6%81%A2%E5%A4%8D%E6%A0%87%E7%AD%BE%E9%A1%B5/)，这个插件右键没有关闭页面的列表。
