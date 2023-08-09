@@ -11,7 +11,7 @@ image: cover.jpg
 
 <u>**[导航页面](../从零开始的软渲染器-导航/)**</u>
 
-图形学中最基础的数学涉及到线性代数，我们需要自己先写一个能处理简单的向量、矩阵运算的库。
+图形学中最基础的数学涉及到线性代数，我们需要自己先写一个能处理简单的向量、矩阵运算的库。前置知识：大学本科水平的线性代数。
 
 # geometry.h
 
@@ -258,13 +258,17 @@ std::ostream& operator<<(std::ostream& out, const Vec<T, dim>& vec){
 我们重载了输出流，方便直接打印出来调试。
 
 ```cpp
-Vec<int,3> toRGB(Vec<int,3> const & v);
-Vec<int,3> toRGB(Vec<float,3> const & v);
-Vec<int,4> toRGBA(Vec<int,4> const & v);
-Vec<int,4> toRGBA(Vec<float,4> const & v);
+Vec<int,4> toOARColor(int const & v);
+Vec<int,4> toOARColor(float const & v);
+Vec<int,4> toOARColor(Vec<int,3> const & v);
+Vec<int,4> toOARColor(Vec<float,3> const & v);
+Vec<int,4> toOARColor(Vec<int,4> const & v);
+Vec<int,4> toOARColor(Vec<float,4> const & v);
 ```
 
 在计算机图形学中，颜色也可以表示为一个向量，为此我们声明几个函数将其他的向量转变为RGB或RGBA颜色值。
+
+这里其中前两个是转换灰度值，中间两个是转换RGB，最后两个是转换RGBA。具体的实现后面会介绍到。
 
 ## 矩阵的定义
 
@@ -343,13 +347,13 @@ Vec<T, nCol> rowVec[nRow]
 
 ```cpp
 Mat<T, nRow, nCol>& operator=(Mat<T, nRow, nCol> const & mat){
-if(this==&mat){
+    if(this==&mat){
+        return *this;
+    }
+    for(size_t i=0 ; i<nRow ; i++){
+        this->rowVec[i] = mat[i];
+    }
     return *this;
-}
-for(size_t i=0 ; i<nRow ; i++){
-    this->rowVec[i] = mat[i];
-}
-return *this;
 }
 ```
 
@@ -401,7 +405,7 @@ Mat<T, nRow, nCol> operator*(Mat<T, nRow, sameDim> const & lhs, Mat<T, sameDim, 
 }
 ```
 
-这里我们默认向量都是列向量，所以矩阵*向量要求向量的维数和矩阵的列数相同。
+这里我们默认向量都是列向量，所以矩阵*向量要求向量的维数和矩阵的列数相同。* 在图形学中，我们大部分时候其实只会把矩阵当成左操作数，向量当成右操作数，所以我们就暂时不考虑相反情况的代码了。
 
 而矩阵乘以矩阵要求前者的列数等于后者的行数。
 
@@ -506,6 +510,7 @@ typedef Vec<float,4> vec4f;
 typedef Vec<int,2> vec2i;
 typedef Vec<int,3> vec3i;
 typedef Vec<int,4> vec4i;
+typedef Vec<int,4> OARColor;
 
 typedef Mat<float, 4, 4> mat4f;
 typedef Mat<int, 4, 4> mat3f;
@@ -515,7 +520,13 @@ typedef Mat<int, 4, 4> mat3f;
 
 另外这些全部都是在geo命名空间中，方便辨别。
 
-完整的代码在<u>**[这里](https://github.com/kegalas/oar/blob/3326779c1166f44db5b6f5e1ce5bd25d6dd98c84/geometry.h)**</u>
+着重讲一下为什么我们的颜色信息（OARColor）被设置成4维的int向量。
+
+相信大家都听过RGB颜色，在这上面多加一维透明度，就是RGBA，基本上可以达到我们所有想要的效果了。而RGBA四个属性的取值范围分别都是$[0,255]$的整数，所以用四维int向量就理所当然了。
+
+你可能会问为什么不拆成黑白、RGB、RGBA三种颜色。确实，这可能会更省内存，但是现在电脑内存一点也不稀缺，并且我们的微型渲染器很难有多大开销，统一处理可能更简单一些。
+
+完整的代码在<u>**[这里](https://github.com/kegalas/oar/blob/main/tutorial/chapter1/geometry.h)**</u>
 
 # geometry.cpp
 
@@ -533,6 +544,8 @@ geo::Vec<int,3>::Vec(geo::Vec<float, 2> const & v, float const z_){
 这段代码将二维的float向量转为三维的int向量，+0.5f即是四舍五入。
 
 然后就是转化为RGBA颜色格式，为了简单起见，我们假设所有的颜色都用RGBA表示，所以我们需要将RGB和灰度图像转化为RGBA，然后在写入图像时再具体分析写入什么颜色数据。举例将float的RGB和int的灰度转换为RGBA：
+
+（注：RGBA其实每一个颜色的权重也可以表示为$[0,1]$之间的实数（这样在处理光照的时候容易些），但我们的图像写出去的是离散的值，所以要将$[0,1]$映射到$[0,255]$上的实数。注意四舍五入）
 
 ```cpp
 geo::Vec<int,4> geo::toOARColor(geo::Vec<float,3> const & v){
@@ -562,4 +575,4 @@ geo::Vec<int,4> geo::toOARColor(int const & v){
 
 其将连续的[0,1]映射到离散的[0,255]（或者本来就是离散的），并且超出的部分映射到边界上，同时也计算了四舍五入。
 
-完整的代码在<u>**[这里](https://github.com/kegalas/oar/blob/3326779c1166f44db5b6f5e1ce5bd25d6dd98c84/geometry.cpp)**</u>
+完整的代码在<u>**[这里](https://github.com/kegalas/oar/blob/main/tutorial/chapter1/geometry.cpp)**</u>
