@@ -265,28 +265,28 @@
 <h1 id="tga_image.h">tga_image.h</h1>
 <p>首先我们根据文件头的描述设定一个结构体</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> TGAHeader<span class="op">{</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>uint8_t<span class="op"> </span> length<span class="op">{};</span>       <span class="co">//TGA图像信息的长度</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>uint8_t<span class="op"> </span> colorMapType<span class="op">{};</span> <span class="co">//0：不使用颜色表，1：使用颜色表</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>uint8_t<span class="op"> </span> imageType<span class="op">{};</span>    <span class="co">//图像类型</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>uint16_t<span class="op"> </span>cMapStart<span class="op">{};</span>    <span class="co">//颜色表首地址</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>uint16_t<span class="op"> </span>cMapLength<span class="op">{};</span>   <span class="co">//颜色表长度</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>uint8_t<span class="op"> </span> cMapDepth<span class="op">{};</span>    <span class="co">//颜色表位数</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>uint16_t<span class="op"> </span>xOffset<span class="op">{};</span>      <span class="co">//x坐标的起始位置</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>uint16_t<span class="op"> </span>yOffset<span class="op">{};</span>      <span class="co">//y坐标的起始位置</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>uint16_t<span class="op"> </span>width<span class="op">{};</span>        <span class="co">//图形宽度</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>uint16_t<span class="op"> </span>height<span class="op">{};</span>       <span class="co">//图像高度</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>uint8_t<span class="op"> </span> pixelDepth<span class="op">{};</span>   <span class="co">//图像每一个像素占用的位数</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>uint8_t<span class="op"> </span> descriptor<span class="op">{};</span>   <span class="co">//图像描述信息</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>uint8_t<span class="op"> </span> length <span class="op">=</span> <span class="dv">0</span><span class="op">;</span>       <span class="co">//TGA图像Identification Field的长度</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>uint8_t<span class="op"> </span> colorMapType <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> <span class="co">//0：不使用颜色表，1：使用颜色表</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>uint8_t<span class="op"> </span> imageType <span class="op">=</span> <span class="dv">0</span><span class="op">;</span>    <span class="co">//图像类型，2代表未压缩的真彩色图像，3代表未压缩的黑白图像</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>uint16_t<span class="op"> </span>cMapStart <span class="op">=</span> <span class="dv">0</span><span class="op">;</span>    <span class="co">//颜色表首地址</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>uint16_t<span class="op"> </span>cMapLength <span class="op">=</span> <span class="dv">0</span><span class="op">;</span>   <span class="co">//颜色表长度</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>uint8_t<span class="op"> </span> cMapDepth <span class="op">=</span> <span class="dv">0</span><span class="op">;</span>    <span class="co">//颜色表位数</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>uint16_t<span class="op"> </span>xOffset <span class="op">=</span> <span class="dv">0</span><span class="op">;</span>      <span class="co">//x坐标的起始位置</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>uint16_t<span class="op"> </span>yOffset <span class="op">=</span> <span class="dv">0</span><span class="op">;</span>      <span class="co">//y坐标的起始位置</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>uint16_t<span class="op"> </span>width <span class="op">=</span> <span class="dv">0</span><span class="op">;</span>        <span class="co">//图形宽度</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>uint16_t<span class="op"> </span>height <span class="op">=</span> <span class="dv">0</span><span class="op">;</span>       <span class="co">//图像高度</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>uint8_t<span class="op"> </span> pixelDepth <span class="op">=</span> <span class="dv">0</span><span class="op">;</span>   <span class="co">//图像每一个像素占用的位数，例如RGB为24位，RGBA为32位</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>uint8_t<span class="op"> </span> descriptor <span class="op">=</span> <span class="dv">0</span><span class="op">;</span>   <span class="co">//图像描述信息，可见http://paulbourke.net/dataformats/tga/</span></span>
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    TGAHeader<span class="op">(){}</span></span>
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div>
 <p>然后是文件尾的结构体</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> TGAFooter<span class="op">{</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>uint32_t<span class="op"> </span>extend<span class="op">{};</span> <span class="co">//扩展区域</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>uint32_t<span class="op"> </span>custom<span class="op">{};</span> <span class="co">//开发者自定义区域</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>uint64_t<span class="op"> </span>sig1<span class="op">{};</span>   <span class="co">//签名1</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>uint64_t<span class="op"> </span>sig2<span class="op">{};</span>   <span class="co">//签名2</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>uint16_t<span class="op"> </span>end<span class="op">;</span>      <span class="co">//结束</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>uint32_t<span class="op"> </span>extend <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> <span class="co">//扩展区域</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>uint32_t<span class="op"> </span>custom <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> <span class="co">//开发者自定义区域</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>uint64_t<span class="op"> </span>sig1 <span class="op">=</span> <span class="dv">0</span><span class="op">;</span>   <span class="co">//签名1</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>uint64_t<span class="op"> </span>sig2 <span class="op">=</span> <span class="dv">0</span><span class="op">;</span>   <span class="co">//签名2</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>uint16_t<span class="op"> </span>end <span class="op">=</span> <span class="dv">0</span><span class="op">;</span>      <span class="co">//结束</span></span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    TGAFooter<span class="op">(){</span></span>
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>        sig1 <span class="op">=</span> <span class="bn">0x4953495645555254</span><span class="op">;</span>  <span class="co">//TRUEVISI</span></span>
@@ -331,10 +331,10 @@
 <span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>    height <span class="op">=</span> <span class="va">height_</span><span class="op">;</span></span>
 <span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span><span class="op">(</span>type <span class="op">==</span> TGAType<span class="op">::</span>grey <span class="op">||</span> type <span class="op">==</span> TGAType<span class="op">::</span>rgb<span class="op">){</span></span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>        descriptor <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>        descriptor <span class="op">|=</span> <span class="bn">0x00</span><span class="op">;</span></span>
 <span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
 <span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> <span class="cf">if</span><span class="op">(</span>type <span class="op">==</span> TGAType<span class="op">::</span>rgba<span class="op">){</span></span>
-<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>        descriptor <span class="op">=</span> <span class="dv">8</span><span class="op">;</span></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>        descriptor <span class="op">|=</span> <span class="bn">0x08</span><span class="op">;</span></span>
 <span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
 <span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <p>这不难理解，如果我们要写入到一个新的文件中，我们定义它的颜色类型和宽度高度，然后修改内容。</p>
@@ -354,13 +354,14 @@
 <span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    <span class="dt">bool</span> readFromFile<span class="op">(</span><span class="bu">std::</span>string<span class="op"> </span><span class="at">const</span> <span class="op">&amp;</span> dir<span class="op">);</span></span>
 <span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    <span class="dt">bool</span> writeToFile<span class="op">(</span><span class="bu">std::</span>string<span class="op"> </span><span class="at">const</span> <span class="op">&amp;</span> dir<span class="op">);</span></span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>    <span class="dt">bool</span> setFragment<span class="op">(</span><span class="bu">std::</span>uint16_t<span class="op"> </span><span class="at">const</span> x<span class="op">,</span> <span class="bu">std::</span>uint16_t<span class="op"> </span><span class="at">const</span> y<span class="op">,</span> geo<span class="op">::</span>vec3i <span class="at">const</span> <span class="op">&amp;</span> color<span class="op">);</span></span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    <span class="dt">bool</span> setFragment<span class="op">(</span><span class="bu">std::</span>uint16_t<span class="op"> </span><span class="at">const</span> x<span class="op">,</span> <span class="bu">std::</span>uint16_t<span class="op"> </span><span class="at">const</span> y<span class="op">,</span> geo<span class="op">::</span>vec4i <span class="at">const</span> <span class="op">&amp;</span> color<span class="op">);</span></span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>    <span class="dt">bool</span> flipVertically<span class="op">();</span></span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>    <span class="dt">bool</span> setFragment<span class="op">(</span><span class="bu">std::</span>uint16_t<span class="op"> </span><span class="at">const</span> x<span class="op">,</span> <span class="bu">std::</span>uint16_t<span class="op"> </span><span class="at">const</span> y<span class="op">,</span> geo<span class="op">::</span>OARColor <span class="at">const</span> <span class="op">&amp;</span> color<span class="op">);</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    <span class="dt">bool</span> flipVertically<span class="op">();</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>    <span class="kw">inline</span> <span class="bu">std::</span>uint16_t<span class="op"> </span>getWidth<span class="op">(){</span><span class="cf">return</span> width<span class="op">;}</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>    <span class="kw">inline</span> <span class="bu">std::</span>uint16_t<span class="op"> </span>getHeight<span class="op">(){</span><span class="cf">return</span> height<span class="op">;}</span></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div>
 <p>赋予了它少量功能，包括读写图片文件，图像翻转，以及设置某个像素的颜色值。</p>
-<p>完整的代码在<u><strong><a href="https://github.com/kegalas/oar/blob/97058860346436641decc719d6b72cc7055eb24c/src/tga_image.h">这里</a></strong></u></p>
+<p>完整的代码在<u><strong><a href="https://github.com/kegalas/oar/blob/main/tutorial/chapter2/tga_image.h">这里</a></strong></u></p>
 <h1 id="tga_image.cpp">tga_image.cpp</h1>
 <div class="sourceCode" id="cb7"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>TGAImage<span class="op">::</span>TGAImage<span class="op">(</span><span class="bu">std::</span>uint16_t<span class="op"> </span><span class="at">const</span> <span class="va">width_</span><span class="op">,</span> <span class="bu">std::</span>uint16_t<span class="op"> </span><span class="at">const</span> <span class="va">height_</span><span class="op">,</span> <span class="dt">unsigned</span> <span class="dt">int</span> <span class="at">const</span> <span class="va">type_</span><span class="op">){</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    width               <span class="op">=</span> <span class="va">width_</span><span class="op">;</span></span>
@@ -505,8 +506,29 @@
 <span id="cb17-28"><a href="#cb17-28" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="kw">true</span><span class="op">;</span></span>
 <span id="cb17-29"><a href="#cb17-29" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <p>主要注意下标要乘以像素占用的字节大小，以及颜色顺序为BGRA。</p>
-<p>完整的代码在<u><strong><a href="https://github.com/kegalas/oar/blob/97058860346436641decc719d6b72cc7055eb24c/src/tga_image.cpp">这里</a></strong></u></p>
-<h1 id="todo-给出使用实例">TODO: 给出使用实例</h1>
+<p>完整的代码在<u><strong><a href="https://github.com/kegalas/oar/blob/main/tutorial/chapter2/tga_image.cpp">这里</a></strong></u></p>
+<h1 id="使用例子">使用例子</h1>
+<p>我们用红色画一条从左下到右上的斜线，我们可以用以下代码</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&#34;tga_image.h&#34;</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">(){</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    TGAImage image<span class="op">(</span><span class="dv">100</span><span class="op">,</span><span class="dv">100</span><span class="op">,</span>TGAType<span class="op">::</span>rgb<span class="op">);</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span><span class="op">(</span><span class="dt">int</span> i<span class="op">=</span><span class="dv">0</span><span class="op">;</span>i<span class="op">&lt;</span><span class="dv">100</span><span class="op">;</span>i<span class="op">++){</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>        image<span class="op">.</span>setFragment<span class="op">(</span>i<span class="op">,</span>i<span class="op">,{</span><span class="dv">255</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">255</span><span class="op">});</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>    image<span class="op">.</span>writeToFile<span class="op">(</span><span class="st">&#34;./test.tga&#34;</span><span class="op">);</span></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a></span></code></pre></div>
+<p>输出结果如下：</p>
+<figure>
+<img src="1.jpg" alt="1.jpg"/>
+<figcaption aria-hidden="true">1.jpg</figcaption>
+</figure>
 
 
 
@@ -846,8 +868,7 @@
     </li>
     <li><a href="#tga_image.h">tga_image.h</a></li>
     <li><a href="#tga_image.cpp">tga_image.cpp</a></li>
-    <li><a href="#todo-给出使用实例">TODO:
-给出使用实例</a></li>
+    <li><a href="#使用例子">使用例子</a></li>
   </ol>
 </nav>
                 </div>

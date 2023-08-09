@@ -109,18 +109,18 @@ image: cover.jpg
 
 ```cpp
 struct TGAHeader{
-    std::uint8_t  length{};       //TGA图像信息的长度
-    std::uint8_t  colorMapType{}; //0：不使用颜色表，1：使用颜色表
-    std::uint8_t  imageType{};    //图像类型
-    std::uint16_t cMapStart{};    //颜色表首地址
-    std::uint16_t cMapLength{};   //颜色表长度
-    std::uint8_t  cMapDepth{};    //颜色表位数
-    std::uint16_t xOffset{};      //x坐标的起始位置
-    std::uint16_t yOffset{};      //y坐标的起始位置
-    std::uint16_t width{};        //图形宽度
-    std::uint16_t height{};       //图像高度
-    std::uint8_t  pixelDepth{};   //图像每一个像素占用的位数
-    std::uint8_t  descriptor{};   //图像描述信息
+    std::uint8_t  length = 0;       //TGA图像Identification Field的长度
+    std::uint8_t  colorMapType = 0; //0：不使用颜色表，1：使用颜色表
+    std::uint8_t  imageType = 0;    //图像类型，2代表未压缩的真彩色图像，3代表未压缩的黑白图像
+    std::uint16_t cMapStart = 0;    //颜色表首地址
+    std::uint16_t cMapLength = 0;   //颜色表长度
+    std::uint8_t  cMapDepth = 0;    //颜色表位数
+    std::uint16_t xOffset = 0;      //x坐标的起始位置
+    std::uint16_t yOffset = 0;      //y坐标的起始位置
+    std::uint16_t width = 0;        //图形宽度
+    std::uint16_t height = 0;       //图像高度
+    std::uint8_t  pixelDepth = 0;   //图像每一个像素占用的位数，例如RGB为24位，RGBA为32位
+    std::uint8_t  descriptor = 0;   //图像描述信息，可见http://paulbourke.net/dataformats/tga/
 
     TGAHeader(){}
 };
@@ -130,11 +130,11 @@ struct TGAHeader{
 
 ```cpp
 struct TGAFooter{
-    std::uint32_t extend{}; //扩展区域
-    std::uint32_t custom{}; //开发者自定义区域
-    std::uint64_t sig1{};   //签名1
-    std::uint64_t sig2{};   //签名2
-    std::uint16_t end;      //结束
+    std::uint32_t extend = 0; //扩展区域
+    std::uint32_t custom = 0; //开发者自定义区域
+    std::uint64_t sig1 = 0;   //签名1
+    std::uint64_t sig2 = 0;   //签名2
+    std::uint16_t end = 0;      //结束
 
     TGAFooter(){
         sig1 = 0x4953495645555254;  //TRUEVISI
@@ -192,10 +192,10 @@ TGAHeader(unsigned int type, std::uint16_t width_, std::uint16_t height_){
     height = height_;
 
     if(type == TGAType::grey || type == TGAType::rgb){
-        descriptor = 0;
+        descriptor |= 0x00;
     }
     else if(type == TGAType::rgba){
-        descriptor = 8;
+        descriptor |= 0x08;
     }
 }
 ```
@@ -220,16 +220,17 @@ public:
 
     bool readFromFile(std::string const & dir);
     bool writeToFile(std::string const & dir);
-    bool setFragment(std::uint16_t const x, std::uint16_t const y, geo::vec3i const & color);
-    bool setFragment(std::uint16_t const x, std::uint16_t const y, geo::vec4i const & color);
+    bool setFragment(std::uint16_t const x, std::uint16_t const y, geo::OARColor const & color);
     bool flipVertically();
+    inline std::uint16_t getWidth(){return width;}
+    inline std::uint16_t getHeight(){return height;}
 
 };
 ```
 
 赋予了它少量功能，包括读写图片文件，图像翻转，以及设置某个像素的颜色值。
 
-完整的代码在<u>**[这里](https://github.com/kegalas/oar/blob/97058860346436641decc719d6b72cc7055eb24c/src/tga_image.h)**</u>
+完整的代码在<u>**[这里](https://github.com/kegalas/oar/blob/main/tutorial/chapter2/tga_image.h)**</u>
 
 # tga_image.cpp
 
@@ -425,6 +426,31 @@ bool TGAImage::setFragment(std::uint16_t const x, std::uint16_t const y, geo::OA
 
 主要注意下标要乘以像素占用的字节大小，以及颜色顺序为BGRA。
 
-完整的代码在<u>**[这里](https://github.com/kegalas/oar/blob/97058860346436641decc719d6b72cc7055eb24c/src/tga_image.cpp)**</u>
+完整的代码在<u>**[这里](https://github.com/kegalas/oar/blob/main/tutorial/chapter2/tga_image.cpp)**</u>
 
-# TODO: 给出使用实例
+# 使用例子
+
+我们用红色画一条从左下到右上的斜线，我们可以用以下代码
+
+```cpp
+#include "tga_image.h"
+
+int main(){
+
+    TGAImage image(100,100,TGAType::rgb);
+
+    for(int i=0;i<100;i++){
+		image.setFragment(i,i,{255,0,0,255});
+    }
+    
+    image.writeToFile("./test.tga");
+
+    return 0;
+}
+
+
+```
+
+输出结果如下：
+
+![1.jpg](1.jpg)
