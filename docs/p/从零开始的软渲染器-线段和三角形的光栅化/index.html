@@ -121,7 +121,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 3 分钟
+                    阅读时长: 4 分钟
                 </time>
             </div>
         
@@ -185,7 +185,7 @@ for x = x0 to x1 do
 <span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
 <span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <p>这里写的包括了<span class="math inline">\(m\in[-1,1]\)</span>的情况，负数情况很简单，就把y++变成y–，以及判断小于零转变为判断大于零。</p>
-<p>当<span class="math inline">\(m\in(1,+\infty]\)</span>时，情况转变为，我们要么向上走一格，要么向上后向右走一格，与之前的情况非常相似，我们只有把遍历x改成遍历y，判断x++的条件即可。</p>
+<p>当<span class="math inline">\(m\in(1,+\infty]\)</span>时，情况转变为，我们要么向上走一格，要么向上后向右走一格，与之前的情况非常相似，我们只要把遍历x改成遍历y，判断x++的条件即可。</p>
 <h1 id="三角形光栅化算法">三角形光栅化算法</h1>
 <p>我会直接使用三角形的重心坐标来实现三角形的光栅化，因为比起其他一些扫描方法，重心坐标能比较方便的实现插值。</p>
 <p>三角形的重心坐标可见《Fundamentals of Computer
@@ -255,8 +255,8 @@ color_c\)</span>。</p>
 <span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>            <span class="op">}</span></span>
 <span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
 <span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span></code></pre></div>
-<p>全部光栅化的代码可见<strong><a href="https://github.com/kegalas/oar/blob/97058860346436641decc719d6b72cc7055eb24c/src/raster.cpp">这里</a></strong></p>
-<p>另外，求重心坐标的代码我写到了geometry.cpp里，方便别处调用。链接在<strong><a href="https://github.com/kegalas/oar/blob/97058860346436641decc719d6b72cc7055eb24c/src/geometry.cpp">这里</a></strong>（在文件末尾）</p>
+<p>全部光栅化的代码可见<strong><a href="https://github.com/kegalas/oar/blob/main/tutorial/chapter3/src/geometry.cpp">这里</a></strong></p>
+<p>另外，求重心坐标的代码我写到了geometry.cpp里，方便别处调用。链接在<strong><a href="https://github.com/kegalas/oar/blob/main/tutorial/chapter3/src/geometry.cpp">这里</a></strong>（在文件末尾）</p>
 <p>另外，求重心坐标还有一种不那么复杂的公式，见<strong><a href="../计算机图形学基础学习笔记-数学基础/#重心坐标系">计算机图形学基础学习笔记-数学基础</a></strong></p>
 <p>注意，</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span><span class="op">(</span><span class="fl">0.</span><span class="bu">f</span><span class="op">&lt;=</span>alpha <span class="op">&amp;&amp;</span> alpha<span class="op">&lt;=</span><span class="fl">1.</span><span class="bu">f</span> <span class="op">&amp;&amp;</span></span>
@@ -265,7 +265,48 @@ color_c\)</span>。</p>
 <p>这一段代码也可以写作</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span><span class="op">(</span>alpha <span class="op">&lt;</span> <span class="fl">0.</span><span class="bu">f</span> <span class="op">||</span> beta <span class="op">&lt;</span> <span class="fl">0.</span><span class="bu">f</span> <span class="op">||</span> gamma <span class="op">&lt;</span> <span class="fl">0.</span><span class="bu">f</span><span class="op">)</span> <span class="cf">continue</span><span class="op">;</span></span></code></pre></div>
 <p>这也是对的。唯一需要小心的是精度问题，float的精度可能不足以把边界上的每一个点都画出来。如果你不在乎这一两个像素点就可以不用管，如果你在乎，那么我们可以修改为alpha&lt;-(1e-5)这样的条件。</p>
-<h1 id="todo-给出绘制实例">TODO: 给出绘制实例</h1>
+<h1 id="使用例子">使用例子</h1>
+<h2 id="绘制线段">绘制线段</h2>
+<div class="sourceCode" id="cb6"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&#34;tga_image.h&#34;</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&#34;raster.h&#34;</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">(){</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    TGAImage image<span class="op">(</span><span class="dv">100</span><span class="op">,</span><span class="dv">100</span><span class="op">,</span>TGAType<span class="op">::</span>rgb<span class="op">);</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    geo<span class="op">::</span>vec2i pts0<span class="op">[</span><span class="dv">2</span><span class="op">]</span> <span class="op">=</span> <span class="op">{</span>geo<span class="op">::</span>vec2i<span class="op">(</span><span class="dv">99</span><span class="op">,</span><span class="dv">0</span><span class="op">),</span>geo<span class="op">::</span>vec2i<span class="op">(</span><span class="dv">0</span><span class="op">,</span><span class="dv">99</span><span class="op">)};</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    ras<span class="op">::</span>line<span class="op">(</span>image<span class="op">,</span> pts0<span class="op">,</span> geo<span class="op">::</span>OARColor<span class="op">(</span><span class="dv">255</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">255</span><span class="op">));</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span><span class="op">(</span><span class="dt">int</span> i<span class="op">=</span><span class="dv">0</span><span class="op">;</span>i<span class="op">&lt;=</span><span class="dv">99</span><span class="op">;</span>i<span class="op">+=</span><span class="dv">10</span><span class="op">){</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>        pts0<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">=</span> geo<span class="op">::</span>vec2i<span class="op">(</span>i<span class="op">,</span><span class="dv">0</span><span class="op">);</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>        ras<span class="op">::</span>line<span class="op">(</span>image<span class="op">,</span> pts0<span class="op">,</span> geo<span class="op">::</span>OARColor<span class="op">(</span><span class="dv">255</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">255</span><span class="op">));</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    image<span class="op">.</span>writeToFile<span class="op">(</span><span class="st">&#34;./line.tga&#34;</span><span class="op">);</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>如上，我们首先绘制了一条<span class="math inline">\((99,0),(0,99)\)</span>的直线，也就是从右下角到左上角，然后我们用循环绘制了一组，一个点固定在右上角的直线。</p>
+<p>效果如下</p>
+<figure>
+<img src="3.jpg" alt="3.jpg"/>
+<figcaption aria-hidden="true">3.jpg</figcaption>
+</figure>
+<h2 id="绘制三角形">绘制三角形</h2>
+<div class="sourceCode" id="cb7"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&#34;tga_image.h&#34;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&#34;raster.h&#34;</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">(){</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    TGAImage image2<span class="op">(</span><span class="dv">100</span><span class="op">,</span><span class="dv">100</span><span class="op">,</span>TGAType<span class="op">::</span>rgb<span class="op">);</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    geo<span class="op">::</span>vec2i pts1<span class="op">[</span><span class="dv">3</span><span class="op">]</span> <span class="op">=</span> <span class="op">{</span>geo<span class="op">::</span>vec2i<span class="op">(</span><span class="dv">60</span><span class="op">,</span><span class="dv">5</span><span class="op">),</span>geo<span class="op">::</span>vec2i<span class="op">(</span><span class="dv">5</span><span class="op">,</span><span class="dv">60</span><span class="op">),</span>geo<span class="op">::</span>vec2i<span class="op">(</span><span class="dv">70</span><span class="op">,</span><span class="dv">90</span><span class="op">)};</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    geo<span class="op">::</span>OARColor colors<span class="op">[</span><span class="dv">3</span><span class="op">]</span> <span class="op">=</span> <span class="op">{</span>geo<span class="op">::</span>OARColor<span class="op">(</span><span class="dv">255</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">255</span><span class="op">),</span>geo<span class="op">::</span>OARColor<span class="op">(</span><span class="dv">0</span><span class="op">,</span><span class="dv">255</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">255</span><span class="op">),</span>geo<span class="op">::</span>OARColor<span class="op">(</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">255</span><span class="op">,</span><span class="dv">255</span><span class="op">)};</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    ras<span class="op">::</span>triangle<span class="op">(</span>image2<span class="op">,</span>pts1<span class="op">,</span>colors<span class="op">);</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    image2<span class="op">.</span>writeToFile<span class="op">(</span><span class="st">&#34;./triangle.tga&#34;</span><span class="op">);</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>代码非常直观，就是把三个点和三个点的颜色设置一下扔到光栅化函数里去。效果如下</p>
+<figure>
+<img src="2.jpg" alt="2.jpg"/>
+<figcaption aria-hidden="true">2.jpg</figcaption>
+</figure>
 
 
 
@@ -598,8 +639,12 @@ color_c\)</span>。</p>
   <ol>
     <li><a href="#线段光栅化算法">线段光栅化算法</a></li>
     <li><a href="#三角形光栅化算法">三角形光栅化算法</a></li>
-    <li><a href="#todo-给出绘制实例">TODO:
-给出绘制实例</a></li>
+    <li><a href="#使用例子">使用例子</a>
+      <ol>
+        <li><a href="#绘制线段">绘制线段</a></li>
+        <li><a href="#绘制三角形">绘制三角形</a></li>
+      </ol>
+    </li>
   </ol>
 </nav>
                 </div>
