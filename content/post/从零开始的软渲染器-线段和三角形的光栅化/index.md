@@ -77,7 +77,7 @@ for(int x = p0->x ; x<=p1->x ; x++){
 
 这里写的包括了$m\in[-1,1]$的情况，负数情况很简单，就把y++变成y--，以及判断小于零转变为判断大于零。
 
-当$m\in(1,+\infty]$时，情况转变为，我们要么向上走一格，要么向上后向右走一格，与之前的情况非常相似，我们只有把遍历x改成遍历y，判断x++的条件即可。
+当$m\in(1,+\infty]$时，情况转变为，我们要么向上走一格，要么向上后向右走一格，与之前的情况非常相似，我们只要把遍历x改成遍历y，判断x++的条件即可。
 
 # 三角形光栅化算法
 
@@ -166,9 +166,9 @@ int maxx = 0, minx = image.getWidth()-1, maxy = 0, miny = image.getHeight()-1;
     }
 ```
 
-全部光栅化的代码可见**[这里](https://github.com/kegalas/oar/blob/97058860346436641decc719d6b72cc7055eb24c/src/raster.cpp)**
+全部光栅化的代码可见**[这里](https://github.com/kegalas/oar/blob/main/tutorial/chapter3/src/geometry.cpp)**
 
-另外，求重心坐标的代码我写到了geometry.cpp里，方便别处调用。链接在**[这里](https://github.com/kegalas/oar/blob/97058860346436641decc719d6b72cc7055eb24c/src/geometry.cpp)**（在文件末尾）
+另外，求重心坐标的代码我写到了geometry.cpp里，方便别处调用。链接在**[这里](https://github.com/kegalas/oar/blob/main/tutorial/chapter3/src/geometry.cpp)**（在文件末尾）
 
 另外，求重心坐标还有一种不那么复杂的公式，见**[计算机图形学基础学习笔记-数学基础](../计算机图形学基础学习笔记-数学基础/#重心坐标系)**
 
@@ -188,4 +188,53 @@ if(alpha < 0.f || beta < 0.f || gamma < 0.f) continue;
 
 这也是对的。唯一需要小心的是精度问题，float的精度可能不足以把边界上的每一个点都画出来。如果你不在乎这一两个像素点就可以不用管，如果你在乎，那么我们可以修改为alpha<-(1e-5)这样的条件。
 
-# TODO: 给出绘制实例
+# 使用例子
+
+## 绘制线段
+
+```cpp
+#include "tga_image.h"
+#include "raster.h"
+
+int main(){
+    TGAImage image(100,100,TGAType::rgb);
+
+    geo::vec2i pts0[2] = {geo::vec2i(99,0),geo::vec2i(0,99)};
+    ras::line(image, pts0, geo::OARColor(255,0,0,255));
+    
+    for(int i=0;i<=99;i+=10){
+        pts0[0] = geo::vec2i(i,0);
+        ras::line(image, pts0, geo::OARColor(255,0,0,255));
+    }
+    
+    image.writeToFile("./line.tga");
+}
+```
+
+如上，我们首先绘制了一条$(99,0),(0,99)$的直线，也就是从右下角到左上角，然后我们用循环绘制了一组，一个点固定在右上角的直线。
+
+效果如下
+
+![3.jpg](3.jpg)
+
+## 绘制三角形
+
+```cpp
+#include "tga_image.h"
+#include "raster.h"
+
+int main(){
+    TGAImage image2(100,100,TGAType::rgb);
+    geo::vec2i pts1[3] = {geo::vec2i(60,5),geo::vec2i(5,60),geo::vec2i(70,90)};
+    geo::OARColor colors[3] = {geo::OARColor(255,0,0,255),geo::OARColor(0,255,0,255),geo::OARColor(0,0,255,255)};
+    ras::triangle(image2,pts1,colors);
+    image2.writeToFile("./triangle.tga");
+
+    return 0;
+}
+
+```
+
+代码非常直观，就是把三个点和三个点的颜色设置一下扔到光栅化函数里去。效果如下
+
+![2.jpg](2.jpg)

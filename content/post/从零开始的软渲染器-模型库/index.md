@@ -115,16 +115,17 @@ Model(std::string const & dir);
 size_t getFaceSize();
 geo::vec3f getVert(size_t faceid, size_t nth);
 bool getTriangle(std::array<geo::vec3f,3> & dist, size_t faceid);
+bool getTriangle(std::array<geo::vec4f,3> & dist, size_t faceid);
 bool getNorm(std::array<geo::vec3f,3> & dist, size_t faceid);
 ```
 
 一个构造函数和一个析构函数不用多说。
 
-之后我们可能需要提供获取三角面数量的函数、获取（某个特定）顶点坐标的函数，获取一个三角面上所有顶点坐标的函数，以及获得三角面上所有顶点法向量的函数。
+之后我们可能需要提供获取三角面数量的函数、获取（某个特定）顶点坐标的函数，获取一个三角面上所有顶点坐标的函数（在这里我按需要提供了四维坐标和三维坐标的版本），以及获得三角面上所有顶点法向量的函数。
 
 之后我们还会在读取材质纹理的地方需要提供纹理坐标的函数。这里先略过。
 
-全部代码可见**[链接](https://github.com/kegalas/oar/blob/5f4cd5fc90df31b357b3580cf063b4bc83ad779a/src/model.h)**
+全部代码可见**[链接](https://github.com/kegalas/oar/blob/main/tutorial/chapter4/src/model.h)**
 
 # model.cpp
 
@@ -183,9 +184,9 @@ Model::Model(std::string const & dir){
 
 ## 获取坐标信息的函数
 
-这一部分其实非常容易理解和实现，就把我们读入的数据，按照下标获取，然后返回即可。全部代码可见**[链接](https://github.com/kegalas/oar/blob/5f4cd5fc90df31b357b3580cf063b4bc83ad779a/src/model.cpp)**
+这一部分其实非常容易理解和实现，就把我们读入的数据，按照下标获取，然后返回即可。全部代码可见**[链接](https://github.com/kegalas/oar/blob/main/tutorial/chapter4/src/model.cpp)**
 
-# 效果测试
+# 使用例子
 
 ```cpp
 #include "tga_image.h"
@@ -219,7 +220,7 @@ int main(){
 }
 ```
 
-我们使用以上代码来测试我们的效果，具体步骤解释都写在上面的注释里了。
+我们使用以上代码来测试我们的效果，具体步骤解释都写在上面的注释里了（模型见**[链接](https://github.com/kegalas/oar/tree/main/tutorial/chapter4/obj)** ）。
 
 ```cpp
 geo::vec2i ras::world2screen(geo::vec4f v, int width, int height){
@@ -227,7 +228,11 @@ geo::vec2i ras::world2screen(geo::vec4f v, int width, int height){
 }
 ```
 
-我们的坐标转换函数如上，我们之后将会详细解释（TODO）。
+我们的坐标转换函数如上（放在这里TODO），这里本来应该在坐标转换的地方讲，但是这里不得不用到，我们就提前讲一下。
+
+我们的物体模型，有他自己的坐标系。这个坐标的范围是$[-1,1]^3$，但我们的显示屏只有两个维度，而且他还只有整数的坐标。为了将模型的坐标映射到显示屏上，我们首先压缩一维，也就是直接不考虑深度（这里是$z$轴），然后把$[-1,1]^2$映射到$\text{width}\times\text{height}$这个坐标上。我们分别对$x,y$进行操作，首先把$x$整体加$1$，就得到$[0,2]$，再除以$2$，就得到$[0,1]$，再乘以$\text{width}$，再取四舍五入到整数就得到了显示屏上的横坐标，同理就得到了纵坐标。
+
+更进一步的知识等到坐标转换的地方再讲吧！
 
 结果如下：
 

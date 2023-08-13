@@ -3489,9 +3489,198 @@ void solve(){
 }
 ```
 
-## 虚树
+若树上所有边边权均为正，则树的所有直径中点重合。
+
+## 树的重心
+
+计算无根树的每一个节点作为根时，其最大子树的大小。最大子树的大小最小的节点叫做树的重心。
+
+**性质如下**
+
+1. 重心如果不唯一，则最多只有两个，且它们相邻。并且此时树有偶数个节点，可以被划分为两个大小相等的连通块，每个块各自包含一个重心。
+2. 以树的重心为根时，所有子树的大小都不超过整棵树的一半
+3. 树中所有点到某个点的距离之和中，到重心的距离之和是最小的。如果有两个重心，它们是并列最小的。反过来距离之和最小的点一定是重心。
+4. 两棵树通过一条边连成一棵树，则新树的重心在连接原来两颗树的重心的路径上。如果两棵树大小一样，那么重心就是两个连接点。
+5. 在一棵树上添加或删除一个叶节点，它的重心最多只移动一条边的距离。如果原树有奇数个节点，那么重心可能会增加一个，原重心仍然是重心。如果有偶数个节点，那么重心可能减少一个，另一个重心仍然是重心。
 
 ```cpp
+//复杂度 n
+//poj 1655
+std::vector<int> edges[MAXN];
+int sz[MAXN], mss[MAXN];//树的大小（含自己），最大子树大小（不含自己）
+std::vector<int> ctr;//存重心
+
+void dfs(int u, int fa, int const n){//需要传入点的个数
+    sz[u] = 1, mss[u] = 0;
+    int size = edges[u].size();
+    for(int e=0;e<size;e++){
+        int v = edges[u][e];
+        if(v==fa) continue;
+        dfs(v,u,n);
+        mss[u] = std::max(mss[u],sz[v]);
+        sz[u] += sz[v];
+    }
+    mss[u] = std::max(mss[u],n-sz[u]);
+    if(mss[u]<=n/2) ctr.push_back(u);
+}
+```
+
+## 虚树 TODO
+
+```cpp
+
+```
+
+## 点分治
+
+```cpp
+//点分治 复杂度nlog^2n
+//poj 1741
+//查询树上长度小于等于k的路径的数量
+#include <iostream>
+#include <algorithm>
+#include <cmath>
+#include <string>
+#include <cstring>
+#include <map>
+#include <set>
+#include <queue>
+#include <stack>
+#include <vector>
+#include <cstdio>
+
+int const MAXN = 10007;
+
+struct Edge{
+    int v,w,next;//指向的点，边权，下一条边
+};
+
+Edge edges[MAXN*2];
+int head[MAXN],cnt;
+
+inline void add(int u, int v, int w){
+    edges[++cnt].w = w;
+    edges[cnt].v = v;
+    edges[cnt].next = head[u];
+    head[u] = cnt;
+}
+
+int sz[MAXN], mss[MAXN];//树的大小（含自己），最大子树大小（不含自己）
+int ctr=-1;//重心
+bool del[MAXN];//这个点是否在分治的时候被删除
+
+void dfsCtr(int u, int fa, int const n){//需要传入树的点的个数
+    //执行完后ctr为本子树的重心
+    sz[u] = 1, mss[u] = 0;
+    for(int e=head[u];e;e=edges[e].next){
+        int v = edges[e].v;
+        if(v==fa || del[v]) continue;
+        dfsCtr(v,u,n);
+        if(ctr!=-1) return;
+        mss[u] = std::max(mss[u],sz[v]);
+        sz[u] += sz[v];
+    }
+    mss[u] = std::max(mss[u],n-sz[u]);
+    if(mss[u]<=n/2) ctr = u, sz[fa] = n-sz[u];//注意要改编sz以保证复杂度正确
+}
+
+int dis[MAXN];//dis[x]存储点x到根root的距离
+int indexx[MAXN];//要对节点编号按照dis进行排序，indexx[0]代表元素个数
+int belong[MAXN];//判断子树节点属于哪一个子子树
+int cntsame[MAXN];//查询[l,r]时，维护[l+1,r]中belong与l的belong相同的个数，见calc函数
+
+bool cmp(int x,int y){return dis[x]<dis[y];}
+
+void dfsDis(int u, int fa, int from){
+    //获得子树到根节点的距离，from用于计算belong
+    indexx[++indexx[0]] = u;
+    belong[u] = from;
+    for(int e=head[u];e;e=edges[e].next){
+        int v = edges[e].v, w = edges[e].w;
+        if(v==fa || del[v]) continue;
+        dis[v] = dis[u] + w;
+        cntsame[from]++;
+        dfsDis(v,u,from);
+    }
+}
+
+int calc(int u,int k){
+    indexx[0] = 0;
+    indexx[++indexx[0]] = u;
+    belong[u] = u;
+    dis[u] = 0;
+    cntsame[u] = 1;
+    for(int e=head[u];e;e=edges[e].next){
+        int v = edges[e].v, w =edges[e].w;
+        if(del[v]) continue;
+        dis[v] = dis[u] + w;
+        cntsame[v] = 1;
+        dfsDis(v,u,v);
+    }
+    std::sort(indexx+1,indexx+1+indexx[0],cmp);
+    
+    int l=1, r=indexx[0],ans=0;
+    while(l<r){
+        int x = indexx[l], y = indexx[r];
+        if(dis[x]+dis[y]>k){
+            cntsame[belong[y]]--;//把cntsame由[l,r]转移,r-1]
+            r--;
+        }
+        else{
+            //显然，如果不考虑两个点在同一个子子树内，则l和l+1~r的每个点都满足dis[x]+dis[y]<=k
+            //减去同子子树的情况，即减去[l+1,r]中和l拥有相同belong的点
+            cntsame[belong[x]]--;//把cntsame由[l,r]转移到[l+1,r]，一定要注意顺序
+            ans += r-l-cntsame[belong[x]];
+            l++;
+        } 
+    }
+    return ans;
+}
+
+int res = 0;
+
+void divide(int u, int k){
+    del[u] = 1;
+    res += calc(u,k);
+    for(int e=head[u];e;e=edges[e].next){
+        int v = edges[e].v, w = edges[e].w;
+        if(del[v]) continue;
+        ctr = -1;
+        dfsCtr(v,0,sz[v]);
+        divide(ctr,k);
+    }
+}
+
+void solve(int n, int k){
+    for(int i=1;i<n;i++){
+        int u,v,w;
+        std::cin>>u>>v>>w;
+        add(u,v,w);
+        add(v,u,w);
+    }
+    dfsCtr(1,0,n);
+    divide(ctr,k);
+    std::cout<<res<<"\n";
+    
+    ctr = -1;
+    cnt = 0;
+    res = 0;
+    for(int i=1;i<=n;i++) head[i] = 0,del[i] = 0;
+}
+
+int main(){
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(0);
+
+	int n,k;
+	
+	while(std::cin>>n>>k){
+	    if(n==0&&k==0) break;
+	    solve(n,k);
+	}
+
+    return 0;
+}
 
 ```
 
@@ -4606,6 +4795,52 @@ int main(){
 
     return 0;
 }
+```
+
+### 二维树状数组
+
+```cpp
+//二维树状数组 支持单点修改和区间查询
+//poj 1195
+int const MAXN = 1055;
+
+class BIT2D{
+public:
+    int N,M;
+    int data[MAXN][MAXN];
+    
+    void init(int n,int m){
+        N = n, M = m;
+    }
+    
+    inline int lowbit(int n){
+        return n&(-n);
+    }
+    
+    void add(int x, int y, int v){//把(x,y)加上v
+        for(int i=x;i<=N;i+=lowbit(i)){
+            for(int j=y;j<=M;j+=lowbit(j)){
+                data[i][j] += v;
+            }
+        }
+    }
+    
+    int sum(int x, int y){
+        int ret = 0;
+        for(int i=x;i>0;i-=lowbit(i)){
+            for(int j=y;j>0;j-=lowbit(j)){
+                ret += data[i][j];
+            }
+        }
+        return ret;
+    }
+    
+    int query(int x1, int y1, int x2, int y2){//查询(x1,y1)-(x2,y2)这个矩形的区间和
+        return sum(x2,y2) - sum(x2,y1-1) - sum(x1-1, y2) + sum(x1-1, y1-1);
+    }
+};
+
+BIT2D bit2d;
 ```
 
 ## 并查集
@@ -6550,11 +6785,11 @@ std::cout.precision(4);
 std::cout<<a;//这里输出小数点后4位。
 ```
 
-## scanf
+## scanf TODO
 
 ### 输入十六进制、八进制、二进制
 
-## printf
+## printf TODO
 
 ### 输出十六进制、八进制、二进制
 
