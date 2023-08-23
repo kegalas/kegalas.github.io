@@ -28,10 +28,10 @@ markup: pandoc
 #include <unordered_map>
 #include <unordered_set>
 
-#define debug(a) std::cout<<#a<<"="<<a<<std::endl
-#define lth(i,x,y) for(int i=x;i<=y;i++)
-#define htl(i,x,y) for(int i=x;i>=y;i--)
-#define mms(x) memset(x, 0, sizeof(x))
+#define debug(a) std::cout<<#a<<"="<<(a)<<"\n"
+#define rep(i,x,y) for(int i=(x);i<=(y);i++)
+#define rrep(i,x,y) for(int i=(x);i>=(y);i--)
+#define mms(x) memset((x), 0, sizeof(x))
 #define pb push_back
 #define mkp std::make_pair
 #define fi first
@@ -39,17 +39,18 @@ markup: pandoc
 
 using LL = long long;
 using ULL = unsigned long long;
+using DB = double;
 using LD = long double;
-using uint = unsigned;
+using ui = unsigned;
 using i128 = __int128;
 using pii = std::pair<int,int>;
 using pll = std::pair<LL,LL>;
 
 int const MAXN = 200005;
 int const INF = 0x7fffffff;
-double const EPS = 1e-8;
+DB const EPS = 1e-8;
 int const MOD = 998244353;
-double const PI = acos(-1);
+DB const PI = acos(-1);
 
 int arr[MAXN];
 
@@ -118,6 +119,7 @@ std::vector<int> KMP(std::string const & s, std::string const & p){
 }
 
 //我们可以通过把模式串和主串拼在一起，p+#+s，然后求这个字符串的前缀函数表（#代表不在主串、模式串字符集内的一个符号），然后pi[i]如果等于模式串的长度，那么i是匹配模式串的子串的起点。
+//关于最小循环结，设字符串下标从1开始，长度为n，则如果n%(n-pf[n])==0，则有循环节，并且长度为n-pf[n]（当然长度可以为n）
 ```
 
 ## 字典树(Trie)
@@ -909,19 +911,13 @@ int main(){
 ## 乘法逆元
 
 ```cpp
-//复杂度 扩展欧几里得法和费马小定理法 logn, 线性求逆元，对于1~n这些数，总共n
+//复杂度 扩展欧几里得法和费马小定理法都是logn
 //乘法逆元
-//分为扩展欧几里得法、快速幂法、线性求逆元
 //ax≡1(mod b)，x为a在乘法意义上的逆元，记作a^(-1)，或者inv(a)
 //用扩展欧几里得法的角度看，就是求ax+by=1的整数解
-//快速幂法利用费马小定理，需要b为素数
-
-#include <iostream>
-#include <cstdio>
-
-using namespace std;
-
-const int MAXN = 3000005;
+//快速幂法利用费马小定理，需要b为素数，并且疑似比exgcd常数大
+//luogu P3811，会TLE，需要线性求逆元
+//但loj 110不会TLE
 
 int exgcd(int a,int b,int& x,int& y){
     if(b==0){
@@ -934,54 +930,55 @@ int exgcd(int a,int b,int& x,int& y){
     return d;
 }
 
-void exgcd_inv(int a, int b){
+int exgcd_inv(int a, int b){
+    //a在模b意义下的逆元
     int x,y;
     int d = exgcd(a,b,x,y);
     if(d!=1){//显然a，b要互质才会有逆元
-        cout<<"None"<<endl;
+        return -1;
     }
     else{
-        cout<<(x+b)%b<<endl;//实际上是为了防止出现x为负数的情况
+        return (x+b)%b;//实际上是为了防止出现x为负数的情况
     }
 }
 
-int qPowMod(int a, int n, int b){
+int qPowMod(int x, int p, int mod){
+    //x^p % m
     int ans = 1;
-    while(n){
-        if(n&1){
-            ans = ans%b*a%b;
+    while(p){
+        if(p&1){
+            ans = (ans*x)%mod;
         }
-        a = a%b*a%b;
-        n>>=1;
+        x = (x*x)%mod;
+        p>>=1;
     }
     return ans;
 }
 
-void fermat_inv(int a, int b){
-    cout<<qPowMod(a,b-2,b)<<endl;
+int fermat_inv(int a, int b){//a在模b意义下的逆元
+    return qPowMod(a,b-2,b);
 }
+```
 
-long long inv[MAXN];
+## 线性求逆元
 
-int main(){
-    long long a,b,n;
-    cin>>a>>b;
-    exgcd_inv(a,b);
-    //fermat_inv(a,b);
+```cpp
+//线性求逆元，对于1~n这些数，复杂度总共n
+//luogu p3381, loj 110
+#include <iostream>
 
-    /*
-    //线性求逆元
+using LL = long long;
+
+int const MAXN = 3000005;
+LL inv[MAXN];
+
+void getinv(LL n, LL m){
+    //求1~n中，每个数在模m意义下的乘法逆元
     inv[1] = 1;
-    for(long long i = 2;i<=n;i++){
+    for(LL i=2;i<=n;i++){
         //inv[i] = -(b/i)*inv[b%i]; //这样写会出现负数
-        inv[i] = (long long)(b-b/i)*inv[b%i]%b;
+        inv[i] = (LL)(m-m/i)*inv[m%i]%m;
     }
-    for(long long i=1;i<=n;i++){
-        printf("%lld\n",inv[i]);
-    }
-    */
-
-    return 0;
 }
 ```
 
@@ -991,6 +988,7 @@ int main(){
 //复杂度 logn
 //ax≡c (mod b)求解x
 //和ax+by=c等价
+//luogu p1082
 #include <iostream>
 
 using namespace std;
@@ -1022,22 +1020,14 @@ int main(){
     c=1;
 
     int d = linearEquation(a,b,c,x,y);
-    //d是a,b的最大公约数
-
-    if(d==-1){
-        cout<<"None"<<endl;
-    }
-    else{
-        //cout<<x<<" "<<y<<endl;
-        //下面输出的是最小整数解
-        int t = b/d;
-        x = (x%t+t)%t;
-        cout<<x<<endl;
-    }
+    //d是a,b的最大公约数，如果无解d==-1
+    //下面输出的是最小整数解
+    int t = b/d;
+    x = (x%t+t)%t;
+    cout<<x<<endl;
 
     return 0;
 }
-
 ```
 
 ## 中国剩余定理
@@ -1108,77 +1098,6 @@ public:
 CRT crt;
 ```
 
-## 用乘法逆元计算组合数
-
-TODO: 用模板元编程实现编译期算阶乘
-
-根据
-
-$$
-(a/b)\%p=(a\times b^{-1})\%p=[(a\%p)\times(b^{-1}\%p)]\%p
-$$
-
-（如果加载不全，见[取余运算的分配律](https://kegalas.top/p/%E5%8F%96%E4%BD%99%E8%BF%90%E7%AE%97%E7%9A%84%E5%88%86%E9%85%8D%E5%BE%8B/)）
-
-可以不用除法求出组合数。其中$b^{-1}$是$b$在模$p$意义下的逆元。
-
-注意阶乘和其逆元的预处理。
-
-```cpp
-//复杂度 初始化为nlogn 后续查询为O(1)
-#include <iostream>
-
-#define LL long long
-
-const int MAXN = 200005;
-const int MOD = 998244353;
-
-LL fac[MAXN];
-LL invFac[MAXN];
-
-LL qPowMod(LL a, LL n, LL b){
-    LL ans = 1;
-    while(n){
-        if(n&1){
-            ans = ans%b*a%b;
-        }
-        a = a%b*a%b;
-        n>>=1;
-    }
-    return ans;
-}
-
-LL fermat_inv(LL a, LL b){
-    return qPowMod(a,b-2,b);
-}
-
-void init(int n){
-    fac[0] = 1;
-    invFac[0] = 1;
-
-    for(int i=1;i<=n;i++){
-        fac[i] = (fac[i-1]*i)%MOD;
-        invFac[i] = fermat_inv(fac[i],MOD);
-    }
-}
-
-LL comb(LL n, LL m){
-    if(n<0||m<0||m>n) return 0;
-    return (((fac[n]*invFac[m])%MOD)*invFac[n-m])%MOD;
-}
-
-int main(){
-    int n,m;
-    std::cin>>n>>m;
-    
-    init(n);
-    
-    std::cout<<comb(n,m)<<"\n";
-
-    return 0;
-}
-```
-
 ## 积性函数
 
 积性函数是数论函数的一种。数论函数则是定义域为正整数的函数。
@@ -1205,7 +1124,7 @@ int main(){
 4. 欧拉函数
 5. 莫比乌斯函数
 
-## 欧拉函数
+## 欧拉函数 TODO：习题
 
 $1\sim N$中与$N$互质的数的个数被称为欧拉函数，记为$\varphi(N)$
 
@@ -1305,7 +1224,7 @@ g(x)=\dfrac{\varepsilon(x)-\sum_{d|x,d\neq 1}f(d)g(x/d)}{f(1)}
 $$
 9. 积性函数一定有逆元，且逆元也是积性函数。
 
-## 莫比乌斯反演
+## 莫比乌斯反演 TODO：习题
 
 莫比乌斯函数是常数函数$1$的逆元。即
 
@@ -1625,7 +1544,7 @@ struct Edge{
     int v,w,next;//指向的点，边权，下一条边
 };
 
-Edge edges[MAXM];
+Edge edges[MAXM];//存无向图记得开两倍
 int head[MAXN],cnt;
 
 inline void add(int u, int v, int w){
@@ -1651,6 +1570,8 @@ for(int e=head[1];e;e=edges[e].next){
 
 ```cpp
 //复杂度 优先队列实现为mlogm
+//dijkstra，单源最短路
+//luogu p4779
 #include <iostream>
 #include <cstring>
 #include <vector>
@@ -1658,50 +1579,36 @@ for(int e=head[1];e;e=edges[e].next){
 #define MAXN 500005
 #define MAXINT 0x7fffffff
 
-using namespace std;
-
-struct edge{
+struct Edge{
     int v,w;//下一点，权
+    Edge(int v_, int w_):v(v_),w(w_){}
 };
 
-struct node {
-  int dis, u;
-  bool operator>(const node& a) const { return dis > a.dis; }
+struct Node {
+    int dis, u;//存储起点到u点的距离
+    Node(int dis_, int u_):dis(dis_),u(u_){};
+    bool operator>(Node const & a) const { return dis > a.dis; }
 };
 
-int n,m,s;//点，边，起点
-
-vector<edge> graph[MAXN];
-
+std::vector<Edge> graph[MAXN];
 int dis[MAXN];
-
 bool tag[MAXN];
 
-priority_queue<node, vector<node>, greater<node> > pq;
+std::priority_queue<Node, std::vector<Node>, std::greater<Node> > pq;
 
-int main(){
-    scanf("%d%d%d",&n,&m,&s);
-
-    for(int i=1;i<=m;i++){
-        int a,b,c;
-        scanf("%d%d%d",&a,&b,&c);
-        //起点，终点，边权
-        edge t;
-        t.v=b;
-        t.w=c;
-        graph[a].push_back(t);
-    }
-
+void init(int n){
     for(int i=1;i<=n;i++){
         dis[i] = MAXINT;
         //初始化为无限远
+        tag[i] = 0;
+        graph[i].clear();
     }
+    while(!pq.empty()) pq.pop();
+}
 
+void dijk(int s){
     dis[s]=0;
-    node tmp;
-    tmp.dis=0;
-    tmp.u=s;
-    pq.push(tmp);
+    pq.push(Node(0,s));
 
     while (!pq.empty())
     {
@@ -1713,17 +1620,30 @@ int main(){
             int v = g.v, w = g.w;
             if(dis[v]>dis[u]+w){
                 dis[v] = dis[u]+w;
-                tmp.dis = dis[v];
-                tmp.u = v;
-                pq.push(tmp);
+                pq.push(Node(dis[v],v));
             }
         }
     }
+}
+
+int main(){
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(0);
+    int n,m,s;
+    std::cin>>n>>m>>s;
+    //点数，边数，起点
+    init(n);
+
+    for(int i=1;i<=m;i++){
+        int u,v,w;
+        std::cin>>u>>v>>w;//起点，终点，边权
+        graph[u].push_back(Edge(v,w));
+    }
+    dijk(s);
 
     for(int i=1;i<=n;i++){
-        printf("%d ",dis[i]);
+        std::cout<<dis[i]<<" ";
     }
-
     return 0;
 }
 ```
@@ -1732,74 +1652,76 @@ int main(){
 
 ```cpp
 //复杂度 nm
+//bellman-ford, 单源最短路
+//luogu p4779，有一个点TLE
 #include <iostream>
 #include <vector>
 #include <cstring>
 
-#define MAXN 500005
-#define INF  0x6fffffff
+int const MAXN = 100005;
+int const INF = 0x6fffffff;
 
-using namespace std;
-
-struct edge{
-    int v;//下一点
-    int w;//权
+struct Edge{
+    int v,w;//下一点,权
+    Edge(int v_, int w_):v(v_),w(w_){}
 };
 
-int n,m,s;
 int dis[MAXN];
-vector<edge> graph[MAXN];
+std::vector<Edge> graph[MAXN];
 
-int main(){
-    
-    cin>>n>>m>>s;
-
-    for(int i=1;i<=n;i++) dis[i]=INF; 
-
-    for(int i=1;i<=m;i++){
-        edge tmp;
-        int a,b,c;
-        cin>>a>>b>>c;
-        //起点，终点，边权
-        tmp.v=b;
-        tmp.w=c;
-        graph[a].push_back(tmp);
+void init(int n){
+    for(int i=1;i<=n;i++){
+        dis[i]=INF;
+        graph[i].clear();
     }
+}
 
+bool BF(int n, int s){
+    //如果不存在最短路就返回0，否则返回1
     dis[s] = 0;
-
-    bool flag;
-    for (int i=1;i<=n;i++)//松弛n-1轮，若第n轮还能松弛，就说明有负环
-    {
-        flag = 0;
+    bool flag = 1;
+    for (int i=1;i<=n;i++){//松弛n-1轮，若第n轮还能松弛，就说明有负环
+        flag = 1;
         for(int u=1;u<=n;u++){//这里看似是两层循环，实际上总数是边数，整个算法的复杂度是mn
             for (auto e : graph[u]){
                 int w=e.w,v=e.v;
                 if(dis[v]>dis[u]+w){
                     dis[v]=dis[u]+w;
-                    flag = 1;
+                    flag = 0;
                 }
             }
         }
-        if(!flag){
+        if(flag){
             break;
         }
     }
+    
+    return flag;
+}
 
-    cout<<flag<<endl;//可以输出是否有负权环
+int main(){
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(0);
+    int n,m,s;//点数，边数，起点
+    std::cin>>n>>m>>s;
+    init(n);
+
+    for(int i=1;i<=m;i++){
+        int u,v,w;
+        std::cin>>u>>v>>w;
+        //起点，终点，边权
+        graph[u].push_back(Edge(v,w));
+    }
+    
+    BF(n,s);
 
     for(int i=1;i<=n;i++){
-        //if(dis[i]!=INF){
-            cout<<dis[i]<<" ";
-        //}
-        //else{
-        //    cout<<"2147483647 ";//根据luogu P3371要输出这个数
-        //}
-        
+        std::cout<<dis[i]<<" ";
     }
     
     return 0;
 }
+
 ```
 
 ### SPFA
@@ -1811,54 +1733,46 @@ int main(){
     只有上一次被松弛的结点，所连接的边，
     才有可能引起下一次的松弛操作
 */
+//spfa 单源最短路
+//luogu P3371
 #include <iostream>
 #include <vector>
 #include <queue>
 
-#define MAXN 500005
-#define INF  0x5fffffff
+int const MAXN = 100005;
+int const INF = 0x5fffffff;
 
-using namespace std;
-
-struct edge{
-    int v;
-    int w;
+struct Edge{
+    int v,w;
+    Edge(int v_, int w_):v(v_),w(w_){}
 };
 
 int dis[MAXN];//距离
 int cnt[MAXN];//算到达本节点所要经过的边数，若cnt>=n，则说明有负权环
 bool tag[MAXN];//用于判断是否为上次松弛过的节点的边所连的点
 
-int n,m,s;
-queue<int> qu;
-vector<edge> graph[MAXN];
+std::queue<int> qu;
+std::vector<Edge> graph[MAXN];
 
-int main(){
-    cin>>n>>m>>s;
-
+void init(int n){
+    while(!qu.empty()) qu.pop();
     for(int i=1;i<=n;i++){
         dis[i] = INF;
+        cnt[i] = 0;
+        tag[i] = 0;
+        graph[i].clear();
     }
+}
 
+bool SPFA(int n, int s){
+    //如果不存在最短路就返回0，否则返回1
     dis[s] = 0;
     tag[s] = 1;
-
-    for(int i=1;i<=m;i++){
-        int a,b,c;
-        cin>>a>>b>>c;
-        //起点，终点，边权
-        edge tmp;
-        tmp.v=b;
-        tmp.w=c;
-        graph[a].push_back(tmp);
-    }
-
     qu.push(s);
-
-    bool is_negative_circle = 0;
+    bool flag = 1;
 
     while(!qu.empty()){
-        if(is_negative_circle) break;
+        if(!flag) break;
         int u = qu.front();
         qu.pop();
         tag[u]=0;
@@ -1868,7 +1782,7 @@ int main(){
                 dis[v]=dis[u]+w;
                 cnt[v]=cnt[u]+1;
                 if(cnt[v]>=n) {
-                    is_negative_circle = 1;
+                    flag = 0;
                     break;
                 }
                 if(!tag[v]){
@@ -1878,69 +1792,216 @@ int main(){
             }
         }
     }
+    return flag;
+}
 
-    cout<<is_negative_circle<<endl;//可以输出是否有负权环
+int main(){
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(0);
+    int n,m,s;
+    std::cin>>n>>m>>s;
+    init(n);
 
+    for(int i=1;i<=m;i++){
+        int u,v,w;
+        std::cin>>u>>v>>w;
+        //起点，终点，边权
+        graph[u].push_back(Edge(v,w));
+    }
+
+    SPFA(n,s);
     for(int i=1;i<=n;i++){
-        //if(dis[i]!=INF){
-            cout<<dis[i]<<" ";
-        //}
-        //else{
-        //    cout<<"2147483647 ";//根据luogu P3371要输出这个数
-        //}
+        if(dis[i]!=INF){
+            std::cout<<dis[i]<<" ";
+        }
+        else{
+            std::cout<<"2147483647 ";//根据luogu P3371要输出这个数
+        }
     }
 
     return 0;
 }
+
 ```
 
 ### Floyd
 
 ```cpp
 //复杂度 n^3
-//floyd
+//floyd全源最短路
+//luogu p5905，由于不能判断负环和速度慢，会wa和tle一些
+//floyd虽然不能处理负环但是可以接受负边
 #include <iostream>
 #include <cstring>
 
-#define MAXN 5005
-#define MAXINT 0x3fffffff //不能设置为int的最大值，否则后面加法可能导致溢出
+using LL = long long;
 
-using namespace std;
-
-int graph[MAXN][MAXN];
+int const MAXN = 3005;
+LL const INF = 1e17; //不能设置为int的最大值，否则后面加法可能导致溢出
+LL graph[MAXN][MAXN];
 
 int main(){
     int n,m;//点数，边数
-    cin>>n>>m;
+    std::cin>>n>>m;
     for(int i = 1;i<=n;i++){
         for(int j = 1;j<=n;j++){
-            graph[i][j] = MAXINT;
+            graph[i][j] = INF;
         }
+    }
+    for(int i=1;i<=m;i++){
+        int u,v;LL w;
+        std::cin>>u>>v>>w;//起点，终点，边权
+        graph[u][v] = std::min(graph[u][v], w);//处理重边
     }
     for(int i = 1;i<=n;i++){
         graph[i][i] = 0;
     }
-    for(int i=1;i<=m;i++){
-        int a,b,v;
-        cin>>a>>b>>v;//起点，终点，边权
-        graph[a][b] = v;
-    }
 
-    for(int k = 1;k<=n;k++){
+    for(int k=1;k<=n;k++){
         for(int i=1;i<=n;i++){
             for(int j=1;j<=n;j++){
-                graph[i][j] = min(graph[i][j],graph[i][k]+graph[k][j]);
+                graph[i][j] = std::min(graph[i][j],graph[i][k]+graph[k][j]);
             }
         }
     }
-
-
-    for(int i = 1;i<=n;i++){
-        for(int j=1;j<=n;j++){
-            cout<<graph[i][j]<<" ";
+    
+    for(int i=1;i<=n;i++){
+        LL res=0;
+        for(LL j=1;j<=n;j++){
+            if(graph[i][j]>1e9) graph[i][j] = 1e9;
+            res += j*graph[i][j];
         }
-        cout<<endl;
+        std::cout<<res<<"\n";
     }
+
+    return 0;
+}
+
+```
+
+### Johnson TODO
+
+## 差分约束
+
+给出一组不等式
+
+$$
+\left\{\begin{matrix}
+x_{c_1}-x_{c_1'}\leq y_1 \\
+x_{c_2}-x_{c_2'}\leq y_2 \\
+\vdots \\
+x_{c_m}-x_{c_m'}\leq y_m
+\end{matrix}\right.
+$$
+
+其中一共有$n$个未知数$x_1,x_2,\cdots,x_n$，$m$个不等式，求一组可行解。
+
+我们连边，连一条$x_{c_i'}$到$x_{c_i}$，权值为$y_i$的边。然后增加$n+1$号节点，从它到所有点连一条权值为$0$的边。然后以$n+1$为源点求到各点的最短路，这个最短距离dis\[i\]就是$x_i$的一个解。
+
+当然，出现负环就无解。
+
+不难理解，$x_1,x_2,\cdots,x_n$全部加上或减去同一个数，仍然是可行解。
+
+之前我们假设dis\[n+1\]=0，如果我们设置dis\[n+1\] = w，那么我们求得的就是$x_1,x_2,\cdots,x_n\leq w$的一组解。实际上，可以证明这个解是满足$x_1,x_2,\cdots,x_n\leq w$的最大解（每个变量能取得的最大值）。
+
+如果题目上的约束条件全部变为$\geq$型，我们要求满足$x_1,x_2,\cdots,x_n\geq w$的最小解，则只需要求最长路即可。对于Bellman-Ford和SPFA来说，初始化dis为-INF，然后颠倒比较符号即可。
+
+题目中不总是给出$x_1-x_2\leq y$，但我们可以转化
+
+- $x_1-x_2\geq y\Rightarrow x_2-x_1\leq -y$
+- $x_1-x_2=y\Rightarrow x_1-x_2\leq y \wedge x_2-x_1\leq -y$
+- $x_1-x_2<y\Rightarrow x_1-x_2\leq y-1$（要求取值只能是整数）
+- $x_1-x_2>y\Rightarrow x_2-x_1\leq -y-1$（要求取值只能是整数）
+
+```cpp
+//差分约束，复杂度同SPFA
+//luogu p5960
+//使用介绍见markdown
+#include <iostream>
+#include <vector>
+#include <queue>
+
+int const MAXN = 5005;
+int const INF = 0x5fffffff;
+
+struct Edge{
+    int v,w;
+    Edge(int v_, int w_):v(v_),w(w_){}
+};
+
+int dis[MAXN];//距离
+int cnt[MAXN];//算到达本节点所要经过的边数，若cnt>=n，则说明有负权环
+bool tag[MAXN];//用于判断是否为上次松弛过的节点的边所连的点
+
+std::queue<int> qu;
+std::vector<Edge> graph[MAXN];
+
+void init(int n){
+    while(!qu.empty()) qu.pop();
+    for(int i=1;i<=n;i++){
+        dis[i] = INF;
+        cnt[i] = 0;
+        tag[i] = 0;
+        graph[i].clear();
+    }
+}
+
+bool SPFA(int n, int s){
+    //如果不存在最短路就返回0，否则返回1
+    dis[s] = 0;
+    tag[s] = 1;
+    qu.push(s);
+    bool flag = 1;
+
+    while(!qu.empty()){
+        if(!flag) break;
+        int u = qu.front();
+        qu.pop();
+        tag[u]=0;
+        for(auto e : graph[u]){
+            int v = e.v, w = e.w;
+            if(dis[v]>dis[u]+w){
+                dis[v]=dis[u]+w;
+                cnt[v]=cnt[u]+1;
+                if(cnt[v]>=n) {
+                    flag = 0;
+                    break;
+                }
+                if(!tag[v]){
+                    qu.push(v);
+                    tag[v]=1;
+                }
+            }
+        }
+    }
+    return flag;
+}
+
+int main(){
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(0);
+    int n,m;
+    std::cin>>n>>m;
+    init(n+1);
+    
+    for(int i=1;i<=m;i++){
+        int v,u,w;
+        std::cin>>v>>u>>w;
+        graph[u].push_back(Edge(v,w));
+    }
+    for(int i=1;i<=n;i++){
+        graph[n+1].push_back(Edge(i,0));
+    }
+    n++;
+    
+    if(!SPFA(n,n)){
+        std::cout<<"NO\n";
+        return 0;
+    }
+    for(int i=1;i<=n-1;i++){
+        std::cout<<dis[i]<<" ";
+    }
+    
 
     return 0;
 }
@@ -1950,78 +2011,49 @@ int main(){
 
 ```cpp
 //复杂度 n
-//拓扑排序
+//拓扑排序, luogu B3644
 #include <iostream>
 #include <vector>
 #include <queue>
 
-using namespace std;
+int const MAXN = 105;
 
-struct graph{
-    int value;
-    int to;
-};
-
-struct point
-{
-    int in_num;
-    vector<graph> graph1;
-}point1[100];
+std::vector<int> graph[MAXN];
+int in[MAXN];
 
 int main(){
-    int n,m;
-    cin>>n>>m;
+    int n;
+    std::cin>>n;
 
-    for(int i = 1;i<=n;i++){
-        point1[i].in_num=0;
+    for(int i=1;i<=n;i++){
+        while(true){
+            int v;
+            std::cin>>v;
+            if(v==0) break;
+            graph[i].push_back(v);
+            in[v]++;
+        }
     }
     
-    for (int i=1;i<=m;i++){
-        int a,b,value;
-        cin>>a>>b;//起点，终点；本次是无权图
-        graph tmp;
-        tmp.to=b;
-        tmp.value = 0;
-        point1[a].graph1.push_back(tmp);
-        point1[b].in_num++;
+    std::queue<int> qu;
+    for(int i=1;i<=n;i++){
+        if(in[i]==0) qu.push(i);
     }
     
-    queue<int> que;
-    vector<int> ans;
-
-    for (int i = 1; i <= n; i++)
-    {
-        if(point1[i].in_num == 0){
-            que.push(i);
+    while(!qu.empty()){
+        int u = qu.front();
+        qu.pop();
+        std::cout<<u<<" ";
+        for(auto v:graph[u]){
+            in[v]--;
+            if(in[v]==0) qu.push(v);
         }
-    }
-
-    while (!que.empty())
-    {
-        int p = que.front();
-        que.pop();
-        ans.push_back(p);
-        for(int i = 0;i<point1[p].graph1.size();i++){
-            int next = point1[p].graph1[i].to;
-            point1[next].in_num--;
-            if(point1[next].in_num==0){
-                que.push(next);
-            }
-        }
-
-    }
-
-    if(ans.size()==n){
-        for(int i = 0;i<ans.size();i++){
-            cout<<ans[i]<<" ";
-        }
-    }
-    else{
-        cout<<"none";
     }
 
     return 0;
 }
+
+
 ```
 
 ## 最小生成树
@@ -2030,76 +2062,74 @@ int main(){
 
 ```cpp
 //复杂度 mlogm
+//最小生成树Kruskal，luogu p3366
 #include <iostream>
 #include <algorithm>
-#define MAXN 200005
 
-using namespace std;
+int const MAXM = 200005;
+int const MAXN = 5005;
 
-int u[MAXN],v[MAXN],w[MAXN];
-int r[MAXN];//临时边序号，间接排序
+struct Edge{
+    int u,v,w;//最小生成树是在无向图上跑的，由于要排序，所以记录uvw
+    bool operator<(Edge const & x) const {
+        return w<x.w;
+    }  
+};
+
+Edge edges[MAXM];
 int find_sets[MAXN];//并查集
-
-bool cmp(const int i, const int j){return w[i]<w[j];}
 
 int find(int x){return find_sets[x]==x ? x : find_sets[x] = find(find_sets[x]);}
 
 int main(){
     int n,m;//点数和边数
 
-    cin>>n>>m;
+    std::cin>>n>>m;
     for(int i=1;i<=m;i++){
-        cin>>u[i]>>v[i]>>w[i];
-        //起点，终点，边权
+        std::cin>>edges[i].u>>edges[i].v>>edges[i].w;
     }
+    std::sort(edges+1,edges+1+m);
 
-    for(int i = 1;i<=n;i++){
+    for(int i=1;i<=n;i++){
         find_sets[i]=i;
     }
-    for(int i=1;i<=m;i++){
-        r[i]=i;
-    }
-
-    sort(r+1,r+m+1,cmp);
 
     int ans = 0;
-    //int cnt=0;
+    int cnt=0;
 
     for(int i=1;i<=m;i++){
-        int tmp = r[i];
-        int x = find(u[tmp]);
-        int y = find(v[tmp]);
+        int u = edges[i].u, v = edges[i].v;
+        int x = find(u);
+        int y = find(v);
 
         if(x!=y){
-            ans += w[tmp];
+            ans += edges[i].w;
             find_sets[x] = y;
-            //cnt++;
+            cnt++;
         }
     }
     //计数，如果小于n-1则不连通
-    /*
+    
     if(cnt<n-1){
-        cout<<"orz"<<endl;
-        return 0;
-        //如果是多个样例注意这个return 0
+        std::cout<<"orz\n";
     }
-    */
-
-    cout<<ans<<endl;
+    else{
+        std::cout<<ans<<"\n";
+    }
 
     return 0;
 }
+
 ```
 
 ### Prim算法
 
 ```cpp
 //复杂度 (m+n)logn
+//最小生成树prim，luogu p3366
 #include <iostream>
 #include <vector>
 #include <queue>
-
-using namespace std;
 
 const int MAXN = 5005;
 const int MAXM = 200005;
@@ -2108,30 +2138,28 @@ const int INF = 0x5fffffff;
 struct edge{
     int v,w;
 
-    edge()=default;
+    edge(){};
     edge(int v,int w):v(v),w(w){}
 
     bool operator>(const edge& x) const {return w>x.w;}
 };
 
-vector<edge> graph[MAXN];
+std::vector<edge> graph[MAXN];
 bool vis[MAXN];
 
-priority_queue<edge, vector<edge>, greater<edge> > pq;
-
-//以下orz代表不连通
+std::priority_queue<edge, std::vector<edge>, std::greater<edge> > pq;
 
 int main(){
     int n,m;//点数，边数
-    scanf("%d%d",&n,&m);
+    std::cin>>n>>m;
     int ans = 0;
     int cnt = 1;
 
     for(int i=1;i<=m;i++){
-        int a,b,c;//起点，终点，边权
-        scanf("%d%d%d",&a,&b,&c);
-        graph[a].push_back(edge(b,c));
-        graph[b].push_back(edge(a,c));
+        int u,v,w;//起点，终点，边权
+        std::cin>>u>>v>>w;
+        graph[u].push_back(edge(v,w));
+        graph[v].push_back(edge(u,w));
         //无向图
     }
 
@@ -2145,7 +2173,7 @@ int main(){
         pq.pop();
         while(vis[minx.v]){
             if(pq.empty()){
-                cout<<"orz"<<endl;
+                std::cout<<"orz\n";//不连通
                 return 0;
             }
             minx=pq.top();
@@ -2163,19 +2191,18 @@ int main(){
     }
 
     if(cnt<n){
-        cout<<"orz"<<endl;
+        std::cout<<"orz\n";
     }
     else{
-        cout<<ans<<endl;
+        std::cout<<ans<<"\n";
     }
 
     return 0;
 }
+
 ```
 
-## 最小树形图
-
-### 朱刘算法
+## 最小树形图（朱刘算法）
 
 ```cpp
 //复杂度 nm
@@ -2183,8 +2210,6 @@ int main(){
 //从根节点能到达其他所有点
 //luogu4716
 #include <iostream>
-
-using namespace std;
 
 const int MAXN = 105;
 const int MAXM = 10005;
@@ -2197,9 +2222,9 @@ struct Edge{
 Edge edge[MAXM]; 
 int vis[MAXN],id[MAXN];
 int in[MAXN],pre[MAXN];
-int n,m,root;
 
-int zhuliu(){
+int zhuliu(int n, int m, int root){
+    //返回最小树形图的边权和，如果不存在则返回-1
     int ans = 0;
     for(;;){
         for(int i=1;i<=n;i++) in[i]=INF;
@@ -2207,14 +2232,14 @@ int zhuliu(){
         for(int i=1;i<=m;i++){
             int u = edge[i].u;
             int v = edge[i].v;
-            if(u!=v&&edge[i].w<in[v]){//遍历所有边，找到对每个点的最短入边
+            if(u!=v && edge[i].w<in[v]){//遍历所有边，找到对每个点的最短入边
                 in[v] = edge[i].w;
                 pre[v] = u;
             }
         }
         
         for(int i=1;i<=n;i++){
-            if(i!=root&&in[i]==INF){
+            if(i!=root && in[i]==INF){
                 return -1;//无解
             }
         }
@@ -2236,7 +2261,7 @@ int zhuliu(){
                 vis[v] = i;
                 v = pre[v];
             }
-            if(v!=root&&id[v]==-1){
+            if(v!=root && id[v]==-1){
                 id[v] = ++cnt;
                 for(int u=pre[v];u!=v;u=pre[u]) id[u] = cnt;
             }
@@ -2265,31 +2290,49 @@ int zhuliu(){
 }
 
 int main(){
-    cin>>n>>m>>root;//点数，边数，根节点序号
+    int n,m,root;
+    std::cin>>n>>m>>root;
+    //点数，边数，根节点序号
     for(int i=1;i<=m;i++){
-        cin>>edge[i].u>>edge[i].v>>edge[i].w;
+        std::cin>>edge[i].u>>edge[i].v>>edge[i].w;
         //起点，终点，边权
     }
-    cout<<zhuliu()<<endl;
+    std::cout<<zhuliu(n,m,root)<<"\n";
     return 0;
 }
 ```
 
+## 二分图判定
+
+一张无向图是二分图，当且仅当图中不存在长度为奇数的环。
+
+我们可以用染色法来判定。假设染成两种颜色，一个节点被染色后，所有相连节点都应该染成另一种颜色，如果有冲突，则说明不是二分图。
+
 ## 二分图匹配
 
-### 匈牙利算法
+### 最大匹配（匈牙利算法）
 
 ```cpp
 //复杂度 nm
-//luogu 3386
+//luogu p3386
 //求二分图最大匹配，根据定理，最大匹配=最小点覆盖，以及最小边覆盖=点数-最大匹配
+
+//二分图是"可以将点集分为两个不相交的部分，所有边连接的两个顶点在不同的部分中"的图
+
+//二分图的匹配：边集的任意子集的任意两条边都没有公共顶点，则这个子集是一个匹配
+//二分图的最大匹配：所有匹配中边数最多的
+//最小点覆盖：选最少的点，满足每条边至少有一个端点被选
+//最大独立集：选最多的点，满足两两之间没有边相连
+//这里的二分图是无向图
+//如果最大匹配中所有点都被匹配，那么叫做完美匹配
+
 #include <iostream>
 #include <cstring>
 
 const int MAXN = 505;
 bool graph[MAXN][MAXN];
 bool vis[MAXN];
-int toLeft[MAXN];
+int toLeft[MAXN];//标记右边节点i连到了哪个左边界点，即toLeft[i]
 
 bool match(int const & i, int const & rightNum){
     for(int j=1;j<=rightNum;j++){
@@ -2305,6 +2348,7 @@ bool match(int const & i, int const & rightNum){
 }
 
 int hungarian(int const & leftNum, int const & rightNum){
+    //返回最大的边数
     int cnt = 0;
 
     for(int i=1;i<=leftNum;i++){
@@ -2331,12 +2375,27 @@ int main(){
 }
 ```
 
-### KM算法
+### 二分图的相关定理
+
+Konig定理：一个二分图中的最大匹配数等于这个图中的最小点覆盖数。
+
+最大独立集=点数-最小点覆盖。
+
+### 最大匹配转换为网络流模型
+
+将源点连上左边所有点，右边所有点连上汇点，容量都为1。原来的每条边从左往右连边（转成了有向有容量图），容量也为1，最大流即最大匹配。用Dinic算法求复杂度为$O(\sqrt nm)$
+
+### 二分图最大权完美匹配（KM算法） TODO: BFS版
 
 ```cpp
-//luogu 6577
-//二分图的最大权匹配，必须是完备匹配才能正确运行，即左右各n个点，最大匹配有n条边
-//随机数据O(n^3)，最坏O(n^4)，所以luogu上会超时一些数据
+//luogu p6577
+//二分图的最大权匹配，必须是完美匹配才能正确运行，即左右各n个点，最大匹配有n条边。虽然KM算法必须是完美匹配才可以运行而转化为费用流则不需要，但是KM算法在稠密图上的效率会高于费用流
+//随机数据O(n^3)，最坏O(n^4)，所以luogu p6577上会超时一些数据
+//这主要是他卡dfs版的，bfs版的可以通过。但luogu p3967不卡dfs
+
+//最大权匹配指二分图中边权和最大的匹配，最大权匹配不一定是最大匹配
+//如果要跑多次KM算法记得把toLeft数组初始化
+
 #include <iostream>
 #include <cstring>
 
@@ -2370,7 +2429,6 @@ bool match(int const & i, int const & pointNum){
 }
 
 LL KM(int const & pointNum){
-    std::memset(toLeft,0,sizeof(toLeft));
     for(int i=1;i<=pointNum;i++){
         labelL[i] = -INF;
         labelR[i] = 0;
@@ -2378,10 +2436,10 @@ LL KM(int const & pointNum){
     }
 
     for(int i=1;i<=pointNum;i++){
-        for(int j=1;j<=pointNum;j++) upd[j] = INF;
         while(true){
             std::memset(visL,0,sizeof(visL));
             std::memset(visR,0,sizeof(visR));
+            for(int j=1;j<=pointNum;j++) upd[j] = INF;
             if(match(i,pointNum)) break;
             LL delta = INF;
             for(int j=1;j<=pointNum;j++)
@@ -2411,7 +2469,8 @@ int main(){
     for(int i=1;i<=e;i++){
         int x,y;
         std::cin>>x>>y;
-        std::cin>>graph[x][y];
+        std::cin>>graph[x][y];//这里是左边有n个点，右边有n个点
+        //左边第x个点到右边第y个点的边权，并不是双向边
     }
 
     std::cout<<KM(n)<<"\n";
@@ -2424,12 +2483,19 @@ int main(){
 }
 ```
 
-## 二分图定理
+### 最大权匹配转化为费用流
 
-Konig定理：一个二分图中的最大匹配数等于这个图中的最小点覆盖数。
+新增一个源点和一个汇点，从源点向二分图的每个左部点连一条流量为1，费用为0的边；从每个右部点向汇点连一条流量为1，费用为0的边；从左部点i向右部点j连一条流量为1，费用为c的边。然后这些边的反向边也要注意连上。然后求这个网络的最大费用最大流即可。
 
-最大独立集=点数-最小点覆盖。
-## 动态维护二分图判定
+具体而言，最大费用的求法最好不要去该内部算法实现。把费用取相反数，然后最后答案再取相反数即可。
+
+如果要输出方案，就遍历右边点到左边点的反向边，如果实际流量w变为1了，则说明走了这条边，也就是这两个点配对。
+
+目前为止还只能处理完美匹配的情况。因为最大费用最大流是在最大流的前提下采取计算最大费用，也就是说它会去计算最大匹配再去计算其中的最大权。而最大权匹配是只要求权最大而不用一定是最大匹配。
+
+解决方法是把左部点连一条边到汇点，容量为1，费用为0，再去求最大费用最大流。这样如果这条边有实际流量通过（即w变成0），他是失配的。
+
+## 动态维护二分图判定 TODO: 例题
 
 只判定一次可以用涂色法。动态加边可以用扩展域并查集（可撤销）来实现。
 
@@ -2638,7 +2704,7 @@ int main(){
 }
 ```
 
-#### Dinic
+#### Dinic TODO: 如果可能换成链式前向星
 
 ```cpp
 //luogu P3376
@@ -2737,11 +2803,21 @@ int main(){
 }
 ```
 
+### ISAP算法 TODO
+
 ### 最大流最小割定理
 
 网络流的最大流等于其所有割的最小容量。
 
+割：从网络中选择一些边，去掉这些边后，剩下恰好两个互相不连通的分别包含源点和汇点的点集（当然其他边不去掉）。去掉的这些边就是一个割。
+
+割的大小就是去掉的这些边的容量之和。
+
 ### 最小费用最大流
+
+即在使流最大的前提下，最小化费用。费用是一条边的属性，一条边的总费用等于它的单位费用$\times$流过的流量。
+
+建边的时候，反向边的容量为0，费用为相反数。
 
 #### EK+SPFA
 
@@ -2962,6 +3038,8 @@ int main(){
 
 #### 无源汇上下界可行流
 
+给定一个没有源点和汇点的网络，每条边的容量都有一个上界和下界，问是否有一个可行流使得流量平衡（即每个点的流入等于流出）。
+
 ```cpp
 //loj 115
 //前面的Dinic算法省略
@@ -3105,155 +3183,176 @@ int main() {
 
 和上面几乎一模一样，只需在拆掉附加边后，从汇点到源点跑一次Dinic，然后flow删去这个结果就得到最小流。Loj 117。
 
-## 割边
-
-### Tarjan算法
+## 割边（Tarjan算法）
 
 ```cpp
 //复杂度 n+m
-//tarjan求割边，不考虑重边，如果有重边那么一定不是割边
+//tarjan求割边，可以正确处理重边
+//如果无向图中删掉某条边会使无向图的连通分量数增多，那么这条边叫割边
 //luogu p1656
 #include <iostream>
 #include <vector>
 #include <stack>
 #include <algorithm>
 
-using namespace std;
-
 const int MAXN = 20005;
 const int MAXM = 100005;
 
-int dfn[MAXN], low[MAXN], cnt=0, fa[MAXN];//fa记录父节点
+int dfn[MAXN], low[MAXN], cnt=0;
 //dfn为对一个图进行dfs时，dfs的顺序序号
 //low[x]为以下所有符合要求的节点的dfn中的最小值
 //1.以x为根的子树的所有节点
 //2.通过非dfs生成树上的边能够到达该子树的所有节点
-vector<int> edges[MAXN];
-vector<pair<int, int>> bridges;//存储割边
+struct Edge{
+    int v,next;//指向的点，边权，下一条边
+};
 
-void tarjan(int u){
+Edge edges[MAXM*2];//存无向图记得开两倍
+int head[MAXN],ecnt=1;//注意这个ecnt=1，这是用来方便in_edge判断的
+bool bridges[MAXM*2];//判断一条边是不是割边
+
+inline void add(int u, int v){
+    edges[++ecnt].v = v;
+    edges[ecnt].next = head[u];
+    head[u] = ecnt;
+}
+
+void tarjan(int u, int in_edge){
     low[u] = dfn[u] = ++cnt;
-    for(int i=0;i<edges[u].size();i++){
-        int v = edges[u][i];
+    for(int i=head[u];i;i=edges[i].next){
+        int v = edges[i].v;
         if(!dfn[v]){
-            fa[v] = u;
-            tarjan(v);
-            low[u] = min(low[u],low[v]);            
+            tarjan(v,i);
+            low[u] = std::min(low[u],low[v]);
             if(low[v]>dfn[u])//边u-v是割边的充要条件
-                bridges.emplace_back(u,v);
+                bridges[i] = bridges[i^1] = true;          
+            
         }
-        else if(fa[u]!=v){
-            low[u] = min(low[u], dfn[v]);
+        else if(i != (in_edge ^ 1)){
+            low[u] = std::min(low[u], dfn[v]);
         }
     }
 }
 
 int main(){
     int n,m;
-    cin>>n>>m;
+    std::cin>>n>>m;
     //点数，边数
     for(int i=1;i<=m;i++){
         int a,b;
-        cin>>a>>b;
+        std::cin>>a>>b;
         //起点，终点
-        edges[a].push_back(b);
-        edges[b].push_back(a);
+        add(a,b);
+        add(b,a);
 		//无向图
     }
     for(int i=1;i<=n;i++){
         if(!dfn[i])
-            tarjan(i);
+            tarjan(i,0);
     }
     
-    for(auto& x:bridges){
-        if(x.first>x.second) std::swap(x.first,x.second);
+    std::vector<std::pair<int,int> > ans;
+    for(int i=2;i<ecnt;i+=2){
+        if(bridges[i]){
+            int u = edges[i].v;
+            int v = edges[i^1].v;
+            if(u>v) std::swap(u,v);
+            ans.push_back({u,v});
+        }
     }
-    std::sort(bridges.begin(),bridges.end());
-    for(int i=0;i<bridges.size();i++){
-        cout<<bridges[i].first<<" "<<bridges[i].second<<endl;
-        //输出割边
-    }    
+    std::sort(ans.begin(),ans.end());
+    for(auto x:ans) std::cout<<x.first<<" "<<x.second<<"\n";
+    
     return 0;
 }
 
 ```
 
-## 割点
-
-### Tarjan算法
+## 割点（Tarjan算法）
 
 ```cpp
 //复杂度 n+m
 //tarjan求割点,luogu P3388
+//如果无向图中删掉某个点和其所有相连的边边会使无向图的连通分量数增多，那么这个点叫割点
 #include <iostream>
 #include <vector>
 #include <stack>
 #include <algorithm>
-
-using namespace std;
 
 const int MAXN = 20005;
 const int MAXM = 100005;
 
 int dfn[MAXN], low[MAXN], cnt=0;
 //含义见割边模板
-vector<int> edges[MAXN];
-vector<int> cut;//存储割点
+struct Edge{
+    int v,next;//指向的点，边权，下一条边
+};
 
-void tarjan(int u, bool root = true){
+Edge edges[MAXM*2];//存无向图记得开两倍
+int head[MAXN],ecnt;//这个ecnt和割边那里不一样，但也可以等于1
+bool cut[MAXN];//判断割点
+
+inline void add(int u, int v){
+    edges[++ecnt].v = v;
+    edges[ecnt].next = head[u];
+    head[u] = ecnt;
+}
+
+void tarjan(int u, int root){
     int tot = 0;
     low[u] = dfn[u] = ++cnt;
-    for(int i=0;i<edges[u].size();i++){
-        int v = edges[u][i];
+    for(int i=head[u];i;i=edges[i].next){
+        int v = edges[i].v;
         if(!dfn[v]){
-            tarjan(v,false);
-            low[u] = min(low[u],low[v]);
-            tot += (low[v]>=dfn[u]);//统计满足的点的个数
-            //一个点x是割点的充要条件是，它至少一个子节点y满足dfn[x]>=low[y]，特别的，对于根节点，需要至少两个这样的子节点
+            tarjan(v,root);
+            low[u] = std::min(low[u],low[v]);
+            //一个点x是割点的充要条件是，它至少一个子节点y满足dfn[x]<=low[y]，特别的，对于根节点，需要至少两个这样的子节点
+            if(low[v]>=dfn[u]){
+                tot++;
+                if(u!=root || tot>1) cut[u] = true;
+            }
         }
         else{
-            low[u] = min(low[u], dfn[v]);
+            low[u] = std::min(low[u], dfn[v]);
         }
-    }
-    if(tot>root){//如果是根节点，则需要有至少两个子树，否则只需要有一个子树
-        cut.push_back(u);
     }
 }
 
 int main(){
     int n,m;
-    cin>>n>>m;
+    std::cin>>n>>m;
     //点数，边数
     for(int i=1;i<=m;i++){
         int a,b;
-        cin>>a>>b;
+        std::cin>>a>>b;
         //起点，终点
-        edges[a].push_back(b);
-        edges[b].push_back(a);
+        add(a,b);
+        add(b,a);
         //无向图
     }
     for(int i=1;i<=n;i++){
         if(!dfn[i])
-            tarjan(i);
+            tarjan(i,i);
     }
-    cout<<cut.size()<<endl;
-    sort(cut.begin(),cut.end());
-    for(int i=0;i<cut.size();i++){
-        cout<<cut[i]<<" ";
-        //输出割点的编号
-    }
+    
+    std::vector<int> ans;
+    for(int i=1;i<=n;i++) if(cut[i]) ans.push_back(i);
+    std::sort(ans.begin(),ans.end());
+    std::cout<<ans.size()<<"\n";
+    for(auto x:ans) std::cout<<x<<" ";
+    
     return 0;
 }
-
 ```
 
-## 强连通分量
-
-### Tarjan算法
+## 强连通分量（Tarjan算法）
 
 ```cpp
 //强连通分量，复杂度 n+m
 //luogu P2863
+//一个有向图是强连通的当且仅当其中任意两个顶点相互可达
+//强连通分量是有向图中的极大的强连通子图。极大意味着把一个图分为若干个强连通分量，分量之间互相不可达。或者，不存在包含该子图的更大的子图也是强连通分量。
+
 #include <iostream>
 #include <vector>
 #include <stack>
@@ -3330,6 +3429,11 @@ int main(){
 ```cpp
 //2-SAT算法，复杂度n+m
 //luogu P4782
+
+//2-SAT是用来解决一些条件是否能够满足的算法。
+//每个条件都能转化为形如"若x赋值为a，则y必须赋值为b"的形式。其中a,b的取值只能有两个，通常是true和false。
+//例如总共有m个这样的条件，我们要判断是否存在一种赋值情况满足所有的条件。如果有还要输出一种可行方案
+
 #include <iostream>
 #include <vector>
 #include <stack>
@@ -3388,6 +3492,8 @@ int main(){
         //j为假则i一定为假
         edges[i+(!a)*n].push_back(j+b*n);
         edges[j+(!b)*n].push_back(i+a*n);//逆否命题
+        //逆否命题是一定要插入的，不能只插入原命题，但是本题拆出来的两个条件正好互为逆否命题，所以只插入了两条边。其他题并不一定总会给出逆否命题
+        //这里的逻辑运算可能有些不容易理解，怕错可以写成很长的if else判断a和b的具体取值
     }
     
     for(int i=1;i<=2*n;i++){
@@ -3412,6 +3518,190 @@ int main(){
     return 0;
 }
 ```
+
+## 边双联通分量
+
+```cpp
+//复杂度 n+m
+//tarjan求边双联通分量
+//luogu p8436
+
+//如果一张无向连通图不存在割边，则称之为边双联通图
+//双连通分量是图的极大双联通子图
+//若u-v边双联通，v-w边双联通，则u-w边双联通
+//一张图是边双联通，当且仅当每条边都在至少一个简单环中
+
+//无向连通图中，对于任意两个点，如果无论删去哪条边（只能一条），都不能使它们不连通，则为边双联通
+//同时这也意味着，把割边删去后的图，就是若干个双联通分量
+
+/*这一段是求割边的核心代码，省略*/
+
+int dcci[MAXN], cdcc;//记录点i属于双联通分量dcci[i]，以及总的dcc个数
+std::vector<std::vector<int> > dcc(MAXN);//存储双联通分量dcc[i]中有哪些点
+
+void getDCC(int u){
+    dcci[u] = cdcc;
+    dcc[cdcc].push_back(u);
+    for(int i=head[u];i;i=edges[i].next){
+        int v = edges[i].v;
+        if(dcci[v] || bridges[i]) continue;
+        getDCC(v);
+    }
+}
+
+int main(){
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(0);
+    
+    int n,m;
+    std::cin>>n>>m;
+    //点数，边数
+    for(int i=1;i<=m;i++){
+        int a,b;
+        std::cin>>a>>b;
+        //起点，终点
+        add(a,b);
+        add(b,a);
+		//无向图
+    }
+    for(int i=1;i<=n;i++){
+        if(!dfn[i])
+            tarjan(i,0);
+    }
+    
+    //以上求完了割边
+    
+    for(int i=1;i<=n;i++){
+        if(!dcci[i]){
+            cdcc++;
+            getDCC(i);
+        }
+    }
+    
+    std::cout<<cdcc<<"\n";
+    for(int i=1;i<=cdcc;i++){
+        std::cout<<dcc[i].size()<<" ";
+        for(auto x:dcc[i]){
+            std::cout<<x<<" ";
+        }
+        std::cout<<"\n";
+    }
+     
+    return 0;
+}
+```
+
+## 边双联通缩点TODO
+
+## 点双联通分量
+
+```cpp
+//复杂度 n+m
+//tarjan求点双联通分量
+//luogu p8435
+
+//如果一张无向连通图不存在割点，则称之为点双联通图
+//双连通分量是图的极大双联通子图
+//极大指的是，不存在包含这个子图的更大的子图也是边双联通图
+//若u-v点双联通，v-w点双联通，则u-w[并不一定]点双联通
+//一张图是点双联通，当且仅当以下两个条件之一成立
+//1. 图的顶点数不超过2
+//2. 图中任意两点都同时包含在至少一个简单环中
+
+//无向连通图中，对于任意两个点，如果无论删去哪个点（只能一个，且不能删除这两个点自己），都不能使它们不连通，则为点双联通
+//但是，虽然边双联通中的割边不属于任何连通分量，但割点却可以属于多个点双联通分量
+
+#include <iostream>
+#include <vector>
+#include <stack>
+#include <algorithm>
+
+const int MAXN = 500005;
+const int MAXM = 2000005;
+
+int dfn[MAXN], low[MAXN], cnt=0;
+//含义见割边模板
+struct Edge{
+    int v,next;//指向的点，边权，下一条边
+};
+
+Edge edges[MAXM*2];//存无向图记得开两倍
+int head[MAXN],ecnt;//这个ecnt和割边那里不一样，但也可以等于1
+bool cut[MAXN];//判断割点
+
+inline void add(int u, int v){
+    edges[++ecnt].v = v;
+    edges[ecnt].next = head[u];
+    head[u] = ecnt;
+}
+
+std::stack<int> stk;
+int cdcc;
+std::vector<std::vector<int> > dcc(MAXN);
+
+void tarjan(int u, int root){
+    low[u] = dfn[u] = ++cnt;
+    stk.push(u);
+    if(u==root && head[u]==0){
+        dcc[++cdcc].push_back(u);
+        return;
+    }
+    int tot=0;
+    for(int i=head[u];i;i=edges[i].next){
+        int v = edges[i].v;
+        if(!dfn[v]){
+            tarjan(v,root);
+            low[u] = std::min(low[u],low[v]);
+            if(low[v]>=dfn[u]){
+                tot++;
+                if(u!=root || tot>1) cut[u] = true;
+                cdcc++;
+                int z;
+                do{
+                    z = stk.top();
+                    stk.pop();
+                    dcc[cdcc].push_back(z);
+                }while(z!=v);
+                dcc[cdcc].push_back(u);
+            }
+        }
+        else{
+            low[u] = std::min(low[u], dfn[v]);
+        }
+    }
+}
+
+int main(){
+    int n,m;
+    std::cin>>n>>m;
+    //点数，边数
+    for(int i=1;i<=m;i++){
+        int a,b;
+        std::cin>>a>>b;
+        //起点，终点
+        if(a==b) continue;//点双联通需要注意排除自环才能处理孤立点
+        add(a,b);
+        add(b,a);
+        //无向图
+    }
+
+    for(int i=1;i<=n;i++){
+        if(!dfn[i])
+            tarjan(i,i);
+    }
+    
+    std::cout<<cdcc<<"\n";
+    for(int i=1;i<=cdcc;i++){
+        std::cout<<dcc[i].size()<<" ";
+        for(auto x:dcc[i]) std::cout<<x<<" ";
+        std::cout<<"\n";
+    }
+    
+    return 0;
+}
+```
+
+## 点双联通缩点TODO
 
 ## 树的直径
 
@@ -3684,7 +3974,430 @@ int main(){
 
 ```
 
-# 计算几何
+## 重链剖分
+
+```cpp
+//树根节点的子节点中子树最大的为它的重子节点，其他的为轻子节点（整棵树的根节点是轻点，其他子树的根节点可轻可重）
+//节点连向其轻子节点的边叫轻边，否则叫重边
+//节点数为n，则从任意节点向上到根节点，经过的轻边数不超过logn
+
+struct Node{
+    int fa, sz, dep, hson;//父节点、子树大小（包含自己）、深度、重子节点
+    int top;//链头，即所在的重链中深度最小的那个节点 
+}node[MAXN];
+
+std::vector<int> edges[MAXN];
+
+void dfs1(int u, int d=1){
+    //在dfs2之前先用dfs1
+    int size = 1, ma = 0;
+    node[u].dep = d;
+    for(auto v:edges[u]){
+        if(!node[v].dep){
+            dfs1(v,d+1);
+            node[v].fa = u;
+            size += node[v].sz;
+            if(node[v].sz > ma){
+                node[u].hson = v, ma = node[v].sz;
+            }
+        }
+    }
+    node[u].sz = size;
+}
+
+void dfs2(int u){
+    //需要先把根节点的top设置为自己
+    for(auto v:edges[u]){
+        if(!node[v].top){
+            if(v==node[u].hson) node[v].top = node[u].top;
+            else node[v].top = v;
+            dfs2(v);
+        }
+    }
+}
+
+void cut(int r=1){
+    //进行树剖预处理
+    dfs1(r);
+    node[r].top = r;
+    dfs2(r);
+}
+
+```
+
+### 重链剖分求LCA
+
+```cpp
+//树剖求LCA，每次查询复杂度 logn，常数很小
+//luogu p3379
+int lca(int a, int b){
+    while(node[a].top!=node[b].top){
+        if(node[node[a].top].dep>node[node[b].top].dep)
+            a = node[node[a].top].fa;
+        else
+            b = node[node[b].top].fa;
+    }
+    if(node[a].dep > node[b].dep) return b;
+    return a;
+}
+```
+
+### 重链剖分+线段树维护树上路径点权和
+
+```cpp
+//树剖维护树上路径的点权和，维护和查询一次复杂度 logn
+//luogu p3384
+
+//树根节点的子节点中子树最大的为它的重子节点，其他的为轻子节点（整棵树的根节点是轻点，其他子树的根节点可轻可重）
+//节点连向其轻子节点的边叫轻边，否则叫重边
+//节点数为n，则从任意节点向上到根节点，经过的轻边数不超过logn
+#include <iostream>
+#include <algorithm>
+#include <cmath>
+#include <cstring>
+#include <vector>
+
+#define pb push_back
+#define mkp std::make_pair
+#define fi first
+#define se second
+
+using LL = long long;
+
+int const MAXN = 100005;
+int const INF = 0x7fffffff;
+LL MOD = 998244353;
+
+struct Node{
+    int fa, sz, dep, hson;//父节点、子树大小（包含自己）、深度、重子节点
+    int top;//链头，即所在的重链中深度最小的那个节点 
+    int dfn, mdfn;//该节点的dfs序，该节点子树的最大dfs序
+    LL v;//点上的权
+}node[MAXN];
+int dfnmap[MAXN];//映射dfn对应的点编号
+
+std::vector<int> edges[MAXN];
+
+void dfs1(int u, int d=1){
+    //在dfs2之前先用dfs1
+    int size = 1, ma = 0;
+    node[u].dep = d;
+    for(auto v:edges[u]){
+        if(!node[v].dep){
+            dfs1(v,d+1);
+            node[v].fa = u;
+            size += node[v].sz;
+            if(node[v].sz > ma){
+                node[u].hson = v, ma = node[v].sz;
+            }
+        }
+    }
+    node[u].sz = size;
+}
+
+int cnt=0;
+
+void dfs2(int u){
+    //需要先把根节点的top设置为自己
+    node[u].dfn = ++cnt;
+    dfnmap[cnt] = u;
+    if(node[u].hson!=0){
+        node[node[u].hson].top = node[u].top;
+        dfs2(node[u].hson);
+    }
+    //采取这个改变的原因是，每棵子树的dfs序是连续的，根节点dfs序最小
+    //而如果我们强制先遍历重子节点，那么重链上的dfs序是连续的，并且链头dfs序最小。这样就能用线段树维护链上的信息了
+    
+    for(auto v:edges[u]){
+        if(!node[v].top){
+            node[v].top = v;
+            dfs2(v);
+        }
+    }
+    
+    node[u].mdfn = cnt;
+}
+
+void cut(int r){
+    dfs1(r);
+    node[r].top = r;
+    dfs2(r);
+}
+
+struct Nodest
+{
+    int s,t;//该端点的起点和终点下标
+    LL tag, v;
+};
+
+Nodest st[MAXN*4+2];
+
+void build(int s, int t, int p){
+    st[p].s = s;
+    st[p].t = t;
+    if(s==t) {
+        st[p].v = node[dfnmap[s]].v%MOD;
+        st[p].tag = 0;
+        return;
+    }
+    int m = s+((t-s)>>1);
+    build(s,m,p*2);
+    build(m+1,t,p*2+1);
+    st[p].v = (st[p*2].v + st[p*2+1].v)%MOD;
+    st[p].tag = 0;
+}
+
+void spreadTag(int p){
+    if(st[p].tag){
+        int s = st[p].s, t = st[p].t;
+        int m = s+((t-s)>>1);
+        st[p*2].v     = (st[p*2].v + (m-s+1)*st[p].tag)%MOD;
+        st[p*2+1].v   = (st[p*2+1].v + (t-m)*st[p].tag)%MOD;
+        st[p*2].tag   = (st[p].tag + st[p*2].tag)%MOD;
+        st[p*2+1].tag = (st[p].tag + st[p*2+1].tag)%MOD;
+        st[p].tag=0;
+    }
+}
+
+void update(int l, int r, int p, LL k){
+    int s = st[p].s, t = st[p].t;
+    if(l<=s && t<=r){
+        st[p].v   = (st[p].v + (t-s+1) * k)%MOD;
+        st[p].tag = (st[p].tag + k)%MOD;
+        return;
+    }
+    spreadTag(p);
+    
+    int m = s+((t-s)>>1);
+    if(l<=m) update(l, r, p*2, k);
+    if(r>m)  update(l, r, p*2+1, k);
+    st[p].v = (st[p*2].v + st[p*2+1].v)%MOD;
+}
+
+LL query(int l, int r, int p){
+    int s = st[p].s, t = st[p].t;
+    if(l<=s && t<=r) return st[p].v%MOD;
+    
+    spreadTag(p);
+    int m = s+((t-s)>>1);
+    LL ret = 0;
+    if(l<=m) ret = (ret + query(l,r,p*2))%MOD;
+    if(r>m)  ret = (ret + query(l,r,p*2+1))%MOD;
+    
+    return ret;
+}
+
+void update_path(int x, int y, LL k){
+    while(node[x].top != node[y].top){
+        if(node[node[x].top].dep > node[node[y].top].dep){
+            update(node[node[x].top].dfn, node[x].dfn, 1, k);
+            x = node[node[x].top].fa;
+        }
+        else{
+            update(node[node[y].top].dfn, node[y].dfn, 1, k);
+            y = node[node[y].top].fa;
+        }
+    }
+    if(node[x].dep>node[y].dep){
+        update(node[y].dfn, node[x].dfn, 1, k);
+    }
+    else{
+        update(node[x].dfn, node[y].dfn, 1, k);
+    }
+}
+
+LL query_path(int x, int y){
+    LL ans = 0;
+    while(node[x].top != node[y].top){
+        if(node[node[x].top].dep > node[node[y].top].dep){
+            ans += query(node[node[x].top].dfn, node[x].dfn, 1);
+            x = node[node[x].top].fa;
+        }
+        else{
+            ans += query(node[node[y].top].dfn, node[y].dfn, 1);
+            y = node[node[y].top].fa;
+        }
+    }
+    if(node[x].dep>node[y].dep){
+        ans += query(node[y].dfn, node[x].dfn, 1);
+    }
+    else{
+        ans += query(node[x].dfn, node[y].dfn, 1);
+    }
+    
+    return ans%MOD;
+}
+
+void update_subtree(int x, LL k){
+    update(node[x].dfn, node[x].mdfn, 1, k);
+}
+
+LL query_subtree(int x){
+    return query(node[x].dfn, node[x].mdfn, 1)%MOD;
+}
+
+void solve(){
+    int n,m,r;
+    std::cin>>n>>m>>r>>MOD;//节点个数，操作个数，根节点序号，取模数
+    for(int i=1;i<=n;i++){
+        std::cin>>node[i].v;
+    }
+    for(int i=1;i<n;i++){
+        int x,y;
+        std::cin>>x>>y;
+        edges[x].pb(y);
+        edges[y].pb(x);
+    }
+    
+    cut(r);
+    build(1,n,1);
+    
+    while(m--){
+        int ope,x,y;
+        LL z;
+        std::cin>>ope;
+        
+        if(ope==1){
+            std::cin>>x>>y>>z;
+            update_path(x,y,z);
+        }
+        else if(ope==2){
+            std::cin>>x>>y;
+            std::cout<<query_path(x,y)<<"\n";
+        }
+        else if(ope==3){
+            std::cin>>x>>z;
+            update_subtree(x,z);
+        }
+        else if(ope==4){
+            std::cin>>x;
+            std::cout<<query_subtree(x)<<"\n";
+        }
+    }
+    
+}
+
+int main(){
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(0);
+
+	int T;
+	T=1;
+	while(T--){
+	    solve();
+	}
+
+    return 0;
+}
+
+```
+
+## 长链剖分
+
+### 求K级祖先
+
+```cpp
+//长链剖分定义子树最深深度最深的节点为重子节点
+//任意节点p的k级祖先q所在的链长度一定大于k
+//任意节点p到根节点最多经过sqrt n级别的轻边
+
+//luogu p5903
+//求任意节点的第k级祖先，预处理nlogn，查询常数
+
+#define pb push_back
+
+using LL = long long;
+
+int const MAXN = 500005;
+
+struct Node{
+    int fa, dep, hson;//父节点、深度、重子节点
+    int top;//链头，即所在的长链中深度最小的那个节点 
+    int len,dfn,mdfn;//部分链长，dfs序，子树最大dfs序
+}node[MAXN];
+
+int dfnmap[MAXN];//dfs序对应节点
+
+std::vector<int> edges[MAXN];
+
+void dfs1(int u, int d=1){
+    node[u].len = 1, node[u].dep = d;
+    for(auto v:edges[u]){
+        if(!node[v].dep){
+            dfs1(v,d+1);
+            node[v].fa = u;
+            if(node[v].len+1>node[u].len)
+                node[u].hson = v, node[u].len = node[v].len+1;
+        }
+    }
+}
+
+int cnt = 0;
+void dfs2(int u, int tp){
+    node[u].dfn = ++cnt;
+    node[u].top = tp;
+    dfnmap[cnt] = u;
+    if(node[u].hson) dfs2(node[u].hson, tp);
+    for(auto v:edges[u]){
+        if(!node[v].top) dfs2(v,v);
+    }
+    node[u].mdfn = cnt;
+}
+
+void cut(int r=1){
+    dfs1(r);
+    dfs2(r,r);
+}
+
+std::vector<int> anc[MAXN], des[MAXN];
+//分别存储（链头）节点p的1,2,...,node[p].len-1级祖先节点和子孙节点
+int const LOGN = 21;
+int fa[MAXN][LOGN];
+int logn[MAXN];
+
+void init(int r, int n){
+    cut(r);
+    
+    logn[1] = 0;
+    logn[2] = 1;
+    for(int i=3;i<MAXN;i++){
+        logn[i] = logn[i/2]+1;
+        //预先计算logn
+    }
+    
+    for(int i=1;i<=n;i++) fa[i][0] = node[i].fa;
+    for(int j=1;j<LOGN;j++){
+        for(int i=1;i<=n;i++){
+            fa[i][j] = fa[fa[i][j-1]][j-1];
+        }
+    }
+    
+    for(int i=1;i<=n;i++){
+        if(node[i].top==i){
+            for(int j=0,p=i;j<node[i].len;j++,p=fa[p][0])
+                anc[i].pb(p);
+            for(int j=0;j<node[i].len;j++)
+                des[i].pb(dfnmap[node[i].dfn+j]);
+        }
+    }
+}
+
+int query(int u, int k){
+    //查询节点u的k级祖先
+    if(k==0) return u;
+    int i = logn[k];
+    int v = fa[u][i];
+    int tp = node[v].top;
+    int d = k - (1<<i) + node[tp].dep - node[v].dep;
+    if(d>0)
+        return anc[tp][d];
+    else
+        return des[tp][-d];
+}
+
+```
+
+# 计算几何 TODO
 
 ## 基础板子
 
@@ -4348,7 +5061,184 @@ int main(){
 }
 ```
 
+## Pick定理
+
+给定顶点均为整点的简单多边形，其面积$A$和内部格点数目$i$，边上格点数目$b$的关系为
+
+$$
+A = i+\dfrac{b}{2}-1
+$$
+
 # 组合数学
+
+## 用乘法逆元计算组合数
+
+TODO: 用模板元编程实现编译期算阶乘
+
+根据
+
+$$
+(a/b)\%p=(a\times b^{-1})\%p=[(a\%p)\times(b^{-1}\%p)]\%p
+$$
+
+（如果加载不全，见[取余运算的分配律](https://kegalas.top/p/%E5%8F%96%E4%BD%99%E8%BF%90%E7%AE%97%E7%9A%84%E5%88%86%E9%85%8D%E5%BE%8B/)）
+
+可以不用除法求出组合数。其中$b^{-1}$是$b$在模$p$意义下的逆元。
+
+注意阶乘和其逆元的预处理。
+
+```cpp
+//复杂度 初始化为nlogn 后续查询为O(1)
+//luogu P3414，只能过50%（因为这道题考的不是这个）
+using LL = long long;
+
+const int MAXN = 200005;
+const LL MOD = 6662333;
+
+LL fac[MAXN];
+LL invFac[MAXN];
+
+LL qPowMod(LL x, LL p, LL m){
+    //x^p % m
+    LL ans = 1;
+    while(p){
+        if(p&1){
+            ans = (ans*x)%m;
+        }
+        x = (x*x)%m;
+        p>>=1;
+    }
+    return ans;
+}
+
+LL fermat_inv(LL a, LL b){
+    return qPowMod(a,b-2,b);
+}
+
+void init(int n){
+    fac[0] = 1;
+    invFac[0] = 1;
+
+    for(int i=1;i<=n;i++){
+        fac[i] = (fac[i-1]*i)%MOD;
+        invFac[i] = fermat_inv(fac[i],MOD);
+    }
+}
+
+LL comb(LL n, LL m){
+    //n里面选m个
+    if(n<0||m<0||m>n) return 0;
+    return (((fac[n]*invFac[m])%MOD)*invFac[n-m])%MOD;
+}
+```
+
+## 组合数的性质
+
+**二项式定理**
+
+$$
+(a+b)^n = \sum^n_{i=0}\binom{n}{i}a^{n-i}b^i
+$$
+
+**对称性**
+
+$$
+\binom{n}{m} = \binom{n}{n-m}
+$$
+
+**递推式1**
+
+$$
+\binom{n}{k}=\dfrac{n}{k}\binom{n-1}{k-1}
+$$
+
+**递推式2**
+
+$$
+\binom{n}{m} = \binom{n-1}{m}+\binom{n-1}{m-1}
+$$
+
+**二项式定理的特例1**
+
+$$
+\binom{n}{0}+\binom{n}{1}+\cdots+\binom{n}{n} = 2^n
+$$
+
+**二项式定理的特例2**
+
+$$
+\sum^n_{i=0}(-1)^i\binom{n}{i} = [n=0]
+$$
+
+**组合数拆分**
+
+$$
+\sum^m_{i=0}\binom{n}{i}\binom{m}{m-i} = \binom{m+n}{m} (n\geq m)
+$$
+
+**组合数拆分的特例**
+
+$$
+\sum^m_{i=0}\binom{n}{i}^2= \binom{2n}{n}
+$$
+
+**带权和1**
+
+$$
+\sum^n_{i=0}i\binom{n}{i} = n2^{n-1}
+$$
+
+**带权和2**
+
+$$
+\sum^n_{i=0}i^2\binom{n}{i} = n(n+1)2^{n-2}
+$$
+
+**性质1**
+
+$$
+\sum^n_{l=0}\binom{l}{k} = \binom{n+1}{k+1}
+$$
+
+**性质2**
+
+$$
+\binom{n}{r}\binom{r}{k} = \binom{n}{k}\binom{n-k}{r-k}
+$$
+
+**斐波那契数列性质**
+
+$$
+\sum^n_{i=0}\binom{n-i}{i} = F_{n+1}
+$$
+
+## 圆排列
+
+$n$个人全部来围成一圈，所有的排列数记为$Q^n_n$。考虑其中已经拍好的一圈，从不同位置断开可以变成不同的队列，则有
+
+$$
+Q^n_n\times n = A^n_n
+$$
+
+由此可知
+
+$$
+Q^r_n = \dfrac{A^r_n}{r}
+$$
+
+## 二项式反演
+
+记$f_n$表示恰好使用$n$个不同元素形成特定结构的方案数，$g_n$表示从$n$个不同元素中选出$i\geq 0$个元素形成特定结构的总方案数。有
+
+$$
+g_n = \sum^n_{i=0}\binom{n}{i}f_i
+$$
+
+二项式反演就是已知$g_n$求$f_n$
+
+$$
+f_n = \sum^n_{i=0}\binom{n}{i}(-1)^{n-i}g_i
+$$
 
 ## 斐波那契数列的性质
 
@@ -4465,7 +5355,11 @@ $n$个节点的二叉树，总共有$C_n$种
 
 $2n+1$个节点组成的满二叉树，有$C_n$种
 
-$n\times n$的格点网中，从左下角格点出发，到达右上角格点，不穿过对角线的单调路径个数有$C_n$个。
+$n\times n$的格点网中，从左下角格点出发，到达右上角格点，不穿过对角线（但可以碰到）的单调路径个数有$C_n$个。
+
+在圆上有$2n$个点，将这些点成对连接起来使得所得到的$n$条线段不相交的方法数为$C_n$种
+
+一个栈（无穷大）的进栈序列为$1,2,3,\cdots,n$，合法的出栈序列有$C_n$个
 
 其计算公式为
 
@@ -4488,7 +5382,8 @@ $$
 ```cpp
 //复杂度 n
 #include <iostream>
-//前几项：1（第0项）, 1, 2, 5, 14, 42, 132, 429, 1430, 4862, 16796
+//前几项：1, 1, 2, 5, 14, 42, 132, 429, 1430, 4862, 16796
+//luogu p1044
 using namespace std;
 
 typedef long long ll;
@@ -4496,29 +5391,29 @@ const int MAXN = 3005;
 
 ll h[MAXN];
 
-ll comb(int a,int b){
+ll comb(ll a,ll b){
     ll ans=1;
-    for(int i=1;i<=b;i++){
+    for(ll i=1;i<=b;i++){
         ans*=a;//数字太大会爆
         a--;
     }
-    for(int i=1;i<=b;i++){
+    for(ll i=1;i<=b;i++){
         ans/=i;
     }
     return ans;
 }
 
 int main(){
-    int n;
+    ll n;
     cin>>n;
-    for(int i=1;i<=n;i++){
-        cout<<comb(2*i,i)/(i+1)<<endl;
+    for(ll i=1;i<=n;i++){
+        cout<<comb(2*i,i)/(i+1)<<endl;//n>=15的时候ll都能爆
     }
     cout<<"###"<<endl;
     //下面是递推求法，不容易爆
     h[1]=1;
     cout<<h[1]<<endl;
-    for(int i=2;i<=n;i++){
+    for(ll i=2;i<=n;i++){
         h[i] = h[i-1]*(4*i-2)/(i+1);
         cout<<h[i]<<endl;
     }
@@ -4529,7 +5424,33 @@ int main(){
 
 ## 生成函数
 
-给出一些常见封闭形式（目前只会普通生成函数来应对组合问题，之后更新指数生成函数应对排列问题）：
+生成函数是一种形式幂级数
+
+$$
+F(x) = \sum_na_nx^n
+$$
+
+$\{a_i\}$序列可以是有限的，也可以是无限的。$a_i$下标以$0$为起点。生成函数例如
+
+1. $a=<1,2,3>$的普通生成函数为$1+2x+3x^2$
+2. $a=<1,1,1,\cdots>$的普通生成函数为$\sum_{n\geq 0}x^n$
+3. $a=<2,4,6,8,\cdots>$的普通生成函数为$\sum_{n\geq 0}(2n+2)x^n$
+
+**加减运算**
+
+设序列$a,b$的普通生成函数分别为$F(x),G(x)$，则
+
+$$
+F(x)\pm G(x) = \sum_n(a_n\pm b_n)x^n
+$$
+
+**乘/卷积运算**
+
+$$
+F(x)G(x) = \sum_n x^n\sum^n_{i=0}a_i b_{n-i}
+$$
+
+给出一些常见封闭形式，这其实和幂级数收敛时的求和公式差不多（目前只会普通生成函数来应对组合问题，之后更新指数生成函数应对排列问题TODO）：
 
 $$
 \sum_{n\geq 0}x^n = \dfrac{1}{1-x}
@@ -4561,9 +5482,47 @@ $$
 
 其他有限项生成函数应该用等比数列求和公式，转化成分式形式。之后再来进行生成函数的计算。
 
-## 稳定婚姻问题
+**例题**
 
-### Gale-Shapley算法
+在许多不同种类的食物中选出$n$个，每种食物的限制如下（每种食物选出来的个数必须满足该限制）
+
+1. 汉堡：偶数个
+2. 可乐：0或1个
+3. 鸡腿：0或1或2个
+4. 蜜桃多：奇数个（注：0个不满足条件）
+5. 鸡块：4的倍数个
+6. 包子，0、1、2、3个
+7. 土豆炒肉：不超过1个
+8. 面包：3的倍数个
+
+所有食物选出来的总数加起来等于$n$就可以算作一种方案。计算方案总数模$10007$
+
+我们设$a_n$表示这种食物选$n$个的方案数，并求出其生成函数。显然，假设只选两个食品，如果食品1选了$i$个，那么食品2就只能选$n-i$个。这和我们之前的卷积形式是一样的。所以我们应该把各种食品的生成函数的封闭形式乘起来得到答案。生成函数构造如下
+
+1. $\sum_{n\geq 0}x^{2n}=\dfrac{1}{1-x^2}$
+2. $1+x$
+3. $1+x+x^2=\dfrac{1-x^3}{1-x}$（这里食品都是相同的，所以选1个只有1种方案。求法是等比数列求和。有些题的物品是不同的，这里就要变成其他序列）
+4. $\dfrac{x}{1-x^2}$
+5. $\dfrac{1}{1-x^4}$
+6. $\dfrac{1-x^4}{1-x}$
+7. $1+x$
+8. $\dfrac{1}{1-x^3}$
+
+全部乘起来得到的生成函数为
+
+$$
+F(x) = \dfrac{(1+x)(1-x^3)x(1-x^4)(1+x)}{(1-x^2)(1-x)(1-x^2)(1-x^4)(1-x)(1-x^3)} = \dfrac{x}{(1-x)^4}
+$$
+
+再转化为展开形式
+
+$$
+F(x) = \sum_{n\geq 0}\binom{n+3}{n}x^{n+1}=\sum_{n\geq 1}\binom{n+2}{n-1}x^n
+$$
+
+可得答案就是$\binom{n+2}{n-1}=\binom{n+2}{3}$
+
+## 稳定婚姻问题(Gale-Shapley算法) TODO
 
 ```cpp
 //POJ 3487
@@ -4893,7 +5852,7 @@ public:
 };
 ```
 
-## 线段树
+## 线段树 TODO: 函数参数默认值
 
 ```cpp
 //复杂度 单次查询 logn 单次修改 logn
@@ -5807,6 +6766,46 @@ int main(){
 }
 ```
 
+## 斜率优化TODO
+
+## 四边形不等式TODO
+
+## 悬线法
+
+```cpp
+//luogu p1387
+//悬线法求最大矩形/正方形，复杂度 nm
+int grid[MAXN][MAXN];
+int l[MAXN][MAXN], r[MAXN][MAXN], u[MAXN][MAXN];
+//l,r分别表示从当前格向上的悬线最多能向左向右扩展多少格（含自己）
+//u表示当前格向上能扩展多少格（含自己），即悬线
+
+void dp(int n, int m){
+    for(int i=1;i<=n;i++){
+        for(int j=1;j<=m;j++){
+            if(grid[i][j]) l[i][j] = l[i][j-1]+1;//这里的条件看情况选择，下面同理
+        }
+    }
+    for(int i=1;i<=n;i++){
+        for(int j=m;j>=1;j--){
+            if(grid[i][j]) r[i][j] = r[i][j+1]+1;
+        }
+    }
+    for(int i=1;i<=n;i++){
+        for(int j=1;j<=m;j++){
+            if(grid[i][j]){
+                u[i][j] = u[i-1][j]+1;
+                if(grid[i-1][j]){
+                    l[i][j] = std::min(l[i][j], l[i-1][j]);
+                    r[i][j] = std::min(r[i][j], r[i-1][j]);
+                }
+                //然后在这里对ans进行该有的操作，因题而异
+            }
+        }
+    }
+}
+```
+
 # 概率论
 
 ## 处理分数期望、概率
@@ -5835,25 +6834,27 @@ $Q^{-1}$是$Q$在模$998244353$意义下的乘法逆元
 //luogu P1226
 using LL = long long;
 
-LL qPow(LL n, LL p){
+LL qPow(LL x, LL p){
+    //x^p
     LL res = 1;
-    while(p>0){
+    while(p){
         if(p&1){
-            res = res * n;
+            res = res * x;
         }
-        n *= n;
+        x *= x;
         p>>=1;
     }
     return res;
 }
 
-LL qPowMod(LL n, LL p, LL m){
+LL qPowMod(LL x, LL p, LL m){
+    //x^p % m
     LL res = 1;
-    while(p>0){
+    while(p){
         if(p&1){
-            res = (res * n)%m;
+            res = (res * x)%m;
         }
-        n = (n*n)%m;
+        x = (x*x)%m;
         p>>=1;
     }
     return res;
@@ -5947,7 +6948,7 @@ void solve(){
 
 ```
 
-## 表达式求值
+## 表达式求值 可能需要进一步完善TODO
 
 ```cpp
 inline bool isOper(char c){
