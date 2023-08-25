@@ -3815,6 +3815,91 @@ void dfs(int u, int fa, int const n){//需要传入点的个数
 }
 ```
 
+## 倍增求最近公共祖先
+
+```cpp
+//复杂度 单次查询 logn 预处理 nlogn，常数小点的可以用重链剖分
+//luogu P3379
+//倍增求最近公共祖先
+#include <iostream>
+#include <vector>
+#include <cstdio>
+
+int const MAXN = 500005;
+int const LOGN = 31;
+
+std::vector<int> edge[MAXN];//邻接表
+int logn[MAXN];
+int fa[MAXN][LOGN],deep[MAXN];
+//fa[a][b]代表a的第2^b个祖先，deep是深度，根节点深度为1
+
+void build(int u,int father){
+    fa[u][0] = father;
+    deep[u] = deep[father]+1;
+
+    for(int i=1;i<=logn[deep[u]];i++){
+        fa[u][i] = fa[fa[u][i-1]][i-1];
+    }
+
+    for(auto v:edge[u]){
+        if(v==father) continue;
+        build(v,u);
+    }
+}
+
+int lca(int x,int y){
+    if(deep[x]>deep[y]) std::swap(x,y);
+    //保证y比x深
+
+    while(deep[x]!=deep[y]){
+        y = fa[y][logn[deep[y]-deep[x]]];
+    }
+    
+    if(x==y) return x;
+    
+    for(int k=logn[deep[x]];k>=0;k--){
+        if(fa[x][k]!=fa[y][k]){
+            x = fa[x][k], y = fa[y][k];
+        }
+    }
+    return fa[x][0];
+}
+
+int main(){
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(0);
+    
+    int n,m,s;
+    std::cin>>n>>m>>s;
+    //点数，询问数，根节点序号
+    
+    for(int i=2;i<=n;i++){
+        logn[i] = logn[i/2] + 1;
+        //必须的初始化
+    }
+
+    for(int i=1;i<=n-1;i++){
+        int a,b;
+        std::cin>>a>>b;
+        //读入树
+        edge[a].push_back(b);
+        edge[b].push_back(a);
+    }
+
+    build(s,0);//必须build才能用
+
+    for(int i=1;i<=m;i++){
+        int x,y;
+        std::cin>>x>>y;
+        //查询x,y的最近公共祖先
+        std::cout<<lca(x,y)<<"\n";
+    }
+
+    return 0;
+}
+
+```
+
 ## 虚树 TODO
 
 ```cpp
@@ -5627,58 +5712,75 @@ int main(){
 //树状数组，维护的是数组的前缀和，有大量的应用
 //luogu P3374
 
+//普通的树状数组要维护的信息，其运算要满足结合律和可差分
+//结合律不难理解，可差分指的是若已知x op y和x，则可以求出y
+//这样的运算例如加，乘，异或。乘如果在模意义下可差分，需要保证每个数都有逆元，如果模数为质数则肯定有
+//gcd,max这种是不可差分的
+
 #include <iostream>
-#include <cstdio>
-#define MAXN 500005
 
-using namespace std;
+int const MAXN = 1000005;
+using LL = long long;
 
-int arr[MAXN];
-int bit[MAXN];
-
-inline int lowbit(int n){
-    return n&(-n);
-}
-
-void update(int p, int k, int n){
-    for(;p<=n;p+=lowbit(p)){
-        bit[p]+=k;
+class Fenwick{
+public:
+    LL data[MAXN];
+    int size = 0;
+    
+    void init(int size_){size=size_;}
+    
+    inline int lowbit(int x){
+        return x&(-x);
     }
-}
-
-int query(int p){
-    int ans=0;
-    for(;p;p-=lowbit(p)){
-        ans+=bit[p];
+    
+    void update(int p, LL k){//位置p的元素加k
+        for(;p<=size;p+=lowbit(p)){
+            data[p]+=k;
+        }
     }
-    return ans;
-}
+    
+    LL query(int p){//查询[1,p]的和
+        LL ret=0;
+        for(;p;p-=lowbit(p)){
+            ret += data[p];
+        }
+        return ret;
+    }
+};
+
+Fenwick fenwick;
 
 int main(){
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(0);
+    
 	int n,m;
-    scanf("%d%d",&n,&m);
+    std::cin>>n>>m;
     //数组长度，查询数
+    fenwick.init(n);
     for(int i=1;i<=n;i++){
-        scanf("%d",&arr[i]);
-        update(i,arr[i],n);
+        LL tmp;
+        std::cin>>tmp;
+        fenwick.update(i,tmp);
     }
 
     for(int i=1;i<=m;i++){
         int op;
-        int x,y,k;
-        scanf("%d",&op);
-        scanf("%d",&x);
+        int x,y;
+        LL k;
+        std::cin>>op>>x;
         if(op==1){
-            scanf("%d",&k);
-            //将单点增加k，如果想要改成修改，则可以update(x,-arr[x]+k)
-            update(x,k,n);
+            std::cin>>k;
+            //将单点增加k，如果想要改成修改，则可以update(x,k-查询x位置上的数)
+            fenwick.update(x,k);
         }
         else{
-            scanf("%d",&y);
+            std::cin>>y;
             //输出[x,y]的数组和
-            cout<<query(y)-query(x-1)<<endl;
+            std::cout<<fenwick.query(y)-fenwick.query(x-1)<<"\n";
         }
     }
+    
     return 0;
 }
 ```
@@ -5688,6 +5790,7 @@ int main(){
 ```cpp
 //复杂度 nlogn
 //Luogu P1908
+//逆序对<i,j>即，符合i<j且ai>aj的<i,j>的个数
 #include <iostream>
 #include <algorithm>
 
@@ -5760,23 +5863,26 @@ int main(){
 
 ```cpp
 //二维树状数组 支持单点修改和区间查询
-//poj 1195
-int const MAXN = 1055;
+//loj 133
+#include <iostream>
+
+int const MAXN = 5005;
+using LL = long long;
 
 class BIT2D{
 public:
     int N,M;
-    int data[MAXN][MAXN];
+    LL data[MAXN][MAXN];
     
     void init(int n,int m){
         N = n, M = m;
     }
     
-    inline int lowbit(int n){
-        return n&(-n);
+    inline int lowbit(int x){
+        return x&(-x);
     }
     
-    void add(int x, int y, int v){//把(x,y)加上v
+    void add(int x, int y, LL v){//把(x,y)这个点加上v
         for(int i=x;i<=N;i+=lowbit(i)){
             for(int j=y;j<=M;j+=lowbit(j)){
                 data[i][j] += v;
@@ -5784,8 +5890,8 @@ public:
         }
     }
     
-    int sum(int x, int y){
-        int ret = 0;
+    LL sum(int x, int y){
+        LL ret = 0;
         for(int i=x;i>0;i-=lowbit(i)){
             for(int j=y;j>0;j-=lowbit(j)){
                 ret += data[i][j];
@@ -5794,7 +5900,7 @@ public:
         return ret;
     }
     
-    int query(int x1, int y1, int x2, int y2){//查询(x1,y1)-(x2,y2)这个矩形的区间和
+    LL query(int x1, int y1, int x2, int y2){//查询(x1,y1)-(x2,y2)这个矩形的区间和
         return sum(x2,y2) - sum(x2,y1-1) - sum(x1-1, y2) + sum(x1-1, y1-1);
     }
 };
@@ -5852,13 +5958,16 @@ public:
 };
 ```
 
-## 线段树 TODO: 函数参数默认值
+## 线段树
 
 ```cpp
 //复杂度 单次查询 logn 单次修改 logn
-//luogu 3372
+//luogu p3372
 //线段树维护的数据要求满足结合律，比如区间和，区间最大区间最小，区间gcd
 //区间修改一般支持加、乘、赋值
+
+#include <iostream>
+
 int const MAXN = 100005;
 using LL = long long;
 
@@ -5871,7 +5980,7 @@ struct Node
 Node st[MAXN*4+2];
 LL arr[MAXN];
 
-void build(int s, int t, int p){
+void build(int s, int t, int p=1){
     st[p].s = s;
     st[p].t = t;
     if(s==t) {
@@ -5898,7 +6007,7 @@ void spreadTag(int p){
     }
 }
 
-void update(int l, int r, int p, LL k){
+void update(int l, int r, LL k, int p=1){
     int s = st[p].s, t = st[p].t;
     if(l<=s && t<=r){
         st[p].v   += (t-s+1) * k;
@@ -5908,12 +6017,12 @@ void update(int l, int r, int p, LL k){
     spreadTag(p);
     
     int m = s+((t-s)>>1);
-    if(l<=m) update(l, r, p*2, k);
-    if(r>m)  update(l, r, p*2+1, k);
+    if(l<=m) update(l, r, k, p*2);
+    if(r>m)  update(l, r, k, p*2+1);
     st[p].v = st[p*2].v + st[p*2+1].v;
 }
 
-LL query(int l, int r, int p){
+LL query(int l, int r, int p=1){
     int s = st[p].s, t = st[p].t;
     if(l<=s && t<=r) return st[p].v;
     
@@ -5934,6 +6043,7 @@ LL query(int l, int r, int p){
 //方便给某个区间赋值，区间加数，维护区间第k大值，区间和等等
 //数据随机的情况下，复杂度为nloglogn
 //珂朵莉树的每一个节点都是一个区间，这个区间内的值相同。
+//cf896c
 struct Node{
     int l,r;
     mutable LL v;//这里修改成自己需要的数据类型，在[l,r]内都等于这个值
@@ -5986,7 +6096,7 @@ odt.tree.insert(Node(1,w,0));
 分块是根号算法，比线段树略差，但是不需要满足结合律，也不需要传递tag。
 
 ```cpp
-//luogu 3372 和线段树区间加，维护区间和一样
+//luogu p3372 和线段树区间加，维护区间和一样
 //复杂度n sqrt(n)
 //在块内时对块操作，跨块时中间对块操作，两边多余部分暴力处理
 LL arr[MAXN];
@@ -6222,7 +6332,10 @@ std::cout<<ans<<"\n";
 ## 对顶堆
 
 ```cpp
-//维护一个序列的第k大数，每次操作logn
+//动态维护一个集合的第k大数，每次操作logn
+//spoj RMID2
+//维护第k小只要维护第n-k大即可
+//另外这个k是可以变化的，不需要固定，复杂度确实是logn
 
 #include <iostream>
 #include <algorithm>
@@ -6234,8 +6347,8 @@ class KthLargest{
 private:
     std::priority_queue<T,std::vector<T>,std::less<T> > big{};
     std::priority_queue<T,std::vector<T>,std::greater<T> > small{};
-    int kth{};
-    int size{};
+    size_t kth{};
+    size_t size{};
     
     void update(){
         kth = std::min(kth,size);
@@ -6252,13 +6365,15 @@ private:
 public:
     KthLargest():kth(1),size(0){}
     
-    T findK(int k){
+    T findK(size_t k){
+		//找到第k大的数字
         kth = k;
         update();
         return small.top();
     }
     
-    void eraseK(int k){
+    void eraseK(size_t k){
+		//移除第k大的数字
         kth = k;
         update();
         small.pop();
@@ -6267,6 +6382,7 @@ public:
     }
     
     void insert(T x){
+		//插入一个数字
         size++;
         if(small.empty() || x>=small.top()){
             small.push(x);
@@ -6277,37 +6393,65 @@ public:
         update();
     }
     
-    int getSize(){
+    size_t getSize(){
         return size;
     }
 };
+
+KthLargest<int> ddd;
+
 ```
 
 ## 单调栈
 
-给出模板，以下是一个维护栈内单调不增的代码
-
 ```cpp
+//单调栈 luogu p5788
+//本题定义f[i]为数列中第i个元素之后第一个大于a[i]的元素的下标（不存在则为0）
+//很显然我们可以维护一个单调不增的栈
+//当push的元素x大于栈顶t时，第一个大于t的元素就是x。反复出栈直到栈顶t小于等于x或栈空，入栈。
+//复杂度 n
 int arr[MAXN];
+int ans[MAXN];
 int stk[MAXN];
 
-int top = 0;
+int main(){
+    int n;
+    std::cin>>n;
 
-for(int i=1;i<=n;i++){
-    while(top&&arr[stk[top]]<arr[i]){
-        //在这里进行一些操作
-        top--;
+    for(int i=1;i<=n;i++){
+        std::cin>>arr[i];
     }
 
-    stk[++top] = i;
+    int top = 0;
+
+    for(int i=1;i<=n;i++){
+        while(top&&arr[stk[top]]<arr[i]){
+            ans[stk[top]] = i;//这一行是具体的操作，因题而异；而其他行在这个for循环里都是固定的
+            top--;
+        }
+
+        stk[++top] = i;
+    }
+
+    for(int i=1;i<=n;i++){
+        std::cout<<ans[i]<<" ";
+    }
+
+    return 0;
 }
 ```
 
 ## 单调队列
 
-给出滑动窗口的模板，单调队列通常会使用双端队列。滑动窗口即给出一个长度为$n$的数组，以及一个长度为$k$的窗口，从左向右滑动，求出窗口中的最小值和最大值
-
 ```cpp
+//单调队列，luogu1886
+//本题是滑动窗口，即在长度为n的数组中，给出一个长度为k的连续区间，从左向右滑动，求每个区间中的最大值和最小值
+//求最小值时，我们可以维护一个单增的双端队列。x加入队尾时，如果队尾元素b>=x，则把队尾弹出，直到b<x或者栈空时把x入队。
+//因为我们的区间长度有限，每次我们的区间左端点向右枚举+1时，判断队首元素的下标，如果小于区间左端点，就出队。
+//之后留在队首的元素就是区间最小值
+//具体可见代码。最大值维护同理。
+
+//复杂度n
 int arr[MAXN];
 
 int main(){
@@ -6329,7 +6473,7 @@ int main(){
         while(!dq.empty()&&arr[dq.back()]>=arr[i]) dq.pop_back();
         dq.push_back(i);
         while(dq.front()<=i-k) dq.pop_front();
-        std::cout<<arr[dq.front()]<<" ";
+        std::cout<<arr[dq.front()]<<" ";//输出最小值
     }
 
     std::cout<<"\n";
@@ -6345,14 +6489,12 @@ int main(){
         while(!dq.empty()&&arr[dq.back()]<=arr[i]) dq.pop_back();
         dq.push_back(i);
         while(dq.front()<=i-k) dq.pop_front();
-        std::cout<<arr[dq.front()]<<" ";
+        std::cout<<arr[dq.front()]<<" ";//输出最大值
     }
 
     return 0;
 }
 ```
-
-# 倍增
 
 ## ST表
 
@@ -6361,6 +6503,11 @@ int main(){
 ```cpp
 //复杂度 单次查询 logn 预处理 nlogn
 //luogu P3865
+//查询区间最大值
+//也可以查询其他可重复贡献问题的信息
+//可重复贡献指对于运算op，满足x op x = x。这样的运算有最大最小、gcd等。但显然求和不是。
+//另外op还必须满足结合律。
+
 #include <cstdio>
 #include <iostream>
 
@@ -6399,85 +6546,9 @@ int main(){
         int a,b;
         scanf("%d%d",&a,&b);
         //查询[a,b]分为两部分，即[a,a+2^s-1]与[b-2^s+1,b]
+        //完全不用担心这两个范围重叠，因为是求max
         int s = logn[b-a+1];
         printf("%d\n",std::max(fmax[a][s],fmax[b-(1<<s)+1][s]));
-    }
-
-    return 0;
-}
-```
-
-## 倍增求最近公共祖先
-
-```cpp
-//复杂度 单次查询 logn 预处理 nlogn
-//luogu P3379
-#include <iostream>
-#include <vector>
-#include <cstdio>
-
-const int MAXN = 500005;
-const int LOGN = 31;
-
-std::vector<int> edge[MAXN];//邻接表
-int fa[MAXN][LOGN],deep[MAXN];
-//fa[a][b]代表a的第2^b个祖先，deep是深度，根节点深度为1
-
-void build(int v,int father){
-    fa[v][0] = father;
-    deep[v] = deep[father]+1;
-
-    for(int i=1;i<LOGN;i++){
-        fa[v][i] = fa[fa[v][i-1]][i-1];
-    }
-
-    for(auto v1:edge[v]){
-        if(v1==father) continue;
-        build(v1,v);
-    }
-}
-
-int lca(int x,int y){
-    if(deep[x]>deep[y]) std::swap(x,y);
-    //保证y比x深
-
-    int tmp = deep[y]-deep[x];
-    for(int i=0;tmp;i++,tmp>>=1){
-        if(tmp&1) y=fa[y][i];
-    }
-
-    if(x==y) return y;
-
-    for(int i=LOGN-1;i>=0&&y!=x;i--){
-        if(fa[x][i]!=fa[y][i]){
-            x = fa[x][i];
-            y = fa[y][i];
-        }
-    }
-
-    return fa[y][0];
-}
-
-int main(){
-    int n,m,s;
-    scanf("%d%d%d",&n,&m,&s);
-    //点数，询问数，根节点序号
-
-    for(int i=1;i<=n-1;i++){
-        int a,b;
-        scanf("%d%d",&a,&b);
-        //读入树
-        edge[a].push_back(b);
-        edge[b].push_back(a);
-    }
-
-    build(s,0);
-
-    for(int i=1;i<=m;i++){
-        int x,y;
-        scanf("%d%d",&x,&y);
-        //查询x,y的最近公共祖先
-        printf("%d\n",lca(x,y));
     }
 
     return 0;
@@ -6504,9 +6575,94 @@ if(judge(l)) std::cout<<l<<"\n";
 else std::cout<<r<<"\n";
 ```
 
+当验证一个情况是否能满足题目的复杂度小于等于$O(n)$，而且这些情况具有单调性（即例如若x>y，x不能满足，则y一定不能满足）时，就可以通过二分去得到最符合题意的答案。二分这些情况的复杂度为$O(\log n)$，再乘上验证情况的复杂度得到总的复杂度。
+
 judge函数应该根据题意写出。
 
-如果是浮点数的二分，则不推荐使用EPS进行精度判断（有可能会丢精度）。而是使用计数器，一般迭代100次就能保证符合题目要求。复杂度显然logn
+如果是浮点数的二分，则不推荐使用EPS进行精度判断（有可能会丢精度）。而是使用计数器，一般迭代100次就能保证符合题目要求。
+
+## 二分查找
+
+通常是在排好序上的数组中，查找第一个大于（或大于等于）x的元素。见STL用法中的lower_bound和upper_bound。每次查找的复杂度是logn
+
+## 二分求单调函数零点
+
+设函数$f$在$[l,r]$上严格单调，$mid=(l+r)/2$，显然有$f(l)f(r)<0$。迭代中，若$f(l)f(mid)<0$，则$r=mid$，否则$l=mid$。直到$f(mid)=0$或者$r-l<EPS$或者迭代次数达到要求。收敛速度是线性收敛。
+
+# 三分法
+
+## 三分法求单峰函数的极值点
+
+用二分求函数的导数的零点也可以，但是并不是每次都可以方便的求出导数。三分法可以不用求出导数。
+
+设函数$f$在$[l,r]$上单峰，意味着有且只有一个极大值$x$，$f$在$[l,x]$上严格单增，在$[x,r]$上严格单减。单谷函数则为极小值$x$。
+
+```cpp
+//三分法求单峰函数的极值点 luogu p3382
+//收敛速度是线性收敛
+//用二分求函数的导数的零点也可以，但是并不是每次都可以方便的求出导数。三分法可以不用求出导数。
+//设函数f在[l,r]上单峰，意味着有且只有一个极大值x，f在[l,x]上严格单增，在[x,r]上严格单减。单谷函数则为极小值x。
+
+//在[l,r]上取两个不等的点，设靠近l的是l1，靠近r的是r1。如果f(l1)<f(r1)，说明极大值一定在[l1,r]，令l=l1
+//如果f(l1)>f(r1)，极大值一定在[l,r1]，令r=r1
+//持续下去直到r-l<EPS或者迭代次数足够
+
+//取l1和r1时，可以直接取三等分点，也可以取黄金分割点(l1=l+(r-l)(1-0.618),r1=r-(r-l)*(1-0.618))
+//还可以让l1=mid-EPS, r1=mid-EPS，但是要令l=mid而不是l=l1，防止死循环
+
+using DB = double;
+DB const EPS = 1e-8;
+DB l,r;
+std::cin>>l>>r;
+
+while(r-l>EPS){
+    DB mid = (l+r)/2;
+    DB f1 = func(mid-EPS), f2 = func(mid+EPS);//func根据题目要求定义，是一元函数
+    if(f1<f2)
+        l = mid;
+    else
+        r = mid;
+}
+```
+
+## 三分套三分
+
+例如Luogu P2571，这是一个二元函数要求最小值。我们发现这个函数在固定$x$的时候$y$是单谷的，固定$y$的时候$x$是单谷的。所以我们可以先三分一个变量，再固定这个变量三分另一个变量，最后得出答案。
+
+注意，三分套三分是指不能先假设一个$y$的定值，再三分$x$，然后拿着计算出的$x$再去三分$y$。应当在三分$x$的过程中，把$x$当作参数，传入三分$y$的函数中。它们不是先后关系，而是嵌套关系。
+
+```cpp
+auto func = [&](DB x, DB y){
+    //这里是函数定义
+};
+
+auto sfy = [&](DB x){//固定x，三分y
+    DB ret = 0.0;
+    DB l = 0.0, r = 1.0;
+    while(r-l>EPS){
+        DB delta = (r-l)/3.0;
+        DB f1 = func(x,l+delta), f2 = func(x,r-delta);
+        if(f1>f2)
+            l = l+delta;
+        else
+            r = r-delta;
+    }
+    return func(x,l);
+};
+
+DB l=0.0,r=1.0;
+while(r-l>EPS){//三分x
+    DB delta = (r-l)/3.0;
+    DB f1 = sfy(l+delta), f2 = sfy(r-delta);
+    if(f1>f2)
+        l = l+delta;
+    else
+        r = r-delta;
+}
+//最后的答案是sfy(l)
+```
+
+## 三分答案 TODO
 
 # 动态规划
 
@@ -6581,6 +6737,8 @@ int main(){
 ```cpp
 //复杂度 Wsum(logk_i) 
 //luogu P1776
+//即每种物品有ki个
+//我们可以简单转化为01背包，但是复杂度太高；采用二进制分组的思想
 #include <iostream>
 #include <cmath>
 
@@ -6774,7 +6932,8 @@ int main(){
 
 ```cpp
 //luogu p1387
-//悬线法求最大矩形/正方形，复杂度 nm
+//悬线法求符合条件的最大矩形/正方形，复杂度 nm
+
 int grid[MAXN][MAXN];
 int l[MAXN][MAXN], r[MAXN][MAXN], u[MAXN][MAXN];
 //l,r分别表示从当前格向上的悬线最多能向左向右扩展多少格（含自己）
@@ -6783,23 +6942,28 @@ int l[MAXN][MAXN], r[MAXN][MAXN], u[MAXN][MAXN];
 void dp(int n, int m){
     for(int i=1;i<=n;i++){
         for(int j=1;j<=m;j++){
-            if(grid[i][j]) l[i][j] = l[i][j-1]+1;//这里的条件看情况选择，下面同理
+            if(grid[i][j]) l[i][j] = l[i][j-1]+1;//若(i,j-1)可选，当然首先要(i,j)可选，(i,j-1)不可选时l[i][j-1]会等于0，l[i][j]就会等于1
+            //这里的if条件看情况选择，下面同理
         }
     }
     for(int i=1;i<=n;i++){
         for(int j=m;j>=1;j--){
-            if(grid[i][j]) r[i][j] = r[i][j+1]+1;
+            if(grid[i][j]) r[i][j] = r[i][j+1]+1;//若(i,j+1)可选
         }
     }
     for(int i=1;i<=n;i++){
         for(int j=1;j<=m;j++){
             if(grid[i][j]){
                 u[i][j] = u[i-1][j]+1;
-                if(grid[i-1][j]){
+                if(grid[i-1][j]){//若(i-1,j)可选
                     l[i][j] = std::min(l[i][j], l[i-1][j]);
                     r[i][j] = std::min(r[i][j], r[i-1][j]);
                 }
                 //然后在这里对ans进行该有的操作，因题而异
+                //对于(i,j)这一格来说，它对应的悬线向左右拓展能得到的最大矩形面积为
+                //u[i][j]*(l[i][j]+r[i][j]-1)
+                //最大正方形为
+                //min(u[i][j],l[i][j]+r[i][j]-1)的平方
             }
         }
     }
@@ -6868,36 +7032,35 @@ LL qPowMod(LL x, LL p, LL m){
 ```cpp
 //复杂度nlogn
 //离散化 例如将1,500,40,1000保持相对大小不变，离散化为1,3,2,4
+//luogu B3694
 #include <iostream>
 #include <vector>
 #include <algorithm>
 
-using namespace std;
+std::vector<int> arr,assi;
 
-vector<int> arr,assi;
-
-int main(){
+void solve(){
     int n;
-    cin>>n;
+    std::cin>>n;
+    arr.clear();
+    assi.clear();
     for(int i=1;i<=n;i++){
         int a;
-        cin>>a;
+        std::cin>>a;
         arr.push_back(a);
         assi.push_back(a);
     }
-    sort(assi.begin(),assi.end());
-    assi.erase(unique(assi.begin(),assi.end()),assi.end());
+    std::sort(assi.begin(),assi.end());
+    assi.erase(std::unique(assi.begin(),assi.end()),assi.end());
 
     for(int i=0;i<n;i++){
-        arr[i] = upper_bound(assi.begin(),assi.end(),arr[i])-assi.begin();
+        arr[i] = std::upper_bound(assi.begin(),assi.end(),arr[i])-assi.begin();
     }
 
     for(int i=0;i<n;i++){
-        cout<<arr[i]<<" ";
+        std::cout<<arr[i]<<" ";
     }
-    cout<<endl;
-
-    return 0;
+    std::cout<<"\n";
 }
 ```
 
@@ -6907,7 +7070,8 @@ int main(){
 //对于序列上的区域离线询问问题，如果[l,r]的答案能够O(1)拓展得到
 //[l-1,r],[l+1,r],[l,r-1],[l,r+1]的答案，那么就可以在O(n sqrt(n))中解决所有询问
 //SPOJ DQUERY
-int nowAns, ans[MAXQ];
+//本题是给定若干个区间[l,r]，查询这个范围内有多少个不同的数
+int arr[MAXN];
 int sq;//分块数sq = sqrt(n)
 
 struct Query{
@@ -6921,31 +7085,57 @@ struct Query{
     }  
 }Q[MAXQ];
 
+int ans[MAXQ], cnt[MAXA], cur;
 int l=1,r=0;//初始化询问区间
 
-inline void update(int p){
-    //update here
+inline void add(int p){
+    if(cnt[arr[p]]==0)//新增一种数
+        cur++;
+    cnt[arr[p]]++;
 }
 
-void solve(){
-    sq = std::sqrt(n);
-    //输入数据（总数n个数据）、查询（总数q个查询）
-    std::sort(Q,Q+q);
-    for(int i=0;i<q;i++){
-        while(l>Q[i].l)
-	        update(--l);
+inline void del(int p){
+    cnt[arr[p]]--;
+    if(cnt[arr[p]]==0)//把一种数全部删完
+        cur--;
+}
+
+int main(){
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(0);
+
+	int n;
+	std::cin>>n;
+	sq = std::sqrt(n);
+	for(int i=1;i<=n;i++) std::cin>>arr[i];
+	int q;
+	std::cin>>q;
+	for(int i=0;i<q;i++){
+	    std::cin>>Q[i].l>>Q[i].r;
+	    Q[i].id = i;//把询问离线
+	}
+	std::sort(Q,Q+q);
+	
+	for(int i=0;i<q;i++){
+	    while(l>Q[i].l)
+	        add(--l);//当前区间l大于查询的l，要把左边的数加进来
 	    while(r<Q[i].r)
-	        update(++r);
+	        add(++r);//当前区间r小于查询的r，要把右边的数加进来
 	    while(l<Q[i].l)
-	        update(l++);
+	        del(l++);//当前区间l小于查询的l，要把左边的数删掉
 	    while(r>Q[i].r)
-	        update(r--);
+	        del(r--);//当前区间r大于查询的r，要把右边的数删掉
 	    //注意上述顺序，扩张区间是先移动再更新，缩减区间是先更新再移动
-	    //四个update可能会有不一样，具体题目具体讨论
-	    ans[Q[i].id] = nowAns;
-    }
-}
+	    //四个操作的具体实现可能会有不一样，具体题目具体讨论
+	    ans[Q[i].id] = cur;
+	}
+	
+	for(int i=0;i<q;i++){
+	    std::cout<<ans[i]<<"\n";
+	}
 
+    return 0;
+}
 ```
 
 ## 表达式求值 可能需要进一步完善TODO
