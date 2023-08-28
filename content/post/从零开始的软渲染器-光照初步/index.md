@@ -9,6 +9,8 @@ markup: pandoc
 image: cover.jpg
 ---
 
+<u>**[导航页面](../从零开始的软渲染器-导航/)**</u>
+
 # Blinn-Phong反射模型
 
 Blinn-Phong反射模型将光的反射分为了三个部分。
@@ -85,7 +87,9 @@ $$
 L = L_a+L_d+L_s
 $$
 
-<u>**[导航页面](../从零开始的软渲染器-导航/)**</u>
+# 使用例子
+
+我们把上一节所讲的人物模型拿出来使用一下。
 
 用**[这个链接](https://github.com/kegalas/oar/blob/5f4cd5fc90df31b357b3580cf063b4bc83ad779a/src/main.cpp)** 中的代码（需要去下载模型文件放到代码中的指定文件夹，见**[链接](https://github.com/kegalas/oar/blob/1eddb36577cd9403dfc0c763c8a738d21c2bd59c/obj/african_head.obj)** ），我们可以得到如下的效果图
 
