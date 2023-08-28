@@ -402,7 +402,7 @@ std::vector<int> zFunc(std::string const & str){
 首先是$O(n\log^2n)$的，没有用到基数排序（因为我不排除会求某种只给出偏序关系的后缀数组）
 
 ```cpp
-//求后缀树组，复杂度O(nlog^2n)
+//求后缀数组，复杂度O(nlog^2n)
 //luogu p3809
 int rk[MAXN<<1],sa[MAXN],tarr[MAXN<<1];
 //rk[i]表示后缀i（从1开始，后缀i代表字符串从i开始到结束的子串）的排名，sa[i]表示所有后缀第i小的起点序号，排名和编号都从1开始
@@ -430,7 +430,7 @@ void getSA(std::string const & s){
 再给出$O(n\log n)$的
 
 ```cpp
-//求后缀树组，复杂度O(nlogn)
+//求后缀数组，复杂度O(nlogn)
 //luogu p3809
 int rk[MAXN<<1],sa[MAXN],tarr[MAXN<<1],cnt[MAXN],rkt[MAXN];
 //rk[i]表示后缀i（从1开始，后缀i代表字符串从i开始到结束的子串）的排名，sa[i]表示所有后缀第i小的起点序号，排名和编号都从1开始
@@ -6970,6 +6970,152 @@ void dp(int n, int m){
 }
 ```
 
+## 数位DP
+
+数位DP是对有多少数符合特性的计数问题。通常他的题目数据范围会很大，比如$10^{18}$。题目通常也会要求我们的数字要在某个范围内，还有可能会要求符合题意的一对、一组数。
+
+我们通常会用记忆化搜索来实现。
+
+```cpp
+//数位dp模板题，常用记忆化搜索实现
+//hdu 2089
+//本题要求，[n,m]之间的所有整数，不含4，不含62（连续的）的数字有多少个
+#include <iostream>
+#include <algorithm>
+#include <cmath>
+#include <cstring>
+#include <vector>
+
+#define pb push_back
+
+std::vector<int> digit;//用于存储getSum中x的每一位，最高位从0下标开始
+int dp[8][12][2];//dp[pos][last][limit]
+//pos代表搜索到第几位，如五位数，pos==0说明搜索到高位第一位，pos==4说明搜索到个位
+//last代表上一位搜索的数字是多少，如果last==11，10这样的数字则代表目前在搜索pos==0。设置为11还是10还是别的什么要看题目对只有一位数时的要求
+//limit代表本位数字的取值有没有限制，例如上限是12345，现在搜到了12???，要搜第三位，显然第三位只能取0,1,2,3，limit==true。又如搜到了11???，第三位就可以取0-9，limit==false。
+//limit==true当且仅当上一位limit也为true且取得最大值（第一位特判）
+
+int dfs(int pos, int last, bool limit){
+    int ret = 0;
+    if(pos==digit.size()) return 1;//搜索终点，由于不是非法状态所以返回1
+    if(dp[pos][last][limit] != -1) return dp[pos][last][limit];
+    for(int v=0;v<=(limit ? digit[pos] : 9);v++){
+        if((last==6 && v==2) || v==4) continue;//非法状态
+        ret += dfs(pos+1, v, limit && v==digit[pos]);
+    }
+    dp[pos][last][limit] = ret;
+    return ret;
+}
+
+int getSum(int x){
+    digit.clear();
+    std::memset(dp,-1,sizeof(dp));
+    while(x){//注意如果某些题0也在范围内要特判
+        digit.pb(x%10);
+        x/=10;
+    }
+    std::reverse(digit.begin(),digit.end());//高位到低位存
+    return dfs(0,10,true);
+}
+
+void solve(int n, int m){
+    std::cout<<getSum(m)-getSum(n-1)<<"\n";
+}
+
+int main(){
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(0);
+
+	int n,m;
+	while(std::cin>>n>>m){
+	    if(n==0 && m==0) break;
+	    solve(n,m);
+	}
+
+    return 0;
+}
+```
+
+下面再给出一例，求一对数字的、与位运算有关的，拆分成二进制的题。
+
+```cpp
+//数位dp另一例
+//atcoder abc317_f
+//本题给定n,a1,a2,a3。要求求三元组<x1,x2,x3>的个数，满足
+//1. 1<=xi<=n，对所有i
+//2. xi是ai的任意倍数，对所有i
+//3. x1^x2^x3=0
+//其中n取值[1,1e18]
+//ai取值[1,10]
+
+#define pb push_back
+using LL = long long;
+LL const MOD = 998244353;
+
+std::vector<int> digit;
+int dp[80][12][12][12][2][2][2][2][2][2];
+int a1,a2,a3;
+
+int dfs(int pos, int r1, int r2, int r3,
+        bool l1, bool l2, bool l3,
+        bool z1, bool z2, bool z3){
+    //分布代表着，pos位数字，上一位搜索到的x1除以a1的余数,...,x1的limit,...,x1是否前面全是前导0
+    int ret = 0;
+    if(pos==-1){
+        return !z1 && !z2 && !z3 && !r1 && !r2 && !r3;
+        //每个数都没有前导零（即填入了至少一个数字），以及余数都是0（即xi已经是ai的倍数了）
+    }
+    if(dp[pos][r1][r2][r3][l1][l2][l3][z1][z2][z3] != -1) return dp[pos][r1][r2][r3][l1][l2][l3][z1][z2][z3];
+    
+    int m1 = l1 ? digit[pos] : 1;
+    int m2 = l2 ? digit[pos] : 1;
+    int m3 = l3 ? digit[pos] : 1;
+    
+    for(LL i=0;i<=m1;i++){
+        for(LL j=0;j<=m2;j++){
+            for(LL k=0;k<=m3;k++){
+                if((i^j^k)!=0) continue;
+                
+                int newr1 = ((LL)r1+(i<<pos))%a1;//计算新的余数
+                int newr2 = ((LL)r2+(j<<pos))%a2;
+                int newr3 = ((LL)r3+(k<<pos))%a3;
+                
+                ret = (ret + dfs(pos-1,newr1,newr2,newr3,
+                l1&&i==digit[pos], l2&&j==digit[pos],l3&&k==digit[pos],
+                z1&&i==0,z2&&j==0,z3&&k==0))%MOD;
+            }
+        }
+    }
+    
+    dp[pos][r1][r2][r3][l1][l2][l3][z1][z2][z3] = ret;
+    return ret;
+}
+
+int getSum(LL x){
+    digit.clear();
+    std::memset(dp,-1,sizeof(dp));
+    while(x){
+        digit.pb(x%2);
+        x/=2;
+    }//本题低位到高位存更方便，方便移位运算
+    return dfs(digit.size()-1,0,0,0,1,1,1,1,1,1);
+}
+
+void solve(){
+    LL n;
+    std::cin>>n>>a1>>a2>>a3;
+    std::cout<<getSum(n)<<"\n";
+}
+```
+
+选择低位到高位还是高位到低位应该根据题目的不同来选择。
+
+另外如果满足limit为真的情况出现的概率远低于为假的，那么可以把limit这一维省略掉，dp数组里面只记录limit为假的情况。
+
+低位到高位存还有一个好处。我们知道高位到低位存时，由于数字长度不一样，比如a有5位，b有10位，把a的dp数组求完后，求b时就必须再次清空成-1。原因是，对于a的pos为1，也就是从高到低第二位，其实对应这b的pos为6，我们就不能用a中求出的dp带进去b里面计算了。
+
+而低位到高位就没有这个问题，大家的最低位都是平等的从0下标开始的，可以进行复用。清零为-1只需要程序最开始的时候清零一次即可。有时候程序有多个case会避免TLE。
+
 # 概率论
 
 ## 处理分数期望、概率
@@ -7138,6 +7284,61 @@ int main(){
 }
 ```
 
+## 0/1分数规划
+
+0/1分数规划的目的是如下列式子取值最大化
+
+$$
+\dfrac{\sum^n_{i=1}a_ix_i}{\sum^n_{i=1}b_ix_i}
+$$
+
+其中$\{a_i\}$和$\{b_i\}$是给定的数列，而$\{x_i\}$是要求的一组解，其取值只能是$0$或$1$。或者说，给定$n$对数$a_i,b_i$，从中选出若干对（通常题目要求恰好选$k$对），使选出的数对的$a$之和和$b$之和的商最大。
+
+我们转化成二分答案，验证一个值$m$，上式的取值能否大于等于$m$。转化一下就可以得到，是否存在一组解$x_1,\cdots,x_n$，满足
+
+$$
+\sum^n_{i=1}(a_i-m\times b_i)\times x_i\geq 0
+$$
+
+如果存在则说明$m$比最大值要小，否则$m$比最大值要大，满足二分性。
+
+我们可以计算每一个$(a_i-m\times b_i)$，如果题目说可以任意选择若干对，则只要有一个非负数，就能满足条件。如果要求恰好选$k$对，那么我们全部算出来然后排序，选择最大的$k$个，其和非负就能满足条件。
+
+```cpp
+//0/1分数规划，复杂度n log^2 n
+//nowcoder NC14662
+//介绍见markdown
+LL a[MAXN],b[MAXN];
+int n,k;
+
+bool judge(DB mid){
+    std::vector<DB> vec;
+    for(int i=1;i<=n;i++){
+        vec.pb(a[i]-mid*b[i]);
+    }
+    std::sort(vec.begin(),vec.end());
+    DB sum = 0;
+    for(int i=n-1;i>=0 && n-1-i+1<=k;i--) sum+=vec[i];
+    if(sum>=0) return true;
+    return false;
+}
+
+void solve(){
+    std::cin>>n>>k;
+    for(int i=1;i<=n;i++){
+        std::cin>>b[i]>>a[i];
+    }
+    
+    DB l=0, r=1e13;
+    for(int i=1;i<=100;i++){
+        DB mid = (l+r)/2;
+        if(judge(mid)) l = mid;
+        else r = mid;
+    }
+    std::cout<<(LL)r<<"\n";
+}
+```
+
 ## 表达式求值 可能需要进一步完善TODO
 
 ```cpp
@@ -7273,6 +7474,44 @@ int main(){
     return 0;
 }
 ```
+
+## 艾弗森括号
+
+艾弗森括号常表示为$[A]$，其中$A$是一个二值表达式。用三元运算符可以等价为$[A]\leftrightarrow A?1:0$。
+
+例如$[\gcd(a,b)==1]$，就意味着，如果$a,b$互质，式子的值为$1$，否则为$0$。
+
+## 向上、向下取整
+
+在C++中，如果我们对一个double或者float用强制类型转换
+
+```
+double x = 1.1;
+std::cout<<(int)x<<"\n";
+```
+
+这其实看起来像是向下取整，实际上却不是。它是省略小数部分，实为向$0$取整。C++的整数除法也是向零取整的，而Python则是向下取整。具体表现为C++中$-7/2$为$-3$，Python中$-7//2$为$-4$。
+
+C++本身也有std::floor()和std::ceil()，但是只能针对浮点数使用。
+
+我们一般会在结果非负的时候，用以下方式计算向上向下取整
+
+```cpp
+int x = a/b;//a/b向下取整
+int y = (a+b-1)/b;//a/b向上取整
+```
+
+而对于负数结果，我们有一个性质
+
+$$
+-\lfloor x\rfloor= \lceil -x\rceil
+$$
+
+$$
+-\lceil x\rceil= \lfloor -x\rfloor
+$$
+
+转换即可。
 
 # C++ STL用法
 
