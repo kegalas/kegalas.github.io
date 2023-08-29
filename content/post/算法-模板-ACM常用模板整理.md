@@ -6036,6 +6036,154 @@ LL query(int l, int r, int p=1){
 }
 ```
 
+## 动态开点线段树
+
+```cpp
+//动态开点线段树
+//luogu p3372，由于并没有找到合适的习题，我把题中的查询范围全部加了一个偏移值-5e4
+
+//动态开点线段树并不是动态分配内存，只是在范围很大，但查询不多的时候，可以用
+//普通线段树的空间复杂度是O(n)，单次操作的时间复杂度是O(logn)
+//动态开点，设查询为m次，时间复杂度仍然为O(logn)，但是空间复杂度变成O(mlogn)
+//动态开点还可以处理查询范围为负数的情况，比如查询[-5,6]这一段上的和
+//动态开点假设初始数组全部为0，输入一个数组时直接add修改线段树即可
+
+using LL = long long;
+int const MAXN = 8e6+5;//能开多大开多大，128M可以开到800万
+
+struct Node{
+    LL val, tag;
+    int ls,  rs;
+}st[MAXN];
+
+inline int& ls(int x){return st[x].ls;}
+inline int& rs(int x){return st[x].rs;}
+inline LL& val(int x){return st[x].val;}
+inline LL& tag(int x){return st[x].tag;}
+
+inline int getMid(int s, int t){
+    //处理负数边界时，需要强行向下取整，而不是向零取整
+    if(s+t==0) return 0;
+    if(s+t>0) return (s+t)/2;
+    return -((-s-t+1)/2);
+}
+
+int stcnt = 1;
+int L = -(1e6+5), R = 1e6+5;//这里根据题目信息选择区间范围
+
+void upd(int &p, LL k, int len){
+    if(!p) p = ++stcnt;
+    val(p) += k * len;
+    tag(p) += k;
+}
+
+void spreadTag(int p, int len){
+    if(len<=1) return;
+    upd(ls(p), tag(p), len-len/2);
+    upd(rs(p), tag(p), len/2);
+    tag(p) = 0;
+}
+
+LL query(int l, int r, int p = 1, int s = L, int t = R){
+    if(s>=l && t<=r) return val(p);
+    spreadTag(p, t-s+1);
+    int mid = getMid(s,t);
+    LL ret = 0;
+    if(mid >= l) ret += query(l, r, ls(p), s, mid);
+    if(mid < r)  ret += query(l, r, rs(p), mid+1, t);
+    return ret;
+}
+
+void add(int l, int r, LL k, int p = 1, int s = L, int t = R){
+    if(s>=l && t<=r){
+        val(p) += k * (t-s+1);
+        tag(p) += k;
+        return;
+    }
+    spreadTag(p, t-s+1);
+    int mid = getMid(s,t);
+    if(mid >= l) add(l, r, k, ls(p), s, mid);
+    if(mid < r)  add(l, r, k, rs(p), mid+1, t);
+    val(p) = val(ls(p)) + val(rs(p));
+}
+
+void solve(){
+    int n,m;
+    std::cin>>n>>m;
+    int const offset = -5e4;
+    for(int i=1;i<=n;i++){
+        int a;
+        std::cin>>a;
+        add(i+offset,i+offset,a);
+    }
+    while(m--){
+        int ope, l, r, x;
+        std::cin>>ope>>l>>r;
+        l += offset;
+        r += offset;
+        if(ope==1){
+            std::cin>>x;
+            add(l,r,x);
+        }
+        else{
+            std::cout<<query(l,r)<<"\n";
+        }
+    }
+}
+```
+
+## 权值线段树
+
+```cpp
+//权值线段树
+//loj 104
+
+//权值线段树大部分时候是用来代替平衡树使用的
+//和树状数组求逆序对很像，他把每一个[x,x]范围上的节点视作一个桶，插入数据时，add(x,x,1)，删除一个时add(x,x,-1)。
+//查询复杂度为O(logv)，v为值域
+
+/*这里是动态开点线段树的核心代码*/
+
+void insert(int v){//插入一个数
+    add(v,v,1);
+}
+
+void remove(int v){//删除一个数，相同的只删一个
+    add(v,v,-1);
+}
+
+int countL(int v){//计算小于v的数的个数
+    return query(L, v-1);
+}
+
+int countG(int v){//计算大于v的数的个数
+    return query(v+1, R);
+}
+
+int rank(int v){//求v的排名，即小于v的数的个数+1
+    return countL(v)+1;
+}
+
+int kth(int k, int p=1, int s=L, int t=R){//查询排名第k的数
+    if(s==t) return s;
+    int mid = getMid(s,t);
+    if(val(ls(p)) >= k)
+        return kth(k, ls(p), s, mid);
+    else
+        return kth(k-val(ls(p)), rs(p), mid+1, t);
+}
+
+int pre(int v){//查询v的前驱，即第一个比v小的数，可能需要保证一定存在
+    int r = countL(v);
+    return kth(r);
+}
+
+int suc(int v){//查询v的后继
+    int r = val(1) - countG(v) + 1;
+    return kth(r);
+}
+```
+
 ## 珂朵莉树
 
 ```CPP
