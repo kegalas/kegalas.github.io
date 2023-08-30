@@ -5842,7 +5842,8 @@ int main(){
 
     for(int i=1;i<=n;i++){
         arr[par[i].id] = i;
-    }//这一步其实是离散化
+    }//这一步其实是离散化，但与stl实现的离散化不同的是，
+    //出现同样的数字时，例如6,-4,3,7,3会离散化为4,1,2,5,3
 
     LL ans = 0;
 
@@ -6181,6 +6182,322 @@ int pre(int v){//查询v的前驱，即第一个比v小的数，可能需要保�
 int suc(int v){//查询v的后继
     int r = val(1) - countG(v) + 1;
     return kth(r);
+}
+```
+
+## 可持久化线段树
+
+### 单点修改
+
+```cpp
+//可持久化线段树，单点修改、区间查询，操作复杂度logn
+//luogu p3919
+//可持久化线段树是完全可持久化的，意味着可以查询历史修改，以及对每一个历史状态都可以再修改
+#include <iostream>
+
+using LL = long long;
+int const MAXV = 3e7+5;
+int const MAXN = 1e6+5;
+
+struct Node{
+    LL val;
+    int ls,  rs;
+}st[MAXV];
+
+inline int& ls(int x){return st[x].ls;}
+inline int& rs(int x){return st[x].rs;}
+inline LL& val(int x){return st[x].val;}
+inline int getMid(int s, int t){
+    if(s+t==0) return 0;
+    if(s+t>0) return (s+t)/2;
+    return -((-s-t+1)/2);
+}
+
+int stcnt = 1;
+int L = 1, R = 1e6+5;//这里根据题目信息选择区间范围
+LL arr[MAXN], roots[MAXN];//arr存初始数组，roots[i]表示第i次操作的根节点
+
+void build(int s=L, int t=R, int p=1){
+    //一般不会完全动态开点，会把初始状态建树
+    if(s==t) val(p) = arr[s];
+    else{
+        ls(p) = ++stcnt, rs(p) = ++stcnt;
+        int mid = getMid(s,t);
+        build(s,mid,ls(p));
+        build(mid+1,t,rs(p));
+        val(p) = val(ls(p)) + val(rs(p));
+    }
+}
+
+void assign(int i, LL k, int p, int q, int s=L, int t=R){
+    //这里是单点修改操作，如果改成区间加，则下一行改成val(q)=val(p)+k
+    //修改第i位为k，对版本x的根节点p进行修改，修改完为版本y的根节点q
+    if(s==t) val(q) = k;
+    else{
+        ls(q) = ls(p), rs(q) = rs(p);
+        int mid = getMid(s,t);
+        if(i<=mid) ls(q) = ++stcnt, assign(i,k,ls(p),ls(q),s,mid);
+        else rs(q) = ++stcnt, assign(i,k,rs(p),rs(q),mid+1,t);
+        val(q) = val(ls(q)) + val(rs(q));
+    }
+}
+
+LL query(int l, int r, int p, int s=L, int t=R){
+    //查询区间和
+    //对版本p查询
+    if(s>r || t<l) return 0;
+    else if(s>=l && t<=r) return val(p);
+    else{
+        int mid = getMid(s,t);
+        return query(l,r,ls(p),s,mid) + query(l,r,rs(p),mid+1,t);
+    }
+}
+
+void solve(){
+    int m;
+    std::cin>>R>>m;
+    for(int i=L;i<=R;i++){
+        std::cin>>arr[i];
+    }
+    build();
+    roots[0] = 1;//别忘了初始化初始区间的根
+    for(int t=1;t<=m;t++){
+        int v, o;
+        std::cin>>v>>o;//v是对第v个版本操作
+        if(o==1){
+            int i;LL k;
+            std::cin>>i>>k;
+            roots[t] = ++stcnt;//本题的修改和查询都算一个版本
+            assign(i,k,roots[v],roots[t]);
+            //注意你把第1个版本修改为第5个，不会对2、3、4版本产生影响
+        }
+        else{
+            int i;
+            std::cin>>i;
+            roots[t] = roots[v];//虽然修改也算一个版本，但是可以和之前的合并
+            std::cout<<query(i,i,roots[v])<<"\n";
+        }
+    }
+}
+```
+
+### 区间修改
+
+```cpp
+//可持久化线段树，区间修改、区间查询，操作复杂度logn
+//hdu 4348
+
+#include <iostream>
+
+using LL = long long;
+int const MAXV = 3e6+5;
+int const MAXN = 1e5+5;
+
+struct Node{
+    LL val, tag;
+    int ls,  rs;
+}st[MAXV];
+
+inline int& ls(int x){return st[x].ls;}
+inline int& rs(int x){return st[x].rs;}
+inline LL& val(int x){return st[x].val;}
+inline LL& tag(int x){return st[x].tag;}
+inline int getMid(int s, int t){
+    if(s+t==0) return 0;
+    if(s+t>0) return (s+t)/2;
+    return -((-s-t+1)/2);
+}
+
+int stcnt = 1;
+int L = 1, R = 1e6+5;//这里根据题目信息选择区间范围
+LL arr[MAXN], roots[MAXN];
+
+void build(int s=L, int t=R, int p=1){
+    if(s==t) val(p) = arr[s], tag(p) = 0;
+    else{
+        ls(p) = ++stcnt, rs(p) = ++stcnt;
+        int mid = getMid(s,t);
+        build(s,mid,ls(p));
+        build(mid+1,t,rs(p));
+        val(p) = val(ls(p)) + val(rs(p));
+    }
+}
+
+void add(int l, int r, LL k, int p, int q, int s=L, int t=R){
+    //l,r是修改范围，其他同单点修改
+    ls(q) = ls(p), rs(q) = rs(p), tag(q) = tag(p);
+    if(l<=s && t<=r){
+        if(t>s) tag(q) += k;
+    }
+    else{
+        int mid = getMid(s,t);
+        if(s<=r && mid>=l) ls(q) = ++stcnt, add(l,r,k,ls(p),ls(q),s,mid);
+        if(mid+1<=r && t>=l) rs(q) = ++stcnt, add(l,r,k,rs(p),rs(q),mid+1,t);
+    }
+    val(q) = val(p) + (std::min(r,t)-std::max(l,s)+1)*k;
+}
+
+LL query(int l, int r, int p, LL tg=0, int s=L, int t=R){
+    //l,r是修改范围，tg是一种标记永久化的技术，其他同单点修改
+    if(s>r || t<l) return 0;
+    else if(s>=l && t<=r) return val(p) + tg*(t-s+1);
+    else{
+        int mid = getMid(s,t);
+        return query(l,r,ls(p),tg+tag(p),s,mid) + query(l,r,rs(p),tg+tag(p),mid+1,t);
+    }
+}
+
+void solve(){
+    int m;
+    std::cin>>m;
+    for(int i=L;i<=R;i++){
+        std::cin>>arr[i];
+    }
+    stcnt = 1;
+    build();
+    roots[0] = 1;
+    int time = 0;//本题只有加数才算进行一次版本修改
+    while(m--){
+        char o;int l,r;LL d;
+        std::cin>>o;
+        if(o=='C'){
+            std::cin>>l>>r>>d;//[l,r]上每个数+d
+            time++;
+            roots[time] = ++stcnt;
+            add(l,r,d,roots[time-1],roots[time]);
+        }
+        else if(o=='Q'){
+            std::cin>>l>>r;//查询当前版本[l,r]和
+            std::cout<<query(l,r,roots[time])<<"\n";
+        }
+        else if(o=='H'){
+            std::cin>>l>>r>>d;//查询版本d的[l,r]和
+            std::cout<<query(l,r,roots[d])<<"\n";
+        }
+        else if(o=='B'){
+            std::cin>>d;//把版本倒回d，中间的版本失效
+            time = d;
+        }
+    }
+    std::cout<<"\n";
+}
+
+signed main(){
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(0);
+
+	while(std::cin>>R){//本题多组数据
+	    solve();
+	}
+
+    return 0;
+}
+
+```
+
+### 主席树（可持久化权值线段树）
+
+```cpp
+//主席树，查询静态区间第k小，复杂度logn
+//luogu p3834
+
+#include <iostream>
+#include <algorithm>
+
+using LL = long long;
+int const MAXV = 8e6+5;
+int const MAXN = 2e5+5;
+
+struct Node{
+    LL val;
+    int ls,  rs;
+}st[MAXV];
+
+inline int& ls(int x){return st[x].ls;}
+inline int& rs(int x){return st[x].rs;}
+inline LL& val(int x){return st[x].val;}
+inline int getMid(int s, int t){
+    //处理负数边界时，需要强行向下取整，而不是向零取整
+    if(s+t==0) return 0;
+    if(s+t>0) return (s+t)/2;
+    return -((-s-t+1)/2);
+}
+
+int stcnt = 1;
+int L = 1, R = 2e5+5;
+
+void build(int s=L, int t=R, int p=1){
+    //初始化建成全0的，因为主席树是权值线段树的可持久化版
+    val(p) = 0;
+    if(s!=t){
+        ls(p) = ++stcnt, rs(p) = ++stcnt;
+        int mid = getMid(s,t);
+        build(s,mid,ls(p));
+        build(mid+1,t,rs(p));
+    }
+}
+
+void add(int i, LL k, int p, int q, int s=L, int t=R){
+    //参数同单点修改
+    if(s==t) val(q) = val(p) + k;
+    else{
+        ls(q) = ls(p), rs(q) = rs(p);
+        int mid = getMid(s,t);
+        if(i<=mid) ls(q) = ++stcnt, add(i,k,ls(p),ls(q),s,mid);
+        else rs(q) = ++stcnt, add(i,k,rs(p),rs(q),mid+1,t);
+        val(q) = val(ls(q)) + val(rs(q));
+    }
+}
+
+int arr[MAXN], disc[MAXN], assi[MAXN],ori[MAXN];
+//arr是输入的原数组，disc是离散化后的，assi是临时的辅助数组
+//ori[i]代表着在arr里排名为i的数
+int roots[MAXN];
+
+int kth(int k, int p, int q, int s=L, int t=R){
+    if(s==t) return ori[s];
+    int mid = getMid(s,t);
+    if(val(ls(q)) - val(ls(p))>=k){
+        return kth(k, ls(p), ls(q), s, mid);
+    }
+    else{
+        return kth(k-(val(ls(q))-val(ls(p))), rs(p), rs(q), mid+1, t);
+    }
+}
+
+int lrkth(int l, int r, int k){
+    //查询数组arr的[l,r]区间中第k小的数
+    return kth(k,roots[l-1],roots[r]);
+}
+
+void solve(){
+    int m;
+    std::cin>>R>>m;
+    for(int i=L;i<=R;i++){
+        std::cin>>arr[i];
+        disc[i] = assi[i] = arr[i]; 
+    }
+    std::sort(assi+L,assi+R+1);
+    int last = std::unique(assi+L,assi+R+1) - (assi+L);
+    for(int i=L;i<=R;i++){
+        disc[i] = std::lower_bound(assi+L,assi+last,disc[i]) - (assi+L)+1;
+        ori[disc[i]] = arr[i];
+    }
+    //这上面都是离散化和数据输入
+    
+    build();
+    roots[0] = 1;
+    for(int i=L;i<=R;i++){
+        roots[i] = ++stcnt;
+        add(disc[i],1,roots[i-1],roots[i]);
+        //和权值线段树的思路一致
+    }
+    
+    while(m--){
+        int l,r,k;
+        std::cin>>l>>r>>k;
+        std::cout<<lrkth(l,r,k)<<"\n";
+    }
 }
 ```
 
@@ -7326,6 +7643,7 @@ LL qPowMod(LL x, LL p, LL m){
 ```cpp
 //复杂度nlogn
 //离散化 例如将1,500,40,1000保持相对大小不变，离散化为1,3,2,4
+//出现同样的数字时，例如6,-4,3,7,3会离散化为3,1,2,4,2
 //luogu B3694
 #include <iostream>
 #include <vector>
