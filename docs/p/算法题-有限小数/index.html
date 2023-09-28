@@ -127,7 +127,7 @@
 <p>​	现在有一个正整数n,可以证明存在若干个正整数d使得1/n在d进制下为有限小数，输出最小的d。</p>
 <h3 id="输入">输入</h3>
 <p>​	单组输入
-​	第一行一个正整数$n(2\le n\le 10^{12})$</p>
+​	第一行一个正整数<span class="math inline">\(n(2\le n\le 10^{12})\)</span></p>
 <h3 id="输出">输出</h3>
 <p>​	一个正整数d</p>
 <h3 id="样例">样例</h3>
@@ -150,41 +150,41 @@
 </tbody>
 </table>
 <h2 id="ac代码">AC代码</h2>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
-</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;cstring&gt;</span><span class="cp">
-</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;cmath&gt;</span><span class="cp">
-</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
-</span></span><span class="line"><span class="cl"><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">(){</span>
-</span></span><span class="line"><span class="cl">    <span class="kt">long</span> <span class="kt">long</span> <span class="n">n</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="n">cin</span><span class="o">&gt;&gt;</span><span class="n">n</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="kt">long</span> <span class="kt">long</span> <span class="n">ans</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="kt">long</span> <span class="kt">long</span> <span class="n">tmp</span><span class="o">=</span><span class="n">n</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="c1">//求n的质因数的乘积
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">for</span><span class="p">(</span><span class="kt">long</span> <span class="kt">long</span> <span class="n">i</span><span class="o">=</span><span class="mi">2</span><span class="p">;</span><span class="n">i</span><span class="o">*</span><span class="n">i</span><span class="o">&lt;=</span><span class="n">tmp</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">){</span>
-</span></span><span class="line"><span class="cl">        <span class="k">if</span><span class="p">(</span><span class="n">tmp</span><span class="o">%</span><span class="n">i</span><span class="o">==</span><span class="mi">0</span><span class="p">){</span>
-</span></span><span class="line"><span class="cl">            <span class="n">ans</span><span class="o">*=</span><span class="n">i</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">            <span class="k">while</span><span class="p">(</span><span class="n">tmp</span><span class="o">%</span><span class="n">i</span><span class="o">==</span><span class="mi">0</span><span class="p">){</span>
-</span></span><span class="line"><span class="cl">                <span class="n">tmp</span><span class="o">/=</span><span class="n">i</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">            <span class="p">}</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="p">(</span><span class="n">tmp</span><span class="o">&gt;</span><span class="mi">1</span><span class="p">)</span> <span class="n">ans</span><span class="o">*=</span><span class="n">tmp</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    
-</span></span><span class="line"><span class="cl">    
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">ans</span><span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;cstring&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;cmath&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span><span><span style="color:#66d9ef">using</span> <span style="color:#66d9ef">namespace</span> std;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(){
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span><span>    <span style="color:#66d9ef">long</span> <span style="color:#66d9ef">long</span> n;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span><span>    cin<span style="color:#f92672">&gt;&gt;</span>n;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span><span>    <span style="color:#66d9ef">long</span> <span style="color:#66d9ef">long</span> ans<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span><span>    <span style="color:#66d9ef">long</span> <span style="color:#66d9ef">long</span> tmp<span style="color:#f92672">=</span>n;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13</span><span>    <span style="color:#75715e">//求n的质因数的乘积
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14</span><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">long</span> <span style="color:#66d9ef">long</span> i<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>;i<span style="color:#f92672">*</span>i<span style="color:#f92672">&lt;=</span>tmp;i<span style="color:#f92672">++</span>){
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15</span><span>        <span style="color:#66d9ef">if</span>(tmp<span style="color:#f92672">%</span>i<span style="color:#f92672">==</span><span style="color:#ae81ff">0</span>){
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16</span><span>            ans<span style="color:#f92672">*=</span>i;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17</span><span>            <span style="color:#66d9ef">while</span>(tmp<span style="color:#f92672">%</span>i<span style="color:#f92672">==</span><span style="color:#ae81ff">0</span>){
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18</span><span>                tmp<span style="color:#f92672">/=</span>i;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19</span><span>            }
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20</span><span>        }
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21</span><span>    }
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22</span><span>    <span style="color:#66d9ef">if</span>(tmp<span style="color:#f92672">&gt;</span><span style="color:#ae81ff">1</span>) ans<span style="color:#f92672">*=</span>tmp;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23</span><span>    
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24</span><span>    
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26</span><span>    cout<span style="color:#f92672">&lt;&lt;</span>ans<span style="color:#f92672">&lt;&lt;</span>endl;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27</span><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28</span><span>}
 </span></span></code></pre></div><h2 id="正确性证明">正确性证明</h2>
-<p>​	若$1/n$可以在d进制表达为有限小数，那么一定有：</p>
-<p>​	$$\frac{1}{n}=\frac{a_1}{d}+\frac{a_2}{d^2}+\dots+\frac{a_m}{d^m}$$</p>
-<p>​	其中$a_i&lt;d(1\le i\le m)$，且$a$为正整数，$m$是一个正整数。将两边同乘$nd^m$得：</p>
-<p>​	$$d^m=n(a_1d^{m-1}+\dots+a_md^0)$$</p>
-<p>故只要$d^m$是n的倍数，$1/n$在d进制下就为有限小数。</p>
-<p>将n进行质因数分解，由唯一分解定理知只能分解为一种形式，设d为n的质因数的乘积，易知此时总存在m使得n|$d^m$，并且显然，这个d是最小的。</p>
+<p>​	若<span class="math inline">\(1/n\)</span>可以在d进制表达为有限小数，那么一定有：</p>
+<p>​	<span class="math inline">\(\frac{1}{n}=\frac{a_1}{d}+\frac{a_2}{d^2}+\dots+\frac{a_m}{d^m}\)</span></p>
+<p>​	其中<span class="math inline">\(a_i<d(1\le i\le m)\)</span>，且<span class="math inline">\(a\)</span>为正整数，<span class="math inline">\(m\)</span>是一个正整数。将两边同乘<span class="math inline">\(nd^m\)</span>得：</p>
+<p>​	<span class="math inline">\(d^m=n(a_1d^{m-1}+\dots+a_md^0)\)</span></p>
+<p>故只要<span class="math inline">\(d^m\)</span>是n的倍数，<span class="math inline">\(1/n\)</span>在d进制下就为有限小数。</p>
+<p>将n进行质因数分解，由唯一分解定理知只能分解为一种形式，设d为n的质因数的乘积，易知此时总存在m使得n|<span class="math inline">\(d^m\)</span>，并且显然，这个d是最小的。</p>
 
 </section>
 
@@ -378,8 +378,8 @@
     </section>
     
     <section class="powerby">
-        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
-        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.4.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+         <br />
+        
     </section>
 </footer>
 
@@ -483,15 +483,19 @@
                 <div class="widget--toc">
                     <nav id="TableOfContents">
   <ol>
-    <li><a href="#题目描述">题目描述</a>
+    <li><a href="#有限小数">有限小数</a>
       <ol>
-        <li><a href="#输入">输入</a></li>
-        <li><a href="#输出">输出</a></li>
-        <li><a href="#样例">样例</a></li>
+        <li><a href="#题目描述">题目描述</a>
+          <ol>
+            <li><a href="#输入">输入</a></li>
+            <li><a href="#输出">输出</a></li>
+            <li><a href="#样例">样例</a></li>
+          </ol>
+        </li>
+        <li><a href="#ac代码">AC代码</a></li>
+        <li><a href="#正确性证明">正确性证明</a></li>
       </ol>
     </li>
-    <li><a href="#ac代码">AC代码</a></li>
-    <li><a href="#正确性证明">正确性证明</a></li>
   </ol>
 </nav>
                 </div>

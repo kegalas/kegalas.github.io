@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="en-us">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='根据https://github.com/olOwOlo/hugo-theme-even/issues/139，hugo无法正确生成目录的原'><title>重新编译hugo来使得pandoc可以生成目录</title>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='注：本文内容可能不再推荐使用，因为pandoc无法生成正确的代码高亮，也没有更多的参数可以选择。并且添加目录的方式比较DIY，而我本人暂时不'><title>重新编译hugo来使得pandoc可以生成目录</title>
 
 <link rel='canonical' href='https://kegalas.top/p/%E9%87%8D%E6%96%B0%E7%BC%96%E8%AF%91hugo%E6%9D%A5%E4%BD%BF%E5%BE%97pandoc%E5%8F%AF%E4%BB%A5%E7%94%9F%E6%88%90%E7%9B%AE%E5%BD%95/'>
 
 <link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='重新编译hugo来使得pandoc可以生成目录'>
-<meta property='og:description' content='根据https://github.com/olOwOlo/hugo-theme-even/issues/139，hugo无法正确生成目录的原'>
+<meta property='og:description' content='注：本文内容可能不再推荐使用，因为pandoc无法生成正确的代码高亮，也没有更多的参数可以选择。并且添加目录的方式比较DIY，而我本人暂时不'>
 <meta property='og:url' content='https://kegalas.top/p/%E9%87%8D%E6%96%B0%E7%BC%96%E8%AF%91hugo%E6%9D%A5%E4%BD%BF%E5%BE%97pandoc%E5%8F%AF%E4%BB%A5%E7%94%9F%E6%88%90%E7%9B%AE%E5%BD%95/'>
 <meta property='og:site_name' content='KegalaS的个人博客'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Hugo' /><meta property='article:tag' content='Pandoc' /><meta property='article:published_time' content='2022-08-06T16:41:53&#43;08:00'/><meta property='article:modified_time' content='2022-08-06T16:41:53&#43;08:00'/>
 <meta name="twitter:title" content="重新编译hugo来使得pandoc可以生成目录">
-<meta name="twitter:description" content="根据https://github.com/olOwOlo/hugo-theme-even/issues/139，hugo无法正确生成目录的原">
+<meta name="twitter:description" content="注：本文内容可能不再推荐使用，因为pandoc无法生成正确的代码高亮，也没有更多的参数可以选择。并且添加目录的方式比较DIY，而我本人暂时不">
     <link rel="shortcut icon" href="favicon-16x16.png" />
 
     </head>
@@ -372,18 +372,23 @@
 </header>
 
     <section class="article-content">
-    <p>根据<a class="link" href="https://github.com/olOwOlo/hugo-theme-even/issues/139"  target="_blank" rel="noopener"
+    <blockquote>
+<p>注：本文内容可能不再推荐使用，因为pandoc无法生成正确的代码高亮，也没有更多的参数可以选择。并且添加目录的方式比较DIY，而我本人暂时不会Go语言相关的东西，无法进一步跟进官方版本的更新。</p>
+<p>现在推荐去给Hugo默认的goldmark引擎添加mathjax支持。</p>
+<p>详情见这篇文章<a class="link" href="../%e4%b8%bahugo%e5%ae%89%e8%a3%85goldmark-mathjax%e6%8f%92%e4%bb%b6%e6%9d%a5%e6%9b%b4%e5%a5%bd%e5%9c%b0%e6%94%af%e6%8c%81%e8%be%93%e5%85%a5%e5%85%ac%e5%bc%8f" >为hugo安装goldmark-mathjax插件来更好地支持输入公式</a></p>
+</blockquote>
+<p>根据<a class="link" href="https://github.com/olOwOlo/hugo-theme-even/issues/139"  target="_blank" rel="noopener"
     >https://github.com/olOwOlo/hugo-theme-even/issues/139</a>，hugo无法正确生成目录的原因是，没有加入&ndash;toc参数。</p>
 <p>其中@jdhao所说的<a class="link" href="https://github.com/gohugoio/hugo/blob/master/helpers/content.go#L735"  target="_blank" rel="noopener"
     >https://github.com/gohugoio/hugo/blob/master/helpers/content.go#L735</a>这一部分代码现在（编辑日期时）已经转移到了<a class="link" href="https://github.com/gohugoio/hugo/blob/master/markup/pandoc/convert.go#L67"  target="_blank" rel="noopener"
     >https://github.com/gohugoio/hugo/blob/master/markup/pandoc/convert.go#L67</a>。按他的办法来说应该改成</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl">	<span class="nx">args</span> <span class="o">:=</span> <span class="p">[]</span><span class="kt">string</span><span class="p">{</span><span class="s">&#34;--mathjax&#34;</span><span class="p">,</span><span class="s">&#34;--toc&#34;</span><span class="p">}</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span>	<span style="color:#a6e22e">args</span> <span style="color:#f92672">:=</span> []<span style="color:#66d9ef">string</span>{<span style="color:#e6db74">&#34;--mathjax&#34;</span>,<span style="color:#e6db74">&#34;--toc&#34;</span>}
 </span></span></code></pre></div><p>实际上并没有那么简单，即使是加入了&ndash;toc参数也不能生成目录。笔者又找到一份他人修改的版本<a class="link" href="https://github.com/bigshans/hugo"  target="_blank" rel="noopener"
     >https://github.com/bigshans/hugo</a>。这个版本的convert.go明显是修改过的，能够正确生成目录。</p>
 <p>将其克隆、编译，然后替换掉原来的hugo.exe。经测试可以正常使用。目前发现的唯一可以称得上是一个问题的是，代码没有高亮。</p>
 <p>编译方法见hugo的github readme。</p>
 <p>如果因为网络问题无法编译，可以给powershell设置代理，见之前的文章。</p>
-<p>如果cgo exit status 2，那么可能是g++的问题，笔者的电脑上g++是msys2滚动更新的，更换为8.1.0版本成功编译了。</p>
+<p>如果cgo exit status 2，那么可能是g++的问题，笔者的电脑上g++是msys2滚动更新的，更换为8.1.0版本成功编译了。（后注：要区分msys环境和mingw64环境，见这篇文章<u><a class="link" href="../msys2mingw64cygwin%e7%9a%84%e4%bd%bf%e7%94%a8%e5%8c%ba%e5%88%ab%e6%b5%85%e8%b0%88" >MSYS2,MinGW64,Cygwin的使用区别浅谈</a></u>）</p>
 
 </section>
 
@@ -448,6 +453,18 @@
             <div class="flex article-list--tile">
                 
                     
+<article class="">
+    <a href="/p/%E4%B8%BAhugo%E5%AE%89%E8%A3%85goldmark-mathjax%E6%8F%92%E4%BB%B6%E6%9D%A5%E6%9B%B4%E5%A5%BD%E5%9C%B0%E6%94%AF%E6%8C%81%E8%BE%93%E5%85%A5%E5%85%AC%E5%BC%8F/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">为Hugo安装goldmark-mathjax插件来更好地支持输入公式</h2>
+        </div>
+    </a>
+</article>
+                
+                    
 <article class="has-image">
     <a href="/p/hugo%E7%9A%84stack%E7%9A%AE%E8%82%A4%E4%B8%AD%E4%BD%BF%E5%BE%97mailto%E8%B6%85%E9%93%BE%E6%8E%A5%E8%83%BD%E5%A4%9F%E7%9B%B4%E6%8E%A5%E6%89%93%E5%BC%80%E7%94%B5%E5%AD%90%E9%82%AE%E4%BB%B6%E5%AE%A2%E6%88%B7%E7%AB%AF/">
         
@@ -471,58 +488,36 @@
                 
                     
 <article class="">
-    <a href="/p/msys2%E4%B8%AD%E7%9A%84make%E5%B7%A5%E5%85%B7%E5%AE%89%E8%A3%85%E6%96%B9%E6%B3%95/">
+    <a href="/p/windows%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E5%90%88%E9%9B%86%E9%95%BF%E6%9C%9F%E6%9B%B4%E6%96%B0/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">MSYS2中的make工具安装方法</h2>
+            <h2 class="article-title">Windows开发环境配置合集（长期更新）</h2>
         </div>
     </a>
 </article>
                 
                     
 <article class="">
-    <a href="/p/msys2mingw64cygwin%E7%9A%84%E4%BD%BF%E7%94%A8%E5%8C%BA%E5%88%AB%E6%B5%85%E8%B0%88/">
+    <a href="/p/c-%E7%AC%94%E8%AE%B0%E4%B9%8B%E9%82%A3%E4%BA%9B%E6%9C%89%E7%94%A8%E4%BD%86%E7%BB%8F%E5%B8%B8%E8%A2%AB%E5%BF%BD%E8%A7%86%E7%9A%84%E5%86%85%E5%AE%B9/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">MSYS2,MinGW64,Cygwin的使用区别浅谈</h2>
-        </div>
-    </a>
-</article>
-                
-                    
-<article class="has-image">
-    <a href="/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
-        
-        
-            <div class="article-image">
-                <img src="/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/cover.d64d42eff1b234bef9a3a8dfd6f81ede_huaa3a4f4fef897a96376c721aafe499bc_261058_250x150_fill_q75_box_smart1.jpg" 
-                        width="250" 
-                        height="150" 
-                        loading="lazy" 
-                        data-key="" 
-                        data-hash="md5-1k1C7/GyNL75o6jf1vge3g==">
-                
-            </div>
-        
-
-        <div class="article-details">
-            <h2 class="article-title">计算机组成原理学习笔记</h2>
+            <h2 class="article-title">C&#43;&#43;笔记之那些有用但经常被忽视的内容</h2>
         </div>
     </a>
 </article>
                 
                     
 <article class="">
-    <a href="/p/emacs%E4%BD%BF%E7%94%A8%E7%AC%94%E8%AE%B0/">
+    <a href="/p/firefox%E4%B9%A0%E6%83%AF%E8%AE%BE%E7%BD%AE%E8%AE%B0%E5%BD%95%E5%8C%85%E5%90%AB%E5%8F%8C%E5%87%BB%E5%85%B3%E9%97%AD%E6%8B%96%E6%8B%BD%E6%89%8B%E5%8A%BF%E6%96%B0%E5%BB%BA%E6%A0%87%E7%AD%BE%E9%A1%B5%E4%BD%8D%E7%BD%AE%E7%AD%89/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">Emacs使用笔记</h2>
+            <h2 class="article-title">Firefox习惯设置记录（包含双击关闭，拖拽手势，新建标签页位置等）</h2>
         </div>
     </a>
 </article>
@@ -587,8 +582,8 @@
     </section>
     
     <section class="powerby">
-        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
-        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.4.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+         <br />
+        
     </section>
 </footer>
 

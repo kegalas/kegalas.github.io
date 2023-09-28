@@ -203,16 +203,12 @@ menu:
           url: https://vndb.org/u166447/ulist?votes=1
           params:
             icon: brand-vndb
-            
-    
 
         - identifier: github
           name: GitHub
           url: https://github.com/kegalas
           params:
             icon: brand-github
-        
-        
 
 related:
     includeNewer: true
@@ -226,13 +222,36 @@ related:
           weight: 200
 
 markup:
+    asciidocExt:
+        attributes: {}
+        backend: html5
+        extensions: []
+        failureLevel: fatal
+        noHeaderOrFooter: true
+        preserveTOC: false
+        safeMode: unsafe
+        sectionNumbers: false
+        trace: false
+        verbose: false
+        workingFolderCurrent: false
+    defaultMarkdownHandler: goldmark
     goldmark:
         renderer:
-            ## Set to true if you have HTML content inside Markdown
             unsafe: true
+    highlight:
+        anchorLineNos: false
+        codeFences: true
+        guessSyntax: false
+        hl_Lines: ""
+        hl_inline: false
+        lineAnchors: ""
+        lineNoStart: 1
+        lineNos: true
+        lineNumbersInTable: false
+        noClasses: true
+        style: monokai
+        tabWidth: 4
     tableOfContents:
         endLevel: 4
         ordered: true
-        startLevel: 2
-    highlight:
-        noClasses: false
+        startLevel: 1
