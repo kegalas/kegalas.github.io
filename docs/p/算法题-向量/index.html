@@ -129,80 +129,82 @@
 <p>​    注意，在本题中，我们认为0向量只能伸缩为0向量，非0向量可以伸缩为0向量、方向相同长度任意的向量、方向相反长度任意的向量。</p>
 <h3 id="输入">输入</h3>
 <p>​    单组输入</p>
-<p>​    第一行一个正整数 $n(1\le n\le 10^5)$，即向量的个数。</p>
-<p>​    接下来$n$行，每行两个整数$x_i$, $y_i$ $(0\le |x_i|,|y_i|\le 10^9)$，分别代表第$i$个向量$x$轴与$y$轴的大小方向。</p>
+<p>​    第一行一个正整数 <span class="math inline">\(n(1\le n\le 10^5)\)</span>，即向量的个数。</p>
+<p>​    接下来<span class="math inline">\(n\)</span>行，每行两个整数<span class="math inline">\(x_i\)</span>, <span class="math inline">\(y_i$ \)</span>(0\le |x_i|,|y_i|\le 10^9)<span class="math inline">\(，分别代表第$i\)</span>个向量<span class="math inline">\(x\)</span>轴与<span class="math inline">\(y\)</span>轴的大小方向。</p>
 <p>数据保证</p>
-<p>$$\sum_{i=1}^{n}(|x_i|+|y_i|)\le 10^9$$</p>
-<h3 id="输出">输出</h3>
-<p>​    若存在满足要求的操作输出 “yes”，反之输出 “no”。</p>
-<h3 id="样例">样例</h3>
-<table>
-<thead>
-<tr>
-<th>样例输入</th>
-<th>样例输出</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>3<br />0 0<br />1 2<br />4 2</td>
-<td>no</td>
-</tr>
-</tbody>
-</table>
-<h2 id="ac代码">AC代码</h2>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
-</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;cstdio&gt;</span><span class="cp">
-</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="k">typedef</span> <span class="kt">long</span> <span class="kt">long</span> <span class="n">ll</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="cp">#define MAXN 100005
-</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
-</span></span><span class="line"><span class="cl"><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">struct</span> <span class="nc">Vec</span>
-</span></span><span class="line"><span class="cl"><span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="n">ll</span> <span class="n">x</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="n">ll</span> <span class="n">y</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="p">};</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">Vec</span> <span class="n">vec</span><span class="p">[</span><span class="n">MAXN</span><span class="p">];</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">(){</span>
-</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">n</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="n">cin</span><span class="o">&gt;&gt;</span><span class="n">n</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="n">Vec</span> <span class="n">allSum</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="n">allSum</span><span class="p">.</span><span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">allSum</span><span class="p">.</span><span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;=</span><span class="n">n</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">){</span>
-</span></span><span class="line"><span class="cl">        <span class="n">cin</span><span class="o">&gt;&gt;</span><span class="n">vec</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">x</span><span class="o">&gt;&gt;</span><span class="n">vec</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">y</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="n">allSum</span><span class="p">.</span><span class="n">x</span><span class="o">+=</span><span class="n">vec</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">x</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="n">allSum</span><span class="p">.</span><span class="n">y</span><span class="o">+=</span><span class="n">vec</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">y</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">    <span class="n">ll</span> <span class="n">ans</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;=</span><span class="n">n</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">){</span>
-</span></span><span class="line"><span class="cl">        <span class="k">if</span><span class="p">(</span><span class="n">vec</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">x</span><span class="o">==</span><span class="mi">0</span><span class="o">&amp;&amp;</span><span class="n">vec</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">y</span><span class="o">==</span><span class="mi">0</span><span class="p">)</span> <span class="k">continue</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="n">Vec</span> <span class="n">tmpSum</span> <span class="o">=</span> <span class="n">allSum</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="n">tmpSum</span><span class="p">.</span><span class="n">x</span><span class="o">-=</span><span class="n">vec</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">x</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="n">tmpSum</span><span class="p">.</span><span class="n">y</span><span class="o">-=</span><span class="n">vec</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">y</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="n">ll</span> <span class="n">dis1</span> <span class="o">=</span> <span class="n">tmpSum</span><span class="p">.</span><span class="n">x</span><span class="o">*</span><span class="n">tmpSum</span><span class="p">.</span><span class="n">x</span><span class="o">+</span><span class="n">tmpSum</span><span class="p">.</span><span class="n">y</span><span class="o">*</span><span class="n">tmpSum</span><span class="p">.</span><span class="n">y</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="n">ll</span> <span class="n">dis2</span> <span class="o">=</span> <span class="n">vec</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">x</span><span class="o">*</span><span class="n">vec</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">x</span><span class="o">+</span><span class="n">vec</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">y</span><span class="o">*</span><span class="n">vec</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">y</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="k">if</span><span class="p">(</span><span class="n">dis1</span><span class="o">==</span><span class="n">dis2</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">            <span class="n">ans</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">            <span class="k">break</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">        <span class="k">if</span><span class="p">(</span><span class="n">vec</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">y</span><span class="o">*</span><span class="n">tmpSum</span><span class="p">.</span><span class="n">x</span><span class="o">-</span><span class="n">tmpSum</span><span class="p">.</span><span class="n">y</span><span class="o">*</span><span class="n">vec</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">x</span><span class="o">==</span><span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">            <span class="n">ans</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">            <span class="k">break</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="p">(</span><span class="n">ans</span><span class="p">)</span> <span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&#34;yes&#34;</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="k">else</span> <span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&#34;no&#34;</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><h2 id="正确性证明">正确性证明</h2>
-<p>首先分析题目，出题人的表达和数据结果并不一致。“是否可以通过旋转异或伸缩任意一个向量”实际上应该是“是否可以通过旋转异或伸缩某一个向量”，从而“使得这n个向量相加等于0向量”。</p>
-<p>数据也就$10^5$，直接枚举就行。先将所有向量加到一起记为allSum，然后建立一个tmpSum = allSum-我们当前枚举的向量，记为v。</p>
-<p>然后判断这个tmpSum向量是否和v长度平方相等，是则可以通过旋转v，再相加得到0向量。判断tmpSum向量终点是否和$(0,0)$和v的终点在同一直线上,是则可以通过伸缩v来达到目的。这里判断三点共线的方法是求外积。若都为否，则不可以只对v伸缩或者旋转达到目的，枚举下一个。这里注意，我上述写的代码要将0向量略过，否则0向量总是可以通过三点共线的判断，达不到目的。</p>
-<p>如果枚举出一个向量可以达到目的，就输出yes。如果所有向量都达不到目的，就输出no。</p>
+<p><span class="math display">\[
+### 输出
+
+​    若存在满足要求的操作输出 “yes”，反之输出 “no”。
+
+### 样例
+
+| 样例输入                         | 样例输出 |
+| ---------------------------- | ---- |
+| 3<br />0 0<br />1 2<br />4 2 | no   |
+
+## AC代码
+
+```c++
+#include <iostream>
+#include <cstdio>
+typedef long long ll;
+#define MAXN 100005
+
+using namespace std;
+
+struct Vec
+{
+    ll x;
+    ll y;
+};
+
+
+Vec vec[MAXN];
+
+int main(){
+    int n;
+    cin>>n;
+    Vec allSum;
+    allSum.x=0;allSum.y=0;
+    for(int i=1;i<=n;i++){
+        cin>>vec[i].x>>vec[i].y;
+        allSum.x+=vec[i].x;
+        allSum.y+=vec[i].y;
+    }
+    ll ans = 0;
+    for(int i=1;i<=n;i++){
+        if(vec[i].x==0&&vec[i].y==0) continue;
+        Vec tmpSum = allSum;
+        tmpSum.x-=vec[i].x;
+        tmpSum.y-=vec[i].y;
+        ll dis1 = tmpSum.x*tmpSum.x+tmpSum.y*tmpSum.y;
+        ll dis2 = vec[i].x*vec[i].x+vec[i].y*vec[i].y;
+        if(dis1==dis2) {
+            ans=1;
+            break;
+        }
+        if(vec[i].y*tmpSum.x-tmpSum.y*vec[i].x==0) {
+            ans=1;
+            break;
+        }
+    }
+    if(ans) cout<<"yes";
+    else cout<<"no";
+    return 0;
+}
+```
+
+## 正确性证明
+
+首先分析题目，出题人的表达和数据结果并不一致。“是否可以通过旋转异或伸缩任意一个向量”实际上应该是“是否可以通过旋转异或伸缩某一个向量”，从而“使得这n个向量相加等于0向量”。
+
+数据也就$10^5$，直接枚举就行。先将所有向量加到一起记为allSum，然后建立一个tmpSum = allSum-我们当前枚举的向量，记为v。
+
+然后判断这个tmpSum向量是否和v长度平方相等，是则可以通过旋转v，再相加得到0向量。判断tmpSum向量终点是否和$(0,0)$和v的终点在同一直线上,是则可以通过伸缩v来达到目的。这里判断三点共线的方法是求外积。若都为否，则不可以只对v伸缩或者旋转达到目的，枚举下一个。这里注意，我上述写的代码要将0向量略过，否则0向量总是可以通过三点共线的判断，达不到目的。
+
+如果枚举出一个向量可以达到目的，就输出yes。如果所有向量都达不到目的，就输出no。
+\]</span></p>
 
 </section>
 
@@ -396,8 +398,8 @@
     </section>
     
     <section class="powerby">
-        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
-        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.4.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+         <br />
+        
     </section>
 </footer>
 
@@ -501,15 +503,15 @@
                 <div class="widget--toc">
                     <nav id="TableOfContents">
   <ol>
-    <li><a href="#题目描述">题目描述</a>
+    <li><a href="#向量">向量</a>
       <ol>
-        <li><a href="#输入">输入</a></li>
-        <li><a href="#输出">输出</a></li>
-        <li><a href="#样例">样例</a></li>
+        <li><a href="#题目描述">题目描述</a>
+          <ol>
+            <li><a href="#输入">输入</a></li>
+          </ol>
+        </li>
       </ol>
     </li>
-    <li><a href="#ac代码">AC代码</a></li>
-    <li><a href="#正确性证明">正确性证明</a></li>
   </ol>
 </nav>
                 </div>
