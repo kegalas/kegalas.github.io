@@ -6501,6 +6501,43 @@ void solve(){
 }
 ```
 
+## 线段树合并
+
+```cpp
+//线段树合并，合并复杂度大概是O(klogN)，N是值域，k是若干线段树一共进行过k次插入
+//luogu p3224
+
+//动态开点线段树，之前的各种操作中都有p=1这一参数默认值，这其实是根节点的意思。也就是如果我们设置不同的p，可以开多颗线段树。
+//线段树合并就是把重合位置的节点的值加起来，对于没有重合位置的节点则原地保留，常常用于权值线段树
+
+int merge(int p, int q, int s=L, int t=R){
+    //不新开空间的合并方式
+    //把q为根的树合并到p为根的树上，返回p，即新根节点
+    //由于各题不一样，所以要在合并后手动把roots[j]指定为p
+    if(!p||!q) return p+q;
+    if(s==t) return val(p)+=val(q), p;
+    int mid = getMid(s,t);
+    ls(p) = merge(ls(p), ls(q), s, mid);
+    rs(p) = merge(rs(p), rs(q), mid+1, t);
+    val(p) = val(ls(p)) + val(rs(p));
+    return p;
+}
+
+int merge(int p, int q, int s=L, int t=R){
+    //新开空间的合并方式
+    //把p,q为根的两棵树合并到r为根的树上，返回r，即新根节点
+    //由于各题不一样，所以要在合并后手动把roots[i]和[j]指定为r
+    if(!p||!q) return p+q;
+    int r = ++stcnt;
+    if(s==t) return val(r) = val(p)+val(q), r;
+    int mid = getMid(s,t);
+    ls(r) = merge(ls(p), ls(q), s, mid);
+    rs(r) = merge(rs(p), rs(q), mid+1, t);
+    val(r) = val(ls(r)) + val(rs(r));
+    return r;
+}
+```
+
 ## 珂朵莉树
 
 ```CPP
