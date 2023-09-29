@@ -1,11 +1,12 @@
 ---
-title: "Firefox习惯设置记录（包含双击关闭，拖拽手势，新建标签页位置等）"
+title: Firefox习惯设置记录（包含双击关闭，拖拽手势，新建标签页位置等）
 date: 2023-08-06T09:55:11+08:00
 draft: false
-tags: [Firefox]
-categories: 其他
+tags:
+  - Firefox
+categories: 其他计算机科学
 mathjax: false
-markup: pandoc
+markup: goldmark
 ---
 
 # 背景

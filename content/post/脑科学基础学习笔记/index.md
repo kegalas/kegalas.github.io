@@ -1,11 +1,13 @@
 ---
-title: "脑科学基础学习笔记"
+title: 脑科学基础学习笔记
 date: 2023-06-11T15:11:44+08:00
 draft: false
-tags: [大学,脑科学]
-categories: 其他
+tags:
+  - 大学
+  - 脑科学
+categories: 人工智能
 mathjax: true
-markup: pandoc
+markup: goldmark
 ---
 
 # 认知与计算

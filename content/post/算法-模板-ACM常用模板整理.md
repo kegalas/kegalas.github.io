@@ -1,13 +1,16 @@
 ---
-title: "算法竞赛常用模板整理"
+title: 算法竞赛常用模板整理
 date: 2021-12-18T15:57:37+08:00
 draft: false
-tags: [算法,模板]
+tags:
+  - 算法
+  - 模板
 description: 包含ICPC竞赛常用的一些模板
 categories: 算法
 mathjax: true
-markup: pandoc
+markup: goldmark
 ---
+
 
 ```CPP
 #include <iostream>
@@ -25,6 +28,7 @@ markup: pandoc
 #include <bitset>
 #include <deque>
 #include <regex>
+#include <list>
 #include <unordered_map>
 #include <unordered_set>
 
@@ -75,6 +79,7 @@ int main(){
 
     return 0;
 }
+
 ```
 
 # 字符串
@@ -636,7 +641,7 @@ struct State{
 };
 
 //PAM的每一个状态代表原字符串的一个回文子串，每一个转移代表从当前状态字符串的前后同时加一个相同字符后的状态。可以接受其所有回文子串。除了奇根都是可行状态（当然不能为空时偶根不可行）
-//fail指针指向该状态的最长回文真后缀。例如ayawaya就指向aba。总体和AC自动机的fail转移很像，都是没有ch的转移，则看fail有没有ch的转移，若fail没有则看fail[fail]的，以此类推。
+//fail指针指向该状态的最长回文真后缀。例如ayawaya就指向aya。总体和AC自动机的fail转移很像，都是没有ch的转移，则看fail有没有ch的转移，若fail没有则看fail[fail]的，以此类推。
 //回文串分为奇长度和偶长度的，所以PAM有奇根和偶根，偶根的fail指向奇根，奇根不可能失配。
 //PAM和SAM一样是动态构建的。
 
@@ -1037,7 +1042,7 @@ int main(){
 $$
 \left\{\begin{matrix}
 x \equiv a_1(mod\quad r_1) \\
-x \equiv a_2(mod\quad r_2 \\
+x \equiv a_2(mod\quad r_2) \\
 \vdots \\
 x \equiv a_k(mod\quad r_k)
 \end{matrix}\right.
@@ -1533,8 +1538,9 @@ for(auto x:graph[u]){
 }
 
 //清空某个点连出的所有边时，graph[u].clear()，不需要管edges的size
-//清楚整个图时edges.clear()，graph要对每个下标clear
-//这种清楚方式复杂度比传统数组版高很多，需要反复建图时不推荐使用。
+//清除整个图时edges.clear()，graph要对每个下标clear
+//这种清除方式复杂度比传统数组版高很多，需要反复建图时不推荐使用。
+//好处是不需要让边编号从2开始，从0开始即可存反向边
 ```
 
 ### 链式前向星（传统数组版）
@@ -1545,7 +1551,8 @@ struct Edge{
 };
 
 Edge edges[MAXM];//存无向图记得开两倍
-int head[MAXN],cnt;
+int head[MAXN],cnt;//如果要存反向边，并且用^1取反向边，应初始化cnt=1
+//不应把后面add的逻辑改成最后再cnt++，因为我们遍历边的时候是判断e是否等于0，所以不应该有边的编号等于0
 
 inline void add(int u, int v, int w){
     edges[++cnt].w = w;
@@ -7426,6 +7433,27 @@ int main(){
 }
 ```
 
+## 最大子段和
+
+```cpp
+//luogu P1115
+//复杂度 n
+//求一个数组里面最大连续子段的和，可以为空，此时和为0
+//如果要保证非空，则可以在外部加一条
+//ans = std::max(ans, arr[i]);
+//并且如果每个数都是负数，则直接输出最大的负数。
+LL calc(std::vector<LL> const & vec){
+    LL ret=0;
+    LL cur=0;
+    for(int i=0;i<vec.size();i++){
+        cur += vec[i];
+        if(cur<0) cur = 0;
+        ret = std::max(ret, cur);
+    }
+    return ret;
+}
+```
+
 ## 斜率优化TODO
 
 ## 四边形不等式TODO
@@ -8624,6 +8652,64 @@ std::tie(a,b,str) = t;
 ```cpp
 auto[c,d,str2] = t;
 ```
+
+## std::list
+
+### 声明方法
+
+```cpp
+std::list<int> l;//如果有初值可以l = {1,2,3};
+```
+
+### 元素访问
+
+链表的特性让我们无法随机访问，只能用`front()`和`end()`访问开始和结束元素。
+
+### ::empty()
+
+返回是否为空
+
+### ::size()
+
+返回元素个数
+
+### ::clear()
+
+清空
+
+### ::begin(), ::end(), ::rbegin(), ::rend()
+
+返回开始、结束迭代器。返回反向开始、结束迭代器。所以list是双向链表。
+
+### ::insert(pos, value)
+
+`pos`是一个迭代器，会在`pos`前面插入值为`value`的元素，不会使任何迭代器失效。
+
+### ::erase(pos)
+
+`pos`是一个迭代器，移除`pos`所指的元素。只有指向该元素的迭代器会失效，其他的不会。
+
+### ::push_back(v), ::pop_back(), ::push_front(v), ::pop_front()
+
+和双向队列一样，不再介绍
+
+### ::merge(list& other)
+
+将两个有序的链表合并，得到的新链表保持有序。另外新列表是调用这个方法的链表，other则会清空（如果两个链表相等则不会做任何事）。
+
+迭代器和引用不会失效。指向other元素的迭代器之后会指向新链表里的对应元素。
+
+### ::reverse()
+
+翻转链表，迭代器不会失效。
+
+### ::sort()
+
+排序，复杂度为nlogn
+
+### ::unique()
+
+删除连续的重复的元素，只保留第一个，被删除元素的迭代器失效。
 
 ## std::next_permutation, std::prev_permutation
 
