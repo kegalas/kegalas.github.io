@@ -1,13 +1,15 @@
 ---
-title: "概率论与数理统计整理"
+title: 概率论与数理统计整理
 date: 2022-08-30T10:41:24+08:00
 draft: false
-tags: [数学,大学]
+tags:
+  - 数学
+  - 大学
 description: 概率论与数理统计的学习笔记
 categories: 数学
-image: "cover.jpg"
+image: cover.jpg
 mathjax: true
-markup: pandoc
+markup: goldmark
 ---
 
 # 基本概念
@@ -681,11 +683,15 @@ $$
 
 #### 数学期望
 
-$$p$$
+$$
+p
+$$
 
 #### 方差
 
-$$p(1-p)$$
+$$
+p(1-p)
+$$
 
 ### 二项分布
 
@@ -706,11 +712,15 @@ $$
 
 #### 数学期望
 
-$$np$$
+$$
+np
+$$
 
 #### 方差
 
-$$np(1-p)$$
+$$
+np(1-p)
+$$
 
 ### 泊松分布
 
@@ -746,7 +756,9 @@ $$
 
 #### 数学期望
 
-$$\lambda$$
+$$
+\lambda
+$$
 
 我们可以证明$X$服从泊松分布时
 
@@ -756,7 +768,9 @@ $$
 
 #### 方差
 
-$$\lambda$$
+$$
+\lambda
+$$
 
 ### 超几何分布
 
@@ -770,11 +784,15 @@ $$
 
 #### 数学期望
 
-$$\frac{nM}{N}$$
+$$
+\frac{nM}{N}
+$$
 
 #### 方差
 
-$$\frac{nM(N-M)(N-n)}{N^2(N-1)}$$
+$$
+\frac{nM(N-M)(N-n)}{N^2(N-1)}
+$$
 
 ### 负二项分布
 
@@ -822,11 +840,15 @@ $$
 
 #### 数学期望
 
-$$\frac{1}{p}$$
+$$
+\frac{1}{p}
+$$
 
 #### 方差
 
-$$\frac{1-p}{p^2}$$
+$$
+\frac{1-p}{p^2}
+$$
 
 ### 多项分布
 
@@ -843,7 +865,7 @@ $$
 如果一个随机变量具有概率密度函数
 
 $$
-f(x)=(\sqrt{2\pi}\sigma)^{-1}e^{-\frac{(x-\mu)^2}{2\sigma^2}}\quad (-\infty<x<+\infty)
+f(x)=(\sqrt{2\pi}\sigma)^{-1}e^{-\frac{(x-\mu)^2}{2\sigma^2}}\quad (-\infty < x < + \infty )
 $$
 
 则称$X$为正态随机变量，并记为$X\sim N(\mu,\sigma^2)$。$\mu,\sigma^2$是常数，$\mu\in R,0<\sigma^2<\infty$，它们称为这个分布的参数。由后续的方差一节，$Var(X)=\sigma^2$，就是分布的方差。
@@ -902,11 +924,15 @@ $$
 
 #### 数学期望
 
-$$\mu$$
+$$
+\mu
+$$
 
 #### 方差
 
-$$\sigma^2$$
+$$
+\sigma^2
+$$
 
 #### 上$\alpha$分位点 
 
@@ -915,9 +941,7 @@ $$\sigma^2$$
 ### 二维正态分布
 
 $$
-f(x_1,x_2)=(2\pi\sigma_1\sigma_2\sqrt{1-\rho^2})^{-1}\exp\left[-\frac{1}{2(1-\rho^2)}\left(\frac{(x_1-a)^2}{\sigma_1^2}-\frac{2\rho(x_1-a)(x_2-b)}{\sigma_1\sigma_2}+
-\\
-\frac{(x_2-b)^2}{\sigma_2^2}\right)\right]
+f(x_1,x_2)=(2\pi\sigma_1\sigma_2\sqrt{1-\rho^2})^{-1}\exp\left[-\frac{1}{2(1-\rho^2)}\left(\frac{(x_1-a)^2}{\sigma_1^2}-\frac{2\rho(x_1-a)(x_2-b)}{\sigma_1\sigma_2}+\frac{(x_2-b)^2}{\sigma_2^2}\right)\right]
 $$
 
 常把这个分布记为$N(a,b,\sigma_1^2,\sigma_2^2,\rho)$
@@ -953,8 +977,8 @@ $$
 对于二维正态分布
 
 $$
-f(x_1,x_2)=(2\pi\sigma_1\sigma_2\sqrt{1-\rho^2})^{-1}\exp\left[-\frac{1}{2(1-\rho^2)}\left(\frac{(x_1-\mu_1)^2}{\sigma_1^2}-\frac{2\rho(x_1-\mu_1)(x_2-\mu_2)}{\sigma_1\sigma_2}+
-\\
+f(x_1,x_2)=\\
+(2\pi\sigma_1\sigma_2\sqrt{1-\rho^2})^{-1}\exp\left[-\frac{1}{2(1-\rho^2)}\left(\frac{(x_1-\mu_1)^2}{\sigma_1^2}-\frac{2\rho(x_1-\mu_1)(x_2-\mu_2)}{\sigma_1\sigma_2}+
 \frac{(x_2-\mu_2)^2}{\sigma_2^2}\right)\right]
 $$
 
@@ -999,7 +1023,7 @@ $$
 1. $n$维正态随机变量$(X_1,X_2,\cdots,X_n)$的每一个分量$X_i$都是正态随机变量；反之若$X_1,X_2,\cdots,X_n$都是正态随机变量且相互独立，则$(X_1,X_2,\cdots,X_n)$是$n$维正态随机变量
 2. $(X_1,X_2,\cdots,X_n)$是$n$维正态随机变量的充要条件是$X_1,X_2,\cdots,X_n$的任意线性组合$l_1X_1,l_2X_2,\cdots,l_nX_n$服从一维正态分布（其中$l_1,l_2,\cdots,l_n$不全为$0$）
 3. 若$(X_1,X_2,\cdots,X_n)$服从$n$维正态分布，设$Y_1,Y_2,\cdots,Y_k$是$X_i$的线性变换，则$(Y_1,Y_2,\cdots,Y_k)$也服从$k$维正态分布
-4. 若$(X_1,X_2,\cdots,X_n)$是$n$维正态随机变量，$m<n$，则$(X_1,X_2,\cdots,X_n)$的任意$m$个分量是$m$维正态随机变量
+4. 若$(X_1,X_2,\cdots,X_n)$是$n$维正态随机变量，$m < n$，则$(X_1,X_2,\cdots,X_n)$的任意$m$个分量是$m$维正态随机变量
 5. 设$(X_1,X_2,\cdots,X_n)$是$n$维正态随机变量，则“$X_1,X_2,\cdots,X_n$相互独立”与“$X_1,X_2,\cdots,X_n$两两不相关”等价。
 
 
@@ -1027,11 +1051,15 @@ $$
 
 #### 数学期望
 
-$$\frac{1}{\lambda}$$
+$$
+\frac{1}{\lambda}
+$$
 
 #### 方差
 
-$$\frac{1}{\lambda^2}$$
+$$
+\frac{1}{\lambda^2}
+$$
 
 ### 威布尔分布
 
@@ -1069,22 +1097,26 @@ $$
 其概率分布函数是
 
 $$
-F(x)=\left\{\begin{matrix}
-0,\quad\quad\quad\quad\quad\quad\quad\quad x\leq a\\
-(x-a)/(b-a),\quad a<x<b\\
-1,\quad\quad\quad\quad\quad\quad\quad\quad x\geq b
-\end{matrix}\right.
+F(x)=\left\{\begin{align*}
+&0, &&x\leq a\\
+&(x-a)/(b-a), &&a < x < b\\
+&1, &&x\geq b
+\end{align*}\right.
 $$
 
 常记作$R(a,b),U(a,b)$
 
 #### 数学期望
 
-$$\frac{a+b}{2}$$
+$$
+\frac{a+b}{2}
+$$
 
 #### 方差
 
-$$\frac{(b-a)^2}{12}$$
+$$
+\frac{(b-a)^2}{12}
+$$
 
 ### 二维随机向量的均匀分布
 
@@ -1143,7 +1175,8 @@ $$
 通过积分
 
 $$
-\Gamma(x) = \int^\infty_0 e^{-t}t^{x-1}dt(x>0)$$
+\Gamma(x) = \int^\infty_0 e^{-t}t^{x-1}dt(x>0)
+$$
 
 来定义
 
@@ -1153,7 +1186,8 @@ $$
 
 $$
 \Gamma(x) = \int^1_0 t^{x-1}(1-t)^{y-1}dt(x>0
-,y>0)$$
+,y>0)
+$$
 
 来定义
 
@@ -1510,7 +1544,7 @@ $$
 而连续的时候，有
 
 $$
-P(X\leq m) = P(X<m) = P(X>m) = P(X\geq m) = 1/2   
+P(X\leq m) = P(X < m) = P(X > m) = P(X\geq m) = 1/2   
 $$
 
 ## 方差与矩
@@ -1773,7 +1807,7 @@ X\sim N(np,np(1-p))
 $$
 
 $$
-P(X\leq x)\approx\Phi\bigg(\frac{x-np}{\sqrt{np(1-p)}}\bigg),\quad P(a<X\leq b)\approx\Phi\bigg(\frac{b-np}{\sqrt{np(1-p)}}\bigg)-\Phi\bigg(\frac{a-np}{\sqrt{np(1-p)}}\bigg)
+P(X\leq x)\approx\Phi\bigg(\frac{x-np}{\sqrt{np(1-p)}}\bigg),\quad P(a < X\leq b)\approx\Phi\bigg(\frac{b-np}{\sqrt{np(1-p)}}\bigg)-\Phi\bigg(\frac{a-np}{\sqrt{np(1-p)}}\bigg)
 $$
 
 # 参数估计
@@ -1830,8 +1864,8 @@ $$
 
 $$
 F_n(x)=\frac{x_1,\cdots,x_n中小于等于x的样本值的个数}{n} = \left\{\begin{matrix}
-0,&x<x_1 \\
-k/n,&x_k<x_{k+1} \\
+0,&x < x_1 \\
+k/n,&x_k < x_{k+1} \\
 1,&x\geq x_n
 \end{matrix}\right.
 $$
@@ -2318,7 +2352,7 @@ $$
 接受域为
 
 $$
-|u| = \bigg|\dfrac{\bar x-\mu_0}{\sigma/\sqrt n}\bigg|<z_{\alpha/2}
+|u| = \bigg|\dfrac{\bar x-\mu_0}{\sigma/\sqrt n}\bigg| < z_{\alpha/2}
 $$
 
 *左边假设*
@@ -2334,7 +2368,7 @@ $$
 接受域为
 
 $$
-u = \dfrac{\bar x-\mu_0}{\sigma/\sqrt n}<z_\alpha
+u = \dfrac{\bar x-\mu_0}{\sigma/\sqrt n} < z_\alpha
 $$
 
 **求未知参数假设检验的步骤**

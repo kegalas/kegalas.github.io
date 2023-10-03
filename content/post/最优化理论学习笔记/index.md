@@ -1,13 +1,16 @@
 ---
-title: "最优化理论学习笔记"
+title: 最优化理论学习笔记
 date: 2023-06-16T19:47:47+08:00
 draft: false
-tags: [大学, 数学, 最优化]
+tags:
+  - 大学
+  - 数学
+  - 最优化
 description: 最优化理论、算法的学习笔记
 categories: 数学
 mathjax: true
-markup: pandoc
-image: "cover.jpg"
+markup: goldmark
+image: cover.jpg
 ---
 
 # 读前警示

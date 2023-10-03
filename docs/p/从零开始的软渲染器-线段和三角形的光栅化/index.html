@@ -1,23 +1,23 @@
 <!DOCTYPE html>
 <html lang="en-us">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='导航页面 线段光栅化算法 从《Fundamentals of Computer Graphics》（第五版）中的第179页，我们得到了一种直线的表达方式， \[ f(x,y)\equiv (y_0-y_1)x&#43;(x_1-x_0)y &#43; x_0y_1-x_1y_0 ='><title>从零开始的软渲染器 线段和三角形的光栅化</title>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='导航页面 线段光栅化算法 从《Fundamentals of Computer Graphics》（第五版）中的第179页，我们得到了一种直线的表达方式， \[f(x,y)\equiv (y_0-y_1)x&#43;(x_1-x_0)y &#43; x_0y_1-x_1y_0 = 0'><title>从零开始的软渲染器 线段和三角形的光栅化</title>
 
 <link rel='canonical' href='https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E7%BA%BF%E6%AE%B5%E5%92%8C%E4%B8%89%E8%A7%92%E5%BD%A2%E7%9A%84%E5%85%89%E6%A0%85%E5%8C%96/'>
 
 <link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='从零开始的软渲染器 线段和三角形的光栅化'>
-<meta property='og:description' content='导航页面 线段光栅化算法 从《Fundamentals of Computer Graphics》（第五版）中的第179页，我们得到了一种直线的表达方式， \[ f(x,y)\equiv (y_0-y_1)x&#43;(x_1-x_0)y &#43; x_0y_1-x_1y_0 ='>
+<meta property='og:description' content='导航页面 线段光栅化算法 从《Fundamentals of Computer Graphics》（第五版）中的第179页，我们得到了一种直线的表达方式， \[f(x,y)\equiv (y_0-y_1)x&#43;(x_1-x_0)y &#43; x_0y_1-x_1y_0 = 0'>
 <meta property='og:url' content='https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E7%BA%BF%E6%AE%B5%E5%92%8C%E4%B8%89%E8%A7%92%E5%BD%A2%E7%9A%84%E5%85%89%E6%A0%85%E5%8C%96/'>
 <meta property='og:site_name' content='KegalaS的个人博客'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='图形学' /><meta property='article:tag' content='渲染' /><meta property='article:published_time' content='2023-05-17T21:31:12&#43;08:00'/><meta property='article:modified_time' content='2023-05-17T21:31:12&#43;08:00'/><meta property='og:image' content='https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E7%BA%BF%E6%AE%B5%E5%92%8C%E4%B8%89%E8%A7%92%E5%BD%A2%E7%9A%84%E5%85%89%E6%A0%85%E5%8C%96/cover.jpg' />
 <meta name="twitter:title" content="从零开始的软渲染器 线段和三角形的光栅化">
-<meta name="twitter:description" content="导航页面 线段光栅化算法 从《Fundamentals of Computer Graphics》（第五版）中的第179页，我们得到了一种直线的表达方式， \[ f(x,y)\equiv (y_0-y_1)x&#43;(x_1-x_0)y &#43; x_0y_1-x_1y_0 ="><meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:description" content="导航页面 线段光栅化算法 从《Fundamentals of Computer Graphics》（第五版）中的第179页，我们得到了一种直线的表达方式， \[f(x,y)\equiv (y_0-y_1)x&#43;(x_1-x_0)y &#43; x_0y_1-x_1y_0 = 0"><meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content='https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E7%BA%BF%E6%AE%B5%E5%92%8C%E4%B8%89%E8%A7%92%E5%BD%A2%E7%9A%84%E5%85%89%E6%A0%85%E5%8C%96/cover.jpg' />
     <link rel="shortcut icon" href="favicon-16x16.png" />
 
     </head>
     <body class="
-    article-page 
+    article-page has-toc
 ">
     <script>
         (function() {
@@ -43,276 +43,22 @@
 </script>
 <div class="container main-container flex 
     
-        on-phone--column extended
+        extended
     
 ">
     
-        <aside class="sidebar left-sidebar sticky">
-    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
-        <span class="hamburger-box">
-            <span class="hamburger-inner"></span>
-        </span>
-    </button>
-
-    <header class="site-info">
-        
-            
-            <figure class="site-avatar">
-                
-                    
-                    
-                    
-                        
-                        <img src="/img/avatar_hue338277dc5d37c7fe2e3b3f1c288220f_302064_300x0_resize_box_3.png" width="300"
-                            height="300" class="site-logo" loading="lazy" alt="Avatar">
-                    
-                
-
-                
-                    <span class="emoji">🤣</span>
-                
-            </figure>
-            
-        
-        
-        <h1 class="site-name"><a href="/">KegalaS的个人博客</a></h1>
-        <h2 class="site-description">长夜伴浪破晓梦,梦晓破浪伴夜长</h2><ol class="social-menu">
-                
-                    <li>
-                        <a 
-                            href='https://space.bilibili.com/8906855'
-                            target="_blank"
-                            title="Bilibili"
-                        >
-                            
-                            
-                                <?xml version="1.0" encoding="utf-8"?>
-<!-- Generator: Adobe Illustrator 26.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-<svg version="1.1" id="图层_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 24 24" style="enable-background:new 0 0 24 24;" xml:space="preserve">
-<style type="text/css">
-	.st0{fill:#BABABA;}
-</style>
-<path class="st0" d="M6.69,1.35l3.57,3.57h3.49l3.57-3.57c0.43-0.43,1.13-0.43,1.56,0c0.43,0.43,0.43,1.13,0,1.56l0,0l-2.01,2.01
-	h2.29c2.13,0,3.85,1.72,3.85,3.85c0,0,0,0,0,0v8.8c0,2.13-1.72,3.85-3.85,3.85H4.85C2.72,21.41,1,19.69,1,17.56l0,0v-8.8
-	c0-2.13,1.72-3.85,3.85-3.85l0,0h2.29L5.13,2.9c-0.43-0.43-0.43-1.13,0-1.56C5.56,0.92,6.26,0.92,6.69,1.35L6.69,1.35z M19.15,7.11
-	H4.85C4,7.11,3.29,7.76,3.21,8.61L3.2,8.76v8.8c0,0.85,0.65,1.56,1.49,1.64l0.16,0.01h14.3c0.85,0,1.56-0.65,1.64-1.49l0.01-0.16
-	v-8.8C20.8,7.85,20.06,7.11,19.15,7.11z M7.6,10.41c0.61,0,1.1,0.49,1.1,1.1v2.2c0,0.61-0.49,1.1-1.1,1.1s-1.1-0.49-1.1-1.1v-2.2
-	C6.5,10.91,6.99,10.41,7.6,10.41z M16.4,10.41c0.61,0,1.1,0.49,1.1,1.1l0,0v2.2c0,0.61-0.49,1.1-1.1,1.1c-0.61,0-1.1-0.49-1.1-1.1
-	v-2.2C15.3,10.91,15.79,10.41,16.4,10.41L16.4,10.41L16.4,10.41z"/>
-</svg>
-
-                            
-                        </a>
-                    </li>
-                
-                    <li>
-                        <a 
-                            href='mailto:kaoshen@outlook.com'
-                            target="_blank"
-                            title="E-Mail"
-                        >
-                            
-                            
-                                <?xml version="1.0" encoding="utf-8"?>
-<!-- Generator: Adobe Illustrator 26.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-<svg version="1.1" id="图层_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 24 24" style="enable-background:new 0 0 24 24;" xml:space="preserve">
-<style type="text/css">
-	.st0{fill:#BABABA;}
-</style>
-<path class="st0" d="M18.88,9.46V8.53l-6.99,4.19L4.9,8.53v0.93l6.99,4.19L18.88,9.46z"/>
-<path class="st0" d="M14.85,13.2l3.53,2.97l0.46-0.94l-3.13-2.51L14.85,13.2z"/>
-<path class="st0" d="M22.15,12.25C22.15,6.59,17.56,2,11.89,2S1.64,6.59,1.64,12.25s4.59,10.25,10.25,10.25S22.15,17.92,22.15,12.25
-	z M2.57,12.25c0-5.15,4.17-9.32,9.32-9.32s9.32,4.17,9.32,9.32s-4.17,9.32-9.32,9.32S2.57,17.4,2.57,12.25z"/>
-<path class="st0" d="M4.59,15.04l0.46,0.95l3.53-2.97l-0.86-0.48L4.59,15.04z"/>
-</svg>
-
-                            
-                        </a>
-                    </li>
-                
-                    <li>
-                        <a 
-                            href='https://github.com/kegalas'
-                            target="_blank"
-                            title="GitHub"
-                        >
-                            
-                            
-                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
-</svg>
-
-
-
-                            
-                        </a>
-                    </li>
-                
-                    <li>
-                        <a 
-                            href='https://vndb.org/u166447/ulist?votes=1'
-                            target="_blank"
-                            title="VNDB"
-                        >
-                            
-                            
-                                <?xml version="1.0" encoding="utf-8"?>
-<!-- Generator: Adobe Illustrator 26.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-<svg version="1.1" id="图层_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 24 24" style="enable-background:new 0 0 24 24;" xml:space="preserve">
-<style type="text/css">
-	.st0{fill:none;stroke:#BABABA;stroke-width:2;stroke-miterlimit:10;}
-	.st1{fill:none;stroke:#ECECEC;stroke-miterlimit:10;}
-	.st2{fill:#FFFFFF;stroke:#BABABA;stroke-miterlimit:10;}
-</style>
-<path class="st0" d="M1.5,2.5l8.6,15.9c0.8,1.5,3,1.5,3.8,0l8.6-15.9"/>
-<g>
-	<g>
-		<path class="st1" d="M1.4,2.5"/>
-	</g>
-</g>
-<g>
-	<g>
-		<path class="st1" d="M-2.8,2.7"/>
-	</g>
-</g>
-<g>
-	<g>
-		<path class="st1" d="M-2.8,2.7"/>
-	</g>
-</g>
-<g>
-	<g>
-		<path class="st1" d="M5.9,2.5"/>
-	</g>
-</g>
-<g>
-	<g>
-		<path class="st1" d="M5.9,2.5"/>
-	</g>
-</g>
-<path class="st2" d="M2.5,12.5"/>
-</svg>
-
-                            
-                        </a>
-                    </li>
-                
-            </ol></header>
-
-    <ol class="menu" id="main-menu">
-        
-        
-        
-
-        <li >
-            <a href='/' >
-                
-                
-                
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <div id="article-toolbar">
+            <a href="/" class="back-home">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
   <path stroke="none" d="M0 0h24v24H0z"/>
-  <polyline points="5 12 3 12 12 3 21 12 19 12" />
-  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
-  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+  <polyline points="15 6 9 12 15 18" />
 </svg>
 
 
 
-                
-                <span>Home</span>
+                <span>返回</span>
             </a>
-        </li>
-        
-        
-
-        <li >
-            <a href='/about/' >
-                
-                
-                
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="12" cy="7" r="4" />
-  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
-</svg>
-
-
-
-                
-                <span>About</span>
-            </a>
-        </li>
-        
-        
-
-        <li >
-            <a href='/archives/' >
-                
-                
-                
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <rect x="3" y="4" width="18" height="4" rx="2" />
-  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
-  <line x1="10" y1="12" x2="14" y2="12" />
-</svg>
-
-
-
-                
-                <span>Archives</span>
-            </a>
-        </li>
-        
-        
-
-        <li >
-            <a href='/search/' >
-                
-                
-                
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="10" cy="10" r="7" />
-  <line x1="21" y1="21" x2="15" y2="15" />
-</svg>
-
-
-
-                
-                <span>Search</span>
-            </a>
-        </li>
-        
-
-        
-            <li id="dark-mode-toggle">
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="8" cy="12" r="2" />
-  <rect x="2" y="6" width="20" height="12" rx="6" />
-</svg>
-
-
-
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="16" cy="12" r="2" />
-  <rect x="2" y="6" width="20" height="12" rx="6" />
-</svg>
-
-
-
-                <span>暗色模式</span>
-            </li>
-        
-    </ol>
-</aside>
-
+        </div>
     
 <main class="main full-width">
     <article class="has-image main-article">
@@ -385,37 +131,41 @@
 </header>
 
     <section class="article-content">
-    <p><u><strong><a
-href="../从零开始的软渲染器-导航/">导航页面</a></strong></u></p>
+    <p><u><strong><a class="link" href="../%e4%bb%8e%e9%9b%b6%e5%bc%80%e5%a7%8b%e7%9a%84%e8%bd%af%e6%b8%b2%e6%9f%93%e5%99%a8-%e5%af%bc%e8%88%aa/" >导航页面</a></strong></u></p>
 <h1 id="线段光栅化算法">线段光栅化算法</h1>
-<p>从《Fundamentals of Computer
-Graphics》（第五版）中的第179页，我们得到了一种直线的表达方式，</p>
-<p><span class="math display">\[
-f(x,y)\equiv (y_0-y_1)x+(x_1-x_0)y + x_0y_1-x_1y_0 = 0
+<p>从《Fundamentals of Computer Graphics》（第五版）中的第179页，我们得到了一种直线的表达方式，</p>
+<p><span class="math display">\[f(x,y)\equiv (y_0-y_1)x+(x_1-x_0)y + x_0y_1-x_1y_0 = 0
 \]</span></p>
-<p>其中<span
-class="math inline">\((x_0,y_0),(x_1,y_1)\)</span>代表直线上的任意不同的两点。并且<span
-class="math inline">\(x_0\leq
-x_1\)</span>，如果这个不满足，就交换两点的序号。然后直线的斜率显然就是</p>
-<p><span class="math display">\[
-m = \dfrac{y_1-y_0}{x_1-x_0}
+<p>其中<span class="math inline">\((x_0,y_0),(x_1,y_1)\)</span>代表直线上的任意不同的两点。并且<span class="math inline">\(x_0\leq x_1\)</span>，如果这个不满足，就交换两点的序号。然后直线的斜率显然就是</p>
+<p><span class="math display">\[m = \dfrac{y_1-y_0}{x_1-x_0}
 \]</span></p>
-<p>方便起见，我们先假设<span
-class="math inline">\(m\in(0,1]\)</span>。</p>
+<p>方便起见，我们先假设<span class="math inline">\(m\in(0,1]\)</span>。</p>
 <p>显然，我们要画一条直线的话，无非就两种情况：</p>
-<figure>
-<img src="1.jpg" alt="1.jpg" />
-<figcaption aria-hidden="true">1.jpg</figcaption>
-</figure>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 48; 
+			flex-basis: 116px"
+	>
+	<a href="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E7%BA%BF%E6%AE%B5%E5%92%8C%E4%B8%89%E8%A7%92%E5%BD%A2%E7%9A%84%E5%85%89%E6%A0%85%E5%8C%96/1.jpg" data-size="179x368">
+		<img src="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E7%BA%BF%E6%AE%B5%E5%92%8C%E4%B8%89%E8%A7%92%E5%BD%A2%E7%9A%84%E5%85%89%E6%A0%85%E5%8C%96/1.jpg"
+			width="179"
+			height="368"
+			srcset="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E7%BA%BF%E6%AE%B5%E5%92%8C%E4%B8%89%E8%A7%92%E5%BD%A2%E7%9A%84%E5%85%89%E6%A0%85%E5%8C%96/1_hue456148a6f7efe9f109597c8b4dfb71d_11439_480x0_resize_q75_box.jpg 480w, /p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E7%BA%BF%E6%AE%B5%E5%92%8C%E4%B8%89%E8%A7%92%E5%BD%A2%E7%9A%84%E5%85%89%E6%A0%85%E5%8C%96/1_hue456148a6f7efe9f109597c8b4dfb71d_11439_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="1.jpg">
+	</a>
+	
+	<figcaption>1.jpg</figcaption>
+	
+</figure></p>
 <p>要么向右移动一格，要么向右后再向上移动一格。总之，我们总是向右移动一格，然后根据某种条件向上移动一格。我们可以把这个条件设置为</p>
-<p><span class="math display">\[
-\mathbf{if}\ f(x+1,y+0.5)&lt;0\ \mathbf{then}\ y=y+1
+<p><span class="math display">\[\mathbf{if}\ f(x+1,y+0.5)<0\ \mathbf{then}\ y=y+1
 \]</span></p>
-<p>注意这里的<span
-class="math inline">\((x,y)\)</span>取整数，起始像素在直线上。</p>
-<p>进一步的，如果我们不想每次都调用函数<span
-class="math inline">\(f\)</span>，我们有如下优化</p>
-<pre><code>y = y0
+<p>注意这里的<span class="math inline">\((x,y)\)</span>取整数，起始像素在直线上。</p>
+<p>进一步的，如果我们不想每次都调用函数<span class="math inline">\(f\)</span>，我们有如下优化</p>
+<pre tabindex="0"><code>y = y0
 d = f(x0+1,y0+0.5)
 for x = x0 to x1 do
     draw(x,y)
@@ -423,167 +173,184 @@ for x = x0 to x1 do
         y = y+1
         d = d+(x1-x0)+(y0-y1)
     else
-        d = d+(y0-y1)</code></pre>
-<p>不优化的方法写成cpp的样子大概如下</p>
-<div class="sourceCode" id="cb2"><pre
-class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span><span class="op">(</span>p0<span class="op">-&gt;</span>x<span class="op">&gt;</span>p1<span class="op">-&gt;</span>x<span class="op">)</span> <span class="bu">std::</span>swap<span class="op">(</span>p0<span class="op">,</span>p1<span class="op">);</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> fxy <span class="op">=</span> <span class="op">[&amp;](</span><span class="dt">float</span> x<span class="op">,</span> <span class="dt">float</span> y<span class="op">)-&gt;</span><span class="dt">float</span><span class="op">{</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">(</span>p0<span class="op">-&gt;</span>y<span class="op">-</span>p1<span class="op">-&gt;</span>y<span class="op">)*</span>x<span class="op">+(</span>p1<span class="op">-&gt;</span>x<span class="op">-</span>p0<span class="op">-&gt;</span>x<span class="op">)*</span>y<span class="op">+</span>p0<span class="op">-&gt;</span>x<span class="op">*</span>p1<span class="op">-&gt;</span>y<span class="op">-</span>p1<span class="op">-&gt;</span>x<span class="op">*</span>p0<span class="op">-&gt;</span>y<span class="op">;</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> y <span class="op">=</span> p0<span class="op">-&gt;</span>y<span class="op">;</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span><span class="op">(</span><span class="dt">int</span> x <span class="op">=</span> p0<span class="op">-&gt;</span>x <span class="op">;</span> x<span class="op">&lt;=</span>p1<span class="op">-&gt;</span>x <span class="op">;</span> x<span class="op">++){</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    image<span class="op">.</span>setFragment<span class="op">(</span>x<span class="op">,</span>y<span class="op">,</span>color<span class="op">);</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="dt">float</span> er <span class="op">=</span> fxy<span class="op">(</span><span class="kw">static_cast</span><span class="op">&lt;</span><span class="dt">float</span><span class="op">&gt;(</span>x<span class="op">)+</span><span class="fl">1.</span><span class="bu">f</span><span class="op">,</span> <span class="kw">static_cast</span><span class="op">&lt;</span><span class="dt">float</span><span class="op">&gt;(</span>y<span class="op">)+</span><span class="fl">.5</span><span class="bu">f</span><span class="op">);</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span><span class="op">(</span>p0<span class="op">-&gt;</span>y<span class="op">&lt;</span>p1<span class="op">-&gt;</span>y <span class="op">&amp;&amp;</span> er<span class="op">&lt;</span><span class="fl">0.</span><span class="bu">f</span> <span class="op">&amp;&amp;</span> y<span class="op">&lt;</span>image<span class="op">.</span>getHeight<span class="op">()-</span><span class="dv">1</span><span class="op">){</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>        y<span class="op">++;</span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> <span class="cf">if</span><span class="op">(</span>p0<span class="op">-&gt;</span>y<span class="op">&gt;</span>p1<span class="op">-&gt;</span>y <span class="op">&amp;&amp;</span> er<span class="op">&gt;</span><span class="fl">0.</span><span class="bu">f</span> <span class="op">&amp;&amp;</span> y<span class="op">&gt;</span><span class="dv">0</span><span class="op">){</span></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>        y<span class="op">--;</span></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
-<p>这里写的包括了<span
-class="math inline">\(m\in[-1,1]\)</span>的情况，负数情况很简单，就把y++变成y–，以及判断小于零转变为判断大于零。</p>
-<p>当<span
-class="math inline">\(m\in(1,+\infty]\)</span>时，情况转变为，我们要么向上走一格，要么向上后向右走一格，与之前的情况非常相似，我们只要把遍历x改成遍历y，判断x++的条件即可。</p>
+        d = d+(y0-y1)
+</code></pre><p>不优化的方法写成cpp的样子大概如下</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span><span style="color:#66d9ef">if</span>(p0<span style="color:#f92672">-&gt;</span>x<span style="color:#f92672">&gt;</span>p1<span style="color:#f92672">-&gt;</span>x) std<span style="color:#f92672">::</span>swap(p0,p1);
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span><span>        
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span><span><span style="color:#66d9ef">auto</span> fxy <span style="color:#f92672">=</span> [<span style="color:#f92672">&amp;</span>](<span style="color:#66d9ef">float</span> x, <span style="color:#66d9ef">float</span> y)<span style="color:#f92672">-&gt;</span><span style="color:#66d9ef">float</span>{
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span><span>    <span style="color:#66d9ef">return</span> (p0<span style="color:#f92672">-&gt;</span>y<span style="color:#f92672">-</span>p1<span style="color:#f92672">-&gt;</span>y)<span style="color:#f92672">*</span>x<span style="color:#f92672">+</span>(p1<span style="color:#f92672">-&gt;</span>x<span style="color:#f92672">-</span>p0<span style="color:#f92672">-&gt;</span>x)<span style="color:#f92672">*</span>y<span style="color:#f92672">+</span>p0<span style="color:#f92672">-&gt;</span>x<span style="color:#f92672">*</span>p1<span style="color:#f92672">-&gt;</span>y<span style="color:#f92672">-</span>p1<span style="color:#f92672">-&gt;</span>x<span style="color:#f92672">*</span>p0<span style="color:#f92672">-&gt;</span>y;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span><span>};
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span><span><span style="color:#66d9ef">int</span> y <span style="color:#f92672">=</span> p0<span style="color:#f92672">-&gt;</span>y;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span><span><span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> x <span style="color:#f92672">=</span> p0<span style="color:#f92672">-&gt;</span>x ; x<span style="color:#f92672">&lt;=</span>p1<span style="color:#f92672">-&gt;</span>x ; x<span style="color:#f92672">++</span>){
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span><span>    image.setFragment(x,y,color);
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span><span>    <span style="color:#66d9ef">float</span> er <span style="color:#f92672">=</span> fxy(<span style="color:#66d9ef">static_cast</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">float</span><span style="color:#f92672">&gt;</span>(x)<span style="color:#f92672">+</span><span style="color:#ae81ff">1.f</span>, <span style="color:#66d9ef">static_cast</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">float</span><span style="color:#f92672">&gt;</span>(y)<span style="color:#f92672">+</span><span style="color:#ae81ff">.5f</span>);
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span><span>    <span style="color:#66d9ef">if</span>(p0<span style="color:#f92672">-&gt;</span>y<span style="color:#f92672">&lt;</span>p1<span style="color:#f92672">-&gt;</span>y <span style="color:#f92672">&amp;&amp;</span> er<span style="color:#f92672">&lt;</span><span style="color:#ae81ff">0.f</span> <span style="color:#f92672">&amp;&amp;</span> y<span style="color:#f92672">&lt;</span>image.getHeight()<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>){
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span><span>        y<span style="color:#f92672">++</span>;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13</span><span>    }
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14</span><span>    <span style="color:#66d9ef">else</span> <span style="color:#a6e22e">if</span>(p0<span style="color:#f92672">-&gt;</span>y<span style="color:#f92672">&gt;</span>p1<span style="color:#f92672">-&gt;</span>y <span style="color:#f92672">&amp;&amp;</span> er<span style="color:#f92672">&gt;</span><span style="color:#ae81ff">0.f</span> <span style="color:#f92672">&amp;&amp;</span> y<span style="color:#f92672">&gt;</span><span style="color:#ae81ff">0</span>){
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15</span><span>        y<span style="color:#f92672">--</span>;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16</span><span>    }
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17</span><span>}
+</span></span></code></pre></div><p>这里写的包括了<span class="math inline">\(m\in[-1,1]\)</span>的情况，负数情况很简单，就把y++变成y&ndash;，以及判断小于零转变为判断大于零。</p>
+<p>当<span class="math inline">\(m\in(1,+\infty]\)</span>时，情况转变为，我们要么向上走一格，要么向上后向右走一格，与之前的情况非常相似，我们只要把遍历x改成遍历y，判断x++的条件即可。</p>
 <h1 id="三角形光栅化算法">三角形光栅化算法</h1>
 <p>我会直接使用三角形的重心坐标来实现三角形的光栅化，因为比起其他一些扫描方法，重心坐标能比较方便的实现插值。</p>
-<p>三角形的重心坐标可见《Fundamentals of Computer
-Graphics》（第五版）中的第52页。</p>
-<p>根据线性代数的知识，假设我们三角形有三个不重合的点<span
-class="math inline">\(A,B,C\)</span>，则我们可以用<span
-class="math inline">\(\vec{AB},\vec{AC}\)</span>表示平面中任意的点<span
-class="math inline">\(p\)</span>，我们有如下公式</p>
-<p><span class="math display">\[
-\vec{p} = \alpha\vec{a} + \beta\vec{b}+\gamma\vec{c}
+<p>三角形的重心坐标可见《Fundamentals of Computer Graphics》（第五版）中的第52页。</p>
+<p>根据线性代数的知识，假设我们三角形有三个不重合的点<span class="math inline">\(A,B,C\)</span>，则我们可以用<span class="math inline">\(\vec{AB},\vec{AC}\)</span>表示平面中任意的点<span class="math inline">\(p\)</span>，我们有如下公式</p>
+<p><span class="math display">\[\vec{p} = \alpha\vec{a} + \beta\vec{b}+\gamma\vec{c}
 \]</span></p>
 <p>其中<span class="math inline">\(\alpha+\beta+\gamma=1\)</span></p>
-<p>可以计算得到，对于平面上的任意一个点<span
-class="math inline">\((x,y)\)</span></p>
-<p><span class="math display">\[
-\gamma =
-\dfrac{(y_a-y_b)x+(x_b-x_a)y+x_ay_b-x_by_a}{(y_a-y_b)x_c+(x_b-x_a)y_c+x_ay_b-x_by_a}
+<p>可以计算得到，对于平面上的任意一个点<span class="math inline">\((x,y)\)</span></p>
+<p><span class="math display">\[\gamma = \dfrac{(y_a-y_b)x+(x_b-x_a)y+x_ay_b-x_by_a}{(y_a-y_b)x_c+(x_b-x_a)y_c+x_ay_b-x_by_a}
 \]</span></p>
-<p><span class="math display">\[
-\beta =
-\dfrac{(y_a-y_c)x+(x_c-x_a)y+x_ay_c-x_cy_a}{(y_a-y_c)x_b+(x_c-x_a)y_b+x_ay_c-x_cy_a}
+<p><span class="math display">\[\beta = \dfrac{(y_a-y_c)x+(x_c-x_a)y+x_ay_c-x_cy_a}{(y_a-y_c)x_b+(x_c-x_a)y_b+x_ay_c-x_cy_a}
 \]</span></p>
-<p><span class="math display">\[
-\alpha = 1-\beta-\gamma
+<p><span class="math display">\[\alpha = 1-\beta-\gamma
 \]</span></p>
 <p>当这个点在三角形内时，满足以下条件</p>
-<p><span class="math display">\[
-0&lt;\alpha&lt;1
+<p><span class="math display">\[0<\alpha<1
 \]</span></p>
-<p><span class="math display">\[
-0&lt;\beta&lt;1
+<p><span class="math display">\[0<\beta<1
 \]</span></p>
-<p><span class="math display">\[
-0&lt;\gamma&lt;1
+<p><span class="math display">\[0<\gamma<1
 \]</span></p>
-<p>特别的，如果在三角形上，则可以取等号。总体还是要满足<span
-class="math inline">\(\alpha+\beta+\gamma=1\)</span>。</p>
-<p>这个东西好就好在，如果需要对颜色进行插值，对于三角形内部任意一点<span
-class="math inline">\(p\)</span>，有<span
-class="math inline">\(color_p=\alpha color_a+\beta color_b+\gamma
-color_c\)</span>。</p>
+<p>特别的，如果在三角形上，则可以取等号。总体还是要满足<span class="math inline">\(\alpha+\beta+\gamma=1\)</span>。</p>
+<p>这个东西好就好在，如果需要对颜色进行插值，对于三角形内部任意一点<span class="math inline">\(p\)</span>，有<span class="math inline">\(color_p=\alpha color_a+\beta color_b+\gamma color_c\)</span>。</p>
 <p>我们绘制的时候设置三个点为红、绿、蓝，中间颜色进行插值，就会得到这个结果</p>
-<figure>
-<img src="2.jpg" alt="2.jpg" />
-<figcaption aria-hidden="true">2.jpg</figcaption>
-</figure>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 100; 
+			flex-basis: 240px"
+	>
+	<a href="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E7%BA%BF%E6%AE%B5%E5%92%8C%E4%B8%89%E8%A7%92%E5%BD%A2%E7%9A%84%E5%85%89%E6%A0%85%E5%8C%96/2.jpg" data-size="390x390">
+		<img src="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E7%BA%BF%E6%AE%B5%E5%92%8C%E4%B8%89%E8%A7%92%E5%BD%A2%E7%9A%84%E5%85%89%E6%A0%85%E5%8C%96/2.jpg"
+			width="390"
+			height="390"
+			srcset="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E7%BA%BF%E6%AE%B5%E5%92%8C%E4%B8%89%E8%A7%92%E5%BD%A2%E7%9A%84%E5%85%89%E6%A0%85%E5%8C%96/2_hu2cd82ccc243f92beef3875a9a1225862_5099_480x0_resize_q75_box.jpg 480w, /p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E7%BA%BF%E6%AE%B5%E5%92%8C%E4%B8%89%E8%A7%92%E5%BD%A2%E7%9A%84%E5%85%89%E6%A0%85%E5%8C%96/2_hu2cd82ccc243f92beef3875a9a1225862_5099_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="2.jpg">
+	</a>
+	
+	<figcaption>2.jpg</figcaption>
+	
+</figure></p>
 <p>接下来我们谈谈具体怎么画三角形。</p>
 <p>首先非常暴力的想法是，把整个屏幕上的点扫描一遍，如果这个点在三角形内部，就给他上色。</p>
 <p>稍微优化一下，我们只需要扫描三角形的外接矩形（四边平行于坐标轴）即可。</p>
 <p>cpp代码如下</p>
-<div class="sourceCode" id="cb3"><pre
-class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> maxx <span class="op">=</span> <span class="dv">0</span><span class="op">,</span> minx <span class="op">=</span> image<span class="op">.</span>getWidth<span class="op">()-</span><span class="dv">1</span><span class="op">,</span> maxy <span class="op">=</span> <span class="dv">0</span><span class="op">,</span> miny <span class="op">=</span> image<span class="op">.</span>getHeight<span class="op">()-</span><span class="dv">1</span><span class="op">;</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span><span class="op">(</span><span class="dt">int</span> i<span class="op">=</span><span class="dv">0</span><span class="op">;</span>i<span class="op">&lt;</span><span class="dv">3</span><span class="op">;</span>i<span class="op">++){</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>        maxx <span class="op">=</span> <span class="bu">std::</span>max<span class="op">(</span>maxx<span class="op">,</span> points<span class="op">[</span>i<span class="op">].</span>x<span class="op">);</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>        minx <span class="op">=</span> <span class="bu">std::</span>min<span class="op">(</span>minx<span class="op">,</span> points<span class="op">[</span>i<span class="op">].</span>x<span class="op">);</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>        maxy <span class="op">=</span> <span class="bu">std::</span>max<span class="op">(</span>maxy<span class="op">,</span> points<span class="op">[</span>i<span class="op">].</span>y<span class="op">);</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>        miny <span class="op">=</span> <span class="bu">std::</span>min<span class="op">(</span>miny<span class="op">,</span> points<span class="op">[</span>i<span class="op">].</span>y<span class="op">);</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span><span class="op">(</span><span class="dt">int</span> x<span class="op">=</span>minx<span class="op">;</span>x<span class="op">&lt;=</span>maxx<span class="op">;</span>x<span class="op">++){</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span><span class="op">(</span><span class="dt">int</span> y<span class="op">=</span>miny<span class="op">;</span>y<span class="op">&lt;=</span>maxy<span class="op">;</span>y<span class="op">++){</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>            <span class="bu">std::</span>tuple<span class="op">&lt;</span><span class="dt">float</span><span class="op">,</span><span class="dt">float</span><span class="op">,</span><span class="dt">float</span><span class="op">&gt;</span> ret <span class="op">=</span> geo<span class="op">::</span>getBarycentric<span class="op">(</span>points<span class="op">,</span> x<span class="op">,</span> y<span class="op">);</span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>            <span class="dt">float</span> alpha <span class="op">=</span> <span class="bu">std::</span>get<span class="op">&lt;</span><span class="dv">0</span><span class="op">&gt;</span> <span class="op">(</span>ret<span class="op">);</span></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>            <span class="dt">float</span> beta  <span class="op">=</span> <span class="bu">std::</span>get<span class="op">&lt;</span><span class="dv">1</span><span class="op">&gt;</span> <span class="op">(</span>ret<span class="op">);</span></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>            <span class="dt">float</span> gamma <span class="op">=</span> <span class="bu">std::</span>get<span class="op">&lt;</span><span class="dv">2</span><span class="op">&gt;</span> <span class="op">(</span>ret<span class="op">);</span></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span><span class="op">(</span><span class="fl">0.</span><span class="bu">f</span><span class="op">&lt;=</span>alpha <span class="op">&amp;&amp;</span> alpha<span class="op">&lt;=</span><span class="fl">1.</span><span class="bu">f</span> <span class="op">&amp;&amp;</span></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>               <span class="fl">0.</span><span class="bu">f</span><span class="op">&lt;=</span>beta  <span class="op">&amp;&amp;</span> beta <span class="op">&lt;=</span><span class="fl">1.</span><span class="bu">f</span> <span class="op">&amp;&amp;</span></span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>               <span class="fl">0.</span><span class="bu">f</span><span class="op">&lt;=</span>gamma <span class="op">&amp;&amp;</span> gamma<span class="op">&lt;=</span><span class="fl">1.</span><span class="bu">f</span><span class="op">)</span></span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>            <span class="op">{</span></span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>                geo<span class="op">::</span>OARColor color <span class="op">=</span> <span class="kw">static_cast</span><span class="op">&lt;</span>geo<span class="op">::</span>vec4i<span class="op">&gt;(</span></span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>                                      alpha<span class="op">*</span><span class="kw">static_cast</span><span class="op">&lt;</span>geo<span class="op">::</span>vec4f<span class="op">&gt;(</span>colors<span class="op">[</span><span class="dv">0</span><span class="op">])</span> <span class="op">+</span></span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>                                      beta<span class="op">*</span><span class="kw">static_cast</span><span class="op">&lt;</span>geo<span class="op">::</span>vec4f<span class="op">&gt;(</span>colors<span class="op">[</span><span class="dv">1</span><span class="op">])</span> <span class="op">+</span></span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>                                      gamma<span class="op">*</span><span class="kw">static_cast</span><span class="op">&lt;</span>geo<span class="op">::</span>vec4f<span class="op">&gt;(</span>colors<span class="op">[</span><span class="dv">2</span><span class="op">]));</span></span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>                image<span class="op">.</span>setFragment<span class="op">(</span>x<span class="op">,</span>y<span class="op">,</span>color<span class="op">);</span></span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>            <span class="op">}</span></span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span></code></pre></div>
-<p>全部光栅化的代码可见<strong><a
-href="https://github.com/kegalas/oar/blob/main/tutorial/chapter3/src/geometry.cpp">这里</a></strong></p>
-<p>另外，求重心坐标的代码我写到了geometry.cpp里，方便别处调用。链接在<strong><a
-href="https://github.com/kegalas/oar/blob/main/tutorial/chapter3/src/geometry.cpp">这里</a></strong>（在文件末尾）</p>
-<p>另外，求重心坐标还有一种不那么复杂的公式，见<strong><a
-href="../计算机图形学基础学习笔记-数学基础/#重心坐标系">计算机图形学基础学习笔记-数学基础</a></strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span><span style="color:#66d9ef">int</span> maxx <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>, minx <span style="color:#f92672">=</span> image.getWidth()<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, maxy <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>, miny <span style="color:#f92672">=</span> image.getHeight()<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span><span>    <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>;i<span style="color:#f92672">&lt;</span><span style="color:#ae81ff">3</span>;i<span style="color:#f92672">++</span>){
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span><span>        maxx <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>max(maxx, points[i].x);
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span><span>        minx <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>min(minx, points[i].x);
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span><span>        maxy <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>max(maxy, points[i].y);
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span><span>        miny <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>min(miny, points[i].y);
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span><span>    }
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span><span>    <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> x<span style="color:#f92672">=</span>minx;x<span style="color:#f92672">&lt;=</span>maxx;x<span style="color:#f92672">++</span>){
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span><span>        <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> y<span style="color:#f92672">=</span>miny;y<span style="color:#f92672">&lt;=</span>maxy;y<span style="color:#f92672">++</span>){
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span><span>            std<span style="color:#f92672">::</span>tuple<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">float</span>,<span style="color:#66d9ef">float</span>,<span style="color:#66d9ef">float</span><span style="color:#f92672">&gt;</span> ret <span style="color:#f92672">=</span> geo<span style="color:#f92672">::</span>getBarycentric(points, x, y);
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span><span>            <span style="color:#66d9ef">float</span> alpha <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>get<span style="color:#f92672">&lt;</span><span style="color:#ae81ff">0</span><span style="color:#f92672">&gt;</span> (ret);
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13</span><span>            <span style="color:#66d9ef">float</span> beta  <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>get<span style="color:#f92672">&lt;</span><span style="color:#ae81ff">1</span><span style="color:#f92672">&gt;</span> (ret);
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14</span><span>            <span style="color:#66d9ef">float</span> gamma <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>get<span style="color:#f92672">&lt;</span><span style="color:#ae81ff">2</span><span style="color:#f92672">&gt;</span> (ret);
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15</span><span>            <span style="color:#66d9ef">if</span>(<span style="color:#ae81ff">0.f</span><span style="color:#f92672">&lt;=</span>alpha <span style="color:#f92672">&amp;&amp;</span> alpha<span style="color:#f92672">&lt;=</span><span style="color:#ae81ff">1.f</span> <span style="color:#f92672">&amp;&amp;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16</span><span>               <span style="color:#ae81ff">0.f</span><span style="color:#f92672">&lt;=</span>beta  <span style="color:#f92672">&amp;&amp;</span> beta <span style="color:#f92672">&lt;=</span><span style="color:#ae81ff">1.f</span> <span style="color:#f92672">&amp;&amp;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17</span><span>               <span style="color:#ae81ff">0.f</span><span style="color:#f92672">&lt;=</span>gamma <span style="color:#f92672">&amp;&amp;</span> gamma<span style="color:#f92672">&lt;=</span><span style="color:#ae81ff">1.f</span>)
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18</span><span>            {
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19</span><span>                geo<span style="color:#f92672">::</span>OARColor color <span style="color:#f92672">=</span> <span style="color:#66d9ef">static_cast</span><span style="color:#f92672">&lt;</span>geo<span style="color:#f92672">::</span>vec4i<span style="color:#f92672">&gt;</span>(
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20</span><span>                                      alpha<span style="color:#f92672">*</span><span style="color:#66d9ef">static_cast</span><span style="color:#f92672">&lt;</span>geo<span style="color:#f92672">::</span>vec4f<span style="color:#f92672">&gt;</span>(colors[<span style="color:#ae81ff">0</span>]) <span style="color:#f92672">+</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21</span><span>                                      beta<span style="color:#f92672">*</span><span style="color:#66d9ef">static_cast</span><span style="color:#f92672">&lt;</span>geo<span style="color:#f92672">::</span>vec4f<span style="color:#f92672">&gt;</span>(colors[<span style="color:#ae81ff">1</span>]) <span style="color:#f92672">+</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22</span><span>                                      gamma<span style="color:#f92672">*</span><span style="color:#66d9ef">static_cast</span><span style="color:#f92672">&lt;</span>geo<span style="color:#f92672">::</span>vec4f<span style="color:#f92672">&gt;</span>(colors[<span style="color:#ae81ff">2</span>]));
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23</span><span>                image.setFragment(x,y,color);
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24</span><span>            }
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25</span><span>        }
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26</span><span>    }
+</span></span></code></pre></div><p>全部光栅化的代码可见**<a class="link" href="https://github.com/kegalas/oar/blob/main/tutorial/chapter3/src/geometry.cpp"  target="_blank" rel="noopener"
+    >这里</a>**</p>
+<p>另外，求重心坐标的代码我写到了geometry.cpp里，方便别处调用。链接在**<a class="link" href="https://github.com/kegalas/oar/blob/main/tutorial/chapter3/src/geometry.cpp"  target="_blank" rel="noopener"
+    >这里</a>**（在文件末尾）</p>
+<p>另外，求重心坐标还有一种不那么复杂的公式，见**<a class="link" href="../%e8%ae%a1%e7%ae%97%e6%9c%ba%e5%9b%be%e5%bd%a2%e5%ad%a6%e5%9f%ba%e7%a1%80%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0-%e6%95%b0%e5%ad%a6%e5%9f%ba%e7%a1%80/#%e9%87%8d%e5%bf%83%e5%9d%90%e6%a0%87%e7%b3%bb" >计算机图形学基础学习笔记-数学基础</a>**</p>
 <p>注意，</p>
-<div class="sourceCode" id="cb4"><pre
-class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span><span class="op">(</span><span class="fl">0.</span><span class="bu">f</span><span class="op">&lt;=</span>alpha <span class="op">&amp;&amp;</span> alpha<span class="op">&lt;=</span><span class="fl">1.</span><span class="bu">f</span> <span class="op">&amp;&amp;</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>               <span class="fl">0.</span><span class="bu">f</span><span class="op">&lt;=</span>beta  <span class="op">&amp;&amp;</span> beta <span class="op">&lt;=</span><span class="fl">1.</span><span class="bu">f</span> <span class="op">&amp;&amp;</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>               <span class="fl">0.</span><span class="bu">f</span><span class="op">&lt;=</span>gamma <span class="op">&amp;&amp;</span> gamma<span class="op">&lt;=</span><span class="fl">1.</span><span class="bu">f</span><span class="op">)</span></span></code></pre></div>
-<p>这一段代码也可以写作</p>
-<div class="sourceCode" id="cb5"><pre
-class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span><span class="op">(</span>alpha <span class="op">&lt;</span> <span class="fl">0.</span><span class="bu">f</span> <span class="op">||</span> beta <span class="op">&lt;</span> <span class="fl">0.</span><span class="bu">f</span> <span class="op">||</span> gamma <span class="op">&lt;</span> <span class="fl">0.</span><span class="bu">f</span><span class="op">)</span> <span class="cf">continue</span><span class="op">;</span></span></code></pre></div>
-<p>这也是对的。唯一需要小心的是精度问题，float的精度可能不足以把边界上的每一个点都画出来。如果你不在乎这一两个像素点就可以不用管，如果你在乎，那么我们可以修改为alpha&lt;-(1e-5)这样的条件。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span><span style="color:#66d9ef">if</span>(<span style="color:#ae81ff">0.f</span><span style="color:#f92672">&lt;=</span>alpha <span style="color:#f92672">&amp;&amp;</span> alpha<span style="color:#f92672">&lt;=</span><span style="color:#ae81ff">1.f</span> <span style="color:#f92672">&amp;&amp;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2</span><span>               <span style="color:#ae81ff">0.f</span><span style="color:#f92672">&lt;=</span>beta  <span style="color:#f92672">&amp;&amp;</span> beta <span style="color:#f92672">&lt;=</span><span style="color:#ae81ff">1.f</span> <span style="color:#f92672">&amp;&amp;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3</span><span>               <span style="color:#ae81ff">0.f</span><span style="color:#f92672">&lt;=</span>gamma <span style="color:#f92672">&amp;&amp;</span> gamma<span style="color:#f92672">&lt;=</span><span style="color:#ae81ff">1.f</span>)
+</span></span></code></pre></div><p>这一段代码也可以写作</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span><span style="color:#66d9ef">if</span>(alpha <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0.f</span> <span style="color:#f92672">||</span> beta <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0.f</span> <span style="color:#f92672">||</span> gamma <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0.f</span>) <span style="color:#66d9ef">continue</span>;
+</span></span></code></pre></div><p>这也是对的。唯一需要小心的是精度问题，float的精度可能不足以把边界上的每一个点都画出来。如果你不在乎这一两个像素点就可以不用管，如果你在乎，那么我们可以修改为alpha&lt;-(1e-5)这样的条件。</p>
 <h1 id="使用例子">使用例子</h1>
 <h2 id="绘制线段">绘制线段</h2>
-<div class="sourceCode" id="cb6"><pre
-class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&quot;tga_image.h&quot;</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&quot;raster.h&quot;</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">(){</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    TGAImage image<span class="op">(</span><span class="dv">100</span><span class="op">,</span><span class="dv">100</span><span class="op">,</span>TGAType<span class="op">::</span>rgb<span class="op">);</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    geo<span class="op">::</span>vec2i pts0<span class="op">[</span><span class="dv">2</span><span class="op">]</span> <span class="op">=</span> <span class="op">{</span>geo<span class="op">::</span>vec2i<span class="op">(</span><span class="dv">99</span><span class="op">,</span><span class="dv">0</span><span class="op">),</span>geo<span class="op">::</span>vec2i<span class="op">(</span><span class="dv">0</span><span class="op">,</span><span class="dv">99</span><span class="op">)};</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    ras<span class="op">::</span>line<span class="op">(</span>image<span class="op">,</span> pts0<span class="op">,</span> geo<span class="op">::</span>OARColor<span class="op">(</span><span class="dv">255</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">255</span><span class="op">));</span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span><span class="op">(</span><span class="dt">int</span> i<span class="op">=</span><span class="dv">0</span><span class="op">;</span>i<span class="op">&lt;=</span><span class="dv">99</span><span class="op">;</span>i<span class="op">+=</span><span class="dv">10</span><span class="op">){</span></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>        pts0<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">=</span> geo<span class="op">::</span>vec2i<span class="op">(</span>i<span class="op">,</span><span class="dv">0</span><span class="op">);</span></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>        ras<span class="op">::</span>line<span class="op">(</span>image<span class="op">,</span> pts0<span class="op">,</span> geo<span class="op">::</span>OARColor<span class="op">(</span><span class="dv">255</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">255</span><span class="op">));</span></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    image<span class="op">.</span>writeToFile<span class="op">(</span><span class="st">&quot;./line.tga&quot;</span><span class="op">);</span></span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
-<p>如上，我们首先绘制了一条<span
-class="math inline">\((99,0),(0,99)\)</span>的直线，也就是从右下角到左上角，然后我们用循环绘制了一组，一个点固定在右上角的直线。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&#34;tga_image.h&#34;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&#34;raster.h&#34;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(){
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span><span>    TGAImage image(<span style="color:#ae81ff">100</span>,<span style="color:#ae81ff">100</span>,TGAType<span style="color:#f92672">::</span>rgb);
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span><span>    geo<span style="color:#f92672">::</span>vec2i pts0[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">=</span> {geo<span style="color:#f92672">::</span>vec2i(<span style="color:#ae81ff">99</span>,<span style="color:#ae81ff">0</span>),geo<span style="color:#f92672">::</span>vec2i(<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">99</span>)};
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span><span>    ras<span style="color:#f92672">::</span>line(image, pts0, geo<span style="color:#f92672">::</span>OARColor(<span style="color:#ae81ff">255</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">255</span>));
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span><span>    
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span><span>    <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>;i<span style="color:#f92672">&lt;=</span><span style="color:#ae81ff">99</span>;i<span style="color:#f92672">+=</span><span style="color:#ae81ff">10</span>){
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span><span>        pts0[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> geo<span style="color:#f92672">::</span>vec2i(i,<span style="color:#ae81ff">0</span>);
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span><span>        ras<span style="color:#f92672">::</span>line(image, pts0, geo<span style="color:#f92672">::</span>OARColor(<span style="color:#ae81ff">255</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">255</span>));
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13</span><span>    }
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14</span><span>    
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15</span><span>    image.writeToFile(<span style="color:#e6db74">&#34;./line.tga&#34;</span>);
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16</span><span>}
+</span></span></code></pre></div><p>如上，我们首先绘制了一条<span class="math inline">\((99,0),(0,99)\)</span>的直线，也就是从右下角到左上角，然后我们用循环绘制了一组，一个点固定在右上角的直线。</p>
 <p>效果如下</p>
-<figure>
-<img src="3.jpg" alt="3.jpg" />
-<figcaption aria-hidden="true">3.jpg</figcaption>
-</figure>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 99; 
+			flex-basis: 239px"
+	>
+	<a href="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E7%BA%BF%E6%AE%B5%E5%92%8C%E4%B8%89%E8%A7%92%E5%BD%A2%E7%9A%84%E5%85%89%E6%A0%85%E5%8C%96/3.jpg" data-size="738x741">
+		<img src="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E7%BA%BF%E6%AE%B5%E5%92%8C%E4%B8%89%E8%A7%92%E5%BD%A2%E7%9A%84%E5%85%89%E6%A0%85%E5%8C%96/3.jpg"
+			width="738"
+			height="741"
+			srcset="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E7%BA%BF%E6%AE%B5%E5%92%8C%E4%B8%89%E8%A7%92%E5%BD%A2%E7%9A%84%E5%85%89%E6%A0%85%E5%8C%96/3_hue07642b8b5cc5c1b7d3a3e96e3a915b7_56624_480x0_resize_q75_box.jpg 480w, /p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E7%BA%BF%E6%AE%B5%E5%92%8C%E4%B8%89%E8%A7%92%E5%BD%A2%E7%9A%84%E5%85%89%E6%A0%85%E5%8C%96/3_hue07642b8b5cc5c1b7d3a3e96e3a915b7_56624_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="3.jpg">
+	</a>
+	
+	<figcaption>3.jpg</figcaption>
+	
+</figure></p>
 <h2 id="绘制三角形">绘制三角形</h2>
-<div class="sourceCode" id="cb7"><pre
-class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&quot;tga_image.h&quot;</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&quot;raster.h&quot;</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">(){</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    TGAImage image2<span class="op">(</span><span class="dv">100</span><span class="op">,</span><span class="dv">100</span><span class="op">,</span>TGAType<span class="op">::</span>rgb<span class="op">);</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    geo<span class="op">::</span>vec2i pts1<span class="op">[</span><span class="dv">3</span><span class="op">]</span> <span class="op">=</span> <span class="op">{</span>geo<span class="op">::</span>vec2i<span class="op">(</span><span class="dv">60</span><span class="op">,</span><span class="dv">5</span><span class="op">),</span>geo<span class="op">::</span>vec2i<span class="op">(</span><span class="dv">5</span><span class="op">,</span><span class="dv">60</span><span class="op">),</span>geo<span class="op">::</span>vec2i<span class="op">(</span><span class="dv">70</span><span class="op">,</span><span class="dv">90</span><span class="op">)};</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    geo<span class="op">::</span>OARColor colors<span class="op">[</span><span class="dv">3</span><span class="op">]</span> <span class="op">=</span> <span class="op">{</span>geo<span class="op">::</span>OARColor<span class="op">(</span><span class="dv">255</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">255</span><span class="op">),</span>geo<span class="op">::</span>OARColor<span class="op">(</span><span class="dv">0</span><span class="op">,</span><span class="dv">255</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">255</span><span class="op">),</span>geo<span class="op">::</span>OARColor<span class="op">(</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">255</span><span class="op">,</span><span class="dv">255</span><span class="op">)};</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    ras<span class="op">::</span>triangle<span class="op">(</span>image2<span class="op">,</span>pts1<span class="op">,</span>colors<span class="op">);</span></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    image2<span class="op">.</span>writeToFile<span class="op">(</span><span class="st">&quot;./triangle.tga&quot;</span><span class="op">);</span></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
-<p>代码非常直观，就是把三个点和三个点的颜色设置一下扔到光栅化函数里去。效果如下</p>
-<figure>
-<img src="2.jpg" alt="2.jpg" />
-<figcaption aria-hidden="true">2.jpg</figcaption>
-</figure>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&#34;tga_image.h&#34;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&#34;raster.h&#34;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(){
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span><span>    TGAImage image2(<span style="color:#ae81ff">100</span>,<span style="color:#ae81ff">100</span>,TGAType<span style="color:#f92672">::</span>rgb);
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span><span>    geo<span style="color:#f92672">::</span>vec2i pts1[<span style="color:#ae81ff">3</span>] <span style="color:#f92672">=</span> {geo<span style="color:#f92672">::</span>vec2i(<span style="color:#ae81ff">60</span>,<span style="color:#ae81ff">5</span>),geo<span style="color:#f92672">::</span>vec2i(<span style="color:#ae81ff">5</span>,<span style="color:#ae81ff">60</span>),geo<span style="color:#f92672">::</span>vec2i(<span style="color:#ae81ff">70</span>,<span style="color:#ae81ff">90</span>)};
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span><span>    geo<span style="color:#f92672">::</span>OARColor colors[<span style="color:#ae81ff">3</span>] <span style="color:#f92672">=</span> {geo<span style="color:#f92672">::</span>OARColor(<span style="color:#ae81ff">255</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">255</span>),geo<span style="color:#f92672">::</span>OARColor(<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">255</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">255</span>),geo<span style="color:#f92672">::</span>OARColor(<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">255</span>,<span style="color:#ae81ff">255</span>)};
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span><span>    ras<span style="color:#f92672">::</span>triangle(image2,pts1,colors);
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span><span>    image2.writeToFile(<span style="color:#e6db74">&#34;./triangle.tga&#34;</span>);
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span><span>}
+</span></span></code></pre></div><p>代码非常直观，就是把三个点和三个点的颜色设置一下扔到光栅化函数里去。效果如下</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 100; 
+			flex-basis: 240px"
+	>
+	<a href="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E7%BA%BF%E6%AE%B5%E5%92%8C%E4%B8%89%E8%A7%92%E5%BD%A2%E7%9A%84%E5%85%89%E6%A0%85%E5%8C%96/2.jpg" data-size="390x390">
+		<img src="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E7%BA%BF%E6%AE%B5%E5%92%8C%E4%B8%89%E8%A7%92%E5%BD%A2%E7%9A%84%E5%85%89%E6%A0%85%E5%8C%96/2.jpg"
+			width="390"
+			height="390"
+			srcset="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E7%BA%BF%E6%AE%B5%E5%92%8C%E4%B8%89%E8%A7%92%E5%BD%A2%E7%9A%84%E5%85%89%E6%A0%85%E5%8C%96/2_hu2cd82ccc243f92beef3875a9a1225862_5099_480x0_resize_q75_box.jpg 480w, /p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E7%BA%BF%E6%AE%B5%E5%92%8C%E4%B8%89%E8%A7%92%E5%BD%A2%E7%9A%84%E5%85%89%E6%A0%85%E5%8C%96/2_hu2cd82ccc243f92beef3875a9a1225862_5099_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="2.jpg">
+	</a>
+	
+	<figcaption>2.jpg</figcaption>
+	
+</figure></p>
 
 </section>
 
@@ -902,6 +669,39 @@ class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb7-1"><a href="#c
             >
 
             </main>
+    
+        <aside class="sidebar right-sidebar sticky">
+            <section class="widget archives">
+                <div class="widget-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+                </div>
+                <h2 class="widget-title section-title">目录</h2>
+                
+                <div class="widget--toc">
+                    <nav id="TableOfContents">
+  <ol>
+    <li><a href="#线段光栅化算法">线段光栅化算法</a></li>
+    <li><a href="#三角形光栅化算法">三角形光栅化算法</a></li>
+    <li><a href="#使用例子">使用例子</a>
+      <ol>
+        <li><a href="#绘制线段">绘制线段</a></li>
+        <li><a href="#绘制三角形">绘制三角形</a></li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+                </div>
+            </section>
+        </aside>
     
 
         </div>

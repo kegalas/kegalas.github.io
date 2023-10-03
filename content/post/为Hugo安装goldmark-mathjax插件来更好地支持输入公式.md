@@ -58,10 +58,14 @@ git clone https://github.com/gohugoio/hugo.git
 
 ```bash
 cd hugo
--
+go get github.com/litao91/goldmark-mathjax
 go install --tags extended
 ```
 
 后两个命令都需要网络通畅。
 
 编译成功后，一般会生成在`C:\Users\XXX\go\bin`，找不到的建议可以用Everything搜一下hugo.exe。之后就可以愉快的使用了。
+
+# 已知问题
+
+1. 输入公式时，`<`有时要求前后有空格，否则会渲染失败。具体触发原理还不明白。

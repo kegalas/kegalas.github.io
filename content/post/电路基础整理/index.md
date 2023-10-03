@@ -1,13 +1,15 @@
 ---
-title: "电路基础整理"
+title: 电路基础整理
 date: 2022-09-02T11:22:59+08:00
 draft: false
-tags: [电路,大学]
+tags:
+  - 电路
+  - 大学
 description: 电路基础的学习笔记
 categories: 电路与信号
 mathjax: true
-markup: pandoc
-image: "cover.jpg"
+markup: goldmark
+image: cover.jpg
 ---
 
 # 电路的基本规律
@@ -501,6 +503,7 @@ $$
 $$
 \sum^b_{k=1}u_ki'_k=0
 $$
+
 $$
 \sum^b_{k=1}u'_ki_k=0
 $$
@@ -898,8 +901,8 @@ $$
 
 $$
 \varepsilon(t-t_0) = \left\{\begin{matrix}
-1,t>t_0\\
-0,t<t_0
+1,t > t_0\\
+0,t < t_0
 \end{matrix}\right.
 $$
 
