@@ -8,7 +8,7 @@ tags:
 description: 复变函数的学习笔记
 categories: 数学
 mathjax: true
-markup: pandoc
+markup: goldmark
 ---
 
 # 复数与复变函数

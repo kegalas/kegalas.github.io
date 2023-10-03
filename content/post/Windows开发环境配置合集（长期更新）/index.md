@@ -21,13 +21,33 @@ markup: goldmark
 
 [https://mirrors.tuna.tsinghua.edu.cn/gnu/emacs/windows/](https://mirrors.tuna.tsinghua.edu.cn/gnu/emacs/windows/)，在清华源下载安装，可以更改的只有安装目录。
 
-我现在初步怀疑，不应该把Emacs添加进环境变量，还需要进一步观察。（TODO）
-
 .emacs.d的部署TODO。
 
-似乎emacs29自带use-package?TODO(https://www.gnu.org/software/emacs/manual///html_node/efaq/New-in-Emacs-29.html)
+现在emacs29自带use-package，直接打开就可以，不需要手动安装。
 
-all-the-icons TODO
+all-the-icons很奇怪，不会被use-package安装，我们`M-x package-install all-the-icons`安装重启即可。
+
+此时，用GUI版本的Emacs已经可以了，但是如果想在命令行里用Emacs，则需要添加环境变量。出于对环境变量冲突的恐惧，我没有直接将Emacs的bin添加进PATH，我选择了照抄Vim的bat文件。如下
+
+```bat
+@echo off
+rem -- Run Emacs --
+
+setlocal
+set EMACS_EXE_DIR=D:\Program_Files\Emacs\emacs-29.1\bin
+if exist "%EMACS%\emacs-29.1\bin\emacs.exe" set EMACS_EXE_DIR=%EMACS%\emacs-29.1\bin
+if exist "%EMACSRUNTIME%\emacs.exe" set EMACS_EXE_DIR=%EMACSRUNTIME%
+
+if not exist "%EMACS_EXE_DIR%\emacs.exe" (
+    echo "%EMACS_EXE_DIR%\emacs.exe" not found
+    goto :eof
+)
+
+"%EMACS_EXE_DIR%\emacs.exe"  %*
+
+```
+
+把这个文件保存为`emacs.bat`，然后找一个文件夹放进去，例如我放在了`xxx\myExec`下，然后把这个文件夹添加到PATH的末尾。
 
 ## IDEA
 
@@ -79,9 +99,35 @@ AVD设置TODO（包括用软连接把安装目录转移等）
 
 [https://www.jetbrains.com/lp/mono/](https://www.jetbrains.com/lp/mono/)，下载解压，得到一大堆ttf格式的文件。虽然你可以一个一个双击安装，但是太慢了，我推荐你把它们全部选中，拖入到`C:\Windows\Fonts`文件夹中，可以批量安装。
 
+## Noto
+
+TODO
+
 # Git
 
 ## Git for Windows
+
+安装步骤选择todo
+
+同样，为了防止PATH冲突，采取了和Emacs一样的手法
+
+```bat
+@echo off
+rem -- Run GIT --
+
+setlocal
+set GIT_EXE_DIR=D:\Program_Files\Git\bin
+if exist "%GIT%\bin\git.exe" set GIT_EXE_DIR=%GIT%\bin
+if exist "%GITRUNTIME%\git.exe" set GIT_EXE_DIR=%GITRUNTIME%
+
+if not exist "%GIT_EXE_DIR%\git.exe" (
+    echo "%GIT_EXE_DIR%\git.exe" not found
+    goto :eof
+)
+
+"%GIT_EXE_DIR%\git.exe"  %*
+
+```
 
 ## Github Desktop
 
@@ -113,27 +159,31 @@ AVD设置TODO（包括用软连接把安装目录转移等）
 
 之后在ucrt64的命令行中执行`pacman -Sy`
 
-之后安装`pacman -S mingw-w64-ucrt-x86_64-gcc`，当然，更好是使用官网推荐的`pacman -S mingw-w64-ucrt-x86_64-toolchain`
+之后安装`pacman -S mingw-w64-ucrt-x86_64-gcc`，当然，也可以使用`pacman -S mingw-w64-ucrt-x86_64-toolchain`。前者是目前官网的安装示例里的，后者则是以前的示例里的。
 
-环境变量我们只设置ucrt64和msys的，全部设置可能会加大冲突风险。
+环境变量我们只设置ucrt64、clang64和msys的，全部设置可能会加大冲突风险。
 
 ![12.jpg](12.jpg)
 
-记住要把ucrt64设置在`\usr\bin`上面。
+注意顺序，不能颠倒。
 
 之后我们打开`MSYS`的命令行，安装`pacman -S gcc`，这一步的目的是，我们使用MSYS提供的虚拟Linux的POSIX，方便我们在windows上进行Linux系统调用，这两个gcc的区别可见[../MSYS2,MinGW64,Cygwin的使用区别浅谈](MSYS2,MinGW64,Cygwin的使用区别浅谈)
 
 ## Clang
 
-我们不去安装LLVM官方给Windows的二进制包了，我们直接在ucrt64里安装。
+我们不去安装LLVM官方给Windows的二进制包了，我们直接在clang64里安装。
 
 ```bash
-pacman -S mingw-w64-ucrt-x86_64-clang mingw-w64-ucrt-x86_64-clang-analyzer mingw-w64-ucrt-x86_64-clang-tools-extra
+pacman -S mingw-w64-clang-x86_64-toolchain
 ```
 
 安装了clang，clangd等工具。安装完之后不用进行任何环境变量配置。
 
+注意：不能只安装clang、clang-tools-extra等，否则clangd可能会出现找不到iostream库的问题。
+
 ## MSVC
+
+TODO
 
 ## Make/Cmake/Ninja
 
