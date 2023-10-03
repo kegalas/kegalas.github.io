@@ -58,7 +58,7 @@ git clone https://github.com/gohugoio/hugo.git
 
 ```bash
 cd hugo
-go get github.com/litao91/goldmark-mathjax
+-
 go install --tags extended
 ```
 

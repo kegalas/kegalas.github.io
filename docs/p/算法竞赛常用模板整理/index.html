@@ -5958,6 +5958,39 @@ x_{c_m}-x_{c_m'}\leq y_m
 </span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 99</span><span>        std<span style="color:#f92672">::</span>cout<span style="color:#f92672">&lt;&lt;</span>lrkth(l,r,k)<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
 </span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">100</span><span>    }
 </span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">101</span><span>}
+</span></span></code></pre></div><h2 id="线段树合并">线段树合并</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span><span style="color:#75715e">//线段树合并，合并复杂度大概是O(klogN)，N是值域，k是若干线段树一共进行过k次插入
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span><span><span style="color:#75715e">//luogu p3224
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span><span><span style="color:#75715e">//动态开点线段树，之前的各种操作中都有p=1这一参数默认值，这其实是根节点的意思。也就是如果我们设置不同的p，可以开多颗线段树。
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span><span><span style="color:#75715e">//线段树合并就是把重合位置的节点的值加起来，对于没有重合位置的节点则原地保留，常常用于权值线段树
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">merge</span>(<span style="color:#66d9ef">int</span> p, <span style="color:#66d9ef">int</span> q, <span style="color:#66d9ef">int</span> s<span style="color:#f92672">=</span>L, <span style="color:#66d9ef">int</span> t<span style="color:#f92672">=</span>R){
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span><span>    <span style="color:#75715e">//不新开空间的合并方式
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span><span><span style="color:#75715e"></span>    <span style="color:#75715e">//把q为根的树合并到p为根的树上，返回p，即新根节点
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span><span><span style="color:#75715e"></span>    <span style="color:#75715e">//由于各题不一样，所以要在合并后手动把roots[j]指定为p
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span>(<span style="color:#f92672">!</span>p<span style="color:#f92672">||!</span>q) <span style="color:#66d9ef">return</span> p<span style="color:#f92672">+</span>q;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span><span>    <span style="color:#66d9ef">if</span>(s<span style="color:#f92672">==</span>t) <span style="color:#66d9ef">return</span> val(p)<span style="color:#f92672">+=</span>val(q), p;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13</span><span>    <span style="color:#66d9ef">int</span> mid <span style="color:#f92672">=</span> getMid(s,t);
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14</span><span>    ls(p) <span style="color:#f92672">=</span> merge(ls(p), ls(q), s, mid);
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15</span><span>    rs(p) <span style="color:#f92672">=</span> merge(rs(p), rs(q), mid<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>, t);
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16</span><span>    val(p) <span style="color:#f92672">=</span> val(ls(p)) <span style="color:#f92672">+</span> val(rs(p));
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17</span><span>    <span style="color:#66d9ef">return</span> p;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18</span><span>}
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20</span><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">merge</span>(<span style="color:#66d9ef">int</span> p, <span style="color:#66d9ef">int</span> q, <span style="color:#66d9ef">int</span> s<span style="color:#f92672">=</span>L, <span style="color:#66d9ef">int</span> t<span style="color:#f92672">=</span>R){
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21</span><span>    <span style="color:#75715e">//新开空间的合并方式
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22</span><span><span style="color:#75715e"></span>    <span style="color:#75715e">//把p,q为根的两棵树合并到r为根的树上，返回r，即新根节点
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23</span><span><span style="color:#75715e"></span>    <span style="color:#75715e">//由于各题不一样，所以要在合并后手动把roots[i]和[j]指定为r
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24</span><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span>(<span style="color:#f92672">!</span>p<span style="color:#f92672">||!</span>q) <span style="color:#66d9ef">return</span> p<span style="color:#f92672">+</span>q;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25</span><span>    <span style="color:#66d9ef">int</span> r <span style="color:#f92672">=</span> <span style="color:#f92672">++</span>stcnt;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26</span><span>    <span style="color:#66d9ef">if</span>(s<span style="color:#f92672">==</span>t) <span style="color:#66d9ef">return</span> val(r) <span style="color:#f92672">=</span> val(p)<span style="color:#f92672">+</span>val(q), r;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27</span><span>    <span style="color:#66d9ef">int</span> mid <span style="color:#f92672">=</span> getMid(s,t);
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28</span><span>    ls(r) <span style="color:#f92672">=</span> merge(ls(p), ls(q), s, mid);
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29</span><span>    rs(r) <span style="color:#f92672">=</span> merge(rs(p), rs(q), mid<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>, t);
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30</span><span>    val(r) <span style="color:#f92672">=</span> val(ls(r)) <span style="color:#f92672">+</span> val(rs(r));
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31</span><span>    <span style="color:#66d9ef">return</span> r;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32</span><span>}
 </span></span></code></pre></div><h2 id="珂朵莉树">珂朵莉树</h2>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-CPP" data-lang="CPP"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span><span style="color:#75715e">//珂朵莉树，区间推平问题
 </span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span><span><span style="color:#75715e">//方便给某个区间赋值，区间加数，维护区间第k大值，区间和等等
@@ -7642,6 +7675,7 @@ std::cout&lt;&lt;(int)x&lt;&lt;&#34;\n&#34;;
 <h3 id="输入十六进制八进制二进制-1">输入十六进制、八进制、二进制</h3>
 <h2 id="printf-todo">printf TODO</h2>
 <h3 id="输出十六进制八进制二进制-1">输出十六进制、八进制、二进制</h3>
+<h2 id="atoi-todo">atoi TODO</h2>
 <h2 id="正则表达式">正则表达式</h2>
 <h3 id="正则表达式语法">正则表达式语法</h3>
 <table>
@@ -8288,6 +8322,7 @@ std::cout&lt;&lt;(int)x&lt;&lt;&#34;\n&#34;;
             <li><a href="#主席树可持久化权值线段树">主席树（可持久化权值线段树）</a></li>
           </ol>
         </li>
+        <li><a href="#线段树合并">线段树合并</a></li>
         <li><a href="#珂朵莉树">珂朵莉树</a></li>
         <li><a href="#分块">分块</a></li>
         <li><a href="#平衡树pbds实现">平衡树（pbds实现）</a></li>
@@ -8499,6 +8534,7 @@ std::cout&lt;&lt;(int)x&lt;&lt;&#34;\n&#34;;
             <li><a href="#输出十六进制八进制二进制-1">输出十六进制、八进制、二进制</a></li>
           </ol>
         </li>
+        <li><a href="#atoi-todo">atoi TODO</a></li>
         <li><a href="#正则表达式">正则表达式</a>
           <ol>
             <li><a href="#正则表达式语法">正则表达式语法</a></li>

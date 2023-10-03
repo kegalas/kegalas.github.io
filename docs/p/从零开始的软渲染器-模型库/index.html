@@ -443,7 +443,7 @@ class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb5-1"><a href="#c
 <p>我们需要三维的顶点坐标、二维的纹理uv坐标，以及三维的顶点法向量坐标。同时也需要记录每个三角面它的顶点坐标序号，纹理坐标序号以及法向量坐标序号。</p>
 <p>再看看我们可能需要什么方法：</p>
 <div class="sourceCode" id="cb6"><pre
-class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>Model<span class="op">(</span><span class="bu">std::</span>string <span class="at">const</span> <span class="op">&amp;</span> dir<span class="op">);</span></span>
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>Model<span class="op">(</span><span class="bu">std::</span>string<span class="op"> </span><span class="at">const</span> <span class="op">&amp;</span> dir<span class="op">);</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="op">~</span>Model<span class="op">();</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="dt">size_t</span> getFaceSize<span class="op">();</span></span>
@@ -460,15 +460,15 @@ href="https://github.com/kegalas/oar/blob/main/tutorial/chapter4/src/model.h">�
 <p>现在我们来看看具体要怎么实现</p>
 <h2 id="构造函数">构造函数</h2>
 <div class="sourceCode" id="cb7"><pre
-class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>Model<span class="op">::</span>Model<span class="op">(</span><span class="bu">std::</span>string <span class="at">const</span> <span class="op">&amp;</span> dir<span class="op">){</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>ifstream in<span class="op">;</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    in<span class="op">.</span>open<span class="op">(</span>dir<span class="op">,</span><span class="bu">std::</span>ifstream::in<span class="op">);</span></span>
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>Model<span class="op">::</span>Model<span class="op">(</span><span class="bu">std::</span>string<span class="op"> </span><span class="at">const</span> <span class="op">&amp;</span> dir<span class="op">){</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>ifstream<span class="op"> </span>in<span class="op">;</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    in<span class="op">.</span>open<span class="op">(</span>dir<span class="op">,</span><span class="bu">std::</span>ifstream<span class="bu">::</span>in<span class="op">);</span></span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span><span class="op">(</span>in<span class="op">.</span>fail<span class="op">())</span> <span class="cf">return</span><span class="op">;</span></span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>string line<span class="op">;</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>string<span class="op"> </span>line<span class="op">;</span></span>
 <span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span><span class="op">(!</span>in<span class="op">.</span>eof<span class="op">()){</span></span>
 <span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>        <span class="bu">std::</span>getline<span class="op">(</span>in<span class="op">,</span>line<span class="op">);</span></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>        <span class="bu">std::</span>istringstream iss<span class="op">(</span>line<span class="op">);</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>        <span class="bu">std::</span>istringstream<span class="op"> </span>iss<span class="op">(</span>line<span class="op">);</span></span>
 <span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>        <span class="dt">char</span> discard<span class="op">;</span></span>
 <span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span><span class="op">(</span>line<span class="op">.</span>compare<span class="op">(</span><span class="dv">0</span><span class="op">,</span><span class="dv">2</span><span class="op">,</span><span class="st">&quot;v &quot;</span><span class="op">)==</span><span class="dv">0</span><span class="op">){</span></span>

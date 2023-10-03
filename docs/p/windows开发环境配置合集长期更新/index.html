@@ -122,11 +122,25 @@
 <h2 id="emacs">Emacs</h2>
 <p><a class="link" href="https://mirrors.tuna.tsinghua.edu.cn/gnu/emacs/windows/"  target="_blank" rel="noopener"
     >https://mirrors.tuna.tsinghua.edu.cn/gnu/emacs/windows/</a>，在清华源下载安装，可以更改的只有安装目录。</p>
-<p>我现在初步怀疑，不应该把Emacs添加进环境变量，还需要进一步观察。（TODO）</p>
 <p>.emacs.d的部署TODO。</p>
-<p>似乎emacs29自带use-package?TODO(<a class="link" href="https://www.gnu.org/software/emacs/manual///html_node/efaq/New-in-Emacs-29.html"  target="_blank" rel="noopener"
-    >https://www.gnu.org/software/emacs/manual///html_node/efaq/New-in-Emacs-29.html</a>)</p>
-<p>all-the-icons TODO</p>
+<p>现在emacs29自带use-package，直接打开就可以，不需要手动安装。</p>
+<p>all-the-icons很奇怪，不会被use-package安装，我们<code>M-x package-install all-the-icons</code>安装重启即可。</p>
+<p>此时，用GUI版本的Emacs已经可以了，但是如果想在命令行里用Emacs，则需要添加环境变量。出于对环境变量冲突的恐惧，我没有直接将Emacs的bin添加进PATH，我选择了照抄Vim的bat文件。如下</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bat" data-lang="bat"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span>@<span style="color:#66d9ef">echo</span> off
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span><span><span style="color:#75715e">rem -- Run Emacs --</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span><span><span style="color:#66d9ef">setlocal</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span><span><span style="color:#66d9ef">set</span> EMACS_EXE_DIR=D:\Program_Files\Emacs\emacs-29.1\bin
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span><span><span style="color:#66d9ef">if</span> <span style="color:#66d9ef">exist</span> <span style="color:#e6db74">&#34;</span>%EMACS%<span style="color:#e6db74">\emacs-29.1\bin\emacs.exe&#34;</span> <span style="color:#66d9ef">set</span> EMACS_EXE_DIR=%EMACS%\emacs-29.1\bin
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span><span><span style="color:#66d9ef">if</span> <span style="color:#66d9ef">exist</span> <span style="color:#e6db74">&#34;</span>%EMACSRUNTIME%<span style="color:#e6db74">\emacs.exe&#34;</span> <span style="color:#66d9ef">set</span> EMACS_EXE_DIR=%EMACSRUNTIME%
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span><span><span style="color:#66d9ef">if</span> <span style="color:#66d9ef">not</span> <span style="color:#66d9ef">exist</span> <span style="color:#e6db74">&#34;</span>%EMACS_EXE_DIR%<span style="color:#e6db74">\emacs.exe&#34;</span> (
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span><span>    <span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#34;</span>%EMACS_EXE_DIR%<span style="color:#e6db74">\emacs.exe&#34;</span> not found
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span><span>    <span style="color:#66d9ef">goto</span> :eof
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span><span>)
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14</span><span><span style="color:#e6db74">&#34;</span>%EMACS_EXE_DIR%<span style="color:#e6db74">\emacs.exe&#34;</span>  %*
+</span></span></code></pre></div><p>把这个文件保存为<code>emacs.bat</code>，然后找一个文件夹放进去，例如我放在了<code>xxx\myExec</code>下，然后把这个文件夹添加到PATH的末尾。</p>
 <h2 id="idea">IDEA</h2>
 <p><a class="link" href="https://www.jetbrains.com/idea/download/?section=windows"  target="_blank" rel="noopener"
     >https://www.jetbrains.com/idea/download/?section=windows</a>，官网下载，我现在主要用Community版本，免费，而且其是可商用的，这点和其他很多软件的社区版不同。</p>
@@ -194,9 +208,27 @@
 <h2 id="jetbrains-mono">Jetbrains Mono</h2>
 <p><a class="link" href="https://www.jetbrains.com/lp/mono/"  target="_blank" rel="noopener"
     >https://www.jetbrains.com/lp/mono/</a>，下载解压，得到一大堆ttf格式的文件。虽然你可以一个一个双击安装，但是太慢了，我推荐你把它们全部选中，拖入到<code>C:\Windows\Fonts</code>文件夹中，可以批量安装。</p>
+<h2 id="noto">Noto</h2>
+<p>TODO</p>
 <h1 id="git">Git</h1>
 <h2 id="git-for-windows">Git for Windows</h2>
-<h2 id="github-desktop">Github Desktop</h2>
+<p>安装步骤选择todo</p>
+<p>同样，为了防止PATH冲突，采取了和Emacs一样的手法</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bat" data-lang="bat"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span>@<span style="color:#66d9ef">echo</span> off
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span><span><span style="color:#75715e">rem -- Run GIT --</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span><span><span style="color:#66d9ef">setlocal</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span><span><span style="color:#66d9ef">set</span> GIT_EXE_DIR=D:\Program_Files\Git\bin
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span><span><span style="color:#66d9ef">if</span> <span style="color:#66d9ef">exist</span> <span style="color:#e6db74">&#34;</span>%GIT%<span style="color:#e6db74">\bin\git.exe&#34;</span> <span style="color:#66d9ef">set</span> GIT_EXE_DIR=%GIT%\bin
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span><span><span style="color:#66d9ef">if</span> <span style="color:#66d9ef">exist</span> <span style="color:#e6db74">&#34;</span>%GITRUNTIME%<span style="color:#e6db74">\git.exe&#34;</span> <span style="color:#66d9ef">set</span> GIT_EXE_DIR=%GITRUNTIME%
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span><span><span style="color:#66d9ef">if</span> <span style="color:#66d9ef">not</span> <span style="color:#66d9ef">exist</span> <span style="color:#e6db74">&#34;</span>%GIT_EXE_DIR%<span style="color:#e6db74">\git.exe&#34;</span> (
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span><span>    <span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#34;</span>%GIT_EXE_DIR%<span style="color:#e6db74">\git.exe&#34;</span> not found
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span><span>    <span style="color:#66d9ef">goto</span> :eof
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span><span>)
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14</span><span><span style="color:#e6db74">&#34;</span>%GIT_EXE_DIR%<span style="color:#e6db74">\git.exe&#34;</span>  %*
+</span></span></code></pre></div><h2 id="github-desktop">Github Desktop</h2>
 <p><a class="link" href="https://desktop.github.com/"  target="_blank" rel="noopener"
     >https://desktop.github.com/</a>，可说的不多，甚至不需要安装，双击就打开安装完毕了，也没有环境变量需要配置（自动配置在User的PATH里了）。</p>
 <h1 id="终端模拟器">终端模拟器</h1>
@@ -232,20 +264,20 @@
 </figure></p>
 <p>把阿里云的这一行复制到第一行。对所有文件都进行这个操作。</p>
 <p>之后在ucrt64的命令行中执行<code>pacman -Sy</code></p>
-<p>之后安装<code>pacman -S mingw-w64-ucrt-x86_64-gcc</code>，当然，更好是使用官网推荐的<code>pacman -S mingw-w64-ucrt-x86_64-toolchain</code></p>
-<p>环境变量我们只设置ucrt64和msys的，全部设置可能会加大冲突风险。</p>
+<p>之后安装<code>pacman -S mingw-w64-ucrt-x86_64-gcc</code>，当然，也可以使用<code>pacman -S mingw-w64-ucrt-x86_64-toolchain</code>。前者是目前官网的安装示例里的，后者则是以前的示例里的。</p>
+<p>环境变量我们只设置ucrt64、clang64和msys的，全部设置可能会加大冲突风险。</p>
 <p><figure 
 	
 		class="gallery-image" 
 		style="
-			flex-grow: 660; 
-			flex-basis: 1584px"
+			flex-grow: 560; 
+			flex-basis: 1345px"
 	>
-	<a href="/p/windows%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E5%90%88%E9%9B%86%E9%95%BF%E6%9C%9F%E6%9B%B4%E6%96%B0/12.jpg" data-size="297x45">
+	<a href="/p/windows%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E5%90%88%E9%9B%86%E9%95%BF%E6%9C%9F%E6%9B%B4%E6%96%B0/12.jpg" data-size="482x86">
 		<img src="/p/windows%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E5%90%88%E9%9B%86%E9%95%BF%E6%9C%9F%E6%9B%B4%E6%96%B0/12.jpg"
-			width="297"
-			height="45"
-			srcset="/p/windows%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E5%90%88%E9%9B%86%E9%95%BF%E6%9C%9F%E6%9B%B4%E6%96%B0/12_hu72e663f7253842be62169ea6b43460d8_4458_480x0_resize_q75_box.jpg 480w, /p/windows%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E5%90%88%E9%9B%86%E9%95%BF%E6%9C%9F%E6%9B%B4%E6%96%B0/12_hu72e663f7253842be62169ea6b43460d8_4458_1024x0_resize_q75_box.jpg 1024w"
+			width="482"
+			height="86"
+			srcset="/p/windows%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E5%90%88%E9%9B%86%E9%95%BF%E6%9C%9F%E6%9B%B4%E6%96%B0/12_huca8f247058c9a6a664a6f5b089503e33_9803_480x0_resize_q75_box.jpg 480w, /p/windows%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E5%90%88%E9%9B%86%E9%95%BF%E6%9C%9F%E6%9B%B4%E6%96%B0/12_huca8f247058c9a6a664a6f5b089503e33_9803_1024x0_resize_q75_box.jpg 1024w"
 			loading="lazy"
 			alt="12.jpg">
 	</a>
@@ -253,13 +285,15 @@
 	<figcaption>12.jpg</figcaption>
 	
 </figure></p>
-<p>记住要把ucrt64设置在<code>\usr\bin</code>上面。</p>
+<p>注意顺序，不能颠倒。</p>
 <p>之后我们打开<code>MSYS</code>的命令行，安装<code>pacman -S gcc</code>，这一步的目的是，我们使用MSYS提供的虚拟Linux的POSIX，方便我们在windows上进行Linux系统调用，这两个gcc的区别可见<a class="link" href="MSYS2,MinGW64,Cygwin%e7%9a%84%e4%bd%bf%e7%94%a8%e5%8c%ba%e5%88%ab%e6%b5%85%e8%b0%88" >../MSYS2,MinGW64,Cygwin的使用区别浅谈</a></p>
 <h2 id="clang">Clang</h2>
-<p>我们不去安装LLVM官方给Windows的二进制包了，我们直接在ucrt64里安装。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span>pacman -S mingw-w64-ucrt-x86_64-clang mingw-w64-ucrt-x86_64-clang-analyzer mingw-w64-ucrt-x86_64-clang-tools-extra
+<p>我们不去安装LLVM官方给Windows的二进制包了，我们直接在clang64里安装。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span>pacman -S mingw-w64-clang-x86_64-toolchain
 </span></span></code></pre></div><p>安装了clang，clangd等工具。安装完之后不用进行任何环境变量配置。</p>
+<p>注意：不能只安装clang、clang-tools-extra等，否则clangd可能会出现找不到iostream库的问题。</p>
 <h2 id="msvc">MSVC</h2>
+<p>TODO</p>
 <h2 id="makecmakeninja">Make/Cmake/Ninja</h2>
 <p>在UCRT64的terminal里面，输入</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span>pacman -S mingw-w64-ucrt-x86_64-cmake mingw-w64-ucrt-x86_64-cmake-gui mingw-w64-ucrt-x86_64-ninja mingw-w64-ucrt-x86_64-make
@@ -811,6 +845,7 @@
     <li><a href="#字体">字体</a>
       <ol>
         <li><a href="#jetbrains-mono">Jetbrains Mono</a></li>
+        <li><a href="#noto">Noto</a></li>
       </ol>
     </li>
     <li><a href="#git">Git</a>
