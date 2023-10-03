@@ -1,12 +1,13 @@
 ---
-title: "计算机图形学基础学习笔记-几何的表示方法"
+title: 计算机图形学基础学习笔记-几何的表示方法
 date: 2022-07-20T13:47:39+08:00
 draft: false
-tags: [图形学]
+tags:
+  - 图形学
 categories: 图形学
 mathjax: true
-markup: pandoc
-image: "cover.jpg"
+markup: goldmark
+image: cover.jpg
 ---
 
 有两种方法描述几何：隐式的、显式的。

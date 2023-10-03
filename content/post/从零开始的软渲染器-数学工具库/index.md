@@ -1,11 +1,14 @@
 ---
-title: "从零开始的软渲染器 数学工具库"
+title: 从零开始的软渲染器 数学工具库
 date: 2022-10-28T15:34:04+08:00
 draft: false
-tags: [图形学,渲染,数学]
+tags:
+  - 图形学
+  - 渲染
+  - 数学
 categories: 图形学
 mathjax: true
-markup: pandoc
+markup: goldmark
 image: cover.jpg
 ---
 

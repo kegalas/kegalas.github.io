@@ -1,12 +1,15 @@
 ---
-title: "信号与系统学习笔记"
+title: 信号与系统学习笔记
 date: 2023-04-05T20:24:29+08:00
 draft: false
-tags: [信号,大学,电路]
+tags:
+  - 信号
+  - 大学
+  - 电路
 categories: 电路与信号
 mathjax: true
-markup: pandoc
-image: "cover.jpg"
+markup: goldmark
+image: cover.jpg
 ---
 
 # 信号与系统概论
@@ -1032,13 +1035,13 @@ $$
 其中这个求和是，k在任意连续$N$个数中都成立的。所以也可以记作
 
 $$
-x[n] = \sum_{k=<N>}a_ke^{jkw_0n}
+x[n] = \sum_{k= < N > }a_ke^{jkw_0n}
 $$
 
 $a_k$由以下公式确定
 
 $$
-a_k = \dfrac{1}{N}\sum_{n=<N>}x[n]e^{-jkw_0n} = \dfrac{1}{N}\sum_{n=<N>}x[n]e^{-jk(2\pi/N)n}
+a_k = \dfrac{1}{N}\sum_{n= < N > }x[n]e^{-jkw_0n} = \dfrac{1}{N}\sum_{n= < N > }x[n]e^{-jk(2\pi/N)n}
 $$
 
 ## 离散时间傅里叶级数的性质
@@ -1090,13 +1093,13 @@ $$
 *周期卷积*
 
 $$
-\sum_{r=<N>}x[r]y[n-r]\leftrightarrow Na_kb_k
+\sum_{r= < N > }x[r]y[n-r]\leftrightarrow Na_kb_k
 $$
 
 *相乘*
 
 $$
-x[n]y[n] \leftrightarrow \sum_{l=<N>}a_l b_{k-l}
+x[n]y[n] \leftrightarrow \sum_{l= < N > }a_l b_{k-l}
 $$
 
 *差分*
@@ -1114,7 +1117,7 @@ $$
 *周期信号的帕塞瓦尔定理*
 
 $$
-\dfrac{1}{N}\sum_{n=<N>}|x[n]|^2 = \sum_{k=<N>}|a_k|^2
+\dfrac{1}{N}\sum_{n= < N > }|x[n]|^2 = \sum_{k= < N > }|a_k|^2
 $$
 
 ## 傅里叶级数与LTI
@@ -1154,13 +1157,13 @@ $$
 离散情况下，若用傅里叶级数表示输入
 
 $$
-x[n] = \sum_{k=<N>} a_ke^{jk(2\pi/N)n}
+x[n] = \sum_{k= < N > } a_ke^{jk(2\pi/N)n}
 $$
 
 那么输出为
 
 $$
-y[n] = \sum_{k=<N>} a_kH(e^{j2\pi k/N})e^{jk(2\pi/N)n}
+y[n] = \sum_{k= < N > } a_kH(e^{j2\pi k/N})e^{jk(2\pi/N)n}
 $$
 
 $y[n]$也是周期的，且和$x[n]$具有相同的周期，$y[n]$的第$k$个傅里叶系数就是$a_kH(e^{j2\pi k/N})$
@@ -1755,7 +1758,7 @@ $$
 x_1(t)x_2(t)\leftrightarrow \dfrac{1}{2\pi j}\int^{c+j\infty}_{c-j\infty}X_1(\eta)X_2(s-\eta)d\eta
 $$
 
-设$R_1$为$Re\{s\}>\sigma_1$，$R_2$为$Re\{s\}>\sigma_2$，则$R$为$Re\{s\}>\sigma_1+\sigma_2,\sigma_1<c<Re\{s\}-\sigma_2$
+设$R_1$为$Re\{s\}>\sigma_1$，$R_2$为$Re\{s\}>\sigma_2$，则$R$为$Re\{s\} > \sigma_1+\sigma_2,\sigma_1 < c < Re\{s\}-\sigma_2$
 
 这里$c$是$X_1(\eta)$与$X_2(\eta)$收敛域重叠部分内与虚轴平行的直线。这里对积分路线的限制较严，积分计算也比较复杂，所以很少用该定理。
 
@@ -2082,7 +2085,8 @@ $$
 
 $$
 x^{(-1)}(t)=\int^t_{-\infty}x(\tau)d\tau \leftrightarrow s^{-1}X(s)
-+s^{-1}x^{(-1)}(0^-)$$
++s^{-1}x^{(-1)}(0^-)
+$$
 
 # $z$变换
 

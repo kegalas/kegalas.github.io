@@ -1,13 +1,16 @@
 ---
-title: "模拟电路学习笔记"
+title: 模拟电路学习笔记
 date: 2023-05-25T16:29:15+08:00
 draft: false
-tags: [大学, 模电, 电路]
+tags:
+  - 大学
+  - 模电
+  - 电路
 description: 模拟电子技术基础学习笔记
 categories: 电路与信号
 mathjax: true
-markup: pandoc
-image: "cover.jpg"
+markup: goldmark
+image: cover.jpg
 ---
 
 # 集成运算放大器

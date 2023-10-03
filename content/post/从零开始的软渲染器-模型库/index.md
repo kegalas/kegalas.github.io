@@ -1,11 +1,13 @@
 ---
-title: "从零开始的软渲染器 模型库"
+title: 从零开始的软渲染器 模型库
 date: 2023-06-25T14:37:37+08:00
 draft: false
-tags: [图形学,渲染]
+tags:
+  - 图形学
+  - 渲染
 categories: 图形学
 mathjax: true
-markup: pandoc
+markup: goldmark
 image: cover.jpg
 ---
 

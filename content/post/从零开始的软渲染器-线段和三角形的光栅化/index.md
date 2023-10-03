@@ -1,11 +1,13 @@
 ---
-title: "从零开始的软渲染器 线段和三角形的光栅化"
+title: 从零开始的软渲染器 线段和三角形的光栅化
 date: 2023-05-17T21:31:12+08:00
 draft: false
-tags: [图形学,渲染]
+tags:
+  - 图形学
+  - 渲染
 categories: 图形学
 mathjax: true
-markup: pandoc
+markup: goldmark
 image: cover.jpg
 ---
 
