@@ -1,13 +1,16 @@
 ---
-title: "我的高等数学下册资料整理"
+title: 我的高等数学下册资料整理
 date: 2022-05-25T21:43:40+08:00
 draft: false
-tags: [高等数学,大学,数学]
+tags:
+  - 高等数学
+  - 大学
+  - 数学
 description: 高等数学下册资料整理
 categories: 数学
 mathjax: true
-markup: pandoc
-image: "8-51.jpg"
+markup: goldmark
+image: 8-51.jpg
 ---
 
 [TOC]
@@ -34,7 +37,7 @@ $$
 
 2. 分配律 $(\bold{a+b})\cdot \bold{c}=\bold{a\cdot c+b\cdot c}$
 
-3. 如下的结合律 $(\lambda \bold{a})\cdot\bold{b}=\lambda(\bold{a\cdot b})$,$\lambda$为数
+3. 如下的结合律 $(\lambda \bold{a})\cdot\bold{b}=\lambda(\bold{a\cdot b})$，$\lambda$为数
 
 ### 向量积的运算规律
 
@@ -42,7 +45,7 @@ $$
 
 2. 分配律 $\bold{(a+b)\times c=a\times c+b\times c}$
 
-3. 如下的结合律 $(\lambda \bold{a})\times \bold{b}=\lambda(\bold{a\times b})$,$\lambda$为数
+3. 如下的结合律 $(\lambda \bold{a})\times \bold{b}=\lambda(\bold{a\times b})$，$\lambda$为数
 
 ### 平面的点法式方程
 
@@ -442,7 +445,7 @@ $$
 \bold{f}(t)=\varphi(t)\bold{i}+\psi(t)\bold{j}+\omega(t)\bold{k}
 $$
 
-所以有$\bold{r=f}(t)$,$\bold{r}$称为向量函数
+所以有$\bold{r=f}(t)$， $\bold{r}$称为向量函数
 
 向量值导数如下：
 
@@ -663,7 +666,7 @@ $$
 \iint\limits_{D_1}f(x,y)d\sigma+\iint\limits_{D_2}f(x,y)d\sigma
 $$
 
-3. 如果在$D$上，$f(x,y)=1$,$\sigma$为$D$的面积，那么
+3. 如果在$D$上，$f(x,y)=1$，$\sigma$为$D$的面积，那么
 
 $$
 \sigma=\iint\limits_{D}1\cdot d\sigma=\iint\limits_{D}d\sigma
@@ -943,7 +946,7 @@ $$
 \int_L\bold{F(x,y)}\cdot d\bold{r}
 $$
 
-其中$\bold{F}=P\bold{i}+Q\bold{j}$,$d\bold{r}=dx\bold{i}+dy\bold{j}$.
+其中$\bold{F}=P\bold{i}+Q\bold{j}$，$d\bold{r}=dx\bold{i}+dy\bold{j}$.
 
 #### 性质
 
@@ -1324,7 +1327,7 @@ $$
 
 **推论** 如果幂级数$\sum^{\infty}_{n=0}a_nx^n$不仅在$x=0$一点收敛，也不是在整个数轴上都收敛，那么必有一个确定的正数$R$存在，使得
 
-当$|x|<R$时，幂级数绝对收敛
+当$|x|< R$时，幂级数绝对收敛
 
 当$|x|>R$时，幂级数发散
 
@@ -1353,7 +1356,7 @@ $$
 设$\sum^{\infty}_{n=0}a_nx^n$和$\sum^{\infty}_{n=0}b_nx^n$分别在区间$(-R,R),(-R',R')$内收敛，则对于这两个幂级数，
 
 1. $\sum^{\infty}_{n=0}a_nx^n\pm\sum^{\infty}_{n=0}b_nx^n=\sum^{\infty}_{n=0}(a_n\pm b_n)x^n$在$(-R,R),(-R',R')$中较小的区间内成立.
-2. $\sum^{\infty}_{n=0}a_nx^n\sum^{\infty}_{n=0}b_nx^n=a_0b_0+(a_0b_1+a_1b_0)x+\dots+(a_0b_n+a_1b_{n-1}+\dots+a_nb_0)x^n+\cdots$$(-R,R),(-R',R')$中较小的区间内成立.
+2. $\sum^{\infty}_{n=0}a_nx^n\sum^{\infty}_{n=0}b_nx^n=a_0b_0+(a_0b_1+a_1b_0)x+\dots+(a_0b_n+a_1b_{n-1}+\dots+a_nb_0)x^n+\cdots$，$(-R,R),(-R',R')$中较小的区间内成立.
 3. $\frac{\sum^{\infty}_{n=0}a_nx^n}{\sum^{\infty}_{n=0}b_nx^n}=\sum^{\infty}_{n=0}c_nx^n$，假设$b_0\ne0$，$c$可以由下式求出
 $$
 a_0=b_0c_0\\

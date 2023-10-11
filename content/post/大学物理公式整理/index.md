@@ -1,13 +1,15 @@
 ---
-title: "大学物理公式整理"
+title: 大学物理公式整理
 date: 2022-06-13T19:13:12+08:00
 draft: false
-tags: [物理,大学]
+tags:
+  - 物理
+  - 大学
 description: 大学物理相关的公式（可能还有一些概念）整理
 categories: 物理
 mathjax: true
-markup: pandoc
-image: "cover.jpg"
+markup: goldmark
+image: cover.jpg
 ---
 
 [TOC]
@@ -844,7 +846,7 @@ $$
 中央明纹的宽度是
 
 $$
--\lambda<asin\varphi<\lambda
+-\lambda < asin \varphi < \lambda
 $$
 
 当$\varphi$很小时，有$sin\varphi\approx\varphi\approx\frac{\lambda}{a}$
@@ -2316,7 +2318,7 @@ $$
 y=y',\quad z=z'
 $$
 
-在低速时，即$u<<c$时，$\beta\approx0$，此时洛伦兹变换与伽利略变换几乎一致，也就是说低速情况我们可以使用伽利略变换。
+在低速时，即$u<< c$时，$\beta\approx0$，此时洛伦兹变换与伽利略变换几乎一致，也就是说低速情况我们可以使用伽利略变换。
 
 真空中的光速$c$是一切物体运动速率的极限。
 
@@ -2745,8 +2747,8 @@ $$
 
 $$
 \left.\begin{align*}
-V(x) = 0,&\quad0<x<a\\
-V(x) = \infty,&\quad x<0\ or\ x>a 
+V(x) = 0,&\quad 0 < x < a\\
+V(x) = \infty,&\quad x < 0\ or\ x > a 
 \end{align*}\right\}
 $$
 

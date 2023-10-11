@@ -1,13 +1,16 @@
 ---
-title: "线性代数整理"
+title: 线性代数整理
 date: 2022-06-04T12:11:53+08:00
 draft: false
-tags: [线性代数,大学,数学]
+tags:
+  - 线性代数
+  - 大学
+  - 数学
 description: 线性代数有关定义定理整理
 categories: 数学
 mathjax: true
-markup: pandoc
-image: "cover.jpg"
+markup: goldmark
+image: cover.jpg
 ---
 
 [TOC]
@@ -507,7 +510,7 @@ $$
 有
 
 $$
-V_n=\prod_{1\leq j<i\leq n}(x_i-x_j) 
+V_n=\prod_{1\leq j < i\leq n}(x_i-x_j) 
 $$
 
 ### 行列式求逆矩阵
@@ -604,7 +607,7 @@ $$
 4. 向量组线性相关的充要条件是至少存在其中的一个向量可由其余向量线性表示
 5. 当$t>n$，含有$t$个$n$维向量的向量组必线性相关。
 6. 向量组$\bm{\alpha}_1,\bm{\alpha}_2,\cdots,\bm{\alpha}_m$线性无关，而向量组$\bm{\alpha}_1,\bm{\alpha}_2,\cdots,\bm{\alpha}_m,\bm{b}$线性相关，则$\bm{b}$可由$\bm{\alpha}_1,\bm{\alpha}_2,\cdots,\bm{\alpha}_m$唯一线性表示
-7. $\bm{\alpha}_1,\bm{\alpha}_2,\cdots,\bm{\alpha}_m$线性无关，则任一部分组$\bm{\alpha}_1,\bm{\alpha}_2,\cdots,\bm{\alpha}_r(r<m)$必线性无关
+7. $\bm{\alpha}_1,\bm{\alpha}_2,\cdots,\bm{\alpha}_m$线性无关，则任一部分组$\bm{\alpha}_1,\bm{\alpha}_2,\cdots,\bm{\alpha}_r(r< m)$必线性无关
 8. $\bm{\alpha}_1,\bm{\alpha}_2,\cdots,\bm{\alpha}_m$线性相关，则增加向量后的向量组$\bm{\alpha}_1,\bm{\alpha}_2,\cdots,\bm{\alpha}_s(s>m)$必线性相关。
 9. 设$\bm{\alpha}_1,\bm{\alpha}_2,\cdots,\bm{\alpha}_m$为$m$个$m$维列向量。则$\bm{\alpha}_1,\bm{\alpha}_2,\cdots,\bm{\alpha}_m$线性无关$\Leftrightarrow$行列式$|[\bm{\alpha}_1,\bm{\alpha}_2,\cdots,\bm{\alpha}_m]|\ne0$;$\bm{\alpha}_1,\bm{\alpha}_2,\cdots,\bm{\alpha}_m$线性相关$\Leftrightarrow$行列式$|[\bm{\alpha}_1,\bm{\alpha}_2,\cdots,\bm{\alpha}_m]|=0$
 10. 从几何角度理解：设$\bm{\alpha,\beta,\gamma}$为三维向量，向量组$\bm{\alpha,\beta}$线性相关$\Leftrightarrow\bm{\alpha,\beta}$共线;向量组$\bm{\alpha,\beta,\gamma}$线性相关$\Leftrightarrow\bm{\alpha,\beta,\gamma}$共面
@@ -629,9 +632,9 @@ $$
 3. 矩阵的秩等于矩阵的行秩等于矩阵的列秩。
 4. 设$\bm{A}$是$m\times n$矩阵，则
 
-矩阵$A$的列向量组线性相关（无关）的充要条件为$R(\bm{A})<n(R(\bm{A})=n)$
+矩阵$A$的列向量组线性相关（无关）的充要条件为$R(\bm{A})< n(R(\bm{A})=n)$
 
-矩阵$A$的行向量组线性相关（无关）的充要条件为$R(\bm{A})<m(R(\bm{A})=m)$
+矩阵$A$的行向量组线性相关（无关）的充要条件为$R(\bm{A})< m(R(\bm{A})=m)$
 
 5. 若向量组$I$可由向量组$II$线性表示，则$I$的秩不超过$II$的秩；
 6. 等价向量组的秩相等。
@@ -683,7 +686,7 @@ $$
 内积具有以下性质
 
 1.  $<\bm{x},\bm{y}>=<\bm{y},\bm{x}>$
-2.  $<k\bm{x},\bm{y}>=<\bm{x},k\bm{y}>=k<\bm{x},\bm{y}>$，$k$是实数
+2.  $< k\bm{x},\bm{y}>=<\bm{x},k\bm{y}>=k<\bm{x},\bm{y}>$，$k$是实数
 3.  $<\bm{x+y},\bm{z}>=<\bm{x},\bm{z}>+<\bm{y},\bm{z}>$
 4.  $<\bm{x},\bm{x}>\ge0,<\bm{x},\bm{x}>=0$当且仅当$\bm{x}=\bm{0}$
 5.  柯西-施瓦茨不等式：$<\bm{x},\bm{y}>^2\leq<\bm{x},\bm{x}><\bm{y},\bm{y}>$
@@ -829,11 +832,11 @@ $$
 
 ### 性质定理
 
-1. 齐次线性方程组$\bold{A}_{m\times n}\bold{x=0}$有非零解的充要条件是$R(\bold{A})=r<n$，且有无穷多解，自由量为$n-r$个（解空间的维数为$n-r$）。这个充要条件可以替换为$|\bm A|=0$及其他等价命题。
+1. 齐次线性方程组$\bold{A}_{m\times n}\bold{x=0}$有非零解的充要条件是$R(\bold{A})=r< n$，且有无穷多解，自由量为$n-r$个（解空间的维数为$n-r$）。这个充要条件可以替换为$|\bm A|=0$及其他等价命题。
 2. 非齐次线性方程组$\bold{A}_{m\times n}\bold{x=b}$有解的充要条件是$R(\bold{A})=R(\~\bold{A})=r$，且当
 
     1. $r=n$时有唯一解，称为适定线性方程组
-    2. $r<n$时有无穷多解，自由量是$n-r$个，称为欠定线性方程组 
+    2. $r< n$时有无穷多解，自由量是$n-r$个，称为欠定线性方程组 
 
 ### 线性方程组解的结构
 
@@ -899,7 +902,7 @@ $$
 4. 转置矩阵由于行列式不变，所以特征值不变。但是特征向量并不一定一样。
 5. 设$n$阶矩阵$\bm A$的$n$个特征值为$\lambda_1,\lambda_2,\cdots,\lambda_n$（重根按重数计算），则
 
-    1. $\lambda_1+\lambda_2+\cdots+\lambda_n=a_{11}+a_{22}+\cdots+a_{nn}=tr(\bm A)$,$tr(\bm A)$称之为矩阵的迹
+    1. $\lambda_1+\lambda_2+\cdots+\lambda_n=a_{11}+a_{22}+\cdots+a_{nn}=tr(\bm A)$，$tr(\bm A)$称之为矩阵的迹
     2. $\lambda_1\lambda_2\cdots\lambda_n=|\bm A|$
 6. 矩阵可逆$\Leftrightarrow$所有特征值均非0
 7. 若$\lambda_1,\lambda_2,\cdots,\lambda_m$是$\bm A$的互不相同的特征值，$\bm{\alpha}_1,\bm{\alpha}_2,\cdots,\bm{\alpha}_m$是对应的特征向量，则$\bm{\alpha}_1,\bm{\alpha}_2,\cdots,\bm{\alpha}_m$线性无关
@@ -935,7 +938,7 @@ $$
 有如下定理：
 
 1. $\bm A$可对角化的充要条件是$\bm A$有$n$个线性无关的特征向量。
-2. $n$阶矩阵$\bm A$的$n$个特征值互不相同$\Rightarrow$$\bm A$可对角化
+2. $n$阶矩阵$\bm A$的$n$个特征值互不相同$\Rightarrow\bm A$可对角化
 3. $\bm A$可对角化的充要条件是对于$\bm A$的每个$k$重特征值$\lambda$，都有$R(\lambda\bm E-\bm A)=n-k$
 
 ### 实对称矩阵的对角化

@@ -1917,7 +1917,7 @@ $$
 
 - $x_1-x_2\geq y\Rightarrow x_2-x_1\leq -y$
 - $x_1-x_2=y\Rightarrow x_1-x_2\leq y \wedge x_2-x_1\leq -y$
-- $x_1-x_2<y\Rightarrow x_1-x_2\leq y-1$（要求取值只能是整数）
+- $x_1-x_2< y\Rightarrow x_1-x_2\leq y-1$（要求取值只能是整数）
 - $x_1-x_2>y\Rightarrow x_2-x_1\leq -y-1$（要求取值只能是整数）
 
 ```cpp
@@ -7096,7 +7096,7 @@ judge函数应该根据题意写出。
 
 ## 二分求单调函数零点
 
-设函数$f$在$[l,r]$上严格单调，$mid=(l+r)/2$，显然有$f(l)f(r)<0$。迭代中，若$f(l)f(mid)<0$，则$r=mid$，否则$l=mid$。直到$f(mid)=0$或者$r-l<EPS$或者迭代次数达到要求。收敛速度是线性收敛。
+设函数$f$在$[l,r]$上严格单调，$mid=(l+r)/2$，显然有$f(l)f(r)<0$。迭代中，若$f(l)f(mid)<0$，则$r=mid$，否则$l=mid$。直到$f(mid)=0$或者$r-l< EPS$或者迭代次数达到要求。收敛速度是线性收敛。
 
 # 三分法
 

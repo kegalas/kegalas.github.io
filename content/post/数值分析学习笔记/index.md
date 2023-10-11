@@ -1,13 +1,15 @@
 ---
-title: "数值分析学习笔记"
+title: 数值分析学习笔记
 date: 2022-10-02T16:42:53+08:00
 draft: false
-tags: [数学,数值分析]
+tags:
+  - 数学
+  - 数值分析
 description: Timothy Sauer所著《数值分析（第二版）》的学习笔记
 categories: 数学
 mathjax: true
-markup: pandoc
-image: "cover.jpg"
+markup: goldmark
+image: cover.jpg
 ---
 
 # 基础知识
@@ -363,7 +365,7 @@ $$
 
 **定理1**
 
-根据函数的连续性，我们知道，如果一个函数是连续的（在[a,b]上），并且在$a<b$时有$f(a)f(b)<0$，那么函数在$(a,b)$之间至少有一个根$r$使得$f(r)=0$
+根据函数的连续性，我们知道，如果一个函数是连续的（在[a,b]上），并且在$a< b$时有$f(a)f(b)<0$，那么函数在$(a,b)$之间至少有一个根$r$使得$f(r)=0$
 
 显然，我们可以判断$c=(b+a)/2$时$f(a)f(c)$的符号来判断根具体在$[a,c]$还是$[c,b]$之中
 
@@ -507,19 +509,19 @@ $$
 对于一组容差$TOL$，我们可能使用绝对终止条件
 
 $$
-|x_{i+1}-x_i|<TOL
+|x_{i+1}-x_i| < \text{TOL}
 $$
 
 当解不在$0$附件时可以使用相对误差条件
 
 $$
-\frac{|x_{i+1}-x_i|}{|x_{i+1}|}<TOL
+\frac{|x_{i+1}-x_i|}{|x_{i+1}|} < \text{TOL}
 $$
 
 还有混合绝对/相对误差终止条件
 
 $$
-\frac{|x_{i+1}-x_i|}{max(|x_{i+1}|,\theta)}<TOL
+\frac{|x_{i+1}-x_i|}{max(|x_{i+1}|,\theta)} < \text{TOL}
 $$
 
 其中$\theta>0$，常常用于$0$附近的解。此外，如果收敛失败，一个好的FPI也应该设置迭代次数上限。
@@ -605,7 +607,7 @@ $$
 \Delta r\approx\frac{-\varepsilon g(r)}{f'(r)+\varepsilon g'(r)}\approx -\varepsilon\frac{g(r)}{f'(r)}
 $$
 
-上式就叫做根的敏感公式。（假设$r$是$f(x)$的根，并且$r+\Delta r$是$f(x)+\varepsilon g(x)$的根，则当$\varepsilon <<f'(r)$时有上式）
+上式就叫做根的敏感公式。（假设$r$是$f(x)$的根，并且$r+\Delta r$是$f(x)+\varepsilon g(x)$的根，则当$\varepsilon << f'(r)$时有上式）
 
 对于一个一般算法生成的近似$x_c$，我们定义
 

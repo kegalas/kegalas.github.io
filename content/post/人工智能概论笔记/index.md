@@ -1,13 +1,15 @@
 ---
-title: "人工智能概论笔记"
+title: 人工智能概论笔记
 date: 2022-10-31T09:56:28+08:00
 draft: false
-tags: [人工智能,大学]
+tags:
+  - 人工智能
+  - 大学
 description: 人工智能概论的学习笔记
 categories: 人工智能
 mathjax: true
-markup: pandoc
-image: "cover.jpg"
+markup: goldmark
+image: cover.jpg
 ---
 
 # 一些概念解释
@@ -1172,9 +1174,7 @@ $$
 
 ### 可信度方法
 
-可信度方法是在确定性理论的基础上，结合概率
-论等提出的一种不确定性推理方法，简称C-F模型。
-该方法首先在医疗系统MYCIN中得到成功的应用。
+可信度方法是在确定性理论的基础上，结合概率论等提出的一种不确定性推理方法，简称C-F模型。该方法首先在医疗系统MYCIN中得到成功的应用。
 
 *可信度的概念*
 
@@ -1213,6 +1213,7 @@ MB(H,E) = \left\{\begin{matrix}
 \end{matrix}\right.
 $$
 
+
 $$
 MD(H,E) = \left\{\begin{matrix}
 1 & ,P(H)=0\\
@@ -1220,8 +1221,8 @@ MD(H,E) = \left\{\begin{matrix}
 \end{matrix}\right.
 $$
 
-- 当$P(H|E)>P(H)$时：表示证据E支持结论$H$,$MB(H,E)>0，MD(H,E)=0$。
-- 当$P(H|E)<P(H)$时，表示$E$不支持$H$,$MD(H,E)>0， MB(H,E)=0$。当$p(H|E)=p(H)$时，表示$E$对$H$无影响，则有$MB=MD=0$
+- 当$P(H|E)>P(H)$时：表示证据E支持结论$H$，$MB(H,E)>0，MD(H,E)=0$。
+- 当$P(H|E)< P(H)$时，表示$E$不支持$H$，$MD(H,E)>0， MB(H,E)=0$。当$p(H|E)=p(H)$时，表示$E$对$H$无影响，则有$MB=MD=0$
 - $MB(H,E)$与$MD(H,E)$是互斥的：当$MB(H,E)>0$时，$MD(H,E)=0$;当$MD(H,E)>0$时，$MB(H,E)=0$
 
 *$CF(H,E)$的计算公式*
@@ -1230,9 +1231,9 @@ $$
 
 $$
 CF(H,E) = \left\{\begin{matrix}
-MB(H,E)-0=\dfrac{P(H|E)-P(H)}{1-P(H)} & ,P(H|E)>P(H)\\
+MB(H,E)-0=\dfrac{P(H|E)-P(H)}{1-P(H)} & ,P(H|E) > P(H)\\
 0 & ,P(H|E)=P(H)\\
-0-MD(H,E)=-\dfrac{P(H)-P(H|E)}{P(H)}& ,P(H|E)<P(H)
+0-MD(H,E)=-\dfrac{P(H)-P(H|E)}{P(H)}& ,P(H|E) < P(H)
 \end{matrix}\right.
 $$
 
@@ -1242,7 +1243,7 @@ $CF(H,E)>0$对应于$P(H|E)>P(H)$
 
 $CF(H,E)=0$对应于$P(H|E)=P(H)$
 
-$CF(H,E)<0$对应于$P(H|E)<P(H)$
+$CF(H,E) < 0$对应于$P(H|E) < P(H)$
 
 当且仅当$P(H|E)=1$时,$CF(H,E)=1$
 
@@ -1321,6 +1322,7 @@ $$
 $$
 \text{IF}\quad E_1\quad \text{THEN}\quad H\quad\quad (CF(H,E_1))
 $$
+
 $$
 \text{IF}\quad E_2\quad \text{THEN}\quad H\quad\quad (CF(H,E_2))
 $$
@@ -1352,6 +1354,7 @@ $$
 $$
 r_1: \text{IF}\quad \{E_1(\omega_1)\}\quad \text{THEN}\quad H_1\quad\quad (CF(H_1,E_1),\lambda_1)
 $$
+
 $$
 r_2: \text{IF}\quad \{E_2(\omega_2)\}\quad \text{THEN}\quad H_2\quad\quad (CF(H_2,E_2),\lambda_2)
 $$
@@ -1510,7 +1513,7 @@ GA中的编码方法可分为三大类：二进制编码方法、浮点数编码
 
 是GA中最常用的一种编码方法。它所构成的个体基因型是一个二进制编码符号串。
 
-二进制编码符号串的长度与问题所要求的求解精度有关。设某一参数的取值范围是$[A, B]，A<B$。则二进制编码的编码精度为：
+二进制编码符号串的长度与问题所要求的求解精度有关。设某一参数的取值范围是$[A, B]，A< B$。则二进制编码的编码精度为：
 
 $$
 \delta = \dfrac{B-A}{2^l-1}
@@ -1765,7 +1768,7 @@ $$
 x_{id}^{k+1} = x_{id}^k + v_{id}^{k+1}
 $$
 
-其中$w$为惯性权重，$d=1,2,\cdots,D,\quad i=1,2,\cdots,M$.$c_1,c_2$为两个正常数称为加速因子，$\text{rand}()$为分布于$[0,1]$的随机数
+其中$w$为惯性权重，$d=1,2,\cdots,D,\quad i=1,2,\cdots,M$。$c_1,c_2$为两个正常数称为加速因子，$\text{rand}()$为分布于$[0,1]$的随机数
 
 $v_{id}^{k+1}$分为三项，第一项是惯性部分，第二项是认知部分，第三项是社会部分
 

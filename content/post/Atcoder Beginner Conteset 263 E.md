@@ -1,11 +1,13 @@
 ---
-title: "Atcoder Beginner Conteset 263 E（概率DP）"
+title: Atcoder Beginner Conteset 263 E（概率DP）
 date: 2022-08-07T12:57:17+08:00
 draft: false
-tags: [算法,概率DP]
+tags:
+  - 算法
+  - 概率DP
 categories: 算法
 mathjax: true
-markup: pandoc
+markup: goldmark
 ---
 
 题意：有$N$个方块，初始时站在$1$方块上。每个方块上有一个数$a_i$，等概率地随机选一个$0\sim a_i$的数，假设在$x$方块上选到了$y$，则跳到$x+y$方块。求跳到$N$上时，选取次数的期望值。
