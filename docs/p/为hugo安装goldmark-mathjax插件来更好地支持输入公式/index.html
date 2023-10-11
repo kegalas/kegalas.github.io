@@ -108,7 +108,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 3 分钟
+                    阅读时长: 4 分钟
                 </time>
             </div>
         
@@ -158,7 +158,9 @@
 <p>编译成功后，一般会生成在<code>C:\Users\XXX\go\bin</code>，找不到的建议可以用Everything搜一下hugo.exe。之后就可以愉快的使用了。</p>
 <h1 id="已知问题">已知问题</h1>
 <ol>
-<li>输入公式时，<code>&lt;</code>有时要求前后有空格，否则会渲染失败。具体触发原理还不明白。</li>
+<li>输入公式时，<code>&lt;</code>有时要求后有空格，否则会渲染失败。一般来说，应该是<code>&lt;</code>后加上大小写字母会渲染失败，必须加上空格。可以用搜索软件搜索所有笔记手动修改。</li>
+<li>两个行内公式，如果中间没有间隔，或者中间间隔为英文逗号、句号，会渲染失败。例如<code>$abc$$abc$</code>，<code>$abc$,$abc$</code>，<code>$abc$.$abc$</code>。后面两种情况搜索即可。第一种情况，由于正常的行间公式双<code>$</code>符在单独一行，所以直接搜索<code>$$</code>，obsidian只会把搜索结果的那一行显示，所以即使有几千条也还是比较方便找到的。</li>
+<li>行间公式，双<code>$</code>符要单独在一行，否则会渲染失败。解决方法同上。</li>
 </ol>
 
 </section>

@@ -179,12 +179,17 @@
 </span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27</span><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
 </span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28</span><span>}
 </span></span></code></pre></div><h2 id="正确性证明">正确性证明</h2>
-<p>​	若<span class="math inline">\(1/n\)</span>可以在d进制表达为有限小数，那么一定有：</p>
-<p>​	<span class="math inline">\(\frac{1}{n}=\frac{a_1}{d}+\frac{a_2}{d^2}+\dots+\frac{a_m}{d^m}\)</span></p>
-<p>​	其中<span class="math inline">\(a_i<d(1\le i\le m)\)</span>，且<span class="math inline">\(a\)</span>为正整数，<span class="math inline">\(m\)</span>是一个正整数。将两边同乘<span class="math inline">\(nd^m\)</span>得：</p>
-<p>​	<span class="math inline">\(d^m=n(a_1d^{m-1}+\dots+a_md^0)\)</span></p>
-<p>故只要<span class="math inline">\(d^m\)</span>是n的倍数，<span class="math inline">\(1/n\)</span>在d进制下就为有限小数。</p>
-<p>将n进行质因数分解，由唯一分解定理知只能分解为一种形式，设d为n的质因数的乘积，易知此时总存在m使得n|<span class="math inline">\(d^m\)</span>，并且显然，这个d是最小的。</p>
+<p>​若<span class="math inline">\(1/n\)</span>可以在d进制表达为有限小数，那么一定有：</p>
+<p><span class="math display">\[\frac{1}{n}=\frac{a_1}{d}+\frac{a_2}{d^2}+\dots+\frac{a_m}{d^m}
+\]</span></p>
+<p>其中<span class="math inline">\(a_i< d(1\le i\le m)\)</span>，且<span class="math inline">\(a\)</span>为正整数，<span class="math inline">\(m\)</span>是一个正整数。将两边同乘<span class="math inline">\(nd^m\)</span>得：</p>
+<p>​$$
+d^m=n(a_1d^{m-1}+\dots+a_md^0)</p>
+<p><span class="math display">\[
+故只要$d^m$是n的倍数，$1/n$在d进制下就为有限小数。
+
+将n进行质因数分解，由唯一分解定理知只能分解为一种形式，设d为n的质因数的乘积，易知此时总存在m使得n|$d^m$，并且显然，这个d是最小的。
+\]</span></p>
 
 </section>
 

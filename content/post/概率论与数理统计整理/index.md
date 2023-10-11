@@ -319,7 +319,7 @@ $$
 设$X$为一随机变量，则函数
 
 $$
-P(X\leq x) = F(x)\quad(-\infty<x<\infty)
+P(X\leq x) = F(x)\quad(-\infty< x<\infty)
 $$
 
 称为$X$的分布函数。这里不限制$X$是离散型的。
@@ -347,7 +347,7 @@ $$
 
 1. $f(x)\geq 0$
 2. $\int^\infty_{-\infty}f(x)dx=1$
-3. 对于任何常数$a<b$，有
+3. 对于任何常数$a< b$，有
 
 $$
 P(a\leq X\leq b)=F(b)-F(a) = \int^b_af(x)dx
@@ -401,7 +401,7 @@ $$
 \frac{\partial^2 F(x,y)}{\partial x\partial y}=f(x,y)
 $$
 
-在$\Delta x,\Delta y$很小时，有$P(x<X<x+\Delta x,y<Y<y+\Delta y)\approx f(x,y)\Delta x\Delta y$
+在$\Delta x,\Delta y$很小时，有$P(x< X< x+\Delta x,y< Y< y+\Delta y)\approx f(x,y)\Delta x\Delta y$
 
 若$G$为$xOy$内的任意区域，点$(x,y)$落在$G$内的概率为
 
@@ -423,7 +423,7 @@ $$
 对于任意$x$，$F(x,-\infty)=0$，对于任意$y$，$F(-\infty,y)=0$
 
 3. $F(x,y)$关于$x,y$均为右连续，$F(x+0,y) = F(x,y)$，$F(x,y+0) = F(x,y)$
-4. 若$x_1<x_2,y_1<y_2$，则$F(x_2,y_2)+F(x_1,y_1)-F(x_2,y_1)-F(x_1,y_2)\geq 0$
+4. 若$x_1< x_2,y_1< y_2$，则$F(x_2,y_2)+F(x_1,y_1)-F(x_2,y_1)-F(x_1,y_2)\geq 0$
 
 另外，有
 
@@ -525,13 +525,13 @@ $$
 
 **定理1**
 
-如果连续变量$X_1,\cdots,X_n$相互独立，则对任何$a_i<b_i$，则由下式定义的$n$个事件也独立
+如果连续变量$X_1,\cdots,X_n$相互独立，则对任何$a_i< b_i$，则由下式定义的$n$个事件也独立
 
 $$
 A_1=\{a_1\leq X_1\leq b_1\},\cdots,A_n=\{a_n\leq X_n\leq b_n\}
 $$
 
-反之，若对任何$a_i<b_i$，事件$A_1,\cdots,A_n$独立，则变量$X_1,\cdots,X_n$独立。
+反之，若对任何$a_i< b_i$，事件$A_1,\cdots,A_n$独立，则变量$X_1,\cdots,X_n$独立。
 
 **定理2**
 
@@ -2168,7 +2168,7 @@ $$
 
 1. 找一个与要估计的参数$g(\theta)$有关的统计量$T$，一般是其一个良好的点估计
 2. 设法找出$T$和$g(\theta)$的某一函数$S(T,g(\theta))$，其分布$F$要与$\theta$无关，$S$称为枢轴变量。
-3. 对任何常数$a<b$，不等式$a\leq S(T,g(\theta))\leq b$要能改写为等价的形式$A\leq g(\theta)\leq B$，$A,B$只与$T,a,b$有关，而与$\theta$无关
+3. 对任何常数$a< b$，不等式$a\leq S(T,g(\theta))\leq b$要能改写为等价的形式$A\leq g(\theta)\leq B$，$A,B$只与$T,a,b$有关，而与$\theta$无关
 4. 取分布$F$的上$\alpha/2$分位点$w_{\alpha/2}$和上$1-\alpha/2$分位点$w_{1-\alpha/2}$，则有$F(w_{\alpha/2})-F(w_{1-\alpha/2})=1-\alpha$，因此
 
 $$

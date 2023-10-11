@@ -132,79 +132,78 @@
 <p>​    第一行一个正整数 <span class="math inline">\(n(1\le n\le 10^5)\)</span>，即向量的个数。</p>
 <p>​    接下来<span class="math inline">\(n\)</span>行，每行两个整数<span class="math inline">\(x_i\)</span>, <span class="math inline">\(y_i$ \)</span>(0\le |x_i|,|y_i|\le 10^9)<span class="math inline">\(，分别代表第$i\)</span>个向量<span class="math inline">\(x\)</span>轴与<span class="math inline">\(y\)</span>轴的大小方向。</p>
 <p>数据保证</p>
-<p><span class="math display">\[
-### 输出
-
-​    若存在满足要求的操作输出 “yes”，反之输出 “no”。
-
-### 样例
-
-| 样例输入                         | 样例输出 |
-| ---------------------------- | ---- |
-| 3<br />0 0<br />1 2<br />4 2 | no   |
-
-## AC代码
-
-```c++
-#include <iostream>
-#include <cstdio>
-typedef long long ll;
-#define MAXN 100005
-
-using namespace std;
-
-struct Vec
-{
-    ll x;
-    ll y;
-};
-
-
-Vec vec[MAXN];
-
-int main(){
-    int n;
-    cin>>n;
-    Vec allSum;
-    allSum.x=0;allSum.y=0;
-    for(int i=1;i<=n;i++){
-        cin>>vec[i].x>>vec[i].y;
-        allSum.x+=vec[i].x;
-        allSum.y+=vec[i].y;
-    }
-    ll ans = 0;
-    for(int i=1;i<=n;i++){
-        if(vec[i].x==0&&vec[i].y==0) continue;
-        Vec tmpSum = allSum;
-        tmpSum.x-=vec[i].x;
-        tmpSum.y-=vec[i].y;
-        ll dis1 = tmpSum.x*tmpSum.x+tmpSum.y*tmpSum.y;
-        ll dis2 = vec[i].x*vec[i].x+vec[i].y*vec[i].y;
-        if(dis1==dis2) {
-            ans=1;
-            break;
-        }
-        if(vec[i].y*tmpSum.x-tmpSum.y*vec[i].x==0) {
-            ans=1;
-            break;
-        }
-    }
-    if(ans) cout<<"yes";
-    else cout<<"no";
-    return 0;
-}
-```
-
-## 正确性证明
-
-首先分析题目，出题人的表达和数据结果并不一致。“是否可以通过旋转异或伸缩任意一个向量”实际上应该是“是否可以通过旋转异或伸缩某一个向量”，从而“使得这n个向量相加等于0向量”。
-
-数据也就$10^5$，直接枚举就行。先将所有向量加到一起记为allSum，然后建立一个tmpSum = allSum-我们当前枚举的向量，记为v。
-
-然后判断这个tmpSum向量是否和v长度平方相等，是则可以通过旋转v，再相加得到0向量。判断tmpSum向量终点是否和$(0,0)$和v的终点在同一直线上,是则可以通过伸缩v来达到目的。这里判断三点共线的方法是求外积。若都为否，则不可以只对v伸缩或者旋转达到目的，枚举下一个。这里注意，我上述写的代码要将0向量略过，否则0向量总是可以通过三点共线的判断，达不到目的。
-
-如果枚举出一个向量可以达到目的，就输出yes。如果所有向量都达不到目的，就输出no。
+<p><span class="math display">\[\sum_{i=1}^{n}(|x_i|+|y_i|)\le 10^9
 \]</span></p>
+<h3 id="输出">输出</h3>
+<p>​    若存在满足要求的操作输出 “yes”，反之输出 “no”。</p>
+<h3 id="样例">样例</h3>
+<table>
+<thead>
+<tr>
+<th>样例输入</th>
+<th>样例输出</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>3<br />0 0<br />1 2<br />4 2</td>
+<td>no</td>
+</tr>
+</tbody>
+</table>
+<h2 id="ac代码">AC代码</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;cstdio&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span><span><span style="color:#75715e"></span><span style="color:#66d9ef">typedef</span> <span style="color:#66d9ef">long</span> <span style="color:#66d9ef">long</span> ll;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span><span><span style="color:#75715e">#define MAXN 100005
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span><span><span style="color:#66d9ef">using</span> <span style="color:#66d9ef">namespace</span> std;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span><span><span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">Vec</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span><span>{
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span><span>    ll x;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span><span>    ll y;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span><span>};
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15</span><span>Vec vec[MAXN];
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17</span><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(){
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18</span><span>    <span style="color:#66d9ef">int</span> n;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19</span><span>    cin<span style="color:#f92672">&gt;&gt;</span>n;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20</span><span>    Vec allSum;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21</span><span>    allSum.x<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>;allSum.y<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22</span><span>    <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>;i<span style="color:#f92672">&lt;=</span>n;i<span style="color:#f92672">++</span>){
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23</span><span>        cin<span style="color:#f92672">&gt;&gt;</span>vec[i].x<span style="color:#f92672">&gt;&gt;</span>vec[i].y;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24</span><span>        allSum.x<span style="color:#f92672">+=</span>vec[i].x;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25</span><span>        allSum.y<span style="color:#f92672">+=</span>vec[i].y;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26</span><span>    }
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27</span><span>    ll ans <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28</span><span>    <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>;i<span style="color:#f92672">&lt;=</span>n;i<span style="color:#f92672">++</span>){
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29</span><span>        <span style="color:#66d9ef">if</span>(vec[i].x<span style="color:#f92672">==</span><span style="color:#ae81ff">0</span><span style="color:#f92672">&amp;&amp;</span>vec[i].y<span style="color:#f92672">==</span><span style="color:#ae81ff">0</span>) <span style="color:#66d9ef">continue</span>;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30</span><span>        Vec tmpSum <span style="color:#f92672">=</span> allSum;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31</span><span>        tmpSum.x<span style="color:#f92672">-=</span>vec[i].x;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32</span><span>        tmpSum.y<span style="color:#f92672">-=</span>vec[i].y;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33</span><span>        ll dis1 <span style="color:#f92672">=</span> tmpSum.x<span style="color:#f92672">*</span>tmpSum.x<span style="color:#f92672">+</span>tmpSum.y<span style="color:#f92672">*</span>tmpSum.y;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34</span><span>        ll dis2 <span style="color:#f92672">=</span> vec[i].x<span style="color:#f92672">*</span>vec[i].x<span style="color:#f92672">+</span>vec[i].y<span style="color:#f92672">*</span>vec[i].y;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35</span><span>        <span style="color:#66d9ef">if</span>(dis1<span style="color:#f92672">==</span>dis2) {
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36</span><span>            ans<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37</span><span>            <span style="color:#66d9ef">break</span>;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38</span><span>        }
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39</span><span>        <span style="color:#66d9ef">if</span>(vec[i].y<span style="color:#f92672">*</span>tmpSum.x<span style="color:#f92672">-</span>tmpSum.y<span style="color:#f92672">*</span>vec[i].x<span style="color:#f92672">==</span><span style="color:#ae81ff">0</span>) {
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40</span><span>            ans<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41</span><span>            <span style="color:#66d9ef">break</span>;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42</span><span>        }
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">43</span><span>    }
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">44</span><span>    <span style="color:#66d9ef">if</span>(ans) cout<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34;yes&#34;</span>;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">45</span><span>    <span style="color:#66d9ef">else</span> cout<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34;no&#34;</span>;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">46</span><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">47</span><span>}
+</span></span></code></pre></div><h2 id="正确性证明">正确性证明</h2>
+<p>首先分析题目，出题人的表达和数据结果并不一致。“是否可以通过旋转异或伸缩任意一个向量”实际上应该是“是否可以通过旋转异或伸缩某一个向量”，从而“使得这n个向量相加等于0向量”。</p>
+<p>数据也就<span class="math inline">\(10^5\)</span>，直接枚举就行。先将所有向量加到一起记为allSum，然后建立一个tmpSum = allSum-我们当前枚举的向量，记为v。</p>
+<p>然后判断这个tmpSum向量是否和v长度平方相等，是则可以通过旋转v，再相加得到0向量。判断tmpSum向量终点是否和<span class="math inline">\((0,0)\)</span>和v的终点在同一直线上,是则可以通过伸缩v来达到目的。这里判断三点共线的方法是求外积。若都为否，则不可以只对v伸缩或者旋转达到目的，枚举下一个。这里注意，我上述写的代码要将0向量略过，否则0向量总是可以通过三点共线的判断，达不到目的。</p>
+<p>如果枚举出一个向量可以达到目的，就输出yes。如果所有向量都达不到目的，就输出no。</p>
 
 </section>
 
@@ -508,8 +507,12 @@ int main(){
         <li><a href="#题目描述">题目描述</a>
           <ol>
             <li><a href="#输入">输入</a></li>
+            <li><a href="#输出">输出</a></li>
+            <li><a href="#样例">样例</a></li>
           </ol>
         </li>
+        <li><a href="#ac代码">AC代码</a></li>
+        <li><a href="#正确性证明">正确性证明</a></li>
       </ol>
     </li>
   </ol>

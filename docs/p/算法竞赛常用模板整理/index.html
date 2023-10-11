@@ -112,7 +112,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 27 分钟
+                    阅读时长: 119 分钟
                 </time>
             </div>
         
@@ -1796,7 +1796,7 @@ x_{c_m}-x_{c_m'}\leq y_m
 <ul>
 <li><span class="math inline">\(x_1-x_2\geq y\Rightarrow x_2-x_1\leq -y\)</span></li>
 <li><span class="math inline">\(x_1-x_2=y\Rightarrow x_1-x_2\leq y \wedge x_2-x_1\leq -y\)</span></li>
-<li><span class="math inline">\(x_1-x_2<y\Rightarrow x_1-x_2\leq y-1\)</span>（要求取值只能是整数）</li>
+<li><span class="math inline">\(x_1-x_2< y\Rightarrow x_1-x_2\leq y-1\)</span>（要求取值只能是整数）</li>
 <li><span class="math inline">\(x_1-x_2>y\Rightarrow x_2-x_1\leq -y-1\)</span>（要求取值只能是整数）</li>
 </ul>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span><span style="color:#75715e">//差分约束，复杂度同SPFA
@@ -6469,7 +6469,7 @@ x_{c_m}-x_{c_m'}\leq y_m
 <h2 id="二分查找">二分查找</h2>
 <p>通常是在排好序上的数组中，查找第一个大于（或大于等于）x的元素。见STL用法中的lower_bound和upper_bound。每次查找的复杂度是logn</p>
 <h2 id="二分求单调函数零点">二分求单调函数零点</h2>
-<p>设函数<span class="math inline">\(f\)</span>在<span class="math inline">\([l,r]\)</span>上严格单调，<span class="math inline">\(mid=(l+r)/2\)</span>，显然有<span class="math inline">\(f(l)f(r)<0\)</span>。迭代中，若<span class="math inline">\(f(l)f(mid)<0\)</span>，则<span class="math inline">\(r=mid\)</span>，否则<span class="math inline">\(l=mid\)</span>。直到<span class="math inline">\(f(mid)=0\)</span>或者<span class="math inline">\(r-l<EPS\)</span>或者迭代次数达到要求。收敛速度是线性收敛。</p>
+<p>设函数<span class="math inline">\(f\)</span>在<span class="math inline">\([l,r]\)</span>上严格单调，<span class="math inline">\(mid=(l+r)/2\)</span>，显然有<span class="math inline">\(f(l)f(r)<0\)</span>。迭代中，若<span class="math inline">\(f(l)f(mid)<0\)</span>，则<span class="math inline">\(r=mid\)</span>，否则<span class="math inline">\(l=mid\)</span>。直到<span class="math inline">\(f(mid)=0\)</span>或者<span class="math inline">\(r-l< EPS\)</span>或者迭代次数达到要求。收敛速度是线性收敛。</p>
 <h1 id="三分法">三分法</h1>
 <h2 id="三分法求单峰函数的极值点">三分法求单峰函数的极值点</h2>
 <p>用二分求函数的导数的零点也可以，但是并不是每次都可以方便的求出导数。三分法可以不用求出导数。</p>

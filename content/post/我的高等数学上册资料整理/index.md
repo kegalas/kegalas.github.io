@@ -127,27 +127,59 @@ $cot\ x,sec\ x,csc\ x$的函数图像如下
 
 #### 和差化积
 
-​ $$sin\alpha+sin\beta=2sin\frac{\alpha+\beta}{2}\cdot cos\frac{\alpha-\beta}{2}$$
-​ $$sin\alpha-sin\beta=2cos\frac{\alpha+\beta}{2}\cdot sin\frac{\alpha-\beta}{2}$$
-​ $$cos\alpha+cos\beta=2cos\frac{\alpha+\beta}{2}\cdot cos\frac{\alpha-\beta}{2}$$
-​ $$cos\alpha-cos\beta=-2sin\frac{\alpha+\beta}{2}\cdot sin\frac{\alpha-\beta}{2}$$
+$$
+sin\alpha+sin\beta=2sin\dfrac{\alpha+\beta}{2}\cdot cos\dfrac{\alpha-\beta}{2}
+$$
+​ 
+$$
+sin\alpha-sin\beta=2cos\frac{\alpha+\beta}{2}\cdot sin\frac{\alpha-\beta}{2}
+$$
+​ 
+$$
+cos\alpha+cos\beta=2cos\frac{\alpha+\beta}{2}\cdot cos\frac{\alpha-\beta}{2}
+$$
+​ 
+$$
+cos\alpha-cos\beta=-2sin\frac{\alpha+\beta}{2}\cdot sin\frac{\alpha-\beta}{2}
+$$
 
 #### 积化和差
 
-​ $$sin\alpha cos\beta=\frac{1}{2}\left[sin(\alpha+\beta)+sin(\alpha-\beta)\right]$$
-​ $$cos\alpha sin\beta=\frac{1}{2}\left[sin(\alpha+\beta)-sin(\alpha-\beta)\right]$$
-​ $$cos\alpha cos\beta=\frac{1}{2}\left[cos(\alpha+\beta)+cos(\alpha-\beta)\right]$$
-​ $$sin\alpha sin\beta=-\frac{1}{2}\left[cos(\alpha+\beta)-cos(\alpha-\beta)\right]$$
+$$
+sin\alpha cos\beta=\frac{1}{2}\left[sin(\alpha+\beta)+sin(\alpha-\beta)\right]
+$$
+​ 
+$$
+cos\alpha sin\beta=\frac{1}{2}\left[sin(\alpha+\beta)-sin(\alpha-\beta)\right]
+$$
+​ 
+$$
+cos\alpha cos\beta=\frac{1}{2}\left[cos(\alpha+\beta)+cos(\alpha-\beta)\right]
+$$
+​ 
+$$
+sin\alpha sin\beta=-\frac{1}{2}\left[cos(\alpha+\beta)-cos(\alpha-\beta)\right]
+$$
 
 #### 半角公式
 
-​ $$sin\frac{\theta}{2}=\pm \sqrt{\frac{1-cos\alpha}{2}}$$
-​ $$sin\frac{\theta}{2}=\pm \sqrt{\frac{1+cos\alpha}{2}}$$
-​ $$tan\frac{\theta}{2}=\pm \sqrt{\frac{1-cos\alpha}{1+cos\alpha}}=\frac{sin\alpha}{1+cos\alpha}=\frac{1-cos\alpha}{sin\alpha}$$
+$$
+sin\frac{\theta}{2}=\pm \sqrt{\frac{1-cos\alpha}{2}}
+$$
+​ 
+$$
+sin\frac{\theta}{2}=\pm \sqrt{\frac{1+cos\alpha}{2}}
+$$
+​ 
+$$
+tan\frac{\theta}{2}=\pm \sqrt{\frac{1-cos\alpha}{1+cos\alpha}}=\frac{sin\alpha}{1+cos\alpha}=\frac{1-cos\alpha}{sin\alpha}
+$$
 
 #### 辅助角公式
 
-​ $$asin\theta\pm bcos\theta=\sqrt{a^2+b^2}sin(\theta\pm\varphi),\quad tan\varphi=\frac{b}{a}$$
+$$
+asin\theta\pm bcos\theta=\sqrt{a^2+b^2}sin(\theta\pm\varphi),\quad tan\varphi=\frac{b}{a}
+$$
 
 #### $sin\ x$和$cos\ x$的$tan\ \frac x2$有理式表示
 
@@ -232,7 +264,7 @@ $$
 
 （3）在区间端点处的函数值相等，即$f(a)=f(b)$,
 
-那么在$(a,b)$内至少有一点$\xi\ (a<\xi<b)$，使得$f'(\xi)=0.$
+那么在$(a,b)$内至少有一点$\xi\ (a<\xi< b)$，使得$f'(\xi)=0.$
 
 ### 拉格朗日中值定理
 
@@ -242,7 +274,7 @@ $$
 
 （2）在开区间$(a,b)$内可导，
 
-那么在$(a,b)$内至少有一点$\xi (a<\xi<b)$，使等式
+那么在$(a,b)$内至少有一点$\xi (a<\xi< b)$，使等式
 
 $$
 f(b)-f(a)=f'(\xi)(b-a)

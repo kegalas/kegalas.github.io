@@ -225,7 +225,7 @@ $$
 
 令$\bar R\xlongequal{\text{def}}R\cup\{\pm\infty\}$为广义实数空间，则映射$f:R^n\to\bar R$为广义实值函数。
 
-规定$-\infty<a<+\infty,\forall a\in R$，以及$(+\infty)+(+\infty)=+\infty,(+\infty)+a=+\infty,\forall a\in R$
+规定$-\infty< a<+\infty,\forall a\in R$，以及$(+\infty)+(+\infty)=+\infty,(+\infty)+a=+\infty,\forall a\in R$
 
 **适当函数**
 
@@ -682,7 +682,7 @@ $$
 
 我们选取的区间使得函数是单股（峰的），这样我们有以下定理（单谷为例）
 
-设$f(x)$在$[a,b]$上单谷，$x^*\in[a,b]$是其极小点，$x_1<x_2$是$[a,b]$上任意两点。则：
+设$f(x)$在$[a,b]$上单谷，$x^*\in[a,b]$是其极小点，$x_1< x_2$是$[a,b]$上任意两点。则：
 
 - 若$f(x_1)\geq f(x_2)$，则$x^*\in[x_1,b]$
 - 否则$x^*[a,x_2]*$
@@ -739,7 +739,7 @@ $$
 
 1. 给定区间$[a,b],\varepsilon>0$
 2. 计算$x_1 = a+0.382(b-a),x_2 = a+0.618(b-a),f(x_1),f(x_2)$
-3. 如果$f(x_1)<f(x_2)$，则$b = x_2，x_2 = x_1,f_2=f_1,x_1 = a+0.382(b-a),f_1 = f(x_1)$。否则$a=x_1,x_1=x_2,f_1=f_2,x_2=a+0.618(b-a),f_2=f(x_2)$
+3. 如果$f(x_1)< f(x_2)$，则$b = x_2，x_2 = x_1,f_2=f_1,x_1 = a+0.382(b-a),f_1 = f(x_1)$。否则$a=x_1,x_1=x_2,f_1=f_2,x_2=a+0.618(b-a),f_2=f(x_2)$
 4. 判断$|a-b|<\varepsilon$，则跳转$5$，否则跳转$4$
 5. $x^*=0.5(a+b),f^*=f(x^*)$，终止。
 
@@ -770,7 +770,7 @@ $$
 
 计算$f(\overline{x})$
 
-3. 若$\overline{x}<x_2$，则新区间为$[x_1,x_2]$，否则新区间为$[x_2,x_3]$。如果$|x_2-\overline{x}|<\varepsilon$，停止迭代，进入$4$。新中间点为$\overline{x}$，返回$2$
+3. 若$\overline{x}< x_2$，则新区间为$[x_1,x_2]$，否则新区间为$[x_2,x_3]$。如果$|x_2-\overline{x}|<\varepsilon$，停止迭代，进入$4$。新中间点为$\overline{x}$，返回$2$
 4. $x^*=\overline{x},f^*=f(\overline{x})$，终止。
 
 **优点**

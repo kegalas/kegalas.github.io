@@ -125,7 +125,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 8 分钟
+                    阅读时长: 29 分钟
                 </time>
             </div>
         
@@ -253,7 +253,7 @@
 <h2 id="凸函数">凸函数</h2>
 <p><strong>广义实值函数</strong></p>
 <p>令<span class="math inline">\(\bar R\xlongequal{\text{def}}R\cup\{\pm\infty\}\)</span>为广义实数空间，则映射<span class="math inline">\(f:R^n\to\bar R\)</span>为广义实值函数。</p>
-<p>规定<span class="math inline">\(-\infty<a<+\infty,\forall a\in R\)</span>，以及<span class="math inline">\((+\infty)+(+\infty)=+\infty,(+\infty)+a=+\infty,\forall a\in R\)</span></p>
+<p>规定<span class="math inline">\(-\infty< a<+\infty,\forall a\in R\)</span>，以及<span class="math inline">\((+\infty)+(+\infty)=+\infty,(+\infty)+a=+\infty,\forall a\in R\)</span></p>
 <p><strong>适当函数</strong></p>
 <p>给定广义实值函数<span class="math inline">\(f\)</span>和非空集合<span class="math inline">\(\mathcal{X}\)</span>，如果存在<span class="math inline">\(x\in\mathcal{X}\)</span>使得<span class="math inline">\(f(x)<+\infty\)</span>，并且对任意的<span class="math inline">\(x\in\mathcal{X}\)</span>，都有<span class="math inline">\(f(x)>-\infty\)</span>，那么称函数<span class="math inline">\(f\)</span>关于集合<span class="math inline">\(\mathcal{X}\)</span>是适当的。</p>
 <p><strong>凸函数</strong></p>
@@ -557,7 +557,7 @@ y\geq 0
 <h2 id="搜索区间的确定">搜索区间的确定</h2>
 <h3 id="单谷峰函数">单谷（峰）函数</h3>
 <p>我们选取的区间使得函数是单股（峰的），这样我们有以下定理（单谷为例）</p>
-<p>设<span class="math inline">\(f(x)\)</span>在<span class="math inline">\([a,b]\)</span>上单谷，<span class="math inline">\(x^*\in[a,b]\)</span>是其极小点，<span class="math inline">\(x_1<x_2\)</span>是<span class="math inline">\([a,b]\)</span>上任意两点。则：</p>
+<p>设<span class="math inline">\(f(x)\)</span>在<span class="math inline">\([a,b]\)</span>上单谷，<span class="math inline">\(x^*\in[a,b]\)</span>是其极小点，<span class="math inline">\(x_1< x_2\)</span>是<span class="math inline">\([a,b]\)</span>上任意两点。则：</p>
 <ul>
 <li>若<span class="math inline">\(f(x_1)\geq f(x_2)\)</span>，则<span class="math inline">\(x^*\in[x_1,b]\)</span></li>
 <li>否则<span class="math inline">\(x^*[a,x_2]*\)</span></li>
@@ -599,7 +599,7 @@ y\geq 0
 <ol>
 <li>给定区间<span class="math inline">\([a,b],\varepsilon>0\)</span></li>
 <li>计算<span class="math inline">\(x_1 = a+0.382(b-a),x_2 = a+0.618(b-a),f(x_1),f(x_2)\)</span></li>
-<li>如果<span class="math inline">\(f(x_1)<f(x_2)\)</span>，则<span class="math inline">\(b = x_2，x_2 = x_1,f_2=f_1,x_1 = a+0.382(b-a),f_1 = f(x_1)\)</span>。否则<span class="math inline">\(a=x_1,x_1=x_2,f_1=f_2,x_2=a+0.618(b-a),f_2=f(x_2)\)</span></li>
+<li>如果<span class="math inline">\(f(x_1)< f(x_2)\)</span>，则<span class="math inline">\(b = x_2，x_2 = x_1,f_2=f_1,x_1 = a+0.382(b-a),f_1 = f(x_1)\)</span>。否则<span class="math inline">\(a=x_1,x_1=x_2,f_1=f_2,x_2=a+0.618(b-a),f_2=f(x_2)\)</span></li>
 <li>判断<span class="math inline">\(|a-b|<\varepsilon\)</span>，则跳转<span class="math inline">\(5\)</span>，否则跳转<span class="math inline">\(4\)</span></li>
 <li><span class="math inline">\(x^*=0.5(a+b),f^*=f(x^*)\)</span>，终止。</li>
 </ol>
@@ -620,7 +620,7 @@ y\geq 0
 \]</span></p>
 <p>计算<span class="math inline">\(f(\overline{x})\)</span></p>
 <ol start="3">
-<li>若<span class="math inline">\(\overline{x}<x_2\)</span>，则新区间为<span class="math inline">\([x_1,x_2]\)</span>，否则新区间为<span class="math inline">\([x_2,x_3]\)</span>。如果<span class="math inline">\(|x_2-\overline{x}|<\varepsilon\)</span>，停止迭代，进入<span class="math inline">\(4\)</span>。新中间点为<span class="math inline">\(\overline{x}\)</span>，返回<span class="math inline">\(2\)</span></li>
+<li>若<span class="math inline">\(\overline{x}< x_2\)</span>，则新区间为<span class="math inline">\([x_1,x_2]\)</span>，否则新区间为<span class="math inline">\([x_2,x_3]\)</span>。如果<span class="math inline">\(|x_2-\overline{x}|<\varepsilon\)</span>，停止迭代，进入<span class="math inline">\(4\)</span>。新中间点为<span class="math inline">\(\overline{x}\)</span>，返回<span class="math inline">\(2\)</span></li>
 <li><span class="math inline">\(x^*=\overline{x},f^*=f(\overline{x})\)</span>，终止。</li>
 </ol>
 <p><strong>优点</strong></p>
