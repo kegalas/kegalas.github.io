@@ -167,11 +167,250 @@ auto const & v2 = fun()[0];//这是最危险的情况，fun的返回值其实生
 
 鉴于上述情况，最好不要用引用接受函数返回值，直接用传值的方式更好。
 
-# 类成员初始化顺序
+# struct/class的大括号初值
 
-TODO，初始化列表的执行顺序总是按照声明的顺序。
+```cpp
+struct St{
+    int x;
+    double y;
+};
+
+St st{1, 2.0};//也可以St st = {1, 2.0};
+```
+
+像这样，用大括号给结构体、类赋初值，其顺序和结构体内部声明的顺序要一致。
+
+# 类拷贝（copy）
+
+C++与Java、Python等不同，在下面的例子中
+
+```cpp
+struct Point{
+    double x,y;
+};
+
+Point p1{1.0, 2.0};
+Point p2 = p1;
+```
+
+用到了`p2 = p1`这一语句。在Java和Python中，`p1`、`p2`现在都指向同一个对象`Point(1.0, 2.0)`，而其本身并不是对象。在C++中，`p2`把`p1`的所有内容拷贝赋值给自己，它们两个是两个不同的对象（即使内容相等）。
+
+在C++中，拷贝默认是深拷贝，而Java和Python中是浅拷贝。如果要在C++里面使用浅拷贝，则使用`Point & p3 = p1`即可（也可以用指针）。
+
+除了是否新建一个对象以为，这两者的生命周期也不同。C++的对象在`p1`销毁时就销毁了，而在Java中`p1`销毁之后，由于还有`p2`指向这个对象，所以对象本身不会销毁。如果所有指向全都销毁，那么垃圾回收机制才会销毁这个对象。
+
+另外，通常“相等”的概念也不同。在Java中，对两个对象变量使用`==`运算符，如果它们指向不同的对象，则不相等，否则相等。在C++中，我们一般会重载`==`运算符，判断两者的内容是否相等。
+
+## 拷贝构造函数
+
+## 赋值构造函数
+
+# argc, argv
+
+```cpp
+int main(int argc, char* argv[]){
+    //...
+}
+```
+
+main函数可以带两个参数，按照传统我们把第一个参数叫`argc`，第二个参数叫`argv`。argc是一个整数，代表命令行中参数的个数，argv是每个参数的字符串。
+
+命令行中参数通常由空格分开，例如
+
+```bash
+./g++.exe 1.cpp -o 1.exe -Wall
+```
+
+其中有五个参数，第一个为可运行文件本身的路径，后面的为运行它的参数。意味着argc等于5，argv存有五个字符串。一般我们会用atoi把字符串里的数字转化为int类型。
+
+# file stream
+
+在NOIP、NOI等竞赛中，一般会用freopen函数。这是一个C的函数，如果要更C++一点，我们会使用file stream。
+
+```cpp
+#include <fstream>
+
+int main(){
+    std::ofstream os{"1.txt"};
+
+    if(os.good()){//在每次使用时都应该确保good
+        os<<"hello world\n";
+    }
+    
+    return 0;
+}
+
+```
+
+如上为写数据时的使用例子。可以看到和cout的用法很像。
+
+```cpp
+#include <fstream>
+
+int main(){
+    std::ifstream is{"2.txt"};
+
+    if(is.good()){//在每次使用时都应该确保good
+        double x,y;
+        is>>x>>y;
+        std::cout<<x<<" "<<y<<"\n";
+    }
+    
+    return 0;
+}
+```
+
+如上为读数据的例子。可以看到和cin的用法很像。
+
+另外，例如写到末尾还是覆盖，是文本还是二进制，这些都是可以设置的。具体参考[https://zh.cppreference.com/w/cpp/header/fstream](https://zh.cppreference.com/w/cpp/header/fstream)，这里简短的给出几个常用的
+
+```cpp
+std::ofstream os{"out.txt", std::ios::app}; //append而不是覆盖
+
+std::ifstream is2{"in.tga", std::ios::binary}; //写二进制
+std::ofstream os2{"out.tga", std::ios::binary}; //读二进制
+```
+
+# 重载<<和>>运算符
+
+```cpp
+struct Vec{
+    double x,y;
+};
+
+std::istream& operator>>(std::istream& is, Vec& v){
+    return is>>v.x>>v.y;
+}
+
+std::ostream& operator<<(std::ostream& os, Vec& v){
+    return os<<v.x<<" "<<v.y;
+}
+
+std::cout<<Vec(2.0,3.0)<<"\n";//可以像对int一样使用cin cout
+```
+
+主要是方便打印、输入数据，例如你在编写一个数值计算库，需要用到很多向量、矩阵的输出。
+
+# mutable和const的成员函数
+
+```cpp
+class Vec{
+public:
+    double x,y;
+    int mutable sth;
+    int sth2;
+
+    void foo() const {
+        sth++;//不会报错
+    }
+
+    void bar() const{
+        sth2++;//会报错
+    }
+};
+```
+
+把类成员函数用const修饰（放在参数列表之后），意味着，这个函数声称不会改变类内的所有成员变量的值。如果你想让几个特例可以修改，那么就把那个特例变量声明为mutable的即可。
+
+# 类成员初始化
+
+在C++ 11以前，我们初始化类成员一般只能在构造函数里进行，如
+
+```cpp
+class Vec{
+public:
+    double x,y;
+    Vec():y(0),x(0){}
+};
+```
+
+其中`:`后面跟着的这个叫做初始化列表，成员后跟着的括号里面的写入初始值，即可完成初始化。
+
+注意，初始化列表里面的赋值顺序并不是初始化列表写出来的顺序，而是按照成员变量的声明顺序。例如上例，是先初始化x，再初始化y。这有时会导致UB，建议绝大部分时候，都要保持两者顺序一致。
+
+当然你也有可能这样写
+
+```cpp
+Vec(int x_, int y_){ //而不是写:x(x_),y(y_)
+    x = x_;
+    y = y_;
+}
+```
+
+这其实能看出一个C++程序员的水平。对于int、double这种内置类型还好。但如果x、y是class，那么`=`意味着拷贝赋值，意味着可能会先构造一个新的对象实例，再拷贝给x和y。而是用初始化列表，则会直接调用构造函数，总体上少了拷贝这一个步骤。
+
+在C++ 11之后，我们也可以这样给初始值
+
+```cpp
+class Vec{
+public:
+    double x=0.0, y=0.0;
+    Vec(){}
+};
+```
 
 #  explicit关键字
 
+
+```cpp
+class Cl{
+public:
+    int n;
+    explicit Cl(int n_):n(n_){}
+};
+
+void foo (Cl a) {}
+
+foo(1);  //隐式调用Cl的构造函数，但因为其构造函数是explicit的，会报错
+foo(Cl(1));//正常
+
+```
+
+个人认为这主要是方便强调一下传入的数据的类型，可能在调试环节比较有用。
+
+# 构造函数相互调用
+
+```cpp
+Class Vec{
+public:
+    double x, y;
+    Vec():Vec(0){}
+    Vec(double a):Vec(a,a){}
+    Vec(double x_, double y_):x(x_),y(y_){}
+};
+```
+
+# 在C++里最好用nullptr而不是null
+
+C++和C语言的`NULL`定义是不同的，在C++中`#define NULL 0`，而在C中`#define NULL ((void*)0)`。不得不这样改的原因是：C++不支持`void*`的隐式转换。可见NULL就是一个数字0，它会有如下问题
+
+```cpp
+void foo(int n){}
+void foo(void *n){}
+```
+
+此时如果你调用
+
+```cpp
+foo(NULL);
+```
+
+则会有二义性问题。编译可能会无法通过。用nullptr则不会有这个问题。
+
+当然，有时候我们会有以下三种写法
+
+```cpp
+if(p){}
+if(p!=NULL){}
+if(p!=nullptr){}
+```
+
+这更多的是一种风格问题，争论这个似乎是无用的。但是之前的二义性还是要小心的。
+
+如果你懒得管，那么就永远使用nullptr。
+
+# const与指针
+
+# 智能指针
 
 
