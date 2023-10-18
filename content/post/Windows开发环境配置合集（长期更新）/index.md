@@ -265,7 +265,7 @@ pacman -S mingw-w64-ucrt-x86_64-cmake mingw-w64-ucrt-x86_64-cmake-gui mingw-w64-
 
 ![4.jpg](4.jpg)
 
-Anaconda的软件源也比较慢，推荐参考[https://mirrors.tuna.tsinghua.edu.cn/CTAN/systems/texlive/Images/](https://mirrors.tuna.tsinghua.edu.cn/CTAN/systems/texlive/Images/)换为国内源。
+Anaconda的软件源也比较慢，推荐参考[https://mirrors.tuna.tsinghua.edu.cn/help/anaconda/](https://mirrors.tuna.tsinghua.edu.cn/help/anaconda/)换为国内源。
 
 # Latex相关
 
