@@ -382,7 +382,7 @@
 <p>其中@jdhao所说的<a class="link" href="https://github.com/gohugoio/hugo/blob/master/helpers/content.go#L735"  target="_blank" rel="noopener"
     >https://github.com/gohugoio/hugo/blob/master/helpers/content.go#L735</a>这一部分代码现在（编辑日期时）已经转移到了<a class="link" href="https://github.com/gohugoio/hugo/blob/master/markup/pandoc/convert.go#L67"  target="_blank" rel="noopener"
     >https://github.com/gohugoio/hugo/blob/master/markup/pandoc/convert.go#L67</a>。按他的办法来说应该改成</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span>	<span style="color:#a6e22e">args</span> <span style="color:#f92672">:=</span> []<span style="color:#66d9ef">string</span>{<span style="color:#e6db74">&#34;--mathjax&#34;</span>,<span style="color:#e6db74">&#34;--toc&#34;</span>}
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>	<span style="color:#a6e22e">args</span> <span style="color:#f92672">:=</span> []<span style="color:#66d9ef">string</span>{<span style="color:#e6db74">&#34;--mathjax&#34;</span>,<span style="color:#e6db74">&#34;--toc&#34;</span>}
 </span></span></code></pre></div><p>实际上并没有那么简单，即使是加入了&ndash;toc参数也不能生成目录。笔者又找到一份他人修改的版本<a class="link" href="https://github.com/bigshans/hugo"  target="_blank" rel="noopener"
     >https://github.com/bigshans/hugo</a>。这个版本的convert.go明显是修改过的，能够正确生成目录。</p>
 <p>将其克隆、编译，然后替换掉原来的hugo.exe。经测试可以正常使用。目前发现的唯一可以称得上是一个问题的是，代码没有高亮。</p>
@@ -488,6 +488,18 @@
                 
                     
 <article class="">
+    <a href="/p/%E5%9C%A8%E6%A0%A1%E5%9B%AD%E7%BD%91%E4%B8%AD%E7%94%A8ssh%E8%BF%9E%E6%8E%A5%E5%AE%BF%E8%88%8D%E7%94%B5%E8%84%91/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">在校园网中用ssh连接宿舍电脑</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="">
     <a href="/p/windows%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E5%90%88%E9%9B%86%E9%95%BF%E6%9C%9F%E6%9B%B4%E6%96%B0/">
         
         
@@ -506,18 +518,6 @@
 
         <div class="article-details">
             <h2 class="article-title">C&#43;&#43;笔记之那些有用但经常被忽视的内容</h2>
-        </div>
-    </a>
-</article>
-                
-                    
-<article class="">
-    <a href="/p/firefox%E4%B9%A0%E6%83%AF%E8%AE%BE%E7%BD%AE%E8%AE%B0%E5%BD%95%E5%8C%85%E5%90%AB%E5%8F%8C%E5%87%BB%E5%85%B3%E9%97%AD%E6%8B%96%E6%8B%BD%E6%89%8B%E5%8A%BF%E6%96%B0%E5%BB%BA%E6%A0%87%E7%AD%BE%E9%A1%B5%E4%BD%8D%E7%BD%AE%E7%AD%89/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">Firefox习惯设置记录（包含双击关闭，拖拽手势，新建标签页位置等）</h2>
         </div>
     </a>
 </article>

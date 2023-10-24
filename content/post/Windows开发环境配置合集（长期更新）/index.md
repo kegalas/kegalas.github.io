@@ -139,6 +139,8 @@ if not exist "%GIT_EXE_DIR%\git.exe" (
 
 ### 主题
 
+## tabby
+
 # C/C++相关
 
 ## GCC
@@ -253,6 +255,8 @@ pacman -S mingw-w64-ucrt-x86_64-cmake mingw-w64-ucrt-x86_64-cmake-gui mingw-w64-
 
 如上勾选之后，环境变量也会自动配置。这个普通版Python并不会影响Anaconda的virtual env，放心使用。
 
+更换pip源见[https://mirrors.tuna.tsinghua.edu.cn/help/pypi/](https://mirrors.tuna.tsinghua.edu.cn/help/pypi/)
+
 ## Anaconda3
 
 [https://www.anaconda.com/download](https://www.anaconda.com/download)下载安装包。
@@ -297,6 +301,10 @@ Anaconda的软件源也比较慢，推荐参考[https://mirrors.tuna.tsinghua.ed
 
 ## Node.js
 
+# SSH配置
+
+参考[在校园网中用ssh连接宿舍电脑](../在校园网中用ssh连接宿舍电脑)
+
 # 博客（Hugo）
 
 ## Hugo
@@ -310,6 +318,8 @@ Anaconda的软件源也比较慢，推荐参考[https://mirrors.tuna.tsinghua.ed
 [https://www.pandoc.org/installing.html](https://www.pandoc.org/installing.html)，现在有安装包，以前只有压缩文件。我只是选择了为所有用户安装以及选择了安装位置，也没有其他可选项了。
 
 需要手动配置环境变量，配置在`xxx\Pandoc\`即可。
+
+但是我现在不怎么用这个了，hugo对goldmark适配的更好
 
 # Matlab
 
@@ -328,6 +338,20 @@ Anaconda的软件源也比较慢，推荐参考[https://mirrors.tuna.tsinghua.ed
 一般会配置在`xxx\Gpg4win\..\GnuPG\bin`
 
 ![1.jpg](1.jpg)
+
+## ssh客户端、服务端
+
+安装的话很简单，在设置里面找到应用-可选功能。
+
+![13.jpg](13.jpg)
+
+点击圈出来这个查看功能，搜索openssh，把客户端和服务器都安装即可。
+
+安装好之后在服务设置里，设置为自动即可开机启动。
+
+![14.jpg](14.jpg)
+
+一般配置文件在`C:\ProgramData\ssh\sshd_config`，具体如何修改TODO，例如配置管理员登陆，以及默认shell
 
 # 环境变量顺序
 

@@ -108,7 +108,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 12 分钟
+                    阅读时长: 13 分钟
                 </time>
             </div>
         
@@ -133,25 +133,25 @@
 <p>其实<code>&lt;=&gt;</code>返回的是<code>std::strong_ordering</code>类型，某些时候给自己的类重载多种比较运算符会简单不少。其中a&lt;b时返回<code>std::strong_ordering::less</code>，a == b时返回<code>std::strong_ordering::equal</code>，a&gt;b时返回<code>std::strong_ordering::greater</code>。</p>
 <h1 id="stdnumeric_limitst">std::numeric_limits&lt;T&gt;</h1>
 <p>这个命名空间包含在&lt;limits&gt;头文件里，其可以给出一个基本数据类型的数据范围，例如</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span>std<span style="color:#f92672">::</span>numeric_limits<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;::</span>lowest();<span style="color:#75715e">//给出T的最小取值（有符号时为绝对值最大的负数）
-</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2</span><span><span style="color:#75715e"></span>std<span style="color:#f92672">::</span>numeric_limits<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;::</span>min();<span style="color:#75715e">//对于整数，给出最小取值，对于浮点数，给出最小的正数
-</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3</span><span><span style="color:#75715e"></span>std<span style="color:#f92672">::</span>numeric_limits<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;::</span>max();<span style="color:#75715e">//给出T的最大取值
-</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4</span><span><span style="color:#75715e"></span>std<span style="color:#f92672">::</span>numeric_limits<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;::</span>epsilon();<span style="color:#75715e">//浮点数给出最小精度，比如第一个大于1的数和1的差
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>std<span style="color:#f92672">::</span>numeric_limits<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;::</span>lowest();<span style="color:#75715e">//给出T的最小取值（有符号时为绝对值最大的负数）
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>std<span style="color:#f92672">::</span>numeric_limits<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;::</span>min();<span style="color:#75715e">//对于整数，给出最小取值，对于浮点数，给出最小的正数
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>std<span style="color:#f92672">::</span>numeric_limits<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;::</span>max();<span style="color:#75715e">//给出T的最大取值
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>std<span style="color:#f92672">::</span>numeric_limits<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;::</span>epsilon();<span style="color:#75715e">//浮点数给出最小精度，比如第一个大于1的数和1的差
 </span></span></span></code></pre></div><h1 id="大括号初始化变量">大括号初始化变量</h1>
 <p>我们可以用如下方法初始化变量</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span><span style="color:#66d9ef">float</span> a <span style="color:#f92672">=</span> <span style="color:#ae81ff">1.5f</span>;
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2</span><span><span style="color:#66d9ef">float</span> b {<span style="color:#ae81ff">1.5f</span>};
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">float</span> a <span style="color:#f92672">=</span> <span style="color:#ae81ff">1.5f</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">float</span> b {<span style="color:#ae81ff">1.5f</span>};
 </span></span></code></pre></div><p>第一种是传统方法，第二种方法有一点好处是，在隐式的基本类型转换中，如果类型收窄（Type Narrowing）会给出Warning，甚至会直接给出error。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span><span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">2.5f</span>;<span style="color:#75715e">//编译器无warning
-</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2</span><span><span style="color:#75715e"></span><span style="color:#66d9ef">float</span> f <span style="color:#f92672">=</span> <span style="color:#ae81ff">2.5f</span>;
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3</span><span><span style="color:#66d9ef">int</span> j {f};<span style="color:#75715e">//编译器产生warning，有时候类型收窄确实可能导致错误。
-</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4</span><span><span style="color:#75715e"></span><span style="color:#66d9ef">int</span> k {<span style="color:#ae81ff">2.5f</span>};<span style="color:#75715e">//编译器会直接给出error
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">2.5f</span>;<span style="color:#75715e">//编译器无warning
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">float</span> f <span style="color:#f92672">=</span> <span style="color:#ae81ff">2.5f</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> j {f};<span style="color:#75715e">//编译器产生warning，有时候类型收窄确实可能导致错误。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">int</span> k {<span style="color:#ae81ff">2.5f</span>};<span style="color:#75715e">//编译器会直接给出error
 </span></span></span></code></pre></div><p>如果你确定类型收窄是你需要的，那么用显式的强制类型转换。</p>
 <h1 id="nodiscard修饰">[[nodiscard]]修饰</h1>
 <p><code>C++17</code>引入。这个修饰是给函数使用的，如果函数有返回值，并且希望返回值不会被忽略，就可以使用这个修饰。</p>
 <p>比如</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">normalize</span>(vec3f <span style="color:#f92672">&amp;</span> v);<span style="color:#75715e">//把v变成单位向量
-</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2</span><span><span style="color:#75715e"></span>vec3f <span style="color:#a6e22e">normalized</span>(vec3f <span style="color:#66d9ef">const</span> <span style="color:#f92672">&amp;</span> v);<span style="color:#75715e">//返回v的单位向量，但v不变
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">normalize</span>(vec3f <span style="color:#f92672">&amp;</span> v);<span style="color:#75715e">//把v变成单位向量
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>vec3f <span style="color:#a6e22e">normalized</span>(vec3f <span style="color:#66d9ef">const</span> <span style="color:#f92672">&amp;</span> v);<span style="color:#75715e">//返回v的单位向量，但v不变
 </span></span></span></code></pre></div><p>这组可能分辨不清的函数，我们就可以把第二个函数加上这个修饰，编译器会在返回值没有被接收的时候发出warning。</p>
 <h1 id="vector扩容初步">vector扩容（初步）</h1>
 <p>这里是一个简易版本的介绍，后续可能会专门出博客来详细解析<code>STL</code>的各种容器与算法（TODO）。</p>
@@ -193,35 +193,35 @@
 <p>左右值的名称是来源于它们在与等号的位置关系，一般情况下左值在等号左边，右值在等号右边。不过不能用一个东西能否被赋值去判断左右值。最好的办法是看能否被引用。</p>
 <h1 id="小心返回引用的函数">小心返回引用的函数</h1>
 <p>例如</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span><span style="color:#66d9ef">int</span><span style="color:#f92672">&amp;</span> fun(<span style="color:#66d9ef">int</span> x){
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2</span><span>    <span style="color:#66d9ef">int</span> y <span style="color:#f92672">=</span> x<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>;
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3</span><span>    <span style="color:#66d9ef">return</span> y;
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4</span><span>}
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">int</span><span style="color:#f92672">&amp;</span> fun(<span style="color:#66d9ef">int</span> x){
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> y <span style="color:#f92672">=</span> x<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> y;
+</span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>显然<code>y</code>的生命周期只能持续到函数结束，返回的引用就指向了一个无效的内存，这个要特别小心。但是如果你通过<code>new</code>分配了一个对象，再返回引用，则是可以的，这个对象的生命周期持续到你手动使用<code>delete</code>或者程序结束。不过并不推荐总是这样做，有时最好直接返回值。</p>
 <h1 id="引用可能会像迭代器一样失效">引用可能会像迭代器一样失效</h1>
 <p>比如对<code>vector</code>进行的操作会涉及<code>capacity</code>的修改，比如在<code>set</code>中进行插入和删除操作，这些是会使原来的迭代器无效的。这同时会使引用失效。就比如我们介绍过<code>vector</code>在扩容时会复制元素到新的内存，原来的引用指向的内存就会被释放，变成无效内存，此时再进行操作是<code>UB</code>。</p>
 <h1 id="不要用引用来延长函数返回值的生命周期">不要用引用来延长函数返回值的生命周期</h1>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span>std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span> fun(){...}
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2</span><span>
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3</span><span><span style="color:#66d9ef">auto</span> <span style="color:#66d9ef">const</span> <span style="color:#f92672">&amp;</span> v <span style="color:#f92672">=</span> fun();<span style="color:#75715e">//现在fun的返回值的周期延长到和v一样，通常不会造成问题
-</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4</span><span><span style="color:#75715e"></span><span style="color:#66d9ef">auto</span> <span style="color:#66d9ef">const</span> <span style="color:#f92672">&amp;</span> v2 <span style="color:#f92672">=</span> fun()[<span style="color:#ae81ff">0</span>];<span style="color:#75715e">//这是最危险的情况，fun的返回值其实生命周期已结束，v2引用的元素已经变成了无效内存，对v2的操作是UB
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span> fun(){...}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">auto</span> <span style="color:#66d9ef">const</span> <span style="color:#f92672">&amp;</span> v <span style="color:#f92672">=</span> fun();<span style="color:#75715e">//现在fun的返回值的周期延长到和v一样，通常不会造成问题
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">auto</span> <span style="color:#66d9ef">const</span> <span style="color:#f92672">&amp;</span> v2 <span style="color:#f92672">=</span> fun()[<span style="color:#ae81ff">0</span>];<span style="color:#75715e">//这是最危险的情况，fun的返回值其实生命周期已结束，v2引用的元素已经变成了无效内存，对v2的操作是UB
 </span></span></span></code></pre></div><p>鉴于上述情况，最好不要用引用接受函数返回值，直接用传值的方式更好。</p>
 <h1 id="structclass的大括号初值">struct/class的大括号初值</h1>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span><span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">St</span>{
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2</span><span>    <span style="color:#66d9ef">int</span> x;
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3</span><span>    <span style="color:#66d9ef">double</span> y;
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4</span><span>};
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5</span><span>
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6</span><span>St st{<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2.0</span>};<span style="color:#75715e">//也可以St st = {1, 2.0};
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">St</span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> x;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">double</span> y;
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>St st{<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2.0</span>};<span style="color:#75715e">//也可以St st = {1, 2.0};
 </span></span></span></code></pre></div><p>像这样，用大括号给结构体、类赋初值，其顺序和结构体内部声明的顺序要一致。</p>
 <h1 id="类拷贝copy">类拷贝（copy）</h1>
 <p>C++与Java、Python等不同，在下面的例子中</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span><span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">Point</span>{
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2</span><span>    <span style="color:#66d9ef">double</span> x,y;
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3</span><span>};
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4</span><span>
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5</span><span>Point p1{<span style="color:#ae81ff">1.0</span>, <span style="color:#ae81ff">2.0</span>};
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6</span><span>Point p2 <span style="color:#f92672">=</span> p1;
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">Point</span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">double</span> x,y;
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Point p1{<span style="color:#ae81ff">1.0</span>, <span style="color:#ae81ff">2.0</span>};
+</span></span><span style="display:flex;"><span>Point p2 <span style="color:#f92672">=</span> p1;
 </span></span></code></pre></div><p>用到了<code>p2 = p1</code>这一语句。在Java和Python中，<code>p1</code>、<code>p2</code>现在都指向同一个对象<code>Point(1.0, 2.0)</code>，而其本身并不是对象。在C++中，<code>p2</code>把<code>p1</code>的所有内容拷贝赋值给自己，它们两个是两个不同的对象（即使内容相等）。</p>
 <p>在C++中，拷贝默认是深拷贝，而Java和Python中是浅拷贝。如果要在C++里面使用浅拷贝，则使用<code>Point &amp; p3 = p1</code>即可（也可以用指针）。</p>
 <p>除了是否新建一个对象以为，这两者的生命周期也不同。C++的对象在<code>p1</code>销毁时就销毁了，而在Java中<code>p1</code>销毁之后，由于还有<code>p2</code>指向这个对象，所以对象本身不会销毁。如果所有指向全都销毁，那么垃圾回收机制才会销毁这个对象。</p>
@@ -229,134 +229,170 @@
 <h2 id="拷贝构造函数">拷贝构造函数</h2>
 <h2 id="赋值构造函数">赋值构造函数</h2>
 <h1 id="argc-argv">argc, argv</h1>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">int</span> argc, <span style="color:#66d9ef">char</span><span style="color:#f92672">*</span> argv[]){
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2</span><span>    <span style="color:#75715e">//...
-</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3</span><span><span style="color:#75715e"></span>}
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">int</span> argc, <span style="color:#66d9ef">char</span><span style="color:#f92672">*</span> argv[]){
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
 </span></span></code></pre></div><p>main函数可以带两个参数，按照传统我们把第一个参数叫<code>argc</code>，第二个参数叫<code>argv</code>。argc是一个整数，代表命令行中参数的个数，argv是每个参数的字符串。</p>
 <p>命令行中参数通常由空格分开，例如</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span>./g++.exe 1.cpp -o 1.exe -Wall
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>./g++.exe 1.cpp -o 1.exe -Wall
 </span></span></code></pre></div><p>其中有五个参数，第一个为可运行文件本身的路径，后面的为运行它的参数。意味着argc等于5，argv存有五个字符串。一般我们会用atoi把字符串里的数字转化为int类型。</p>
 <h1 id="file-stream">file stream</h1>
 <p>在NOIP、NOI等竞赛中，一般会用freopen函数。这是一个C的函数，如果要更C++一点，我们会使用file stream。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;fstream&gt;</span><span style="color:#75715e">
-</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span><span><span style="color:#75715e"></span>
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(){
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span><span>    std<span style="color:#f92672">::</span>ofstream os{<span style="color:#e6db74">&#34;1.txt&#34;</span>};
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span><span>
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span><span>    <span style="color:#66d9ef">if</span>(os.good()){<span style="color:#75715e">//在每次使用时都应该确保good
-</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span><span><span style="color:#75715e"></span>        os<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34;hello world</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span><span>    }
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span><span>    
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span><span>}
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;fstream&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(){
+</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>ofstream os{<span style="color:#e6db74">&#34;1.txt&#34;</span>};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span>(os.good()){<span style="color:#75715e">//在每次使用时都应该确保good
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        os<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34;hello world</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>如上为写数据时的使用例子。可以看到和cout的用法很像。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;fstream&gt;</span><span style="color:#75715e">
-</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span><span><span style="color:#75715e"></span>
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(){
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span><span>    std<span style="color:#f92672">::</span>ifstream is{<span style="color:#e6db74">&#34;2.txt&#34;</span>};
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span><span>
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span><span>    <span style="color:#66d9ef">if</span>(is.good()){<span style="color:#75715e">//在每次使用时都应该确保good
-</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span><span><span style="color:#75715e"></span>        <span style="color:#66d9ef">double</span> x,y;
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span><span>        is<span style="color:#f92672">&gt;&gt;</span>x<span style="color:#f92672">&gt;&gt;</span>y;
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span><span>        std<span style="color:#f92672">::</span>cout<span style="color:#f92672">&lt;&lt;</span>x<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34; &#34;</span><span style="color:#f92672">&lt;&lt;</span>y<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span><span>    }
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span><span>    
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13</span><span>}
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;fstream&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(){
+</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>ifstream is{<span style="color:#e6db74">&#34;2.txt&#34;</span>};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span>(is.good()){<span style="color:#75715e">//在每次使用时都应该确保good
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#66d9ef">double</span> x,y;
+</span></span><span style="display:flex;"><span>        is<span style="color:#f92672">&gt;&gt;</span>x<span style="color:#f92672">&gt;&gt;</span>y;
+</span></span><span style="display:flex;"><span>        std<span style="color:#f92672">::</span>cout<span style="color:#f92672">&lt;&lt;</span>x<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34; &#34;</span><span style="color:#f92672">&lt;&lt;</span>y<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>如上为读数据的例子。可以看到和cin的用法很像。</p>
 <p>另外，例如写到末尾还是覆盖，是文本还是二进制，这些都是可以设置的。具体参考<a class="link" href="https://zh.cppreference.com/w/cpp/header/fstream"  target="_blank" rel="noopener"
     >https://zh.cppreference.com/w/cpp/header/fstream</a>，这里简短的给出几个常用的</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span>std<span style="color:#f92672">::</span>ofstream os{<span style="color:#e6db74">&#34;out.txt&#34;</span>, std<span style="color:#f92672">::</span>ios<span style="color:#f92672">::</span>app}; <span style="color:#75715e">//append而不是覆盖
-</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2</span><span><span style="color:#75715e"></span>
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3</span><span>std<span style="color:#f92672">::</span>ifstream is2{<span style="color:#e6db74">&#34;in.tga&#34;</span>, std<span style="color:#f92672">::</span>ios<span style="color:#f92672">::</span>binary}; <span style="color:#75715e">//写二进制
-</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4</span><span><span style="color:#75715e"></span>std<span style="color:#f92672">::</span>ofstream os2{<span style="color:#e6db74">&#34;out.tga&#34;</span>, std<span style="color:#f92672">::</span>ios<span style="color:#f92672">::</span>binary}; <span style="color:#75715e">//读二进制
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>std<span style="color:#f92672">::</span>ofstream os{<span style="color:#e6db74">&#34;out.txt&#34;</span>, std<span style="color:#f92672">::</span>ios<span style="color:#f92672">::</span>app}; <span style="color:#75715e">//append而不是覆盖
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>std<span style="color:#f92672">::</span>ifstream is2{<span style="color:#e6db74">&#34;in.tga&#34;</span>, std<span style="color:#f92672">::</span>ios<span style="color:#f92672">::</span>binary}; <span style="color:#75715e">//写二进制
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>std<span style="color:#f92672">::</span>ofstream os2{<span style="color:#e6db74">&#34;out.tga&#34;</span>, std<span style="color:#f92672">::</span>ios<span style="color:#f92672">::</span>binary}; <span style="color:#75715e">//读二进制
 </span></span></span></code></pre></div><h1 id="重载和运算符">重载&laquo;和&raquo;运算符</h1>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span><span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">Vec</span>{
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span><span>    <span style="color:#66d9ef">double</span> x,y;
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span><span>};
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span><span>
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span><span>std<span style="color:#f92672">::</span>istream<span style="color:#f92672">&amp;</span> <span style="color:#66d9ef">operator</span><span style="color:#f92672">&gt;&gt;</span>(std<span style="color:#f92672">::</span>istream<span style="color:#f92672">&amp;</span> is, Vec<span style="color:#f92672">&amp;</span> v){
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span><span>    <span style="color:#66d9ef">return</span> is<span style="color:#f92672">&gt;&gt;</span>v.x<span style="color:#f92672">&gt;&gt;</span>v.y;
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span><span>}
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span><span>
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span><span>std<span style="color:#f92672">::</span>ostream<span style="color:#f92672">&amp;</span> <span style="color:#66d9ef">operator</span><span style="color:#f92672">&lt;&lt;</span>(std<span style="color:#f92672">::</span>ostream<span style="color:#f92672">&amp;</span> os, Vec<span style="color:#f92672">&amp;</span> v){
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span><span>    <span style="color:#66d9ef">return</span> os<span style="color:#f92672">&lt;&lt;</span>v.x<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34; &#34;</span><span style="color:#f92672">&lt;&lt;</span>v.y;
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span><span>}
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span><span>
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13</span><span>std<span style="color:#f92672">::</span>cout<span style="color:#f92672">&lt;&lt;</span>Vec(<span style="color:#ae81ff">2.0</span>,<span style="color:#ae81ff">3.0</span>)<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;<span style="color:#75715e">//可以像对int一样使用cin cout
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">Vec</span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">double</span> x,y;
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>std<span style="color:#f92672">::</span>istream<span style="color:#f92672">&amp;</span> <span style="color:#66d9ef">operator</span><span style="color:#f92672">&gt;&gt;</span>(std<span style="color:#f92672">::</span>istream<span style="color:#f92672">&amp;</span> is, Vec<span style="color:#f92672">&amp;</span> v){
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> is<span style="color:#f92672">&gt;&gt;</span>v.x<span style="color:#f92672">&gt;&gt;</span>v.y;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>std<span style="color:#f92672">::</span>ostream<span style="color:#f92672">&amp;</span> <span style="color:#66d9ef">operator</span><span style="color:#f92672">&lt;&lt;</span>(std<span style="color:#f92672">::</span>ostream<span style="color:#f92672">&amp;</span> os, Vec<span style="color:#f92672">&amp;</span> v){
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> os<span style="color:#f92672">&lt;&lt;</span>v.x<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34; &#34;</span><span style="color:#f92672">&lt;&lt;</span>v.y;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>std<span style="color:#f92672">::</span>cout<span style="color:#f92672">&lt;&lt;</span>Vec(<span style="color:#ae81ff">2.0</span>,<span style="color:#ae81ff">3.0</span>)<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;<span style="color:#75715e">//可以像对int一样使用cin cout
 </span></span></span></code></pre></div><p>主要是方便打印、输入数据，例如你在编写一个数值计算库，需要用到很多向量、矩阵的输出。</p>
 <h1 id="mutable和const的成员函数">mutable和const的成员函数</h1>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Vec</span>{
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span><span><span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span><span>    <span style="color:#66d9ef">double</span> x,y;
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span><span>    <span style="color:#66d9ef">int</span> <span style="color:#66d9ef">mutable</span> sth;
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span><span>    <span style="color:#66d9ef">int</span> sth2;
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span><span>
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span><span>    <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">foo</span>() <span style="color:#66d9ef">const</span> {
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span><span>        sth<span style="color:#f92672">++</span>;<span style="color:#75715e">//不会报错
-</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span><span><span style="color:#75715e"></span>    }
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span><span>
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span><span>    <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">bar</span>() <span style="color:#66d9ef">const</span>{
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span><span>        sth2<span style="color:#f92672">++</span>;<span style="color:#75715e">//会报错
-</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13</span><span><span style="color:#75715e"></span>    }
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14</span><span>};
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Vec</span>{
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">double</span> x,y;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> <span style="color:#66d9ef">mutable</span> sth;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> sth2;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">foo</span>() <span style="color:#66d9ef">const</span> {
+</span></span><span style="display:flex;"><span>        sth<span style="color:#f92672">++</span>;<span style="color:#75715e">//不会报错
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">bar</span>() <span style="color:#66d9ef">const</span>{
+</span></span><span style="display:flex;"><span>        sth2<span style="color:#f92672">++</span>;<span style="color:#75715e">//会报错
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    }
+</span></span><span style="display:flex;"><span>};
 </span></span></code></pre></div><p>把类成员函数用const修饰（放在参数列表之后），意味着，这个函数声称不会改变类内的所有成员变量的值。如果你想让几个特例可以修改，那么就把那个特例变量声明为mutable的即可。</p>
 <h1 id="类成员初始化">类成员初始化</h1>
 <p>在C++ 11以前，我们初始化类成员一般只能在构造函数里进行，如</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Vec</span>{
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2</span><span><span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3</span><span>    <span style="color:#66d9ef">double</span> x,y;
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4</span><span>    Vec()<span style="color:#f92672">:</span>y(<span style="color:#ae81ff">0</span>),x(<span style="color:#ae81ff">0</span>){}
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5</span><span>};
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Vec</span>{
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">double</span> x,y;
+</span></span><span style="display:flex;"><span>    Vec()<span style="color:#f92672">:</span>y(<span style="color:#ae81ff">0</span>),x(<span style="color:#ae81ff">0</span>){}
+</span></span><span style="display:flex;"><span>};
 </span></span></code></pre></div><p>其中<code>:</code>后面跟着的这个叫做初始化列表，成员后跟着的括号里面的写入初始值，即可完成初始化。</p>
 <p>注意，初始化列表里面的赋值顺序并不是初始化列表写出来的顺序，而是按照成员变量的声明顺序。例如上例，是先初始化x，再初始化y。这有时会导致UB，建议绝大部分时候，都要保持两者顺序一致。</p>
 <p>当然你也有可能这样写</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span>Vec(<span style="color:#66d9ef">int</span> x_, <span style="color:#66d9ef">int</span> y_){ <span style="color:#75715e">//而不是写:x(x_),y(y_)
-</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2</span><span><span style="color:#75715e"></span>    x <span style="color:#f92672">=</span> x_;
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3</span><span>    y <span style="color:#f92672">=</span> y_;
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4</span><span>}
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>Vec(<span style="color:#66d9ef">int</span> x_, <span style="color:#66d9ef">int</span> y_){ <span style="color:#75715e">//而不是写:x(x_),y(y_)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    x <span style="color:#f92672">=</span> x_;
+</span></span><span style="display:flex;"><span>    y <span style="color:#f92672">=</span> y_;
+</span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>这其实能看出一个C++程序员的水平。对于int、double这种内置类型还好。但如果x、y是class，那么<code>=</code>意味着拷贝赋值，意味着可能会先构造一个新的对象实例，再拷贝给x和y。而是用初始化列表，则会直接调用构造函数，总体上少了拷贝这一个步骤。</p>
 <p>在C++ 11之后，我们也可以这样给初始值</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Vec</span>{
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2</span><span><span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3</span><span>    <span style="color:#66d9ef">double</span> x<span style="color:#f92672">=</span><span style="color:#ae81ff">0.0</span>, y<span style="color:#f92672">=</span><span style="color:#ae81ff">0.0</span>;
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4</span><span>    Vec(){}
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5</span><span>};
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Vec</span>{
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">double</span> x<span style="color:#f92672">=</span><span style="color:#ae81ff">0.0</span>, y<span style="color:#f92672">=</span><span style="color:#ae81ff">0.0</span>;
+</span></span><span style="display:flex;"><span>    Vec(){}
+</span></span><span style="display:flex;"><span>};
 </span></span></code></pre></div><h1 id="explicit关键字">explicit关键字</h1>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Cl</span>{
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span><span><span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span><span>    <span style="color:#66d9ef">int</span> n;
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span><span>    <span style="color:#66d9ef">explicit</span> <span style="color:#a6e22e">Cl</span>(<span style="color:#66d9ef">int</span> n_)<span style="color:#f92672">:</span>n(n_){}
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span><span>};
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span><span>
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">foo</span> (Cl a) {}
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span><span>
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span><span>foo(<span style="color:#ae81ff">1</span>);  <span style="color:#75715e">//隐式调用Cl的构造函数，但因为其构造函数是explicit的，会报错
-</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span><span><span style="color:#75715e"></span>foo(Cl(<span style="color:#ae81ff">1</span>));<span style="color:#75715e">//正常
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Cl</span>{
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> n;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">explicit</span> <span style="color:#a6e22e">Cl</span>(<span style="color:#66d9ef">int</span> n_)<span style="color:#f92672">:</span>n(n_){}
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">foo</span> (Cl a) {}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>foo(<span style="color:#ae81ff">1</span>);  <span style="color:#75715e">//隐式调用Cl的构造函数，但因为其构造函数是explicit的，会报错
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>foo(Cl(<span style="color:#ae81ff">1</span>));<span style="color:#75715e">//正常
 </span></span></span></code></pre></div><p>个人认为这主要是方便强调一下传入的数据的类型，可能在调试环节比较有用。</p>
 <h1 id="构造函数相互调用">构造函数相互调用</h1>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span>Class Vec{
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2</span><span><span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3</span><span>    <span style="color:#66d9ef">double</span> x, y;
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4</span><span>    Vec()<span style="color:#f92672">:</span>Vec(<span style="color:#ae81ff">0</span>){}
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5</span><span>    Vec(<span style="color:#66d9ef">double</span> a)<span style="color:#f92672">:</span>Vec(a,a){}
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6</span><span>    Vec(<span style="color:#66d9ef">double</span> x_, <span style="color:#66d9ef">double</span> y_)<span style="color:#f92672">:</span>x(x_),y(y_){}
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7</span><span>};
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>Class Vec{
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">double</span> x, y;
+</span></span><span style="display:flex;"><span>    Vec()<span style="color:#f92672">:</span>Vec(<span style="color:#ae81ff">0</span>){}
+</span></span><span style="display:flex;"><span>    Vec(<span style="color:#66d9ef">double</span> a)<span style="color:#f92672">:</span>Vec(a,a){}
+</span></span><span style="display:flex;"><span>    Vec(<span style="color:#66d9ef">double</span> x_, <span style="color:#66d9ef">double</span> y_)<span style="color:#f92672">:</span>x(x_),y(y_){}
+</span></span><span style="display:flex;"><span>};
 </span></span></code></pre></div><h1 id="在c里最好用nullptr而不是null">在C++里最好用nullptr而不是null</h1>
 <p>C++和C语言的<code>NULL</code>定义是不同的，在C++中<code>#define NULL 0</code>，而在C中<code>#define NULL ((void*)0)</code>。不得不这样改的原因是：C++不支持<code>void*</code>的隐式转换。可见NULL就是一个数字0，它会有如下问题</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">foo</span>(<span style="color:#66d9ef">int</span> n){}
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2</span><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">foo</span>(<span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>n){}
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">foo</span>(<span style="color:#66d9ef">int</span> n){}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">foo</span>(<span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>n){}
 </span></span></code></pre></div><p>此时如果你调用</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span>foo(NULL);
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>foo(NULL);
 </span></span></code></pre></div><p>则会有二义性问题。编译可能会无法通过。用nullptr则不会有这个问题。</p>
 <p>当然，有时候我们会有以下三种写法</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span><span style="color:#66d9ef">if</span>(p){}
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2</span><span><span style="color:#66d9ef">if</span>(p<span style="color:#f92672">!=</span>NULL){}
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3</span><span><span style="color:#66d9ef">if</span>(p<span style="color:#f92672">!=</span><span style="color:#66d9ef">nullptr</span>){}
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">if</span>(p){}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span>(p<span style="color:#f92672">!=</span>NULL){}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span>(p<span style="color:#f92672">!=</span><span style="color:#66d9ef">nullptr</span>){}
 </span></span></code></pre></div><p>这更多的是一种风格问题，争论这个似乎是无用的。但是之前的二义性还是要小心的。</p>
 <p>如果你懒得管，那么就永远使用nullptr。</p>
 <h1 id="const与指针">const与指针</h1>
+<p>众所周知，在指针类型的声明里，const放的位置不同会导致语义的不同。主要是指针是否可变，以及指针指向的内容是否可变。 如下表</p>
+<table>
+<thead>
+<tr>
+<th>声明</th>
+<th>所指内容可变？</th>
+<th>指针本身可变？</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>T *</td>
+<td>是</td>
+<td>是</td>
+</tr>
+<tr>
+<td>T const *</td>
+<td>否</td>
+<td>是</td>
+</tr>
+<tr>
+<td>T * const</td>
+<td>是</td>
+<td>否</td>
+</tr>
+<tr>
+<td>T const * const</td>
+<td>否</td>
+<td>否</td>
+</tr>
+</tbody>
+</table>
+<p>简单来说就是const在星号右边则指针自己不可变，在左边则所指内容不可变。也可以理解为，const修饰的是它左边的东西。要么修饰指针（即星号），要么修饰值（即T）</p>
+<p>所以说，我更推荐<code>T const</code>的写法，而不是<code>const T</code>。但是我们也要知道，<code>const T *</code>是修饰值不可变。</p>
 <h1 id="智能指针">智能指针</h1>
+<h1 id="this指针">this指针</h1>
+<p>有点类似于Python里的self参数，都是只能用在类里的。是一个指向对象自己的指针。</p>
 
 </section>
 
@@ -420,6 +456,18 @@
                 
                     
 <article class="">
+    <a href="/p/%E5%9C%A8%E6%A0%A1%E5%9B%AD%E7%BD%91%E4%B8%AD%E7%94%A8ssh%E8%BF%9E%E6%8E%A5%E5%AE%BF%E8%88%8D%E7%94%B5%E8%84%91/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">在校园网中用ssh连接宿舍电脑</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="">
     <a href="/p/windows%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E5%90%88%E9%9B%86%E9%95%BF%E6%9C%9F%E6%9B%B4%E6%96%B0/">
         
         
@@ -462,18 +510,6 @@
 
         <div class="article-details">
             <h2 class="article-title">MSYS2中的make工具安装方法</h2>
-        </div>
-    </a>
-</article>
-                
-                    
-<article class="">
-    <a href="/p/msys2mingw64cygwin%E7%9A%84%E4%BD%BF%E7%94%A8%E5%8C%BA%E5%88%AB%E6%B5%85%E8%B0%88/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">MSYS2,MinGW64,Cygwin的使用区别浅谈</h2>
         </div>
     </a>
 </article>
@@ -676,6 +712,7 @@
     <li><a href="#在c里最好用nullptr而不是null">在C++里最好用nullptr而不是null</a></li>
     <li><a href="#const与指针">const与指针</a></li>
     <li><a href="#智能指针">智能指针</a></li>
+    <li><a href="#this指针">this指针</a></li>
   </ol>
 </nav>
                 </div>

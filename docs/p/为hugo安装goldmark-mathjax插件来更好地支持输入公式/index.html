@@ -139,7 +139,7 @@
 </ul>
 <p>官网没有提到GCC的版本，我这里使用的是msys2 ucrt里安装的gcc 13.1.0，而go用的是1.21.1。</p>
 <h2 id="clone修改代码">Clone、修改代码</h2>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span>git clone https://github.com/gohugoio/hugo.git
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git clone https://github.com/gohugoio/hugo.git
 </span></span></code></pre></div><p>（不知道为什么shell代码没有高亮）</p>
 <p>可能会遇到网络问题，需要自行解决。</p>
 <p>之后在<code>hugo/markup/goldmark/convert.go</code>中进行修改。</p>
@@ -151,9 +151,9 @@
     >这个链接</a>查看具体怎么修改的。也可以直接克隆我的fork，<a class="link" href="https://github.com/kegalas/hugo"  target="_blank" rel="noopener"
     >https://github.com/kegalas/hugo</a></p>
 <h2 id="编译">编译</h2>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span>cd hugo
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2</span><span>go get github.com/litao91/goldmark-mathjax
-</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3</span><span>go install --tags extended
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cd hugo
+</span></span><span style="display:flex;"><span>go get github.com/litao91/goldmark-mathjax
+</span></span><span style="display:flex;"><span>go install --tags extended
 </span></span></code></pre></div><p>后两个命令都需要网络通畅。</p>
 <p>编译成功后，一般会生成在<code>C:\Users\XXX\go\bin</code>，找不到的建议可以用Everything搜一下hugo.exe。之后就可以愉快的使用了。</p>
 <h1 id="已知问题">已知问题</h1>
@@ -263,6 +263,18 @@
                 
                     
 <article class="">
+    <a href="/p/%E5%9C%A8%E6%A0%A1%E5%9B%AD%E7%BD%91%E4%B8%AD%E7%94%A8ssh%E8%BF%9E%E6%8E%A5%E5%AE%BF%E8%88%8D%E7%94%B5%E8%84%91/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">在校园网中用ssh连接宿舍电脑</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="">
     <a href="/p/windows%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E5%90%88%E9%9B%86%E9%95%BF%E6%9C%9F%E6%9B%B4%E6%96%B0/">
         
         
@@ -281,18 +293,6 @@
 
         <div class="article-details">
             <h2 class="article-title">C&#43;&#43;笔记之那些有用但经常被忽视的内容</h2>
-        </div>
-    </a>
-</article>
-                
-                    
-<article class="">
-    <a href="/p/firefox%E4%B9%A0%E6%83%AF%E8%AE%BE%E7%BD%AE%E8%AE%B0%E5%BD%95%E5%8C%85%E5%90%AB%E5%8F%8C%E5%87%BB%E5%85%B3%E9%97%AD%E6%8B%96%E6%8B%BD%E6%89%8B%E5%8A%BF%E6%96%B0%E5%BB%BA%E6%A0%87%E7%AD%BE%E9%A1%B5%E4%BD%8D%E7%BD%AE%E7%AD%89/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">Firefox习惯设置记录（包含双击关闭，拖拽手势，新建标签页位置等）</h2>
         </div>
     </a>
 </article>
