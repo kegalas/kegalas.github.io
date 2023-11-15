@@ -86,6 +86,10 @@ PasswordAuthentication yes
 New-ItemProperty -Path "HKLM:\SOFTWARE\OpenSSH" -Name DefaultShell -Value "G:\Program_Files\PowerShell\7\pwsh.exe" -PropertyType String -Force
 ```
 
+**后记**
+
+powershell 7在更新的时候可能会把你安装的位置强行迁移到C盘Program Files下，我建议不要换默认安装位置，防止自己搞不清状况又要重新配置。
+
 ### 注意事项
 
 注意，authorized_keys需要注意权限和所有权的问题。如果假如说，你创建了一个用户2，作为没有管理员权限的用户，用户1是拥有管理员权限的用户。它们两个在服务端。那么你需要确保用户2的`~\.ssh`是由用户2自己创建的，并且自己有完全控制的权限。`authorized_keys`文件同理。这样才能让用户2正常读取文件信息。
