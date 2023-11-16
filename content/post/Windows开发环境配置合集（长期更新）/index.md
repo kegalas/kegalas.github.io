@@ -65,6 +65,8 @@ if not exist "%EMACS_EXE_DIR%\emacs.exe" (
 
 TODO
 
+（如果设置Android SDK会导致奇怪的卡顿）
+
 ## Android Studio
 
 [https://developer.android.google.cn/studio](https://developer.android.google.cn/studio)，官网下载。
