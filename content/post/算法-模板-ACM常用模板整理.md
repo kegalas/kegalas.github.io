@@ -8083,6 +8083,26 @@ struct node{
 //不用添加cmp参数
 ```
 
+## std::merge
+
+对两个有序数组进行合并。
+
+```cpp
+std::vector<int> a(5), b(6);
+std::vector<int> c(5+6);
+std::merge(a.begin(), a.end(), b.begin(), b.end(), c.begin(), std::less<int>());
+```
+
+如上，假设a和b都是从小到大排好序的数组，把它们合并成同样从小到大排序的c数组。如果是从大到小合并成从大到小，则改成std::greater
+
+另外，它的操作逻辑是双指针。比如less情况下，指向a数组元素的指针为p1，指向b数组元素的指针为p2。他会判断p1大还是p2大，如果p1大，则把p1指向的数字放进c，然后p1自增。否则p2放进去后自增。他其实不会管你原来的数组是否真的排好序，有时候这可以用在一些数组的合并上。
+
+## std::greater, std::less
+
+很简单，greater是大于号`>`，而less是小于号`<`。在sort函数里的第三个参数可以用这个，例如`std::greater<int>()`代表从大到小排序，`std::less<int>()`则是从小到大排序。
+
+但是在优先队列里不一样，greater是小根堆，而less才是大根堆。
+
 ## std::lower_bound,std::upper_bound
 
 对某个已经排序好的数组，查找第一个大于等于（lower_bound）或者大于(upper_bound)某个给定值的元素。复杂度：logn（对于随机访问的迭代器），n（对于其他迭代器）。
