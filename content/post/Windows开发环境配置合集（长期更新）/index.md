@@ -27,6 +27,8 @@ markup: goldmark
 
 all-the-icons很奇怪，不会被use-package安装，我们`M-x package-install all-the-icons`安装重启即可。
 
+另外，我安装了lsp-pyright来提供python的补全，python里面也要用pip安装pyright才能运行。
+
 此时，用GUI版本的Emacs已经可以了，但是如果想在命令行里用Emacs，则需要添加环境变量。出于对环境变量冲突的恐惧，我没有直接将Emacs的bin添加进PATH，我选择了照抄Vim的bat文件。如下
 
 ```bat
@@ -200,6 +202,11 @@ pacman -S mingw-w64-ucrt-x86_64-cmake mingw-w64-ucrt-x86_64-cmake-gui mingw-w64-
 安装cmake官网的windows版本会不会更优有待考察TODO。
 
 另外，直接安装`make`后，并不能在powershell里直接使用，见[MSYS2中的make工具安装方法](../MSYS2中的make工具安装方法)
+
+要让clangd能够检测Cmake项目，还需要进行[https://clangd.llvm.org/installation#project-setup](https://clangd.llvm.org/installation#project-setup)里提到的操作，简单来说
+
+1. 在cmake进行configure的时候添加参数-DCMAKE_EXPORT_COMPILE_COMMANDS=1
+2. 把configure后build目录里生成的compile_commands.json软连接到项目根目录
 
 ## Lua
 

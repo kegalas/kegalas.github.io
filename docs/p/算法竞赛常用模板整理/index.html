@@ -112,7 +112,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 109 分钟
+                    阅读时长: 113 分钟
                 </time>
             </div>
         
@@ -1058,7 +1058,8 @@ x \equiv a_2(mod\quad r_2) \\
 x \equiv a_k(mod\quad r_k)
 \end{matrix}\right.
 \]</span></p>
-<p>其中<span class="math inline">\(r_i\)</span>两两互质，如果不满足则需要扩展CRT</p>
+<p>其中<span class="math inline">\(r_i\)</span>两两互质，如果不满足则需要扩展CRT。</p>
+<p>设<span class="math inline">\(n=r_1r_2\cdots r_k\)</span>，计算<span class="math inline">\(m_i=n/r_i\)</span>，计算<span class="math inline">\(m_i\)</span>在模<span class="math inline">\(r_i\)</span>意义下的逆元，计算<span class="math inline">\(c_i=m_im_i^{-1}\)</span>（不要对<span class="math inline">\(r_i\)</span>取模）。方程组在模<span class="math inline">\(n\)</span>意义下有唯一解<span class="math inline">\(x=\sum^k_i a_ic_i\)</span>（也就意味着<span class="math inline">\(x\)</span>在<span class="math inline">\(1\sim n\)</span>中必有一解）</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#75715e">//中国剩余定理 复杂度 klogk
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">//luogu p1495
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">typedef</span> <span style="color:#66d9ef">long</span> <span style="color:#66d9ef">long</span> ll;
@@ -7289,7 +7290,158 @@ std::cout&lt;&lt;(int)x&lt;&lt;&#34;\n&#34;;
 <p><span class="math display">\[-\lceil x\rceil= \lfloor -x\rfloor
 \]</span></p>
 <p>转换即可。</p>
-<h1 id="c-stl用法">C++ STL用法</h1>
+<h2 id="滚动哈希">滚动哈希</h2>
+<p>（总觉得和之前的字符串哈希其实一模一样）</p>
+<p>滚动哈希用来以线性复杂度求一个序列的哈希，这个序列可以是一个字符串，可以是一个数组。或者也可以退化成单个元素。假设序列是<span class="math inline">\(A=(A_1,A_2,\cdots,A_N)\)</span>，定义滚动哈希函数为<span class="math inline">\(R\)</span>，为</p>
+<p><span class="math display">\[R(A) = \bigg(\sum^N_{i=1}A_ix^{N-i}\bigg)\mod{p}
+\]</span></p>
+<p>其中，<span class="math inline">\(P\)</span>是一个足够大的质数，而<span class="math inline">\(x\)</span>是从<span class="math inline">\([0,p)\)</span>中等可能选出的一个整数。假设<span class="math inline">\(A(a,b)\)</span>为<span class="math inline">\(A\)</span>的下标从<span class="math inline">\(a\)</span>到<span class="math inline">\(b\)</span>的子序列，我们可以立即得到它的递推式：</p>
+<p><span class="math display">\[R(A(1,1)) = A_1, R(A(1,n))=R(A(1,n-1))\times x+A_n(n>1)
+\]</span></p>
+<p>并且如果已经与处理过所有的<span class="math inline">\(R(A(1, i))\)</span>，那么我们可以在<span class="math inline">\(O(1)\)</span>内求出<span class="math inline">\(R(A(a,b))\)</span>，即</p>
+<p><span class="math display">\[R(A(a,b)) = R(A(1,b)) - R(A(1, a-1))\times x^{b-(a-1)}
+\]</span></p>
+<p>有一个有用的性质，如果记<span class="math inline">\(A+B=(A_1+B_1, A_2+B_2, \cdots, A_N+B_N)\)</span>，那么有</p>
+<p><span class="math display">\[R(A+B) = R(A)+R(B)
+\]</span></p>
+<p>对于字符串<span class="math inline">\(S\)</span>和<span class="math inline">\(T\)</span>，它们的<strong>拼接</strong>，即<span class="math inline">\(S+T\)</span>，可以由之前的递推式得出哈希为</p>
+<p><span class="math display">\[R(S+T) = R(S)\times x^{|T|}+R(T)
+\]</span></p>
+<p>这样的序列上的哈希可以方便我们判断任意两个区间的内容是否相等。另外，结合线段树，我们可以实现<span class="math inline">\(O(logn)\)</span>的单点修改和<span class="math inline">\(O(logn)\)</span>的区间哈希查询。只要每个节点存这段区间的哈希即可。两个区间合并的时候相当于<strong>拼接</strong>。支持区间修改可能有些麻烦，因为lazy tag有些难写。</p>
+<p>另外，对于字符串，滚动哈希还可以用来<span class="math inline">\(O(1)\)</span>地判断一个区间是否是回文串。我们只需要正着求一遍哈希，再倒着求一遍哈希，响应的区间的哈希值相等，那么意味着是回文串。如果要避免下标的转换，则可以换一下哈希函数（注意与之前正着的哈希区分）：</p>
+<p><span class="math display">\[R'(A) = \bigg(\sum^N_{i=1}A_ix^{i-1}\bigg)\mod{p}
+\]</span></p>
+<p>此时，<span class="math inline">\(R'(S+T)=R'(S)+R'(T)\times x^{|S|}\)</span>。</p>
+<p>另外，单哈希可能不能使得碰撞的概率足够低，那么我们就重复使用多个<span class="math inline">\(p\)</span>来算多个哈希即可。</p>
+<p>下面给出一个，支持单点修改，维护字符串子串哈希的线段树代码</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#75715e">//atcoder abc331_f
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//滚动哈希+线段树
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;string&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;random&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;ctime&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;array&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> LL <span style="color:#f92672">=</span> <span style="color:#66d9ef">long</span> <span style="color:#66d9ef">long</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#66d9ef">const</span> MAXN <span style="color:#f92672">=</span> <span style="color:#ae81ff">1000005</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">constexpr</span> <span style="color:#66d9ef">int</span> B <span style="color:#f92672">=</span> <span style="color:#ae81ff">5</span>;
+</span></span><span style="display:flex;"><span>LL mod[B] <span style="color:#f92672">=</span> {<span style="color:#ae81ff">998244353</span>, <span style="color:#ae81ff">1000000007</span>, <span style="color:#ae81ff">1000000009</span>, <span style="color:#ae81ff">1000000021</span>, <span style="color:#ae81ff">1000000033</span>};
+</span></span><span style="display:flex;"><span>LL base[B];
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">Hash</span>{
+</span></span><span style="display:flex;"><span>    LL h1, h2, pw;  
+</span></span><span style="display:flex;"><span>    Hash()<span style="color:#f92672">:</span>h1(<span style="color:#ae81ff">0</span>),h2(<span style="color:#ae81ff">0</span>),pw(<span style="color:#ae81ff">1</span>){} <span style="color:#75715e">// 字符串拼接哈希时，拼接操作的幺元
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>};
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> T <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>array<span style="color:#f92672">&lt;</span>Hash, B<span style="color:#f92672">&gt;</span>; <span style="color:#75715e">// 存多个哈希，以减小碰撞概率
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>T <span style="color:#66d9ef">operator</span><span style="color:#f92672">+</span>(T lhs, T rhs){
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 区间拼接
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    T res;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>;i<span style="color:#f92672">&lt;</span>B;i<span style="color:#f92672">++</span>){
+</span></span><span style="display:flex;"><span>        res[i].h1 <span style="color:#f92672">=</span> (lhs[i].h1<span style="color:#f92672">*</span>rhs[i].pw <span style="color:#f92672">+</span> rhs[i].h1)<span style="color:#f92672">%</span>mod[i];
+</span></span><span style="display:flex;"><span>        res[i].h2 <span style="color:#f92672">=</span> (lhs[i].h2 <span style="color:#f92672">+</span> lhs[i].pw<span style="color:#f92672">*</span>rhs[i].h2)<span style="color:#f92672">%</span>mod[i];
+</span></span><span style="display:flex;"><span>        res[i].pw <span style="color:#f92672">=</span> (lhs[i].pw<span style="color:#f92672">*</span>rhs[i].pw)<span style="color:#f92672">%</span>mod[i];
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 见字符串拼接的哈希
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> res;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>T <span style="color:#a6e22e">gen</span>(<span style="color:#66d9ef">char</span> c){
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 单个字符的哈希
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    T res;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>;i<span style="color:#f92672">&lt;</span>B;i<span style="color:#f92672">++</span>){
+</span></span><span style="display:flex;"><span>        res[i].h1 <span style="color:#f92672">=</span> c;
+</span></span><span style="display:flex;"><span>        res[i].h2 <span style="color:#f92672">=</span> c;
+</span></span><span style="display:flex;"><span>        res[i].pw <span style="color:#f92672">=</span> base[i];
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> res;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">Node</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> s,t;<span style="color:#75715e">//该端点的起点和终点下标
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    T v;
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Node st[MAXN<span style="color:#f92672">*</span><span style="color:#ae81ff">4</span><span style="color:#f92672">+</span><span style="color:#ae81ff">2</span>];
+</span></span><span style="display:flex;"><span>std<span style="color:#f92672">::</span>string arr;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">build</span>(<span style="color:#66d9ef">int</span> s, <span style="color:#66d9ef">int</span> t, <span style="color:#66d9ef">int</span> p<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>){
+</span></span><span style="display:flex;"><span>    st[p].s <span style="color:#f92672">=</span> s;
+</span></span><span style="display:flex;"><span>    st[p].t <span style="color:#f92672">=</span> t;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span>(s<span style="color:#f92672">==</span>t) {
+</span></span><span style="display:flex;"><span>        st[p].v <span style="color:#f92672">=</span> gen(arr[s]);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> m <span style="color:#f92672">=</span> s<span style="color:#f92672">+</span>((t<span style="color:#f92672">-</span>s)<span style="color:#f92672">&gt;&gt;</span><span style="color:#ae81ff">1</span>);
+</span></span><span style="display:flex;"><span>    build(s,m,p<span style="color:#f92672">*</span><span style="color:#ae81ff">2</span>);
+</span></span><span style="display:flex;"><span>    build(m<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>,t,p<span style="color:#f92672">*</span><span style="color:#ae81ff">2</span><span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>);
+</span></span><span style="display:flex;"><span>    st[p].v <span style="color:#f92672">=</span> st[p<span style="color:#f92672">*</span><span style="color:#ae81ff">2</span>].v <span style="color:#f92672">+</span> st[p<span style="color:#f92672">*</span><span style="color:#ae81ff">2</span><span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>].v;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">update</span>(<span style="color:#66d9ef">int</span> i, <span style="color:#66d9ef">char</span> ch, <span style="color:#66d9ef">int</span> p<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>){
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> s <span style="color:#f92672">=</span> st[p].s, t <span style="color:#f92672">=</span> st[p].t;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span>(s<span style="color:#f92672">==</span>t){
+</span></span><span style="display:flex;"><span>        st[p].v <span style="color:#f92672">=</span> gen(ch);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> m <span style="color:#f92672">=</span> s<span style="color:#f92672">+</span>((t<span style="color:#f92672">-</span>s)<span style="color:#f92672">&gt;&gt;</span><span style="color:#ae81ff">1</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span>(i<span style="color:#f92672">&lt;=</span>m) update(i, ch, p<span style="color:#f92672">*</span><span style="color:#ae81ff">2</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span>(i<span style="color:#f92672">&gt;</span>m)  update(i, ch, p<span style="color:#f92672">*</span><span style="color:#ae81ff">2</span><span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>);
+</span></span><span style="display:flex;"><span>    st[p].v <span style="color:#f92672">=</span> st[p<span style="color:#f92672">*</span><span style="color:#ae81ff">2</span>].v <span style="color:#f92672">+</span> st[p<span style="color:#f92672">*</span><span style="color:#ae81ff">2</span><span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>].v;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>T <span style="color:#a6e22e">query</span>(<span style="color:#66d9ef">int</span> l, <span style="color:#66d9ef">int</span> r, <span style="color:#66d9ef">int</span> p<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>){
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> s <span style="color:#f92672">=</span> st[p].s, t <span style="color:#f92672">=</span> st[p].t;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span>(l<span style="color:#f92672">&lt;=</span>s <span style="color:#f92672">&amp;&amp;</span> t<span style="color:#f92672">&lt;=</span>r) <span style="color:#66d9ef">return</span> st[p].v;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> m <span style="color:#f92672">=</span> s<span style="color:#f92672">+</span>((t<span style="color:#f92672">-</span>s)<span style="color:#f92672">&gt;&gt;</span><span style="color:#ae81ff">1</span>);
+</span></span><span style="display:flex;"><span>    T ret;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span>(l<span style="color:#f92672">&lt;=</span>m) ret <span style="color:#f92672">=</span> ret<span style="color:#f92672">+</span>query(l,r,p<span style="color:#f92672">*</span><span style="color:#ae81ff">2</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span>(r<span style="color:#f92672">&gt;</span>m)  ret <span style="color:#f92672">=</span> ret<span style="color:#f92672">+</span>query(l,r,p<span style="color:#f92672">*</span><span style="color:#ae81ff">2</span><span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>);
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> ret;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">solve</span>(){
+</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>mt19937_64 rng(time(<span style="color:#ae81ff">0</span>));
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>;i<span style="color:#f92672">&lt;</span>B;i<span style="color:#f92672">++</span>){
+</span></span><span style="display:flex;"><span>        base[i] <span style="color:#f92672">=</span> rng() <span style="color:#f92672">%</span> mod[i]; <span style="color:#75715e">// 即随机生成的x
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    }
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> n,q;
+</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>cin<span style="color:#f92672">&gt;&gt;</span>n<span style="color:#f92672">&gt;&gt;</span>q;
+</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>cin<span style="color:#f92672">&gt;&gt;</span>arr;
+</span></span><span style="display:flex;"><span>    arr <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;#&#39;</span><span style="color:#f92672">+</span>arr;
+</span></span><span style="display:flex;"><span>    build(<span style="color:#ae81ff">1</span>, n);
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">while</span>(q<span style="color:#f92672">--</span>){
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">int</span> op;
+</span></span><span style="display:flex;"><span>        std<span style="color:#f92672">::</span>cin<span style="color:#f92672">&gt;&gt;</span>op;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span>(op<span style="color:#f92672">==</span><span style="color:#ae81ff">1</span>){
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">int</span> x;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">char</span> c;
+</span></span><span style="display:flex;"><span>            std<span style="color:#f92672">::</span>cin<span style="color:#f92672">&gt;&gt;</span>x<span style="color:#f92672">&gt;&gt;</span>c;
+</span></span><span style="display:flex;"><span>            update(x,c);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">else</span>{
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// 判断[l,r]是否为回文串
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            <span style="color:#66d9ef">int</span> l, r;
+</span></span><span style="display:flex;"><span>            std<span style="color:#f92672">::</span>cin<span style="color:#f92672">&gt;&gt;</span>l<span style="color:#f92672">&gt;&gt;</span>r;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">auto</span> h <span style="color:#f92672">=</span> query(l, r);
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">bool</span> ans <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>;i<span style="color:#f92672">&lt;</span>B;i<span style="color:#f92672">++</span>){
+</span></span><span style="display:flex;"><span>                ans <span style="color:#f92672">&amp;=</span> (h[i].h1<span style="color:#f92672">==</span>h[i].h2);
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            std<span style="color:#f92672">::</span>cout<span style="color:#f92672">&lt;&lt;</span>(ans<span style="color:#f92672">?</span><span style="color:#e6db74">&#34;Yes&#34;</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#34;No&#34;</span>)<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h1 id="c-stl用法">C++ STL用法</h1>
 <h2 id="stdswap">std::swap</h2>
 <p>交换两个元素的内容（也可以交换数组，不重要不介绍）。复杂度：常数。</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">int</span> a,b;
@@ -7311,7 +7463,17 @@ std::cout&lt;&lt;(int)x&lt;&lt;&#34;\n&#34;;
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">bool</span> <span style="color:#66d9ef">operator</span><span style="color:#f92672">&lt;</span>(<span style="color:#66d9ef">const</span> node<span style="color:#f92672">&amp;</span> a);
 </span></span><span style="display:flex;"><span>};
 </span></span><span style="display:flex;"><span><span style="color:#75715e">//不用添加cmp参数
-</span></span></span></code></pre></div><h2 id="stdlower_boundstdupper_bound">std::lower_bound,std::upper_bound</h2>
+</span></span></span></code></pre></div><h2 id="stdmerge">std::merge</h2>
+<p>对两个有序数组进行合并。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span> a(<span style="color:#ae81ff">5</span>), b(<span style="color:#ae81ff">6</span>);
+</span></span><span style="display:flex;"><span>std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span> c(<span style="color:#ae81ff">5</span><span style="color:#f92672">+</span><span style="color:#ae81ff">6</span>);
+</span></span><span style="display:flex;"><span>std<span style="color:#f92672">::</span>merge(a.begin(), a.end(), b.begin(), b.end(), c.begin(), std<span style="color:#f92672">::</span>less<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span>());
+</span></span></code></pre></div><p>如上，假设a和b都是从小到大排好序的数组，把它们合并成同样从小到大排序的c数组。如果是从大到小合并成从大到小，则改成std::greater</p>
+<p>另外，它的操作逻辑是双指针。比如less情况下，指向a数组元素的指针为p1，指向b数组元素的指针为p2。他会判断p1大还是p2大，如果p1大，则把p1指向的数字放进c，然后p1自增。否则p2放进去后自增。他其实不会管你原来的数组是否真的排好序，有时候这可以用在一些数组的合并上。</p>
+<h2 id="stdgreater-stdless">std::greater, std::less</h2>
+<p>很简单，greater是大于号<code>&gt;</code>，而less是小于号<code>&lt;</code>。在sort函数里的第三个参数可以用这个，例如<code>std::greater&lt;int&gt;()</code>代表从大到小排序，<code>std::less&lt;int&gt;()</code>则是从小到大排序。</p>
+<p>但是在优先队列里不一样，greater是小根堆，而less才是大根堆。</p>
+<h2 id="stdlower_boundstdupper_bound">std::lower_bound,std::upper_bound</h2>
 <p>对某个已经排序好的数组，查找第一个大于等于（lower_bound）或者大于(upper_bound)某个给定值的元素。复杂度：logn（对于随机访问的迭代器），n（对于其他迭代器）。</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">int</span> a[<span style="color:#ae81ff">5</span>]<span style="color:#f92672">=</span>{<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">4</span>,<span style="color:#ae81ff">6</span>};
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> first <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>lower_bound(a,a<span style="color:#f92672">+</span><span style="color:#ae81ff">5</span>,<span style="color:#ae81ff">3</span>);
@@ -7642,6 +7804,16 @@ std::cout&lt;&lt;(int)x&lt;&lt;&#34;\n&#34;;
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-CPP" data-lang="CPP"><span style="display:flex;"><span>Iterator <span style="color:#a6e22e">unique</span>(Iterator first, Iterator last);
 </span></span></code></pre></div><p>给出一个范围来进行这个操作。具体用例可以见离散化一节。</p>
 <p>返回值是新数组的末尾的迭代器。</p>
+<h2 id="stdmt19937_64">std::mt19937_64</h2>
+<p>本功能在C++11后可以使用。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#75715e">#include</span><span style="color:#75715e">&lt;random&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span><span style="color:#75715e">&lt;ctime&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>std<span style="color:#f92672">::</span>mt19937_64 rng(time(<span style="color:#ae81ff">0</span>));
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>;i<span style="color:#f92672">&lt;</span>B;i<span style="color:#f92672">++</span>){
+</span></span><span style="display:flex;"><span>    base[i] <span style="color:#f92672">=</span> rng() <span style="color:#f92672">%</span> mod[i]; <span style="color:#75715e">// 即随机生成[0,mod[i])之间的整数
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
+</span></span></code></pre></div><p>使用梅森缠绕算法，给出<span class="math inline">\([0,2^{64})\)</span>之间的随机数，如果想要32位的，用mt19937即可。其比cstdlib中的srand和rand生成的随机数性质要好得多，并且rand()的范围不那么好设置。推荐在涉及随机的算法中优先使用这个生成器。</p>
 <h2 id="stdcin">std::cin</h2>
 <h3 id="输入十六进制八进制二进制">输入十六进制、八进制、二进制</h3>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-CPP" data-lang="CPP"><span style="display:flex;"><span><span style="color:#66d9ef">int</span> a;
@@ -8377,12 +8549,15 @@ std::cout&lt;&lt;(int)x&lt;&lt;&#34;\n&#34;;
         <li><a href="#表达式求值-可能需要进一步完善todo">表达式求值 可能需要进一步完善TODO</a></li>
         <li><a href="#艾弗森括号">艾弗森括号</a></li>
         <li><a href="#向上向下取整">向上、向下取整</a></li>
+        <li><a href="#滚动哈希">滚动哈希</a></li>
       </ol>
     </li>
     <li><a href="#c-stl用法">C++ STL用法</a>
       <ol>
         <li><a href="#stdswap">std::swap</a></li>
         <li><a href="#stdsort">std::sort</a></li>
+        <li><a href="#stdmerge">std::merge</a></li>
+        <li><a href="#stdgreater-stdless">std::greater, std::less</a></li>
         <li><a href="#stdlower_boundstdupper_bound">std::lower_bound,std::upper_bound</a></li>
         <li><a href="#stdmaxstdmin">std::max,std::min</a></li>
         <li><a href="#stdmax_elementstdmin_element">std::max_element,std::min_element</a></li>
@@ -8512,6 +8687,7 @@ std::cout&lt;&lt;(int)x&lt;&lt;&#34;\n&#34;;
         </li>
         <li><a href="#stdnext_permutation-stdprev_permutation">std::next_permutation, std::prev_permutation</a></li>
         <li><a href="#stdunique">std::unique</a></li>
+        <li><a href="#stdmt19937_64">std::mt19937_64</a></li>
         <li><a href="#stdcin">std::cin</a>
           <ol>
             <li><a href="#输入十六进制八进制二进制">输入十六进制、八进制、二进制</a></li>
