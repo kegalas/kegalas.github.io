@@ -836,6 +836,8 @@ std::vector<int> prime;
 bool isnp[MAXN];
 
 void sieve(int n){
+    isnp[1] = 1;
+    isnp[0] = 1;
     for(int i=2;i<=n;i++){
         if(!isnp[i]) prime.push_back(i);
         for(auto p:prime){
