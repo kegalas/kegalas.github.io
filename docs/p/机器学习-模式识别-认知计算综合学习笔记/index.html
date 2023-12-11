@@ -1,0 +1,1573 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='我们本科课程在一学期内开了这三门课，内容重合度95%，我并不知道为什么要分开上，但是我把笔记整合在一起记录。'><title>机器学习&#43;模式识别&#43;认知计算综合学习笔记</title>
+
+<link rel='canonical' href='https://kegalas.top/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/'>
+
+<link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='机器学习&#43;模式识别&#43;认知计算综合学习笔记'>
+<meta property='og:description' content='我们本科课程在一学期内开了这三门课，内容重合度95%，我并不知道为什么要分开上，但是我把笔记整合在一起记录。'>
+<meta property='og:url' content='https://kegalas.top/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/'>
+<meta property='og:site_name' content='KegalaS的个人博客'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='大学' /><meta property='article:tag' content='人工智能' /><meta property='article:tag' content='机器学习' /><meta property='article:tag' content='模式识别' /><meta property='article:published_time' content='2023-11-28T10:21:26&#43;08:00'/><meta property='article:modified_time' content='2023-11-28T10:21:26&#43;08:00'/><meta property='og:image' content='https://kegalas.top/cover.jpg' />
+<meta name="twitter:title" content="机器学习&#43;模式识别&#43;认知计算综合学习笔记">
+<meta name="twitter:description" content="我们本科课程在一学期内开了这三门课，内容重合度95%，我并不知道为什么要分开上，但是我把笔记整合在一起记录。"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://kegalas.top/cover.jpg' />
+    <link rel="shortcut icon" href="favicon-16x16.png" />
+
+    </head>
+    <body class="
+    article-page has-toc
+">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex 
+    
+        extended
+    
+">
+    
+        <div id="article-toolbar">
+            <a href="/" class="back-home">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="15 6 9 12 15 18" />
+</svg>
+
+
+
+                <span>返回</span>
+            </a>
+        </div>
+    
+<main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+                
+                    <img src="/cover.jpg" loading="lazy" alt="Featured image of post 机器学习&#43;模式识别&#43;认知计算综合学习笔记" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" >
+                人工智能
+            </a>
+        
+    </header>
+    
+
+    <h2 class="article-title">
+        <a href="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">机器学习&#43;模式识别&#43;认知计算综合学习笔记</a>
+    </h2>
+
+    
+    <h3 class="article-subtitle">
+        我们本科课程在一学期内开了这三门课，内容重合度95%，我并不知道为什么要分开上，但是我把笔记整合在一起记录。
+    </h3>
+    
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Nov 28, 2023</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 34 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+</div>
+</header>
+
+    <section class="article-content">
+    <h1 id="中英文词汇对照">中英文词汇对照</h1>
+<p>因为这门课是英语试卷，有些专有名词还是得记录</p>
+<table>
+<thead>
+<tr>
+<th>英文</th>
+<th>中文</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>neurons</td>
+<td>神经元</td>
+</tr>
+<tr>
+<td>cortex</td>
+<td>皮质（尤指大脑皮层）</td>
+</tr>
+<tr>
+<td>neocortex</td>
+<td>新皮质</td>
+</tr>
+<tr>
+<td>synapses</td>
+<td>突触</td>
+</tr>
+<tr>
+<td>synaptic</td>
+<td>突触的</td>
+</tr>
+<tr>
+<td>dopamine</td>
+<td>多巴胺</td>
+</tr>
+<tr>
+<td>amnesia</td>
+<td>失忆</td>
+</tr>
+<tr>
+<td>prefrontal cortex</td>
+<td>额叶前皮质</td>
+</tr>
+<tr>
+<td>lobe</td>
+<td>脑叶</td>
+</tr>
+<tr>
+<td>subcortical</td>
+<td>皮质下的</td>
+</tr>
+<tr>
+<td>hippocampus</td>
+<td>海马区</td>
+</tr>
+<tr>
+<td>amygdala</td>
+<td>杏仁核</td>
+</tr>
+<tr>
+<td>thalamus</td>
+<td>丘脑</td>
+</tr>
+<tr>
+<td>basal ganglia</td>
+<td>基底核</td>
+</tr>
+<tr>
+<td>cerebellum</td>
+<td>小脑</td>
+</tr>
+<tr>
+<td>occipital lobe</td>
+<td>枕叶</td>
+</tr>
+<tr>
+<td>temporal lobe</td>
+<td>颞叶</td>
+</tr>
+<tr>
+<td>frontal lobe</td>
+<td>额叶</td>
+</tr>
+<tr>
+<td>parietal lobe</td>
+<td>顶叶</td>
+</tr>
+<tr>
+<td>arousal</td>
+<td>激励</td>
+</tr>
+<tr>
+<td>modulatory functions</td>
+<td>调节功能</td>
+</tr>
+<tr>
+<td>Reinforcement Learning</td>
+<td>强化学习</td>
+</tr>
+<tr>
+<td>Motor Control</td>
+<td>运动控制</td>
+</tr>
+<tr>
+<td>Executive Function</td>
+<td>执行功能</td>
+</tr>
+<tr>
+<td>motor coordination</td>
+<td>运动协调</td>
+</tr>
+<tr>
+<td>semantic</td>
+<td>语义的</td>
+</tr>
+<tr>
+<td>spike</td>
+<td></td>
+</tr>
+<tr>
+<td>dendrites</td>
+<td>树突</td>
+</tr>
+<tr>
+<td>axon</td>
+<td>轴突</td>
+</tr>
+<tr>
+<td>excitatory pyramidal neurons</td>
+<td>兴奋性椎体神经元</td>
+</tr>
+<tr>
+<td>inhibitory interneurons</td>
+<td>抑制性中间神经元</td>
+</tr>
+<tr>
+<td>white matter</td>
+<td>白质</td>
+</tr>
+<tr>
+<td>Likelihood function</td>
+<td>似然函数</td>
+</tr>
+<tr>
+<td>neurology</td>
+<td>神经学</td>
+</tr>
+<tr>
+<td>genetics</td>
+<td>遗传学</td>
+</tr>
+</tbody>
+</table>
+<h1 id="绪论">绪论</h1>
+<h2 id="大脑">大脑</h2>
+<p>在大脑新皮质上，每个神经元都有约10k个来自其他神经元的输入，通过突触连接。而大脑中总体有20billion规模的神经元。</p>
+<p>虽然每两个神经元之间的连接相对而言影响较小，但是通过学习机制（learning mechanisms），这些神经元们可以实现非常复杂的信息处理功能。</p>
+<p>大脑的学习过程并不要求单个神经元非常复杂，它其实是信息整合的一个简单形式</p>
+<ol>
+<li>准确描述神经元的反应特性</li>
+<li>在聚合神经网络上实现复杂的信息处理</li>
+</ol>
+<h2 id="认知计算的基本问题">认知计算的基本问题</h2>
+<ol>
+<li>视觉</li>
+<li>注意力</li>
+<li>多巴胺与奖励机制</li>
+<li>记忆</li>
+<li>含义（Meaning）</li>
+<li>任务导向行为</li>
+</ol>
+<h2 id="我们应该关注大脑的什么">我们应该关注大脑的什么？</h2>
+<p>David Marr认为，我们只需要独立地关注三个层次：</p>
+<ol>
+<li>计算层次。即大脑中在进行什么计算，什么信息在被处理？</li>
+<li>算法层次。大脑中的计算是如何进行的，信息处理的步骤是什么？</li>
+<li>实现层面。硬件如何实现这些算法？</li>
+</ol>
+<p>注意独立，我们就可以抛弃实现，只研究计算和算法层次。</p>
+<p>这部分的研究的简明历史如下</p>
+<ol>
+<li>1960s~1990s，主要的研究是认为人脑和传统计算机差不多，所以研究主要面向逻辑和符号命题</li>
+<li>后来，基于概率的研究变得流行，贝叶斯概率的框架使用广泛，他强调大脑在信息处理过程中的分级性质。但是贝叶斯理论对大脑在神经层面的拟合不是很好，实际上大脑不像一个通用的计算设备</li>
+<li>神经网络</li>
+</ol>
+<h2 id="脑区域之下皮质">脑区域之下皮质</h2>
+<p><figure 
+	>
+	<a href="/%e6%9c%ba%e5%99%a8%e5%ad%a6%e4%b9%a0%e6%a8%a1%e5%bc%8f%e8%af%86%e5%88%ab%e8%ae%a4%e7%9f%a5%e8%ae%a1%e7%ae%97%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/1.jpg" >
+		<img src="/%e6%9c%ba%e5%99%a8%e5%ad%a6%e4%b9%a0%e6%a8%a1%e5%bc%8f%e8%af%86%e5%88%ab%e8%ae%a4%e7%9f%a5%e8%ae%a1%e7%ae%97%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/1.jpg"
+			
+			
+			
+			loading="lazy"
+			alt="1.jpg">
+	</a>
+	
+	<figcaption>1.jpg</figcaption>
+	
+</figure></p>
+<h3 id="海马区hippocampus">海马区（Hippocampus）</h3>
+<p>是旧皮质，在短期记忆中有很重要的作用。</p>
+<h3 id="杏仁核amyglada">杏仁核（Amyglada）</h3>
+<p>对情绪显著刺激（emotionally salient stimuli）很重要，并且可以向大脑的其他部分发送警报（alert）。</p>
+<p>它在基于奖惩机制的强化运动（和认知）动作（reinforcing motor (and cognitive) actions）中也发挥重要的作用。</p>
+<h3 id="丘脑thalamus">丘脑（Thalamus）</h3>
+<p>为感官信息进入大脑新皮质提供了主要通道。也可能对注意力、激励和其他调节功能很重要。它在感知和注意力以及运动控制和强化学习中发挥作用。</p>
+<h3 id="基底核basal-ganglia">基底核（Basal Ganglia）</h3>
+<p>它是下皮质的一系列区域的集合，在运动控制、强化学习和执行功能（Executive Function）中发挥关键作用</p>
+<p>它帮助做出最后的“GO”指令，决定是否执行大脑皮层建议的特定动作，以及决定是否更新前额叶的认知计划。</p>
+<h3 id="小脑cerebellum">小脑（Cerebellum）</h3>
+<p>其神经元占了脑的一半，在运动协调中有重要作用。在大部分认知任务中也处于活跃状态。</p>
+<h2 id="脑区域之新皮质">脑区域之新皮质</h2>
+<p><figure 
+	>
+	<a href="/%e6%9c%ba%e5%99%a8%e5%ad%a6%e4%b9%a0%e6%a8%a1%e5%bc%8f%e8%af%86%e5%88%ab%e8%ae%a4%e7%9f%a5%e8%ae%a1%e7%ae%97%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/2.jpg" >
+		<img src="/%e6%9c%ba%e5%99%a8%e5%ad%a6%e4%b9%a0%e6%a8%a1%e5%bc%8f%e8%af%86%e5%88%ab%e8%ae%a4%e7%9f%a5%e8%ae%a1%e7%ae%97%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/2.jpg"
+			
+			
+			
+			loading="lazy"
+			alt="2.jpg">
+	</a>
+	
+	<figcaption>2.jpg</figcaption>
+	
+</figure></p>
+<p>Brodmann根据解剖结果把大脑分为四个区域。</p>
+<h3 id="枕叶occipital-lobe">枕叶（Occipital lobe）</h3>
+<p>这里包含初级的视觉皮层，在枕叶的非常末端的位置。然后包含向外辐射的高级视觉中枢。</p>
+<h3 id="颞叶temporal-lobe">颞叶（Temporal lobe）</h3>
+<p>包含初级的听觉皮层，以及联系到高级听觉和语言处理的区域。</p>
+<p>与此同时，视觉看到的物体转换到语言、语言转换到视觉的功能也是在这里进行的。这也是我们为什么能进行阅读的原因。</p>
+<p>颞叶也对语义知识（semantic knowledg）很重要，也就是你对事物的深层理解。</p>
+<p>这里包含了我们对于他人的面容、名字，事实、事件、物体、文字的认知。</p>
+<h3 id="额叶">额叶</h3>
+<p>额叶的前部，或叫前额叶，是大脑执行功能的区域。这里是所有高级shots被called的区域。</p>
+<p>在这里，你的所有计划被整理出来，然后受基本动机和情绪的影响后，才真正决定你会如何行动。</p>
+<p>这里也是处理最抽象、最有挑战性的认知形式的关键所在。</p>
+<p>额叶皮层的内侧和腹侧区域对于情绪和动机非常重要。</p>
+<h3 id="顶叶parietal-lobe">顶叶（Parietal lobe）</h3>
+<p>这里对encoding空间位置、数字、数学、抽象关系和其他有关“智慧”的东西很重要。</p>
+<p>它给视觉信息指导运动动作提供了主要的通道。</p>
+<h2 id="神经元">神经元</h2>
+<p>大脑神经元如此复杂，其是为了一个非常简单的整体功能“检测（detection）”服务的。</p>
+<p>神经元接受数以千计的输入，但其中重要且有意义的只有一些特定模式（specific pattern）的输入，这些有价值的输入被称为“spike”，这也是神经元之间交流的基础。</p>
+<p>神经元接受信号后，将它们与阈值比较，然后加入到总体的输出中，再用这个总体的输出和其他神经元交流。</p>
+<h2 id="把神经元看作是detector">把神经元看作是Detector</h2>
+<p>发送神经元和接收神经元用突触连接，大部分突触都连接在接收端的树突上。这些信号通过树突进入细胞体，进行信息的处理与综合。</p>
+<p>输出的阈值判断发生在输出端的最开始，也就是轴突。</p>
+<p>突触网络的效能或者说权重，指的是发送神经元发送的信号能以多大程度影响到接收神经元。</p>
+<p>从计算上说，权重决定了一个神经元接受什么。权重越大，神经元对这个输入就更敏感，反之亦然。</p>
+<p>学习的过程就是不断地调整神经元之间连接的权重，来达到想要的输出。</p>
+<h2 id="大脑新皮质的神经网络">大脑新皮质的神经网络</h2>
+<p>有85%的神经元是兴奋性锥体神经元（excitatory pyramidal neurons），它们的连接跨度很广，可以跨越不同的脑区，有时候甚至可以跨越整个大脑。学习行为主要就发生在这些兴奋性神经元中；有15%是抑制性中间神经元（inhibitory interneurons），它们的连接更加局部化。某种意义上，可以理解为兴奋性神经元的散热器。</p>
+<h2 id="新皮质的层级结构">新皮质的层级结构</h2>
+<p>新皮质具有6种不同的层，每种脑区都有这种6层结构。但是拥有不同功能的脑区，其6层结构的厚度也各有不同，暗示了层级结构的功能。</p>
+<p>新皮质中负责数据输入的脑区（Input Area）接收感知的输入（例如视觉；通常会经过丘脑），这些脑区的Layer 4通常会更大。这是因为来自丘脑的轴突都连接到这里。这些输入层（input layer）有一种特别的兴奋性神经元，称为星状细胞（stellate cell）。这些细胞的树突非常浓密，并且似乎尤其善于收集这一层的局部轴突输入。</p>
+<p>新皮质中的隐藏脑区（Hidden Area），并不直接接受感觉输入，也不直接输出运动动作。它们是这个输入和输出的中间部分。我们可以理解为，这些区域从感官输入中创建越来越复杂和抽象的类别（catagories），然后再从这些高级类别中，协助选择出正确的运动动作。这些脑区的superficial layers 2/3会更厚，包含了许多锥体神经元，并且都放在很好的位置来实现这些抽象化功能。</p>
+<p>新皮质中的输出脑区（Output Area），拥有直接作用于肌肉控制区的突触，发出电信号后，可以直接影响物理运动。这些输出层有更厚的deep layer 5/6，会把轴突发送给许多下皮质区域。</p>
+<h2 id="新皮质中的连接模式">新皮质中的连接模式</h2>
+<p>信息传输包含正向传播和反向传播两个过程。</p>
+<p>正向传播时，信息从感官信息流向大脑中更高级、更深的部分，从而形成了越来越抽象和复杂的类别（catagories）</p>
+<p>反向传播时，信息从隐藏层和输出层出发，回到这些区域在正向传播时的前级区域，从而支持自上而下的行为认知控制、直接注意力，并且帮助解决感官输入中的歧义。</p>
+<p>所以说，区域之间的连接很大程度上是双向的，发送前向信息的区域通常也会收到下级区域的信息。这种双向连接对于使网络能够跨层聚合到连贯的整体活动状态很重要，对于错误驱动（error-driven）的学习也很重要。</p>
+<h2 id="类别和分布式表示categorization-and-distributed-representations">类别和分布式表示（Categorization and Distributed Representations）</h2>
+<p><figure 
+	>
+	<a href="/%e6%9c%ba%e5%99%a8%e5%ad%a6%e4%b9%a0%e6%a8%a1%e5%bc%8f%e8%af%86%e5%88%ab%e8%ae%a4%e7%9f%a5%e8%ae%a1%e7%ae%97%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/3.jpg" >
+		<img src="/%e6%9c%ba%e5%99%a8%e5%ad%a6%e4%b9%a0%e6%a8%a1%e5%bc%8f%e8%af%86%e5%88%ab%e8%ae%a4%e7%9f%a5%e8%ae%a1%e7%ae%97%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/3.jpg"
+			
+			
+			
+			loading="lazy"
+			alt="3.jpg">
+	</a>
+	
+	<figcaption>3.jpg</figcaption>
+	
+</figure></p>
+<p>如上，当我们看到一个人时，在最低的一层中，这里我们获得的表示只有一些最基本的特征。在下一层，我们把这些特征连起来，变成更复杂的视觉特征。在下一层，我们把面部特征全部组合了起来，形成了对于面容的认知。最后，我们把这张脸和语义上的各种东西关联起来，例如名字，性别，性格。</p>
+<p>这个过程可以通过fMRI来显示，不同视觉刺激的脑部活动区域高度重合。</p>
+<h2 id="神经元的数学公式">神经元的数学公式</h2>
+<p>一个基本的积分和激发神经元（A Basic Integrate-and-Fire Neuron）</p>
+<p><span class="math display">\[\tau_m\dfrac{du(t)}{dt}=u_{res}-u(t)+R_mi(t)
+\]</span></p>
+<p>其中<span class="math inline">\(\tau_m\)</span>是神经元的膜时间常数，其由通道的平均电导决定。<span class="math inline">\(u_{res}\)</span>是神经元的静息电位。<span class="math inline">\(i(t)\)</span>是输入电流，其由突触前神经元放电产生，并且是众多这种放电的和。<span class="math inline">\(R_m\)</span>是神经元对电流的电阻。</p>
+<p>具体来说，<span class="math inline">\(i(t)\)</span>还受到突触连接强度的影响，</p>
+<p><span class="math display">\[i(t) = \sum_j\sum_{t^f_j} w_jf(t-t^f_j)
+\]</span></p>
+<p>其中<span class="math inline">\(f(\cdot)\)</span>代表激活函数，<span class="math inline">\(t\)</span>表示突触<span class="math inline">\(j\)</span>的突触前神经元的放电时间，该时间由膜电位<span class="math inline">\(u\)</span>达到阈值<span class="math inline">\(\theta\)</span>的时间决定。</p>
+<p><span class="math display">\[u(t^f) = \theta
+\]</span></p>
+<h1 id="神经网络基础概念">神经网络基础概念</h1>
+<h2 id="神经元及其数学模型">神经元及其数学模型</h2>
+<p><figure 
+	>
+	<a href="/%e6%9c%ba%e5%99%a8%e5%ad%a6%e4%b9%a0%e6%a8%a1%e5%bc%8f%e8%af%86%e5%88%ab%e8%ae%a4%e7%9f%a5%e8%ae%a1%e7%ae%97%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/4.jpg" >
+		<img src="/%e6%9c%ba%e5%99%a8%e5%ad%a6%e4%b9%a0%e6%a8%a1%e5%bc%8f%e8%af%86%e5%88%ab%e8%ae%a4%e7%9f%a5%e8%ae%a1%e7%ae%97%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/4.jpg"
+			
+			
+			
+			loading="lazy"
+			alt="4.jpg">
+	</a>
+	
+	<figcaption>4.jpg</figcaption>
+	
+</figure></p>
+<p>神经元大体上由四个部分组成：细胞体、轴突、树突、突触</p>
+<p>在神经元的信息处理过程中，树突相当于信息的接收器，细胞体相当于加和、处理信息的东西，轴突相当于信息的发射器，突触就是信息传递的连接点。</p>
+<p>神经元只有当输入信息达到阈值后才会兴奋。所有这些信息都是电化学信息。学习则是突触间电化学过程效率的变化的过程。</p>
+<p>于是我们就可以把神经元抽象成一个数学模型。这其实是一个有向图，每个节点代表神经元的细胞体。每个节点一般的多个输入对应树突，一个输出（有时有多个）对应轴突。神经元的兴奋阈值在这里是节点的激活函数，而突触间的效率在这里就是边的权重。例如下图</p>
+<p><figure 
+	>
+	<a href="/%e6%9c%ba%e5%99%a8%e5%ad%a6%e4%b9%a0%e6%a8%a1%e5%bc%8f%e8%af%86%e5%88%ab%e8%ae%a4%e7%9f%a5%e8%ae%a1%e7%ae%97%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/5.jpg" >
+		<img src="/%e6%9c%ba%e5%99%a8%e5%ad%a6%e4%b9%a0%e6%a8%a1%e5%bc%8f%e8%af%86%e5%88%ab%e8%ae%a4%e7%9f%a5%e8%ae%a1%e7%ae%97%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/5.jpg"
+			
+			
+			
+			loading="lazy"
+			alt="5.jpg">
+	</a>
+	
+	<figcaption>5.jpg</figcaption>
+	
+</figure></p>
+<p>其中一个经典的模型是感知器：</p>
+<p><figure 
+	>
+	<a href="/%e6%9c%ba%e5%99%a8%e5%ad%a6%e4%b9%a0%e6%a8%a1%e5%bc%8f%e8%af%86%e5%88%ab%e8%ae%a4%e7%9f%a5%e8%ae%a1%e7%ae%97%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/6.jpg" >
+		<img src="/%e6%9c%ba%e5%99%a8%e5%ad%a6%e4%b9%a0%e6%a8%a1%e5%bc%8f%e8%af%86%e5%88%ab%e8%ae%a4%e7%9f%a5%e8%ae%a1%e7%ae%97%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/6.jpg"
+			
+			
+			
+			loading="lazy"
+			alt="6.jpg">
+	</a>
+	
+	<figcaption>6.jpg</figcaption>
+	
+</figure></p>
+<p>他这里的中间的两个大节点可以理解为把一个节点拆成两个部分。感知器的作用是把一系列输入分为两个类型中的一类。</p>
+<h2 id="大脑分区和基础的神经网络">大脑分区和基础的神经网络</h2>
+<p>大脑分区和功能之前探讨过了，这里不再赘述。</p>
+<p>神经网络面对的问题是，对于一组历史数据<span class="math inline">\(\{(x_1,y_1),(x_2,y_2),\cdots,(x_l,y_l)\}\)</span>，要找出一个函数<span class="math inline">\(f(x)=\hat y\)</span>，使得对未来的数据<span class="math inline">\(x\)</span>，<span class="math inline">\(\hat y\)</span>是一个良好的预测。</p>
+<p>单输入的神经元如下：</p>
+<p><figure 
+	>
+	<a href="/%e6%9c%ba%e5%99%a8%e5%ad%a6%e4%b9%a0%e6%a8%a1%e5%bc%8f%e8%af%86%e5%88%ab%e8%ae%a4%e7%9f%a5%e8%ae%a1%e7%ae%97%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/7.jpg" >
+		<img src="/%e6%9c%ba%e5%99%a8%e5%ad%a6%e4%b9%a0%e6%a8%a1%e5%bc%8f%e8%af%86%e5%88%ab%e8%ae%a4%e7%9f%a5%e8%ae%a1%e7%ae%97%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/7.jpg"
+			
+			
+			
+			loading="lazy"
+			alt="7.jpg">
+	</a>
+	
+	<figcaption>7.jpg</figcaption>
+	
+</figure></p>
+<p>拓展到多输入为</p>
+<p><figure 
+	>
+	<a href="/%e6%9c%ba%e5%99%a8%e5%ad%a6%e4%b9%a0%e6%a8%a1%e5%bc%8f%e8%af%86%e5%88%ab%e8%ae%a4%e7%9f%a5%e8%ae%a1%e7%ae%97%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/8.jpg" >
+		<img src="/%e6%9c%ba%e5%99%a8%e5%ad%a6%e4%b9%a0%e6%a8%a1%e5%bc%8f%e8%af%86%e5%88%ab%e8%ae%a4%e7%9f%a5%e8%ae%a1%e7%ae%97%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/8.jpg"
+			
+			
+			
+			loading="lazy"
+			alt="8.jpg">
+	</a>
+	
+	<figcaption>8.jpg</figcaption>
+	
+</figure></p>
+<p><span class="math inline">\(f\)</span>一般称为激活函数，典型的有：</p>
+<p><strong>阶跃函数、符号函数</strong></p>
+<p><span class="math display">\[f(x) = step(x)
+\]</span></p>
+<p><span class="math display">\[f(x)=sgn(x)
+\]</span></p>
+<p><strong>线性函数</strong></p>
+<p><span class="math display">\[f(x)=kx+b
+\]</span></p>
+<p><strong>sigmoid函数</strong></p>
+<p><span class="math display">\[f(x) = \sigma(x) = \dfrac{1}{1+e^{-x}}
+\]</span></p>
+<p>特别的，其导数为</p>
+<p><span class="math display">\[\sigma'(x) = \sigma(x)(1-\sigma(x))
+\]</span></p>
+<p>其范围为<span class="math inline">\((0,1)\)</span>，输出中心为<span class="math inline">\(0.5\)</span>。指数运算会比较慢，并且<span class="math inline">\(x\)</span>很大时，出现梯度消失问题。</p>
+<p><strong>双曲正切</strong></p>
+<p><span class="math display">\[f(x) = \tanh(x)=\dfrac{2}{1+e^{-2x}}-1
+\]</span></p>
+<p>长得和Sigmoid很像，但是其范围为<span class="math inline">\((-1,1)\)</span>，输出中心为<span class="math inline">\(0\)</span>。问题和sigmoid相同。</p>
+<p><strong>ReLU</strong></p>
+<p><span class="math display">\[f(x)=\max(0,x)
+\]</span></p>
+<p>其没有指数运算，且不会梯度消失。但输入为负数时，完全失效。</p>
+<p><strong>Leaky ReLU</strong></p>
+<p>即在<span class="math inline">\(x\geq 0\)</span>时，<span class="math inline">\(f(x)=x\)</span>，在<span class="math inline">\(x<0\)</span>时，<span class="math inline">\(f(x)=ax\)</span>，其中<span class="math inline">\(a\)</span>是一个相对于<span class="math inline">\(1\)</span>很小的正常数。其对ReLU进行了微小的修正，使得在负数输入时有效。</p>
+<p>有了这些东西，我们就可以构造神经网络了，其中最简单的单层（Single Layer）（实际上是双层）神经网络如下。</p>
+<p><figure 
+	>
+	<a href="/%e6%9c%ba%e5%99%a8%e5%ad%a6%e4%b9%a0%e6%a8%a1%e5%bc%8f%e8%af%86%e5%88%ab%e8%ae%a4%e7%9f%a5%e8%ae%a1%e7%ae%97%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/9.jpg" >
+		<img src="/%e6%9c%ba%e5%99%a8%e5%ad%a6%e4%b9%a0%e6%a8%a1%e5%bc%8f%e8%af%86%e5%88%ab%e8%ae%a4%e7%9f%a5%e8%ae%a1%e7%ae%97%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/9.jpg"
+			
+			
+			
+			loading="lazy"
+			alt="9.jpg">
+	</a>
+	
+	<figcaption>9.jpg</figcaption>
+	
+</figure></p>
+<p>这样的神经网络作用极其有限。只能用在线性分类任务上，大部分函数都不是线性的，或者不是线性可分的。</p>
+<p>于是就有了多层的神经网络，在上图的输入层和输出层之间添加一个或非常多个隐藏层。</p>
+<p><figure 
+	>
+	<a href="/%e6%9c%ba%e5%99%a8%e5%ad%a6%e4%b9%a0%e6%a8%a1%e5%bc%8f%e8%af%86%e5%88%ab%e8%ae%a4%e7%9f%a5%e8%ae%a1%e7%ae%97%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/10.jpg" >
+		<img src="/%e6%9c%ba%e5%99%a8%e5%ad%a6%e4%b9%a0%e6%a8%a1%e5%bc%8f%e8%af%86%e5%88%ab%e8%ae%a4%e7%9f%a5%e8%ae%a1%e7%ae%97%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/10.jpg"
+			
+			
+			
+			loading="lazy"
+			alt="10.jpg">
+	</a>
+	
+	<figcaption>10.jpg</figcaption>
+	
+</figure></p>
+<p>这样，神经网络就能处理更多复杂的分类问题。但是，多层神经网络的问题是难以训练。</p>
+<h2 id="正向传播和反向传播">正向传播和反向传播</h2>
+<p>反向传播算法的出现解决了训练的问题。</p>
+<p>假设神经元<span class="math inline">\(j\)</span>的期望输出是<span class="math inline">\(t_j\)</span>，实际输出是<span class="math inline">\(o_j\)</span>，那么误差就是</p>
+<p><span class="math display">\[E = \dfrac{1}{2}\sum_j(t_j-o_j)^2
+\]</span></p>
+<p>我们要优化的是每个连接的权重，我们就要找到每个权重对于误差的影响，偏导数</p>
+<p><span class="math display">\[\dfrac{\partial E}{\partial w_{ij}}
+\]</span></p>
+<p>其中<span class="math inline">\(w_{ij}\)</span>是神经元<span class="math inline">\(i\)</span>到<span class="math inline">\(j\)</span>的权重</p>
+<p>我们经常会用梯度下降法来优化权重，其迭代方向为</p>
+<p><span class="math display">\[\Delta w_{ij} = -\eta\dfrac{\partial E}{\partial w_{ij}}
+\]</span></p>
+<p>假设上一层的输入是<span class="math inline">\(b_i\)</span>，这一层的输入为<span class="math inline">\(\beta_j\)</span>，那么有<span class="math inline">\(\beta_j = \sum_i w_{ij}b_i\)</span></p>
+<p>注意到<span class="math inline">\(w_{ij}\)</span>首先影响输入值<span class="math inline">\(\beta_j\)</span>，再影响到输出值<span class="math inline">\(o_j\)</span>，最后才能影响到<span class="math inline">\(E\)</span>。所以</p>
+<p><span class="math display">\[\dfrac{\partial E}{\partial w_{ij}} = \dfrac{\partial E}{\partial o_j}\cdot \dfrac{\partial o_j}{\partial \beta_j}\cdot\dfrac{\partial \beta_j}{\partial w_{ij}}
+\]</span></p>
+<p>其中，显然有<span class="math inline">\(\dfrac{\partial \beta_j}{\partial w_{ij}}=b_i\)</span></p>
+<p>设<span class="math inline">\(g_j = -\dfrac{\partial E}{\partial o_j}\cdot \dfrac{\partial o_j}{\partial \beta_j}\)</span>，如果激活函数为<span class="math inline">\(\sigma(x)\)</span>，假设神经元阈值为<span class="math inline">\(\theta_j\)</span>，则</p>
+<p><span class="math display">\[g_j = -(t_j-o_j)\sigma'(\beta_j-\theta_j) = o_j(1-o_j)(t_j-o_j)
+\]</span></p>
+<p>于是更新公式为</p>
+<p><span class="math display">\[w_{ij}\leftarrow w_{ij}+\Delta w_{ij} = w_{ij} + ng_jb_i
+\]</span></p>
+<h1 id="学习">学习</h1>
+<h2 id="贝叶斯推理和学习">贝叶斯推理和学习</h2>
+<p>传统的频率学派认为，可以用大量试验中，事件出现的频率来估计概率。</p>
+<p>但是贝叶斯学派不同，贝叶斯学派同时利用样本信息和先验知识。</p>
+<p>频率学派通过大量独立实验将概率解释为统计均值（大数定律）。贝叶斯学派则将概率解释为信念度（degree of belief）（不需要大量的实验）。</p>
+<p>频率学派把模型参数看做固定量，把样本看做随机变量。而贝叶斯学派则都看作随机变量。</p>
+<p>贝叶斯推理在如下情况时，比频率方法更为有效：</p>
+<ul>
+<li>样本数量十分有限</li>
+<li>避免过拟合</li>
+<li>我们有理由相信某个模型更为合适，但是这个理由不包含在样本数据里</li>
+<li>我们更想知道某个事实有多大的可能性，而不是可能性最大的事实是什么</li>
+</ul>
+<p>贝叶斯学派经常用到以下概率公式</p>
+<p><strong>条件概率</strong></p>
+<p><span class="math display">\[P(A|B) = \dfrac{P(AB)}{P(B)}
+\]</span></p>
+<p>值得注意的是<span class="math inline">\(P(A|B)\neq P(B|A)\)</span>通常成立</p>
+<p><strong>事件的积的概率</strong></p>
+<p><span class="math inline">\(P(AB) = P(A|B)P(B)\)</span></p>
+<p>有<span class="math inline">\(P(AB)=P(BA)\)</span></p>
+<p><strong>全概率公式</strong></p>
+<p><span class="math display">\[P(A) = P(AB_1)+P(AB_2)+\cdots+P(AB_n)
+\]</span></p>
+<p>其中<span class="math inline">\(B_1+B_2+\cdots+B_n\)</span>是必然事件，它们两两互斥。</p>
+<p>于是再由条件概率，得到全概率公式为：</p>
+<p><span class="math display">\[P(A)=\sum^n_{i=1}P(A|B_i)P(B_i)
+\]</span></p>
+<p><strong>贝叶斯公式</strong></p>
+<p><span class="math display">\[P(B_i|A) = \dfrac{P(A|B_i)P(B_i)}{P(A)}=\dfrac{P(A|B_i)P(B_i)}{\sum^n_{i=1}P(A|B_i)P(B_i)}
+\]</span></p>
+<p>将贝叶斯公式写在模型中，得到</p>
+<p><span class="math display">\[P(model|data) = \dfrac{P(data|model)P(model)}{P(data)}
+\]</span></p>
+<p>也即</p>
+<p><span class="math display">\[P(\theta|X)=\dfrac{P(X|\theta)P(\theta)}{P(X)}
+\]</span></p>
+<p>其中<span class="math inline">\(P(\theta|X)\)</span>是模型的后验概率，<span class="math inline">\(P(X|\theta)\)</span>是数据的似然函数（Likelihood Function），<span class="math inline">\(P(\theta)\)</span>是模型的先验概率，<span class="math inline">\(P(X)\)</span>为证据。</p>
+<h3 id="先验概率">先验概率</h3>
+<p>先验概率分布即<span class="math inline">\(P(\theta)\)</span>，他的目的是，在我们得到任何样本之前，先capture我们对于<span class="math inline">\(\theta\)</span>的先验知识。</p>
+<h3 id="似然函数">似然函数</h3>
+<p>记为<span class="math inline">\(L(\theta|X)=P(X|\theta)\)</span>，固定<span class="math inline">\(X\)</span>时，关于参数<span class="math inline">\(\theta\)</span>的似然函数，（在数值上）等于给定参数<span class="math inline">\(\theta\)</span>后变量<span class="math inline">\(X\)</span>的概率。</p>
+<h3 id="后验概率">后验概率</h3>
+<p>贝叶斯推断的目标就是，使用样本数据<span class="math inline">\(X\)</span>，来更新我们的先验概率<span class="math inline">\(P(\theta)\)</span>，就得到了后验概率</p>
+<h3 id="最大后验估计map">最大后验估计（MAP）</h3>
+<p><span class="math display">\[h_{MAP} = \arg\max_{h\in H} P(h|D) = \arg\max_{h\in H}\dfrac{P(D|h)P(h)}{P(D)}
+\]</span></p>
+<p>由于分母是常数，所以有</p>
+<p><span class="math display">\[h_{MAP} = \arg\max_{h\in H}P(D|h)P(h)
+\]</span></p>
+<h3 id="最大似然估计mlp">最大似然估计（MLP）</h3>
+<p><span class="math display">\[h_{MLP} = \arg\max_{h\in H}P(D/h)
+\]</span></p>
+<p>在有些时候，所有<span class="math inline">\(H\)</span>的估计的先验概率是一样的（或者可以假设为一样的），就可以用最大似然估计。</p>
+<h3 id="贝叶斯过程">贝叶斯过程</h3>
+<p><span class="math display">\[P(X|\theta)=\dfrac{P(\theta|X)P(X)}{P(\theta)}
+\]</span></p>
+<p>假设你对某些特定的参数<span class="math inline">\(\theta\)</span>感兴趣，那么通用的步骤如下</p>
+<ol>
+<li>通过先验知识确定<span class="math inline">\(P(\theta)\)</span></li>
+<li>通过试验等办法收集<span class="math inline">\(X\)</span></li>
+<li>用贝叶斯公式得到后验概率</li>
+<li>后验概率作为下一次迭代的先验概率，下次迭代时要获取新的<span class="math inline">\(X\)</span></li>
+</ol>
+<h3 id="贝叶斯分类器">贝叶斯分类器</h3>
+<p>假设总共有<span class="math inline">\(N\)</span>类，其label分别为<span class="math inline">\(y=\{c_1,c_2,\cdots,c_N\}\)</span>。对于一个样本<span class="math inline">\(x\)</span>，设其属于<span class="math inline">\(c_j\)</span>类，其被错误归类为<span class="math inline">\(c_i\)</span>时，损失大小为<span class="math inline">\(\lambda_{ij}\)</span></p>
+<p>样本<span class="math inline">\(x\)</span>被归类为<span class="math inline">\(c_i\)</span>的条件风险（或期望损失）就为</p>
+<p><span class="math display">\[R(c_i|x) = \sum^N_{j=1}\lambda_{ij}P(c_j|x)
+\]</span></p>
+<p>我们的任务是最小化损失，即最小化</p>
+<p><span class="math display">\[R(h) = E_x[R(h(x)|x)]
+\]</span></p>
+<p>为了最小化总体风险，我们只需要在每个样本上都选择那个能使条件风险最小的类别。即</p>
+<p><span class="math display">\[h^*(x)=\arg\min_{c\in y}R(c|x)
+\]</span></p>
+<p>此时<span class="math inline">\(h^*(x)\)</span>就是贝叶斯最优分类器。与之对应的总体风险<span class="math inline">\(R(h^*)\)</span>称为贝叶斯风险。</p>
+<p>具体来说，若目标是最小化分类错误率，我们是损失可以写作</p>
+<p><span class="math display">\[\lambda_{ij}\left\{\begin{matrix}
+0, & i=j\\
+1, & i\neq j
+\end{matrix}\right.
+\]</span></p>
+<p>此时条件概率可以算出来，</p>
+<p><span class="math display">\[R(c|x) = 1-P(c|x)
+\]</span></p>
+<p>于是最优分类器就为</p>
+<p><span class="math display">\[h^*(x) = \arg\max_{c\in y}P(c|x)
+\]</span></p>
+<p>即对每个样本<span class="math inline">\(x\)</span>，都选择能使其后验概率最大的类别<span class="math inline">\(c\)</span></p>
+<p>对于<span class="math inline">\(P(c|x)\)</span>怎样得出，判别式模型对于给定的<span class="math inline">\(x\)</span>，通过直接建模<span class="math inline">\(P(c|x)\)</span>来预测<span class="math inline">\(c\)</span>。而生成式模型，先对联合概率<span class="math inline">\(P(x,c)\)</span>建模，再通过贝叶斯公式得到<span class="math inline">\(P(c|x)\)</span></p>
+<p><span class="math display">\[P(c|x)=\dfrac{P(x,c)}{P(x)} = \dfrac{P(c)P(x|c)}{P(x)}
+\]</span></p>
+<h3 id="朴素贝叶斯分类器">朴素贝叶斯分类器</h3>
+<p>之前的贝叶斯公式的问题是<span class="math inline">\(P(x|c)\)</span>是一个联合概率，其并不方便直接从训练样本里面得出。朴素贝叶斯假设属性条件独立，那么有</p>
+<p><span class="math display">\[P(c|x)=\dfrac{P(c)P(x|c)}{P(x)}=\dfrac{P(c)}{P(x)}\prod^d_{i=1}P(x_i|c)
+\]</span></p>
+<p>其中<span class="math inline">\(d\)</span>为属性数目，<span class="math inline">\(x_i\)</span>为<span class="math inline">\(x\)</span>在第<span class="math inline">\(i\)</span>个属性上的取值。</p>
+<p>于是朴素贝叶斯分类器就为</p>
+<p><span class="math display">\[h_{nb} = \arg\max_{c\in y} P(c)\prod^d_{i=1}P(x_i|c)
+\]</span></p>
+<p>若有充足的独立同分布样本，则可容易地估计出类先验概率</p>
+<p><span class="math display">\[P(c) = \dfrac{|D_c|}{|D|}
+\]</span></p>
+<p>即类<span class="math inline">\(c\)</span>的个数在所有样本个数中的占比。</p>
+<p>对于离散属性，条件概率可以估计为</p>
+<p><span class="math display">\[P(x_i|c)=\dfrac{|D_{c,x_i}|}{|D_c|}
+\]</span></p>
+<p><span class="math inline">\(D_{c,x_i}\)</span>指的是，<span class="math inline">\(D_c\)</span>中，在第<span class="math inline">\(i\)</span>个属性上取值为<span class="math inline">\(x_i\)</span>的样本组成的集合。</p>
+<p>对于连续属性，可以考虑概率密度函数，例如<span class="math inline">\(P(x_i|c)\sim N(\mu_{c,i},\sigma^2_{c,i})\)</span>，其中<span class="math inline">\(\mu_{c,i},\sigma^2_{c,i}\)</span>是第<span class="math inline">\(c\)</span>类样本在第<span class="math inline">\(i\)</span>个属性上取值的均值和方差。</p>
+<h3 id="贝叶斯网络">贝叶斯网络</h3>
+<p>贝叶斯网络是一个有向无环图。其中节点代表随机变量<span class="math inline">\(\{X_1,X_2,\cdots,X_n\}\)</span>。如果两个节点之间有因果关系，那么用一条有向边连接，起点是原因，终点是结果。</p>
+<p>这个因果关系由参数<span class="math inline">\(\theta\)</span>描述，所以贝叶斯网络可以表述为一个图<span class="math inline">\(G\)</span>和参数<span class="math inline">\(\theta\)</span>，即<span class="math inline">\(B=< G,\theta >\)</span>。假设属性<span class="math inline">\(x_i\)</span>在图中的父节点为<span class="math inline">\(\pi_i\)</span>（注意可以有多个父节点），则<span class="math inline">\(\theta_{x_i|\pi_i}=P_B(x_i|\pi_i)\)</span></p>
+<p>贝叶斯网假设每个属性与它的非后裔属性独立，于是有</p>
+<p><span class="math display">\[P_B(x_1,x_2,\cdots,x_d) = \prod^d_{i=1}P_B(x_i|\pi_i) = \prod^d_{i=1}\theta_{x_i|\pi_i}
+\]</span></p>
+<p>例如</p>
+<p><figure 
+	>
+	<a href="/%e6%9c%ba%e5%99%a8%e5%ad%a6%e4%b9%a0%e6%a8%a1%e5%bc%8f%e8%af%86%e5%88%ab%e8%ae%a4%e7%9f%a5%e8%ae%a1%e7%ae%97%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/11.jpg" >
+		<img src="/%e6%9c%ba%e5%99%a8%e5%ad%a6%e4%b9%a0%e6%a8%a1%e5%bc%8f%e8%af%86%e5%88%ab%e8%ae%a4%e7%9f%a5%e8%ae%a1%e7%ae%97%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/11.jpg"
+			
+			
+			
+			loading="lazy"
+			alt="11.jpg">
+	</a>
+	
+	<figcaption>11.jpg</figcaption>
+	
+</figure></p>
+<h2 id="有监督学习">有监督学习</h2>
+<p>即训练集除了属性，还有标签。</p>
+<p>其训练、验证、预测程序框架如下</p>
+<p><figure 
+	>
+	<a href="/%e6%9c%ba%e5%99%a8%e5%ad%a6%e4%b9%a0%e6%a8%a1%e5%bc%8f%e8%af%86%e5%88%ab%e8%ae%a4%e7%9f%a5%e8%ae%a1%e7%ae%97%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/12.jpg" >
+		<img src="/%e6%9c%ba%e5%99%a8%e5%ad%a6%e4%b9%a0%e6%a8%a1%e5%bc%8f%e8%af%86%e5%88%ab%e8%ae%a4%e7%9f%a5%e8%ae%a1%e7%ae%97%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/12.jpg"
+			
+			
+			
+			loading="lazy"
+			alt="12.jpg">
+	</a>
+	
+	<figcaption>12.jpg</figcaption>
+	
+</figure></p>
+<p>一般来说，其有如下步骤</p>
+<ol>
+<li>决定数据集的类型</li>
+<li>获取数据集</li>
+<li>决定学习的模型，以及学习的算法</li>
+<li>完成程序设计，在训练集上跑</li>
+<li>评估正确率等指标，然后选择继续修正参数再次训练或者结束。</li>
+</ol>
+<p>有监督学习的任务主要分为两个：回归、分类。回归就是对输入给出预测的输出，例如预测未来某一天的温度；分类则是对样本进行划分，使其属于某一个类别。</p>
+<p>常见的算法有：决策树、随机森林、支持向量机、逻辑回归、人工神经网络、K近邻、贝叶斯等</p>
+<h3 id="回归任务">回归任务</h3>
+<p>其一般如下。设样本为<span class="math inline">\(\{(x^{(1)}, y^{(1)}), (x^{(2)}, y^{(2)}), \cdots, (x^{(m)}, y^{(m)})\}\)</span>。程序对于<span class="math inline">\(x\)</span>给出的预测是<span class="math inline">\(h_\theta(x)=\hat y\)</span>，其中<span class="math inline">\(h_\theta\)</span>就是我们的预测函数，或者说模型，而<span class="math inline">\(\theta\)</span>是模型参数。我们的目标是求出</p>
+<p><span class="math display">\[\theta^* = \arg\min_{\theta}\sum^m_{i=1}(\hat y^{(i)}-y^{(i)})^2=\arg\min_\theta J(\theta)
+\]</span></p>
+<p>至于如何求出，一般会使用数值最优化方法，例如梯度下降。搜索方向即是<span class="math inline">\(-\eta\nabla J(\theta)\)</span></p>
+<h3 id="分类任务">分类任务</h3>
+<p>总体来说和回归任务形式上还是挺相似的。只是样本的<span class="math inline">\(y\)</span>记录的是样本的类别标签。给出的预测也是预测标签。通常目标也是最小化损失函数。</p>
+<p>前面在贝叶斯分类器中提到过，生成式模型（Generative Algorithms）和判别式模型（Discriminative Algorithms）的区别。</p>
+<p>判别式模型直接对<span class="math inline">\(P(Y|X)\)</span>建模。例子：通过人脸识别来判断性别。典型算法有：逻辑回归、SVM、神经网络等。</p>
+<p>而生成式模型通过对<span class="math inline">\(P(X|Y)\)</span>和<span class="math inline">\(P(Y)\)</span>建模，通过贝叶斯公式来算<span class="math inline">\(P(Y|X)\)</span>。例子：你收到电子邮件（观察结果，the observation），你想推断邮件是否是垃圾邮件（原因，the cause）。典型算法有：朴素贝叶斯、贝叶斯网络。</p>
+<h3 id="逻辑回归logistic-regression">逻辑回归（Logistic Regression）</h3>
+<p>逻辑回归是一种线性分类算法，其通常是二分类，并且给出确定结果（而不是属于某一类的概率）。当输出为1时，预判为正类，输出为0时，预判为负类。</p>
+<p>线性回归的模型如下，其一般用于回归问题</p>
+<p><span class="math display">\[h_\theta(x)=\theta_0+\theta_1x_1+\theta_2x_2+\cdots+\theta_nx_n = \theta^Tx+\theta_0
+\]</span></p>
+<p>想把它转化到分类问题上时，我们给他套上一个sigmoid函数，即<span class="math inline">\(\sigma(x)=\dfrac{1}{1+e^{-z}}\)</span></p>
+<p>得到逻辑回归的模型如下</p>
+<p><span class="math display">\[h_\theta(x) = \dfrac{1}{1+e^{-(\theta^Tx+\theta_0)}}
+\]</span></p>
+<p>之后我们有</p>
+<p><span class="math display">\[\ln\dfrac{h_\theta(x)}{1-h_\theta(x)} = \theta^Tx+\theta_0
+\]</span></p>
+<p>因为逻辑回归的输出只有<span class="math inline">\(0,1\)</span>，当<span class="math inline">\(h_\theta(x)=0\)</span>时，<span class="math inline">\(\theta^Tx+\theta_0=-\infty\)</span>，当<span class="math inline">\(h_\theta(x)=1\)</span>时，<span class="math inline">\(\theta^Tx+\theta_0=\infty\)</span></p>
+<p>所以我们的判别方法为：当<span class="math inline">\(\theta^Tx+\theta_0<0\)</span>时，判断为负类（0）。当当<span class="math inline">\(\theta^Tx+\theta_0>0\)</span>时，判断为正类（1）。</p>
+<p>关于如何训练，我们得到的损失函数如下</p>
+<p><span class="math display">\[J(\theta) = \dfrac{1}{m}\sum^m_{i=1}[-y^{(i)}\log(h_\theta(x^{(i)}))-(1-y^{(i)})\log(1-h_\theta(x^{(i)}))]
+\]</span></p>
+<p>其中<span class="math inline">\(m\)</span>是样本数量，<span class="math inline">\(y\)</span>的取值为<span class="math inline">\(\{0,1\}\)</span>。目标就是最小化损失函数，可以利用梯度下降法等办法。</p>
+<p>另外，还是有可能算出属于某个类的概率的，即<span class="math inline">\(p(y/x;\theta)=(h_\theta(x))^y(1-h_\theta(x))^{1-y}\)</span></p>
+<h3 id="支持向量机">支持向量机</h3>
+<p>支持向量机也是二分类分类器。其基本思想是找到一个分类面（或者是线，或者是超平面），把样本分成两类。但是这样的划分面可能有很多个</p>
+<p><figure 
+	>
+	<a href="/%e6%9c%ba%e5%99%a8%e5%ad%a6%e4%b9%a0%e6%a8%a1%e5%bc%8f%e8%af%86%e5%88%ab%e8%ae%a4%e7%9f%a5%e8%ae%a1%e7%ae%97%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/13.jpg" >
+		<img src="/%e6%9c%ba%e5%99%a8%e5%ad%a6%e4%b9%a0%e6%a8%a1%e5%bc%8f%e8%af%86%e5%88%ab%e8%ae%a4%e7%9f%a5%e8%ae%a1%e7%ae%97%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/13.jpg"
+			
+			
+			
+			loading="lazy"
+			alt="13.jpg">
+	</a>
+	
+	<figcaption>13.jpg</figcaption>
+	
+</figure></p>
+<p>（注意，样本虽然形式上和逻辑回归相似，都是<span class="math inline">\(\{(x_1,y_1),(x_2,y_2),\cdots,(x_1,y_1),(x_m,y_m)\}\)</span>，并且都是二分类，但是支持向量机这里，<span class="math inline">\(y\in\{-1,1\}\)</span>，<span class="math inline">\(1\)</span>代表正类，<span class="math inline">\(-1\)</span>代表负类）</p>
+<p>直觉上来说，我们应该选择那条加粗的线。因为它对样本的局部扰动容忍性最好。换言之，这个划分超平面所产生的分类结果是最鲁棒的，对未见示例的泛化能力最强.</p>
+<p>划分的超平面的形式如下</p>
+<p><span class="math display">\[w^Tx+b=0
+\]</span></p>
+<p>其中<span class="math inline">\(w=(w1,w2,\cdots,w_d)\)</span>是法向量，决定超平面的方向，<span class="math inline">\(b\)</span>是位移项，决定超平面和原点的距离。我们将其记为<span class="math inline">\((w,b)\)</span>，样本空间中任意一个点<span class="math inline">\(x\)</span>到该超平面的距离为</p>
+<p><span class="math display">\[r = \dfrac{|w^Tx+b|}{||w||}
+\]</span></p>
+<p>假设超平面能将训练样本正确分类，即对于<span class="math inline">\((x_i,y_i)\in D\)</span>，若<span class="math inline">\(y_i=1\)</span>，则有<span class="math inline">\(w^Tx_i+b>0\)</span>，若<span class="math inline">\(y_i=-1\)</span>，则有<span class="math inline">\(w^Tx_i+b<0\)</span>，令</p>
+<p><span class="math display">\[\left\{\begin{matrix}
+ w^Tx_i+b\geq +1, & y=+1\\
+ w^Tx_i+b\leq -1, & y=-1
+\end{matrix}\right.
+\]</span></p>
+<p>如下图</p>
+<p><figure 
+	>
+	<a href="/%e6%9c%ba%e5%99%a8%e5%ad%a6%e4%b9%a0%e6%a8%a1%e5%bc%8f%e8%af%86%e5%88%ab%e8%ae%a4%e7%9f%a5%e8%ae%a1%e7%ae%97%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/14.jpg" >
+		<img src="/%e6%9c%ba%e5%99%a8%e5%ad%a6%e4%b9%a0%e6%a8%a1%e5%bc%8f%e8%af%86%e5%88%ab%e8%ae%a4%e7%9f%a5%e8%ae%a1%e7%ae%97%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/14.jpg"
+			
+			
+			
+			loading="lazy"
+			alt="14.jpg">
+	</a>
+	
+	<figcaption>14.jpg</figcaption>
+	
+</figure></p>
+<p>距离超平面最近的几个训练样本使得上式的等号成立，这些训练样本被称为支持向量。两个异类支持向量到超平面的距离之和为</p>
+<p><span class="math display">\[\gamma = \dfrac{2}{||w||}
+\]</span></p>
+<p>这也被称为间隔。</p>
+<p>支持向量机的训练目标就是最大化间隔。也就是如下的最优化问题</p>
+<p><span class="math display">\[\begin{align*}
+ \max_{w,b} &\quad \dfrac{2}{||w||}\\
+ \text{s.t.} &\quad y_i(w^Tx_i+b)\geq 1,\quad i=1,2,\cdots,m
+\end{align*}
+\]</span></p>
+<p>其中目标函数等价于最小化问题</p>
+<p><span class="math display">\[\begin{align*}
+ \min_{w,b} &\quad \dfrac{1}{2}||w||^2\\
+ \text{s.t.} &\quad y_i(w^Tx_i+b)\geq 1,\quad i=1,2,\cdots,m
+\end{align*}
+\]</span></p>
+<p>上式是一个凸二次规划问题，其对偶问题是</p>
+<p><span class="math display">\[\begin{align*}
+ \max_{\alpha} &\quad \sum^m_{i=1}\alpha_i-\dfrac{1}{2}\sum^m_{i=1}\sum^m_{j=1}\alpha_i\alpha_jy_iy_jx_i^Tx_j\\
+ \text{s.t.} &\quad \sum^m_{i=1}\alpha_iy_i=0\\
+  &\quad \alpha_i\geq 0,\quad i = 1,2,\cdots,m
+\end{align*}
+\]</span></p>
+<p>求出<span class="math inline">\(\alpha\)</span>后，即可算出模型</p>
+<p><span class="math display">\[f(x)=w^Tx+b=\bigg(\sum^m_{i=1}\alpha_iy_ix_i^T\bigg)x+b=\sum^m_{i=1}\alpha_iy_ix_i^Tx+b
+\]</span></p>
+<p>到目前为止，我们能分类的样本都只能是线性可分的。如果是对于异或问题等非线性可分的问题，我们引入核函数，将样本从原始空间映射到一个更高维的特征空间，使得样本在这个特征空间内线性可分。</p>
+<p><figure 
+	>
+	<a href="/%e6%9c%ba%e5%99%a8%e5%ad%a6%e4%b9%a0%e6%a8%a1%e5%bc%8f%e8%af%86%e5%88%ab%e8%ae%a4%e7%9f%a5%e8%ae%a1%e7%ae%97%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/15.jpg" >
+		<img src="/%e6%9c%ba%e5%99%a8%e5%ad%a6%e4%b9%a0%e6%a8%a1%e5%bc%8f%e8%af%86%e5%88%ab%e8%ae%a4%e7%9f%a5%e8%ae%a1%e7%ae%97%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/15.jpg"
+			
+			
+			
+			loading="lazy"
+			alt="15.jpg">
+	</a>
+	
+	<figcaption>15.jpg</figcaption>
+	
+</figure></p>
+<p>可以证明，如果原始空间是有限维，即属性数有限，那么一定存在一个高维特征空间使样本可分.</p>
+<p>令<span class="math inline">\(\phi(x)\)</span>表示将<span class="math inline">\(x\)</span>映射后的特征向量，于是，在特征空间中划分超平面所对应的模型可表示为</p>
+<p><span class="math display">\[f(x) = w^T\phi(x)+b
+\]</span></p>
+<p>其对偶问题是</p>
+<p><span class="math display">\[\begin{align*}
+ \max_{\alpha} &\quad \sum^m_{i=1}\alpha_i-\dfrac{1}{2}\sum^m_{i=1}\sum^m_{j=1}\alpha_i\alpha_jy_iy_j\phi(x_i)^T\phi(x_j)\\
+ \text{s.t.} &\quad \sum^m_{i=1}\alpha_iy_i=0\\
+  &\quad \alpha_i\geq 0,\quad i = 1,2,\cdots,m
+\end{align*}
+\]</span></p>
+<p>其中<span class="math inline">\(\phi(x_i)^T\phi(x_j)\)</span>是样本映射到特征空间之后的内积。由于特征空间维数可能很高，甚至可能是无穷维，因此直接计算<span class="math inline">\(\phi(x_i)^T\phi(x_j)\)</span>通常是困难的。为了避开这个障碍，可以设想这样一个函数：</p>
+<p><span class="math display">\[\kappa(x_i,x_j)=<\phi(x_i),\phi(x_j)>=\phi(x_i)^T\phi(x_j)
+\]</span></p>
+<p>即<span class="math inline">\(x_i\)</span>与<span class="math inline">\(x_j\)</span>在特征空间的内积等于它们在原始样本空间中通过函数<span class="math inline">\(\kappa(x_i,x_j)\)</span>计算的结果。这里的这个函数就是核函数。</p>
+<p>解出来的模型就是</p>
+<p><span class="math display">\[f(x) = w^T\phi(x)+b = \sum^m_{i=1}a_iy_i\phi(x_i)^T\phi(x)+b = \sum^m_{i=1}a_iy_i\kappa(x_i,x)+b
+\]</span></p>
+<p>核函数具体形式TODO</p>
+<h3 id="knn">KNN</h3>
+<p>KNN的思想很简单，挑选出距离该样本最近的<span class="math inline">\(k\)</span>个样本，这<span class="math inline">\(k\)</span>个样本中最多的类别决定为预测类别。算法流程如下</p>
+<p>todo</p>
+<p>其中距离常用的有欧拉距离、曼哈顿距离等。<span class="math inline">\(k\)</span>是超参数，一般比较小，如几或几十，通常可以用交叉验证来确定最优的<span class="math inline">\(k\)</span></p>
+<p>KNN的错误概率为</p>
+<p><span class="math display">\[P(err)=1-\sum_{c\in Y}P(c|x)P(c|z)
+\]</span></p>
+<p>其中<span class="math inline">\(x\)</span>是测试样本，<span class="math inline">\(z\)</span>是其最邻近样本。</p>
+<h3 id="随机森林">随机森林</h3>
+<p>在讲随机森林前要先讲集成学习。</p>
+<p><figure 
+	>
+	<a href="/%e6%9c%ba%e5%99%a8%e5%ad%a6%e4%b9%a0%e6%a8%a1%e5%bc%8f%e8%af%86%e5%88%ab%e8%ae%a4%e7%9f%a5%e8%ae%a1%e7%ae%97%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/16.jpg" >
+		<img src="/%e6%9c%ba%e5%99%a8%e5%ad%a6%e4%b9%a0%e6%a8%a1%e5%bc%8f%e8%af%86%e5%88%ab%e8%ae%a4%e7%9f%a5%e8%ae%a1%e7%ae%97%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/16.jpg"
+			
+			
+			
+			loading="lazy"
+			alt="16.jpg">
+	</a>
+	
+	<figcaption>16.jpg</figcaption>
+	
+</figure></p>
+<p>如上，先产生一组个体学习器，再用某种策略将它们结合起来。</p>
+<p>个体学习器通常由一个现有的学习算法从训练数据产生，</p>
+<p>根据个体学习器的生成方式，目前的集成学习方法大致可分为两大类：</p>
+<ol>
+<li>个体学习器间存在强依赖关系、必须串行生成的序列化方法</li>
+<li>以及个体学习器间不存在强依赖关系、可同时生成的并行化方法</li>
+</ol>
+<p>前者的代表是Boosting，后者的代表是Bagging和随机森林。</p>
+<p>Bagging要求每个预测器的算法相同（也称为基学习器的基学习算法），但是在不同的随机训练子集上训练。Bagging要去取样时样本放回，如果取样时样本不放回的叫pasting。</p>
+<p>一旦这些基学习器训练完成，继承就可以通过简单地聚合所有预测器的预测来对新实例做出预测。对于分类，聚合函数通常是统计法（即投票，简单多数），而回归问题则通常用平均法。</p>
+<p>随机森林是决策树的集成，通常使用bagging。</p>
+<ol>
+<li>设训练集的大小是<span class="math inline">\(n\)</span>，利用采样，可放回地对训练集采样<span class="math inline">\(n\)</span>次，得到一个大小同样为<span class="math inline">\(n\)</span>的数据集。重复这个操作，得到<span class="math inline">\(m\)</span>个大小为<span class="math inline">\(n\)</span>采样集。（可以算出每个采样集中有原始数据集的<span class="math inline">\(63.2\%\)</span>的样本）</li>
+<li>我们在这<span class="math inline">\(m\)</span>个采样集上，分别训练<span class="math inline">\(m\)</span>个决策树。</li>
+<li>用这<span class="math inline">\(m\)</span>个决策树同时预测一个数据，通过投票结果，给出最后的判断。</li>
+</ol>
+<p>传统的决策树是，从当前的<span class="math inline">\(d\)</span>个特征中选择最优的特征。随机森林中的决策树，是随机选取<span class="math inline">\(d\)</span>个特征中的<span class="math inline">\(k\)</span>个特征。在从<span class="math inline">\(k\)</span>个特征中选出最优的那个特征。</p>
+<h2 id="无监督学习">无监督学习</h2>
+<p>和有监督学习相比，无监督学习就是样本没有打上label。</p>
+<p>训练集一般就没有<span class="math inline">\(y\)</span>，为<span class="math inline">\(\{x^{(1)}, x^{(2)}, \cdots, x^{(m)}\}\)</span>。常见的应用有：</p>
+<p>网络搜索、认知科学、神经学、遗传学。</p>
+<h3 id="k-means聚类算法">K-means聚类算法</h3>
+<p>K-means算法把<span class="math inline">\(n\)</span>个样本分成<span class="math inline">\(k\)</span>类，每一个样本和与它最近的类型中心分为一类。这里可以是各种距离，包括欧几里得距离、海明距离、曼哈顿距离等。</p>
+<p>假设样本集为<span class="math inline">\(D=\{x_1,x_2,\cdots,x_m\}\)</span>，要把他们分为<span class="math inline">\(k\)</span>类，<span class="math inline">\(C=\{C_1,C_2,\cdots,C_k\}\)</span>。K-means的优化目标是，最小化：</p>
+<p><span class="math display">\[E = \sum^k_{i=1}\sum_{x\in C_i}||x-\mu_i||^2_2
+\]</span></p>
+<p>其中<span class="math inline">\(\mu_i\)</span>是每一类的聚类中心，</p>
+<p><span class="math display">\[\mu_i = \dfrac{1}{|C_i|}\sum_{x\in C_i}x
+\]</span></p>
+<p><span class="math inline">\(E\)</span>越小，代表着各类的样本和样本重心的紧密度（closeness degree）越高，代表着聚类效果越好。</p>
+<p>算法流程如下：</p>
+<ol>
+<li>随机选取<span class="math inline">\(k\)</span>个聚类中心<span class="math inline">\(\mu_i\)</span>，可以指定坐标，也可以直接从样本点中随机选。</li>
+<li>把每个点划分进最近的聚类中心的那一类。</li>
+<li>计算新的聚类中心。即使用<span class="math inline">\(\mu_i = \dfrac{1}{|C_i|}\sum_{x\in C_i}x\)</span></li>
+<li>重复2-3，直到迭代次数足够，或聚类中心不再改变（两次迭代的距离差距极小）</li>
+</ol>
+<h3 id="主成分分析principal-component-analysispca">主成分分析（Principal Component Analysis(PCA)）</h3>
+<p>主成分分析更多地用作一种降维手段，它主要涉及识别数据中的相关性。</p>
+<p>考虑在正交属性空间中的样本点，如何用一个超平面（直线的高维推广）对所有样本进行恰当的表达？</p>
+<p>显然这个超平面如果存在，就要</p>
+<ul>
+<li>最近重构性（Recent reconfigurability）：样本点到这个超平面的距离都足够近。</li>
+<li>最大可分性（Maximum separability）：样本点在这个超平面上的投影能尽可能分开。</li>
+</ul>
+<p>算法流程如下，设样本集是<span class="math inline">\(D=\{x_1,x_2,\cdots,x_m\}\)</span>，要将他降维至<span class="math inline">\(d'\)</span>维。</p>
+<ol>
+<li>对所有样本进行中心化：<span class="math inline">\(x_i\rightarrow x_i-\dfrac{1}{m}\sum^m_{i=1}x_i\)</span>，即最后使得<span class="math inline">\(\sum_i x_i=0\)</span></li>
+<li>计算样本的协方差矩阵<span class="math inline">\(XX^T\)</span></li>
+<li>对协方差矩阵<span class="math inline">\(XX^T\)</span>做特征值分解（常见的其实会用SVD分解，分解成<span class="math inline">\(U\Sigma V^T\)</span>，这里的<span class="math inline">\(V\)</span>，每一列向量都是样本的主成分，也是特征值）</li>
+<li>取<span class="math inline">\(V^T\)</span>中的前<span class="math inline">\(d'\)</span>个列向量<span class="math inline">\(w_1,w_2,\cdots,w_{d'}\)</span></li>
+<li>输出<span class="math inline">\(W=[w_1,w_2,\cdots,w_{d'}]\)</span></li>
+</ol>
+<p>此时，样本点<span class="math inline">\(x_i\)</span>在低维坐标中的投影是<span class="math inline">\(z_i=(z_{i1},z_{i2},\cdots,z_{i}d')\)</span>，其中<span class="math inline">\(z_{ij} = w_j^Tx_i\)</span>（或者说，<span class="math inline">\(z_i=W^Tx_i\)</span>）。如果基于<span class="math inline">\(z_i\)</span>来重构<span class="math inline">\(x_i\)</span>，则有<span class="math inline">\(\hat x_i = \sum^{d'}_{j=1}z_{ij}w_j\)</span>。</p>
+<p>至于如何选择<span class="math inline">\(d'\)</span>，则可以使用交叉验证，使用KNN验证不同的<span class="math inline">\(d'\)</span>的效果。</p>
+<p>对PCA，还可从重构的角度设置一个重构阈值，例如<span class="math inline">\(t = 95\%\)</span>，然后选取使下式成立的最小<span class="math inline">\(d'\)</span>值：</p>
+<p><span class="math display">\[\dfrac{\sum^{d'}_{i=1}\lambda_i}{\sum^{d}_{i=1}\lambda_i}\geq t
+\]</span></p>
+<p>其中<span class="math inline">\(\lambda_i\)</span>是特征值，并且特征值从大到小排序。</p>
+<h3 id="独立成分分析independent-component-analysisica">独立成分分析（Independent Component Analysis(ICA)）</h3>
+<p>ICA是一种统计学原理的计算方法，是一种线性变换。这个变幻把数据或信号分为统计学意义上独立的非高斯源的线性组合。其最重要的假设是，假设信号在统计学意义上是独立的。</p>
+<p>经典问题是鸡尾酒会问题（cocktail party problem）。</p>
+<p><figure 
+	>
+	<a href="/%e6%9c%ba%e5%99%a8%e5%ad%a6%e4%b9%a0%e6%a8%a1%e5%bc%8f%e8%af%86%e5%88%ab%e8%ae%a4%e7%9f%a5%e8%ae%a1%e7%ae%97%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/17.jpg" >
+		<img src="/%e6%9c%ba%e5%99%a8%e5%ad%a6%e4%b9%a0%e6%a8%a1%e5%bc%8f%e8%af%86%e5%88%ab%e8%ae%a4%e7%9f%a5%e8%ae%a1%e7%ae%97%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/17.jpg"
+			
+			
+			
+			loading="lazy"
+			alt="17.jpg">
+	</a>
+	
+	<figcaption>17.jpg</figcaption>
+	
+</figure></p>
+<p>在派对中，可能会有很多人说话，这些声音嘈杂在一起，但是人可以从其中专注于单一的说话者。ICA就是用于解决这种分离问题的。图上的<span class="math inline">\(W\)</span>是分离矩阵。</p>
+<h3 id="生成对抗网络generative-adversarial-networkgan">生成对抗网络（Generative Adversarial Network(GAN)）</h3>
+<p>GAN由一个生成网络（generation network）和一个判别网络（discriminant
+network）组成。</p>
+<p>具体而言，生成网络从潜在空间（potential space，latent space）中随机采样来作为输入（通常会用随机分布作为输入，并且通常用高斯分布），其输出需要尽可能模拟训练集中的真实样本。</p>
+<p>判别网络的输入是真实样本和生成网络的输出，目的就是尽可能将生成网络生成的东西和真实的东西区分开来。</p>
+<p>两个网络相互对抗，并不断调整参数，最终目标是使判别网络无法很好地区分生成网络生成的数据和真实样本的数据。</p>
+<p>其公式如下</p>
+<p><span class="math display">\[\min_G\max_D V(D,G)=E_{x\sim p_{data}(x)}[\log D(x)] + E_{z\sim p_z(z)}[\log(1-D(G(z)))]
+\]</span></p>
+<p>其中<span class="math inline">\(E_{x\sim p}[\log Q(x)]\)</span>这种形式的东西是交叉熵，见附录。</p>
+<p><span class="math inline">\(E_{x\sim p_{data}(x)}[\log D(x)]\)</span>描述的是真实数据的交叉熵，其中<span class="math inline">\(x\)</span>是真实数据。而<span class="math inline">\(E_{z\sim p_z(z)}[\log(1-D(G(z)))]\)</span>是从潜在空间中生成的东西的交叉熵，其中<span class="math inline">\(z\)</span>是从中生成的东西。</p>
+<p><span class="math inline">\(V(D,G)\)</span>相当于表示真实样本和生成样本的差异程度，其中G是生成器，D是判别器。<span class="math inline">\(min_G\max_D\)</span>代表，首先固定<span class="math inline">\(G\)</span>，最大化判别器的判别效果。然后最大化判别器之后将其固定，要求最小化生成器生成的东西和真实数据的差异。</p>
+<h2 id="半监督学习">半监督学习</h2>
+<p>如果训练集里面一部分是有标签的，而另一部分是无标签的，那么在此上训练的就是半监督学习算法。</p>
+<p>虽然什么比例都可以，但通常情况下是，有标签的只占一小部分，大部分仍是无标签。大部分的半监督学习算法也是结合了有监督学习和无监督学习，例如深度置信网络（Deep Belief Networks(DBNS)），他是一个以无监督学习为基础的受限玻尔兹曼机（Restricted Boltzmann Machine(RBMS)），但是整个系统却是建立在有监督学习技术上的。</p>
+<h1 id="强化学习">强化学习</h1>
+<h2 id="概论">概论</h2>
+<p>在强化学习中，软件智能体在环境中进行观察并采取行动，作为回报，它会获得奖励。</p>
+<p>也就是说，强化学习的数据是很多对“状态-动作”，每采取一个动作，到达一个新的状态，然后获得奖励（或惩罚）。而其目标是，学会以一种可以随时间推移最大化其预期回报的方式来采取行动。</p>
+<p>假设每一步行动<span class="math inline">\(a_t\)</span>后，状态从<span class="math inline">\(S_t\)</span>转移到<span class="math inline">\(S_{t+1}\)</span>，获得<span class="math inline">\(r_t\)</span>的回报，那么从<span class="math inline">\(t\)</span>开始的总回报为（注意和后面区分）</p>
+<p><span class="math display">\[R_t = \sum^\infty_{i=t} r_i
+\]</span></p>
+<p>需注意“机器”与“环境”的界限，在环境中状态的转移（指采取动作后的转移方向）、奖赏的返回是不受机器控制的，机器只能通过选择要执行的动作来影响环境，也只能通过观察转移后的状态和返回的奖赏来感知环境.</p>
+<h2 id="马尔科夫决策过程markov-decision-processes">马尔科夫决策过程（Markov Decision Processes）</h2>
+<p>我们可以使用马尔科夫决策过程来描述一个强化学习任务。</p>
+<p>机器处于环境<span class="math inline">\(E\)</span>中，状态空间为<span class="math inline">\(X\)</span>，每个状态<span class="math inline">\(x\in X\)</span>是机器感知到的环境的描述。机器能采取的动作构成的动作空间为<span class="math inline">\(A\)</span>，若某个动作<span class="math inline">\(a\in A\)</span>作用在当前的状态<span class="math inline">\(x\)</span>上，则（潜在的）转移函数<span class="math inline">\(P\)</span>将使得环境从当前状态按某种概率转移到另一个状态。在转移到另一个状态的同时，环境会根据（潜在的）奖赏函数<span class="math inline">\(R\)</span>反馈给机器一个奖赏。</p>
+<p>综合起来，强化学习任务对应了四元组<span class="math inline">\(E=< X,A,P,R >\)</span>，其中<span class="math inline">\(P:X\times A\times X\rightarrow \mathbb{R}\)</span>指定了状态转移的概率，<span class="math inline">\(R:X\times A\times X\rightarrow \mathbb{R}\)</span>指定了奖赏。在有些时候奖赏函数只和状态转移有关，即<span class="math inline">\(R:X\times X\rightarrow \mathbb{R}\)</span>。如下是用有向图表示的一个例子</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 152; 
+			flex-basis: 366px"
+	>
+	<a href="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/18.jpg" data-size="768x503">
+		<img src="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/18.jpg"
+			width="768"
+			height="503"
+			srcset="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/18_hu8dc70a979d18f41b75ee07d6a36a19ab_37599_480x0_resize_q75_box.jpg 480w, /p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/18_hu8dc70a979d18f41b75ee07d6a36a19ab_37599_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="18.jpg">
+	</a>
+	
+	<figcaption>18.jpg</figcaption>
+	
+</figure></p>
+<p>一个状态转移如果是马尔科夫的，则必须要符合马尔科夫性质。也就是说，状态转移只取决于当前的状态，而与过去的状态无关（独立）。公式表述如下</p>
+<p><span class="math display">\[P[x_{t+1}|x_t] = P[x_{t+1}|x_1,x_2,\cdots,x_t]
+\]</span></p>
+<p>当然，马尔科夫决策过程中的所有状态转移都要是马尔科夫的。</p>
+<p>当然，有些地方马尔科夫决策过程是五元组，还要多一元<span class="math inline">\(\gamma\)</span>，其是折扣因子（discount factor），其取值范围为<span class="math inline">\([0,1]\)</span>，此时，从<span class="math inline">\(t\)</span>开始的奖赏（称为<span class="math inline">\(\gamma\)</span>折扣累计奖赏）为</p>
+<p><span class="math display">\[R_t = \sum^\infty_{i=0}\gamma^i r_{i+t}
+\]</span></p>
+<p>如果不使用折扣因子，则可以使用<span class="math inline">\(T\)</span>步累计奖赏（注意和前面区分）</p>
+<p><span class="math display">\[R_t = \dfrac{1}{T}\sum^T_{t=1}r_t
+\]</span></p>
+<p>如果转移不是确定的，那么就要使用<span class="math inline">\(E[\sum^\infty_{i=0}\gamma^i r_{i+t}]\)</span>和<span class="math inline">\(E(\dfrac{1}{T}\sum^T_{t=1}r_t)\)</span>，对所有的随机变量求期望，来求期望奖赏。</p>
+<p>机器在这样一个马尔科夫决策过程中，要做的是通过在环境中不断地尝试而学得一个“策略”（policy）<span class="math inline">\(\pi\)</span>，根据这个策略，在状态<span class="math inline">\(x\)</span>下就能得知要执行的动作<span class="math inline">\(a=\pi(x)\)</span>。策略有两种表示方法</p>
+<ol>
+<li><span class="math inline">\(\pi :X\to A\)</span>，用于确定性的策略</li>
+<li><span class="math inline">\(\pi:X\times A\to \mathbb{R}\)</span>，用于表示概率、随机性的策略，此时用<span class="math inline">\(\pi(x,a)\)</span>（或者<span class="math inline">\(\pi(a|x)\)</span>）表示状态<span class="math inline">\(x\)</span>下选择动作<span class="math inline">\(a\)</span>的概率。注意必须有<span class="math inline">\(\sum_a \pi(x,a)=1\)</span>。</li>
+</ol>
+<p>此时，在策略<span class="math inline">\(\pi\)</span>下，状态<span class="math inline">\(x\)</span>的奖励就为（假设第<span class="math inline">\(t\)</span>步进行到<span class="math inline">\(x\)</span>）</p>
+<p><span class="math display">\[R_x=E_\pi[R_{t+1}|X_t=x]
+\]</span></p>
+<p>把从此时开始的总折扣奖励记为</p>
+<p><span class="math display">\[G_t = R_{t+1}+\gamma R_{t+2}+\cdots = \sum^\infty_{k=0}\gamma^kR_{t+k+1}
+\]</span></p>
+<p>也可以用<span class="math inline">\(T\)</span>步累计奖赏。策略的优劣取决于长期执行这一策略后得到的累计奖赏。</p>
+<p>在模型已知时，对任意策略<span class="math inline">\(\pi\)</span>能估计出该策略带来的期望累积奖赏。用这个期望累积奖赏来评估策略。</p>
+<p>假设回报只和状态转移有关，那么从此时开始的状态值函数（Value Function）记为</p>
+<p><span class="math display">\[V_\pi(x) = E_\pi[G_t|X_t=x]
+\]</span></p>
+<p>区分两种累计奖赏，以<span class="math inline">\(0\)</span>为开始行动步骤，则有</p>
+<p><span class="math display">\[\left\{\begin{matrix}
+ V^\pi_T(x) = E_\pi[\frac{1}{T}\sum^T_{t=1}r_t|x_0=x],& T步累积奖赏\\
+ V^\pi_\gamma(x)=E_\pi[\sum^{+\infty}_{t=0}\gamma^t r_{t+1}|x_0=x], & \gamma 折扣累积奖赏
+\end{matrix}\right.
+\]</span></p>
+<p>如果回报和状态转移和采取的动作都有关，那么状态-动作值函数记为</p>
+<p><span class="math display">\[Q_\pi(x,a) = E_\pi[G_t|X_t=x, A_t=a]
+\]</span></p>
+<p>区分有</p>
+<p><span class="math display">\[\left\{\begin{matrix}
+ Q^\pi_T(x,a) = E_\pi[\frac{1}{T}\sum^T_{t=1}r_t|x_0=x,a_0=a],& T步累积奖赏\\
+ Q^\pi_\gamma(x,a)=E_\pi[\sum^{+\infty}_{t=0}\gamma^t r_{t+1}|x_0=x,a_0=a], & \gamma 折扣累积奖赏
+\end{matrix}\right.
+\]</span></p>
+<p>于是我们的优化目标就是选出最优策略</p>
+<p><span class="math display">\[\pi^\ast(x) = \arg\max_a Q^\ast(x,a)
+\]</span></p>
+<h2 id="有模型学习">有模型学习</h2>
+<p>考虑多步强化学习任务，暂且假定任务对应的马尔科夫决策过程的四元组<span class="math inline">\(E=< X,A,P,R >\)</span>均为已知，这样的情形称为“模型已知”，即及其已对环境进行了建模，能在机器内部模拟出与环境相同或近似的状况.在已知模型的环境中学习称为“有模型学习&quot; (model-based learning)。</p>
+<p>此时，对于任意的状态<span class="math inline">\(x,x'\)</span>和动作<span class="math inline">\(a\)</span>，在<span class="math inline">\(x\)</span>状态下执行动作<span class="math inline">\(a\)</span>转移到<span class="math inline">\(x'\)</span>状态的概率<span class="math inline">\(P^a_{x\to x'}=P[X_{t+1}=x'|X_t=x,A_t=a]\)</span>是已知的，其带来的奖赏<span class="math inline">\(R^a_{x\to x'}\)</span>也是已知的。</p>
+<h3 id="动态规划">动态规划</h3>
+<p>众所周知，动态规划是非常通用的方法，只要满足：</p>
+<ol>
+<li>最优子结构</li>
+<li>重叠子问题</li>
+</ol>
+<p>即可使用。</p>
+<p>在强化学习中，DP需要知道整个环境，并且<span class="math inline">\(V_\pi(x)\)</span>需要是自举的（bootstrapping）（我觉得说成是递归的更好）。</p>
+<p>在强化学习中使用DP的主要想法是：使用值函数来构建搜索最优策略的方式；需要一个对于环境的完美模型。主要由两步构成：从任意的策略开始；重复评估/改进直到收敛。评估/改进则是：计算<span class="math inline">\(\pi\)</span>的<span class="math inline">\(V_\pi(x)\)</span>，然后用<span class="math inline">\(V_\pi(x)\)</span>来改进<span class="math inline">\(\pi\)</span></p>
+<p>通过<span class="math inline">\(\pi\)</span>来计算<span class="math inline">\(V_\pi(x)\)</span>是一个递归的过程，以<span class="math inline">\(\gamma\)</span>为例，有</p>
+<p><span class="math display">\[V^\pi_\gamma(x) = \sum_{a\in A}\pi(x,a)\sum_{x'\in X}P^a_{x\to x'}(R^a_{x\to x'}+\gamma V^\pi_{\gamma}(x'))
+\]</span></p>
+<p>这个递归等式也称为Bellman等式（推导过程可以去周志华《机器学习》查阅，主要是因为满足马尔科夫性质，并且已知<span class="math inline">\(P\)</span>和<span class="math inline">\(R\)</span>，做全概率展开，才能推导）。显然的，利用动态规划，我们可以从<span class="math inline">\(0\)</span>开始，从低到高计算，这样只需要计算<span class="math inline">\(T\)</span>次即可到达现在的值函数。</p>
+<p>通过<span class="math inline">\(V_\pi(x)\)</span>来更新<span class="math inline">\(\pi\)</span>，则是</p>
+<p><span class="math display">\[\pi'(x) = \arg\max_{a\in A}Q_\pi(x,a) = \arg\max_{a\in A}\sum_{x'\in X}P^{a}_{x\to x'}[R^a_{x\to x'}+\gamma V_\pi(x')]
+\]</span></p>
+<p>注意上式是通过用<span class="math inline">\(V_\pi\)</span>来表示<span class="math inline">\(Q_\pi\)</span>来实现，具体公式推导可以去周志华《机器学习》查阅。</p>
+<p>此时<span class="math inline">\(\pi'\)</span>要么严格好于<span class="math inline">\(\pi\)</span>，要么<span class="math inline">\(\pi'\)</span>已经是最优的了。</p>
+<p>重复执行上述更新过程，我们有两种停止更新的策略</p>
+<ol>
+<li>策略迭代。即真的用<span class="math inline">\(\pi_0\)</span>计算<span class="math inline">\(V_{\pi_0}\)</span>，再用其更新出<span class="math inline">\(\pi_1\)</span>，再计算<span class="math inline">\(V_{\pi_1}\)</span>，直到<span class="math inline">\(\pi\)</span>收敛。输出<span class="math inline">\(\pi^*\)</span>他要用两次嵌套迭代，在每次改进策略后都需重新进行策略评估。但是不需要收敛到<span class="math inline">\(V_{\pi_k}\)</span>（我实在不明白老师PPT里这句话指的是什么意思）</li>
+<li>值迭代。即使用<span class="math inline">\(V_{k+1}(x) = \max_{a\in A}\sum_{x'\in X}P^a_{x\to x'}(R^a_{x\to x'}+\gamma V_k(x'))\)</span>来迭代。需要收敛到<span class="math inline">\(V^*\)</span>（我实在不明白老师PPT里这句话指的是什么意思）</li>
+</ol>
+<p>两个算法的伪代码如下（虽然是基于<span class="math inline">\(T\)</span>步奖赏的，但是修改不难）</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 130; 
+			flex-basis: 313px"
+	>
+	<a href="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/19.jpg" data-size="916x702">
+		<img src="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/19.jpg"
+			width="916"
+			height="702"
+			srcset="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/19_hu531b8ee80e0d27a7e973201e2bcc7607_47633_480x0_resize_q75_box.jpg 480w, /p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/19_hu531b8ee80e0d27a7e973201e2bcc7607_47633_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="19.jpg">
+	</a>
+	
+	<figcaption>19.jpg</figcaption>
+	
+</figure></p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 154; 
+			flex-basis: 371px"
+	>
+	<a href="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/20.jpg" data-size="798x515">
+		<img src="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/20.jpg"
+			width="798"
+			height="515"
+			srcset="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/20_hu0c3232b6b8af8dbf1489412ad0973c86_36506_480x0_resize_q75_box.jpg 480w, /p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/20_hu0c3232b6b8af8dbf1489412ad0973c86_36506_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="20.jpg">
+	</a>
+	
+	<figcaption>20.jpg</figcaption>
+	
+</figure></p>
+<h2 id="免模型学习">免模型学习</h2>
+<p>在现实的强化学习任务中，环境的转移概率、奖赏函数往往很难得知，甚至有多少状态都很难得知，往往只有一些经验和模拟经验。如果学习算法不依赖于环境建模，则称为免模型学习。</p>
+<h3 id="蒙特卡罗方法">蒙特卡罗方法</h3>
+<p>对比有模型学习的方法，策略迭代算法在没有模型的时候，首先就没有办法评估策略，因为未知<span class="math inline">\(P,R\)</span>而无法做到全概率展开。另一方面，策略迭代算法估计的是状态值函数<span class="math inline">\(V\)</span>，而最终的策略则是通过状态-动作值函数<span class="math inline">\(Q\)</span>来获得。当模型已知时，<span class="math inline">\(V\)</span>到<span class="math inline">\(Q\)</span>很容易，但未知时则很困难。另外，模型已知的时候，我们可以从起始状态动态规划地得到所有状态。而没有模型时则不行，只能在探索的过程中逐渐发现各个状态。</p>
+<p>一种直接的策略评估替代方法是多次“采样”，然后求取平均累积奖赏来作为期望累积奖赏的近似，这称为蒙特卡罗强化学习.由于采样必须为有限次数，因此该方法更适合于使用<span class="math inline">\(T\)</span>步累积奖赏的强化学习任务.</p>
+<h1 id="附录">附录</h1>
+<h2 id="熵">熵</h2>
+<p><a class="link" href="https://zhuanlan.zhihu.com/p/149186719"  target="_blank" rel="noopener"
+    >https://zhuanlan.zhihu.com/p/149186719</a></p>
+<p>具体可以看上文。信息论中的熵是指：无损编码事件信息的最小平均编码长度。假设所要表述的信息有<span class="math inline">\(N\)</span>种可能性，每种可能性<span class="math inline">\(i\)</span>出现的概率为<span class="math inline">\(P(i)\)</span>，那么，熵为</p>
+<p><span class="math display">\[-\sum_i P(i)\log_2 P(i)
+\]</span></p>
+<p>这个东西可以理解为，<span class="math inline">\(-\log_2 P(i)\)</span>的期望，记作<span class="math inline">\(H(P)\)</span>，那么有</p>
+<p><span class="math display">\[H(P) = E_{x\sim P}[-\log P(x)] = -\sum_i P(i)\log_2 P(i)
+\]</span></p>
+<p>如何理解<span class="math inline">\(-\log P(i)\)</span>？注意当每种情况等可能时，编码的长度就需要至少（并且足够）<span class="math inline">\(\log N\)</span>，而<span class="math inline">\(\log N = -\log\dfrac{1}{N} = -\log P\)</span>。上式只是拓展到不同概率的事件的情况。所以<span class="math inline">\(-\log P(i)\)</span>可以理解为该事件的平均编码长度。所有事件的平均编码长度就是概率的加权平均，也就是熵了。</p>
+<h2 id="交叉熵">交叉熵</h2>
+<p>熵是假设了我们知道每种可能性的概率分布，但是我们在实践中通常不知道概率分布，只有一个预估的概率分布<span class="math inline">\(Q\)</span>。于是我们就只有一个预估的熵</p>
+<p><span class="math display">\[E_{x\sim Q}[-\log Q(x)]
+\]</span></p>
+<p>我们希望这个熵尽可能接近理论上的熵，于是我们引入了交叉熵</p>
+<p><span class="math display">\[H(P,Q) = E_{x\sim P}[-\log Q(x)]
+\]</span></p>
+<p>这个<span class="math inline">\(P\)</span>可能是建模得到的，也可能是大量统计观测得到的。在机器学习中可能就是样本集的，而<span class="math inline">\(Q\)</span>则是预测器给出的。</p>
+<p>可以证明<span class="math inline">\(H(P,Q)\geq H(P)\)</span>，我们的训练目标就是使得交叉熵尽可能的接近真实的熵。所以可以把交叉熵用作损失函数。</p>
+<p>假设五分类任务，训练集用one-hot方式编码，即第一类编码为<span class="math inline">\([1,0,0,0,0]\)</span>，第二类编码为<span class="math inline">\([0,1,0,0,0]\)</span>，以此类推。即每一个样本都确定地属于一个类（可以算出熵都为<span class="math inline">\(0\)</span>）。</p>
+<p>假设分类器A给出的预测是<span class="math inline">\([0.4,0.3,0.1,0.1,0.1]\)</span>，分类器B给出的预测是<span class="math inline">\([0.9,0.1,0,0,0]\)</span>。那么</p>
+<p><span class="math display">\[\begin{align*}
+ H(P,Q_A) & = -\sum_i P(i)\log Q_A(i) \\
+  & = -(1\log 0.4+0\log 0.3+0\log 0.1+0\log 0.1+0\log 0.1)\\
+  & = 0.916
+\end{align*} 
+\]</span></p>
+<p><span class="math display">\[\begin{align*}
+ H(P,Q_B) & = -\sum_i P(i)\log Q_A(i) \\
+  & = -(1\log 0.9+0\log 0.1+0\log 0.1+0\log 0.1+0\log 0.1)\\
+  & = 0.152
+\end{align*} 
+\]</span></p>
+<p>显然分类器B的交叉熵更低，实际上预测结果也更好。</p>
+<p>特别的，对于二分类问题，其交叉熵就为</p>
+<p><span class="math display">\[-P\log Q - (1-P)\log(1-Q)
+\]</span></p>
+<p>机器学习中，一般把标签作为<span class="math inline">\(P\)</span>，预测作为<span class="math inline">\(Q\)</span>，于是就有</p>
+<p><span class="math display">\[-y\log h_\theta(x) - (1-y)\log (1-h_\theta(x))
+\]</span></p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/%E5%A4%A7%E5%AD%A6/">大学</a>
+        
+            <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">人工智能</a>
+        
+            <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a>
+        
+            <a href="/tags/%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB/">模式识别</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css"integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js"integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8"crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js"integrity="sha384-vZTG03m&#43;2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl"crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.querySelector(`.article-content`), {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ]
+        });})
+</script>
+    
+</article>
+
+    <aside class="related-contents--wrapper">
+    
+    
+        <h2 class="section-title">相关文章</h2>
+        <div class="related-contents">
+            <div class="flex article-list--tile">
+                
+                    
+<article class="has-image">
+    <a href="/p/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E6%A6%82%E8%AE%BA%E7%AC%94%E8%AE%B0/">
+        
+        
+            <div class="article-image">
+                <img src="/p/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E6%A6%82%E8%AE%BA%E7%AC%94%E8%AE%B0/cover.9efee14869436ec4c69d3de759fc6854_hu729735102c3c060f4a29b2f0df39e169_86954_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-nv7hSGlDbsTGnT3nWfxoVA==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">人工智能概论笔记</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="">
+    <a href="/p/%E8%84%91%E7%A7%91%E5%AD%A6%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">脑科学基础学习笔记</h2>
+        </div>
+    </a>
+</article>
+                
+            </div>
+        </div>
+    
+</aside>
+
+     
+    
+        
+    <script src="https://utteranc.es/client.js" 
+        repo="kegalas/blogComments"
+        issue-term="pathname"
+        
+        crossorigin="anonymous"
+        async
+        >
+</script>
+
+<style>
+    .utterances {
+        max-width: unset;
+    }
+</style>
+
+<script>
+    function setUtterancesTheme(theme) {
+        let utterances = document.querySelector('.utterances iframe');
+        if (utterances) {
+            utterances.contentWindow.postMessage(
+                {
+                    type: 'set-theme',
+                    theme: `github-${theme}`
+                },
+                'https://utteranc.es'
+            );
+        }
+    }
+
+    addEventListener('message', event => {
+        if (event.origin !== 'https://utteranc.es') return;
+        setUtterancesTheme(document.documentElement.dataset.scheme)
+    });
+
+    window.addEventListener('onColorSchemeChange', (e) => {
+        setUtterancesTheme(e.detail)
+    })
+</script>
+
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2023 KegalaS的个人博客
+    </section>
+    
+    <section class="powerby">
+         <br />
+        
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    
+        <aside class="sidebar right-sidebar sticky">
+            <section class="widget archives">
+                <div class="widget-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+                </div>
+                <h2 class="widget-title section-title">目录</h2>
+                
+                <div class="widget--toc">
+                    <nav id="TableOfContents">
+  <ol>
+    <li><a href="#中英文词汇对照">中英文词汇对照</a></li>
+    <li><a href="#绪论">绪论</a>
+      <ol>
+        <li><a href="#大脑">大脑</a></li>
+        <li><a href="#认知计算的基本问题">认知计算的基本问题</a></li>
+        <li><a href="#我们应该关注大脑的什么">我们应该关注大脑的什么？</a></li>
+        <li><a href="#脑区域之下皮质">脑区域之下皮质</a>
+          <ol>
+            <li><a href="#海马区hippocampus">海马区（Hippocampus）</a></li>
+            <li><a href="#杏仁核amyglada">杏仁核（Amyglada）</a></li>
+            <li><a href="#丘脑thalamus">丘脑（Thalamus）</a></li>
+            <li><a href="#基底核basal-ganglia">基底核（Basal Ganglia）</a></li>
+            <li><a href="#小脑cerebellum">小脑（Cerebellum）</a></li>
+          </ol>
+        </li>
+        <li><a href="#脑区域之新皮质">脑区域之新皮质</a>
+          <ol>
+            <li><a href="#枕叶occipital-lobe">枕叶（Occipital lobe）</a></li>
+            <li><a href="#颞叶temporal-lobe">颞叶（Temporal lobe）</a></li>
+            <li><a href="#额叶">额叶</a></li>
+            <li><a href="#顶叶parietal-lobe">顶叶（Parietal lobe）</a></li>
+          </ol>
+        </li>
+        <li><a href="#神经元">神经元</a></li>
+        <li><a href="#把神经元看作是detector">把神经元看作是Detector</a></li>
+        <li><a href="#大脑新皮质的神经网络">大脑新皮质的神经网络</a></li>
+        <li><a href="#新皮质的层级结构">新皮质的层级结构</a></li>
+        <li><a href="#新皮质中的连接模式">新皮质中的连接模式</a></li>
+        <li><a href="#类别和分布式表示categorization-and-distributed-representations">类别和分布式表示（Categorization and Distributed Representations）</a></li>
+        <li><a href="#神经元的数学公式">神经元的数学公式</a></li>
+      </ol>
+    </li>
+    <li><a href="#神经网络基础概念">神经网络基础概念</a>
+      <ol>
+        <li><a href="#神经元及其数学模型">神经元及其数学模型</a></li>
+        <li><a href="#大脑分区和基础的神经网络">大脑分区和基础的神经网络</a></li>
+        <li><a href="#正向传播和反向传播">正向传播和反向传播</a></li>
+      </ol>
+    </li>
+    <li><a href="#学习">学习</a>
+      <ol>
+        <li><a href="#贝叶斯推理和学习">贝叶斯推理和学习</a>
+          <ol>
+            <li><a href="#先验概率">先验概率</a></li>
+            <li><a href="#似然函数">似然函数</a></li>
+            <li><a href="#后验概率">后验概率</a></li>
+            <li><a href="#最大后验估计map">最大后验估计（MAP）</a></li>
+            <li><a href="#最大似然估计mlp">最大似然估计（MLP）</a></li>
+            <li><a href="#贝叶斯过程">贝叶斯过程</a></li>
+            <li><a href="#贝叶斯分类器">贝叶斯分类器</a></li>
+            <li><a href="#朴素贝叶斯分类器">朴素贝叶斯分类器</a></li>
+            <li><a href="#贝叶斯网络">贝叶斯网络</a></li>
+          </ol>
+        </li>
+        <li><a href="#有监督学习">有监督学习</a>
+          <ol>
+            <li><a href="#回归任务">回归任务</a></li>
+            <li><a href="#分类任务">分类任务</a></li>
+            <li><a href="#逻辑回归logistic-regression">逻辑回归（Logistic Regression）</a></li>
+            <li><a href="#支持向量机">支持向量机</a></li>
+            <li><a href="#knn">KNN</a></li>
+            <li><a href="#随机森林">随机森林</a></li>
+          </ol>
+        </li>
+        <li><a href="#无监督学习">无监督学习</a>
+          <ol>
+            <li><a href="#k-means聚类算法">K-means聚类算法</a></li>
+            <li><a href="#主成分分析principal-component-analysispca">主成分分析（Principal Component Analysis(PCA)）</a></li>
+            <li><a href="#独立成分分析independent-component-analysisica">独立成分分析（Independent Component Analysis(ICA)）</a></li>
+            <li><a href="#生成对抗网络generative-adversarial-networkgan">生成对抗网络（Generative Adversarial Network(GAN)）</a></li>
+          </ol>
+        </li>
+        <li><a href="#半监督学习">半监督学习</a></li>
+      </ol>
+    </li>
+    <li><a href="#强化学习">强化学习</a>
+      <ol>
+        <li><a href="#概论">概论</a></li>
+        <li><a href="#马尔科夫决策过程markov-decision-processes">马尔科夫决策过程（Markov Decision Processes）</a></li>
+        <li><a href="#有模型学习">有模型学习</a>
+          <ol>
+            <li><a href="#动态规划">动态规划</a></li>
+          </ol>
+        </li>
+        <li><a href="#免模型学习">免模型学习</a>
+          <ol>
+            <li><a href="#蒙特卡罗方法">蒙特卡罗方法</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+    <li><a href="#附录">附录</a>
+      <ol>
+        <li><a href="#熵">熵</a></li>
+        <li><a href="#交叉熵">交叉熵</a></li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+                </div>
+            </section>
+        </aside>
+    
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                defer="false"
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
