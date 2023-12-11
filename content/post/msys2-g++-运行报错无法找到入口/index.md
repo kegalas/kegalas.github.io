@@ -8,7 +8,7 @@ mathjax: false
 image: "1.jpg"
 ---
 
-![1.jpg](1.jpg)
+![1.jpg](msys2-g++-运行报错无法找到入口/1.jpg)
 
 情况如图所示，_ZSt28__throw_bad_array_new_lengthv无法被定位。
 
