@@ -13,7 +13,7 @@ categories: 其他计算机科学
 
 在很久以前的使用中，我发现默认的Hugo渲染引擎无法正确渲染所有数学公式，但我并没有深究为什么。我进行一番搜索后改用pandoc来作为渲染引擎，它在数学公式方面表现的不错，但是，它无法生成目录，也无法生成代码高亮。
 
-再一番搜索后，我搜索到这篇文章<u>[给 Hugo 增加一些 Pandoc 支持增强](https://bigshans.github.io/post/hugo-patch-with-pandoc/)</u>，里面详细介绍了怎么才能让pandoc正确生成目录，之后我写了文章<u>[重新编译hugo来使得pandoc可以生成目录](重新编译hugo来使得pandoc可以生成目录.md)</u>。
+再一番搜索后，我搜索到这篇文章<u>[给 Hugo 增加一些 Pandoc 支持增强](https://bigshans.github.io/post/hugo-patch-with-pandoc/)</u>，里面详细介绍了怎么才能让pandoc正确生成目录，之后我写了文章<u>[重新编译hugo来使得pandoc可以生成目录](../重新编译hugo来使得pandoc可以生成目录)</u>。
 
 在这些操作后，目录确实可以生成了，但是代码高亮却没有出现。另外，这个版本比较老，无法使用Hugo的最新特性。
 
