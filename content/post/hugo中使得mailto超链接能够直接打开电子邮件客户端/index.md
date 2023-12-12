@@ -14,7 +14,7 @@ image: "cover.jpg"
 
 然后修改复制后的文件，如下图。
 
-![1.jpg](hugo中使得mailto超链接能够直接打开电子邮件客户端/1.jpg)
+![1.jpg](1.jpg)
 
 第41行中选中的部分原来是relLangURL，改成absURL。
 

@@ -10,7 +10,7 @@ categories: 其他计算机科学
 > 
 > 现在推荐去给Hugo默认的goldmark引擎添加mathjax支持。
 > 
-> 详情见这篇文章[为hugo安装goldmark-mathjax插件来更好地支持输入公式](../为hugo安装goldmark-mathjax插件来更好地支持输入公式)
+> 详情见这篇文章[为Hugo安装goldmark-mathjax插件来更好地支持输入公式](为Hugo安装goldmark-mathjax插件来更好地支持输入公式.md)
 
 根据[https://github.com/olOwOlo/hugo-theme-even/issues/139](https://github.com/olOwOlo/hugo-theme-even/issues/139)，hugo无法正确生成目录的原因是，没有加入--toc参数。
 
