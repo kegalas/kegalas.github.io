@@ -173,7 +173,7 @@ if not exist "%GIT_EXE_DIR%\git.exe" (
 
 注意顺序，不能颠倒。
 
-之后我们打开`MSYS`的命令行，安装`pacman -S gcc`，这一步的目的是，我们使用MSYS提供的虚拟Linux的POSIX，方便我们在windows上进行Linux系统调用，这两个gcc的区别可见[../MSYS2,MinGW64,Cygwin的使用区别浅谈](../MSYS2,MinGW64,Cygwin的使用区别浅谈.md)
+之后我们打开`MSYS`的命令行，安装`pacman -S gcc`，这一步的目的是，我们使用MSYS提供的虚拟Linux的POSIX，方便我们在windows上进行Linux系统调用，这两个gcc的区别可见[MSYS2,MinGW64,Cygwin的使用区别浅谈](../MSYS2,MinGW64,Cygwin的使用区别浅谈)
 
 ## Clang
 
@@ -201,7 +201,7 @@ pacman -S mingw-w64-ucrt-x86_64-cmake mingw-w64-ucrt-x86_64-cmake-gui mingw-w64-
 
 安装cmake官网的windows版本会不会更优有待考察TODO。
 
-另外，直接安装`make`后，并不能在powershell里直接使用，见[MSYS2中的make工具安装方法](../MSYS2中的make工具安装方法.md)
+另外，直接安装`make`后，并不能在powershell里直接使用，见[MSYS2中的make工具安装方法](../MSYS2中的make工具安装方法)
 
 要让clangd能够检测Cmake项目，还需要进行[https://clangd.llvm.org/installation#project-setup](https://clangd.llvm.org/installation#project-setup)里提到的操作，简单来说
 
@@ -318,7 +318,7 @@ Anaconda的软件源也比较慢，推荐参考[https://mirrors.tuna.tsinghua.ed
 
 ## Hugo
 
-见我的文章[为Hugo安装goldmark-mathjax插件来更好地支持输入公式](../为Hugo安装goldmark-mathjax插件来更好地支持输入公式.md)，不推荐使用官网的安装包，推荐自己加插件自己编译。
+见我的文章[为Hugo安装goldmark-mathjax插件来更好地支持输入公式](../为Hugo安装goldmark-mathjax插件来更好地支持输入公式)，不推荐使用官网的安装包，推荐自己加插件自己编译。
 
 把编译好生成的`hugo.exe`放到某个你喜欢的地方，比如我的`G:\Program_Files\Hugo\`，并把这个目录设置为环境变量。
 
