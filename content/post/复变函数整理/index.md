@@ -1542,7 +1542,7 @@ $$
 \lim_{z\to e^{i\theta_0},z\in S_\alpha(e^{i\theta_0})}g(z)=l
 $$
 
-![1.jpg](复变函数整理/1.jpg)
+![1.jpg](1.jpg)
 
 **Abel第二定理**
 

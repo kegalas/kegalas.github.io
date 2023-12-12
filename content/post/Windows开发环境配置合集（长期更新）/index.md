@@ -57,7 +57,7 @@ if not exist "%EMACS_EXE_DIR%\emacs.exe" (
 
 我这里没有选择添加进`PATH`，并且把所有文件关联都勾选上了。主要是考虑到防止PATH里面东西太多，干扰运行。
 
-![2.jpg](Windows开发环境配置合集（长期更新）/2.jpg)
+![2.jpg](2.jpg)
 
 ## Pycharm
 
@@ -75,7 +75,7 @@ TODO
 
 勾上AVD，这个是安卓虚拟机，很显然是必要的。
 
-![10.jpg](Windows开发环境配置合集（长期更新）/10.jpg)
+![10.jpg](10.jpg)
 
 AVD设置TODO（包括用软连接把安装目录转移等）
 
@@ -159,7 +159,7 @@ if not exist "%GIT_EXE_DIR%\git.exe" (
 
 在文件中搜索ali
 
-![11.jpg](Windows开发环境配置合集（长期更新）/11.jpg)
+![11.jpg](11.jpg)
 
 把阿里云的这一行复制到第一行。对所有文件都进行这个操作。
 
@@ -169,11 +169,11 @@ if not exist "%GIT_EXE_DIR%\git.exe" (
 
 环境变量我们只设置ucrt64、clang64和msys的，全部设置可能会加大冲突风险。
 
-![12.jpg](Windows开发环境配置合集（长期更新）/12.jpg)
+![12.jpg](12.jpg)
 
 注意顺序，不能颠倒。
 
-之后我们打开`MSYS`的命令行，安装`pacman -S gcc`，这一步的目的是，我们使用MSYS提供的虚拟Linux的POSIX，方便我们在windows上进行Linux系统调用，这两个gcc的区别可见[../MSYS2,MinGW64,Cygwin的使用区别浅谈](MSYS2,MinGW64,Cygwin的使用区别浅谈)
+之后我们打开`MSYS`的命令行，安装`pacman -S gcc`，这一步的目的是，我们使用MSYS提供的虚拟Linux的POSIX，方便我们在windows上进行Linux系统调用，这两个gcc的区别可见[../MSYS2,MinGW64,Cygwin的使用区别浅谈](../MSYS2,MinGW64,Cygwin的使用区别浅谈.md)
 
 ## Clang
 
@@ -201,7 +201,7 @@ pacman -S mingw-w64-ucrt-x86_64-cmake mingw-w64-ucrt-x86_64-cmake-gui mingw-w64-
 
 安装cmake官网的windows版本会不会更优有待考察TODO。
 
-另外，直接安装`make`后，并不能在powershell里直接使用，见[MSYS2中的make工具安装方法](../MSYS2中的make工具安装方法)
+另外，直接安装`make`后，并不能在powershell里直接使用，见[MSYS2中的make工具安装方法](../MSYS2中的make工具安装方法.md)
 
 要让clangd能够检测Cmake项目，还需要进行[https://clangd.llvm.org/installation#project-setup](https://clangd.llvm.org/installation#project-setup)里提到的操作，简单来说
 
@@ -234,7 +234,7 @@ pacman -S mingw-w64-ucrt-x86_64-cmake mingw-w64-ucrt-x86_64-cmake-gui mingw-w64-
 
 以JDK17为例
 
-![5.jpg](Windows开发环境配置合集（长期更新）/5.jpg)
+![5.jpg](5.jpg)
 
 我这里全都勾选了，但是PATH和JAVA_HOME其实可以不用勾选，因为很多IDE（如IDEA，Android Studio）都支持搜索所有JDK，并且手动选择JDK版本，所以这个其实不是很必要。
 
@@ -256,11 +256,11 @@ pacman -S mingw-w64-ucrt-x86_64-cmake mingw-w64-ucrt-x86_64-cmake-gui mingw-w64-
 
 我选择添加python.exe进PATH，并且Customize installation。勾选第二页的全部选项（默认就是全部）、第三页也全部勾选（注意有一个选项需要先安装Visual Studio）。
 
-![6.jpg](Windows开发环境配置合集（长期更新）/6.jpg)
+![6.jpg](6.jpg)
 
-![7.jpg](Windows开发环境配置合集（长期更新）/7.jpg)
+![7.jpg](7.jpg)
 
-![8.jpg](Windows开发环境配置合集（长期更新）/8.jpg)
+![8.jpg](8.jpg)
 
 如上勾选之后，环境变量也会自动配置。这个普通版Python并不会影响Anaconda的virtual env，放心使用。
 
@@ -272,11 +272,11 @@ pacman -S mingw-w64-ucrt-x86_64-cmake mingw-w64-ucrt-x86_64-cmake-gui mingw-w64-
 
 安装时，我选择的是Just Me而不是All Users
 
-![3.jpg](Windows开发环境配置合集（长期更新）/3.jpg)
+![3.jpg](3.jpg)
 
 勾选如下，勾选了第三个，可以让Pycharm选择里面的环境。第四个看到他推荐也就勾选了。第二个不勾选，防止环境变量冲突。
 
-![4.jpg](Windows开发环境配置合集（长期更新）/4.jpg)
+![4.jpg](4.jpg)
 
 Anaconda的软件源也比较慢，推荐参考[https://mirrors.tuna.tsinghua.edu.cn/help/anaconda/](https://mirrors.tuna.tsinghua.edu.cn/help/anaconda/)换为国内源。
 
@@ -296,7 +296,7 @@ Anaconda的软件源也比较慢，推荐参考[https://mirrors.tuna.tsinghua.ed
 
 下载后装载这个iso，打开install-tl-windows.bat安装
 
-![9.jpg](Windows开发环境配置合集（长期更新）/9.jpg)
+![9.jpg](9.jpg)
 
 选好位置点击安装。
 
@@ -318,7 +318,7 @@ Anaconda的软件源也比较慢，推荐参考[https://mirrors.tuna.tsinghua.ed
 
 ## Hugo
 
-见我的文章[为Hugo安装goldmark-mathjax插件来更好地支持输入公式](../为Hugo安装goldmark-mathjax插件来更好地支持输入公式)，不推荐使用官网的安装包，推荐自己加插件自己编译。
+见我的文章[为Hugo安装goldmark-mathjax插件来更好地支持输入公式](../为Hugo安装goldmark-mathjax插件来更好地支持输入公式.md)，不推荐使用官网的安装包，推荐自己加插件自己编译。
 
 把编译好生成的`hugo.exe`放到某个你喜欢的地方，比如我的`G:\Program_Files\Hugo\`，并把这个目录设置为环境变量。
 
@@ -346,19 +346,19 @@ Anaconda的软件源也比较慢，推荐参考[https://mirrors.tuna.tsinghua.ed
 
 一般会配置在`xxx\Gpg4win\..\GnuPG\bin`
 
-![1.jpg](Windows开发环境配置合集（长期更新）/1.jpg)
+![1.jpg](1.jpg)
 
 ## ssh客户端、服务端
 
 安装的话很简单，在设置里面找到应用-可选功能。
 
-![13.jpg](Windows开发环境配置合集（长期更新）/13.jpg)
+![13.jpg](13.jpg)
 
 点击圈出来这个查看功能，搜索openssh，把客户端和服务器都安装即可。
 
 安装好之后在服务设置里，设置为自动即可开机启动。
 
-![14.jpg](Windows开发环境配置合集（长期更新）/14.jpg)
+![14.jpg](14.jpg)
 
 一般配置文件在`C:\ProgramData\ssh\sshd_config`，具体如何修改TODO，例如配置管理员登陆，以及默认shell
 
