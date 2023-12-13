@@ -289,7 +289,7 @@
 	
 </figure></p>
 <p>注意顺序，不能颠倒。</p>
-<p>之后我们打开<code>MSYS</code>的命令行，安装<code>pacman -S gcc</code>，这一步的目的是，我们使用MSYS提供的虚拟Linux的POSIX，方便我们在windows上进行Linux系统调用，这两个gcc的区别可见<a class="link" href="../MSYS2,MinGW64,Cygwin%e7%9a%84%e4%bd%bf%e7%94%a8%e5%8c%ba%e5%88%ab%e6%b5%85%e8%b0%88.md" >../MSYS2,MinGW64,Cygwin的使用区别浅谈</a></p>
+<p>之后我们打开<code>MSYS</code>的命令行，安装<code>pacman -S gcc</code>，这一步的目的是，我们使用MSYS提供的虚拟Linux的POSIX，方便我们在windows上进行Linux系统调用，这两个gcc的区别可见<a class="link" href="../MSYS2,MinGW64,Cygwin%e7%9a%84%e4%bd%bf%e7%94%a8%e5%8c%ba%e5%88%ab%e6%b5%85%e8%b0%88" >MSYS2,MinGW64,Cygwin的使用区别浅谈</a></p>
 <h2 id="clang">Clang</h2>
 <p>我们不去安装LLVM官方给Windows的二进制包了，我们直接在clang64里安装。</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>pacman -S mingw-w64-clang-x86_64-toolchain
@@ -301,7 +301,7 @@
 <p>在UCRT64的terminal里面，输入</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>pacman -S mingw-w64-ucrt-x86_64-cmake mingw-w64-ucrt-x86_64-cmake-gui mingw-w64-ucrt-x86_64-ninja mingw-w64-ucrt-x86_64-make
 </span></span></code></pre></div><p>安装cmake官网的windows版本会不会更优有待考察TODO。</p>
-<p>另外，直接安装<code>make</code>后，并不能在powershell里直接使用，见<a class="link" href="../MSYS2%e4%b8%ad%e7%9a%84make%e5%b7%a5%e5%85%b7%e5%ae%89%e8%a3%85%e6%96%b9%e6%b3%95.md" >MSYS2中的make工具安装方法</a></p>
+<p>另外，直接安装<code>make</code>后，并不能在powershell里直接使用，见<a class="link" href="../MSYS2%e4%b8%ad%e7%9a%84make%e5%b7%a5%e5%85%b7%e5%ae%89%e8%a3%85%e6%96%b9%e6%b3%95" >MSYS2中的make工具安装方法</a></p>
 <p>要让clangd能够检测Cmake项目，还需要进行<a class="link" href="https://clangd.llvm.org/installation#project-setup"  target="_blank" rel="noopener"
     >https://clangd.llvm.org/installation#project-setup</a>里提到的操作，简单来说</p>
 <ol>
@@ -497,7 +497,7 @@
 <p>参考<a class="link" href="../%e5%9c%a8%e6%a0%a1%e5%9b%ad%e7%bd%91%e4%b8%ad%e7%94%a8ssh%e8%bf%9e%e6%8e%a5%e5%ae%bf%e8%88%8d%e7%94%b5%e8%84%91" >在校园网中用ssh连接宿舍电脑</a></p>
 <h1 id="博客hugo">博客（Hugo）</h1>
 <h2 id="hugo">Hugo</h2>
-<p>见我的文章<a class="link" href="../%e4%b8%baHugo%e5%ae%89%e8%a3%85goldmark-mathjax%e6%8f%92%e4%bb%b6%e6%9d%a5%e6%9b%b4%e5%a5%bd%e5%9c%b0%e6%94%af%e6%8c%81%e8%be%93%e5%85%a5%e5%85%ac%e5%bc%8f.md" >为Hugo安装goldmark-mathjax插件来更好地支持输入公式</a>，不推荐使用官网的安装包，推荐自己加插件自己编译。</p>
+<p>见我的文章<a class="link" href="../%e4%b8%baHugo%e5%ae%89%e8%a3%85goldmark-mathjax%e6%8f%92%e4%bb%b6%e6%9d%a5%e6%9b%b4%e5%a5%bd%e5%9c%b0%e6%94%af%e6%8c%81%e8%be%93%e5%85%a5%e5%85%ac%e5%bc%8f" >为Hugo安装goldmark-mathjax插件来更好地支持输入公式</a>，不推荐使用官网的安装包，推荐自己加插件自己编译。</p>
 <p>把编译好生成的<code>hugo.exe</code>放到某个你喜欢的地方，比如我的<code>G:\Program_Files\Hugo\</code>，并把这个目录设置为环境变量。</p>
 <h2 id="pandoc">Pandoc</h2>
 <p><a class="link" href="https://www.pandoc.org/installing.html"  target="_blank" rel="noopener"
