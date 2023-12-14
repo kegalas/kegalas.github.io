@@ -121,7 +121,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 61 分钟
+                    阅读时长: 65 分钟
                 </time>
             </div>
         
@@ -961,44 +961,103 @@
 <p><span class="math display">\[P(err)=1-\sum_{c\in Y}P(c|x)P(c|z)
 \]</span></p>
 <p>其中<span class="math inline">\(x\)</span>是测试样本，<span class="math inline">\(z\)</span>是其最邻近样本。</p>
-<h3 id="随机森林">随机森林</h3>
-<p>在讲随机森林前要先讲集成学习。</p>
+<h3 id="决策树">决策树</h3>
 <p><figure 
 	
 		class="gallery-image" 
 		style="
-			flex-grow: 250; 
-			flex-basis: 601px"
+			flex-grow: 148; 
+			flex-basis: 356px"
 	>
-	<a href="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/16.jpg" data-size="634x253">
-		<img src="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/16.jpg"
-			width="634"
-			height="253"
-			srcset="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/16_hu3e40d1eae6ec8f777b0ab757e62e7afb_12605_480x0_resize_q75_box.jpg 480w, /p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/16_hu3e40d1eae6ec8f777b0ab757e62e7afb_12605_1024x0_resize_q75_box.jpg 1024w"
+	<a href="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/78.jpg" data-size="1102x741">
+		<img src="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/78.jpg"
+			width="1102"
+			height="741"
+			srcset="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/78_hu6af102818d2281a13f277206006c7e69_60475_480x0_resize_q75_box.jpg 480w, /p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/78_hu6af102818d2281a13f277206006c7e69_60475_1024x0_resize_q75_box.jpg 1024w"
 			loading="lazy"
-			alt="16.jpg">
+			alt="78.jpg">
 	</a>
 	
-	<figcaption>16.jpg</figcaption>
+	<figcaption>78.jpg</figcaption>
 	
 </figure></p>
-<p>如上，先产生一组个体学习器，再用某种策略将它们结合起来。</p>
-<p>个体学习器通常由一个现有的学习算法从训练数据产生，</p>
-<p>根据个体学习器的生成方式，目前的集成学习方法大致可分为两大类：</p>
+<p>决策树的适用条件：</p>
 <ol>
-<li>个体学习器间存在强依赖关系、必须串行生成的序列化方法</li>
-<li>以及个体学习器间不存在强依赖关系、可同时生成的并行化方法</li>
+<li>有一个决策者期望实现的明确目标。</li>
+<li>决策者有多于两种可行的选项</li>
+<li>有多于两个不确定的因素超过了决策者的控制范围</li>
+<li>决策者可以估计不确定因素的发生概率</li>
+<li>可以计算不同方案在不同因素下的收益或损失</li>
 </ol>
-<p>前者的代表是Boosting，后者的代表是Bagging和随机森林。</p>
-<p>Bagging要求每个预测器的算法相同（也称为基学习器的基学习算法），但是在不同的随机训练子集上训练。Bagging要去取样时样本放回，如果取样时样本不放回的叫pasting。</p>
-<p>一旦这些基学习器训练完成，继承就可以通过简单地聚合所有预测器的预测来对新实例做出预测。对于分类，聚合函数通常是统计法（即投票，简单多数），而回归问题则通常用平均法。</p>
-<p>随机森林是决策树的集成，通常使用bagging。</p>
+<p>决策树是一个树形的决策帮助数据结构工具。一般的，一棵决策树包含一个根结点、若干个内部结点和若干个叶结点；叶结点对应于决策结果，其他每个结点则对应于一个属性测试；每个结点包含的样本集合根据属性测试的结果被划分到子结点中；根结点包含样本全集。从
+根结点到每个叶结点的路径对应了一个判定测试序列.</p>
+<p>生成决策树有三种算法：ID3、C4.5、CART。</p>
+<p><strong>信息增益</strong></p>
+<p>信息增益Information Gain，指知道一个特征后，不确定性的减少程度。也就是知道前后的信息熵的变化程度。记作<span class="math inline">\(g(D,A)\)</span>，其中<span class="math inline">\(D\)</span>是训练集，<span class="math inline">\(A\)</span>是其中的一个特征，有</p>
+<p><span class="math display">\[g(D,A) = H(D) - H(D|A)
+\]</span></p>
+<p>其中</p>
+<p><span class="math display">\[H(D) = -\sum^K_{k=1}\dfrac{|D_k|}{|D|}\log\dfrac{|D_k|}{|D|}
+\]</span></p>
+<p><span class="math display">\[H(D|A) = \sum^K_{k=1}\dfrac{|D_k|}{|D|}H(D_k)
+\]</span></p>
+<p>其中<span class="math inline">\(D_k\)</span>指的是，离散属性<span class="math inline">\(A\)</span>将当前样本集划分成<span class="math inline">\(n\)</span>个分支节点，每个分支构成了一个新样本集<span class="math inline">\(D_k\)</span>。</p>
+<p>样本数越多的分支结点的影响越大，信息增益越大，则意味着使用属性<span class="math inline">\(A\)</span>来进行划分所获得的“纯度提升”越大。因此，我们可用信息增益来进行决策树的划分属性选择。</p>
+<p>ID3选择这个值来选择最优划分属性。</p>
+<p><strong>信息增益率</strong></p>
+<p>实际上，信息增益准则对可取值数目较多的属性有所偏好，为减少这种偏好可能带来的不利影响，C4.5选择使用增益率来替代。</p>
+<p><span class="math display">\[g_R(D,A) = \dfrac{g(D,A)}{H_A(D)}
+\]</span></p>
+<p><span class="math display">\[H_A(D) = -\sum^K_{k=1}\dfrac{|D_k|}{|D|}\log\dfrac{|D_k|}{|D|}
+\]</span></p>
+<p>属性<span class="math inline">\(A\)</span>的可能取值越多，通常<span class="math inline">\(H_A\)</span>会越大。</p>
+<p>但是C4.5也不是直接使用增益率，增益率准则对可取值数目较少的属性有所偏好。它使用一种启发式的算法，先从候选划分属性中找出信息增益高于平均水平的属性，再从中选择增益率最高的。</p>
+<p><strong>基尼指数</strong></p>
+<p>CART选择使用基尼不纯度来选择划分属性，数据集的纯度可以用基尼值来度量</p>
+<p><span class="math display">\[Gini(D) = \sum^{|Y|}_{k=1}\sum_{k'\neq k}p_kp_{k'} = 1 - \sum^{|Y|}_{k=1}p_k^2
+\]</span></p>
+<p>直观来说，<span class="math inline">\(Gini(P)\)</span>反映了从数据集<span class="math inline">\(D\)</span>中随机抽取两个样本，其类别标记不一致的概率。因此，<span class="math inline">\(Gini(D)\)</span>越小，则数据集<span class="math inline">\(D\)</span>的纯度越高。基尼指数定义为</p>
+<p><span class="math display">\[Gini\_index(D,A) = \sum^K_{k=1}\dfrac{|D_k|}{|D|}Gini(D_k)
+\]</span></p>
+<p>于是最优属性为<span class="math inline">\(a^*=\arg\min_{a\in A} Gini\_index(D,A)\)</span></p>
+<p>决策树的算法流程如下</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 140; 
+			flex-basis: 336px"
+	>
+	<a href="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/79.jpg" data-size="857x611">
+		<img src="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/79.jpg"
+			width="857"
+			height="611"
+			srcset="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/79_hu1b7ab7270e96adf6d728023858d2e831_63214_480x0_resize_q75_box.jpg 480w, /p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/79_hu1b7ab7270e96adf6d728023858d2e831_63214_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="79.jpg">
+	</a>
+	
+	<figcaption>79.jpg</figcaption>
+	
+</figure></p>
+<p><strong>剪枝（pruning）</strong></p>
+<p>剪枝是决策树学习算法对付“过拟合”的主要手段。在决策树学习中，为了尽可能正确分类训练样本，结点划分过程将不断重复，有时会造成决策树分支过多，这时就可能因训练样本学得“太好” 了，以致于把训练集自身的一些特点当作所有数据都具有的一般性质而导致过拟合。因此，可通过主动去掉一些分支来降低过拟合的风险.</p>
+<h3 id="随机森林">随机森林</h3>
+<p>在讲随机森林前要先讲集成学习，见后。</p>
+<p>决策树对于训练集的数据很敏感，如果训练集太小，则预测结果会不好，如果训练集太大，则容易过拟合。所以要引入随机森林。</p>
+<p>另外，像CART这样的算法，是贪心的，即使使用bagging，所有的决策树结构上还是相似的，并且预测是相关的。如果来自子模型的预测是不相关的，或者至少是弱相关的，那么集合方法就能工作得更好。</p>
+<p>随机森林是决策树的集成，通常使用bagging。随机森林的算法略微调整bagging，使得决策树的训练的数据的特征，被限制在了一些随机采样出来的特征中，从而解决相关性的问题。</p>
 <ol>
-<li>设训练集的大小是<span class="math inline">\(n\)</span>，利用采样，可放回地对训练集采样<span class="math inline">\(n\)</span>次，得到一个大小同样为<span class="math inline">\(n\)</span>的数据集。重复这个操作，得到<span class="math inline">\(m\)</span>个大小为<span class="math inline">\(n\)</span>采样集。（可以算出每个采样集中有原始数据集的<span class="math inline">\(63.2\%\)</span>的样本）</li>
+<li>设训练集的大小是<span class="math inline">\(n\)</span>，利用采样，可放回地对训练集采样<span class="math inline">\(n\)</span>次，得到一个大小同样为<span class="math inline">\(n\)</span>的数据集。重复这个操作，得到<span class="math inline">\(m\)</span>个大小为<span class="math inline">\(n\)</span>采样集。（可以算出每个采样集中有原始数据集的<span class="math inline">\(63.2\%\)</span>的样本）（也就相当于使用<span class="math inline">\(m\)</span>次bootstrapping）</li>
 <li>我们在这<span class="math inline">\(m\)</span>个采样集上，分别训练<span class="math inline">\(m\)</span>个决策树。</li>
 <li>用这<span class="math inline">\(m\)</span>个决策树同时预测一个数据，通过投票结果，给出最后的判断。</li>
 </ol>
 <p>传统的决策树是，从当前的<span class="math inline">\(d\)</span>个特征中选择最优的特征。随机森林中的决策树，是随机选取<span class="math inline">\(d\)</span>个特征中的<span class="math inline">\(k\)</span>个特征。在从<span class="math inline">\(k\)</span>个特征中选出最优的那个特征。</p>
+<p>通常，对于分类任务，可以选择<span class="math inline">\(k=\sqrt{d}\)</span>，对于回归任务，可以选择<span class="math inline">\(k=d/3\)</span></p>
+<p><strong>优点</strong></p>
+<p>作为最流行的一种bagging算法，它综合几个弱学习器来形成一个强学习器，提高准确度的同时降低方差，并且还消除了过拟合。</p>
+<p><strong>缺点</strong></p>
+<p>引入了模型可解释性的损失。当没有进行适当的步骤时，可能会给结果模型引入很多偏差。计算复杂度可能提升。</p>
 <h2 id="无监督学习">无监督学习</h2>
 <p>和有监督学习相比，无监督学习就是样本没有打上label。</p>
 <p>训练集一般就没有<span class="math inline">\(y\)</span>，为<span class="math inline">\(\{x^{(1)}, x^{(2)}, \cdots, x^{(m)}\}\)</span>。常见的应用有：</p>
@@ -1079,6 +1138,94 @@ network）组成。</p>
 <h2 id="半监督学习">半监督学习</h2>
 <p>如果训练集里面一部分是有标签的，而另一部分是无标签的，那么在此上训练的就是半监督学习算法。</p>
 <p>虽然什么比例都可以，但通常情况下是，有标签的只占一小部分，大部分仍是无标签。大部分的半监督学习算法也是结合了有监督学习和无监督学习，例如深度置信网络（Deep Belief Networks(DBNS)），他是一个以无监督学习为基础的受限玻尔兹曼机（Restricted Boltzmann Machine(RBMS)），但是整个系统却是建立在有监督学习技术上的。</p>
+<h2 id="集成学习">集成学习</h2>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 250; 
+			flex-basis: 601px"
+	>
+	<a href="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/16.jpg" data-size="634x253">
+		<img src="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/16.jpg"
+			width="634"
+			height="253"
+			srcset="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/16_hu3e40d1eae6ec8f777b0ab757e62e7afb_12605_480x0_resize_q75_box.jpg 480w, /p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/16_hu3e40d1eae6ec8f777b0ab757e62e7afb_12605_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="16.jpg">
+	</a>
+	
+	<figcaption>16.jpg</figcaption>
+	
+</figure></p>
+<p>如上，先产生一组个体学习器，再用某种策略将它们结合起来。</p>
+<p>个体学习器通常由一个现有的学习算法从训练数据产生，</p>
+<p>根据个体学习器的生成方式，目前的集成学习方法大致可分为两大类：</p>
+<ol>
+<li>个体学习器间存在强依赖关系、必须串行生成的序列化方法</li>
+<li>以及个体学习器间不存在强依赖关系、可同时生成的并行化方法</li>
+</ol>
+<p>前者的代表是Boosting，后者的代表是Bagging和随机森林。</p>
+<p>Bagging要求每个预测器的算法相同（也称为基学习器的基学习算法），但是在不同的随机训练子集上训练。Bagging要去取样时样本放回，如果取样时样本不放回的叫pasting。</p>
+<p>一旦这些基学习器训练完成，继承就可以通过简单地聚合所有预测器的预测来对新实例做出预测。对于分类，聚合函数通常是统计法（即投票，简单多数），而回归问题则通常用平均法。</p>
+<h3 id="boosting">Boosting</h3>
+<p>Boosting是一族可将弱学习器提升为强学习器的算法。这族算法的工作机制类似：先从初始训练集训练出一个基学习器，再根据基学习器的表现对训练样本分布进行调整，使得先前基学习器做错的训练样本在后续受到更多关注，然后基于调整后的样本分布来训练下一个基学习器；如此重复进行，直至基学习器数目达到事先指定的值T，最终将这T个基学习器进行加权结合。</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 169; 
+			flex-basis: 407px"
+	>
+	<a href="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/80.jpg" data-size="1140x671">
+		<img src="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/80.jpg"
+			width="1140"
+			height="671"
+			srcset="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/80_hu4cb3d0983d8940d96964ed61cc16013a_32469_480x0_resize_q75_box.jpg 480w, /p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/80_hu4cb3d0983d8940d96964ed61cc16013a_32469_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="80.jpg">
+	</a>
+	
+	<figcaption>80.jpg</figcaption>
+	
+</figure></p>
+<p>如上图，训练过程是阶梯式的，基学习器按照顺序学习，最后加权综合。</p>
+<p>有两个关键问题：如何更改每个训练样本的权重？如何把弱学习器组合成强学习器？</p>
+<p>Boost用途广泛，例如计算机视觉的对象分类任务、二分类加速等等。</p>
+<p><strong>AdaBoost</strong></p>
+<p>AdaBoost可能是Boost中最著名的。对于两个问题，它的回答是</p>
+<ol>
+<li>增加前一轮中被错误分类的样本的权重，减少正确分类的样本的权重</li>
+<li>使用一个加权的投票方法来组合</li>
+</ol>
+<p>有很多种推导AdaBoost的方法，比较容易理解的是加性模型，即基学习器的线性组合</p>
+<p><span class="math display">\[H(x) = \sum^T_{t=1}\alpha_th_t(x)
+\]</span></p>
+<p>来最小化指数损失函数</p>
+<p><span class="math display">\[l_{exp}(H|D) = E_{x\sim D}[e^{-f(x)H(x)}]
+\]</span></p>
+<p>其中<span class="math inline">\(f(x)\)</span>是真实函数。数据集的<span class="math inline">\(y\in\{-1,1\}\)</span>（预测器的输出也应该是<span class="math inline">\(h\in \{-1,1\}\)</span>）</p>
+<p>训练算法如下</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 142; 
+			flex-basis: 342px"
+	>
+	<a href="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/81.jpg" data-size="686x481">
+		<img src="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/81.jpg"
+			width="686"
+			height="481"
+			srcset="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/81_hu71e1ce04198d9b3d8d0b2726f6bd67d8_34365_480x0_resize_q75_box.jpg 480w, /p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/81_hu71e1ce04198d9b3d8d0b2726f6bd67d8_34365_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="81.jpg">
+	</a>
+	
+	<figcaption>81.jpg</figcaption>
+	
+</figure></p>
+<h3 id="bagging">Bagging</h3>
 <h1 id="强化学习">强化学习</h1>
 <h2 id="概论">概论</h2>
 <p>在强化学习中，软件智能体在环境中进行观察并采取行动，作为回报，它会获得奖励。</p>
@@ -2813,6 +2960,9 @@ network）组成。</p>
 <p><span class="math display">\[H(P) = E_{x\sim P}[-\log P(x)] = -\sum_i P(i)\log_2 P(i)
 \]</span></p>
 <p>如何理解<span class="math inline">\(-\log P(i)\)</span>？注意当每种情况等可能时，编码的长度就需要至少（并且足够）<span class="math inline">\(\log N\)</span>，而<span class="math inline">\(\log N = -\log\dfrac{1}{N} = -\log P\)</span>。上式只是拓展到不同概率的事件的情况。所以<span class="math inline">\(-\log P(i)\)</span>可以理解为该事件的平均编码长度。所有事件的平均编码长度就是概率的加权平均，也就是熵了。</p>
+<p>对于某个特定的数据集，我们用试验频率代替概率，得到熵为</p>
+<p><span class="math display">\[H(D) = -\sum^K_{k=1}\dfrac{|C_k|}{|D|}\log\dfrac{|C_k|}{|D|}
+\]</span></p>
 <h2 id="交叉熵">交叉熵</h2>
 <p>熵是假设了我们知道每种可能性的概率分布，但是我们在实践中通常不知道概率分布，只有一个预估的概率分布<span class="math inline">\(Q\)</span>。于是我们就只有一个预估的熵</p>
 <p><span class="math display">\[E_{x\sim Q}[-\log Q(x)]
@@ -2843,6 +2993,9 @@ network）组成。</p>
 <p>机器学习中，一般把标签作为<span class="math inline">\(P\)</span>，预测作为<span class="math inline">\(Q\)</span>，于是就有</p>
 <p><span class="math display">\[-y\log h_\theta(x) - (1-y)\log (1-h_\theta(x))
 \]</span></p>
+<h2 id="bootstrapping">bootstrapping</h2>
+<p>这是一种评估方法。通过可放回地从数据集中抽样<span class="math inline">\(m\)</span>次，得到大小为<span class="math inline">\(m\)</span>的训练集。可以算出，大概有<span class="math inline">\(36.8\%\)</span>的数据从未出现在训练集中，那么就可以把这些数据用作测试集。</p>
+<p>如果不放回，变量的后续选择始终取决于先前的选择，这会使得预判准则不随机。</p>
 
 </section>
 
@@ -3170,6 +3323,7 @@ network）组成。</p>
             <li><a href="#逻辑回归logistic-regression">逻辑回归（Logistic Regression）</a></li>
             <li><a href="#支持向量机">支持向量机</a></li>
             <li><a href="#knn">KNN</a></li>
+            <li><a href="#决策树">决策树</a></li>
             <li><a href="#随机森林">随机森林</a></li>
           </ol>
         </li>
@@ -3182,6 +3336,12 @@ network）组成。</p>
           </ol>
         </li>
         <li><a href="#半监督学习">半监督学习</a></li>
+        <li><a href="#集成学习">集成学习</a>
+          <ol>
+            <li><a href="#boosting">Boosting</a></li>
+            <li><a href="#bagging">Bagging</a></li>
+          </ol>
+        </li>
       </ol>
     </li>
     <li><a href="#强化学习">强化学习</a>
@@ -3282,6 +3442,7 @@ network）组成。</p>
       <ol>
         <li><a href="#熵">熵</a></li>
         <li><a href="#交叉熵">交叉熵</a></li>
+        <li><a href="#bootstrapping">bootstrapping</a></li>
       </ol>
     </li>
   </ol>
