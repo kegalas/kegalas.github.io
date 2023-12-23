@@ -434,6 +434,143 @@ if(p!=nullptr){}
 
 在析构函数执行完毕后，类成员变量的析构顺序，是按照其声明顺序的反方向进行的。
 
+# 有时候可以尝试集中处理Exception
+
+```cpp
+void handle_errors(){
+    try{
+        throw; //必要的，进行re-throw
+    }
+    catch(...){}
+    catch(...){}
+    catch(...){}
+}
+
+void foo(...){
+    try{
+        ...
+    }
+    catch(...){
+        handle_errors();
+    }
+}
+
+void bar(...){
+    try{
+        ...
+    }
+    catch(...){
+        handle_errors();
+    }
+}
+```
+
+这可以复用代码，尤其是你的东西可能会抛出一样的exception的时候。
+
+# RAII思想和其对于Exception内存泄漏的保护
+
+RAII是Resource Acquisition Is Initialization的缩写，意为资源获取就是初始化。
+
+其要求，对象在构造函数中获取资源，在析构函数中释放资源。为什么这是好的呢？他可以减少你管理内存的工作量，你不需要手动去到处写delete来释放内存。它会在对象生命周期结束的时候自动释放，也就避免了内存泄漏。
+
+而对于Exception，它也可以很好的保护内存。C++的Exception在throw的时候，保证可以释放创建的局部对象。于是就可以自动释放内存，而不用担心是否在throw前正确处理了内存。
+
+像C语言这样的东西，申请完内存需要free才能释放，如果在函数中提前返回了，无法运行到free这一行，那么内存就泄漏了。如下例
+
+```c
+void foo(){
+    int *a = malloc(...);
+    ...
+    if(...){
+        ...
+        return; // 这里没有释放内存，产生泄漏
+    }
+    ...
+    free(a);
+    return;
+}
+```
+
+所以如果C++调用了某个C库，又没有很好的释放内存，就可能会造成泄漏。如果你想避免这个，可能可以尝试用C++的类包装一下，提供析构函数。
+
+上例在exception结构中类似下例
+
+```cpp
+void foo(){
+    int *a = new...;
+    ...
+    if(...){
+        ...
+        throw ...;// 这里没有释放内存，产生泄漏。但是如果有析构函数则可以避免
+    }
+    ...
+    delete a;
+    return;
+}
+```
+
+另外，RAII也就要求你，不能在析构函数本身中出现提前的throw。
+
+# noexcept修饰
+
+修饰函数时，如果给出noexcept，则意味着你保证：
+
+- 函数的操作不会失败
+- 从外部来看，任何Exception是不可见的。或者说所有Exception都在内部处理了。
+
+如果noexcept函数还是抛出了一个Exception，那么程序会终止。
+
+我们可以给noexcept提供一个条件，满足条件是函数才是noexcept的。
+
+```cpp
+void foo() noexcept(n<9){...} // 当n<9时noexcept
+void bar() noexcept( noexcept(foo) ){...} // 当foo是noexcept时，bar是noexcept
+```
+
+# 注意给assert的参数加上括号
+
+因为assert其实是宏，所以
+
+```cpp
+assert(min(a,b)==a); //不好
+assert((min(a,b)==a)); //好
+```
+
+否则，宏替换可能会出问题，而且你无法察觉。
+
+# static_assert
+
+assert是给运行时用的，而static_assert就是给编译时用的。
+
+```
+static_assert(bool_exp, "msg"); // C++11可用
+static_assert(bool_exp); //C++17可用
+```
+
+# 用-DNDBUG忽略所有assert
+
+这是g++的编译选项，只需使用这个参数即可
+
+```
+g++ -DNDBUG ...
+```
+
 # Cmake使用
 
-详情见[]
+TODO
+
+# doctest/catch2使用
+
+TODO
+
+# GDB使用
+
+TODO
+
+# 使用g++/clang检测内存错误使用、未定义行为等
+
+TODO
+
+# 使用valgrind检测内存泄漏、锁问题等
+
+TODO

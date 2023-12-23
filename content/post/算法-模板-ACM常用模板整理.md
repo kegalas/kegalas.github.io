@@ -836,6 +836,8 @@ std::vector<int> prime;
 bool isnp[MAXN];
 
 void sieve(int n){
+    isnp[1] = 1;
+    isnp[0] = 1;
     for(int i=2;i<=n;i++){
         if(!isnp[i]) prime.push_back(i);
         for(auto p:prime){
@@ -1048,7 +1050,9 @@ x \equiv a_k(mod\quad r_k)
 \end{matrix}\right.
 $$
 
-其中$r_i$两两互质，如果不满足则需要扩展CRT
+其中$r_i$两两互质，如果不满足则需要扩展CRT。
+
+设$n=r_1r_2\cdots r_k$，计算$m_i=n/r_i$，计算$m_i$在模$r_i$意义下的逆元，计算$c_i=m_im_i^{-1}$（不要对$r_i$取模）。方程组在模$n$意义下有唯一解$x=\sum^k_i a_ic_i$（也就意味着$x$在$1\sim n$中必有一解）
 
 ```cpp
 //中国剩余定理 复杂度 klogk
@@ -8044,6 +8048,184 @@ $$
 
 转换即可。
 
+## 滚动哈希
+
+（总觉得和之前的字符串哈希其实一模一样）
+
+滚动哈希用来以线性复杂度求一个序列的哈希，这个序列可以是一个字符串，可以是一个数组。或者也可以退化成单个元素。假设序列是$A=(A_1,A_2,\cdots,A_N)$，定义滚动哈希函数为$R$，为
+
+$$
+R(A) = \bigg(\sum^N_{i=1}A_ix^{N-i}\bigg)\mod{p}
+$$
+
+其中，$P$是一个足够大的质数，而$x$是从$[0,p)$中等可能选出的一个整数。假设$A(a,b)$为$A$的下标从$a$到$b$的子序列，我们可以立即得到它的递推式：
+
+$$
+R(A(1,1)) = A_1, R(A(1,n))=R(A(1,n-1))\times x+A_n(n>1)
+$$
+
+并且如果已经与处理过所有的$R(A(1, i))$，那么我们可以在$O(1)$内求出$R(A(a,b))$，即
+
+$$
+R(A(a,b)) = R(A(1,b)) - R(A(1, a-1))\times x^{b-(a-1)}
+$$
+
+有一个有用的性质，如果记$A+B=(A_1+B_1, A_2+B_2, \cdots, A_N+B_N)$，那么有
+
+$$
+R(A+B) = R(A)+R(B)
+$$
+
+对于字符串$S$和$T$，它们的**拼接**，即$S+T$，可以由之前的递推式得出哈希为
+
+$$
+R(S+T) = R(S)\times x^{|T|}+R(T)
+$$
+
+这样的序列上的哈希可以方便我们判断任意两个区间的内容是否相等。另外，结合线段树，我们可以实现$O(logn)$的单点修改和$O(logn)$的区间哈希查询。只要每个节点存这段区间的哈希即可。两个区间合并的时候相当于**拼接**。支持区间修改可能有些麻烦，因为lazy tag有些难写。
+
+另外，对于字符串，滚动哈希还可以用来$O(1)$地判断一个区间是否是回文串。我们只需要正着求一遍哈希，再倒着求一遍哈希，响应的区间的哈希值相等，那么意味着是回文串。如果要避免下标的转换，则可以换一下哈希函数（注意与之前正着的哈希区分）：
+
+$$
+R'(A) = \bigg(\sum^N_{i=1}A_ix^{i-1}\bigg)\mod{p}
+$$
+
+此时，$R'(S+T)=R'(S)+R'(T)\times x^{|S|}$。
+
+另外，单哈希可能不能使得碰撞的概率足够低，那么我们就重复使用多个$p$来算多个哈希即可。
+
+下面给出一个，支持单点修改，维护字符串子串哈希的线段树代码
+
+```cpp
+//atcoder abc331_f
+//滚动哈希+线段树
+#include <iostream>
+#include <string>
+#include <random>
+#include <ctime>
+#include <array>
+
+using LL = long long;
+
+int const MAXN = 1000005;
+
+constexpr int B = 5;
+LL mod[B] = {998244353, 1000000007, 1000000009, 1000000021, 1000000033};
+LL base[B];
+
+struct Hash{
+    LL h1, h2, pw;  
+    Hash():h1(0),h2(0),pw(1){} // 字符串拼接哈希时，拼接操作的幺元
+};
+using T = std::array<Hash, B>; // 存多个哈希，以减小碰撞概率
+
+T operator+(T lhs, T rhs){
+    // 区间拼接
+    T res;
+    for(int i=0;i<B;i++){
+        res[i].h1 = (lhs[i].h1*rhs[i].pw + rhs[i].h1)%mod[i];
+        res[i].h2 = (lhs[i].h2 + lhs[i].pw*rhs[i].h2)%mod[i];
+        res[i].pw = (lhs[i].pw*rhs[i].pw)%mod[i];
+        // 见字符串拼接的哈希
+    }
+    return res;
+}
+
+T gen(char c){
+    // 单个字符的哈希
+    T res;
+    for(int i=0;i<B;i++){
+        res[i].h1 = c;
+        res[i].h2 = c;
+        res[i].pw = base[i];
+    }
+    return res;
+}
+
+struct Node
+{
+    int s,t;//该端点的起点和终点下标
+    T v;
+};
+
+Node st[MAXN*4+2];
+std::string arr;
+
+void build(int s, int t, int p=1){
+    st[p].s = s;
+    st[p].t = t;
+    if(s==t) {
+        st[p].v = gen(arr[s]);
+        return;
+    }
+    int m = s+((t-s)>>1);
+    build(s,m,p*2);
+    build(m+1,t,p*2+1);
+    st[p].v = st[p*2].v + st[p*2+1].v;
+}
+
+void update(int i, char ch, int p=1){
+    int s = st[p].s, t = st[p].t;
+    if(s==t){
+        st[p].v = gen(ch);
+        return;
+    }
+    
+    int m = s+((t-s)>>1);
+    if(i<=m) update(i, ch, p*2);
+    if(i>m)  update(i, ch, p*2+1);
+    st[p].v = st[p*2].v + st[p*2+1].v;
+}
+
+T query(int l, int r, int p=1){
+    int s = st[p].s, t = st[p].t;
+    if(l<=s && t<=r) return st[p].v;
+
+    int m = s+((t-s)>>1);
+    T ret;
+    if(l<=m) ret = ret+query(l,r,p*2);
+    if(r>m)  ret = ret+query(l,r,p*2+1);
+    
+    return ret;
+}
+
+
+void solve(){
+    std::mt19937_64 rng(time(0));
+    for(int i=0;i<B;i++){
+        base[i] = rng() % mod[i]; // 即随机生成的x
+    }
+    
+    int n,q;
+    std::cin>>n>>q;
+    std::cin>>arr;
+    arr = '#'+arr;
+    build(1, n);
+    
+    while(q--){
+        int op;
+        std::cin>>op;
+        if(op==1){
+            int x;
+            char c;
+            std::cin>>x>>c;
+            update(x,c);
+        }
+        else{
+            // 判断[l,r]是否为回文串
+            int l, r;
+            std::cin>>l>>r;
+            auto h = query(l, r);
+            bool ans = 1;
+            for(int i=0;i<B;i++){
+                ans &= (h[i].h1==h[i].h2);
+            }
+            std::cout<<(ans?"Yes":"No")<<"\n";
+        }
+    }
+}
+```
+
 # C++ STL用法
 
 ## std::swap
@@ -8767,6 +8949,22 @@ Iterator unique(Iterator first, Iterator last);
 给出一个范围来进行这个操作。具体用例可以见离散化一节。
 
 返回值是新数组的末尾的迭代器。
+
+## std::mt19937_64
+
+本功能在C++11后可以使用。
+
+```cpp
+#include<random>
+#include<ctime>
+
+std::mt19937_64 rng(time(0));
+for(int i=0;i<B;i++){
+    base[i] = rng() % mod[i]; // 即随机生成[0,mod[i])之间的整数
+}
+```
+
+使用梅森缠绕算法，给出$[0,2^{64})$之间的随机数，如果想要32位的，用mt19937即可。其比cstdlib中的srand和rand生成的随机数性质要好得多，并且rand()的范围不那么好设置。推荐在涉及随机的算法中优先使用这个生成器。
 
 ## std::cin
 
