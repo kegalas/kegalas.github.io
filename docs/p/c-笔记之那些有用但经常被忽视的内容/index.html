@@ -108,7 +108,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 13 分钟
+                    阅读时长: 15 分钟
                 </time>
             </div>
         
@@ -390,9 +390,101 @@
 </table>
 <p>简单来说就是const在星号右边则指针自己不可变，在左边则所指内容不可变。也可以理解为，const修饰的是它左边的东西。要么修饰指针（即星号），要么修饰值（即T）</p>
 <p>所以说，我更推荐<code>T const</code>的写法，而不是<code>const T</code>。但是我们也要知道，<code>const T *</code>是修饰值不可变。</p>
-<h1 id="智能指针">智能指针</h1>
+<h1 id="智能指针-todo">智能指针 TODO</h1>
 <h1 id="this指针">this指针</h1>
 <p>有点类似于Python里的self参数，都是只能用在类里的。是一个指向对象自己的指针。</p>
+<h1 id="析构函数的析构顺序">析构函数的析构顺序</h1>
+<p>在析构函数执行完毕后，类成员变量的析构顺序，是按照其声明顺序的反方向进行的。</p>
+<h1 id="有时候可以尝试集中处理exception">有时候可以尝试集中处理Exception</h1>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">handle_errors</span>(){
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">try</span>{
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">throw</span>; <span style="color:#75715e">//必要的，进行re-throw
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">catch</span>(...){}
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">catch</span>(...){}
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">catch</span>(...){}
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">foo</span>(...){
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">try</span>{
+</span></span><span style="display:flex;"><span>        ...
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">catch</span>(...){
+</span></span><span style="display:flex;"><span>        handle_errors();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">bar</span>(...){
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">try</span>{
+</span></span><span style="display:flex;"><span>        ...
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">catch</span>(...){
+</span></span><span style="display:flex;"><span>        handle_errors();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>这可以复用代码，尤其是你的东西可能会抛出一样的exception的时候。</p>
+<h1 id="raii思想和其对于exception内存泄漏的保护">RAII思想和其对于Exception内存泄漏的保护</h1>
+<p>RAII是Resource Acquisition Is Initialization的缩写，意为资源获取就是初始化。</p>
+<p>其要求，对象在构造函数中获取资源，在析构函数中释放资源。为什么这是好的呢？他可以减少你管理内存的工作量，你不需要手动去到处写delete来释放内存。它会在对象生命周期结束的时候自动释放，也就避免了内存泄漏。</p>
+<p>而对于Exception，它也可以很好的保护内存。C++的Exception在throw的时候，保证可以释放创建的局部对象。于是就可以自动释放内存，而不用担心是否在throw前正确处理了内存。</p>
+<p>像C语言这样的东西，申请完内存需要free才能释放，如果在函数中提前返回了，无法运行到free这一行，那么内存就泄漏了。如下例</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">foo</span>(){
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> <span style="color:#f92672">*</span>a <span style="color:#f92672">=</span> <span style="color:#a6e22e">malloc</span>(...);
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span>(...){
+</span></span><span style="display:flex;"><span>        ...
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>; <span style="color:#75715e">// 这里没有释放内存，产生泄漏
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    }
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">free</span>(a);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>所以如果C++调用了某个C库，又没有很好的释放内存，就可能会造成泄漏。如果你想避免这个，可能可以尝试用C++的类包装一下，提供析构函数。</p>
+<p>上例在exception结构中类似下例</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">foo</span>(){
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> <span style="color:#f92672">*</span>a <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span>...;
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span>(...){
+</span></span><span style="display:flex;"><span>        ...
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">throw</span> ...;<span style="color:#75715e">// 这里没有释放内存，产生泄漏。但是如果有析构函数则可以避免
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    }
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">delete</span> a;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>另外，RAII也就要求你，不能在析构函数本身中出现提前的throw。</p>
+<h1 id="noexcept修饰">noexcept修饰</h1>
+<p>修饰函数时，如果给出noexcept，则意味着你保证：</p>
+<ul>
+<li>函数的操作不会失败</li>
+<li>从外部来看，任何Exception是不可见的。或者说所有Exception都在内部处理了。</li>
+</ul>
+<p>如果noexcept函数还是抛出了一个Exception，那么程序会终止。</p>
+<p>我们可以给noexcept提供一个条件，满足条件是函数才是noexcept的。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">foo</span>() <span style="color:#66d9ef">noexcept</span>(n<span style="color:#f92672">&lt;</span><span style="color:#ae81ff">9</span>){...} <span style="color:#75715e">// 当n&lt;9时noexcept
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">bar</span>() <span style="color:#66d9ef">noexcept</span>( <span style="color:#66d9ef">noexcept</span>(foo) ){...} <span style="color:#75715e">// 当foo是noexcept时，bar是noexcept
+</span></span></span></code></pre></div><h1 id="注意给assert的参数加上括号">注意给assert的参数加上括号</h1>
+<p>因为assert其实是宏，所以</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>assert(min(a,b)<span style="color:#f92672">==</span>a); <span style="color:#75715e">//不好
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>assert((min(a,b)<span style="color:#f92672">==</span>a)); <span style="color:#75715e">//好
+</span></span></span></code></pre></div><p>否则，宏替换可能会出问题，而且你无法察觉。</p>
+<h1 id="static_assert">static_assert</h1>
+<p>assert是给运行时用的，而static_assert就是给编译时用的。</p>
+<pre tabindex="0"><code>static_assert(bool_exp, &#34;msg&#34;); // C++11可用
+static_assert(bool_exp); //C++17可用
+</code></pre><h1 id="用-dndbug忽略所有assert">用-DNDBUG忽略所有assert</h1>
+<p>这是g++的编译选项，只需使用这个参数即可</p>
+<pre tabindex="0"><code>g++ -DNDBUG ...
+</code></pre><h1 id="cmake使用">Cmake使用</h1>
+<p>TODO</p>
+<h1 id="doctestcatch2使用">doctest/catch2使用</h1>
+<p>TODO</p>
+<h1 id="gdb使用">GDB使用</h1>
+<p>TODO</p>
+<h1 id="使用gclang检测内存错误使用未定义行为等">使用g++/clang检测内存错误使用、未定义行为等</h1>
+<p>TODO</p>
+<h1 id="使用valgrind检测内存泄漏锁问题等">使用valgrind检测内存泄漏、锁问题等</h1>
+<p>TODO</p>
 
 </section>
 
@@ -455,6 +547,28 @@
             <div class="flex article-list--tile">
                 
                     
+<article class="has-image">
+    <a href="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+        
+        
+            <div class="article-image">
+                <img src="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/cover.e854b56daa550dc940cfe938a5e554af_hu9ed3e3d7509314fb7a01cf1769564f25_44442_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-6FS1bapVDclAz&#43;k4peVUrw==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">微机原理学习笔记</h2>
+        </div>
+    </a>
+</article>
+                
+                    
 <article class="">
     <a href="/p/%E5%9C%A8%E6%A0%A1%E5%9B%AD%E7%BD%91%E4%B8%AD%E7%94%A8ssh%E8%BF%9E%E6%8E%A5%E5%AE%BF%E8%88%8D%E7%94%B5%E8%84%91/">
         
@@ -498,18 +612,6 @@
 
         <div class="article-details">
             <h2 class="article-title">Firefox习惯设置记录（包含双击关闭，拖拽手势，新建标签页位置等）</h2>
-        </div>
-    </a>
-</article>
-                
-                    
-<article class="">
-    <a href="/p/msys2%E4%B8%AD%E7%9A%84make%E5%B7%A5%E5%85%B7%E5%AE%89%E8%A3%85%E6%96%B9%E6%B3%95/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">MSYS2中的make工具安装方法</h2>
         </div>
     </a>
 </article>
@@ -711,8 +813,20 @@
     <li><a href="#构造函数相互调用">构造函数相互调用</a></li>
     <li><a href="#在c里最好用nullptr而不是null">在C++里最好用nullptr而不是null</a></li>
     <li><a href="#const与指针">const与指针</a></li>
-    <li><a href="#智能指针">智能指针</a></li>
+    <li><a href="#智能指针-todo">智能指针 TODO</a></li>
     <li><a href="#this指针">this指针</a></li>
+    <li><a href="#析构函数的析构顺序">析构函数的析构顺序</a></li>
+    <li><a href="#有时候可以尝试集中处理exception">有时候可以尝试集中处理Exception</a></li>
+    <li><a href="#raii思想和其对于exception内存泄漏的保护">RAII思想和其对于Exception内存泄漏的保护</a></li>
+    <li><a href="#noexcept修饰">noexcept修饰</a></li>
+    <li><a href="#注意给assert的参数加上括号">注意给assert的参数加上括号</a></li>
+    <li><a href="#static_assert">static_assert</a></li>
+    <li><a href="#用-dndbug忽略所有assert">用-DNDBUG忽略所有assert</a></li>
+    <li><a href="#cmake使用">Cmake使用</a></li>
+    <li><a href="#doctestcatch2使用">doctest/catch2使用</a></li>
+    <li><a href="#gdb使用">GDB使用</a></li>
+    <li><a href="#使用gclang检测内存错误使用未定义行为等">使用g++/clang检测内存错误使用、未定义行为等</a></li>
+    <li><a href="#使用valgrind检测内存泄漏锁问题等">使用valgrind检测内存泄漏、锁问题等</a></li>
   </ol>
 </nav>
                 </div>

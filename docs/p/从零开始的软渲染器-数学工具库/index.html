@@ -176,9 +176,9 @@
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">private</span><span style="color:#f92672">:</span>
 </span></span><span style="display:flex;"><span>    T data_[dim];
 </span></span><span style="display:flex;"><span>};
-</span></span></code></pre></div><p>首先template&lt;class T, size_t dim&gt;指的是让它的向量元素的数据类型为T，然后有dim维</p>
-<p>Vec()这个默认构造函数不难理解，Vec(Vec&lt;T,dim&gt; const &amp; v)是一个复制构造函数，而相应的Vec&lt;T, dim&gt;&amp; operator=(const Vec&lt;T,dim&gt; vec)是一个复制赋值运算符。</p>
-<p>T&amp; operator[]是为了方便取向量的某一个元素，并且同时提供了const的版本，这是一个经常可以见到的设计。并且我们检查数组越界。</p>
+</span></span></code></pre></div><p>首先<code>template&lt;class T, size_t dim&gt;</code>指的是让它的向量元素的数据类型为<code>T</code>，然后有<code>dim</code>维</p>
+<p><code>Vec()</code>这个默认构造函数不难理解，<code>Vec(Vec&lt;T,dim&gt; const &amp; v)</code>是一个复制构造函数，而相应的<code>Vec&lt;T, dim&gt;&amp; operator=(const Vec&lt;T,dim&gt; vec)</code>是一个复制赋值运算符。</p>
+<p><code>T&amp; operator[]</code>是为了方便取向量的某一个元素，并且同时提供了const的版本，这是一个经常可以见到的设计。并且我们检查数组越界。</p>
 <p>下面对其进行模板特殊化</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">T</span><span style="color:#f92672">&gt;</span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Vec</span><span style="color:#f92672">&lt;</span>T,<span style="color:#ae81ff">2</span><span style="color:#f92672">&gt;</span>{
@@ -222,8 +222,8 @@
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>};
-</span></span></code></pre></div><p>如上，我们定义了一个二维的向量，这个叫做模板特殊化，当我们声明Vec&lt;float,2&gt;时，会首先调用最特殊的那个，在此处会调用Vec&lt;T,2&gt;，而不是更一般的Vec&lt;T,dim&gt;</p>
-<p>另外需要注意的是，模板特殊化并不是继承，特殊的模板不会继承一般的模板的成员。所以我们需要重新地定义整个Vec&lt;T,2&gt;</p>
+</span></span></code></pre></div><p>如上，我们定义了一个二维的向量，这个叫做模板特殊化，当我们声明<code>Vec&lt;float,2&gt;</code>时，会首先调用最特殊的那个，在此处会调用<code>Vec&lt;T,2&gt;</code>，而不是更一般的<code>Vec&lt;T,dim&gt;</code></p>
+<p>另外需要注意的是，模板特殊化并不是继承，特殊的模板不会继承一般的模板的成员。所以我们需要重新地定义整个<code>Vec&lt;T,2&gt;</code></p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">union</span>{
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">struct</span> {T x,y;};
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">struct</span> {T s,t;};
@@ -497,7 +497,7 @@
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>这是计算行列式与代数余子式的代码。</p>
 <p>计算大于2阶的行列式，需要用到代数余子式的方法，可以参考线性代数笔记。</p>
-<p>值得注意的是，det中我们每次计算都会减少dim一阶，但是你并不能使用if(dim==2);if(dim==1);if(dim&lt;=0)这样的语句来在模板内部定义特例，这是无法编译通过的。你需要做的是将模板特殊化，这样才能通过编译。</p>
+<p>值得注意的是，det中我们每次计算都会减少dim一阶，但是你并不能使用<code>if(dim==2);if(dim==1);if(dim&lt;=0)</code>这样的语句来在模板内部定义特例，这是无法编译通过的。你需要做的是将模板特殊化，这样才能通过编译。</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">T</span>, size_t dim<span style="color:#f92672">&gt;</span>
 </span></span><span style="display:flex;"><span>Mat<span style="color:#f92672">&lt;</span>T,dim,dim<span style="color:#f92672">&gt;</span> adjugate(Mat<span style="color:#f92672">&lt;</span>T, dim, dim<span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">const</span> <span style="color:#f92672">&amp;</span> mat){
 </span></span><span style="display:flex;"><span>    Mat<span style="color:#f92672">&lt;</span>T, dim, dim<span style="color:#f92672">&gt;</span> ret;
