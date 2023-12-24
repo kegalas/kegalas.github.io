@@ -125,7 +125,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 66 分钟
+                    阅读时长: 17 分钟
                 </time>
             </div>
         
@@ -287,7 +287,7 @@
 </tr>
 </tbody>
 </table>
-<h1 id="绪论">绪论</h1>
+<h1 id="认知计算绪论">认知计算绪论</h1>
 <h2 id="大脑">大脑</h2>
 <p>在大脑新皮质上，每个神经元都有约10k个来自其他神经元的输入，通过突触连接。而大脑中总体有20billion规模的神经元。</p>
 <p>虽然每两个神经元之间的连接相对而言影响较小，但是通过学习机制（learning mechanisms），这些神经元们可以实现非常复杂的信息处理功能。</p>
@@ -442,6 +442,108 @@
 <p>其中<span class="math inline">\(f(\cdot)\)</span>代表激活函数，<span class="math inline">\(t\)</span>表示突触<span class="math inline">\(j\)</span>的突触前神经元的放电时间，该时间由膜电位<span class="math inline">\(u\)</span>达到阈值<span class="math inline">\(\theta\)</span>的时间决定。</p>
 <p><span class="math display">\[u(t^f) = \theta
 \]</span></p>
+<h1 id="模式识别绪论">模式识别绪论</h1>
+<h2 id="模式识别是什么">模式识别是什么</h2>
+<p>模式识别是研究如何让机器观察环境，学习从环境中区分出感兴趣的物体，然后做出明智的有理由的决策。</p>
+<p>主要包括：目标识别（人脸识别）、语音识别、文本分类、图像视频识别等。</p>
+<p>模式识别的两个核心：特征提取和分类器设计。</p>
+<p>存在于时间和空间中可观察的物体，如果我们可以区别它们是否相同或是否相似，都可以称之为模式。</p>
+<p>识别的过程是从底层，逐渐抽象到高层，这样的一个过程。</p>
+<p>模式识别的目的：利用计算机对物体（模式）进行分类，在错误概率最小的条件下，使识别的结果尽量与客观物体相符合。</p>
+<h2 id="模式识别的基本概念">模式识别的基本概念</h2>
+<ul>
+<li>样本：一类事物的一个具体体现，所研究对象的一个个体，也称模式。</li>
+<li>样本集：若干样本的集合</li>
+<li>类或类别：在所有样本上定义的一个子集，处于同一类的样本在我们所关心的性质上是不可区分的，即具有相同的模式，也称模式类。</li>
+<li>特征：用于表征样本的观测信息，通常是数值表示的，有时也称为属性（attribute）；如果是高维则称为特征向量，样本的特征（向量）构成了特征空间，每个样本是特征空间中的一个点。</li>
+<li>已知样本：事先知道类别标号的样本</li>
+<li>未知样本（待识别的样本，测试样本）：类别标号未知但特征已知的样本</li>
+</ul>
+<p>一般来说，模式识别必须经过如下的过程：模式空间-&gt;特征空间-&gt;类型空间</p>
+<ul>
+<li>在模式空间（等于特征空间）中每个样本模式都是一个点，点的位置由该模式在各维上的测量值确定。</li>
+<li>模式空间中的点经过特征提取就得到了特征空间。对模式空间里的各坐标元素进行综合分析，以提取最能揭示样本属性的特征，这些特征就构成特征空间。</li>
+<li>特征空间进行分类决策就得到了类型空间。根据适当的判决规则，把特征空间里的样本区分成不同的类型，从而把特征空间塑造成了类型空间。</li>
+</ul>
+<h2 id="模式识别的基本框架">模式识别的基本框架</h2>
+<ul>
+<li>传感器（sensing）：信号采集</li>
+<li>分割：使图像模式互不重叠</li>
+<li>特征提取：可判别特征、平移、旋转和尺度变换不变性特征</li>
+<li>分类</li>
+<li>后处理</li>
+</ul>
+<p>训练和识别流程：</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 201; 
+			flex-basis: 483px"
+	>
+	<a href="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/83.jpg" data-size="578x287">
+		<img src="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/83.jpg"
+			width="578"
+			height="287"
+			srcset="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/83_hu7beb467df4981c5c224d4285956b8f62_20479_480x0_resize_q75_box.jpg 480w, /p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/83_hu7beb467df4981c5c224d4285956b8f62_20479_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="83.jpg">
+	</a>
+	
+	<figcaption>83.jpg</figcaption>
+	
+</figure></p>
+<p>模式识别系统设计的五个步骤：</p>
+<ul>
+<li>收集数据</li>
+<li>特征选择</li>
+<li>选择模型</li>
+<li>训练分类器</li>
+<li>评估分类器</li>
+</ul>
+<p>分类器主要有有监督学习和无监督学习。具体可以看后面传统机器学习方法。</p>
+<h2 id="模式识别的方法">模式识别的方法</h2>
+<h3 id="模板匹配">模板匹配</h3>
+<p>首先对每个类别建立一个或多个模板，然后对输入数据和每个类别的模板求距离或相关，根据相关性和距离大小做分类。</p>
+<p>优点：简单直接</p>
+<p>缺点：适应性差</p>
+<p>形变模板</p>
+<h3 id="统计方法">统计方法</h3>
+<p>根据训练样本，建立决策边界。这是我们课上的重点。</p>
+<ul>
+<li>统计决策理论：根据每一类总体的概率分布决定决策边界</li>
+<li>判别式分析方法：给出带参数的决策边界，根据某种准则，由训练样本决定“最优”的参数</li>
+</ul>
+<h3 id="句法方法">句法方法</h3>
+<p>许多复杂的模式可以分解为简单的子模式，这些子模式组成所谓 “基元”。每个模式都可以由基元根据一定的关系来组成。模式的相似性由句子的相似性来决定。</p>
+<p>优点：适合结构性强的模式</p>
+<p>缺点：抗噪声能力差，计算复杂度高</p>
+<h3 id="神经网络">神经网络</h3>
+<p>进行大规模并行计算的数学模型。具有学习、推广、自适应、容错、分布表达和计算的能力。</p>
+<ul>
+<li>优点：可以有效的解决一些复杂的非线性问题</li>
+<li>缺点：缺少有效的学习理论</li>
+</ul>
+<h3 id="比较">比较</h3>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 137; 
+			flex-basis: 329px"
+	>
+	<a href="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/82.jpg" data-size="490x357">
+		<img src="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/82.jpg"
+			width="490"
+			height="357"
+			srcset="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/82_hu6ea8eb9dd2f634e4aa60df22b9b80da9_30364_480x0_resize_q75_box.jpg 480w, /p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/82_hu6ea8eb9dd2f634e4aa60df22b9b80da9_30364_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="82.jpg">
+	</a>
+	
+	<figcaption>82.jpg</figcaption>
+	
+</figure></p>
 <h1 id="神经网络基础概念">神经网络基础概念</h1>
 <h2 id="神经元及其数学模型">神经元及其数学模型</h2>
 <p><figure 
@@ -705,19 +807,94 @@
 <li>用贝叶斯公式得到后验概率</li>
 <li>后验概率作为下一次迭代的先验概率，下次迭代时要获取新的<span class="math inline">\(X\)</span></li>
 </ol>
-<h3 id="贝叶斯分类器">贝叶斯分类器</h3>
-<p>假设总共有<span class="math inline">\(N\)</span>类，其label分别为<span class="math inline">\(y=\{c_1,c_2,\cdots,c_N\}\)</span>。对于一个样本<span class="math inline">\(x\)</span>，设其属于<span class="math inline">\(c_j\)</span>类，其被错误归类为<span class="math inline">\(c_i\)</span>时，损失大小为<span class="math inline">\(\lambda_{ij}\)</span></p>
+<h3 id="贝叶斯决策理论贝叶斯分类器">贝叶斯决策理论（贝叶斯分类器）</h3>
+<p>其是一种统计决策理论。要求：各个类别的总体概率分布 (先验概率和类条件概率密度) 是已知的；决策分类的类别数是一定的。</p>
+<p>常用的决策准则有：最小错误率准则、最小风险准则、黎曼皮尔逊准则、最小最大决策准则。</p>
+<p>下面解释一下机器学习中的各种概率的实际意义。设有<span class="math inline">\(C\)</span>个类型，类型空间为<span class="math inline">\(\Omega = \{\omega_1,\omega_2,\cdots,\omega_C\}\)</span>，则</p>
+<ul>
+<li>先验概率<span class="math inline">\(P(\omega_i)\)</span>：代表未获得观测数据之前类别的分布（即类别占比大小）</li>
+<li>类条件概率<span class="math inline">\(P(x|\omega_i)\)</span>：代表在<span class="math inline">\(\omega_i\)</span>类中<span class="math inline">\(x\)</span>的概率分布密度</li>
+<li>后验概率<span class="math inline">\(P(\omega_i|x)\)</span>：代表在<span class="math inline">\(x\)</span>出现的条件下<span class="math inline">\(\omega_i\)</span>出现的概率</li>
+</ul>
+<p>例如我们要区分鲈鱼鲑鱼，假设只捕获了这两种鱼，并且捕获的数量相等，则有<span class="math inline">\(P(w_1)=P(w_2),P(w_1)+P(w_2)=1\)</span></p>
+<p>以光泽度为特征，类条件概率可以为</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 137; 
+			flex-basis: 330px"
+	>
+	<a href="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/84.jpg" data-size="483x351">
+		<img src="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/84.jpg"
+			width="483"
+			height="351"
+			srcset="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/84_hua3b4e9b9f05507552042c04b2eac8c80_14296_480x0_resize_q75_box.jpg 480w, /p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/84_hua3b4e9b9f05507552042c04b2eac8c80_14296_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="84.jpg">
+	</a>
+	
+	<figcaption>84.jpg</figcaption>
+	
+</figure></p>
+<p>根据贝叶斯共识，就可以得出后验概率。</p>
+<p><span class="math display">\[P(w_i|x)=\dfrac{P(x|w_i)P(w_i)}{\sum P(x|w_j)P(w_j)}
+\]</span></p>
+<p>后验概率的直观含义如下：</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 176; 
+			flex-basis: 423px"
+	>
+	<a href="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/85.jpg" data-size="623x353">
+		<img src="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/85.jpg"
+			width="623"
+			height="353"
+			srcset="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/85_hu57f41b0fc2d1c85f17b439bcbffb62cf_20680_480x0_resize_q75_box.jpg 480w, /p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/85_hu57f41b0fc2d1c85f17b439bcbffb62cf_20680_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="85.jpg">
+	</a>
+	
+	<figcaption>85.jpg</figcaption>
+	
+</figure></p>
+<p><strong>最小错误率准则（最大后验概率准则）</strong></p>
+<p>于是，如果<span class="math inline">\(P(w_1|x)>P(w_2|x)\)</span>，那么判断为<span class="math inline">\(w_1\)</span>类，否则判断为<span class="math inline">\(w_2\)</span>类。（决策过程）</p>
+<p>此时，真实为<span class="math inline">\(w_2\)</span>却被判定为<span class="math inline">\(w_1\)</span>的概率误差就为<span class="math inline">\(P(w_1|x)\)</span>；真实为<span class="math inline">\(w_1\)</span>却被判定为<span class="math inline">\(w_2\)</span>的概率误差就为<span class="math inline">\(P(w_2|x)\)</span>。无论如何，概率误差为<span class="math inline">\(P(error|x)=\min[P(w_1|x),P(w_2|x)]\)</span></p>
+<p>其决策过程有四个等价形式（以二分类为例）</p>
+<ol>
+<li><span class="math inline">\(w = \arg\max_{w_j} P(w_j|x)\)</span></li>
+<li><span class="math inline">\(w=\arg\max_{w_j}P(x|w_j)P(w_j)\)</span></li>
+<li>若<span class="math inline">\(\dfrac{P(x|w_1)}{P(x|w_2)}>\dfrac{P(w_2)}{P(w_1)}\)</span>，则<span class="math inline">\(x\)</span>属于<span class="math inline">\(w_1\)</span>，否则属于<span class="math inline">\(w_2\)</span>。（似然比形式）</li>
+<li>若<span class="math inline">\(-\ln P(x|w_1)+\ln P(x|w_2)<\ln\dfrac{P(w_1)}{P(w_2)}\)</span>，则<span class="math inline">\(x\)</span>属于<span class="math inline">\(w_1\)</span>，否则属于<span class="math inline">\(w_2\)</span></li>
+</ol>
+<p><strong>最小风险准则</strong></p>
+<p>假设总共有<span class="math inline">\(N\)</span>类，其label分别为<span class="math inline">\(y=\{c_1,c_2,\cdots,c_N\}\)</span>。对于某个样本，设其属于<span class="math inline">\(c_j\)</span>类，其被错误归类为<span class="math inline">\(c_i\)</span>时，损失大小为<span class="math inline">\(\lambda_{ij}\)</span></p>
 <p>样本<span class="math inline">\(x\)</span>被归类为<span class="math inline">\(c_i\)</span>的条件风险（或期望损失）就为</p>
 <p><span class="math display">\[R(c_i|x) = \sum^N_{j=1}\lambda_{ij}P(c_j|x)
 \]</span></p>
-<p>我们的任务是最小化损失，即最小化</p>
-<p><span class="math display">\[R(h) = E_x[R(h(x)|x)]
+<p>我们的任务是最小化损失，即最小化（期望风险）</p>
+<p><span class="math display">\[R(h) = E_x[R(h(x)|x)] = \int R(h(x)|x)p(x)dx
 \]</span></p>
 <p>为了最小化总体风险，我们只需要在每个样本上都选择那个能使条件风险最小的类别。即</p>
 <p><span class="math display">\[h^*(x)=\arg\min_{c\in y}R(c|x)
 \]</span></p>
 <p>此时<span class="math inline">\(h^*(x)\)</span>就是贝叶斯最优分类器。与之对应的总体风险<span class="math inline">\(R(h^*)\)</span>称为贝叶斯风险。</p>
-<p>具体来说，若目标是最小化分类错误率，我们是损失可以写作</p>
+<p>具体过程为：</p>
+<ol>
+<li>同前，先根据已知条件算出后验概率<span class="math inline">\(P(w_i|x)\)</span></li>
+<li>利用后验概率和损失函数，计算采取每种决策的风险<span class="math inline">\(R(c_i|x) = \sum^N_{j=1}\lambda_{ij}P(c_j|x)\)</span></li>
+<li>找出风险最小的决策<span class="math inline">\(h^*(x)=\arg\min_{c\in y}R(c|x)\)</span></li>
+</ol>
+<p>损失函数要根据具体问题具体设置，通常不是很容易，需要有关专家研讨决定。</p>
+<p>以二分类为例，其决策为<span class="math inline">\(R(a_1|x)<R(a_2|x)\)</span>时，判断为属于<span class="math inline">\(w_1\)</span>，否则属于<span class="math inline">\(w_2\)</span>。展开、经过运算后得到似然比形式为</p>
+<p><span class="math display">\[\dfrac{P(x|w_1)}{P(x|w_2)}>\dfrac{\lambda_{12}-\lambda_{22}}{\lambda_{21}-\lambda_{11}}\times\dfrac{P(w_2)}{P(w_1)}
+\]</span></p>
+<p>此时判断属于<span class="math inline">\(w_1\)</span>。</p>
+<p>显然，如果有<span class="math inline">\(\lambda_{12}-\lambda_{22}=\lambda_{21}-\lambda_{11}\)</span>，那么其等价于最小错误率准则。</p>
+<p>对于多分类任务，我们的损失可以写作（此时等价于多分类<em>最小化分类错误率</em>）</p>
 <p><span class="math display">\[\lambda_{ij}\left\{\begin{matrix}
 0, & i=j\\
 1, & i\neq j
@@ -733,6 +910,17 @@
 <p>对于<span class="math inline">\(P(c|x)\)</span>怎样得出，判别式模型对于给定的<span class="math inline">\(x\)</span>，通过直接建模<span class="math inline">\(P(c|x)\)</span>来预测<span class="math inline">\(c\)</span>。而生成式模型，先对联合概率<span class="math inline">\(P(x,c)\)</span>建模，再通过贝叶斯公式得到<span class="math inline">\(P(c|x)\)</span></p>
 <p><span class="math display">\[P(c|x)=\dfrac{P(x,c)}{P(x)} = \dfrac{P(c)P(x|c)}{P(x)}
 \]</span></p>
+<h3 id="判别函数和决策面分类器设计">判别函数和决策面、分类器设计</h3>
+<p>用于表示决策规则的某些函数<span class="math inline">\(g_i(x)\)</span>称为判别函数，每个类别分别对应一个判别函数。</p>
+<p>判别函数与决策面方程密切相关，且都由相应的决策规则所确定。</p>
+<p>对于<span class="math inline">\(c\)</span>类分类问题，按照决策规则可以把<span class="math inline">\(d\)</span>维特征空间分成<span class="math inline">\(c\)</span>个决策域，将划分决策域的边界面称为决策面，在数学上用解析形式可以表示成决策面方程。</p>
+<p>判决区域<span class="math inline">\(R_i\)</span>是特征空间中的一个子空间，所有落入<span class="math inline">\(R_i\)</span>的样本都会被判断为类别<span class="math inline">\(w_i\)</span></p>
+<p>在判决边界上，通常有两类或多类的判别函数值相等。</p>
+<p>分类器设计就是设计判别函数，求出判定面方程<span class="math inline">\(g(x)\)</span></p>
+<p>分类器最常用的表述方式为判别函数<span class="math inline">\(g_i(x),i=1,2,\cdots,c\)</span></p>
+<p>基于判别函数的判定方法为：<span class="math inline">\(w_i = \arg\max_i g_i(x)\)</span>。决策面方程就为<span class="math inline">\(g_i(x)=g_j(x)\)</span></p>
+<p>基于最小错误率的判决函数就是<span class="math inline">\(g_i(x)=P(w_i|x)\)</span>，基于最小风险的判决函数就是<span class="math inline">\(g_i(x)=-R(a_i|x)\)</span>。</p>
+<p>特别的，对于两分类问题，可以只用一个判别函数<span class="math inline">\(g(x)=g_1(x)-g_2(x)\)</span>。如果<span class="math inline">\(g(x)>0\)</span>，则为<span class="math inline">\(w_1\)</span>，否则为<span class="math inline">\(w_2\)</span>。此时决策面为<span class="math inline">\(g(x)=0\)</span></p>
 <h3 id="朴素贝叶斯分类器">朴素贝叶斯分类器</h3>
 <p>之前的贝叶斯公式的问题是<span class="math inline">\(P(x|c)\)</span>是一个联合概率，其并不方便直接从训练样本里面得出。朴素贝叶斯假设属性条件独立，那么有</p>
 <p><span class="math display">\[P(c|x)=\dfrac{P(c)P(x|c)}{P(x)}=\dfrac{P(c)}{P(x)}\prod^d_{i=1}P(x_i|c)
@@ -776,6 +964,13 @@
 	<figcaption>11.jpg</figcaption>
 	
 </figure></p>
+<h3 id="正态分布下的统计决策">正态分布下的统计决策</h3>
+<p>TODO</p>
+<h3 id="贝叶斯vs其他判别">贝叶斯vs其他判别</h3>
+<p>我们的贝叶斯理论都基于后验概率，所以要先知道先验概率和类条件概率。实际情况下并不一定知道类条件概率，如果样本充足，则可以用估计的办法估计类条件概率。有时候样本不够多，样本维数又比较高，此时估计就会不准确。更适合采用别的方法，例如线性判别。</p>
+<p>线性判别直接假设判别函数，用样本来估计判别函数的参数，而免去估计类条件概率。非贝叶斯的算法基本上都采用这种方式。判别函数最简单的形式是线性函数，决策面是超平面，此时也叫做线性判别。其包含参数<span class="math inline">\(w,w_0\)</span></p>
+<p>然而，在贝叶斯决策中，判别函数为最小错误率和最小风险。使用这种判别函数的分类器是所有分类器中的最优分类器。其他判别函数下的分类器都只能称为次优分类器。</p>
+<p>后面介绍的准则函数，都只是在给定准则下的最优解，而不是整个问题的最优解。次优解的好处是代价小。</p>
 <h2 id="有监督学习">有监督学习</h2>
 <p>即训练集除了属性，还有标签。</p>
 <p>其训练、验证、预测程序框架如下</p>
@@ -818,6 +1013,83 @@
 <p>前面在贝叶斯分类器中提到过，生成式模型（Generative Algorithms）和判别式模型（Discriminative Algorithms）的区别。</p>
 <p>判别式模型直接对<span class="math inline">\(P(Y|X)\)</span>建模。例子：通过人脸识别来判断性别。典型算法有：逻辑回归、SVM、神经网络等。</p>
 <p>而生成式模型通过对<span class="math inline">\(P(X|Y)\)</span>和<span class="math inline">\(P(Y)\)</span>建模，通过贝叶斯公式来算<span class="math inline">\(P(Y|X)\)</span>。例子：你收到电子邮件（观察结果，the observation），你想推断邮件是否是垃圾邮件（原因，the cause）。典型算法有：朴素贝叶斯、贝叶斯网络。</p>
+<h3 id="fisher线性判别">Fisher线性判别</h3>
+<p>对于两类问题，线性判别函数为</p>
+<p><span class="math display">\[g(x) = w^Tx+w_0
+\]</span></p>
+<p>判决面方程为<span class="math inline">\(g(x)=0\)</span></p>
+<p>决策规则为：令<span class="math inline">\(g(x)=g_1(x)-g_2(x)\)</span>，如果<span class="math inline">\(g(x)>0\)</span>，则判断为<span class="math inline">\(w_1\)</span>，若<span class="math inline">\(g(x)<0\)</span>，则判断为<span class="math inline">\(w_2\)</span>，如果<span class="math inline">\(g(x)=0\)</span>，则可以拒判或者任意分。</p>
+<p>至于如何取得参数，我们需要一个准则函数<span class="math inline">\(J\)</span>，其是<span class="math inline">\(x,w,w_0\)</span>的函数，它的极值对应于“最优”的决策。我们用最优化方法求取<span class="math inline">\(J\)</span>的极值，就可以得到最优参数。</p>
+<p>Fisher判别分析考虑把<span class="math inline">\(d\)</span>维特征投影到一条直线上，形成一维空间，并且保持较好的性能。</p>
+<p>只要给每个样本<span class="math inline">\(x\)</span>乘以向量<span class="math inline">\(w^T\)</span>就可得到一个标量<span class="math inline">\(y=w^Tx\)</span>，也就是投影到了一条直线上。其中<span class="math inline">\(w\)</span>就是投影到的直线。其方向重要而长度不重要。</p>
+<p>如何保持较好的性能呢？Fisher法希望两类样本在该直线上的距离尽可能远，而类内的距离尽可能近。</p>
+<p>假设有<span class="math inline">\(m\)</span>个<span class="math inline">\(n\)</span>维样本<span class="math inline">\(\{x_1,x_2,\cdots,x_m\}\)</span>，第一类集合为<span class="math inline">\(D_1\)</span>，规模为<span class="math inline">\(N_1\)</span>，第二类集合为<span class="math inline">\(D_2\)</span>，规模为<span class="math inline">\(N_2\)</span></p>
+<p><strong>在<span class="math inline">\(n\)</span>维<span class="math inline">\(X\)</span>空间中</strong></p>
+<p>各类均值向量为</p>
+<p><span class="math display">\[\mu_i = \dfrac{1}{N_i}\sum_{x_j\in D_i}x_j
+\]</span></p>
+<p>类<span class="math inline">\(i\)</span>的类内离散度为</p>
+<p><span class="math display">\[S_i = \sum_{x_j\in D_i}(x_j-\mu_i)(x_j-\mu_i)^T
+\]</span></p>
+<p>总类内离散度就为</p>
+<p><span class="math display">\[S_w = S_1+S_2
+\]</span></p>
+<p>其是对称半正定矩阵，当<span class="math inline">\(m>n\)</span>时通常是非奇异的</p>
+<p>类间离散度为</p>
+<p><span class="math display">\[S_b = (\mu_1-\mu_2)(\mu_1-\mu_2)^T
+\]</span></p>
+<p>其是对称半正定矩阵。</p>
+<p><strong>在<span class="math inline">\(1\)</span>维<span class="math inline">\(Y\)</span>空间中</strong></p>
+<p>各类均值向量为</p>
+<p><span class="math display">\[\bar\mu_i = \dfrac{1}{N_i}\sum_{y_j\in D_i}y_j
+\]</span></p>
+<p>类<span class="math inline">\(i\)</span>的类内离散度为</p>
+<p><span class="math display">\[\bar S_i^2 = \sum_{x_j\in D_i}(y_j-\bar\mu_i)^2
+\]</span></p>
+<p>总类内离散度就为</p>
+<p><span class="math display">\[\bar S_w = \bar S_1^2+\bar S_2^2
+\]</span></p>
+<p>类间离散度为</p>
+<p><span class="math display">\[\bar S_b = (\bar\mu_1-\bar\mu_2)^2
+\]</span></p>
+<p>于是Fisher的最佳投影方向的准则函数就为</p>
+<p><span class="math display">\[J(w) = \dfrac{\bar S_b}{\bar S_w}
+\]</span></p>
+<p>最优参数就是</p>
+<p><span class="math display">\[w^\ast = \arg\max_w J(w)
+\]</span></p>
+<p>把<span class="math inline">\(y_j\)</span>用<span class="math inline">\(w^Tx\)</span>代入，展开可以得到</p>
+<p><span class="math display">\[\bar S_b = w^T S_b w
+\]</span></p>
+<p><span class="math display">\[\bar S_w = w^TS_ww
+\]</span></p>
+<p>所以有</p>
+<p><span class="math display">\[J(w) = \dfrac{w^TS_bw}{w^TS_ww}
+\]</span></p>
+<p>假定分母是非零常数，则可以用拉格朗日乘数法算出</p>
+<p><span class="math display">\[w^* = S^{-1}_w(\mu_1-\mu_2)
+\]</span></p>
+<p>于是用这个参数，我们把所有样本<span class="math inline">\(x\)</span>降维为<span class="math inline">\(y=w^{*T}x\)</span>。</p>
+<p>分类规则为，<span class="math inline">\(y>w_0\)</span>时属于<span class="math inline">\(\omega_1\)</span>类，否则属于<span class="math inline">\(\omega_2\)</span>类。其中<span class="math inline">\(w_0\)</span>可以用多种取法。最常用的有</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 276; 
+			flex-basis: 664px"
+	>
+	<a href="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/86.jpg" data-size="457x165">
+		<img src="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/86.jpg"
+			width="457"
+			height="165"
+			srcset="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/86_hub9df32b7768da709947c3a8741685b57_9664_480x0_resize_q75_box.jpg 480w, /p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/86_hub9df32b7768da709947c3a8741685b57_9664_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="86.jpg">
+	</a>
+	
+	<figcaption>86.jpg</figcaption>
+	
+</figure></p>
 <h3 id="逻辑回归logistic-regression">逻辑回归（Logistic Regression）</h3>
 <p>逻辑回归是一种线性分类算法，其通常是二分类，并且给出确定结果（而不是属于某一类的概率）。当输出为1时，预判为正类，输出为0时，预判为负类。</p>
 <p>线性回归的模型如下，其一般用于回归问题</p>
@@ -837,6 +1109,74 @@
 \]</span></p>
 <p>其中<span class="math inline">\(m\)</span>是样本数量，<span class="math inline">\(y\)</span>的取值为<span class="math inline">\(\{0,1\}\)</span>。目标就是最小化损失函数，可以利用梯度下降法等办法。</p>
 <p>另外，还是有可能算出属于某个类的概率的，即<span class="math inline">\(p(y/x;\theta)=(h_\theta(x))^y(1-h_\theta(x))^{1-y}\)</span></p>
+<h3 id="感知准则函数与感知器算法">感知准则函数与感知器算法</h3>
+<p><strong>线性可分性</strong></p>
+<p>如果存在一个向量<span class="math inline">\(a\)</span>使得，对于所有的<span class="math inline">\(x\in w_1\)</span>，有<span class="math inline">\(a^Tx>0\)</span>，对于所有的<span class="math inline">\(x\in w_2\)</span>，有<span class="math inline">\(a^Tx<0\)</span>，那么样本集是线性可分的。否则是线性不可分的。</p>
+<p><strong>样本规范化</strong></p>
+<p>对于线性可分的样本集，令</p>
+<p><span class="math display">\[x_i' = \left\{\begin{matrix}
+ x_i  ,&\quad x_i\in w_1\\
+ -x_i ,&\quad x_i\in w_2
+\end{matrix}\right.
+\]</span></p>
+<p>那么线性可分条件就可以改写为<span class="math inline">\(a^T x'_i>0\)</span></p>
+<p>上述过程称为样本的规范化。<span class="math inline">\(x'_i\)</span>称为规范化增广样本向量。本部分的后续内容都是规范化的，简记为<span class="math inline">\(x_i\)</span></p>
+<p><strong>解向量和解区</strong></p>
+<p>对于线性可分的一组规范化样本<span class="math inline">\(\{x_1,x_2,\cdots,x_m\}\)</span>，若存在一个权向量<span class="math inline">\(a^*\)</span>满足</p>
+<p><span class="math display">\[a^{*T}x_i>0
+\]</span></p>
+<p>则称<span class="math inline">\(a^*\)</span>为一个解向量，在权值空间中所有解向量组成的区域称为解区。</p>
+<p><strong>对解区的限制</strong></p>
+<p>解向量不唯一，我们可以通过加入限制得到更好的选择。一般认为，越靠近解区中间的解向量，似乎越能对新的样本正确分类。</p>
+<p>我们可以选找一个单位长度的解向量使之最大化样本到分界面的距离</p>
+<p>也可以引用一个余量<span class="math inline">\(b>0\)</span>，寻找对所有样本<span class="math inline">\(x_i\)</span>满足</p>
+<p><span class="math display">\[a^Tx_i > b
+\]</span></p>
+<p>的最小长度的向量。新的解区位于原解区之中，而且他的边界到原解区边界的距离为<span class="math inline">\(b/||x_i||\)</span></p>
+<p><strong>感知器算法</strong></p>
+<p>对于线性可分的（规范化）样本，满足<span class="math inline">\(w^Tx_i > 0\)</span>。在训练时，对于某个迭代中的权向量<span class="math inline">\(w\)</span>，如果某个样本被错误分类，则<span class="math inline">\(w^T x_k\leq 0\)</span>。我们对所有错分样本的惩罚函数，即感知器准则函数定义如下</p>
+<p><span class="math display">\[J_P(w) = \sum_{w^T x_k\leq 0}(-w^Tx_k)
+\]</span></p>
+<p>当且仅当函数取得最小值<span class="math inline">\(0\)</span>时，有最优的<span class="math inline">\(w^*\)</span>。求解过程可以用梯度下降法。见<a class="link" href="../%e6%9c%80%e4%bc%98%e5%8c%96%e7%90%86%e8%ae%ba%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/#%e6%9c%80%e9%80%9f%e4%b8%8b%e9%99%8d%e6%b3%95" >最优化理论学习笔记</a></p>
+<p>感知器算法的更新公式如下：</p>
+<p><span class="math display">\[w^{(k+1)} = \left\{\begin{matrix}
+ w^{(k)}, &\ w^{(k)T}x_i>0\\
+ w^{(k)}+Cx_i &\ w^{(k)T}x_i\leq 0
+\end{matrix}\right.
+\]</span></p>
+<p>其中<span class="math inline">\(C\)</span>是一个校正增量。对正确分类的模式则“赏”，实际上是“不罚”，即权向量不变。对错误分类的模式则“罚”，使<span class="math inline">\(w^{(k)}\)</span>加上一个正比于<span class="math inline">\(x_i\)</span>的分量。如此反复直到所有样本都可以被正确分类。</p>
+<p>如果线性可分，那么参数一定会收敛。否则一定无法收敛，会一直迭代。</p>
+<p>这个算法必须要有代表性的正确的训练数据，其对噪声很敏感，解不够鲁棒。</p>
+<p>如果要有比较好的训练效果，以及时间不是开销太大。一般样本数为<span class="math inline">\(C=2(k+1)\)</span>的<span class="math inline">\(10\sim 20\)</span>倍，其中<span class="math inline">\(k\)</span>为特征维数。</p>
+<h3 id="广义线性判别分析">广义线性判别分析</h3>
+<p>对于非线性问题，线性判别函数难以正确分类，而且设计非线性判别函数比较复杂。</p>
+<p>此时，常用的方法是将原特征空间映射到一个高维空间，将低维空间中的非线性问题转化为高维空间中的线性问题，从而降低模式分类的难度。</p>
+<p>例如对于二次判别函数<span class="math inline">\(g(x)=c_0+c_1x+c_2x^2\)</span>。我们就可以令<span class="math inline">\(y=[1,x,x^2],a=[c_0,c_1,c_2]\)</span>。则<span class="math inline">\(g(x)=a^Ty\)</span>就是<span class="math inline">\(y\)</span>的线性函数。</p>
+<p>此时称<span class="math inline">\(g(y)\)</span>为广义线性判别函数，<span class="math inline">\(a\)</span>叫做广义权向量。</p>
+<p>如此做的副作用是，增加了特征的维数，如上例就是一维变三维。可以证明，如果特征数有限，那么一定存在一个高维特征空间使得样本线性可分。</p>
+<p>判别函数的一般形式是</p>
+<p><span class="math display">\[g(x) = w_1f_1(x)+w_2f_2(x)+\cdots+w_kf_k(x)+w_0
+\]</span></p>
+<p>其中<span class="math inline">\(f_i\)</span>是单值函数。将函数从<span class="math inline">\(x\)</span>空间变换到<span class="math inline">\(y\)</span>空间后，在新空间中是线性函数。</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 329; 
+			flex-basis: 791px"
+	>
+	<a href="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/87.jpg" data-size="775x235">
+		<img src="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/87.jpg"
+			width="775"
+			height="235"
+			srcset="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/87_hu0bf4764cbfdad86ceaeac0ae08aff5d8_17269_480x0_resize_q75_box.jpg 480w, /p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/87_hu0bf4764cbfdad86ceaeac0ae08aff5d8_17269_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="87.jpg">
+	</a>
+	
+	<figcaption>87.jpg</figcaption>
+	
+</figure></p>
 <h3 id="支持向量机">支持向量机</h3>
 <p>支持向量机也是二分类分类器。其基本思想是找到一个分类面（或者是线，或者是超平面），把样本分成两类。但是这样的划分面可能有很多个</p>
 <p><figure 
@@ -957,14 +1297,28 @@
 <p><span class="math display">\[f(x) = w^T\phi(x)+b = \sum^m_{i=1}a_iy_i\phi(x_i)^T\phi(x)+b = \sum^m_{i=1}a_iy_i\kappa(x_i,x)+b
 \]</span></p>
 <p>核函数具体形式TODO</p>
-<h3 id="knn">KNN</h3>
-<p>KNN的思想很简单，挑选出距离该样本最近的<span class="math inline">\(k\)</span>个样本，这<span class="math inline">\(k\)</span>个样本中最多的类别决定为预测类别。算法流程如下</p>
-<p>todo</p>
-<p>其中距离常用的有欧拉距离、曼哈顿距离等。<span class="math inline">\(k\)</span>是超参数，一般比较小，如几或几十，通常可以用交叉验证来确定最优的<span class="math inline">\(k\)</span></p>
-<p>KNN的错误概率为</p>
+<h3 id="最近邻">最近邻</h3>
+<p>近邻法（NN和KNN）在原理上属于模板匹配，并且它没有训练过程。它将训练样本集中的每个样本都作为模板，用测试样本与每个模板做比较，看与哪个模板最相似(即为近邻)，就按最近似的模板的类别作为自己的类别。</p>
+<p>近邻法的共同缺点是计算量大，存储量也大。它也不考虑决策风险。另外有限样本的分析难以进行。</p>
+<p>但是在模板数量很大时其错误率指标还是相当不错的。该方法普适性比较好。常用来作为一个基准算法。</p>
+<p>最近邻就是将与测试样本最近邻样本的类别作为决策的方法。</p>
+<p>对于一个<span class="math inline">\(C\)</span>类别问题，每类有<span class="math inline">\(N_i\)</span>个样本，则第<span class="math inline">\(i\)</span>类的判别函数为</p>
+<p><span class="math display">\[g_i(x) = \min_k||x-x_i^k||
+\]</span></p>
+<p>其中<span class="math inline">\(x^k_i\)</span>表示<span class="math inline">\(w_i\)</span>类中的第<span class="math inline">\(k\)</span>个样本。距离可以有很多种，用的比较多的是欧氏距离。</p>
+<p>决策规则为，<span class="math inline">\(w = \arg\min_w g_i(x)\)</span>。</p>
+<p>最近邻法的错误率会有偶然性，也就是指与具体的训练样本集有关。计算错误率的偶然性会因训练样本数量的增大而减小。随着训练样本的增加，准确率会有所提高。</p>
+<p>最近邻的错误率比贝叶斯错误率要大，但是在无限样本的情况下，错误率不会超过两倍贝叶斯错误率。</p>
+<p>NN的错误概率为</p>
 <p><span class="math display">\[P(err)=1-\sum_{c\in Y}P(c|x)P(c|z)
 \]</span></p>
 <p>其中<span class="math inline">\(x\)</span>是测试样本，<span class="math inline">\(z\)</span>是其最邻近样本。</p>
+<p>在无限大样本时，有</p>
+<p><span class="math display">\[P(err)\approx 1 - \sum_{c\in Y}P^2(c|x)\leq 1-P^2(c^*|x)=(1+P(c^*|x))(1-P(c^*|x))\leq 2\times(1-P(c^*|x))
+\]</span></p>
+<h3 id="knn">KNN</h3>
+<p>KNN的思想很简单，挑选出距离该样本最近的<span class="math inline">\(k\)</span>个样本，这<span class="math inline">\(k\)</span>个样本中最多的类别决定为预测类别。<span class="math inline">\(k\)</span>一般为奇数。一般比较小，如几或几十，通常可以用交叉验证来确定最优的<span class="math inline">\(k\)</span>。</p>
+<p>在无穷多样本的情况下，KNN错误率要低于NN。也仍然是在一倍到两边贝叶斯错误率之间。</p>
 <h3 id="决策树">决策树</h3>
 <p><figure 
 	
@@ -985,6 +1339,13 @@
 	<figcaption>78.jpg</figcaption>
 	
 </figure></p>
+<p>决策树比较适合离散属性的分类问题。他是一种多级分类器，综合采用多个决策规则，逐步把复杂的多类别分类问题转化为若干个简单的分类问题。</p>
+<p>决策树是一个树形的决策帮助数据结构工具。一般的，一棵决策树包含一个根结点、若干个内部结点和若干个叶结点；叶结点对应于决策结果，其他每个结点则对应于一个属性测试；每个结点包含的样本集合根据属性测试的结果被划分到子结点中；根结点包含样本全集。从
+根结点到每个叶结点的路径对应了一个判定测试序列.</p>
+<p>二叉决策树是一个特例，把复杂的多分类任务转化成多级两分类任务。</p>
+<p>对噪声数据有很好的健壮性且能学习析取表达式，之前的线性判别函数中的感知器函数对噪声特别敏感，决策树对噪声鲁棒性较好。</p>
+<p>构造好的决策树的关键在于如何选择好的逻辑判断或属性。人们研究出，一般情况下或具有较大概率地说，树越小则树的预测能力越强。要构造尽可能小的决策树，关键在于选择恰当的逻辑判断或属性。</p>
+<p>若某一个子集上样本很少，还有分支，这说明属性不是很好，只对某些很少的样本有作用（过拟合）</p>
 <p>决策树的适用条件：</p>
 <ol>
 <li>有一个决策者期望实现的明确目标。</li>
@@ -993,9 +1354,9 @@
 <li>决策者可以估计不确定因素的发生概率</li>
 <li>可以计算不同方案在不同因素下的收益或损失</li>
 </ol>
-<p>决策树是一个树形的决策帮助数据结构工具。一般的，一棵决策树包含一个根结点、若干个内部结点和若干个叶结点；叶结点对应于决策结果，其他每个结点则对应于一个属性测试；每个结点包含的样本集合根据属性测试的结果被划分到子结点中；根结点包含样本全集。从
-根结点到每个叶结点的路径对应了一个判定测试序列.</p>
-<p>生成决策树有三种算法：ID3、C4.5、CART。</p>
+<p>优点：可以生成可以理解的规则，比较直观；计算量不太大；可以处理连续和离散字段；可以清晰地在树的构造过程中显示哪些字段比较重要</p>
+<p>缺点：对于连续性的字段比较难预测；类别太多时，错误率可能会增加的比较快；一般的算法分类时，只是根据一个属性来分类；不是全局最优。</p>
+<p>生成决策树有三种算法：ID3（处理离散）、C4.5（处理连续）、CART（处理属性缺失）。</p>
 <p><strong>信息增益</strong></p>
 <p>信息增益Information Gain，指知道一个特征后，不确定性的减少程度。也就是知道前后的信息熵的变化程度。记作<span class="math inline">\(g(D,A)\)</span>，其中<span class="math inline">\(D\)</span>是训练集，<span class="math inline">\(A\)</span>是其中的一个特征，有</p>
 <p><span class="math display">\[g(D,A) = H(D) - H(D|A)
@@ -1065,17 +1426,25 @@
 <p>引入了模型可解释性的损失。当没有进行适当的步骤时，可能会给结果模型引入很多偏差。计算复杂度可能提升。</p>
 <h2 id="无监督学习">无监督学习</h2>
 <p>和有监督学习相比，无监督学习就是样本没有打上label。</p>
-<p>训练集一般就没有<span class="math inline">\(y\)</span>，为<span class="math inline">\(\{x^{(1)}, x^{(2)}, \cdots, x^{(m)}\}\)</span>。常见的应用有：</p>
-<p>网络搜索、认知科学、神经学、遗传学。</p>
+<p>训练集一般就没有<span class="math inline">\(y\)</span>，为<span class="math inline">\(\{x^{(1)}, x^{(2)}, \cdots, x^{(m)}\}\)</span>。常见的应用有：网络搜索、认知科学、神经学、遗传学。</p>
+<h3 id="高斯混合模型">高斯混合模型</h3>
+<p>TODO</p>
 <h3 id="k-means聚类算法">K-means聚类算法</h3>
+<p>K-means是一种基于样本间相似性度量的聚类方法，这类方法的目标是类内样本相似性高，类间样本相似性低。基于样本间相似性度量的聚类方法可以分为动态聚类法和层次聚类法，K-means是动态聚类法。</p>
+<p>动态聚类的关键点是</p>
+<ol>
+<li>选取一定的距离度量方法作为样本间的相似性度量准则。</li>
+<li>确定样本的合理初始划分，包括代表点的选择，初始分类方法的选择等。</li>
+<li>确定评价聚类结果质量的准则函数，对初始分类进行调整，使其达到该准则函数的极值。</li>
+</ol>
 <p>K-means算法把<span class="math inline">\(n\)</span>个样本分成<span class="math inline">\(k\)</span>类，每一个样本和与它最近的类型中心分为一类。这里可以是各种距离，包括欧几里得距离、海明距离、曼哈顿距离等。</p>
 <p>假设样本集为<span class="math inline">\(D=\{x_1,x_2,\cdots,x_m\}\)</span>，要把他们分为<span class="math inline">\(k\)</span>类，<span class="math inline">\(C=\{C_1,C_2,\cdots,C_k\}\)</span>。K-means的优化目标是，最小化：</p>
-<p><span class="math display">\[E = \sum^k_{i=1}\sum_{x\in C_i}||x-\mu_i||^2_2
+<p><span class="math display">\[J = \sum^k_{i=1}\sum_{x\in C_i}||x-\mu_i||^2_2
 \]</span></p>
 <p>其中<span class="math inline">\(\mu_i\)</span>是每一类的聚类中心，</p>
 <p><span class="math display">\[\mu_i = \dfrac{1}{|C_i|}\sum_{x\in C_i}x
 \]</span></p>
-<p><span class="math inline">\(E\)</span>越小，代表着各类的样本和样本重心的紧密度（closeness degree）越高，代表着聚类效果越好。</p>
+<p><span class="math inline">\(J\)</span>越小，代表着各类的样本和样本重心的紧密度（closeness degree）越高，代表着聚类效果越好。</p>
 <p>算法流程如下：</p>
 <ol>
 <li>随机选取<span class="math inline">\(k\)</span>个聚类中心<span class="math inline">\(\mu_i\)</span>，可以指定坐标，也可以直接从样本点中随机选。</li>
@@ -1083,6 +1452,63 @@
 <li>计算新的聚类中心。即使用<span class="math inline">\(\mu_i = \dfrac{1}{|C_i|}\sum_{x\in C_i}x\)</span></li>
 <li>重复2-3，直到迭代次数足够，或聚类中心不再改变（两次迭代的距离差距极小）</li>
 </ol>
+<p>优点：简单、快速；处理大数据集，该算法是相对可伸缩和高效率的；当类密集，且类与类之间区别明显（比如球型聚集）时，聚类效果很好；</p>
+<p>缺点：结果与初始聚类中心有关；必须预先给出类别数<span class="math inline">\(k\)</span>；对噪声和孤立点敏感；不适合发现非凸面形状的聚类</p>
+<p>对于初值选择问题，可以多设置一些不同的初值，对比最后的结果，直到稳定。</p>
+<p>对于聚类数未知情况下的聚类问题：聚类分裂、合并确定聚类数；可以通过其他的算法来估计<span class="math inline">\(k\)</span></p>
+<h3 id="模糊聚类fcm">模糊聚类（FCM）</h3>
+<p>前置知识为<a class="link" href="../%e4%ba%ba%e5%b7%a5%e6%99%ba%e8%83%bd%e6%a6%82%e8%ae%ba%e7%ac%94%e8%ae%b0/#%e6%a8%a1%e7%b3%8a%e8%ae%a1%e7%ae%97%e5%92%8c%e6%a8%a1%e7%b3%8a%e6%8e%a8%e7%90%86" >人工智能概论笔记</a></p>
+<p>这里只用到<span class="math inline">\(\mu_A(x)\)</span>表示<span class="math inline">\(x\)</span>属于集合<span class="math inline">\(A\)</span>的程度。</p>
+<p>在模糊模式识别中，用模糊子集代替确定子集，而得到模糊的分类结果，即分类结果的模糊化，其中，一个样本以不同的程度属于各个类别，而不再属于某个确定的类别。也就是软聚类。</p>
+<p>优点是：可以反映出分类过程中的不确定性, 有利于用户根据结果进行决策。模糊化的分类结果比明确的分类结果中包含更多的信息, 有利于进一步决策。</p>
+<p>相较于Kmeans的准则函数，FCM的准则函数添加了隶属度部分（有<span class="math inline">\(N\)</span>个样本，共<span class="math inline">\(C\)</span>类）</p>
+<p><span class="math display">\[J_f = \sum^C_{j=1}\sum^N_{i=1}[\mu_j(x_i)]^b||x_i-m_j||^2
+\]</span></p>
+<p>其中<span class="math inline">\(b >1\)</span>是一个可以控制聚类结果的模糊程度的超参数，<span class="math inline">\(m_j\)</span>是<span class="math inline">\(j\)</span>类的聚类中心。约束条件为</p>
+<p><span class="math display">\[\sum^C_{j=1}\mu_j(x_i)=1
+\]</span></p>
+<p>在此<span class="math inline">\(N\)</span>个约束条件下，对<span class="math inline">\(J_f\)</span>使用拉格朗日乘数法，可得</p>
+<p><span class="math display">\[m_j = \dfrac{\sum^N_{i=1}[\mu_j(x_i)]^bx_i}{\sum^N_{i=1}[\mu_j(x_i)]^b}
+\]</span></p>
+<p><span class="math display">\[\mu_j(x_i) = \dfrac{(1/||x_i-m_j||^2)^{1/(b-1)}}{\sum^C_{l=1}(1/||x_i-m_l||^2)^{1/(b-1)}}
+\]</span></p>
+<p>算法步骤为：</p>
+<ol>
+<li>设定聚类数目<span class="math inline">\(C\)</span>，参数<span class="math inline">\(b\)</span>（通常为<span class="math inline">\(2\sim 5\)</span>），和一个<span class="math inline">\(\varepsilon >0\)</span></li>
+<li>初始化聚类中心</li>
+<li>根据上式更新<span class="math inline">\(\mu_j(x_i)\)</span></li>
+<li>根据新的隶属度函数更新新的聚类中心</li>
+<li>如果两次迭代的聚类中心不变动（变动距离小于<span class="math inline">\(\varepsilon\)</span>），则停止。否则返回3</li>
+</ol>
+<p>最后的输出可以输出隶属度，也可以输出隶属度最大的类。</p>
+<p>FCM算法速度较快，对于满足正态分布的数据聚类效果会很好。但是也会对孤立点敏感，并且也对初始化关系大，且需要提前给出类别数。</p>
+<h3 id="层次聚类算法">层次聚类算法</h3>
+<p>基于划分的聚类算法可以将数据集划分为指定数量的聚类簇，但在某些情况下，数据集需要在不同的级别进行划分。</p>
+<p>并且，基于划分的算法需要给出聚类的数目<span class="math inline">\(K\)</span>，实际应用中经常不能确定类的数目。有时，数据集划分为两类四类八类都是合理的。因此，特定数据集应该聚成多少个簇通常取决于我们研究该数据集的尺度。</p>
+<p>层次聚类算法主要分为分裂的和凝聚的两类，具体决于其层次结构是“自上而下”还是“自下而上”的。</p>
+<p>分裂方法：自上而下，首先把所有样本数据归为同一个聚类簇。然后递归地把这些聚类簇划
+分成更小的子聚类簇，直到每一个样本都单独作为一个聚类簇，或满足某个终止条件。常见的基于分裂方的的算法有层次K-均值算法。</p>
+<p>凝聚方法：自下而上，数据集中的每个样本首先被视为一个聚类簇，然后迭代地将这些较小
+的簇合并为更大的聚类簇。直到最后所有样本被归为一个大聚类簇，或满足某个终止条件。</p>
+<p><strong>层次K均值</strong></p>
+<ol>
+<li>把所有样本数据归到一个簇<span class="math inline">\(C\)</span>中，即为层次结构的根</li>
+<li>使用Kmeans把簇<span class="math inline">\(C\)</span>划分成指定的<span class="math inline">\(K\)</span>个子簇</li>
+<li>对于2中的<span class="math inline">\(K\)</span>个簇，分别使用Kmeans划分为更小的簇，递归地只到无法划分或者满足终止条件。</li>
+</ol>
+<p>缺点：一旦两个样本在开始时被分成不同的簇，即使两点之间的距离非常接近，它们也不会在以后的聚类过程中聚在一起。</p>
+<p><strong>凝聚方法</strong></p>
+<ol>
+<li>把每个样本都看做一个簇，共<span class="math inline">\(n\)</span>个，每个簇只含一个样本</li>
+<li>重复以下步骤，只到所有样本被聚类到同一个簇或者满足停止条件
+<ol>
+<li>从<span class="math inline">\(C\)</span>中找到两个距离最近的簇</li>
+<li>合并这两个簇</li>
+<li>从<span class="math inline">\(C\)</span>中删除原来的两个簇，添加新簇</li>
+</ol>
+</li>
+</ol>
+<p>关于簇间的距离。单连锁方式：两个簇中相距最近的点作为簇间距离。全连锁方式：按照两个簇中相距最远的两个点之间的距离作为簇间距离。平均连锁：把两个簇之间两两点之间的距离的平均值作为簇间距离。</p>
 <h3 id="主成分分析principal-component-analysispca">主成分分析（Principal Component Analysis(PCA)）</h3>
 <p>主成分分析更多地用作一种降维手段，它主要涉及识别数据中的相关性。</p>
 <p>考虑在正交属性空间中的样本点，如何用一个超平面（直线的高维推广）对所有样本进行恰当的表达？</p>
@@ -1230,6 +1656,104 @@ network）组成。</p>
 	<figcaption>81.jpg</figcaption>
 	
 </figure></p>
+<h1 id="特征选择">特征选择</h1>
+<h2 id="基本概念">基本概念</h2>
+<p>对分类器设计来说，使用什么样的特征描述事物，也就是说使用什么样的特征空间是个很重要的问题。</p>
+<p>对特征空间的改造、优化，主要的目的是降维，即把维数高的特征空间改成维数低的特征空间，降维主要有两种途径。</p>
+<ul>
+<li>筛选掉次要特征。关键在于如何确定特征的重要性，以及如何筛选</li>
+<li>通过线性变换来降维。</li>
+</ul>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 186; 
+			flex-basis: 447px"
+	>
+	<a href="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/88.jpg" data-size="708x380">
+		<img src="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/88.jpg"
+			width="708"
+			height="380"
+			srcset="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/88_hu7b1aca7a6285e8bd6b0a55cd6e047b02_39630_480x0_resize_q75_box.jpg 480w, /p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/88_hu7b1aca7a6285e8bd6b0a55cd6e047b02_39630_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="88.jpg">
+	</a>
+	
+	<figcaption>88.jpg</figcaption>
+	
+</figure></p>
+<p><strong>三大类特征</strong></p>
+<p>三大类特征：物理、结构和数字的</p>
+<ul>
+<li>物理和结构特征：易于为人的直觉感知，但有时难于定量描述，因而不易用于机器判别。</li>
+<li>数字特征：易于用机器定量描述和判别，如基于统计的特征。</li>
+</ul>
+<p><strong>特征空间的优化</strong></p>
+<p>对初始的特征空间进行优化是为了降维。即初始的特征空间维数较高。能否改成一个维数较低的空间，称为优化。有两种方法</p>
+<ul>
+<li>特征选择。从原有的的<span class="math inline">\(D\)</span>维特征空间，删去一些特征描述量，从而得到精简后的特征空间。新空间的维数<span class="math inline">\(d < D\)</span>，并且，其是原空间的一个子集，每个分量都必然能在原空间中找到对应的分量。</li>
+<li>特征提取。找到一个映射关系<span class="math inline">\(A:Y\to X\)</span>，使得新样本特征描述维数比原维数降低。其中每个分量<span class="math inline">\(x_i\)</span>是原特征向量各分量的函数，即<span class="math inline">\(x_i=W^T y_i\)</span></li>
+</ul>
+<p>一般人常想，只要逐个分析每个特征，判断它对分类的价值，然后根据其价值删去或保留，但是这种方法并不能保证特征空间的最优组合优化，因此本节仅讨论一些原理上更好的方法。</p>
+<p>特征选择要从原始特征中挑选出一些最有代表性、分类性能最好的特征进行分类。</p>
+<p>要解决两个问题：</p>
+<ul>
+<li>选择的标准，如可分离性判据</li>
+<li>快速特征子集搜索算法</li>
+</ul>
+<p>另外，从<span class="math inline">\(D\)</span>中选<span class="math inline">\(d\)</span>个，或者从<span class="math inline">\(D\)</span>中选出不定大小的子集，是典型的组合优化问题。</p>
+<p>特征选择的方法：</p>
+<ul>
+<li>是否直接考虑分类器性能？
+<ul>
+<li>Filter方法。根据独立于分类器的指标<span class="math inline">\(J\)</span>来评价所选择的特征子集<span class="math inline">\(S\)</span>，在所有可能的特征子集中搜索出使得<span class="math inline">\(J\)</span>最大的特征子集作为最优特征子集。不考虑所使用的学习算法。</li>
+<li>Wrapper方法。将特征选择和分类器结合在一起，在分类过程中表现优异的的特征子集会被选中。</li>
+</ul>
+</li>
+<li>选择特征的顺序
+<ul>
+<li>自下而上：特征数从零逐步增加到d。</li>
+<li>自上而下：特征数从D开始逐步减少到d。</li>
+</ul>
+</li>
+</ul>
+<h2 id="类别可分离性判据">类别可分离性判据</h2>
+<p>用以定量检验分类性能的准则称为类别可分性准则<span class="math inline">\(J_{ij}\)</span>，需要满足以下几点：</p>
+<ol>
+<li>与错误概率有单调关系。这样，准则取最大值时的，错误概率也更小</li>
+<li>特征独立时具有可加性</li>
+<li>度量特性
+<ul>
+<li><span class="math inline">\(J_{ij}>0\)</span>，<span class="math inline">\(i\neq j\)</span>时</li>
+<li><span class="math inline">\(J_{ij}=0\)</span>，<span class="math inline">\(i=j\)</span>时</li>
+<li><span class="math inline">\(J_{ij}=J_{ji}\)</span></li>
+</ul>
+</li>
+</ol>
+<p>这里<span class="math inline">\(J_{ij}\)</span>是第<span class="math inline">\(i\)</span>类和第<span class="math inline">\(j\)</span>类的可分性准则函数，<span class="math inline">\(J_{ij}\)</span>越大，两类的分离程度就越大。</p>
+<ol start="4">
+<li>单调性，即加入新的特征时，准则函数不减小。</li>
+</ol>
+<h3 id="基于距离的可分离性判据">基于距离的可分离性判据</h3>
+<p>基于距离的可分性判据的实质是Fisher准则的延伸。各类样本之间的距离越大，则类别可分性越大。因此，可以用各类样本之间的距离的平均值作为可分性准则</p>
+<p><span class="math display">\[J_d(x) = \dfrac{1}{2}\sum^C_{i=1}P_i\sum^{C}_{j=1}P_j\dfrac{1}{n_in_j}\sum^{n_i}_{k=1}\sum^{n_j}_{l=1}\delta(x^{(i)}_k, x^{(j)}_l)
+\]</span></p>
+<p>其中<span class="math inline">\(c\)</span>是类别数，<span class="math inline">\(P_i,P_j\)</span>是相应类别的先验概率，<span class="math inline">\(\delta(x^{(i)}_k, x^{(j)}_l)\)</span>是两个向量之间的距离，通常用欧氏距离。</p>
+<p>如果记均值向量和总平均向量为</p>
+<p><span class="math display">\[m_i=\dfrac{1}{n_i}\sum^{n_i}_{k=1} x^{(i)}_k,\quad m = \sum^C_{i=1}P_im_i
+\]</span></p>
+<p>那么等价为</p>
+<p><span class="math display">\[J_d(x) = \sum^C_{i=1}P_i\bigg[\dfrac{1}{n_i}\sum^{n_i}_{k=1} \delta(x^{(i)}_k, m_i)+\delta(m_i,m)\bigg]
+\]</span></p>
+<p>其中方括号中的前半为样本到质心的平方距离，后半为某类均值向量到总体样本向量之间的平方距离。如果乘进去，则有类间离散度<span class="math inline">\(\tilde{S}_b\)</span>和类内离散度<span class="math inline">\(\tilde{S}_w\)</span>为</p>
+<p><span class="math display">\[\tilde{S}_w = \sum^C_{i=1}P_i\dfrac{1}{n_i}\sum^{n_i}_{k=1} \delta(x^{(i)}_k, m_i)
+\]</span></p>
+<p><span class="math display">\[\tilde{S}_b = \sum^C_{i=1}P_i\delta(m_i, m)
+\]</span></p>
+<p>此时</p>
+<p><span class="math display">\[J_d(x) = tr(\tilde{S}_w+\tilde{S}_b)
+\]</span></p>
 <h1 id="强化学习">强化学习</h1>
 <h2 id="概论">概论</h2>
 <p>在强化学习中，软件智能体在环境中进行观察并采取行动，作为回报，它会获得奖励。</p>
@@ -3018,6 +3542,7 @@ network）组成。</p>
 <h2 id="bootstrapping">bootstrapping</h2>
 <p>这是一种评估方法。通过可放回地从数据集中抽样<span class="math inline">\(m\)</span>次，得到大小为<span class="math inline">\(m\)</span>的训练集。可以算出，大概有<span class="math inline">\(36.8\%\)</span>的数据从未出现在训练集中，那么就可以把这些数据用作测试集。</p>
 <p>如果不放回，变量的后续选择始终取决于先前的选择，这会使得预判准则不随机。</p>
+<h2 id="矩阵向量求导技术">矩阵/向量求导技术</h2>
 
 </section>
 
@@ -3285,7 +3810,7 @@ network）组成。</p>
                     <nav id="TableOfContents">
   <ol>
     <li><a href="#中英文词汇对照">中英文词汇对照</a></li>
-    <li><a href="#绪论">绪论</a>
+    <li><a href="#认知计算绪论">认知计算绪论</a>
       <ol>
         <li><a href="#大脑">大脑</a></li>
         <li><a href="#认知计算的基本问题">认知计算的基本问题</a></li>
@@ -3316,6 +3841,22 @@ network）组成。</p>
         <li><a href="#神经元的数学公式">神经元的数学公式</a></li>
       </ol>
     </li>
+    <li><a href="#模式识别绪论">模式识别绪论</a>
+      <ol>
+        <li><a href="#模式识别是什么">模式识别是什么</a></li>
+        <li><a href="#模式识别的基本概念">模式识别的基本概念</a></li>
+        <li><a href="#模式识别的基本框架">模式识别的基本框架</a></li>
+        <li><a href="#模式识别的方法">模式识别的方法</a>
+          <ol>
+            <li><a href="#模板匹配">模板匹配</a></li>
+            <li><a href="#统计方法">统计方法</a></li>
+            <li><a href="#句法方法">句法方法</a></li>
+            <li><a href="#神经网络">神经网络</a></li>
+            <li><a href="#比较">比较</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
     <li><a href="#神经网络基础概念">神经网络基础概念</a>
       <ol>
         <li><a href="#神经元及其数学模型">神经元及其数学模型</a></li>
@@ -3333,17 +3874,24 @@ network）组成。</p>
             <li><a href="#最大后验估计map">最大后验估计（MAP）</a></li>
             <li><a href="#最大似然估计mlp">最大似然估计（MLP）</a></li>
             <li><a href="#贝叶斯过程">贝叶斯过程</a></li>
-            <li><a href="#贝叶斯分类器">贝叶斯分类器</a></li>
+            <li><a href="#贝叶斯决策理论贝叶斯分类器">贝叶斯决策理论（贝叶斯分类器）</a></li>
+            <li><a href="#判别函数和决策面分类器设计">判别函数和决策面、分类器设计</a></li>
             <li><a href="#朴素贝叶斯分类器">朴素贝叶斯分类器</a></li>
             <li><a href="#贝叶斯网络">贝叶斯网络</a></li>
+            <li><a href="#正态分布下的统计决策">正态分布下的统计决策</a></li>
+            <li><a href="#贝叶斯vs其他判别">贝叶斯vs其他判别</a></li>
           </ol>
         </li>
         <li><a href="#有监督学习">有监督学习</a>
           <ol>
             <li><a href="#回归任务">回归任务</a></li>
             <li><a href="#分类任务">分类任务</a></li>
+            <li><a href="#fisher线性判别">Fisher线性判别</a></li>
             <li><a href="#逻辑回归logistic-regression">逻辑回归（Logistic Regression）</a></li>
+            <li><a href="#感知准则函数与感知器算法">感知准则函数与感知器算法</a></li>
+            <li><a href="#广义线性判别分析">广义线性判别分析</a></li>
             <li><a href="#支持向量机">支持向量机</a></li>
+            <li><a href="#最近邻">最近邻</a></li>
             <li><a href="#knn">KNN</a></li>
             <li><a href="#决策树">决策树</a></li>
             <li><a href="#随机森林">随机森林</a></li>
@@ -3351,7 +3899,10 @@ network）组成。</p>
         </li>
         <li><a href="#无监督学习">无监督学习</a>
           <ol>
+            <li><a href="#高斯混合模型">高斯混合模型</a></li>
             <li><a href="#k-means聚类算法">K-means聚类算法</a></li>
+            <li><a href="#模糊聚类fcm">模糊聚类（FCM）</a></li>
+            <li><a href="#层次聚类算法">层次聚类算法</a></li>
             <li><a href="#主成分分析principal-component-analysispca">主成分分析（Principal Component Analysis(PCA)）</a></li>
             <li><a href="#独立成分分析independent-component-analysisica">独立成分分析（Independent Component Analysis(ICA)）</a></li>
             <li><a href="#生成对抗网络generative-adversarial-networkgan">生成对抗网络（Generative Adversarial Network(GAN)）</a></li>
@@ -3361,6 +3912,16 @@ network）组成。</p>
         <li><a href="#集成学习">集成学习</a>
           <ol>
             <li><a href="#boosting">Boosting</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+    <li><a href="#特征选择">特征选择</a>
+      <ol>
+        <li><a href="#基本概念">基本概念</a></li>
+        <li><a href="#类别可分离性判据">类别可分离性判据</a>
+          <ol>
+            <li><a href="#基于距离的可分离性判据">基于距离的可分离性判据</a></li>
           </ol>
         </li>
       </ol>
@@ -3464,6 +4025,7 @@ network）组成。</p>
         <li><a href="#熵">熵</a></li>
         <li><a href="#交叉熵">交叉熵</a></li>
         <li><a href="#bootstrapping">bootstrapping</a></li>
+        <li><a href="#矩阵向量求导技术">矩阵/向量求导技术</a></li>
       </ol>
     </li>
   </ol>
