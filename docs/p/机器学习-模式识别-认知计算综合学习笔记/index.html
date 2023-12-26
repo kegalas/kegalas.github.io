@@ -125,7 +125,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 17 分钟
+                    阅读时长: 24 分钟
                 </time>
             </div>
         
@@ -568,7 +568,7 @@
 <p>神经元大体上由四个部分组成：细胞体、轴突、树突、突触</p>
 <p>在神经元的信息处理过程中，树突相当于信息的接收器，细胞体相当于加和、处理信息的东西，轴突相当于信息的发射器，突触就是信息传递的连接点。</p>
 <p>神经元只有当输入信息达到阈值后才会兴奋。所有这些信息都是电化学信息。学习则是突触间电化学过程效率的变化的过程。</p>
-<p>于是我们就可以把神经元抽象成一个数学模型。这其实是一个有向图，每个节点代表神经元的细胞体。每个节点一般的多个输入对应树突，一个输出（有时有多个）对应轴突。神经元的兴奋阈值在这里是节点的激活函数，而突触间的效率在这里就是边的权重。例如下图</p>
+<p>于是我们就可以把神经元抽象成一个数学模型（这里是M-P模型）。这其实是一个有向图，每个节点代表神经元的细胞体。每个节点一般的多个输入对应树突，一个输出（有时有多个）对应轴突。神经元的兴奋阈值在这里是节点的激活函数，而突触间的效率在这里就是边的权重。例如下图</p>
 <p><figure 
 	
 		class="gallery-image" 
@@ -609,6 +609,12 @@
 	
 </figure></p>
 <p>他这里的中间的两个大节点可以理解为把一个节点拆成两个部分。感知器的作用是把一系列输入分为两个类型中的一类。</p>
+<h2 id="人工神经网络的特点">人工神经网络的特点</h2>
+<ul>
+<li>固有的并行结构和并行处理</li>
+<li>容错性</li>
+<li>自适应性</li>
+</ul>
 <h2 id="大脑分区和基础的神经网络">大脑分区和基础的神经网络</h2>
 <p>大脑分区和功能之前探讨过了，这里不再赘述。</p>
 <p>神经网络面对的问题是，对于一组历史数据<span class="math inline">\(\{(x_1,y_1),(x_2,y_2),\cdots,(x_l,y_l)\}\)</span>，要找出一个函数<span class="math inline">\(f(x)=\hat y\)</span>，使得对未来的数据<span class="math inline">\(x\)</span>，<span class="math inline">\(\hat y\)</span>是一个良好的预测。</p>
@@ -661,6 +667,26 @@
 <p><strong>线性函数</strong></p>
 <p><span class="math display">\[f(x)=kx+b
 \]</span></p>
+<p><strong>分段线性函数</strong></p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 313; 
+			flex-basis: 751px"
+	>
+	<a href="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/89.jpg" data-size="670x214">
+		<img src="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/89.jpg"
+			width="670"
+			height="214"
+			srcset="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/89_hu0eab7b140357db29ea805f0a949f5ad6_11836_480x0_resize_q75_box.jpg 480w, /p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/89_hu0eab7b140357db29ea805f0a949f5ad6_11836_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="89.jpg">
+	</a>
+	
+	<figcaption>89.jpg</figcaption>
+	
+</figure></p>
 <p><strong>sigmoid函数</strong></p>
 <p><span class="math display">\[f(x) = \sigma(x) = \dfrac{1}{1+e^{-x}}
 \]</span></p>
@@ -678,7 +704,9 @@
 <p>其没有指数运算，且不会梯度消失。但输入为负数时，完全失效。</p>
 <p><strong>Leaky ReLU</strong></p>
 <p>即在<span class="math inline">\(x\geq 0\)</span>时，<span class="math inline">\(f(x)=x\)</span>，在<span class="math inline">\(x<0\)</span>时，<span class="math inline">\(f(x)=ax\)</span>，其中<span class="math inline">\(a\)</span>是一个相对于<span class="math inline">\(1\)</span>很小的正常数。其对ReLU进行了微小的修正，使得在负数输入时有效。</p>
-<p>有了这些东西，我们就可以构造神经网络了，其中最简单的单层（Single Layer）（实际上是双层）神经网络如下。</p>
+<h3 id="人工神经网络的拓扑结构">人工神经网络的拓扑结构</h3>
+<p><strong>单层网络</strong></p>
+<p>有了这些东西，我们就可以构造神经网络了，其中最简单的单层（Single Layer）（输入数据不被看做一层）神经网络如下。</p>
 <p><figure 
 	
 		class="gallery-image" 
@@ -699,6 +727,7 @@
 	
 </figure></p>
 <p>这样的神经网络作用极其有限。只能用在线性分类任务上，大部分函数都不是线性的，或者不是线性可分的。</p>
+<p><strong>多层网络</strong></p>
 <p>于是就有了多层的神经网络，在上图的输入层和输出层之间添加一个或非常多个隐藏层。</p>
 <p><figure 
 	
@@ -720,9 +749,126 @@
 	
 </figure></p>
 <p>这样，神经网络就能处理更多复杂的分类问题。但是，多层神经网络的问题是难以训练。</p>
+<p>在构成多层网络时，层间的转移函数应是非线性的，否则多层网络的计算能力并不比单层网络强。若干的线性单元层叠加还是线性单元。</p>
+<p><strong>回归型网络（反馈网络）</strong></p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 111; 
+			flex-basis: 268px"
+	>
+	<a href="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/90.jpg" data-size="255x228">
+		<img src="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/90.jpg"
+			width="255"
+			height="228"
+			srcset="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/90_huc9382adee78c555353d820d6e51e4e11_11839_480x0_resize_q75_box.jpg 480w, /p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/90_huc9382adee78c555353d820d6e51e4e11_11839_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="90.jpg">
+	</a>
+	
+	<figcaption>90.jpg</figcaption>
+	
+</figure></p>
+<p>一般来说，凡包含反馈连接的网络均称为回归型网络，或称反馈网络。</p>
+<p><strong>前馈型网络(feed-forward network)</strong></p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 75; 
+			flex-basis: 180px"
+	>
+	<a href="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/91.jpg" data-size="202x268">
+		<img src="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/91.jpg"
+			width="202"
+			height="268"
+			srcset="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/91_hu13ef43a6efcd5d781feb632ae88ccd6c_7953_480x0_resize_q75_box.jpg 480w, /p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/91_hu13ef43a6efcd5d781feb632ae88ccd6c_7953_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="91.jpg">
+	</a>
+	
+	<figcaption>91.jpg</figcaption>
+	
+</figure></p>
+<ul>
+<li>结点按照一定的层次排列；</li>
+<li>网络是单向的，信号只能按照单一的方向，从下一层结点传递到相应的上一层结点；</li>
+<li>上层结点与下一层所有结点相联接。</li>
+<li>层间（Inter-field）联接</li>
+</ul>
+<p>代表网络有：多层感知机、径向基函数网络。</p>
+<p><strong>反馈型网络(feed-back network)</strong></p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 85; 
+			flex-basis: 205px"
+	>
+	<a href="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/92.jpg" data-size="220x257">
+		<img src="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/92.jpg"
+			width="220"
+			height="257"
+			srcset="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/92_hu7809b7c6c086b11ffc3e3a0076e15a6f_10217_480x0_resize_q75_box.jpg 480w, /p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/92_hu7809b7c6c086b11ffc3e3a0076e15a6f_10217_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="92.jpg">
+	</a>
+	
+	<figcaption>92.jpg</figcaption>
+	
+</figure></p>
+<ul>
+<li>输入信号作用于神经元结点后，各个结点的输出又作为输入反馈到各结点，形成一个动态系统，当系统稳定后读取其输出；</li>
+<li>层间（Inter-field）联接</li>
+<li>循环联接</li>
+</ul>
+<p>代表网络：Hopfield网络</p>
+<p><strong>竞争学习网络(competitive learning network)</strong></p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 155; 
+			flex-basis: 372px"
+	>
+	<a href="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/93.jpg" data-size="239x154">
+		<img src="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/93.jpg"
+			width="239"
+			height="154"
+			srcset="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/93_hud3c28084e6516cab028d33ac62c0b50f_6202_480x0_resize_q75_box.jpg 480w, /p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/93_hud3c28084e6516cab028d33ac62c0b50f_6202_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="93.jpg">
+	</a>
+	
+	<figcaption>93.jpg</figcaption>
+	
+</figure></p>
+<ul>
+<li>神经元结点通常排列在同一个层次上；</li>
+<li>没有反馈联接，但是结点之间有横向的联接或相互影响；</li>
+<li>在学习时通过神经元之间的竞争实现特定的映射。</li>
+<li>层内（Intra-field）联接</li>
+</ul>
+<p>代表网络：自组织映射(SOM)网络</p>
 <h2 id="正向传播和反向传播">正向传播和反向传播</h2>
-<p>反向传播算法的出现解决了训练的问题。</p>
-<p>假设神经元<span class="math inline">\(j\)</span>的期望输出是<span class="math inline">\(t_j\)</span>，实际输出是<span class="math inline">\(o_j\)</span>，那么误差就是</p>
+<p>在感知器算法中我们实际上是在利用理想输出与实际输出之间的误差作为增量来修正权值，然而在多层感知器中，我们只能计算出输出层的误差，中间隐层由于不直接与外界连接，其误差无法估计。</p>
+<p>反向传播算法的出现解决了训练的问题。从后向前反向逐层传播输出层的误差，以间接计算隐层的误差。</p>
+<p>算法分为两个阶段</p>
+<ul>
+<li>正向过程：从输入层经隐层逐层正向计算各单元的输出；</li>
+<li>反向过程：由输出误差逐层反向计算隐层各单元的误差，并用此误差修正前层的权值。</li>
+</ul>
+<p>流程为</p>
+<ol>
+<li>选择一组训练样本，每一个样本由输入信息和期望的输出结果两部分组成。</li>
+<li>从训练样本集中取一样本，把输入信息输入到网络中。</li>
+<li>分别计算经神经元处理后的各层结点的输出。</li>
+<li>计算网络的实际输出和期望输出的误差。</li>
+<li>从输出层反向计算到第一个隐层，并按照某种能使误差向减小方向发展的原则，调整网络中各神经元的连接权值。</li>
+<li>对训练样本集中的每一个样本重复3-5的步骤，直到对整个训练样本集的误差达到要求时为止。</li>
+</ol>
+<p>反向传播算法中采用梯度法修正权值，为此要求输出函数可微 。通常采用sigmoid函数作为输出函数。假设神经元<span class="math inline">\(j\)</span>的期望输出是<span class="math inline">\(t_j\)</span>，实际输出是<span class="math inline">\(o_j\)</span>，那么误差就是</p>
 <p><span class="math display">\[E = \dfrac{1}{2}\sum_j(t_j-o_j)^2
 \]</span></p>
 <p>我们要优化的是每个连接的权重，我们就要找到每个权重对于误差的影响，偏导数</p>
@@ -732,7 +878,7 @@
 <p>我们经常会用梯度下降法来优化权重，其迭代方向为</p>
 <p><span class="math display">\[\Delta w_{ij} = -\eta\dfrac{\partial E}{\partial w_{ij}}
 \]</span></p>
-<p>假设上一层的输出是<span class="math inline">\(b_i\)</span>，这一层的输入为<span class="math inline">\(\beta_j\)</span>，那么有<span class="math inline">\(\beta_j = \sum_i w_{ij}b_i\)</span></p>
+<p>假设上一层的输出是<span class="math inline">\(b_i\)</span>，这一层的总输入为<span class="math inline">\(\beta_j\)</span>，那么有<span class="math inline">\(\beta_j = \sum_i w_{ij}b_i\)</span></p>
 <p>注意到<span class="math inline">\(w_{ij}\)</span>首先影响输入值<span class="math inline">\(\beta_j\)</span>，再影响到输出值<span class="math inline">\(o_j\)</span>，最后才能影响到<span class="math inline">\(E\)</span>。所以</p>
 <p><span class="math display">\[\dfrac{\partial E}{\partial w_{ij}} = \dfrac{\partial E}{\partial o_j}\cdot \dfrac{\partial o_j}{\partial \beta_j}\cdot\dfrac{\partial \beta_j}{\partial w_{ij}}
 \]</span></p>
@@ -741,7 +887,140 @@
 <p><span class="math display">\[g_j = -(t_j-o_j)\sigma'(\beta_j-\theta_j) = o_j(1-o_j)(t_j-o_j)
 \]</span></p>
 <p>于是更新公式为</p>
-<p><span class="math display">\[w_{ij}\leftarrow w_{ij}+\Delta w_{ij} = w_{ij} + ng_jb_i
+<p><span class="math display">\[w_{ij}\leftarrow w_{ij}+\Delta w_{ij} = w_{ij} + \eta g_jb_i
+\]</span></p>
+<p>综上，BP算法的迭代一次的流程为</p>
+<ol>
+<li>从前向后各层计算各单元的实际输出<span class="math inline">\(o_j\)</span>。<span class="math inline">\(\beta_j = \sum_i w_{ij}o_i\)</span>（假设上一层的输出为<span class="math inline">\(o_i\)</span>），<span class="math inline">\(o_j = \sigma(\beta_j)\)</span></li>
+<li>对输出层计算<span class="math inline">\(g_j=-o_j(1-o_j)(t_j-o_j)\)</span>（注意这里采用了和之前稍微不同的方向，后面也会对应修改方向）</li>
+<li>从后向前计算各隐层<span class="math inline">\(g_j=o_j(1-o_j)\sum_k w_{jk}g_k\)</span></li>
+<li>计算并保存各个权值修正量<span class="math inline">\(\Delta w_{ij} = -\eta g_j o_i\)</span></li>
+<li>修正权值<span class="math inline">\(w_{ij}\leftarrow w_{ij}+\Delta w_{ij}\)</span></li>
+</ol>
+<p>优点：理论基础牢固，推导过程严谨，物理概念清晰，通用性好等。所以，它是目前用来训练前馈多层网络较好的算法。</p>
+<p>缺点：收敛慢；不能保证全局最优；推广能力有可能较差。</p>
+<h2 id="常见网络">常见网络</h2>
+<h3 id="som网络">SOM网络</h3>
+<p>SOM是一种自组织（竞争型）神经网络。Kohonen认为：一个神经网络接受外界输入模式时，将会分为不同的对应区域，各区域对输入模式具有不同的响应特征，且该过程是自动完成的。</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 191; 
+			flex-basis: 459px"
+	>
+	<a href="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/94.jpg" data-size="385x201">
+		<img src="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/94.jpg"
+			width="385"
+			height="201"
+			srcset="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/94_hue1627e5041fa6e86ea8449fc41fccf9b_10448_480x0_resize_q75_box.jpg 480w, /p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/94_hue1627e5041fa6e86ea8449fc41fccf9b_10448_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="94.jpg">
+	</a>
+	
+	<figcaption>94.jpg</figcaption>
+	
+</figure></p>
+<p>该网络由输入层和输出层组成，其中输入层的神经元个数的选取按输入网络的向量个数而定，输入神经元为一维矩阵，接收网络的输入信号，输出层则是由神经元按一定的方式排列成一个二维节点矩阵。输入层的神经元与输出层的神经元通过权值相互联结在一起。当网络接收到外部的输入信号以后，输出层的某个神经元便会“兴奋”起来。</p>
+<p>基本思想：网络的竞争层的各神经元竞争对输入模式响应的机会，最后仅有一个神经元成为竞争的胜者。这一获胜神经元则表示对输入模式的分类。</p>
+<p>学习算法：模拟生物神经元之间的兴奋、协调与抑制、竞争作用的信息处理的动力学原理来指导网络的学习与工作，而不像多层神经网络那样是以网络的误差作为算法的准则。</p>
+<p>竞争学习的步骤：</p>
+<ol>
+<li>向量归一化，对当前向量和全部神经元做归一化</li>
+<li>寻找获胜神经元，依据相似度评价</li>
+<li>网络输出与权值调整</li>
+</ol>
+<p>步骤3完成后回到步骤1继续训练，直到学习率衰减到0 。学习率处于<span class="math inline">\((0,1]\)</span>，一般随着学习的进展而减小，神经元（权重）趋于聚类中心。</p>
+<h3 id="rbf网络">RBF网络</h3>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 162; 
+			flex-basis: 390px"
+	>
+	<a href="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/95.jpg" data-size="387x238">
+		<img src="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/95.jpg"
+			width="387"
+			height="238"
+			srcset="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/95_huda9ee7269622b76d848458bb10ee2c74_9361_480x0_resize_q75_box.jpg 480w, /p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/95_huda9ee7269622b76d848458bb10ee2c74_9361_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="95.jpg">
+	</a>
+	
+	<figcaption>95.jpg</figcaption>
+	
+</figure></p>
+<p>径向基函数网络（RBF网络）是一种常用的前馈神经网络。（拓扑结构比较固定）</p>
+<ul>
+<li>只有一个隐层；</li>
+<li>隐层单元采用径向基函数作为输出函数；</li>
+<li>输入层到隐层单元间的权值固定为1；</li>
+<li>输出结点为线性求和单元</li>
+<li>隐层到输出结点的权值可调</li>
+</ul>
+<p>这里的径向基函数是一个非线性映射，将原始空间投影到高维，从而线性可分。它是某种沿径向对称的标量函数。通常定义为空间中任意一点到某一中心之间欧氏距离的单调函数。记为</p>
+<p><span class="math display">\[k(||x-x_i||)
+\]</span></p>
+<p>其中<span class="math inline">\(x\)</span>是输入向量，<span class="math inline">\(x_i\)</span>是第<span class="math inline">\(i\)</span>个隐节点的中心。径向基函数的作用往往是局部的，离中心越远函数值越小。常用的径向基函数是高斯函数。</p>
+<p><span class="math display">\[k(||x-x_c||) = \exp\bigg(-\dfrac{||x-x_c||^2}{2\sigma^2}\bigg)
+\]</span></p>
+<p>可以从两个方面理解RBF网络</p>
+<ul>
+<li>函数逼近：把网络看成对未知函数<span class="math inline">\(f(x)\)</span>的逼近器。一般任何函数都可以表示成一组基函数的加权和，这相当于用隐层单元的输出函数构成一组基函数来逼近<span class="math inline">\(f(x)\)</span>。</li>
+<li>线性分类：把隐层看做是对输入的非线性映射（通常将低维线性不可分的样本映射到高维空间），再用线性分类器（输出结点的输出函数是线性函数）分类。</li>
+</ul>
+<p>RBF有三个参数可以调，即<span class="math inline">\(x_c,\sigma\)</span>和隐层节点到输出节点的权值。RBF学习算法分两个阶段</p>
+<ul>
+<li>确定RBF函数的中心：无师学习</li>
+<li>训练隐层与输出节点之间的权值：有师学习</li>
+</ul>
+<p>一种可能的具体训练算法步骤如下：</p>
+<ol>
+<li>对所有样本的输入进行聚类（可以采用k均值聚类算法），求得各隐层结点RBF函数的中心。</li>
+<li>当RBF函数的中心<span class="math inline">\(x_c\)</span>确定后，训练隐层与输出结点之间的权值。这是一个线性优化问题。（利用训练样本监督完成，如最小二乘法，梯度下降法）</li>
+</ol>
+<p>和BP相比，其非线性映射采用了不同的输出函数，径向基函数的作用是局部的，而sigmoid函数是全局的。</p>
+<p>已经证明，RBF网络具有唯一最佳逼近的特性，且无局部极小，可以获得全局最优解</p>
+<p>但是，径向基函数、隐层结点个数难以确定（人工神经网络的公共问题），目前尚无解决方案。隐层结点RBF函数的中心难以求解，阻碍了RBF网络的广泛应用。</p>
+<h3 id="bp网络">BP网络</h3>
+<p>参见之前的反向传播算法。</p>
+<p>其解决简单感知器不能解决的疑惑问题。从本质上讲，BP算法就是以网络误差平方为目标函数、采用梯度下降法来计算目标函数的最小值。</p>
+<p>BP神经网络具有很强的非线性映射能力和柔性的网络结构。网络的中间层数、各层的神经元个数可根据具体情况任意设定，并且随着结构的差异其性能也有所不同。</p>
+<p>但是学习速度慢，容易陷入局部最优。网络层数、神经元个数的选择没有相应的理论指导；网络推广能力有限。</p>
+<h3 id="hopfield网络">Hopfield网络</h3>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 137; 
+			flex-basis: 331px"
+	>
+	<a href="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/96.jpg" data-size="407x295">
+		<img src="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/96.jpg"
+			width="407"
+			height="295"
+			srcset="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/96_huc8ba0d37fc1aebe56520a712e36efa6a_18584_480x0_resize_q75_box.jpg 480w, /p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/96_huc8ba0d37fc1aebe56520a712e36efa6a_18584_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="96.jpg">
+	</a>
+	
+	<figcaption>96.jpg</figcaption>
+	
+</figure></p>
+<p>Hopfield神经网络是一种单层互相全连接的反馈型神经网络。每个神经元既是输入也是输出，网络中的每一个神经元都将自己的输出通过连接权传送给所有其它神经元，同时又都接收所有其它神经元传递过来的信息。即：网络中的神经元在t时刻的输出状态实际上间接地与自己t-1时刻的输
+出状态有关。神经元之间互连接，所以得到的权重矩阵将是对称矩阵。</p>
+<p>Hopfield神经网络成功引入能量函数的概念，使网络运行地稳定性判断有了可靠依据。基本的Hopfield神经网络是一个由非线性元件构成的全连接型单层递归系统。其状态变化可以用差分方程来表示。</p>
+<p>递归型网络的一个重要特点就是它具有稳定状态。当网络达到稳定状态的时候，也就是它的能量函数达到最小的时候。</p>
+<p><strong>离散随机Hopfield神经网络</strong></p>
+<p>每个神经元只取二元的离散值<span class="math inline">\(0,1\)</span>或<span class="math inline">\(-1,1\)</span>。神经元<span class="math inline">\(i\)</span>和神经元<span class="math inline">\(j\)</span>之间的权重由<span class="math inline">\(w_{ij}\)</span>决定。神经元由当前状态<span class="math inline">\(u_i\)</span>和输出<span class="math inline">\(v_i\)</span>组成，也是二值。</p>
+<p><span class="math display">\[u_{i}(t+1) = \sum^n_{j=1}w_{ij} v_j(t)+I_i
+\]</span></p>
+<p><span class="math display">\[v_i(t+1) = f(u_i) = [u_i>0]
+\]</span></p>
+<p>其中<span class="math inline">\(I_i\)</span>是神经元<span class="math inline">\(i\)</span>的外部连续输入，<span class="math inline">\(f\)</span>是激励函数。</p>
+<p>当网络更新时，如果权重矩阵与非负对角线对称，则下面这个能量函数可以保证最小化，直到系统收敛到其稳定状态之一：</p>
+<p><span class="math display">\[E = -\dfrac{1}{2}\sum^n_{i=1}\sum^n_{j=1}w_{ij}v_iv_j-\sum^n_{i=1}I_iv_i
 \]</span></p>
 <h1 id="传统学习">传统学习</h1>
 <h2 id="贝叶斯推理和学习">贝叶斯推理和学习</h2>
@@ -1178,7 +1457,45 @@
 	
 </figure></p>
 <h3 id="支持向量机">支持向量机</h3>
-<p>支持向量机也是二分类分类器。其基本思想是找到一个分类面（或者是线，或者是超平面），把样本分成两类。但是这样的划分面可能有很多个</p>
+<p><strong>理论基础</strong></p>
+<p>传统的统计模式识别方法只有在样本趋向无穷大时，其性能才有理论的保证。这就是经验风险最
+小化理论，比如人工神经网络。统计学习理论（STL）研究有限样本情况下的机器学习问题。SVM
+的理论基础就是统计学习理论。</p>
+<p>传统的统计模式识别方法在进行机器学习时，强调经验风险最小化。而单纯的经验风险最小化会产生“过学习问题”（过拟合），其推广能力较差。</p>
+<p>根据统计学习理论，学习机器的实际风险由经验风险值和置信范围值两部分组成。而基于经验风险最小化准则的学习方法只强调了训练样本的经验风险最小误差，没有最小化置信范围值，因此其推广能力较差。</p>
+<p>SVM则是以训练误差（经验风险最小）作为优化问题的约束条件，以置信范围值最小化（推广能力）作为优化目标，即SVM是一种基于结构风险最小化准则的学习方法，其推广能力明显优于一些传统的学习方法。</p>
+<p>SVM的优化最终可以规约为二次规划问题，由于目标和约束都是凸函数，所以SVM的解是全局唯一的最优解。</p>
+<p>SVM在解决小样本、非线性及高维模式识别问题中表现出许多特有的优势，它能够获取全局最优解，并能够推广应用到函数拟合等其他机器学习问题中。</p>
+<p><strong>线性判别函数和判别面</strong></p>
+<p>线性判别函数是由<span class="math inline">\(x\)</span>的各个分量的线性组合而成的函数</p>
+<p><span class="math display">\[g(x) = w^Tx+w_0
+\]</span></p>
+<p>支持向量机通常是是二分类分类器。</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 272; 
+			flex-basis: 653px"
+	>
+	<a href="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/97.jpg" data-size="700x257">
+		<img src="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/97.jpg"
+			width="700"
+			height="257"
+			srcset="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/97_hud71f48e9c8ed4e0aa1a65d32d04cc36a_20806_480x0_resize_q75_box.jpg 480w, /p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/97_hud71f48e9c8ed4e0aa1a65d32d04cc36a_20806_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="97.jpg">
+	</a>
+	
+	<figcaption>97.jpg</figcaption>
+	
+</figure></p>
+<p>判别面则是方程<span class="math inline">\(g(x)=0\)</span>，也即上面那张图中的直线。</p>
+<p>如果两个点<span class="math inline">\(x_1,x_2\)</span>都在判定面上，那么有<span class="math inline">\(w^Tx_1+w_0=w^Tx_2+w_0\)</span>，即<span class="math inline">\(w^T(x_1-x_2)=0\)</span>。即<span class="math inline">\(w\)</span>与判别面上的任意向量正交，称<span class="math inline">\(w\)</span>为判别面的法向量。</p>
+<p><strong>广义线性判别函数</strong></p>
+<p>和之前说到的广义线性判别分析中的一样，见前即可。</p>
+<p><strong>最优分类超平面</strong></p>
+<p>SVM其基本思想是找到一个分类面（或者是线，或者是超平面），把样本分成两类。但是这样的划分面可能有很多个</p>
 <p><figure 
 	
 		class="gallery-image" 
@@ -1199,8 +1516,9 @@
 	
 </figure></p>
 <p>（注意，样本虽然形式上和逻辑回归相似，都是<span class="math inline">\(\{(x_1,y_1),(x_2,y_2),\cdots,(x_1,y_1),(x_m,y_m)\}\)</span>，并且都是二分类，但是支持向量机这里，<span class="math inline">\(y\in\{-1,1\}\)</span>，<span class="math inline">\(1\)</span>代表正类，<span class="math inline">\(-1\)</span>代表负类）</p>
-<p>直觉上来说，我们应该选择那条加粗的线。因为它对样本的局部扰动容忍性最好。换言之，这个划分超平面所产生的分类结果是最鲁棒的，对未见示例的泛化能力最强.</p>
-<p>划分的超平面的形式如下</p>
+<p>直觉上来说，我们应该选择那条加粗的线。因为它对样本的局部扰动容忍性最好。换言之，这个划分超平面所产生的分类结果是最鲁棒的，对未见实例的泛化能力最强.</p>
+<p>这个划分面也叫做最优分类超平面。即一个超平面能够将训练样本没有错误的分开，而且两类训练样本中离超平面最近的样本与超平面之间的距离之和最大。这个距离之和也叫做分类间隔（margin）</p>
+<p>形式地说，划分的超平面的形式如下</p>
 <p><span class="math display">\[w^Tx+b=0
 \]</span></p>
 <p>其中<span class="math inline">\(w=(w1,w2,\cdots,w_d)\)</span>是法向量，决定超平面的方向，<span class="math inline">\(b\)</span>是位移项，决定超平面和原点的距离。我们将其记为<span class="math inline">\((w,b)\)</span>，样本空间中任意一个点<span class="math inline">\(x\)</span>到该超平面的距离为</p>
@@ -1236,7 +1554,7 @@
 <p><span class="math display">\[\gamma = \dfrac{2}{||w||}
 \]</span></p>
 <p>这也被称为间隔。</p>
-<p>支持向量机的训练目标就是最大化间隔。也就是如下的最优化问题</p>
+<p>支持向量机的训练目标就是最大化间隔（或者是求最优超平面）。也就是如下的最优化问题</p>
 <p><span class="math display">\[\begin{align*}
  \max_{w,b} &\quad \dfrac{2}{||w||}\\
  \text{s.t.} &\quad y_i(w^Tx_i+b)\geq 1,\quad i=1,2,\cdots,m
@@ -1248,7 +1566,7 @@
  \text{s.t.} &\quad y_i(w^Tx_i+b)\geq 1,\quad i=1,2,\cdots,m
 \end{align*}
 \]</span></p>
-<p>上式是一个凸二次规划问题，其对偶问题是</p>
+<p>上式是一个凸二次规划问题，拉格朗日法得出其对偶问题是</p>
 <p><span class="math display">\[\begin{align*}
  \max_{\alpha} &\quad \sum^m_{i=1}\alpha_i-\dfrac{1}{2}\sum^m_{i=1}\sum^m_{j=1}\alpha_i\alpha_jy_iy_jx_i^Tx_j\\
  \text{s.t.} &\quad \sum^m_{i=1}\alpha_iy_i=0\\
@@ -1258,6 +1576,13 @@
 <p>求出<span class="math inline">\(\alpha\)</span>后，即可算出模型</p>
 <p><span class="math display">\[f(x)=w^Tx+b=\bigg(\sum^m_{i=1}\alpha_iy_ix_i^T\bigg)x+b=\sum^m_{i=1}\alpha_iy_ix_i^Tx+b
 \]</span></p>
+<p>当然，输出是<span class="math inline">\(\pm 1\)</span>的话，可以写作<span class="math inline">\(f(x) = \text{sgn}\bigg\{\sum^m_{i=1}\alpha_iy_ix_i^Tx+b\bigg\}\)</span>。</p>
+<p>其中<span class="math inline">\(\alpha_i\)</span>是支持向量系数，最优超平面的权重向量等于训练样本以一定的系数加权后进行线性组合。只有满足优化式等号成立的样本对应<span class="math inline">\(\alpha_i\)</span>的才大于<span class="math inline">\(0\)</span>，其他样本都等于<span class="math inline">\(0\)</span>。求和只对少数支持向量进行。</p>
+<p>当样本集不是线性可分时，存在一些样本使得<span class="math inline">\(y_i(w^Tx_i+b)<1\)</span>。对于这个样本，我们总可以找到一个整数<span class="math inline">\(\xi\)</span>使得对于该样本有<span class="math inline">\(y_i(w^Tx_i+b)+\xi\geq 1\)</span>。对于众多这样的样本，优化目标函数就变为</p>
+<p><span class="math display">\[\min_{w}\dfrac{1}{2}||w||^2+C\sum\xi_i
+\]</span></p>
+<p>其中<span class="math inline">\(\xi_i\)</span>是松弛因子，其和越大，错分的样本越多。此时的目标变成一方面让分类间隔尽可能的大，另一方面让错分的样本尽可能的少且错误率尽可能的低。</p>
+<p><strong>核函数</strong></p>
 <p>到目前为止，我们能分类的样本都只能是线性可分的。如果是对于异或问题等非线性可分的问题，我们引入核函数，将样本从原始空间映射到一个更高维的特征空间，使得样本在这个特征空间内线性可分。</p>
 <p><figure 
 	
@@ -1279,8 +1604,8 @@
 	
 </figure></p>
 <p>可以证明，如果原始空间是有限维，即属性数有限，那么一定存在一个高维特征空间使样本可分.</p>
-<p>令<span class="math inline">\(\phi(x)\)</span>表示将<span class="math inline">\(x\)</span>映射后的特征向量，于是，在特征空间中划分超平面所对应的模型可表示为</p>
-<p><span class="math display">\[f(x) = w^T\phi(x)+b
+<p>令<span class="math inline">\(\phi(x)\)</span>表示将<span class="math inline">\(x\)</span>映射后的特征向量（显然<span class="math inline">\(\phi(x)\)</span>不会是线性变换），于是，在特征空间中划分超平面所对应的模型可表示为</p>
+<p><span class="math display">\[g(x) = w^T\phi(x)+b
 \]</span></p>
 <p>其对偶问题是</p>
 <p><span class="math display">\[\begin{align*}
@@ -1289,14 +1614,49 @@
   &\quad \alpha_i\geq 0,\quad i = 1,2,\cdots,m
 \end{align*}
 \]</span></p>
+<p>其解为<span class="math inline">\(f(x) = \text{sgn}\bigg\{\sum^m_{i=1}\alpha_iy_i\phi(x_i)^T\phi(x)+b\bigg\}\)</span></p>
 <p>其中<span class="math inline">\(\phi(x_i)^T\phi(x_j)\)</span>是样本映射到特征空间之后的内积。由于特征空间维数可能很高，甚至可能是无穷维，因此直接计算<span class="math inline">\(\phi(x_i)^T\phi(x_j)\)</span>通常是困难的。为了避开这个障碍，可以设想这样一个函数：</p>
 <p><span class="math display">\[\kappa(x_i,x_j)=<\phi(x_i),\phi(x_j)>=\phi(x_i)^T\phi(x_j)
 \]</span></p>
 <p>即<span class="math inline">\(x_i\)</span>与<span class="math inline">\(x_j\)</span>在特征空间的内积等于它们在原始样本空间中通过函数<span class="math inline">\(\kappa(x_i,x_j)\)</span>计算的结果。这里的这个函数就是核函数。</p>
+<p>从计算角度，不论<span class="math inline">\(\phi(x)\)</span>所生成的变换空间维数有多高，这个空间里的线性支持矢量机求解都可以在原空间通过核函数<span class="math inline">\(\kappa(x_i,x_j)\)</span>进行，这样就避免了高维空间里的计算，而且计算核函数的复杂度与计算内积并没有实质性增加。</p>
 <p>解出来的模型就是</p>
-<p><span class="math display">\[f(x) = w^T\phi(x)+b = \sum^m_{i=1}a_iy_i\phi(x_i)^T\phi(x)+b = \sum^m_{i=1}a_iy_i\kappa(x_i,x)+b
+<p><span class="math display">\[f(x)=\text{sgn}\bigg\{\sum^m_{i=1}\alpha_iy_i\kappa(x_i,x)+b\bigg\}
 \]</span></p>
-<p>核函数具体形式TODO</p>
+<p>根据泛函的有关理论，只要一种核函数满足Mercer条件，它就对应某一变换空间中的内积。因此，在最优分类面中采用适当的内积函数就可以实现某一非线性变换后的线性分类。现在我们可以说正式得到了完全体的SVM。</p>
+<p>核函数具体形式有许多，在实际问题中，通常是直接给出核函数。常见的有</p>
+<ul>
+<li>线性核函数<span class="math inline">\(\kappa(x+i,x_j)=x_i^Tx_j\)</span></li>
+<li>多项式核函数<span class="math inline">\((x_i^Tx_j)^d\)</span>，其中<span class="math inline">\(d\geq 1\)</span>为多项式的次数。也有写作<span class="math inline">\((sx_i^Tx_j+c)^d\)</span>的。</li>
+<li>径向基核函数<span class="math inline">\(\exp(-\gamma||x_i-x_j||^2)\)</span>。<span class="math inline">\(\gamma=1/2\sigma^2\)</span>时称为高斯核，<span class="math inline">\(\gamma=\sigma\)</span>时称为拉普拉斯核</li>
+<li>sigmoid核<span class="math inline">\(\tanh(\beta x_i^Tx_j+\theta)\)</span>，其中<span class="math inline">\(\beta>0,\theta<0\)</span></li>
+</ul>
+<p><strong>训练方式</strong></p>
+<p>对于线性情况，我们通过数值最优化办法求出对偶问题的<span class="math inline">\(\alpha\)</span>，然后显然有<span class="math inline">\(w=\sum \alpha_iy_ix_i\)</span>。利用KKT条件可以算出<span class="math inline">\(b=\dfrac{1}{|S|}\sum_{i\in S}(y_i-\sum \alpha_jy_jx_j^Tx_i)\)</span>，其中<span class="math inline">\(S\)</span>是所有支持向量的下标集。</p>
+<p>非线性情况，同样地有<span class="math inline">\(w=\sum a_iy_i\phi(x_i)\)</span>，<span class="math inline">\(b\)</span>类似。当然我们可能不关注<span class="math inline">\(w^Tx\)</span>而直接关注<span class="math inline">\(\sum^m_{i=1}\alpha_iy_i\kappa(x_i,x)\)</span></p>
+<p><strong>多分类SVM</strong></p>
+<p>SVM单独一般只能做二分类，但是我们可以训练多个SVM实现多分类。</p>
+<ul>
+<li>One-against-all方法，把<span class="math inline">\(k\)</span>类问题分解成<span class="math inline">\(k\)</span>个两类问题，例如区分A与非A，B与非B，C与非C三个;</li>
+<li>One-against-one方法，把<span class="math inline">\(k\)</span>类问题分解成<span class="math inline">\(k(k-1)/2\)</span>个两类问题，例如区分AB，区分BC，区分AC三个;</li>
+<li>其他的整体算法(Weston,Bredensteiner, 和Guermeur)</li>
+</ul>
+<p><strong>特点</strong></p>
+<ul>
+<li>专门针对有限样本的情况的最优解，而不是无限样本假设的最优解</li>
+<li>全局最优解而非局部</li>
+<li>推广能力好，避免维数灾难。</li>
+<li>较强的非线性处理能力</li>
+<li>支持向量是SVM的训练结果,在SVM分类决策中起决定作用的是支持向量。</li>
+<li>SVM 的最终决策函数只由少数的支持向量所确定,计算的复杂性取决于支持向量的数目,而不是样本空间的维数,这在某种意义上避免了“维数灾难”。</li>
+<li>少数支持向量决定了最终结果,这不但可以帮助我们抓住关键样本、“剔除”大量冗余样本,而且注定了该方法不但算法简单,而且具有较好的“鲁棒”性。
+<ul>
+<li>增、删非支持向量样本对模型没有影响</li>
+<li>支持向量样本集具有一定的鲁棒性</li>
+<li>有些成功的应用中，SVM方法对核的选取不敏感</li>
+</ul>
+</li>
+</ul>
 <h3 id="最近邻">最近邻</h3>
 <p>近邻法（NN和KNN）在原理上属于模板匹配，并且它没有训练过程。它将训练样本集中的每个样本都作为模板，用测试样本与每个模板做比较，看与哪个模板最相似(即为近邻)，就按最近似的模板的类别作为自己的类别。</p>
 <p>近邻法的共同缺点是计算量大，存储量也大。它也不考虑决策风险。另外有限样本的分析难以进行。</p>
@@ -1362,11 +1722,11 @@
 <p><span class="math display">\[g(D,A) = H(D) - H(D|A)
 \]</span></p>
 <p>其中</p>
-<p><span class="math display">\[H(D) = -\sum^K_{k=1}\dfrac{|D_k|}{|D|}\log\dfrac{|D_k|}{|D|}
+<p><span class="math display">\[H(D) = -\sum_i\dfrac{|C_i|}{|D|}\log\dfrac{|C_i|}{|D|}
 \]</span></p>
 <p><span class="math display">\[H(D|A) = \sum^K_{k=1}\dfrac{|D_k|}{|D|}H(D_k)
 \]</span></p>
-<p>其中<span class="math inline">\(D_k\)</span>指的是，离散属性<span class="math inline">\(A\)</span>将当前样本集划分成<span class="math inline">\(n\)</span>个分支节点，每个分支构成了一个新样本集<span class="math inline">\(D_k\)</span>。</p>
+<p>其中<span class="math inline">\(D_k\)</span>指的是，离散属性<span class="math inline">\(A\)</span>将当前样本集划分成<span class="math inline">\(n\)</span>个分支节点，每个分支构成了一个新样本集<span class="math inline">\(D_k\)</span>。其中<span class="math inline">\(C_i\)</span>是指分类目标有几类，其中<span class="math inline">\(D\)</span>所有样本中属于第<span class="math inline">\(i\)</span>类的集合。例如分为正类和负类，<span class="math inline">\(C_0\)</span>就是<span class="math inline">\(D\)</span>中所有负类的集合，<span class="math inline">\(C_1\)</span>就是<span class="math inline">\(D\)</span>中所有正类的集合。</p>
 <p>样本数越多的分支结点的影响越大，信息增益越大，则意味着使用属性<span class="math inline">\(A\)</span>来进行划分所获得的“纯度提升”越大。因此，我们可用信息增益来进行决策树的划分属性选择。</p>
 <p>ID3选择这个值来选择最优划分属性。</p>
 <p><strong>信息增益率</strong></p>
@@ -1567,9 +1927,162 @@ network）组成。</p>
 <p><span class="math inline">\(E_{x\sim p_{data}(x)}[\log D(x)]\)</span>描述的是真实数据的交叉熵，其中<span class="math inline">\(x\)</span>是真实数据。而<span class="math inline">\(E_{z\sim p_z(z)}[\log(1-D(G(z)))]\)</span>是从潜在空间中生成的东西的交叉熵，其中<span class="math inline">\(z\)</span>是从中生成的东西。</p>
 <p><span class="math inline">\(V(D,G)\)</span>相当于表示真实样本和生成样本的差异程度，其中G是生成器，D是判别器。<span class="math inline">\(min_G\max_D\)</span>代表，首先固定<span class="math inline">\(G\)</span>，最大化判别器的判别效果。然后最大化判别器之后将其固定，要求最小化生成器生成的东西和真实数据的差异。</p>
 <h2 id="半监督学习">半监督学习</h2>
+<h3 id="通用理论">通用理论</h3>
 <p>如果训练集里面一部分是有标签的，而另一部分是无标签的，那么在此上训练的就是半监督学习算法。</p>
 <p>虽然什么比例都可以，但通常情况下是，有标签的只占一小部分，大部分仍是无标签。大部分的半监督学习算法也是结合了有监督学习和无监督学习，例如深度置信网络（Deep Belief Networks(DBNS)），他是一个以无监督学习为基础的受限玻尔兹曼机（Restricted Boltzmann Machine(RBMS)），但是整个系统却是建立在有监督学习技术上的。</p>
-<h2 id="集成学习">集成学习</h2>
+<p>实际上，未标记样本虽然没有直接含有类别标记信息，但如果它们和有标记样本是从相同的数据中独立同分布采样得到的，则它们包含的有关数据分布的信息对学习模型有很大帮助。</p>
+<p>如何让学习过程不依赖外界的咨询交互，自动利用未标记样本所含信息来提高模型性能便是本专题所要介绍的内容，即半监督学习(Semi-Supervised Learning，SSL)。</p>
+<p>形式化地来说，有标记的样本集记为<span class="math inline">\(D_l=\{(x_1,y_1),(x_2,y_2),\cdots,(x_l,y_l)\}\)</span>，未标记的样本集为<span class="math inline">\(D_u=\{x_{l+1},x_{l+2},\cdots,x_{l+u}\}\)</span>。其中通常会有<span class="math inline">\(l<<u\)</span></p>
+<p>面对这样的问题，我们可能会有如下的思路。</p>
+<p><strong>思路1</strong></p>
+<p>只使用<span class="math inline">\(D_l\)</span>来训练。其问题是样本过少，完全舍弃非标记样本的信息，训练量不足</p>
+<p><strong>思路2</strong></p>
+<p>把<span class="math inline">\(D_u\)</span>打上标记。这其实就转化为有监督学习了，缺点是消耗大量时间。</p>
+<p><strong>思路3</strong></p>
+<p>先利用<span class="math inline">\(D_l\)</span>学出一个模型，然后利用这个模型，从<span class="math inline">\(D_u\)</span>中挑出一个样本，对这个样本的标签进行预测（查询），把这个获得标签的样本作为新的标记样本加入<span class="math inline">\(D_l\)</span>中重新学习得到一个模型。反复重复直到<span class="math inline">\(D_u\)</span>全部被给予标记并被放入<span class="math inline">\(D_l\)</span>中。</p>
+<p>这样的学习方式被称为主动学习（Active Learning）。其目标是希望尽可能少的查询标签来获得尽量好的模型性能。</p>
+<p>缺点是，显然主动学习引入了额外的专家知识，仍然需要与外界产生交互来将部分未标记样本转变为有标记样本。</p>
+<p><strong>思路4</strong></p>
+<p>利用未标记样本提供的数据分布的信息。这样的学习方式被称为半监督学习。让学习器不依赖外界交互、自动的利用未标记样本来提升学习性能，就是半监督学习（Semi-Supervised Learning，SSL）。即训练集中同时包含有标记样本数据和未标记样本数据。</p>
+<p>半监督学习需要预设两个假设前提</p>
+<ul>
+<li>聚类假设（Cluster Assumption）：假设数据存在簇结构，同一个簇的样本属于同一个类别。</li>
+<li>流形假设（Manifold Assumption）：假设数据分布在一个流形结构上，邻近的样本拥有相似的输出值。</li>
+</ul>
+<p>更一般地假设，如果两个样本相似，那么他们具有相似的输出。</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 199; 
+			flex-basis: 478px"
+	>
+	<a href="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/99.jpg" data-size="550x276">
+		<img src="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/99.jpg"
+			width="550"
+			height="276"
+			srcset="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/99_hu7d6ed9c6f55dcec61feacadd24ee3527_20223_480x0_resize_q75_box.jpg 480w, /p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/99_hu7d6ed9c6f55dcec61feacadd24ee3527_20223_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="99.jpg">
+	</a>
+	
+	<figcaption>99.jpg</figcaption>
+	
+</figure></p>
+<h3 id="半监督分类">半监督分类</h3>
+<p><strong>生成式模型</strong></p>
+<p>TODO</p>
+<p><strong>半监督SVM</strong></p>
+<p>其中使用最广泛的是TSVM。使用转导推理（Transductive Inference）方法，通过观察特定的训练样本，进而预测特定的测试样本。</p>
+<p>TSVM也是针对二分类问题，tsvm的目标是给出<span class="math inline">\(D_u\)</span>的预测标记<span class="math inline">\(\hat y=\{y_{l+1},y_{l+2}+\cdots+y_{l+u}\}\)</span>，使得划分超平面具有最大边界。即</p>
+<p><span class="math display">\[\begin{align*}
+ \min_{w,b,\hat y,\xi} &\quad \dfrac{1}{2}||w||^2+C_l\sum^{l}_{i=1}\xi_i+C_u\sum_{i=1}^{u}\xi_{l+i} & \\
+ \text{s.t.} &\quad y_i(w^Tx_i+b)+\xi_i\geq 1, & \quad i=1,2,\cdots,l\\
+  &\quad \hat y_{l+i}(w^Tx_{l+i}+b)+\xi_{l+i}\geq 1, & i=1,2,\cdots,u\\
+  &\quad \xi_i\geq 0 & i=1,2,\cdots,u+l
+\end{align*}
+\]</span></p>
+<p>其中<span class="math inline">\(C_l,C_u\)</span>是用户自定义参数，用来决定有标记样本和未标记样本的重要程度。</p>
+<p>TSVM是一个时间和计算复杂度都十分高的算法。因此，半监督SVM需要重点研究如何设计出高效的优化策略。</p>
+<p><strong>基于图的半监督学习</strong></p>
+<p>对于一个样本集，我们可以把其样本之间的关系用一个图来表示，其中每个样本对应图中的一个节点。如果两个样本直接的相关性很高，则对应的两个结点之间会存在一条边并且边的权重和样本之间的相似度成正比。</p>
+<p>代表算法：一种多分类标记传播算法。</p>
+<p>首先用<span class="math inline">\(D_l\cup D_u\)</span>建立一个图<span class="math inline">\(G=(V,E)\)</span>，其中<span class="math inline">\(V=\{x_1,x_2,\cdots,x_{l+u}\}\)</span>，图是满图，边权用高斯函数如下定义</p>
+<p><span class="math display">\[w_{ij} = \begin{cases}
+ \exp\bigg(\dfrac{-||x_i-x_j||_2^2}{2\sigma^2}\bigg), & i\neq j\\
+ 0 ,& i=j
+\end{cases}
+\]</span></p>
+<p>定义对角矩阵<span class="math inline">\(D=diag(d_1,d_2,\cdots,d_{l+u})\)</span>，其中<span class="math inline">\(d_i=\sum_{j=1}^{l+u}w_{ij}\)</span>。</p>
+<p>设标签<span class="math inline">\(y\in \Psi\)</span>，定义一个大小为<span class="math inline">\((l+u)\times |\Psi|\)</span>的非负标记矩阵<span class="math inline">\(F=(F_1^T,F_2^T,\cdots,F_{l+u}^T)^T\)</span>，其中<span class="math inline">\(F_i=(F_{i1},F_{i2},\cdots,F_{i|\Psi|})\)</span>为样本<span class="math inline">\(x_i\)</span>的标记向量，其分类准则为<span class="math inline">\(y_i=\arg\max_{j}F_{ij}\)</span>。矩阵初始化为</p>
+<p><span class="math display">\[F^{(0)}_{ij}=\begin{cases}
+1, & (1\leq i\leq l)\wedge(y_i=j)\\
+0, & \text{otherwise}
+\end{cases}
+\]</span></p>
+<p>根据矩阵边矩阵<span class="math inline">\(W\)</span>建立一个标记传播矩阵<span class="math inline">\(S = D^{-1/2}WD^{-1/2}\)</span>。其中<span class="math inline">\(D=diag(\dfrac{1}{\sqrt{d_1}}, \dfrac{1}{\sqrt{d_2}}, \cdots, \dfrac{1}{\sqrt{d_{l+u}}})\)</span>，于是我们得到迭代公式</p>
+<p><span class="math display">\[F^{(t+1)} = \alpha SF^{(t)}+(1-\alpha)Y
+\]</span></p>
+<p>其中<span class="math inline">\(Y=F^{(0)}\)</span>，<span class="math inline">\(\alpha\in(0,1)\)</span>是由用户控制的参数。上式迭代收敛到</p>
+<p><span class="math display">\[F^* = \lim_{t\to\infty}F^{(t)}=(1-\alpha)(I-\alpha S)^{-1}Y
+\]</span></p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 220; 
+			flex-basis: 530px"
+	>
+	<a href="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/100.jpg" data-size="1242x562">
+		<img src="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/100.jpg"
+			width="1242"
+			height="562"
+			srcset="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/100_hufc53b90bf5bcc0bb82efb784bdacb0de_47009_480x0_resize_q75_box.jpg 480w, /p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/100_hufc53b90bf5bcc0bb82efb784bdacb0de_47009_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="100.jpg">
+	</a>
+	
+	<figcaption>100.jpg</figcaption>
+	
+</figure></p>
+<p>算法复杂度上存在较大的不足，很难处理大规模数据。</p>
+<p>在构建图的过程中，只考虑到训练样本集，很难判断新的样本在图中的位置。在出现新的样本时，需要将新样本加入到原样本集对图进行重建且进行标记传播。</p>
+<p><strong>基于分歧的方法</strong></p>
+<p>使用两个学习器来“协同训练”，在训练过程中，两个分类器挑选置信度较高的已标记和未标记样本交给对方学习，直到达到某个终止条件。</p>
+<p>一个样本往往拥有多个属性，每个属性在这里被称为一个“视图”。给出样本空间<span class="math inline">\(X=X_1\times X_2\)</span>，其中<span class="math inline">\(X_1,X_2\)</span>对应一个样本的两种不同视图。在此基础上，每个样本<span class="math inline">\(x\)</span>可以用一对<span class="math inline">\((x_1,x_2)\)</span>来表示。</p>
+<p>使用这个方法对于数据有前提假设：每个视图条件独立；每个视图本身就足以进行正确的分类，即<span class="math inline">\(f(x)=f(x_1)=f(x_2)=y\)</span>。满足该假设的不同的视图具有相容性，即它们包含的关于输出类别的信息是一致的。</p>
+<p>算法框架如下</p>
+<ul>
+<li>假设<span class="math inline">\(x\)</span>拥有两个条件独立且充分的两个视图<span class="math inline">\(x_1\)</span>和<span class="math inline">\(x_2\)</span></li>
+<li>利用每个视图基于有标记样本分别训练得到一个分类器，然后让每个分类器各自去选择自己“最信任的”的未标记样本赋值一个伪标记，并且把这个伪标记的样本作为一个有标记样本提供给另外一个分类器进行训练更新。</li>
+<li>这个“互相学习”的过程不断的进行迭代，直到达到迭代的终止条件为止。</li>
+</ul>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 304; 
+			flex-basis: 731px"
+	>
+	<a href="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/101.jpg" data-size="1365x448">
+		<img src="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/101.jpg"
+			width="1365"
+			height="448"
+			srcset="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/101_hueca4b83a7fa0dd2ae57e10435307b1df_51753_480x0_resize_q75_box.jpg 480w, /p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/101_hueca4b83a7fa0dd2ae57e10435307b1df_51753_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="101.jpg">
+	</a>
+	
+	<figcaption>101.jpg</figcaption>
+	
+</figure></p>
+<p>实际问题中，满足这两个假设的样本集是很少的。2000年有一种新的协同训练方法可以不要求两个假设。2007年的Tri-training使用三个分类器协同训练，对样本集没有苛刻的要求。特点为：</p>
+<ul>
+<li>对于每一个分类器，将剩余的两个分类器作为其辅助分类器来对未标记样本进行分类，标记相同的未标记样本就会被作为置信度较高的样本。</li>
+<li>主分类器会随机从中选取一些伪标记样本添加到标记样本集中进行训练。</li>
+<li>每一次被挑选出来的未标记样本在参与完本轮的迭代后，仍然作为未标记样本保留在未标记数据集中。</li>
+</ul>
+<p>框架如下：</p>
+<ul>
+<li>首先对有标记样本集进行可重复抽样(bootstrapping)来获得三个有标记训练集进行初始分类器的训练。</li>
+<li>在迭代过程中，每个分类器轮流作为主分类器，其余两个作为辅助分类器来为主分类器提供新的无标记数据用来训练。</li>
+<li>在进行样本预测时，使用三个分类器的结果进行投票得到最终的分类标记。</li>
+</ul>
+<h3 id="半监督聚类">半监督聚类</h3>
+<p>聚类本来是无监督的，但是利用少量的标记样本可以对聚类算法进行辅助。</p>
+<p>标记可以分为：数据对是否属于同一类别的约束关系、类别标记。</p>
+<p><strong>基于距离的半监督聚类算法</strong></p>
+<p>传统聚类大多采用基于距离的度量准则来描述相似性，但是选择何种距离没有统一答案。半监督时，根据约束或者类别信息来构造某种距离度量，然后在该距离度量的基础上进行聚类。</p>
+<p><strong>基于约束的半监督聚类算法</strong></p>
+<p>利用监督信息对聚类的搜索过程进行约束。例如Constrained-K-means算法和Seeded-K-means算法。</p>
+<ul>
+<li>在K-means算法的基础上，引入了由少量标记样本组成的Seed集合，含有全部的<span class="math inline">\(K\)</span>个聚类簇，每种类别最少有一个样本。</li>
+<li>对Seed进行划分得到K个聚类并且基于此来进行初始化，即初始的聚类中心。</li>
+<li>利用EM算法来进行优化步骤。</li>
+</ul>
+<p>在Seeded-K-means算法中，Seed集的标记是可以发生改变的，而在Constrained-K-means算法中，Seed集的样本标记是固定的。</p>
+<p>在不含噪声的情况下，Constrained-K-means算法的性能较好，而在Seed集中含有噪声的情况下，Seeded-K-means的性能明显更优。</p>
+<h2 id="集成学习组合分类器">集成学习/组合分类器</h2>
 <p><figure 
 	
 		class="gallery-image" 
@@ -1589,18 +2102,23 @@ network）组成。</p>
 	<figcaption>16.jpg</figcaption>
 	
 </figure></p>
-<p>如上，先产生一组个体学习器，再用某种策略将它们结合起来。</p>
+<p>如上，基本思想是先产生一组个体学习器，再用某种策略将它们结合起来，以获得一个更好的性能</p>
 <p>个体学习器通常由一个现有的学习算法从训练数据产生，</p>
 <p>根据个体学习器的生成方式，目前的集成学习方法大致可分为两大类：</p>
 <ol>
-<li>个体学习器间存在强依赖关系、必须串行生成的序列化方法</li>
-<li>以及个体学习器间不存在强依赖关系、可同时生成的并行化方法</li>
+<li>个体学习器间存在强依赖关系、必须串行生成的序列化方法。训练集不独立</li>
+<li>以及个体学习器间不存在强依赖关系、可同时生成的并行化方法。训练集独立</li>
 </ol>
-<p>前者的代表是Boosting，后者的代表是Bagging和随机森林。</p>
+<p>前者的代表是Boosting，后者的代表是Bagging和随机森林（见前）。</p>
 <p>Bagging要求每个预测器的算法相同（也称为基学习器的基学习算法），但是在不同的随机训练子集上训练。Bagging要去取样时样本放回，如果取样时样本不放回的叫pasting。</p>
+<p>在大多数数据集中，boosting的准确性比bagging高。在有些数据集中，boosting会引起退化（过拟合）。</p>
 <p>一旦这些基学习器训练完成，集成就可以通过简单地聚合所有预测器的预测来对新实例做出预测。对于分类，聚合函数通常是统计法（即投票，简单多数），而回归问题则通常用平均法。</p>
+<h3 id="bagging">Bagging</h3>
+<p>如前所述，要求每个预测器的学习算法相同。每次学习中，某个个体学习器的训练集都是bootstrapping得来的。分类问题采用投票，回归问题采用平均。</p>
+<p>Bagging比较适合“不稳定”的分类算法，例如决策树、神经网络。不稳定指的是数据集的小的变动能够使得分类结果的显著的变动。</p>
+<p>只有弱学习算法不稳定时，采用Bagging来集成，才能提升预测准确率。其对稳定的学习算法效果不明显，甚至有副作用。</p>
 <h3 id="boosting">Boosting</h3>
-<p>Boosting是一族可将弱学习器提升为强学习器的算法。这族算法的工作机制类似：先从初始训练集训练出一个基学习器，再根据基学习器的表现对训练样本分布进行调整，使得先前基学习器做错的训练样本在后续受到更多关注，然后基于调整后的样本分布来训练下一个基学习器；如此重复进行，直至基学习器数目达到事先指定的值T，最终将这T个基学习器进行加权结合。</p>
+<p>Boosting是一族可将弱学习器提升为强学习器的算法。这族算法的工作机制类似：先从初始训练集训练出一个基学习器，再根据基学习器的表现对训练样本分布进行调整，使得先前基学习器做错的训练样本在后续受到更多关注（加大权重），然后基于调整后的样本分布来训练下一个基学习器；如此重复进行，直至基学习器数目达到事先指定的值T，最终将这T个基学习器进行加权结合。</p>
 <p><figure 
 	
 		class="gallery-image" 
@@ -1621,10 +2139,17 @@ network）组成。</p>
 	
 </figure></p>
 <p>如上图，训练过程是阶梯式的，基学习器按照顺序学习，最后加权综合。</p>
+<p>每次迭代过程分为两步：在一定的权重条件下训练数据，得出分类器；根据分类器的错误率调整权重</p>
 <p>有两个关键问题：如何更改每个训练样本的权重？如何把弱学习器组合成强学习器？</p>
 <p>Boost用途广泛，例如计算机视觉的对象分类任务、二分类加速等等。</p>
+<ul>
+<li>Boosting易受到噪音的影响；</li>
+<li>AdaBoost可以用来鉴别异常；经过多轮后，具有最高权重的样本即为异常。</li>
+<li>应用Boosting，不需寻找很难获得的预测精度很高的强学习算法，只需找出精度稍好于随机预测的弱学习算法即可。</li>
+<li>但是同时也有可能使集成过分偏向于某几个特别困难的示例。因此，该方法不太稳定，有时能起到很好的作用，有时却没有效果。</li>
+</ul>
 <p><strong>AdaBoost</strong></p>
-<p>AdaBoost可能是Boost中最著名的。对于两个问题，它的回答是</p>
+<p>AdaBoost可能是Boost中最著名的。对于两个关键问题，它的回答是</p>
 <ol>
 <li>增加前一轮中被错误分类的样本的权重，减少正确分类的样本的权重</li>
 <li>使用一个加权的投票方法来组合</li>
@@ -1656,6 +2181,45 @@ network）组成。</p>
 	<figcaption>81.jpg</figcaption>
 	
 </figure></p>
+<p><strong>XGBoost</strong></p>
+<p>一种对多个回归树进行集成的方法，构造出的多个回归树通过优化使得树群的预测值尽可能接近真实值且具有泛化能力</p>
+<h3 id="分类器组合评价">分类器组合评价</h3>
+<p><strong>泛化误差</strong></p>
+<p>假设<span class="math inline">\(E(s)\)</span>表示在数据集<span class="math inline">\(s\)</span>上的组合分类结果，那么<span class="math inline">\(E(s)\)</span>的泛化误差则是根据带类标的样本空间分布对任意数量选定样本的误分类概率。</p>
+<p>可以用之后提到的holdout、bootstrapping、k-fold估计泛化误差。</p>
+<p><strong>计算复杂度</strong></p>
+<p>包括产生一个新的分类器的计算复杂度、更新一个分类器的计算复杂度、将一个新样本进行分类的计算复杂度。</p>
+<p>总体复杂度可以看作是这三种度量方式的总和，特别是当数据集数量较大时，更应当考虑到产生某一新的分类器的损耗。</p>
+<p><strong>其他评价标准</strong></p>
+<p>鲁棒性、稳定性、可解释性、大规模数据的可测量性。</p>
+<h3 id="非监督集成学习">非监督集成学习</h3>
+<p>非监督集成(Unsupervised ensemble)也称聚类集成，被认为在许多方面都能超越单个聚类算法，如：鲁棒性，稳定性和一致性估计以及并行性和可量测性</p>
+<h2 id="分类器准确率评估">分类器准确率评估</h2>
+<h3 id="保留法holdout">保留法（holdout）</h3>
+<p>即划分为两个独立的数据集：训练集、测试集。</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 412; 
+			flex-basis: 988px"
+	>
+	<a href="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/98.jpg" data-size="618x150">
+		<img src="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/98.jpg"
+			width="618"
+			height="150"
+			srcset="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/98_hu83eee879ef06d500e0f7fb512ba03479_11297_480x0_resize_q75_box.jpg 480w, /p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/98_hu83eee879ef06d500e0f7fb512ba03479_11297_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="98.jpg">
+	</a>
+	
+	<figcaption>98.jpg</figcaption>
+	
+</figure></p>
+<h3 id="k-fold">K-fold</h3>
+<p>将数据分为<span class="math inline">\(k\)</span>个子集。每次训练时，用<span class="math inline">\(k-1\)</span>个子集做训练集，剩下1个子集做测试集，然后<span class="math inline">\(k\)</span>次交叉验证求平均。</p>
+<h3 id="留一法">留一法</h3>
+<p>即K-fold中，每个子集的大小都为<span class="math inline">\(1\)</span>。</p>
 <h1 id="特征选择">特征选择</h1>
 <h2 id="基本概念">基本概念</h2>
 <p>对分类器设计来说，使用什么样的特征描述事物，也就是说使用什么样的特征空间是个很重要的问题。</p>
@@ -1747,13 +2311,69 @@ network）组成。</p>
 <p><span class="math display">\[J_d(x) = \sum^C_{i=1}P_i\bigg[\dfrac{1}{n_i}\sum^{n_i}_{k=1} \delta(x^{(i)}_k, m_i)+\delta(m_i,m)\bigg]
 \]</span></p>
 <p>其中方括号中的前半为样本到质心的平方距离，后半为某类均值向量到总体样本向量之间的平方距离。如果乘进去，则有类间离散度<span class="math inline">\(\tilde{S}_b\)</span>和类内离散度<span class="math inline">\(\tilde{S}_w\)</span>为</p>
-<p><span class="math display">\[\tilde{S}_w = \sum^C_{i=1}P_i\dfrac{1}{n_i}\sum^{n_i}_{k=1} \delta(x^{(i)}_k, m_i)
+<p><span class="math display">\[\tilde{S}_w = \sum^C_{i=1}P_i\dfrac{1}{n_i}\sum^{n_i}_{k=1}(x^{(i)}_k-m_i)(x^{(i)}_k-m_i)^T
 \]</span></p>
-<p><span class="math display">\[\tilde{S}_b = \sum^C_{i=1}P_i\delta(m_i, m)
+<p><span class="math display">\[\tilde{S}_b = \sum^C_{i=1}P_i(m_i-m)(m_i-m)^T
 \]</span></p>
 <p>此时</p>
 <p><span class="math display">\[J_d(x) = tr(\tilde{S}_w+\tilde{S}_b)
 \]</span></p>
+<p>其他表达形式TODO。</p>
+<p>基于距离的准则概念直观，计算方便。但没有直接考虑样本的分布情况，与错误率没有直接关系；而且两类样本的分布有重叠时，这些判据不能反映重叠的情况。</p>
+<h3 id="基于概率的可分性判据">基于概率的可分性判据</h3>
+<p>TODO</p>
+<h3 id="基于熵的可分性依据">基于熵的可分性依据</h3>
+<p>TODO</p>
+<h2 id="特征子集的搜索策略">特征子集的搜索策略</h2>
+<h3 id="单独最优特征组合">单独最优特征组合</h3>
+<p>计算各特征单独使用时的可分性判据<span class="math inline">\(J\)</span>并加以排序，取前<span class="math inline">\(d\)</span>个作为选择结果。</p>
+<p>问题是组合起来不一定是最优结果，只有当可分性判据对各特征具有（广义）可加性时，才可以选出一组最优特征。例如：各类具有正态分布；各特征统计独立；可分性判据基于Mahalanobis距离</p>
+<h3 id="顺序前进法sfs">顺序前进法（SFS）</h3>
+<p>自下而上</p>
+<p>每次从未入选的特征中选择一个特征，使得它与已入选的特征组合在一起时所得的可分性或分类识别率为最大，直到加入的特征数达到<span class="math inline">\(d\)</span></p>
+<p>优点是考虑了所选特征与已入选特征之间的相关性。比单独最优特征组合效果好。</p>
+<p>缺点是，一旦某特征入选，后面无论加入什么，也无法去除它。</p>
+<h3 id="广义顺序前进法gsfs">广义顺序前进法（GSFS）</h3>
+<p>每次从未入选的选出<span class="math inline">\(r\)</span>个，使得<span class="math inline">\(r\)</span>个特征加入后<span class="math inline">\(J\)</span>最大</p>
+<p>SFS每次只加一个，未考虑新加特征之间的统计相关性。GSFS更好，但计算量更大，且还是无法拿出之前的。</p>
+<h3 id="顺序后退法sbs">顺序后退法（SBS）</h3>
+<p>自上而下</p>
+<p>从全体特征开始，每次剔除一个特征，使得保留的特征集合具有最大的可分性或分类识别率。依次迭代，知道可分性或识别率开始下降。</p>
+<p>特点是，计算过程中可以估计每次去掉一个特征所造成的可分性的降低。计算量比前进法大。同样的，一旦被删除就无法再加入。</p>
+<p>也有广义顺序后退法。</p>
+<h3 id="增l减r法">增l减r法</h3>
+<p>为了避免一加入就无法剔除，一剔除就无法加入的问题。引入局部回溯手段。</p>
+<p>在第<span class="math inline">\(k\)</span>步先用SFS一个个加入特征到<span class="math inline">\(k+l\)</span>个，再用SBS一个个剔除<span class="math inline">\(r\)</span>个特征。反复进行直到满足<span class="math inline">\(d\)</span>个特征。此时<span class="math inline">\(l>r\)</span>，自下而上，起始时有<span class="math inline">\(0\)</span>个特征。</p>
+<p>如果<span class="math inline">\(l<r\)</span>，则要先剔除，再增加。自上而下，起始时有<span class="math inline">\(D\)</span>个特征。</p>
+<p>也有其推广。即把上面每一步的SFS和SBS换成GSFS和GSBS。</p>
+<h3 id="遗传算法">遗传算法</h3>
+<p>从生物进化论得到启迪。遗传，变异，自然选择。基于该思想发展了遗传优化算法。</p>
+<ul>
+<li>基因链码：待解问题的解的编码，每个基因链码也称为一个个体。对于特征选择，可用一个<span class="math inline">\(D\)</span>位的0/1构成的串表示一种特征组合。</li>
+<li>群体：若干个个体的集合，即问题的一些解的集合。</li>
+<li>交叉：由当前两个个体的链码交叉产生新一代的两个个体。</li>
+<li>变异：由一个链码随机选取某基因使其翻转。</li>
+<li>适应度：对于每个解，以给定的优化准则来判断其性能的优劣，作为其适应度，即函数<span class="math inline">\(f_i\)</span>的值，个体<span class="math inline">\(x_i\)</span>越好，<span class="math inline">\(f_i\)</span>越大。新一代群体对环境的平均适应度比父代高。</li>
+</ul>
+<p>基本步骤如下：</p>
+<ol>
+<li>令进化代数<span class="math inline">\(t=0\)</span></li>
+<li>给出初始化群体<span class="math inline">\(P(t)\)</span>，令<span class="math inline">\(x_g\)</span>为其中任一个体</li>
+<li>对<span class="math inline">\(P(t)\)</span>中每个个体估值，并将群体中的最优解<span class="math inline">\(x'\)</span>与<span class="math inline">\(x_g\)</span>比价， 如果比<span class="math inline">\(x_g\)</span>更优，则<span class="math inline">\(x_g=x'\)</span></li>
+<li>如果终止条件满足，则算法结束，<span class="math inline">\(x_g\)</span>作为输出。否则继续</li>
+<li>从<span class="math inline">\(P(t)\)</span>中选择个体并进行交叉和变异操作，得到新一代群体<span class="math inline">\(P(t+1)\)</span>，令<span class="math inline">\(t=t+1\)</span>，转第3步。</li>
+</ol>
+<p>其中交叉操作仅对非最优个体进行，而且交叉后的个体应该适应度比父代大，如果不满足就要反复交叉直到满足或者无法交叉。</p>
+<p>变异操作是对交叉后还不满足条件的进行的。如果某个类中有一半以上交叉的后代个体不大于父代，则全变异。</p>
+<p><strong>轮盘赌选择法</strong></p>
+<p>依据个体的适应度值计算每个个体在子代中出现的概率，并按照此概率随机选择个体构成子代种群。</p>
+<p>轮盘赌选择策略的出发点是适应度值越好的个体被选择的概率越大。因此，在求解最大化问题的时候，我们可以直接采用适应度值来进行选择。</p>
+<ol>
+<li>将种群中个体的适应度值叠加，得到总适应度值</li>
+<li>每个个体的适应度值除以总适应度值得到个体被选择的概率</li>
+<li>计算个体的累积概率以构造一个轮盘</li>
+<li>轮盘选择：产生一个<span class="math inline">\([0,1]\)</span>区间内的随机数，若该随机数小于或等于个体<span class="math inline">\(a\)</span>的累积概率且大于个体<span class="math inline">\(b\)</span>的累积概率，选择个体<span class="math inline">\(a\)</span>进入子代种群。重复步骤(4)多次次，得到的个体构成新一代种群。</li>
+</ol>
 <h1 id="强化学习">强化学习</h1>
 <h2 id="概论">概论</h2>
 <p>在强化学习中，软件智能体在环境中进行观察并采取行动，作为回报，它会获得奖励。</p>
@@ -3543,6 +4163,42 @@ network）组成。</p>
 <p>这是一种评估方法。通过可放回地从数据集中抽样<span class="math inline">\(m\)</span>次，得到大小为<span class="math inline">\(m\)</span>的训练集。可以算出，大概有<span class="math inline">\(36.8\%\)</span>的数据从未出现在训练集中，那么就可以把这些数据用作测试集。</p>
 <p>如果不放回，变量的后续选择始终取决于先前的选择，这会使得预判准则不随机。</p>
 <h2 id="矩阵向量求导技术">矩阵/向量求导技术</h2>
+<h3 id="向量变量与标量函数">向量变量与标量函数</h3>
+<p>定义<span class="math inline">\(f(x), x=[x_1,x_2,\cdots,x_n]^T\)</span>，即变量是向量，而函数值是标量，则其导数为</p>
+<p><span class="math display">\[\dfrac{\partial f(x)}{\partial x} = \bigg[\dfrac{\partial f}{\partial x_1},\dfrac{\partial f}{\partial x_2},\cdots,\dfrac{\partial f}{\partial x_n}\bigg]^T
+\]</span></p>
+<p>其求导满足普通的线性、乘法、除法法则。下面给出几个常用公式</p>
+<p><span class="math display">\[\dfrac{\partial c}{\partial x} = \vec{0},\ c是常数
+\]</span></p>
+<p><span class="math display">\[\dfrac{\partial x^Ta}{\partial x} = \dfrac{\partial a^Tx}{\partial x} = a,\ a是常数向量
+\]</span></p>
+<p><span class="math display">\[\dfrac{\partial x^Tx}{\partial x} = 2x
+\]</span></p>
+<p><span class="math display">\[\dfrac{\partial x^T Ax}{\partial x} = Ax+A^Tx,\ A是常数矩阵
+\]</span></p>
+<p><span class="math display">\[\dfrac{\partial a^Txx^Tb}{\partial x} = ab^Tx+ba^Tx,\ a,b是常数向量
+\]</span></p>
+<h3 id="矩阵变量与标量函数">矩阵变量与标量函数</h3>
+<p>定义<span class="math inline">\(f(X),X_{m\times n}\)</span>，其导数定义为</p>
+<p><span class="math display">\[\dfrac{\partial f}{\partial X}=
+\begin{bmatrix}
+ \dfrac{\partial f}{\partial x_{11}} & \dfrac{\partial f}{\partial x_{12}} & \cdots & \dfrac{\partial f}{\partial x_{1n}}\\
+ \dfrac{\partial f}{\partial x_{21}} & \dfrac{\partial f}{\partial x_{22}} & \cdots & \dfrac{\partial f}{\partial x_{2n}}\\
+ \vdots & \vdots & \ddots & \vdots\\
+ \dfrac{\partial f}{\partial x_{m1}} & \dfrac{\partial f}{\partial x_{m2}} & \cdots & \dfrac{\partial f}{\partial x_{mn}}
+\end{bmatrix}
+\]</span></p>
+<p>其同样满足线性、乘法、除法运算法则。常用公式如下</p>
+<p><span class="math display">\[\dfrac{\partial c}{\partial X} = 0_{m\times n},\ c是常数
+\]</span></p>
+<p><span class="math display">\[\dfrac{\partial a^TXb}{\partial X} = ab^T
+\]</span></p>
+<p><span class="math display">\[\dfrac{\partial a^TX^Tb}{\partial X} = ba^T
+\]</span></p>
+<p><span class="math display">\[\dfrac{\partial a^TXX^Tb}{\partial X} = ab^TX+ba^TX
+\]</span></p>
+<p><span class="math display">\[\dfrac{\partial a^TX^TXb}{\partial X} = Xba^T+Xab^T
+\]</span></p>
 
 </section>
 
@@ -3860,8 +4516,21 @@ network）组成。</p>
     <li><a href="#神经网络基础概念">神经网络基础概念</a>
       <ol>
         <li><a href="#神经元及其数学模型">神经元及其数学模型</a></li>
-        <li><a href="#大脑分区和基础的神经网络">大脑分区和基础的神经网络</a></li>
+        <li><a href="#人工神经网络的特点">人工神经网络的特点</a></li>
+        <li><a href="#大脑分区和基础的神经网络">大脑分区和基础的神经网络</a>
+          <ol>
+            <li><a href="#人工神经网络的拓扑结构">人工神经网络的拓扑结构</a></li>
+          </ol>
+        </li>
         <li><a href="#正向传播和反向传播">正向传播和反向传播</a></li>
+        <li><a href="#常见网络">常见网络</a>
+          <ol>
+            <li><a href="#som网络">SOM网络</a></li>
+            <li><a href="#rbf网络">RBF网络</a></li>
+            <li><a href="#bp网络">BP网络</a></li>
+            <li><a href="#hopfield网络">Hopfield网络</a></li>
+          </ol>
+        </li>
       </ol>
     </li>
     <li><a href="#传统学习">传统学习</a>
@@ -3908,10 +4577,26 @@ network）组成。</p>
             <li><a href="#生成对抗网络generative-adversarial-networkgan">生成对抗网络（Generative Adversarial Network(GAN)）</a></li>
           </ol>
         </li>
-        <li><a href="#半监督学习">半监督学习</a></li>
-        <li><a href="#集成学习">集成学习</a>
+        <li><a href="#半监督学习">半监督学习</a>
           <ol>
+            <li><a href="#通用理论">通用理论</a></li>
+            <li><a href="#半监督分类">半监督分类</a></li>
+            <li><a href="#半监督聚类">半监督聚类</a></li>
+          </ol>
+        </li>
+        <li><a href="#集成学习组合分类器">集成学习/组合分类器</a>
+          <ol>
+            <li><a href="#bagging">Bagging</a></li>
             <li><a href="#boosting">Boosting</a></li>
+            <li><a href="#分类器组合评价">分类器组合评价</a></li>
+            <li><a href="#非监督集成学习">非监督集成学习</a></li>
+          </ol>
+        </li>
+        <li><a href="#分类器准确率评估">分类器准确率评估</a>
+          <ol>
+            <li><a href="#保留法holdout">保留法（holdout）</a></li>
+            <li><a href="#k-fold">K-fold</a></li>
+            <li><a href="#留一法">留一法</a></li>
           </ol>
         </li>
       </ol>
@@ -3922,6 +4607,18 @@ network）组成。</p>
         <li><a href="#类别可分离性判据">类别可分离性判据</a>
           <ol>
             <li><a href="#基于距离的可分离性判据">基于距离的可分离性判据</a></li>
+            <li><a href="#基于概率的可分性判据">基于概率的可分性判据</a></li>
+            <li><a href="#基于熵的可分性依据">基于熵的可分性依据</a></li>
+          </ol>
+        </li>
+        <li><a href="#特征子集的搜索策略">特征子集的搜索策略</a>
+          <ol>
+            <li><a href="#单独最优特征组合">单独最优特征组合</a></li>
+            <li><a href="#顺序前进法sfs">顺序前进法（SFS）</a></li>
+            <li><a href="#广义顺序前进法gsfs">广义顺序前进法（GSFS）</a></li>
+            <li><a href="#顺序后退法sbs">顺序后退法（SBS）</a></li>
+            <li><a href="#增l减r法">增l减r法</a></li>
+            <li><a href="#遗传算法">遗传算法</a></li>
           </ol>
         </li>
       </ol>
@@ -4025,7 +4722,12 @@ network）组成。</p>
         <li><a href="#熵">熵</a></li>
         <li><a href="#交叉熵">交叉熵</a></li>
         <li><a href="#bootstrapping">bootstrapping</a></li>
-        <li><a href="#矩阵向量求导技术">矩阵/向量求导技术</a></li>
+        <li><a href="#矩阵向量求导技术">矩阵/向量求导技术</a>
+          <ol>
+            <li><a href="#向量变量与标量函数">向量变量与标量函数</a></li>
+            <li><a href="#矩阵变量与标量函数">矩阵变量与标量函数</a></li>
+          </ol>
+        </li>
       </ol>
     </li>
   </ol>
