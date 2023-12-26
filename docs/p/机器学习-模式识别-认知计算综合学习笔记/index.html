@@ -1244,7 +1244,165 @@
 	
 </figure></p>
 <h3 id="正态分布下的统计决策">正态分布下的统计决策</h3>
-<p>TODO</p>
+<p><strong>单变量正态分布</strong></p>
+<p><span class="math display">\[p(x) = \dfrac{1}{\sqrt{2\pi}\sigma}\exp\bigg\{-\dfrac{1}{2}\bigg(\dfrac{x-\mu}{\sigma}\bigg)^2\bigg\}
+\]</span></p>
+<p>记作<span class="math inline">\(N(\mu,\sigma)\)</span>，其中<span class="math inline">\(\mu=Ex=\int xp(x)dx,\sigma^2=Dx=E(x-\mu)^2=\int (x-\mu)^2p(x)dx\)</span></p>
+<p><strong>多元正态分布函数</strong></p>
+<p>设<span class="math inline">\(x\)</span>是<span class="math inline">\(d\)</span>维向量</p>
+<p><span class="math display">\[p(x) = \dfrac{1}{(2\pi)^{d/2}|\Sigma|^{1/2}}\exp\bigg(-\dfrac{1}{2}(x-\mu)^T\Sigma^{-1}(x-\mu)\bigg)
+\]</span></p>
+<p>其中<span class="math inline">\(\mu\)</span>是均值向量<span class="math inline">\((\mu_1,\mu_2,\cdots,\mu_d)^T\)</span>，</p>
+<p><span class="math inline">\(\Sigma\)</span>是协方差矩阵即<span class="math inline">\(E((x-\mu)(x-\mu)^T)=[\sigma_{ij}]_{d\times d}\)</span>，其中每个元素为<span class="math inline">\(\sigma_{ij}=E((x_i-E(x_i))(x_j-E(x_j)))\)</span>。协方差矩阵是对称非负定矩阵。</p>
+<p>一个多元正态分布函数共有<span class="math inline">\(d+d(d+1)/2\)</span>个参数，其中<span class="math inline">\(d\)</span>个参数是均值向量，剩下的<span class="math inline">\(d(d+1)/2\)</span>是协方差矩阵。</p>
+<p>该概率密度函数中等密度点的轨迹为一超椭球面。如果要使<span class="math inline">\(p(x)\)</span>值不变，只需要保证<span class="math inline">\(\exp\)</span>内的参数为常数。</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 189; 
+			flex-basis: 454px"
+	>
+	<a href="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/102.jpg" data-size="632x334">
+		<img src="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/102.jpg"
+			width="632"
+			height="334"
+			srcset="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/102_hu7e2f9988b6695f68d5515a0b59f4b485_23049_480x0_resize_q75_box.jpg 480w, /p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/102_hu7e2f9988b6695f68d5515a0b59f4b485_23049_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="102.jpg">
+	</a>
+	
+	<figcaption>102.jpg</figcaption>
+	
+</figure></p>
+<p><strong>马氏距离（的平方）</strong></p>
+<p><span class="math display">\[\gamma^2 = (x-\mu)^T\Sigma^{-1}(x-\mu) = \sum^n_{i-1}\sum^n_{j-1}p_{ij}(x_i-\mu_i)(x_j-\mu_j)\geq 0
+\]</span></p>
+<p>与欧氏距离（的平方）<span class="math inline">\((x-\mu)^T(x-\mu)\)</span>相比，马氏距离考虑数据各个维度间的相关性，<span class="math inline">\(x\)</span>到<span class="math inline">\(\mu\)</span>的马氏距离为常数时，所组成的超椭球面为等密度点 。</p>
+<p><strong>判别函数</strong></p>
+<p>根据最小错误率贝叶斯判别函数，在多元正态概型<span class="math inline">\((p(x|w_i)\sim N(\mu_i, \sigma_i), i=1,\cdots,c)\)</span>下就可以立即写出其相应的表达式。</p>
+<p>因为</p>
+<p><span class="math display">\[p(x|w_i) = \dfrac{1}{(2\pi)^{d/2}|\Sigma_i|^{1/2}}\exp\bigg(-\dfrac{1}{2}(x-\mu_i)^T\Sigma^{-1}_i(x-\mu_i)\bigg)
+\]</span></p>
+<p>之前我们得出最小错误率的判决函数就是<span class="math inline">\(g_i(x)=P(w_i|x)\)</span>，也就等价于<span class="math inline">\(g_i(x)=P(x|w_i)P(w_i)\)</span>（分母为无关项）。我们判断是选取判决函数最大的作为预测类，也就等价于最大的<span class="math inline">\(g_i(x)=\ln P(x|w_i)+\ln P(w_i)\)</span>。于是，代入多元正态，得到最终的判别函数为</p>
+<p><span class="math display">\[g_i(x) = -\dfrac{1}{2}(x-\mu_i)^T\Sigma^{-1}_i(x-\mu_i)-\dfrac{d}{2}\ln 2\pi-\dfrac{1}{2}\ln|\Sigma_i|+\ln P(w_i)
+\]</span></p>
+<p>决策面方程为<span class="math inline">\(g_i(x)-g_j(x)=0\)</span>，即</p>
+<p><span class="math display">\[-\dfrac{1}{2}[(x-\mu_i)^T\Sigma^{-1}_i(x-\mu_i)-(x-\mu_j)^T\Sigma^{-1}_j(x-\mu_j)] - \dfrac{1}{2}\ln\dfrac{|\Sigma_i|}{|\Sigma_j|}+\ln\dfrac{P(w_i)}{P(w_j)} = 0
+\]</span></p>
+<p><em>情况1</em></p>
+<p>若<span class="math inline">\(\Sigma_1=\cdots=\Sigma_c=\sigma^2 I\)</span>，则有<span class="math inline">\(\Sigma^{-1}_i=\dfrac{1}{\sigma^2} I, |\Sigma_i|=\sigma^{2d}\)</span>，代入、展开、去除与<span class="math inline">\(i\)</span>无关的项得到判决函数为</p>
+<p><span class="math display">\[g_i(x) = \dfrac{1}{\sigma^2}\mu_i^Tx-\dfrac{1}{2\sigma^2}\mu^T_i\mu_i+\ln P(w_i)=w^T_{i1}x+w_{i0}
+\]</span></p>
+<p>等价于一个线性判别函数。其决策面为<span class="math inline">\(g_i(x)=g_j(x)\)</span>，等价于<span class="math inline">\(w^T(x-x_0)=0\)</span>。其中</p>
+<p><span class="math display">\[w = \mu_i-\mu_j
+\]</span></p>
+<p><span class="math display">\[x_0 = \dfrac{1}{2}(\mu_i+\mu_j)-\dfrac{\sigma^2}{||\mu_i-\mu_j||^2}\ln\dfrac{P(w_i)}{P(w_j)}(\mu_i-\mu_j)
+\]</span></p>
+<p>直观来说，如果<span class="math inline">\(P(w_i)=P(w_j)\)</span>，则<span class="math inline">\(x_0\)</span>位于两中心的终点。否则更靠近先验概率小的方向。</p>
+<p>在先验概率相等的情况下，最优判决的规则为：为将某特征向量<span class="math inline">\(x\)</span>归类，通过测量<span class="math inline">\(x\)</span>到<span class="math inline">\(c\)</span>个均值向量中心的欧氏距离，并将<span class="math inline">\(x\)</span>归为离它最近的那一类。这样的分类器称为“<strong>最小距离分类器</strong>”。</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 152; 
+			flex-basis: 364px"
+	>
+	<a href="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/103.jpg" data-size="380x250">
+		<img src="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/103.jpg"
+			width="380"
+			height="250"
+			srcset="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/103_hua3d13277834db7ff925f4df35c160e33_10810_480x0_resize_q75_box.jpg 480w, /p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/103_hua3d13277834db7ff925f4df35c160e33_10810_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="103.jpg">
+	</a>
+	
+	<figcaption>103.jpg</figcaption>
+	
+</figure></p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 241; 
+			flex-basis: 580px"
+	>
+	<a href="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/104.jpg" data-size="721x298">
+		<img src="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/104.jpg"
+			width="721"
+			height="298"
+			srcset="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/104_hu0a74d196150b7d05f9ceeb2753241e14_23300_480x0_resize_q75_box.jpg 480w, /p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/104_hu0a74d196150b7d05f9ceeb2753241e14_23300_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="104.jpg">
+	</a>
+	
+	<figcaption>104.jpg</figcaption>
+	
+</figure></p>
+<p><em>情况2</em></p>
+<p>若<span class="math inline">\(\Sigma_1=\cdots=\Sigma_c=\Sigma\)</span>，在几何上，相当于各类样本集中在以该类均值为中心的同样大小和形状的超椭球内。</p>
+<p>去除无关项，得到判决函数为</p>
+<p><span class="math display">\[g_i(x) = -\dfrac{1}{2}(x-\mu_i)^T\Sigma^{-1}(x-\mu_i)+\ln P(w_i)
+\]</span></p>
+<p>特例，如果<span class="math inline">\(P(w_i)=P\)</span>为固定值，那么判决函数就可以进一步简化为<span class="math inline">\(g_i(x)=\gamma^2\)</span>，即马氏距离的平方。</p>
+<p>把上式展开，去除与<span class="math inline">\(i\)</span>无关的项，可以得到</p>
+<p><span class="math display">\[g_i(x) = \mu_i^T\Sigma^{-1}x-\dfrac{1}{2}\mu_i^T\Sigma^{-1}\mu_i+\ln P(w_i)=w^T_{i1}x+w_{i0}
+\]</span></p>
+<p>等价于一个线性判别函数。其决策面为<span class="math inline">\(g_i(x)=g_j(x)\)</span>，等价于<span class="math inline">\(w^T(x-x_0)=0\)</span>。其中</p>
+<p><span class="math display">\[w = \Sigma^{-1}(\mu_i-\mu_j)
+\]</span></p>
+<p><span class="math display">\[x_0 = \dfrac{1}{2}(\mu_i+\mu_j)-\dfrac{1}{(\mu_i-\mu_j)^T\Sigma^{-1}(\mu_i-\mu_j)}\ln\dfrac{P(w_i)}{P(w_j)}(\mu_i-\mu_j)
+\]</span></p>
+<p>由于<span class="math inline">\(w\)</span>并非沿着<span class="math inline">\(\mu_i-\mu)j\)</span>方向，因此分界面并非与均值间的连线垂直正交。</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 207; 
+			flex-basis: 498px"
+	>
+	<a href="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/105.jpg" data-size="688x331">
+		<img src="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/105.jpg"
+			width="688"
+			height="331"
+			srcset="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/105_hu2d96ea2c3b32e9bb43dd86730c192f07_30778_480x0_resize_q75_box.jpg 480w, /p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/105_hu2d96ea2c3b32e9bb43dd86730c192f07_30778_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="105.jpg">
+	</a>
+	
+	<figcaption>105.jpg</figcaption>
+	
+</figure></p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 160; 
+			flex-basis: 385px"
+	>
+	<a href="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/106.jpg" data-size="699x435">
+		<img src="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/106.jpg"
+			width="699"
+			height="435"
+			srcset="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/106_hu6882db052d0f434dde69632f69d1d27a_37352_480x0_resize_q75_box.jpg 480w, /p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/106_hu6882db052d0f434dde69632f69d1d27a_37352_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="106.jpg">
+	</a>
+	
+	<figcaption>106.jpg</figcaption>
+	
+</figure></p>
+<p><em>情况3</em></p>
+<p>即任意的<span class="math inline">\(\Sigma_i\)</span></p>
+<p><span class="math display">\[g_i(x) = -\dfrac{1}{2}(x-\mu_i)^T\Sigma^{-1}_i(x-\mu_i)-\dfrac{1}{2}\ln|\Sigma_i|+\ln P(w_i)
+\]</span></p>
+<p>可以写为</p>
+<p><span class="math display">\[g_i(x) = x^Tw_{i2}x+w_{i1}^Tx+w_{i0}
+\]</span></p>
+<p>这样的二次型形式。决策面<span class="math inline">\(g_i(x)=g_j(x)\)</span>为</p>
+<p><span class="math display">\[x^T(W_i-W_j)x+(w_i-w_j)^Tx+w_{i0}-w_{j0}=0
+\]</span></p>
+<p>由上式所决定的决策面为超二次曲面随着参数的不同而呈现为某种超二次曲面，即超球面、超椭球面、超抛物面、超双曲面或超平面。</p>
 <h3 id="贝叶斯vs其他判别">贝叶斯vs其他判别</h3>
 <p>我们的贝叶斯理论都基于后验概率，所以要先知道先验概率和类条件概率。实际情况下并不一定知道类条件概率，如果样本充足，则可以用估计的办法估计类条件概率。有时候样本不够多，样本维数又比较高，此时估计就会不准确。更适合采用别的方法，例如线性判别。</p>
 <p>线性判别直接假设判别函数，用样本来估计判别函数的参数，而免去估计类条件概率。非贝叶斯的算法基本上都采用这种方式。判别函数最简单的形式是线性函数，决策面是超平面，此时也叫做线性判别。其包含参数<span class="math inline">\(w,w_0\)</span></p>
@@ -1788,7 +1946,95 @@
 <p>和有监督学习相比，无监督学习就是样本没有打上label。</p>
 <p>训练集一般就没有<span class="math inline">\(y\)</span>，为<span class="math inline">\(\{x^{(1)}, x^{(2)}, \cdots, x^{(m)}\}\)</span>。常见的应用有：网络搜索、认知科学、神经学、遗传学。</p>
 <h3 id="高斯混合模型">高斯混合模型</h3>
-<p>TODO</p>
+<p>统计学习模型可以分为两类，一类是概率模型，另一类是非概率模型。</p>
+<p>概率模型的形式是<span class="math inline">\(P(Y|X)\)</span>。如果输入是<span class="math inline">\(X\)</span>，输出是<span class="math inline">\(Y\)</span>，训练后模型得到的输出不是一个具体
+的值，而是一系列的概率值。对于聚类问题来说，就是输入<span class="math inline">\(X\)</span>对应于各个不同聚类簇<span class="math inline">\(Y\)</span>的概率，称作软聚类。</p>
+<p>非概率模型的形式是一个决策函数<span class="math inline">\(Y=f(X)\)</span>，如果输入是<span class="math inline">\(X\)</span>，输出是<span class="math inline">\(Y\)</span>，训练后模型得到的
+输出是一个具体的值。对于聚类问题来说，输入数据<span class="math inline">\(X\)</span>后就可以通过模型映射得到唯一的判决结果<span class="math inline">\(Y\)</span>，在无监督学习中称作硬聚类。</p>
+<p>高斯混合模型（GMM）是一种典型的概率模型。假设所有数据点都是由具有未知参数的有限个高斯分布混合产生的。</p>
+<p>高斯混合模型是用于估计样本的概率密度分布的方法，其估计采用的模型是几个在训练前就已经建立好的高斯模型的加权和。高斯模型的数目是一个超参数，在模型建立前给定，每个聚类簇都对应于一个高斯分布。</p>
+<p>理论上，高斯混合模型可用于近似任何概率分布。</p>
+<p>单高斯模型的基本定义和之前提到的正态分布下的统计决策一致。即用一个一维正态分布或者一个多维正态分布就可以描述样本<span class="math inline">\(x\)</span>，将<span class="math inline">\(x\)</span>代入概率密度函数，当概率值大于给定阈值时，就认为该样本属于<span class="math inline">\(C\)</span>类。</p>
+<p>单高斯分布模型可以拟合数据接近高斯分布的情况，但实际应用中，数据的分布情况往往不满足高斯分布，这就引入了高斯混合模型。</p>
+<p>高斯混合模型假定样本数据分布服从几个高斯分布的加权和的形式。</p>
+<p><span class="math display">\[\Pr(x) = \sum^K_{k=1}\pi_kN(x;\mu_k,\Sigma_k)
+\]</span></p>
+<p>其中任意的一个高斯分布称为这个模型的一个分量。<span class="math inline">\(0\leq \pi_k\leq 1\)</span>是混合系数，表示每个分量的权重 。满足<span class="math inline">\(\sum \pi_k=1\)</span></p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 177; 
+			flex-basis: 426px"
+	>
+	<a href="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/107.jpg" data-size="681x383">
+		<img src="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/107.jpg"
+			width="681"
+			height="383"
+			srcset="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/107_hua68a74ed4222fd12b99df584aee14611_43014_480x0_resize_q75_box.jpg 480w, /p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/107_hua68a74ed4222fd12b99df584aee14611_43014_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="107.jpg">
+	</a>
+	
+	<figcaption>107.jpg</figcaption>
+	
+</figure></p>
+<p><strong>将高斯混合模型用于聚类</strong></p>
+<p>先假设数据服从混合高斯分布，再根据数据推出高斯混合模型的概率分布就可以进一步求出各个样本属于每个聚类的概率。</p>
+<p>高斯混合模型的<span class="math inline">\(K\)</span>个高斯模型实际上对应<span class="math inline">\(K\)</span>个聚类簇。</p>
+<p>高斯混合模型参数的求解，就是在只有样本数据，而不知道样本分类的情况下，计算出模型的隐含参数<span class="math inline">\(\pi_k,\mu,\Sigma\)</span>。可以使用期望最大化（EM）算法来求解。</p>
+<p>求解完后聚类的具体步骤为</p>
+<ol>
+<li>以<span class="math inline">\(\pi_k\)</span>为概率随机选择<span class="math inline">\(K\)</span>个高斯分布分量中的一个（个人猜测类似于轮盘赌）</li>
+<li>把样本数据代入第一步中选中的高斯分布，判断输出概率是否大于阈值，如果不是则返回第一步重新选择。</li>
+</ol>
+<p>如何求解模型？如果样本分类已知，就是有监督学习，可以用最大似然估计</p>
+<p><span class="math display">\[\pi_k = \dfrac{N_k}{N}
+\]</span></p>
+<p><span class="math display">\[\mu_k = \dfrac{1}{N_k}\sum_{x\in L(k)}x
+\]</span></p>
+<p><span class="math display">\[\Sigma_k=\dfrac{1}{N_k}\sum_{x\in L(k)}(x-\mu_k)(x-\mu_k)^T
+\]</span></p>
+<p>其中<span class="math inline">\(N\)</span>是总样本数，<span class="math inline">\(N_k\)</span>是属于<span class="math inline">\(k\)</span>类的样本数，<span class="math inline">\(L(k)\)</span>是<span class="math inline">\(k\)</span>类的样本集合。</p>
+<p>如果样本分类未知，就是无监督学习。假设有<span class="math inline">\(N\)</span>个数据点，其服从某种分布<span class="math inline">\(Pr(x;\theta)\)</span>，我们的目标是找到一组这种分布的参数<span class="math inline">\(\theta\)</span>，使得在这种分布下生成这些数据点的概率最大，也就是似然函数最大。似然函数表示为</p>
+<p><span class="math display">\[\prod^N_{i=1} \Pr(x_i;\theta)
+\]</span></p>
+<p>在实际应用中，往往单个点分布的概率都很小，为了便于求解， 一 般 对似然函数取对数 ，得到对数似然函数。对高斯混合模型求对数似然函数</p>
+<p><span class="math display">\[\sum^N_{i=1}\log\bigg[\sum^K_{k=1}\pi_k N(x_i;\mu_k,\Sigma_k)\bigg]
+\]</span></p>
+<p>我们的目标是要找到一组最佳的模型参数，使得上式所示的期望最大，期望最大化算法（EM）的名字就由此而来。</p>
+<p><strong>EM算法</strong></p>
+<p>在统计模型中，EM算法是一种求参数的最大似然或最大后验概率(MAP)估计的迭代方法，其模型依赖于未观测到的隐含变量。</p>
+<ul>
+<li>EM算法迭代地交替执行期望(E)步和最大化(M)步</li>
+<li>E步使用参数的当前估计计算的对数似然的期望值创建函数</li>
+<li>M步计算最大化在E步上找到的期望对数似然的参数。然后用这些参数估计来确定下一步中隐含变量的分布。</li>
+</ul>
+<p>EM求解的问题的一般形式是</p>
+<p><span class="math display">\[\theta^* = \arg\max_{\theta}\prod^{|X|}_{j=1}\sum_{y\in Y}\Pr(X=x_j,Y=y;\theta)
+\]</span></p>
+<p>其中<span class="math inline">\(Y\)</span>是隐含变量。其基本思路是：随机初始化一组模型参数<span class="math inline">\(\theta^{(0)}\)</span>，并根据后验概率更新<span class="math inline">\(Y\)</span>的预期<span class="math inline">\(E(Y)\)</span>，然后用<span class="math inline">\(E(Y)\)</span>代替<span class="math inline">\(Y\)</span>求出新的模型参数<span class="math inline">\(\theta^{(1)}\)</span>。如此迭代直到<span class="math inline">\(\theta\)</span>收敛。</p>
+<ol>
+<li>定义分类数目<span class="math inline">\(K\)</span>，对每个分量<span class="math inline">\(k\)</span>设置<span class="math inline">\(\pi_k,\mu_k,\Sigma_k\)</span>的初始值，然后计算对数似然函数</li>
+<li>E步，引入隐含变量<span class="math inline">\(\gamma\)</span>，其在高斯混合模型中表示数据点由各个分量生成的概率</li>
+</ol>
+<p><span class="math display">\[\gamma(i,k) = \dfrac{\pi_kN(x_i;\mu_k,\Sigma_k)}{\sum^K_{j=1}\pi_jN(x_i;\mu_j,\Sigma_j)}
+\]</span></p>
+<ol start="3">
+<li>M步，通过最大似然估计来求解模型参数，现在我们认为上一步求出<span class="math inline">\(\gamma(i,k)\)</span>的就是“数据点<span class="math inline">\(x_i\)</span>由分量<span class="math inline">\(k\)</span>生成的概率。仿照之前的有类别标记的估计法，有</li>
+</ol>
+<p><span class="math display">\[N_k = \sum^N_{i=1}\gamma(i,k)
+\]</span></p>
+<p><span class="math display">\[\pi_k = \dfrac{N_k}{N}
+\]</span></p>
+<p><span class="math display">\[\mu_k = \dfrac{1}{N_k}\sum^N_{i=1}\gamma(i,k)x_i
+\]</span></p>
+<p><span class="math display">\[\Sigma_k = \dfrac{1}{N_k}\sum^N_{i=1}\gamma(i,k)(x_i-\mu_k)(x_i-\mu_k)^T
+\]</span></p>
+<ol start="4">
+<li>计算对数似然函数<span class="math inline">\(\sum^N_{i=1}\log\bigg[\sum^K_{k=1}\pi_k N(x_i;\mu_k,\Sigma_k)\bigg]\)</span></li>
+<li>检查参数是否收敛，或者对数似然函数是否收敛，不收敛则返回2</li>
+</ol>
 <h3 id="k-means聚类算法">K-means聚类算法</h3>
 <p>K-means是一种基于样本间相似性度量的聚类方法，这类方法的目标是类内样本相似性高，类间样本相似性低。基于样本间相似性度量的聚类方法可以分为动态聚类法和层次聚类法，K-means是动态聚类法。</p>
 <p>动态聚类的关键点是</p>
@@ -2318,7 +2564,26 @@ network）组成。</p>
 <p>此时</p>
 <p><span class="math display">\[J_d(x) = tr(\tilde{S}_w+\tilde{S}_b)
 \]</span></p>
-<p>其他表达形式TODO。</p>
+<p>其他表达形式如下。</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 137; 
+			flex-basis: 330px"
+	>
+	<a href="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/108.jpg" data-size="663x481">
+		<img src="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/108.jpg"
+			width="663"
+			height="481"
+			srcset="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/108_hub32c02de7a20c570ebc440bd25bb2523_23181_480x0_resize_q75_box.jpg 480w, /p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/108_hub32c02de7a20c570ebc440bd25bb2523_23181_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="108.jpg">
+	</a>
+	
+	<figcaption>108.jpg</figcaption>
+	
+</figure></p>
 <p>基于距离的准则概念直观，计算方便。但没有直接考虑样本的分布情况，与错误率没有直接关系；而且两类样本的分布有重叠时，这些判据不能反映重叠的情况。</p>
 <h3 id="基于概率的可分性判据">基于概率的可分性判据</h3>
 <p>TODO</p>
