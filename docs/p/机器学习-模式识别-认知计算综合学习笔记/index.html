@@ -125,7 +125,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 24 分钟
+                    阅读时长: 64 分钟
                 </time>
             </div>
         
@@ -1116,7 +1116,7 @@
 	<figcaption>84.jpg</figcaption>
 	
 </figure></p>
-<p>根据贝叶斯共识，就可以得出后验概率。</p>
+<p>根据贝叶斯公式，就可以得出后验概率。</p>
 <p><span class="math display">\[P(w_i|x)=\dfrac{P(x|w_i)P(w_i)}{\sum P(x|w_j)P(w_j)}
 \]</span></p>
 <p>后验概率的直观含义如下：</p>
@@ -1168,7 +1168,7 @@
 <li>找出风险最小的决策<span class="math inline">\(h^*(x)=\arg\min_{c\in y}R(c|x)\)</span></li>
 </ol>
 <p>损失函数要根据具体问题具体设置，通常不是很容易，需要有关专家研讨决定。</p>
-<p>以二分类为例，其决策为<span class="math inline">\(R(a_1|x)<R(a_2|x)\)</span>时，判断为属于<span class="math inline">\(w_1\)</span>，否则属于<span class="math inline">\(w_2\)</span>。展开、经过运算后得到似然比形式为</p>
+<p>以二分类为例，其决策为<span class="math inline">\(R(a_1|x)< R(a_2|x)\)</span>时，判断为属于<span class="math inline">\(w_1\)</span>，否则属于<span class="math inline">\(w_2\)</span>。展开、经过运算后得到似然比形式为</p>
 <p><span class="math display">\[\dfrac{P(x|w_1)}{P(x|w_2)}>\dfrac{\lambda_{12}-\lambda_{22}}{\lambda_{21}-\lambda_{11}}\times\dfrac{P(w_2)}{P(w_1)}
 \]</span></p>
 <p>此时判断属于<span class="math inline">\(w_1\)</span>。</p>
@@ -2217,7 +2217,72 @@ network）组成。</p>
 </figure></p>
 <h3 id="半监督分类">半监督分类</h3>
 <p><strong>生成式模型</strong></p>
-<p>TODO</p>
+<p>给定样本<span class="math inline">\(x\)</span>，类别标记为<span class="math inline">\(y\in Y=\{1,2,\cdots,N\}\)</span>。假设样本是由高斯混合模型生成的。且每一个类别都对应一个高斯混合成分，数据是由如下概率密度生成</p>
+<p><span class="math display">\[p(x) = \sum^N_{i=1}\alpha_i\cdot p(x;\mu_i,\Sigma_i)
+\]</span></p>
+<p>其中<span class="math inline">\(a_i\geq 0, \sum a_i=1\)</span></p>
+<p>用<span class="math inline">\(f(x)\in Y\)</span>表示模型<span class="math inline">\(f\)</span>对样本的预测值，<span class="math inline">\(\Theta\in\{1,2,\cdots,N\}\)</span>是样本<span class="math inline">\(x\)</span>隶属的高斯混合成分。最大化后验概率得</p>
+<p><span class="math display">\[\begin{align*}
+ f(x) & = \arg\max_{j\in Y}p(y=j|x) \\
+  & = \arg\max_{j\in Y}\sum^N_{i=1}p(y=j,\Theta=i|x)\\
+  & = \arg\max_{j\in Y}\sum^N_{i=1}p(y=j|\Theta=i,x)\cdot p(\Theta=i|x)\\
+  &
+\end{align*}
+\]</span></p>
+<p>其中<span class="math inline">\(p(y=j,\Theta=i,x)\)</span>是第<span class="math inline">\(i\)</span>个高斯混合成分生成，且类别为<span class="math inline">\(j\)</span>的概率</p>
+<p><span class="math display">\[p(\Theta=i|x) = \dfrac{\alpha_i\cdot p(x;\mu_i,\Sigma_i)}{\sum^N_{j=1}\alpha_j\cdot p(x;\mu_j,\Sigma_j)}
+\]</span></p>
+<p>是样本<span class="math inline">\(x\)</span>由第<span class="math inline">\(i\)</span>个高斯混合成分生成的后验概率。</p>
+<p>这里面，<span class="math inline">\(p(y=j|\Theta=i,x)\cdot p(\Theta=i|x)\)</span>的前半部分要知道标记<span class="math inline">\(y\)</span>，也就是有标记样本，而后半部分不需要知道，于是我们就可以同时利用有标记和未标记样本。</p>
+<p>参数求解过程如下：</p>
+<ul>
+<li>假定给了有标记数据集<span class="math inline">\(D_l\)</span>和未标记数据集<span class="math inline">\(D_u\)</span></li>
+<li>假设所有样本独立同分布且由同一个高斯混合模型生成</li>
+<li>使用极大似然估计得到高斯混合模型的参数<span class="math inline">\(\alpha_i,\mu_i,\Sigma_i\)</span></li>
+<li>使用EM算法对其参数进行求解</li>
+</ul>
+<p>其中，极大似然函数可以写作</p>
+<p><span class="math display">\[LL(D_l\cup D_u) = \sum_{(x_j,y_j)\in D_l}\ln\bigg(\sum^N_{i=1}\alpha_i\cdot p(x_j;\mu_i,\Sigma_i)\cdot p(y_j|\Theta=i,x_j)\bigg) + \sum_{x_j\in D_u}\ln\bigg(\sum^N_{i=1}\alpha_i\cdot p(x_j;\mu_i,\Sigma_i)\bigg)
+\]</span></p>
+<p>EM算法如下</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 374; 
+			flex-basis: 898px"
+	>
+	<a href="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/110.jpg" data-size="820x219">
+		<img src="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/110.jpg"
+			width="820"
+			height="219"
+			srcset="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/110_hu7a8bf19d747495cc33d54dd311235c3e_18505_480x0_resize_q75_box.jpg 480w, /p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/110_hu7a8bf19d747495cc33d54dd311235c3e_18505_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="110.jpg">
+	</a>
+	
+	<figcaption>110.jpg</figcaption>
+	
+</figure></p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 303; 
+			flex-basis: 728px"
+	>
+	<a href="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/111.jpg" data-size="811x267">
+		<img src="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/111.jpg"
+			width="811"
+			height="267"
+			srcset="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/111_hu17cacebf7e3869e47bec8805ba31405b_20460_480x0_resize_q75_box.jpg 480w, /p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/111_hu17cacebf7e3869e47bec8805ba31405b_20460_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="111.jpg">
+	</a>
+	
+	<figcaption>111.jpg</figcaption>
+	
+</figure></p>
 <p><strong>半监督SVM</strong></p>
 <p>其中使用最广泛的是TSVM。使用转导推理（Transductive Inference）方法，通过观察特定的训练样本，进而预测特定的测试样本。</p>
 <p>TSVM也是针对二分类问题，tsvm的目标是给出<span class="math inline">\(D_u\)</span>的预测标记<span class="math inline">\(\hat y=\{y_{l+1},y_{l+2}+\cdots+y_{l+u}\}\)</span>，使得划分超平面具有最大边界。即</p>
@@ -2586,9 +2651,67 @@ network）组成。</p>
 </figure></p>
 <p>基于距离的准则概念直观，计算方便。但没有直接考虑样本的分布情况，与错误率没有直接关系；而且两类样本的分布有重叠时，这些判据不能反映重叠的情况。</p>
 <h3 id="基于概率的可分性判据">基于概率的可分性判据</h3>
-<p>TODO</p>
+<p>基于距离的可分性判据原理直观，计算简便。但是这种原理没有考虑概率分布，因此当不同类样本中有部分在特征空间中交迭分布时，简单地按距离划分，无法表明与错误概率之间的联系。</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 194; 
+			flex-basis: 467px"
+	>
+	<a href="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/109.jpg" data-size="612x314">
+		<img src="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/109.jpg"
+			width="612"
+			height="314"
+			srcset="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/109_hu4bc6e0ffb08155ff717b4c97d08dceca_15693_480x0_resize_q75_box.jpg 480w, /p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/109_hu4bc6e0ffb08155ff717b4c97d08dceca_15693_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="109.jpg">
+	</a>
+	
+	<figcaption>109.jpg</figcaption>
+	
+</figure></p>
+<p>显然不同类别在特征空间<span class="math inline">\(x\)</span>中的分布要尽可能不一样，则分类就比较容易，通俗的讲，则不同类别在特征空间的不同区域聚集，则分类就容易，它们重迭的程度越低，越有别于分类。</p>
+<p>分布密度的交叠程度可用<span class="math inline">\(p(X|w_1)\)</span>及<span class="math inline">\(p(X|w_2)\)</span>这两个分布密度函数之间的距离<span class="math inline">\(J_p\)</span>来度量，距离<span class="math inline">\(J_p\)</span>有以下几个共同点：</p>
+<ol>
+<li><span class="math inline">\(J_p\)</span>是非负的</li>
+<li>当两类完全不交叠时，<span class="math inline">\(J_p\)</span>达到其最大值</li>
+<li>当两类分布密度相同时，<span class="math inline">\(J_p=0\)</span></li>
+</ol>
+<p>常用的有巴氏距离、切诺夫界限、散度等</p>
+<p><strong>Bhattacharyya距离</strong></p>
+<p><span class="math display">\[J_B = -\ln\int[p(x|w_1)p(x|w_2)]^{1/2}dx
+\]</span></p>
+<p>不交叠时为无穷大，相同时为<span class="math inline">\(0\)</span>。巴氏距离与错误率的上界有直接关系，因此<span class="math inline">\(J_B\)</span>不仅用来对特征空间进行降维优化，而且也用来对分类器的错误率作出估计。</p>
+<p><strong>Chernoff界限</strong></p>
+<p><span class="math display">\[J_C = -\ln\int p^s(x|w_1)p^{1-s}(x|w_2)dx
+\]</span></p>
+<p>其中<span class="math inline">\(s\in[0,1]\)</span>，当<span class="math inline">\(s=0.5\)</span>时其等价于巴氏距离、</p>
+<p><strong>散度</strong></p>
+<p>散度是区分<span class="math inline">\(i,j\)</span>两类总的平均信息</p>
+<p><span class="math display">\[l_{ij}(x) = \dfrac{p(x|w_i)}{p(x|w_j)}
+\]</span></p>
+<p><span class="math display">\[I_{ij}(x) = \int_x p(x|w_i)\ln\dfrac{p(x|w_i)}{p(x|w_j)}dx
+\]</span></p>
+<p><span class="math display">\[I_{ji}(x) = \int_x p(x|w_j)\ln\dfrac{p(x|w_j)}{p(x|w_i)}dx
+\]</span></p>
+<p><span class="math display">\[J_D(x) = I_{ij}+I_{ji}
+\]</span></p>
+<p>如果两类样本服从正态分布，且协方差矩阵相等，那么散度就是马氏距离。</p>
 <h3 id="基于熵的可分性依据">基于熵的可分性依据</h3>
-<p>TODO</p>
+<p>特征对分类的有效性也可以从后验概率角度来考虑。后验概率越集中，错误概率就越小，反之后验概率分布越平缓，即接近均匀分布，则分类错误概率就越大。</p>
+<p>熵函数记作</p>
+<p><span class="math display">\[H = J_c[P(w_1|x),\cdots,P(w_c|x)]
+\]</span></p>
+<p>其中，香农熵为</p>
+<p><span class="math display">\[J_c^1 = -\sum^c_{i=1}P(w_i|x)\log_2 P(w_i|x)
+\]</span></p>
+<p>平方熵为</p>
+<p><span class="math display">\[J_c^2 = 2\bigg[1-\sum^c_{i=1}P^2(w_i|x)\bigg]
+\]</span></p>
+<p>熵函数期望表征类别的分离程度：</p>
+<p><span class="math display">\[J(\cdot)=E\{J_c[P(w_1|x),\cdots,P(w_c|x)]\}
+\]</span></p>
 <h2 id="特征子集的搜索策略">特征子集的搜索策略</h2>
 <h3 id="单独最优特征组合">单独最优特征组合</h3>
 <p>计算各特征单独使用时的可分性判据<span class="math inline">\(J\)</span>并加以排序，取前<span class="math inline">\(d\)</span>个作为选择结果。</p>
