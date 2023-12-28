@@ -125,7 +125,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 64 分钟
+                    阅读时长: 119 分钟
                 </time>
             </div>
         
@@ -1276,7 +1276,7 @@
 	
 </figure></p>
 <p><strong>马氏距离（的平方）</strong></p>
-<p><span class="math display">\[\gamma^2 = (x-\mu)^T\Sigma^{-1}(x-\mu) = \sum^n_{i-1}\sum^n_{j-1}p_{ij}(x_i-\mu_i)(x_j-\mu_j)\geq 0
+<p><span class="math display">\[\gamma^2 = (x-\mu)^T\Sigma^{-1}(x-\mu) = \sum^n_{i=1}\sum^n_{j=1}p_{ij}(x_i-\mu_i)(x_j-\mu_j)\geq 0
 \]</span></p>
 <p>与欧氏距离（的平方）<span class="math inline">\((x-\mu)^T(x-\mu)\)</span>相比，马氏距离考虑数据各个维度间的相关性，<span class="math inline">\(x\)</span>到<span class="math inline">\(\mu\)</span>的马氏距离为常数时，所组成的超椭球面为等密度点 。</p>
 <p><strong>判别函数</strong></p>
@@ -1353,7 +1353,7 @@
 \]</span></p>
 <p><span class="math display">\[x_0 = \dfrac{1}{2}(\mu_i+\mu_j)-\dfrac{1}{(\mu_i-\mu_j)^T\Sigma^{-1}(\mu_i-\mu_j)}\ln\dfrac{P(w_i)}{P(w_j)}(\mu_i-\mu_j)
 \]</span></p>
-<p>由于<span class="math inline">\(w\)</span>并非沿着<span class="math inline">\(\mu_i-\mu)j\)</span>方向，因此分界面并非与均值间的连线垂直正交。</p>
+<p>由于<span class="math inline">\(w\)</span>并非沿着<span class="math inline">\(\mu_i-\mu_j\)</span>方向，因此分界面并非与均值间的连线垂直正交。</p>
 <p><figure 
 	
 		class="gallery-image" 
@@ -1784,9 +1784,9 @@
 <p>根据泛函的有关理论，只要一种核函数满足Mercer条件，它就对应某一变换空间中的内积。因此，在最优分类面中采用适当的内积函数就可以实现某一非线性变换后的线性分类。现在我们可以说正式得到了完全体的SVM。</p>
 <p>核函数具体形式有许多，在实际问题中，通常是直接给出核函数。常见的有</p>
 <ul>
-<li>线性核函数<span class="math inline">\(\kappa(x+i,x_j)=x_i^Tx_j\)</span></li>
+<li>线性核函数<span class="math inline">\(\kappa(x_i,x_j)=x_i^Tx_j\)</span></li>
 <li>多项式核函数<span class="math inline">\((x_i^Tx_j)^d\)</span>，其中<span class="math inline">\(d\geq 1\)</span>为多项式的次数。也有写作<span class="math inline">\((sx_i^Tx_j+c)^d\)</span>的。</li>
-<li>径向基核函数<span class="math inline">\(\exp(-\gamma||x_i-x_j||^2)\)</span>。<span class="math inline">\(\gamma=1/2\sigma^2\)</span>时称为高斯核，<span class="math inline">\(\gamma=\sigma\)</span>时称为拉普拉斯核</li>
+<li>径向基核函数<span class="math inline">\(\exp(-\gamma||x_i-x_j||^2)\)</span>。<span class="math inline">\(\gamma=1/2\sigma^2\)</span>时称为高斯核，<span class="math inline">\(\gamma=1/\sigma\)</span>时称为拉普拉斯核</li>
 <li>sigmoid核<span class="math inline">\(\tanh(\beta x_i^Tx_j+\theta)\)</span>，其中<span class="math inline">\(\beta>0,\theta<0\)</span></li>
 </ul>
 <p><strong>训练方式</strong></p>
@@ -1805,9 +1805,9 @@
 <li>全局最优解而非局部</li>
 <li>推广能力好，避免维数灾难。</li>
 <li>较强的非线性处理能力</li>
-<li>支持向量是SVM的训练结果,在SVM分类决策中起决定作用的是支持向量。</li>
-<li>SVM 的最终决策函数只由少数的支持向量所确定,计算的复杂性取决于支持向量的数目,而不是样本空间的维数,这在某种意义上避免了“维数灾难”。</li>
-<li>少数支持向量决定了最终结果,这不但可以帮助我们抓住关键样本、“剔除”大量冗余样本,而且注定了该方法不但算法简单,而且具有较好的“鲁棒”性。
+<li>支持向量是SVM的训练结果，在SVM分类决策中起决定作用的是支持向量。</li>
+<li>SVM的最终决策函数只由少数的支持向量所确定，计算的复杂性取决于支持向量的数目，而不是样本空间的维数，这在某种意义上避免了“维数灾难”。</li>
+<li>少数支持向量决定了最终结果，这不但可以帮助我们抓住关键样本、“剔除”大量冗余样本,而且注定了该方法不但算法简单，而且具有较好的“鲁棒”性。
 <ul>
 <li>增、删非支持向量样本对模型没有影响</li>
 <li>支持向量样本集具有一定的鲁棒性</li>
@@ -1999,7 +1999,7 @@
 <p>如果样本分类未知，就是无监督学习。假设有<span class="math inline">\(N\)</span>个数据点，其服从某种分布<span class="math inline">\(Pr(x;\theta)\)</span>，我们的目标是找到一组这种分布的参数<span class="math inline">\(\theta\)</span>，使得在这种分布下生成这些数据点的概率最大，也就是似然函数最大。似然函数表示为</p>
 <p><span class="math display">\[\prod^N_{i=1} \Pr(x_i;\theta)
 \]</span></p>
-<p>在实际应用中，往往单个点分布的概率都很小，为了便于求解， 一 般 对似然函数取对数 ，得到对数似然函数。对高斯混合模型求对数似然函数</p>
+<p>在实际应用中，往往单个点分布的概率都很小，为了便于求解， 一般对似然函数取对数 ，得到对数似然函数。对高斯混合模型求对数似然函数</p>
 <p><span class="math display">\[\sum^N_{i=1}\log\bigg[\sum^K_{k=1}\pi_k N(x_i;\mu_k,\Sigma_k)\bigg]
 \]</span></p>
 <p>我们的目标是要找到一组最佳的模型参数，使得上式所示的期望最大，期望最大化算法（EM）的名字就由此而来。</p>
@@ -2178,7 +2178,7 @@ network）组成。</p>
 <p>虽然什么比例都可以，但通常情况下是，有标签的只占一小部分，大部分仍是无标签。大部分的半监督学习算法也是结合了有监督学习和无监督学习，例如深度置信网络（Deep Belief Networks(DBNS)），他是一个以无监督学习为基础的受限玻尔兹曼机（Restricted Boltzmann Machine(RBMS)），但是整个系统却是建立在有监督学习技术上的。</p>
 <p>实际上，未标记样本虽然没有直接含有类别标记信息，但如果它们和有标记样本是从相同的数据中独立同分布采样得到的，则它们包含的有关数据分布的信息对学习模型有很大帮助。</p>
 <p>如何让学习过程不依赖外界的咨询交互，自动利用未标记样本所含信息来提高模型性能便是本专题所要介绍的内容，即半监督学习(Semi-Supervised Learning，SSL)。</p>
-<p>形式化地来说，有标记的样本集记为<span class="math inline">\(D_l=\{(x_1,y_1),(x_2,y_2),\cdots,(x_l,y_l)\}\)</span>，未标记的样本集为<span class="math inline">\(D_u=\{x_{l+1},x_{l+2},\cdots,x_{l+u}\}\)</span>。其中通常会有<span class="math inline">\(l<<u\)</span></p>
+<p>形式化地来说，有标记的样本集记为<span class="math inline">\(D_l=\{(x_1,y_1),(x_2,y_2),\cdots,(x_l,y_l)\}\)</span>，未标记的样本集为<span class="math inline">\(D_u=\{x_{l+1},x_{l+2},\cdots,x_{l+u}\}\)</span>。其中通常会有<span class="math inline">\(l << u\)</span></p>
 <p>面对这样的问题，我们可能会有如下的思路。</p>
 <p><strong>思路1</strong></p>
 <p>只使用<span class="math inline">\(D_l\)</span>来训练。其问题是样本过少，完全舍弃非标记样本的信息，训练量不足</p>
@@ -2268,14 +2268,14 @@ network）组成。</p>
 	
 		class="gallery-image" 
 		style="
-			flex-grow: 303; 
-			flex-basis: 728px"
+			flex-grow: 226; 
+			flex-basis: 542px"
 	>
-	<a href="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/111.jpg" data-size="811x267">
+	<a href="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/111.jpg" data-size="1140x504">
 		<img src="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/111.jpg"
-			width="811"
-			height="267"
-			srcset="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/111_hu17cacebf7e3869e47bec8805ba31405b_20460_480x0_resize_q75_box.jpg 480w, /p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/111_hu17cacebf7e3869e47bec8805ba31405b_20460_1024x0_resize_q75_box.jpg 1024w"
+			width="1140"
+			height="504"
+			srcset="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/111_huc0bd9109a3fd8f3d9dab9c5e4b8002d5_45910_480x0_resize_q75_box.jpg 480w, /p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/111_huc0bd9109a3fd8f3d9dab9c5e4b8002d5_45910_1024x0_resize_q75_box.jpg 1024w"
 			loading="lazy"
 			alt="111.jpg">
 	</a>
@@ -2311,7 +2311,7 @@ network）组成。</p>
 0, & \text{otherwise}
 \end{cases}
 \]</span></p>
-<p>根据矩阵边矩阵<span class="math inline">\(W\)</span>建立一个标记传播矩阵<span class="math inline">\(S = D^{-1/2}WD^{-1/2}\)</span>。其中<span class="math inline">\(D=diag(\dfrac{1}{\sqrt{d_1}}, \dfrac{1}{\sqrt{d_2}}, \cdots, \dfrac{1}{\sqrt{d_{l+u}}})\)</span>，于是我们得到迭代公式</p>
+<p>根据矩阵边矩阵<span class="math inline">\(W\)</span>建立一个标记传播矩阵<span class="math inline">\(S = D^{-1/2}WD^{-1/2}\)</span>。其中<span class="math inline">\(D^{-1/2}=diag(\dfrac{1}{\sqrt{d_1}}, \dfrac{1}{\sqrt{d_2}}, \cdots, \dfrac{1}{\sqrt{d_{l+u}}})\)</span>，于是我们得到迭代公式</p>
 <p><span class="math display">\[F^{(t+1)} = \alpha SF^{(t)}+(1-\alpha)Y
 \]</span></p>
 <p>其中<span class="math inline">\(Y=F^{(0)}\)</span>，<span class="math inline">\(\alpha\in(0,1)\)</span>是由用户控制的参数。上式迭代收敛到</p>
@@ -2726,13 +2726,13 @@ network）组成。</p>
 <p>SFS每次只加一个，未考虑新加特征之间的统计相关性。GSFS更好，但计算量更大，且还是无法拿出之前的。</p>
 <h3 id="顺序后退法sbs">顺序后退法（SBS）</h3>
 <p>自上而下</p>
-<p>从全体特征开始，每次剔除一个特征，使得保留的特征集合具有最大的可分性或分类识别率。依次迭代，知道可分性或识别率开始下降。</p>
+<p>从全体特征开始，每次剔除一个特征，使得保留的特征集合具有最大的可分性或分类识别率。依次迭代，直到可分性或识别率开始下降。</p>
 <p>特点是，计算过程中可以估计每次去掉一个特征所造成的可分性的降低。计算量比前进法大。同样的，一旦被删除就无法再加入。</p>
 <p>也有广义顺序后退法。</p>
 <h3 id="增l减r法">增l减r法</h3>
 <p>为了避免一加入就无法剔除，一剔除就无法加入的问题。引入局部回溯手段。</p>
 <p>在第<span class="math inline">\(k\)</span>步先用SFS一个个加入特征到<span class="math inline">\(k+l\)</span>个，再用SBS一个个剔除<span class="math inline">\(r\)</span>个特征。反复进行直到满足<span class="math inline">\(d\)</span>个特征。此时<span class="math inline">\(l>r\)</span>，自下而上，起始时有<span class="math inline">\(0\)</span>个特征。</p>
-<p>如果<span class="math inline">\(l<r\)</span>，则要先剔除，再增加。自上而下，起始时有<span class="math inline">\(D\)</span>个特征。</p>
+<p>如果<span class="math inline">\(l< r\)</span>，则要先剔除，再增加。自上而下，起始时有<span class="math inline">\(D\)</span>个特征。</p>
 <p>也有其推广。即把上面每一步的SFS和SBS换成GSFS和GSBS。</p>
 <h3 id="遗传算法">遗传算法</h3>
 <p>从生物进化论得到启迪。遗传，变异，自然选择。基于该思想发展了遗传优化算法。</p>
