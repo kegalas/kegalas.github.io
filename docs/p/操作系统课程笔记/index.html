@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='本笔记不会涉及过深的操作系统知识，因为笔者在人工智能学院，本课程是选修。本笔记只会介绍操作系统有什么，后续笔者可能会研究操作系统的具体实现。'><title>操作系统课程笔记</title>
+
+<link rel='canonical' href='https://kegalas.top/p/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/'>
+
+<link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='操作系统课程笔记'>
+<meta property='og:description' content='本笔记不会涉及过深的操作系统知识，因为笔者在人工智能学院，本课程是选修。本笔记只会介绍操作系统有什么，后续笔者可能会研究操作系统的具体实现。'>
+<meta property='og:url' content='https://kegalas.top/p/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/'>
+<meta property='og:site_name' content='KegalaS的个人博客'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='大学' /><meta property='article:tag' content='操作系统' /><meta property='article:published_time' content='2024-01-01T20:01:20&#43;08:00'/><meta property='article:modified_time' content='2024-01-01T20:01:20&#43;08:00'/><meta property='og:image' content='https://kegalas.top/cover.jpg' />
+<meta name="twitter:title" content="操作系统课程笔记">
+<meta name="twitter:description" content="本笔记不会涉及过深的操作系统知识，因为笔者在人工智能学院，本课程是选修。本笔记只会介绍操作系统有什么，后续笔者可能会研究操作系统的具体实现。"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://kegalas.top/cover.jpg' />
+    <link rel="shortcut icon" href="favicon-16x16.png" />
+
+    </head>
+    <body class="
+    article-page has-toc
+">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex 
+    
+        extended
+    
+">
+    
+        <div id="article-toolbar">
+            <a href="/" class="back-home">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="15 6 9 12 15 18" />
+</svg>
+
+
+
+                <span>返回</span>
+            </a>
+        </div>
+    
+<main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/p/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/">
+                
+                    <img src="/cover.jpg" loading="lazy" alt="Featured image of post 操作系统课程笔记" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/%E5%85%B6%E4%BB%96%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/" >
+                其他计算机科学
+            </a>
+        
+    </header>
+    
+
+    <h2 class="article-title">
+        <a href="/p/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/">操作系统课程笔记</a>
+    </h2>
+
+    
+    <h3 class="article-subtitle">
+        本笔记不会涉及过深的操作系统知识，因为笔者在人工智能学院，本课程是选修。本笔记只会介绍操作系统有什么，后续笔者可能会研究操作系统的具体实现。
+    </h3>
+    
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Jan 01, 2024</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 9 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+</div>
+</header>
+
+    <section class="article-content">
+    <h1 id="概论">概论</h1>
+<p>除了老师在课上的PPT课件，我还参考了人民邮电出版社的《操作系统导论》中的内容。本笔记也会像书中一样分为三大板块，但是也会介绍一些其他内容例如系统安全。另外本课程讲的实在过于浅显，我之后可能会专门写《操作系统导论》的笔记。</p>
+<h2 id="什么是操作系统">什么是操作系统？</h2>
+<p>对于高层应用程序的程序员来说，操作系统就是一个扩展的机器，其隐藏对于硬件的操作的具体实现，提供简单易用的API、虚拟机等给程序员使用。</p>
+<p>对于开发系统内核的程序员来说，它是一个资源管理器，负责管理CPU的分时复用、存储器的使用等等。协调各种程序的运行。</p>
+<p>对于普通使用者来说，操作系统是用户使用计算机的界面（UI）。</p>
+<p>比较正式地说，操作系统是控制和管理计算机硬件和软件资源、合理地组织和管理计算机的工作流程以方便用户使用的程序的集合。</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 88; 
+			flex-basis: 212px"
+	>
+	<a href="/p/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/1.jpg" data-size="467x528">
+		<img src="/p/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/1.jpg"
+			width="467"
+			height="528"
+			srcset="/p/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/1_hu78c4d407e30203590223bdf8315f1881_23475_480x0_resize_q75_box.jpg 480w, /p/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/1_hu78c4d407e30203590223bdf8315f1881_23475_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="1.jpg">
+	</a>
+	
+	<figcaption>1.jpg</figcaption>
+	
+</figure></p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 200; 
+			flex-basis: 480px"
+	>
+	<a href="/p/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/2.jpg" data-size="1271x635">
+		<img src="/p/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/2.jpg"
+			width="1271"
+			height="635"
+			srcset="/p/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/2_hu79ccb54168eab55853a6509b196dc4b7_64591_480x0_resize_q75_box.jpg 480w, /p/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/2_hu79ccb54168eab55853a6509b196dc4b7_64591_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="2.jpg">
+	</a>
+	
+	<figcaption>2.jpg</figcaption>
+	
+</figure></p>
+<h2 id="引入操作系统的目的">引入操作系统的目的</h2>
+<ul>
+<li>方便：给用户提供一个硬件接口，易于操作</li>
+<li>有效：以有效的方式使用软硬件资源</li>
+<li>改善性能：组织计算机的工作流程，改善系统性能</li>
+<li>提供扩展能力：方便引进新的功能</li>
+</ul>
+<h2 id="现代操作系统的特征">现代操作系统的特征</h2>
+<p>按照《操作系统导论》来说是虚拟化、并发、持久性。下面是PPT中的，个人感觉它没涉及持久性。</p>
+<h3 id="并发concurrency">并发（concurrency）</h3>
+<p>并发指多个事件在同一时间段内发生。单个CPU核其实只能单独执行一个进程（即串行），我们可以让多个进程交替进行，只要交替得够快，宏观上就像在并发。OS就要完成这些并发过程的管理。</p>
+<p>程序的静态实体是可执行文件，动态实体是进程，并发是进程在并发。</p>
+<p>并发与并行（parallel）不同，并行是不存在交替过程的，是真正的同时进行。</p>
+<h3 id="共享sharing">共享（sharing）</h3>
+<p>计算机中的有限资源不再为某个用户独占，而是可以多个用户共享。OS就负责管理共享的时候如何分配管理。</p>
+<p>有两种共享：</p>
+<ul>
+<li>互斥共享。同一时间内某个资源只能最多有一个用户使用，使用完后别的用户才能用。例：打印机</li>
+<li>非互斥共享。同一时间内某个资源可以有多个用户“同时”使用。同时并不是并行意义上的，而是并发意义上的。例：CPU、内存。</li>
+</ul>
+<h3 id="虚拟virtual">虚拟（virtual）</h3>
+<p>在并发的时候，切换执行的进程对进程本身是不可见的，它们都以为自己完整地占用了CPU。也就是说，一个物理CPU被虚拟化成多个逻辑CPU，每个进程一个。</p>
+<p>虚拟分成分时复用（CPU）和分空间复用（存储器）。</p>
+<h3 id="不确定性uncertainty">不确定性（uncertainty）</h3>
+<p>也称为异步性（asynchronism）。指多个进程并发时，执行顺序的不确定，导致结果的不确定。</p>
+<h1 id="虚拟化">虚拟化</h1>
+<p>虚拟化主要分为虚拟化CPU和虚拟化内存。虽然虚拟化CPU会提到进程和并发的基础概念，但是这里主要讲进程调度，并发部分会主要讲锁。</p>
+<h2 id="进程">进程</h2>
+<h3 id="基本概念">基本概念</h3>
+<p>程序的并发执行使得程序的执行成为一个动态的过程。程序更像是描述一个静态的可执行文件，于是引入进程来描述动态执行的程序。</p>
+<p>这些并发的进程的特性为：程序执行的间断性；资源贡献；独立和合作（制约）性。</p>
+<p>进程，直观地定义的话，就是执行中的程序。该进程可与其他进程并发执行；它是一个动态的实体，既是资源的基本分配单元，也是基本的执行单元。</p>
+<p><strong>进程与程序的区别</strong></p>
+<ul>
+<li>程序是静态的，是有序代码的集合。进程是动态的，是程序的一次执行。</li>
+<li>程序是永久的，没有生命周期。进程是暂时的，有生命周期，会不断变化。</li>
+<li>进程是操作系统资源分配和保护的基本单位，而程序不是。</li>
+<li>进程与程序的结构不同</li>
+</ul>
+<p><strong>进程与程序的联系</strong></p>
+<ul>
+<li>通过多次执行，一个程序可以对应多个进程。</li>
+<li>通过调用，一个进程可以包括多个程序。</li>
+</ul>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 57; 
+			flex-basis: 137px"
+	>
+	<a href="/p/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/3.jpg" data-size="415x722">
+		<img src="/p/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/3.jpg"
+			width="415"
+			height="722"
+			srcset="/p/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/3_huffb5163ed2e09a2d4883660cfa2c9a57_19049_480x0_resize_q75_box.jpg 480w, /p/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/3_huffb5163ed2e09a2d4883660cfa2c9a57_19049_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="3.jpg">
+	</a>
+	
+	<figcaption>3.jpg</figcaption>
+	
+</figure></p>
+<h3 id="组成成分">组成成分</h3>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 267; 
+			flex-basis: 641px"
+	>
+	<a href="/p/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/4.jpg" data-size="1056x395">
+		<img src="/p/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/4.jpg"
+			width="1056"
+			height="395"
+			srcset="/p/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/4_hu41aeea27cf981ea9cd194bdd2abbb17f_46537_480x0_resize_q75_box.jpg 480w, /p/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/4_hu41aeea27cf981ea9cd194bdd2abbb17f_46537_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="4.jpg">
+	</a>
+	
+	<figcaption>4.jpg</figcaption>
+	
+</figure></p>
+<p>PCB包含的信息有：进程ID、用户ID、创建时间、父子进程关系等标识信息。CPU寄存器内容等现场信息。持有句柄、进程状态、信号量、调度信息、优先级等控制信息。</p>
+<h2 id="进程控制">进程控制</h2>
+<p>OS对进程的控制和管理是通过操作系统内核中的原语实现的。</p>
+<p>原语指的是原子操作，即该操作要么完全进行了，要么根本不进行，不存在进行了一半被打断的情况。原语的原子性主要是通过屏蔽中断保证的。</p>
+<p>原语主要分为：进程控制原语、进程通信原语、资源管理原语、其他。常见的有：创建、撤销、阻塞、唤醒、挂起、激活等。</p>
+<p>进程主要有三种状态</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 176; 
+			flex-basis: 422px"
+	>
+	<a href="/p/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/5.jpg" data-size="849x482">
+		<img src="/p/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/5.jpg"
+			width="849"
+			height="482"
+			srcset="/p/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/5_hu33c0efe7765755e38b640b4bb9b452c0_49692_480x0_resize_q75_box.jpg 480w, /p/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/5_hu33c0efe7765755e38b640b4bb9b452c0_49692_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="5.jpg">
+	</a>
+	
+	<figcaption>5.jpg</figcaption>
+	
+</figure></p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 143; 
+			flex-basis: 343px"
+	>
+	<a href="/p/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/6.jpg" data-size="1030x719">
+		<img src="/p/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/6.jpg"
+			width="1030"
+			height="719"
+			srcset="/p/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/6_hu0ef9fa649ebc7b8cf6fd14213080d3b9_63289_480x0_resize_q75_box.jpg 480w, /p/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/6_hu0ef9fa649ebc7b8cf6fd14213080d3b9_63289_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="6.jpg">
+	</a>
+	
+	<figcaption>6.jpg</figcaption>
+	
+</figure></p>
+<h2 id="进程调度">进程调度</h2>
+<p>进程调度关注的问题是：当有多个进程/线程准备就绪时，先执行哪一个？这又有两个子问题，什么时候进行这个决策？如何决策？</p>
+<p>设计算法的时候，要同时考虑到系统和用户。对于系统来说，需要有公平性（不会有进程被饿死）和较大的吞吐量。对于用户来说，需要有及时性和较短的周转时间。</p>
+<p>周转时间为</p>
+<p><span class="math display">\[T_{周转时间}=T_{完成时间}-T_{到达时间}
+\]</span></p>
+<p>而响应时间为</p>
+<p><span class="math display">\[T_{响应时间}=T_{首次运行}-T_{到达时间}
+\]</span></p>
+<p><strong>抢占式和非抢占式</strong></p>
+<p>非抢占式调度意味着，一旦某个进程开始运行，那么直到该进程放弃CPU之前，操作系统只能干看着，无论后面有什么进程在等待。</p>
+<p>抢占式意味着，操作系统非常愿意停止一个进程，然后运行新的进程，只要它觉得有必要。</p>
+<h3 id="先来先服务算法fcfs">先来先服务算法（FCFS）</h3>
+<p>也就是FIFO，也就是队列。让最早开始等待的进程占用CPU。非抢占式。</p>
+<p>其有公平性，但是吞吐量、及时性、周转时间都很差。</p>
+<h3 id="最短任务优先sjf">最短任务优先（SJF）</h3>
+<p>就和小学经典的排队节水问题一样，接水最少的人最先。这里也是，执行时间最短的任务最先。</p>
+<p>可以证明，如果所有任务同时到达，SJF是最优的调度算法（周转意义上）。但是没有这个前提，任务随机地在某个时间点到达（贴近现实），则可能会很差。比如一个超长的任务先到达，过了一两秒后两个很短的任务到达，那么这两个任务就会等很久，造成周转时间长。</p>
+<p>这是一个非抢占式算法。</p>
+<p>但是考虑到公平性，一个进程可以反复发起短时间的占用，最终占用了长时间的CPU。所以并不公平。</p>
+<p>另外我们几乎不可能知道一个进程要占用多长时间。</p>
+<h3 id="最短完成时间优先stcf">最短完成时间优先（STCF）</h3>
+<p>在SJF最后的问题中，可能会立刻想到一个抢占式的算法，即让完成最快的任务先进行。显然是抢占式的。</p>
+<p>可以证明，STCF在周转意义上是最优的。其他缺点同SJF。</p>
+<h3 id="基于优先数的调度算法">基于优先数的调度算法</h3>
+<p>其给每个进程设置一个优先级，系统在调度的时候优先选择高优先级的进程。如果有相同的优先级则按照FCFS。</p>
+<p>优先级有两种确定方法</p>
+<ul>
+<li>静态优先数法：进程创建时就规定好优先级，运行时不改变</li>
+<li>动态优先数法：进程的优先级在执行过程中可以改变</li>
+</ul>
+<p>PPT没说优缺点，我估计是跟优先级的选择有关。</p>
+<h3 id="时间片轮转法rr">时间片轮转法（RR）</h3>
+<p>思想很简单，系统规定一个时间长度作为运行一个进程运行的时间，如果这段时间内进程没有运行完，则必须让出CPU然后回去排队。</p>
+<p>显然，其及时性很好，但是周转时间很差。</p>
+<p>老师的PPT还给出其公平性差，我不明白为什么，这是非常公平的算法。有其他资料印证我的想法。</p>
+<h3 id="多级反馈队列mlfq">多级反馈队列（MLFQ）</h3>
+<p>MLFQ中有许多独立的队列，每个队列有不同的优先级。每个任务只能存在于一个队列之中。MLFQ总是执行优先级较高的队列中的工作。优先级相同的工作则对他们使用轮转法。具体规则为：</p>
+<ol>
+<li>如果A的优先级&gt;B的优先级，运行A</li>
+<li>如果A的优先级=B的优先级，轮转运行A和B</li>
+<li>任务进入系统时，放在最高优先级队列</li>
+<li>一旦任务用完了时间配额，就把它放入低一级队列</li>
+<li>经过一段时间S，将所有工作重新加入到最高优先级队列</li>
+</ol>
+<p>Windows内核采用的就是这种算法的修改版</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 139; 
+			flex-basis: 335px"
+	>
+	<a href="/p/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/11.jpg" data-size="986x705">
+		<img src="/p/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/11.jpg"
+			width="986"
+			height="705"
+			srcset="/p/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/11_hu7bcb9836383fa62008ba09cd661205f7_44483_480x0_resize_q75_box.jpg 480w, /p/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/11_hu7bcb9836383fa62008ba09cd661205f7_44483_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="11.jpg">
+	</a>
+	
+	<figcaption>11.jpg</figcaption>
+	
+</figure></p>
+<h1 id="并发">并发</h1>
+<h2 id="线程">线程</h2>
+<p>把进程介绍放到虚拟化，把线程介绍放到并发，并不是说进程不能并发，只是《操作系统导论》中API的介绍是这样安排的。我这里也一样。</p>
+<h3 id="基本概念-1">基本概念</h3>
+<p>线程算是一种轻型的进程，是一个可执行的实体单元，是线代操作系统中处理器调度（执行）的基本单位。</p>
+<p><strong>线程和进程的关系</strong></p>
+<ul>
+<li>线程是进程的一个组成部分，线程由进程创建，一个进程中可以有多个线程。</li>
+<li>进程是资源分配和保护的基本单位。每个进程都有自己独立的资源，而一个进程内的多个线程使用资源有很多是一样的，也即进程的资源。</li>
+<li>所有线程的代码段和数据段是一样的，但是可以执行在不同的代码上</li>
+<li>每个线程可独立运行也可以互相合作</li>
+<li>每个线程的上下文是独立的，也即寄存器、栈等。</li>
+</ul>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 155; 
+			flex-basis: 373px"
+	>
+	<a href="/p/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/7.jpg" data-size="1046x672">
+		<img src="/p/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/7.jpg"
+			width="1046"
+			height="672"
+			srcset="/p/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/7_hu7ded2ea3ad16b1d3966d67413a42bdf1_52926_480x0_resize_q75_box.jpg 480w, /p/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/7_hu7ded2ea3ad16b1d3966d67413a42bdf1_52926_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="7.jpg">
+	</a>
+	
+	<figcaption>7.jpg</figcaption>
+	
+</figure></p>
+<h3 id="线程的实现方式">线程的实现方式</h3>
+<p><strong>用户态线程</strong></p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 152; 
+			flex-basis: 365px"
+	>
+	<a href="/p/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/8.jpg" data-size="652x428">
+		<img src="/p/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/8.jpg"
+			width="652"
+			height="428"
+			srcset="/p/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/8_hu69cee36551c91233a44fe27a6750ac12_16035_480x0_resize_q75_box.jpg 480w, /p/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/8_hu69cee36551c91233a44fe27a6750ac12_16035_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="8.jpg">
+	</a>
+	
+	<figcaption>8.jpg</figcaption>
+	
+</figure></p>
+<p>即进程自己管理线程。</p>
+<p>优点：</p>
+<ul>
+<li>线程对操作系统不可见，操作系统适应性强</li>
+<li>线程切换快</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>程序设计困难</li>
+<li>并发度低</li>
+</ul>
+<p><strong>内核态线程</strong></p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 150; 
+			flex-basis: 360px"
+	>
+	<a href="/p/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/9.jpg" data-size="661x440">
+		<img src="/p/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/9.jpg"
+			width="661"
+			height="440"
+			srcset="/p/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/9_hud531fa72f56324b3e38d5ee2c865c0a0_20141_480x0_resize_q75_box.jpg 480w, /p/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/9_hud531fa72f56324b3e38d5ee2c865c0a0_20141_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="9.jpg">
+	</a>
+	
+	<figcaption>9.jpg</figcaption>
+	
+</figure></p>
+<p>即操作系统来管理线程。</p>
+<p>优点：实现简单，并发度高</p>
+<p>缺点：执行效率低、资源消耗高</p>
+<p><strong>混合模型</strong></p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 163; 
+			flex-basis: 392px"
+	>
+	<a href="/p/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/10.jpg" data-size="795x486">
+		<img src="/p/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/10.jpg"
+			width="795"
+			height="486"
+			srcset="/p/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/10_hu47aebb8ae24f4b0d22c9deeb0754b7c0_20990_480x0_resize_q75_box.jpg 480w, /p/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/10_hu47aebb8ae24f4b0d22c9deeb0754b7c0_20990_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="10.jpg">
+	</a>
+	
+	<figcaption>10.jpg</figcaption>
+	
+</figure></p>
+<h2 id="进程通信">进程通信</h2>
+<p>进程通信简单来说就是在进程间传输数据</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 187; 
+			flex-basis: 449px"
+	>
+	<a href="/p/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/12.jpg" data-size="961x513">
+		<img src="/p/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/12.jpg"
+			width="961"
+			height="513"
+			srcset="/p/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/12_hu7f87c2ceb8dedb26e2040251b0733962_37354_480x0_resize_q75_box.jpg 480w, /p/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/12_hu7f87c2ceb8dedb26e2040251b0733962_37354_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="12.jpg">
+	</a>
+	
+	<figcaption>12.jpg</figcaption>
+	
+</figure></p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 152; 
+			flex-basis: 365px"
+	>
+	<a href="/p/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/13.jpg" data-size="1027x675">
+		<img src="/p/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/13.jpg"
+			width="1027"
+			height="675"
+			srcset="/p/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/13_hufeab705a2697e3c6cdf4417dc503993b_59583_480x0_resize_q75_box.jpg 480w, /p/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/13_hufeab705a2697e3c6cdf4417dc503993b_59583_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="13.jpg">
+	</a>
+	
+	<figcaption>13.jpg</figcaption>
+	
+</figure></p>
+<p><strong>共享内存模式</strong></p>
+<p>它是间接通信，是最快捷有效的方法之一。</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 161; 
+			flex-basis: 388px"
+	>
+	<a href="/p/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/14.jpg" data-size="890x550">
+		<img src="/p/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/14.jpg"
+			width="890"
+			height="550"
+			srcset="/p/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/14_hu22c07744e0f58bfaa239c32d7df6d965_54470_480x0_resize_q75_box.jpg 480w, /p/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/14_hu22c07744e0f58bfaa239c32d7df6d965_54470_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="14.jpg">
+	</a>
+	
+	<figcaption>14.jpg</figcaption>
+	
+</figure></p>
+<p><strong>消息传递模式</strong></p>
+<p>由发送方形成，通过一定的机制传递给接收方的一组信息，它的长度可以固定，也可以变化。和客户端-服务端的形式比较像。</p>
+<p>消息也是分为消息头和消息体。就像HTTP请求一样。</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 243; 
+			flex-basis: 585px"
+	>
+	<a href="/p/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/15.jpg" data-size="1063x436">
+		<img src="/p/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/15.jpg"
+			width="1063"
+			height="436"
+			srcset="/p/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/15_hufcd49a4dcbc018538768e14219e0b4bd_28282_480x0_resize_q75_box.jpg 480w, /p/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/15_hufcd49a4dcbc018538768e14219e0b4bd_28282_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="15.jpg">
+	</a>
+	
+	<figcaption>15.jpg</figcaption>
+	
+</figure></p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 133; 
+			flex-basis: 319px"
+	>
+	<a href="/p/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/16.jpg" data-size="926x696">
+		<img src="/p/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/16.jpg"
+			width="926"
+			height="696"
+			srcset="/p/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/16_hua47ddc2b52fb02f8448c63d1bed90feb_64274_480x0_resize_q75_box.jpg 480w, /p/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/16_hua47ddc2b52fb02f8448c63d1bed90feb_64274_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="16.jpg">
+	</a>
+	
+	<figcaption>16.jpg</figcaption>
+	
+</figure></p>
+<p><strong>共享文件模式（管道）</strong></p>
+<p>Linux的管道就是经典的例子。</p>
+<p>管道是一种信息流缓冲机构，基于文件系统，可以连接两个进程，以FIFO的方式单向传送数据。</p>
+<p><em>匿名管道</em></p>
+<p>匿名管道是一种未命名的、单向管道。常用在父子进程之间。匿名管道是本地的，不能用在网络之间。匿名管道如果想要双向通信，通常会创建两个单向管道。</p>
+<p><em>命名管道</em></p>
+<p>命名管道是一种有名称的，可在本地或者网络间传输，支持可靠的单向或双向通信。</p>
+<h2 id="锁">锁</h2>
+<ul>
+<li>临界区：是访问共享资源的一段代码，资源通常是一个变量或数据结构</li>
+<li>竞态条件：出现在多个执行线程大致同时进入临界区时，它们都试图更新共享资源，达到了错误的结果</li>
+<li>不确定性：程序里面有竞态条件，就会导致程序的输出不确定。</li>
+<li>互斥原语：即可以把临界区原子化的操作</li>
+</ul>
+<p>大致上，锁是这样用的</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>lock();
+</span></span><span style="display:flex;"><span>a <span style="color:#f92672">=</span> a<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>;
+</span></span><span style="display:flex;"><span>unlock();
+</span></span></code></pre></div><h3 id="控制中断">控制中断</h3>
+<p>即在临界区关中断，防止调度程序切换线程。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">lock</span>(){
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">DisableInterrupts</span>();
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">unlock</span>(){
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">EnableInterrupts</span>();
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>缺点：</p>
+<ol>
+<li>恶意程序可以在lock之后死循环，让系统假死</li>
+<li>不支持多处理器</li>
+<li>导致中断丢失</li>
+<li>效率低</li>
+</ol>
+<h3 id="测试并设置test-and-set">测试并设置（Test-And-Set）</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">typedef</span> <span style="color:#66d9ef">struct</span> <span style="color:#66d9ef">lock_t</span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> flag;
+</span></span><span style="display:flex;"><span>} <span style="color:#66d9ef">lock_t</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">init</span>(<span style="color:#66d9ef">lock_t</span> <span style="color:#f92672">*</span>lock){
+</span></span><span style="display:flex;"><span>    lock<span style="color:#f92672">-&gt;</span>flag <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; <span style="color:#75715e">// 0代表未加锁，1代表加锁
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">lock</span>(<span style="color:#66d9ef">lock_t</span> <span style="color:#f92672">*</span>lock){
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">while</span> (<span style="color:#a6e22e">TestAndSet</span>(<span style="color:#f92672">&amp;</span>lock<span style="color:#f92672">-&gt;</span>flag, <span style="color:#ae81ff">1</span>)<span style="color:#f92672">==</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>        ; <span style="color:#75715e">//自旋
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">unlock</span>(<span style="color:#66d9ef">lock_t</span> <span style="color:#f92672">*</span>lock){
+</span></span><span style="display:flex;"><span>    lock<span style="color:#f92672">-&gt;</span>flag <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>测试并设置所要做的事是，当一个进程要进入临界区时，首先测试这把锁，如果锁的值为<span class="math inline">\(0\)</span>，则设置为<span class="math inline">\(1\)</span>并进入临界区。否则等待直到其变为<span class="math inline">\(0\)</span></p>
+<p>结果意义上，等价于设置新值，返回旧值。其等价于如下c语言代码。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">TestAndSet</span>(<span style="color:#66d9ef">int</span> <span style="color:#f92672">*</span>old_ptr, <span style="color:#66d9ef">int</span> new){
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> old <span style="color:#f92672">=</span> <span style="color:#f92672">*</span>old_ptr;
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">*</span>old_ptr <span style="color:#f92672">=</span> new;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> old;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>注意，不能用C语言就实现锁，必须要有硬件的支持。上述测试并设置并不是原子的，可能会在中间中断。</p>
+<p>幸运的是，操作系统提供这样的指令，如<code>HSL</code>和<code>XCHG</code>。</p>
+<p>这个锁并不保证任何的公平性，线程可能会永远自旋。</p>
+<p>另外，一直在自旋也会导致性能开销很大，CPU会一直处于忙等待（Busy waiting）状态</p>
+<h3 id="比较并交换compare-and-exchangeswap">比较并交换（compare-and-exchange（swap））</h3>
+<p>也是需要硬件支持的。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">CompareAndSwap</span>(<span style="color:#66d9ef">int</span> <span style="color:#f92672">*</span>ptr, <span style="color:#66d9ef">int</span> expected, <span style="color:#66d9ef">int</span> new){
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> actual <span style="color:#f92672">=</span> <span style="color:#f92672">*</span>ptr;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span>(actual <span style="color:#f92672">==</span> expected)
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">*</span>ptr <span style="color:#f92672">=</span> new
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> actual;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">lock</span>(<span style="color:#66d9ef">lock_t</span> <span style="color:#f92672">*</span>lock){
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">while</span>(<span style="color:#a6e22e">CompareAndSwap</span>(<span style="color:#f92672">&amp;</span>lock<span style="color:#f92672">-&gt;</span>flag, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>)<span style="color:#f92672">==</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>        ;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>如果只是实现简单的自旋锁，那么等价于测试并设置。</p>
+<h3 id="链接的加载和条件式存储指令">链接的加载和条件式存储指令</h3>
+<p>TODO</p>
+<h3 id="获取并增加">获取并增加</h3>
+<p>TODO</p>
+<h2 id="条件变量">条件变量</h2>
+<p>TODO</p>
+<h2 id="信号量">信号量</h2>
+<h3 id="生产者-消费者模型">生产者-消费者模型</h3>
+<p>TODO</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/%E5%A4%A7%E5%AD%A6/">大学</a>
+        
+            <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css"integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js"integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8"crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js"integrity="sha384-vZTG03m&#43;2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl"crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.querySelector(`.article-content`), {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ]
+        });})
+</script>
+    
+</article>
+
+    <aside class="related-contents--wrapper">
+    
+    
+        <h2 class="section-title">相关文章</h2>
+        <div class="related-contents">
+            <div class="flex article-list--tile">
+                
+                    
+<article class="has-image">
+    <a href="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+        
+        
+            <div class="article-image">
+                <img src="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/cover.e854b56daa550dc940cfe938a5e554af_hu9ed3e3d7509314fb7a01cf1769564f25_44442_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-6FS1bapVDclAz&#43;k4peVUrw==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">微机原理学习笔记</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+        
+        
+            <div class="article-image">
+                <img src="/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/cover.d64d42eff1b234bef9a3a8dfd6f81ede_huaa3a4f4fef897a96376c721aafe499bc_261058_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-1k1C7/GyNL75o6jf1vge3g==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">计算机组成原理学习笔记</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="">
+    <a href="/p/virtualbox%E6%89%93%E5%BC%80%E8%99%9A%E6%8B%9F%E6%9C%BAverr_invalid_name-104%E9%94%99%E8%AF%AF%E7%9A%84%E8%A7%A3%E5%86%B3/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">VirtualBox打开虚拟机VERR_INVALID_NAME( 104)错误的解决</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="">
+    <a href="/p/%E5%9C%A8%E6%A0%A1%E5%9B%AD%E7%BD%91%E4%B8%AD%E7%94%A8ssh%E8%BF%9E%E6%8E%A5%E5%AE%BF%E8%88%8D%E7%94%B5%E8%84%91/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">在校园网中用ssh连接宿舍电脑</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="">
+    <a href="/p/windows%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E5%90%88%E9%9B%86%E9%95%BF%E6%9C%9F%E6%9B%B4%E6%96%B0/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Windows开发环境配置合集（长期更新）</h2>
+        </div>
+    </a>
+</article>
+                
+            </div>
+        </div>
+    
+</aside>
+
+     
+    
+        
+    <script src="https://utteranc.es/client.js" 
+        repo="kegalas/blogComments"
+        issue-term="pathname"
+        
+        crossorigin="anonymous"
+        async
+        >
+</script>
+
+<style>
+    .utterances {
+        max-width: unset;
+    }
+</style>
+
+<script>
+    function setUtterancesTheme(theme) {
+        let utterances = document.querySelector('.utterances iframe');
+        if (utterances) {
+            utterances.contentWindow.postMessage(
+                {
+                    type: 'set-theme',
+                    theme: `github-${theme}`
+                },
+                'https://utteranc.es'
+            );
+        }
+    }
+
+    addEventListener('message', event => {
+        if (event.origin !== 'https://utteranc.es') return;
+        setUtterancesTheme(document.documentElement.dataset.scheme)
+    });
+
+    window.addEventListener('onColorSchemeChange', (e) => {
+        setUtterancesTheme(e.detail)
+    })
+</script>
+
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2024 KegalaS的个人博客
+    </section>
+    
+    <section class="powerby">
+         <br />
+        
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    
+        <aside class="sidebar right-sidebar sticky">
+            <section class="widget archives">
+                <div class="widget-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+                </div>
+                <h2 class="widget-title section-title">目录</h2>
+                
+                <div class="widget--toc">
+                    <nav id="TableOfContents">
+  <ol>
+    <li><a href="#概论">概论</a>
+      <ol>
+        <li><a href="#什么是操作系统">什么是操作系统？</a></li>
+        <li><a href="#引入操作系统的目的">引入操作系统的目的</a></li>
+        <li><a href="#现代操作系统的特征">现代操作系统的特征</a>
+          <ol>
+            <li><a href="#并发concurrency">并发（concurrency）</a></li>
+            <li><a href="#共享sharing">共享（sharing）</a></li>
+            <li><a href="#虚拟virtual">虚拟（virtual）</a></li>
+            <li><a href="#不确定性uncertainty">不确定性（uncertainty）</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+    <li><a href="#虚拟化">虚拟化</a>
+      <ol>
+        <li><a href="#进程">进程</a>
+          <ol>
+            <li><a href="#基本概念">基本概念</a></li>
+            <li><a href="#组成成分">组成成分</a></li>
+          </ol>
+        </li>
+        <li><a href="#进程控制">进程控制</a></li>
+        <li><a href="#进程调度">进程调度</a>
+          <ol>
+            <li><a href="#先来先服务算法fcfs">先来先服务算法（FCFS）</a></li>
+            <li><a href="#最短任务优先sjf">最短任务优先（SJF）</a></li>
+            <li><a href="#最短完成时间优先stcf">最短完成时间优先（STCF）</a></li>
+            <li><a href="#基于优先数的调度算法">基于优先数的调度算法</a></li>
+            <li><a href="#时间片轮转法rr">时间片轮转法（RR）</a></li>
+            <li><a href="#多级反馈队列mlfq">多级反馈队列（MLFQ）</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+    <li><a href="#并发">并发</a>
+      <ol>
+        <li><a href="#线程">线程</a>
+          <ol>
+            <li><a href="#基本概念-1">基本概念</a></li>
+            <li><a href="#线程的实现方式">线程的实现方式</a></li>
+          </ol>
+        </li>
+        <li><a href="#进程通信">进程通信</a></li>
+        <li><a href="#锁">锁</a>
+          <ol>
+            <li><a href="#控制中断">控制中断</a></li>
+            <li><a href="#测试并设置test-and-set">测试并设置（Test-And-Set）</a></li>
+            <li><a href="#比较并交换compare-and-exchangeswap">比较并交换（compare-and-exchange（swap））</a></li>
+            <li><a href="#链接的加载和条件式存储指令">链接的加载和条件式存储指令</a></li>
+            <li><a href="#获取并增加">获取并增加</a></li>
+          </ol>
+        </li>
+        <li><a href="#条件变量">条件变量</a></li>
+        <li><a href="#信号量">信号量</a>
+          <ol>
+            <li><a href="#生产者-消费者模型">生产者-消费者模型</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+                </div>
+            </section>
+        </aside>
+    
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                defer="false"
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
