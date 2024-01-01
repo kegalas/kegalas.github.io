@@ -362,6 +362,18 @@ Anaconda的软件源也比较慢，推荐参考[https://mirrors.tuna.tsinghua.ed
 
 一般配置文件在`C:\ProgramData\ssh\sshd_config`，具体如何修改TODO，例如配置管理员登陆，以及默认shell
 
+## 关闭Windows休眠
+
+C盘下一般会有两个大文件，即`hiberfil.sys`和`pagefile.sys`。前面那个是休眠功能使用的文件，后面的是虚拟内存使用的文件。
+
+休眠和睡眠不一样，睡眠是电脑低功率运行，但是保持开机，内存的数据就在内存里。而休眠相当于virtualbox里面给虚拟机“快速休眠”的操作，即把内存保存在硬盘中，此时可以不用保持开机。下次开机恢复电脑布局。
+
+我从来不用这个功能（我甚至从来不知道它，知道了也找不到在哪里），所以关掉，防止占我C盘。办法很简单，管理员powershell运行
+
+```powershell
+powercfg -h off
+```
+
 # 环境变量顺序
 
 TODO

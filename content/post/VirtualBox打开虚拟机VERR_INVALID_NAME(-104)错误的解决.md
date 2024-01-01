@@ -1,7 +1,12 @@
 ---
 title: "VirtualBox打开虚拟机VERR_INVALID_NAME( 104)错误的解决"
 date: 2023-10-22T22:33:16+08:00
-draft: true
+draft: false
+tags:
+  - VirtualBox
+  - Windows
+categories: 其他计算机科学
+markup: goldmark
 ---
 
 可能是因为我安装了Debian子系统，VBox突然就打不开了。当然时间久远，一直没有解决，是不是这个原因暂且按下不表。
@@ -18,7 +23,7 @@ Error relaunching VirtualBox VM process: 5
 
 这样的。
 
-我知道很长一段时间内，Hyper-v和VirtualBox、VMWare是不兼容的。但是现在VBox都已经7.0版本了，甚至都支持半虚拟化用Hyper-v了，再用这个来解释就有点说不过去了。
+我知道很长一段时间内，Hyper-v和VirtualBox、VMWare是不兼容的。但是现在VBox都已经7.0版本了，甚至都支持半虚拟化用Hyper-v了，再用hyper-v和virtualbox不兼容来解释就有点说不过去了。
 
 经过一番搜索，我的方法如下：
 
