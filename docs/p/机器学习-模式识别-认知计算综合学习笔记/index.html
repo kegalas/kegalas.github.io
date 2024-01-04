@@ -125,7 +125,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 119 分钟
+                    阅读时长: 131 分钟
                 </time>
             </div>
         
@@ -544,6 +544,14 @@
 	<figcaption>82.jpg</figcaption>
 	
 </figure></p>
+<h1 id="机器学习绪论">机器学习绪论</h1>
+<h2 id="定义">定义</h2>
+<p>机器学习是研究“不通过显式编程的方法让机器能够学习”的领域。</p>
+<p>电脑程序通过学习关于任务T的经验E，以及使用一些表现的度量方法P。</p>
+<h2 id="机器学习的算法分类">机器学习的算法分类</h2>
+<p>主要分为两类：监督学习和无监督学习。其他还包括：强化学习、推荐系统等。</p>
+<p>监督学习主要包括回归和分类任务，见后。</p>
+<p>无监督学习主要包括聚类、概率密度估计、数据降维/可视化任务等，见后。</p>
 <h1 id="神经网络基础概念">神经网络基础概念</h1>
 <h2 id="神经元及其数学模型">神经元及其数学模型</h2>
 <p><figure 
@@ -667,6 +675,7 @@
 <p><strong>线性函数</strong></p>
 <p><span class="math display">\[f(x)=kx+b
 \]</span></p>
+<p>但是线性函数不应该被使用，因为可以通过线性组合找到一个等效的二层神经网络，多层的优势就没有了。</p>
 <p><strong>分段线性函数</strong></p>
 <p><figure 
 	
@@ -704,6 +713,7 @@
 <p>其没有指数运算，且不会梯度消失。但输入为负数时，完全失效。</p>
 <p><strong>Leaky ReLU</strong></p>
 <p>即在<span class="math inline">\(x\geq 0\)</span>时，<span class="math inline">\(f(x)=x\)</span>，在<span class="math inline">\(x<0\)</span>时，<span class="math inline">\(f(x)=ax\)</span>，其中<span class="math inline">\(a\)</span>是一个相对于<span class="math inline">\(1\)</span>很小的正常数。其对ReLU进行了微小的修正，使得在负数输入时有效。</p>
+<p>人工神经网络也叫做多层感知器，但是与感知器略有不同的地方就是激活函数，感知器只会用阶跃函数，而神经网络更多用sigmoid函数。这使得神经网络是可微分的。</p>
 <h3 id="人工神经网络的拓扑结构">人工神经网络的拓扑结构</h3>
 <p><strong>单层网络</strong></p>
 <p>有了这些东西，我们就可以构造神经网络了，其中最简单的单层（Single Layer）（输入数据不被看做一层）神经网络如下。</p>
@@ -868,7 +878,46 @@
 <li>从输出层反向计算到第一个隐层，并按照某种能使误差向减小方向发展的原则，调整网络中各神经元的连接权值。</li>
 <li>对训练样本集中的每一个样本重复3-5的步骤，直到对整个训练样本集的误差达到要求时为止。</li>
 </ol>
-<p>反向传播算法中采用梯度法修正权值，为此要求输出函数可微 。通常采用sigmoid函数作为输出函数。假设神经元<span class="math inline">\(j\)</span>的期望输出是<span class="math inline">\(t_j\)</span>，实际输出是<span class="math inline">\(o_j\)</span>，那么误差就是</p>
+<p><strong>机器学习课程</strong>中的符号：<span class="math inline">\(a_i^{(j)}\)</span>表示，第<span class="math inline">\(j\)</span>层的第<span class="math inline">\(i\)</span>个神经元接受到的数据和，<span class="math inline">\(w^{(j)}_{xy}\)</span>表示<span class="math inline">\(j\)</span>层到下一层的连接权重，其中<span class="math inline">\(y\)</span>是<span class="math inline">\(j\)</span>层的神经元序号，<span class="math inline">\(x\)</span>是下一层的神经元序号。<span class="math inline">\(z_i^{(j)}\)</span>表示第<span class="math inline">\(j\)</span>层的第<span class="math inline">\(i\)</span>个神经元激活函数后的输出。例如</p>
+<p><span class="math display">\[z^{(2)}_1 = h(a_1^{(2)}) = h(w_{10}^{(1)}x_0+w_{11}^{(1)}x_1+w_{12}^{(1)}x_2+w_{13}^{(1)}x_3)
+\]</span></p>
+<p>其中<span class="math inline">\(x\)</span>是输入层，其等价于<span class="math inline">\(x_i = z^{(1)}_i\)</span>。一般<span class="math inline">\(z_0^{(j)}\)</span>都是这一层的常数偏置。</p>
+<p>表示为矩阵可以为</p>
+<p><span class="math display">\[a^{(2)} = W^{(1)}x
+\]</span></p>
+<p><span class="math display">\[z^{(2)} = h(a^{(2)})（算完之后还要加上偏置项）
+\]</span></p>
+<p>假设本层有<span class="math inline">\(s_j\)</span>个神经元（除去偏置），下一层有<span class="math inline">\(s_{j+1}\)</span>个神经元，那么<span class="math inline">\(W^{(j)}\)</span>的大小为<span class="math inline">\(s_{j+1}\times (s_j+1)\)</span>。</p>
+<p>其中输出一般记为<span class="math inline">\(y\)</span>，而标签记为<span class="math inline">\(t\)</span></p>
+<p>这样一层一层地往下算算到输出，就是正向传播过程。</p>
+<p><strong>对于回归问题</strong></p>
+<p>回归问题中，输出层的激活函数是恒等函数，即该层的输入等于输出。</p>
+<p>一般用SSE来度量误差</p>
+<p><span class="math display">\[
+E = \dfrac{1}{2}\sum_{n=1}^N(y_n-t_n)^2
+\]</span></p>
+<p>其中<span class="math inline">\(N\)</span>是训练集大小</p>
+<p>输出层的输出等于输出层的输入意味着<span class="math inline">\(y_j=a_j\)</span>，也意味着</p>
+<p><span class="math display">\[\dfrac{\partial E}{\partial a_k} = y_j-t_j
+\]</span></p>
+<p><strong>对于分类问题</strong></p>
+<p>分类问题中，输出层也会用sigmoid。</p>
+<p>机器学习课程中，对于二分类问题会用交叉熵来度量</p>
+<p><span class="math display">\[E = -\sum_{n=1}^N[t_n\log y_n+(1-t_n)\log (1-y_n)]
+\]</span></p>
+<p>此时输出层只要一个输出即可，<span class="math inline">\(y\)</span>代表输入属于正类的概率。</p>
+<p>对于多分类问题，会把标签和输出都one-hot编码成<span class="math inline">\(K\)</span>维向量。此时，<span class="math inline">\(K\)</span>类的交叉熵为</p>
+<p><span class="math display">\[E = -\sum^N_{n=1}\sum^K_{k=1}[t_{nk}\log y_{nk}+(1-t_{nk})ln(1-y_{nk}))]
+\]</span></p>
+<p>如果所有类是互斥的，那么有</p>
+<p><span class="math display">\[E = -\sum^N_{n=1}\sum^K_{k=1}t_{nk}\log y_{nk}
+\]</span></p>
+<p>通常，多分类时<span class="math inline">\(y\)</span>的激活函数会用softmax，即</p>
+<p><span class="math display">\[y_k(x,w) = \dfrac{\exp(a_k(x,w))}{\sum_j \exp(a_j(x,w))}
+\]</span></p>
+<p>模式识别课程中还是用SSE来度量。</p>
+<p><strong>反向传播算法（模式识别课程版）</strong></p>
+<p>反向传播算法中采用梯度法修正权值，为此要求输出函数可微 。通常采用sigmoid函数作为输出函数。假设神经元<span class="math inline">\(j\)</span>的期望输出是<span class="math inline">\(t_j\)</span>，实际输出是<span class="math inline">\(o_j\)</span>，那么误差（SSE）就是</p>
 <p><span class="math display">\[E = \dfrac{1}{2}\sum_j(t_j-o_j)^2
 \]</span></p>
 <p>我们要优化的是每个连接的权重，我们就要找到每个权重对于误差的影响，偏导数</p>
@@ -897,9 +946,195 @@
 <li>计算并保存各个权值修正量<span class="math inline">\(\Delta w_{ij} = -\eta g_j o_i\)</span></li>
 <li>修正权值<span class="math inline">\(w_{ij}\leftarrow w_{ij}+\Delta w_{ij}\)</span></li>
 </ol>
+<p><strong>反向传播算法（机器学习课程版）</strong></p>
+<p>反向传播分为两步走。第一步，即误差在网络中的反向传播，然后用来计算梯度。第二步，即使用梯度来调整权重。</p>
+<p>令人奇怪的是，他这里又不用交叉熵，改用SSE了，见前。</p>
+<p>这里会默认使用随机梯度降，总的误差为</p>
+<p><span class="math display">\[E(w) = \sum^N_{n=1}E_n(W)
+\]</span></p>
+<p>计算输出层梯度时，有</p>
+<p><span class="math display">\[\dfrac{\partial E_n}{\partial w_{ji}} = \dfrac{\partial E_n}{\partial a_{j}}\dfrac{\partial a_j}{\partial w_{ji}}  
+\]</span></p>
+<p>记</p>
+<p><span class="math display">\[\delta_j = \dfrac{\partial E_n}{\partial a_{j}} 
+\]</span></p>
+<p>它经常被叫做“误差”。</p>
+<p>因为<span class="math inline">\(a_j = \sum_i w_{ji}z_i\)</span>，所以有</p>
+<p><span class="math display">\[\dfrac{\partial a_j}{\partial w_{ji}}   = z_i
+\]</span></p>
+<p>所以</p>
+<p><span class="math display">\[\dfrac{\partial E_n}{\partial w_{ji}} = \delta_jz_i
+\]</span></p>
+<p>如果假设我们在输出层使用恒等函数作为激活函数，那么</p>
+<p><span class="math display">\[\delta_k = y_k-t_k
+\]</span></p>
+<p>之后，我们计算隐藏层的梯度，用同样的方法</p>
+<p><span class="math display">\[\delta_j = \dfrac{\partial E_n}{\partial a_j} = \sum_k\dfrac{\partial E_n}{\partial a_k}\dfrac{\partial a_k}{\partial a_j}
+\]</span></p>
+<p>其中<span class="math inline">\(j\)</span>是隐藏层的节点，<span class="math inline">\(k\)</span>是该节点连接到的输出层节点。下图是比较直观的一个过程</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 179; 
+			flex-basis: 430px"
+	>
+	<a href="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/115.jpg" data-size="526x293">
+		<img src="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/115.jpg"
+			width="526"
+			height="293"
+			srcset="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/115_hu07d33775c1eca867afebd038dc48a79e_12418_480x0_resize_q75_box.jpg 480w, /p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/115_hu07d33775c1eca867afebd038dc48a79e_12418_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="115.jpg">
+	</a>
+	
+	<figcaption>115.jpg</figcaption>
+	
+</figure></p>
+<p>其中蓝色的过程是正向传播，红色的过程是反向传播。假设我们在隐藏层使用的激活函数是<span class="math inline">\(h(\cdot)\)</span>，那么有<span class="math inline">\(\dfrac{\partial a_k}{\partial a_j}=h'(a_j)w_{kj}\)</span>，有</p>
+<p><span class="math display">\[\delta_j = h'(a_j)\sum_k w_{kj}\delta_k
+\]</span></p>
+<p>这样只要我们一层层往回推，就能推出对于输出的偏导公式。每一层的输出记为<span class="math inline">\(z\)</span>的话，每一层的全中的梯度都有如下的形式</p>
+<p><span class="math display">\[\dfrac{\partial E_n}{\partial w_{ji}} = \delta_iz_j
+\]</span></p>
+<p>举一个例子</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 124; 
+			flex-basis: 299px"
+	>
+	<a href="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/116.jpg" data-size="648x519">
+		<img src="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/116.jpg"
+			width="648"
+			height="519"
+			srcset="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/116_hu562ece945ea6fd29c54b292f17e283a8_33250_480x0_resize_q75_box.jpg 480w, /p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/116_hu562ece945ea6fd29c54b292f17e283a8_33250_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="116.jpg">
+	</a>
+	
+	<figcaption>116.jpg</figcaption>
+	
+</figure></p>
+<p>假设输出层激活函数为恒等函数，隐藏层激活函数为<span class="math inline">\(\tanh(a)\)</span>，易知其导数为<span class="math inline">\(h'(a) = 1-h(a)^2\)</span>。对于每个样本，我们同样定义SSE</p>
+<p><span class="math display">\[E_n = \dfrac{1}{2}\sum^K_{k=1}(y_k-t_k)^2
+\]</span></p>
+<p>对于每个样本，我们先执行正向传播过程，有</p>
+<p><span class="math display">\[a_j = \sum^D_{i=0}w^{(1)}_{ji}x_i
+\]</span></p>
+<p><span class="math display">\[z_j = \tanh(a_j)
+\]</span></p>
+<p><span class="math display">\[y_k = \sum^M_{j=0}w^{(2)}_{kj}z_j
+\]</span></p>
+<p>之后，我们首先计算输出层的<span class="math inline">\(\delta\)</span>，为</p>
+<p><span class="math display">\[\delta_k = y_k-t_k
+\]</span></p>
+<p>之后反向传播到隐藏层有</p>
+<p><span class="math display">\[\delta_j = (1-z_j^2)\sum^{K}_{k=1}w_{kj}\delta_k
+\]</span></p>
+<p>最后计算出梯度为</p>
+<p><span class="math display">\[\dfrac{\partial E_n}{\partial w^{(1)}_{ji}} = \delta_jx_i,\quad \dfrac{\partial E_n}{\partial w^{(2)}_{kj}} = \delta_kz_j
+\]</span></p>
+<p>然后就可以拿这个东西去随机梯度降了。</p>
+<p><strong>反向传播算法复杂度分析</strong></p>
+<p>假设网络中的所有权重有<span class="math inline">\(W\)</span>个，那么对于一个样本的误差的计算，就是<span class="math inline">\(O(W)\)</span>的。</p>
+<p>除了稀疏的网络，权重的数量会远远大于神经元的数量。大部分开销都花在了计算权重加权和上了，计算激活函数的都是少的。</p>
+<p>一种解决办法是，使用有限差分法（<span class="math inline">\(\epsilon << 1\)</span>）</p>
+<p><span class="math display">\[\dfrac{\partial E_n}{\partial w_{ji}} = \dfrac{E_n(w_{ji}+\epsilon)-E_n(w_{ji})}{\epsilon}+O(\epsilon)
+\]</span></p>
+<p>或者</p>
+<p><span class="math display">\[\dfrac{\partial E_n}{\partial w_{ji}} = \dfrac{E_n(w_{ji}+\epsilon)-E_n(w_{ji}-\epsilon)}{2\epsilon}+O(\epsilon^2)
+\]</span></p>
+<p>但是这种办法的时间复杂度甚至更差了，<span class="math inline">\(O(W)\)</span>的前向传播，另外，每个权重都必须自己更新自己的，使得反向传播为<span class="math inline">\(O(W^2)\)</span></p>
+<p>但是这个东西也不是没用，可以检查反向传播算法实现的正确性。</p>
+<p><strong>反向传播算法的优缺点</strong></p>
 <p>优点：理论基础牢固，推导过程严谨，物理概念清晰，通用性好等。所以，它是目前用来训练前馈多层网络较好的算法。</p>
 <p>缺点：收敛慢；不能保证全局最优；推广能力有可能较差。</p>
-<h2 id="常见网络">常见网络</h2>
+<h2 id="local-quadratic-approximation">Local quadratic approximation</h2>
+<p>讲了一大串没搞明白，我看也不会考，就记住：一个驻点为最小值时，这个点的二阶偏导数大于零（对于单权重情况），或者这个点的海瑟矩阵正定（对于多权重情况）。</p>
+<h2 id="正则化神经网络">正则化神经网络</h2>
+<p>给神经网络一个正则化项，以期其能拥有更好的泛化性能，在拟合不足和过拟合之间取得平衡点。通常正则化项是加载误差函数上的，最简单的是二次形式的（quadratic）：</p>
+<p><span class="math display">\[\tilde{E}(w) = E(w) + \dfrac{\lambda}{2}w^Tw
+\]</span></p>
+<p>这个正则化项也被称作权重衰减（weight decay）。它的一个局限在于，与网格映射中的确定性缩放性质不相容。</p>
+<p>如果我们使用原始数据训练网络，和使用进行了线性变换的数据训练网络，那么相容性要求这两个网络应该是等价的。任何正则化项也应该与这个性质相容，否则模型就会偏向某个解，而忽视某个等价的解。</p>
+<p>简单的权重衰减项由于把所有的偏置和权重同等对待，所以不满足这个性质。</p>
+<p>于是我们要找一个正则化项，使得其对线性不变性不变，如</p>
+<p><span class="math display">\[\dfrac{\lambda_1}{2}\sum_{w\in W_1} w^2+\dfrac{\lambda_2}{2}\sum_{w\in W_2}w^2
+\]</span></p>
+<p>其中<span class="math inline">\(W_1\)</span>代表第一层的权重，<span class="math inline">\(W_2\)</span>代表第二层的权重，其中加和中不包含偏置项的权重。该正则对应的先验为</p>
+<p><span class="math display">\[p(w|\alpha_1,\alpha_2)\approx \exp\bigg(-\dfrac{\alpha_1}{2}\sum_{w\in W_1} w^2-\dfrac{\alpha_2}{2}\sum_{w\in W_2}w^2\bigg)
+\]</span></p>
+<p>更一般的，对于更多层，有</p>
+<p><span class="math display">\[p(w|\alpha_1,\alpha_2)\approx \exp\bigg(-\dfrac{1}{2}\sum_{k}a_k||w||_k^2\bigg)
+\]</span></p>
+<p>其中</p>
+<p><span class="math display">\[||w||^2_k=\sum_{j\in W_k}w^2
+\]</span></p>
+<p>（个人觉得课上讲的一坨，完全没介绍前置知识，照搬PRML，可能我以后会自己再做这方面的笔记吧）</p>
+<h2 id="早期停止法">早期停止法</h2>
+<p>这也是一种防止网络过拟合的方法。</p>
+<p>一般，神经网络的训练对应着误差函数的迭代减小。误差函数是一个关于迭代次数的不增函数，然而，神经网络在测试集、验证集上的误差通常会首先减小，之后迭代过多达到过拟合，然后误差会增大，于是，训练过程可以在验证集误差最小的时候停止。</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 287; 
+			flex-basis: 690px"
+	>
+	<a href="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/117.jpg" data-size="1329x462">
+		<img src="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/117.jpg"
+			width="1329"
+			height="462"
+			srcset="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/117_hu4619c803b1b31fbd7f0df7a465c5b4b3_30594_480x0_resize_q75_box.jpg 480w, /p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/117_hu4619c803b1b31fbd7f0df7a465c5b4b3_30594_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="117.jpg">
+	</a>
+	
+	<figcaption>117.jpg</figcaption>
+	
+</figure></p>
+<p>这种情况下，⽹络的⾏为有时可以通过⽹络的⾃由度有效数量来定量描述。⾃由度有效数量开始时很⼩，然后在训练过程中增长，对应于模型复杂度的持续增长。这样，在训练误差达到最⼩值之前停⽌训练就表⽰了⼀种限制模型复杂度的⽅式。</p>
+<p>在⼆次误差函数的情况下，我们可以说明这种直观的描述，并且说明早期停⽌的效果与使⽤简单的权值衰减的正则化项的效果类似。这可以下图来理解。</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 132; 
+			flex-basis: 318px"
+	>
+	<a href="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/118.jpg" data-size="763x575">
+		<img src="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/118.jpg"
+			width="763"
+			height="575"
+			srcset="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/118_hu796fa6b6e762c709ccb4205bf58a35c8_13415_480x0_resize_q75_box.jpg 480w, /p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/118_hu796fa6b6e762c709ccb4205bf58a35c8_13415_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="118.jpg">
+	</a>
+	
+	<figcaption>118.jpg</figcaption>
+	
+</figure></p>
+<h2 id="不变量">不变量</h2>
+<p>在许多模式识别的应⽤中，在对于输⼊变量进⾏了⼀个或者多个变换之后，预测不应该发⽣变化，或者说应该具有不变性（invariant）。例如，在⼆维图像（例如⼿写数字）的分类问题中，⼀个特定的图像的类别应该与图像的位置⽆关（平移不变性（translation invariance）），也应该与图像的⼤⼩⽆关（缩放不变性（scale invariance））。</p>
+<p>如果可以得到⾜够多的训练样本，那么可调节的模型（例如神经⽹络）可以学习到不变性，⾄少可以近似地学习到。</p>
+<p>但是，如果训练样本数受限，或者有多个不变性（变换的组合的数量随着变换的数量指数增长），那么这种⽅法就很不实⽤。一般用以下四个方法</p>
+<ul>
+<li>复制训练样本，同时对不变性进行变换。例如平移图像</li>
+<li>为误差函数加上正则化项</li>
+<li>在预处理阶段，在要求的不变性下做特征提取</li>
+<li>把不变性整合进神经网络的构建中</li>
+</ul>
+<h2 id="切线传播">切线传播</h2>
+<p>通过切线传播（tangent propagation）的⽅法，我们可以使⽤正则化来让模型对于输⼊的变换具有不变性（Simard et al., 1992）。</p>
+<p>不考，略过。</p>
+<h2 id="用变换过的数据来训练">用变换过的数据来训练</h2>
+<p>一种方法是，用原始数据集和变化过的数据集加起来当训练集来训练。</p>
+<h2 id="卷积神经网络">卷积神经网络</h2>
+<p>不考</p>
+<h2 id="反向传播的推广">反向传播的推广</h2>
+<h2 id="其他常见网络">其他常见网络</h2>
 <h3 id="som网络">SOM网络</h3>
 <p>SOM是一种自组织（竞争型）神经网络。Kohonen认为：一个神经网络接受外界输入模式时，将会分为不同的对应区域，各区域对输入模式具有不同的响应特征，且该过程是自动完成的。</p>
 <p><figure 
@@ -1043,6 +1278,9 @@
 <p><strong>事件的积的概率</strong></p>
 <p><span class="math inline">\(P(AB) = P(A|B)P(B)\)</span></p>
 <p>有<span class="math inline">\(P(AB)=P(BA)\)</span></p>
+<p>扩展一下</p>
+<p><span class="math display">\[P(a,b,c) = P(a|b,c)P(b,c)
+\]</span></p>
 <p><strong>全概率公式</strong></p>
 <p><span class="math display">\[P(A) = P(AB_1)+P(AB_2)+\cdots+P(AB_n)
 \]</span></p>
@@ -1217,6 +1455,10 @@
 \]</span></p>
 <p><span class="math inline">\(D_{c,x_i}\)</span>指的是，<span class="math inline">\(D_c\)</span>中，在第<span class="math inline">\(i\)</span>个属性上取值为<span class="math inline">\(x_i\)</span>的样本组成的集合。</p>
 <p>对于连续属性，可以考虑概率密度函数，例如<span class="math inline">\(P(x_i|c)\sim N(\mu_{c,i},\sigma^2_{c,i})\)</span>，其中<span class="math inline">\(\mu_{c,i},\sigma^2_{c,i}\)</span>是第<span class="math inline">\(c\)</span>类样本在第<span class="math inline">\(i\)</span>个属性上取值的均值和方差。</p>
+<h3 id="贝叶斯线性回归">贝叶斯线性回归</h3>
+<p>TODO</p>
+<h3 id="贝叶斯逻辑回归">贝叶斯逻辑回归</h3>
+<p>TODO</p>
 <h3 id="贝叶斯网络">贝叶斯网络</h3>
 <p>贝叶斯网络是一个有向无环图。其中节点代表随机变量<span class="math inline">\(\{X_1,X_2,\cdots,X_n\}\)</span>。如果两个节点之间有因果关系，那么用一条有向边连接，起点是原因，终点是结果。</p>
 <p>这个因果关系由参数<span class="math inline">\(\theta\)</span>描述，所以贝叶斯网络可以表述为一个图<span class="math inline">\(G\)</span>和参数<span class="math inline">\(\theta\)</span>，即<span class="math inline">\(B=< G,\theta >\)</span>。假设属性<span class="math inline">\(x_i\)</span>在图中的父节点为<span class="math inline">\(\pi_i\)</span>（注意可以有多个父节点），则<span class="math inline">\(\theta_{x_i|\pi_i}=P_B(x_i|\pi_i)\)</span></p>
@@ -1441,15 +1683,163 @@
 <p>有监督学习的任务主要分为两个：回归、分类。回归就是对输入给出预测的输出，例如预测未来某一天的温度；分类则是对样本进行划分，使其属于某一个类别。</p>
 <p>常见的算法有：决策树、随机森林、支持向量机、逻辑回归、人工神经网络、K近邻、贝叶斯等</p>
 <h3 id="回归任务">回归任务</h3>
+<p>一般预测的输出为连续变量。</p>
 <p>其一般如下。设样本为<span class="math inline">\(\{(x^{(1)}, y^{(1)}), (x^{(2)}, y^{(2)}), \cdots, (x^{(m)}, y^{(m)})\}\)</span>。程序对于<span class="math inline">\(x\)</span>给出的预测是<span class="math inline">\(h_\theta(x)=\hat y\)</span>，其中<span class="math inline">\(h_\theta\)</span>就是我们的预测函数，或者说模型，而<span class="math inline">\(\theta\)</span>是模型参数。我们的目标是求出</p>
 <p><span class="math display">\[\theta^* = \arg\min_{\theta}\sum^m_{i=1}(\hat y^{(i)}-y^{(i)})^2=\arg\min_\theta J(\theta)
 \]</span></p>
 <p>至于如何求出，一般会使用数值最优化方法，例如梯度下降。搜索方向即是<span class="math inline">\(-\eta\nabla J(\theta)\)</span></p>
 <h3 id="分类任务">分类任务</h3>
+<p>一般预测的输出为离散变量。</p>
 <p>总体来说和回归任务形式上还是挺相似的。只是样本的<span class="math inline">\(y\)</span>记录的是样本的类别标签。给出的预测也是预测标签。通常目标也是最小化损失函数。</p>
 <p>前面在贝叶斯分类器中提到过，生成式模型（Generative Algorithms）和判别式模型（Discriminative Algorithms）的区别。</p>
 <p>判别式模型直接对<span class="math inline">\(P(Y|X)\)</span>建模。例子：通过人脸识别来判断性别。典型算法有：逻辑回归、SVM、神经网络等。</p>
 <p>而生成式模型通过对<span class="math inline">\(P(X|Y)\)</span>和<span class="math inline">\(P(Y)\)</span>建模，通过贝叶斯公式来算<span class="math inline">\(P(Y|X)\)</span>。例子：你收到电子邮件（观察结果，the observation），你想推断邮件是否是垃圾邮件（原因，the cause）。典型算法有：朴素贝叶斯、贝叶斯网络。</p>
+<h3 id="线性回归模型">线性回归模型</h3>
+<p>单变量的模型为</p>
+<p><span class="math display">\[h_w(x) = w_0+w_1x
+\]</span></p>
+<p>包含两个参数。其代价函数为（也称为均方误差MSE）</p>
+<p><span class="math display">\[J(w_0,w_1)=\dfrac{1}{2m}\sum^m_{i=1}(h_w(x^{(i)})-y^{(i)})^2
+\]</span></p>
+<p>其中<span class="math inline">\(m\)</span>为样本集大小，前面的常数系数个人觉得是多少都行，并不会影响求解过程，有个<span class="math inline">\(2\)</span>只是方便求导。</p>
+<p>我们的目标即为</p>
+<p><span class="math display">\[\arg\min_{w_0,w_1} J(w_0,w_1)
+\]</span></p>
+<p>求解的方法一般会用梯度下降法。见<a class="link" href="../%e6%9c%80%e4%bc%98%e5%8c%96%e7%90%86%e8%ae%ba%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/#%e6%9c%80%e9%80%9f%e4%b8%8b%e9%99%8d%e6%b3%95" >最优化理论学习笔记</a></p>
+<p>这边，更新公式就为</p>
+<p><span class="math display">\[w_j := w_j - \alpha\dfrac{\partial}{\partial w_j}J(w_0, w_1)
+\]</span></p>
+<p>注意，需要把新值<span class="math inline">\(w_0', w_1'\)</span>存下来，等两个新值都计算完后，在赋值给变量。不能计算一个，马上就赋值一个。本次更新的信息都必须来自上次。</p>
+<p>扩展到多变量也很方便，模型变为</p>
+<p><span class="math display">\[h_w(x) = w_0+w_1x_1+w_2x_2+\cdots+w_nx_n = w^Tx
+\]</span></p>
+<p>其中<span class="math inline">\(w\)</span>和<span class="math inline">\(x\)</span>都是<span class="math inline">\(n+1\)</span>维向量，默认<span class="math inline">\(x_0=1\)</span>。样本特征仍然是<span class="math inline">\(n\)</span>维的。</p>
+<p>代价函数没多大变化</p>
+<p><span class="math display">\[J(w) = \dfrac{1}{2m}\sum^m_{i=1}(h_w(x^{(i)})-y^{(i)})^2
+\]</span></p>
+<p><span class="math display">\[\arg\min_{w} J(w)
+\]</span></p>
+<p><span class="math display">\[w_j := w_j - \alpha\dfrac{\partial}{\partial w_j}J(w)
+\]</span></p>
+<p>其中梯度为</p>
+<p><span class="math display">\[\dfrac{\partial}{\partial w_j}J(w) = \dfrac{1}{m}\sum^m_{i=1}(h_w(x^{(i)})-y^{(i)})x_j^{(i)}
+\]</span></p>
+<p>我们也不一定要用梯度下降法才能求出最优参数，线性回归方程有闭式解</p>
+<p><span class="math display">\[w^\ast = (X^TX)^{-1}X^Ty
+\]</span></p>
+<p>其中<span class="math inline">\(X\)</span>是一个<span class="math inline">\(m\)</span>行<span class="math inline">\(n+1\)</span>列的矩阵。每一行的矩阵代表一个样本。于是<span class="math inline">\(X^TX\)</span>是一个<span class="math inline">\((n+1)\times(n+1)\)</span>的矩阵，<span class="math inline">\(X^Ty\)</span>是一个<span class="math inline">\(n+1\)</span>行的列向量。</p>
+<p><strong>广义线性模型</strong></p>
+<p>和之后提到的广义线性判别分析一样，我们也可以通过加高维数的方法使得多项式变成线性。这里不再赘述。</p>
+<p><strong>正则化</strong></p>
+<p>给代价函数加上一项</p>
+<p><span class="math display">\[J(w) = \dfrac{1}{2m}\bigg[\sum^m_{i=1}(h_w(x^{(i)})-y^{(i)})^2+\lambda \sum^n_{j=1}w_j^2\bigg]
+\]</span></p>
+<p>注意加上的不包含<span class="math inline">\(\lambda w_0\)</span>，求导的时候要注意。</p>
+<p>这也叫做Tikhonov正则化、岭回归。此时，学习算法不仅要拟合数据，还要使模型权重尽可能小。</p>
+<p><span class="math inline">\(\lambda\)</span>等于零时等价于线性回归， <span class="math inline">\(\lambda\)</span>很大时，会使曲线趋于平缓，不至于过拟合。平缓时，可以减小方差，但是会增加偏差。</p>
+<p>另外使用正则化需要缩放数据，因为其对输入特征的缩放很敏感。</p>
+<p>闭式解为</p>
+<p><span class="math display">\[w = (X^TX+\lambda A)^{-1}X^Ty
+\]</span></p>
+<p>其中<span class="math inline">\(A\)</span>是一个<span class="math inline">\((n+1)\times(n+1)\)</span>的单位矩阵，然后再设置最左上角的元素为<span class="math inline">\(0\)</span></p>
+<h3 id="线性分类模型">线性分类模型</h3>
+<p>先看二分类问题，模型为</p>
+<p><span class="math display">\[y(x) = w^Tx+w_0
+\]</span></p>
+<p><span class="math inline">\(w\)</span>是权重向量，<span class="math inline">\(w_0\)</span>为偏置项。当<span class="math inline">\(y(x)\geq 0\)</span>时分为第一类，否则分为第二类。于是决策面就为<span class="math inline">\(y(x)=0\)</span>，对于<span class="math inline">\(D\)</span>维特征样本，决策面是<span class="math inline">\(D-1\)</span>维超平面</p>
+<p>假设<span class="math inline">\(x_a,x_b\)</span>在决策面上，那么有<span class="math inline">\(w^T(x_a-x_b)=0\)</span>，即权重向量<span class="math inline">\(w\)</span>和所有决策面上的向量正交。所以<span class="math inline">\(w\)</span>是决策面的法向量方向。</p>
+<p>任意一点到决策面的距离为</p>
+<p><span class="math display">\[\dfrac{|y(x)|}{||w||}
+\]</span></p>
+<p>现在考虑多分类（K类）问题，我们可以训练<span class="math inline">\(K\)</span>个一对多二分类器，也可以训练<span class="math inline">\(K(K-1)/2\)</span>个一对一二分类器，然后通过投票的方式选出得票最多的。但是，我们会遇到投票数相等的情况，例如</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 104; 
+			flex-basis: 250px"
+	>
+	<a href="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/112.jpg" data-size="721x692">
+		<img src="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/112.jpg"
+			width="721"
+			height="692"
+			srcset="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/112_hu1f5b3280c62bc27efc0ca4b0486fdeb8_21156_480x0_resize_q75_box.jpg 480w, /p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/112_hu1f5b3280c62bc27efc0ca4b0486fdeb8_21156_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="112..jpg">
+	</a>
+	
+	<figcaption>112..jpg</figcaption>
+	
+</figure></p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 105; 
+			flex-basis: 253px"
+	>
+	<a href="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/113.jpg" data-size="715x678">
+		<img src="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/113.jpg"
+			width="715"
+			height="678"
+			srcset="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/113_hu0b9b6d4eb387be1d6fc037200628476e_22421_480x0_resize_q75_box.jpg 480w, /p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/113_hu0b9b6d4eb387be1d6fc037200628476e_22421_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="113.jpg">
+	</a>
+	
+	<figcaption>113.jpg</figcaption>
+	
+</figure></p>
+<p>有些时候这个方法还是有用的，但是作为一般的讨论，我们要找到一种更好的方法来避免出现这种ambiguous regions。</p>
+<p>我们升级模型为</p>
+<p><span class="math display">\[y_k(x) = w_k^Tx+w_{k0}
+\]</span></p>
+<p>其中<span class="math inline">\(k=1,\cdots,K\)</span>。如果对于所有的<span class="math inline">\(j\neq k\)</span>，有<span class="math inline">\(y_k(x)>y_j(x)\)</span>，那么把<span class="math inline">\(x\)</span>归类为<span class="math inline">\(C_k\)</span>类。</p>
+<p>此时，<span class="math inline">\(k\)</span>类和<span class="math inline">\(j\)</span>类的判决面就是<span class="math inline">\(y_k(x)=y_j(x)\)</span>，也即</p>
+<p><span class="math display">\[(w_k-w_j)^Tx+(w_{k0}-w_{j0}) = 0
+\]</span></p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 150; 
+			flex-basis: 360px"
+	>
+	<a href="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/114.jpg" data-size="599x399">
+		<img src="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/114.jpg"
+			width="599"
+			height="399"
+			srcset="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/114_hu6f22dd58d0334d735c87069431fbc95d_11716_480x0_resize_q75_box.jpg 480w, /p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/114_hu6f22dd58d0334d735c87069431fbc95d_11716_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="114.jpg">
+	</a>
+	
+	<figcaption>114.jpg</figcaption>
+	
+</figure></p>
+<p>线段<span class="math inline">\(x_ax_b\)</span>上的点都可以表示为<span class="math inline">\(\hat x = \lambda x_a+(1-\lambda)x_b\)</span>，其中<span class="math inline">\(0\leq\lambda\leq 1\)</span>。于是，根据线性性，我们就得到<span class="math inline">\(y_k(\hat x)=\lambda y_k(x_a)+(1-\lambda)y_k(x_b)\)</span>，并且因为<span class="math inline">\(y_k(x_a)>y_j(x_a)\)</span>且<span class="math inline">\(y_k(x_n)>y_j(x_n)\)</span>，可以得出<span class="math inline">\(y_k(\hat x)>y_j(\hat x)\)</span>，以及<span class="math inline">\(\hat x\)</span>属于<span class="math inline">\(C_k\)</span>。</p>
+<p>所以说，判决区域是单连通的，并且是凸的。</p>
+<p>为了便于表示，我们可以把<span class="math inline">\(K\)</span>个模型合并起来，得到</p>
+<p><span class="math display">\[y(x)=\tilde{W}^T\tilde{x}
+\]</span></p>
+<p>其中<span class="math inline">\(\tilde{W}\)</span>是一个<span class="math inline">\(K\)</span>列矩阵，每一列是<span class="math inline">\(D+1\)</span>维列向量。即<span class="math inline">\(\tilde{w}_k=[w_{k0}, w_k^T]^T\)</span>。相应的有，<span class="math inline">\(\tilde{x}=[1,x^T]^T\)</span></p>
+<p>求取参数矩阵的最小二乘解（least-squares solutions），我们的损失函数称作误差平方和（SSE，和均方误差的区别在于前面的系数），即</p>
+<p><span class="math display">\[E_D(\tilde{W}) = \dfrac{1}{2}tr\{(\tilde{X}\tilde{W}-T)^T(\tilde{X}\tilde{W}-T)\}
+\]</span></p>
+<p>其中<span class="math inline">\(\tilde{W}\)</span>同前，而<span class="math inline">\(\tilde{X}\)</span>的每一行都代表一个<span class="math inline">\(\tilde{x}^T\)</span>，共<span class="math inline">\(N\)</span>行，即训练集大小。而<span class="math inline">\(\tilde{T}\)</span>也是<span class="math inline">\(N\)</span>行矩阵，每一行都是一个向量<span class="math inline">\(t^T\)</span>，代表训练集的标记。虽然老师没说，但我感觉是one-hot编码的标记。</p>
+<p>于是有闭式解为</p>
+<p><span class="math display">\[\tilde W = (\tilde X^T\tilde X)^{-1}\tilde XT=\tilde X^\dagger T
+\]</span></p>
+<p>其中<span class="math inline">\(\dagger\)</span>表示伪逆（pseudo-inverse）矩阵</p>
+<p>这样的最小二乘解有一个性质，如果对一对固定的<span class="math inline">\(a,b\)</span>，每个训练样本的标记都满足</p>
+<p><span class="math display">\[a^Tt+b = 0
+\]</span></p>
+<p>那么模型也会满足</p>
+<p><span class="math display">\[a^Ty(x)+b=0
+\]</span></p>
+<p>因此，使用one-hot编码的标记，对任意样本<span class="math inline">\(x\)</span>进行预测得到<span class="math inline">\(y(x)\)</span>，预测结果的每一项加起来等于<span class="math inline">\(1\)</span></p>
+<p>然而，并不能用这个来表示样本属于类各类的概率，因为每一项并不限制在<span class="math inline">\((0,1)\)</span>之间</p>
+<p>另外，最小二乘解对极端值没有鲁棒性。</p>
 <h3 id="fisher线性判别">Fisher线性判别</h3>
 <p>对于两类问题，线性判别函数为</p>
 <p><span class="math display">\[g(x) = w^Tx+w_0
@@ -1545,7 +1935,11 @@
 <p><span class="math display">\[J(\theta) = \dfrac{1}{m}\sum^m_{i=1}[-y^{(i)}\log(h_\theta(x^{(i)}))-(1-y^{(i)})\log(1-h_\theta(x^{(i)}))]
 \]</span></p>
 <p>其中<span class="math inline">\(m\)</span>是样本数量，<span class="math inline">\(y\)</span>的取值为<span class="math inline">\(\{0,1\}\)</span>。目标就是最小化损失函数，可以利用梯度下降法等办法。</p>
-<p>另外，还是有可能算出属于某个类的概率的，即<span class="math inline">\(p(y/x;\theta)=(h_\theta(x))^y(1-h_\theta(x))^{1-y}\)</span></p>
+<p>梯度为</p>
+<p><span class="math display">\[\dfrac{\partial}{\partial w_j} J(\theta) = \dfrac{1}{m}\sum^m_{i=1}(h_\theta(x^{(i)})-y^{(i)})x_j^{(i)}
+\]</span></p>
+<p>另外，还是有可能算出属于某个类的概率的，即<span class="math inline">\(p(y|x;\theta)=(h_\theta(x))^y(1-h_\theta(x))^{1-y}\)</span>，或者说<span class="math inline">\(h_\theta(x)\)</span>表示<span class="math inline">\(x\)</span>属于正类的概率。</p>
+<p>非线性可分时，仍然可以使用广义线性模型来升维解决。</p>
 <h3 id="感知准则函数与感知器算法">感知准则函数与感知器算法</h3>
 <p><strong>线性可分性</strong></p>
 <p>如果存在一个向量<span class="math inline">\(a\)</span>使得，对于所有的<span class="math inline">\(x\in w_1\)</span>，有<span class="math inline">\(a^Tx>0\)</span>，对于所有的<span class="math inline">\(x\in w_2\)</span>，有<span class="math inline">\(a^Tx<0\)</span>，那么样本集是线性可分的。否则是线性不可分的。</p>
@@ -1571,11 +1965,37 @@
 \]</span></p>
 <p>的最小长度的向量。新的解区位于原解区之中，而且他的边界到原解区边界的距离为<span class="math inline">\(b/||x_i||\)</span></p>
 <p><strong>感知器算法</strong></p>
-<p>对于线性可分的（规范化）样本，满足<span class="math inline">\(w^Tx_i > 0\)</span>。在训练时，对于某个迭代中的权向量<span class="math inline">\(w\)</span>，如果某个样本被错误分类，则<span class="math inline">\(w^T x_k\leq 0\)</span>。我们对所有错分样本的惩罚函数，即感知器准则函数定义如下</p>
-<p><span class="math display">\[J_P(w) = \sum_{w^T x_k\leq 0}(-w^Tx_k)
+<p>感知器算法也是个二分类算法。</p>
+<p>通常首先要使用一个固定的非线性转换把输入向量<span class="math inline">\(x\)</span>转换成特征向量<span class="math inline">\(\phi(x)\)</span>。这个特征向量之后要被用作构建一个广义线性模型</p>
+<p><span class="math display">\[y(x) = f(w^T\phi(x))
 \]</span></p>
+<p>其中<span class="math inline">\(f(\cdot)\)</span>是一个非线性激活函数，通常会用如下形式的阶跃函数</p>
+<p><span class="math display">\[f(a)\begin{cases}
+ +1, & a\geq 0 \\
+ -1, & a < 0
+\end{cases} 
+\]</span></p>
+<p>另外，像之前一样，有<span class="math inline">\(\phi_0(x)=1\)</span>。注意我们之前可能把二分类标记为<span class="math inline">\(\{0,1\}\)</span>，这里我们标记为<span class="math inline">\(t\in\{-1,1\}\)</span>，因为可以比较方便地样本规范化。</p>
+<p><span class="math display">\[w^T\phi(x_n)t_n > 0
+\]</span></p>
+<p>对于线性可分的（规范化）样本，满足<span class="math inline">\(w^T\phi(x_n)t_n > 0\)</span>。在训练时，对于某个迭代中的权向量<span class="math inline">\(w\)</span>，如果某个样本被错误分类，则<span class="math inline">\(w^T \phi(x_k)t_k\leq 0\)</span>。我们对所有错分样本的惩罚函数，即感知器准则函数定义如下</p>
+<p><span class="math display">\[E_P(w)=J_P(w) = -\sum_{k\in M}(w^T\phi(x_k)t_k)
+\]</span></p>
+<p>其中<span class="math inline">\(M\)</span>是错分样本的下标集。</p>
 <p>当且仅当函数取得最小值<span class="math inline">\(0\)</span>时，有最优的<span class="math inline">\(w^*\)</span>。求解过程可以用梯度下降法。见<a class="link" href="../%e6%9c%80%e4%bc%98%e5%8c%96%e7%90%86%e8%ae%ba%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/#%e6%9c%80%e9%80%9f%e4%b8%8b%e9%99%8d%e6%b3%95" >最优化理论学习笔记</a></p>
-<p>感知器算法的更新公式如下：</p>
+<p><strong>机器学习课上</strong>，使用了随机梯度降，</p>
+<p><span class="math display">\[w^{(t+1)} = w^{(t)} - \eta \nabla E_P(w) = w^{(t)} + \eta\phi_nt_n
+\]</span></p>
+<p>不具一般性的，如果把<span class="math inline">\(w\)</span>乘上一个常数，那么预测<span class="math inline">\(y(x,w)\)</span>是不改变的，所以可以把<span class="math inline">\(\eta\)</span>设置为<span class="math inline">\(1\)</span>。</p>
+<p>但是，一般来说，<span class="math inline">\(w\)</span>改变的同时，错分的集合也会变。</p>
+<p>我们训练的时候是每次迭代，对每个样本都跑一次这个梯度降，如果分类正确了，就保持<span class="math inline">\(w\)</span>不动，如果分类错误，则加上这个样本对应的<span class="math inline">\(\eta\phi_n t_n\)</span></p>
+<p>如果我们关注单个错分样本的训练过程，</p>
+<p><span class="math display">\[-w^{(t+1)T}\phi_nt_n = -w^{(t)T}\phi_nt_n-(\phi_nt_n)^T(\phi_nt_n) < -w^{(t)T}\phi_nt_n
+\]</span></p>
+<p>其是减小误差值的，但是由于每个样本的训练是分开的，他减小的时候可能会导致别人的增大。所以，感知器算法并不保证在每个状态中，总体误差都会更小。</p>
+<p>但是，感知器算法可以保证，如果样本线性可分，那么一定会在有限步内收敛到一个确切的解。（线性不可分则一定不会收敛）</p>
+<p>但是的但是，虽然有限步，可能还是会很大。另外，即使样本线性可分，可能也会存在多个解，感知器达到哪个解，要看他的初始情况和数据的表示方法。</p>
+<p><strong>模式识别课上</strong>，感知器算法的更新公式如下（这里没有进行投影变换，以及是原始版本的规范化）：</p>
 <p><span class="math display">\[w^{(k+1)} = \left\{\begin{matrix}
  w^{(k)}, &\ w^{(k)T}x_i>0\\
  w^{(k)}+Cx_i &\ w^{(k)T}x_i\leq 0
@@ -4920,6 +5340,12 @@ network）组成。</p>
         </li>
       </ol>
     </li>
+    <li><a href="#机器学习绪论">机器学习绪论</a>
+      <ol>
+        <li><a href="#定义">定义</a></li>
+        <li><a href="#机器学习的算法分类">机器学习的算法分类</a></li>
+      </ol>
+    </li>
     <li><a href="#神经网络基础概念">神经网络基础概念</a>
       <ol>
         <li><a href="#神经元及其数学模型">神经元及其数学模型</a></li>
@@ -4930,7 +5356,15 @@ network）组成。</p>
           </ol>
         </li>
         <li><a href="#正向传播和反向传播">正向传播和反向传播</a></li>
-        <li><a href="#常见网络">常见网络</a>
+        <li><a href="#local-quadratic-approximation">Local quadratic approximation</a></li>
+        <li><a href="#正则化神经网络">正则化神经网络</a></li>
+        <li><a href="#早期停止法">早期停止法</a></li>
+        <li><a href="#不变量">不变量</a></li>
+        <li><a href="#切线传播">切线传播</a></li>
+        <li><a href="#用变换过的数据来训练">用变换过的数据来训练</a></li>
+        <li><a href="#卷积神经网络">卷积神经网络</a></li>
+        <li><a href="#反向传播的推广">反向传播的推广</a></li>
+        <li><a href="#其他常见网络">其他常见网络</a>
           <ol>
             <li><a href="#som网络">SOM网络</a></li>
             <li><a href="#rbf网络">RBF网络</a></li>
@@ -4953,6 +5387,8 @@ network）组成。</p>
             <li><a href="#贝叶斯决策理论贝叶斯分类器">贝叶斯决策理论（贝叶斯分类器）</a></li>
             <li><a href="#判别函数和决策面分类器设计">判别函数和决策面、分类器设计</a></li>
             <li><a href="#朴素贝叶斯分类器">朴素贝叶斯分类器</a></li>
+            <li><a href="#贝叶斯线性回归">贝叶斯线性回归</a></li>
+            <li><a href="#贝叶斯逻辑回归">贝叶斯逻辑回归</a></li>
             <li><a href="#贝叶斯网络">贝叶斯网络</a></li>
             <li><a href="#正态分布下的统计决策">正态分布下的统计决策</a></li>
             <li><a href="#贝叶斯vs其他判别">贝叶斯vs其他判别</a></li>
@@ -4962,6 +5398,8 @@ network）组成。</p>
           <ol>
             <li><a href="#回归任务">回归任务</a></li>
             <li><a href="#分类任务">分类任务</a></li>
+            <li><a href="#线性回归模型">线性回归模型</a></li>
+            <li><a href="#线性分类模型">线性分类模型</a></li>
             <li><a href="#fisher线性判别">Fisher线性判别</a></li>
             <li><a href="#逻辑回归logistic-regression">逻辑回归（Logistic Regression）</a></li>
             <li><a href="#感知准则函数与感知器算法">感知准则函数与感知器算法</a></li>

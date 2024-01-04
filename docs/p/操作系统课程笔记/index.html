@@ -9,10 +9,10 @@
 <meta property='og:description' content='本笔记不会涉及过深的操作系统知识，因为笔者在人工智能学院，本课程是选修。本笔记只会介绍操作系统有什么，后续笔者可能会研究操作系统的具体实现。'>
 <meta property='og:url' content='https://kegalas.top/p/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/'>
 <meta property='og:site_name' content='KegalaS的个人博客'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='大学' /><meta property='article:tag' content='操作系统' /><meta property='article:published_time' content='2024-01-01T20:01:20&#43;08:00'/><meta property='article:modified_time' content='2024-01-01T20:01:20&#43;08:00'/><meta property='og:image' content='https://kegalas.top/cover.jpg' />
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='大学' /><meta property='article:tag' content='操作系统' /><meta property='article:published_time' content='2024-01-01T20:01:20&#43;08:00'/><meta property='article:modified_time' content='2024-01-01T20:01:20&#43;08:00'/><meta property='og:image' content='https://kegalas.top/p/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/cover.jpg' />
 <meta name="twitter:title" content="操作系统课程笔记">
 <meta name="twitter:description" content="本笔记不会涉及过深的操作系统知识，因为笔者在人工智能学院，本课程是选修。本笔记只会介绍操作系统有什么，后续笔者可能会研究操作系统的具体实现。"><meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:image" content='https://kegalas.top/cover.jpg' />
+    <meta name="twitter:image" content='https://kegalas.top/p/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/cover.jpg' />
     <link rel="shortcut icon" href="favicon-16x16.png" />
 
     </head>
@@ -65,8 +65,12 @@
     <header class="article-header">
         <div class="article-image">
             <a href="/p/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/">
-                
-                    <img src="/cover.jpg" loading="lazy" alt="Featured image of post 操作系统课程笔记" />
+                <img src="/p/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/cover_hucd8e14c4efc19cc77fb7e62d6a8c22d5_18667_800x0_resize_q75_box.jpg"
+                        srcset="/p/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/cover_hucd8e14c4efc19cc77fb7e62d6a8c22d5_18667_800x0_resize_q75_box.jpg 800w, /p/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/cover_hucd8e14c4efc19cc77fb7e62d6a8c22d5_18667_1600x0_resize_q75_box.jpg 1600w"
+                        width="800" 
+                        height="284" 
+                        loading="lazy"
+                        alt="Featured image of post 操作系统课程笔记" />
                 
             </a>
         </div>
@@ -121,7 +125,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 41 分钟
+                    阅读时长: 44 分钟
                 </time>
             </div>
         
@@ -305,6 +309,14 @@
 </figure></p>
 <h2 id="进程调度">进程调度</h2>
 <p>进程调度关注的问题是：当有多个进程/线程准备就绪时，先执行哪一个？这又有两个子问题，什么时候进行这个决策？如何决策？</p>
+<p>可能会涉及调度的情况：</p>
+<ol>
+<li>进程生成</li>
+<li>进程退出</li>
+<li>用户进程调用一个用户自己定义的函数</li>
+<li>进程在IO上被阻塞</li>
+<li>IO中断</li>
+</ol>
 <p>设计算法的时候，要同时考虑到系统和用户。对于系统来说，需要有公平性（不会有进程被饿死）和较大的吞吐量。对于用户来说，需要有及时性和较短的周转时间。</p>
 <p>周转时间为</p>
 <p><span class="math display">\[T_{周转时间}=T_{完成时间}-T_{到达时间}
@@ -339,6 +351,9 @@
 <p>思想很简单，系统规定一个时间长度作为运行一个进程运行的时间，如果这段时间内进程没有运行完，则必须让出CPU然后回去排队。</p>
 <p>显然，其及时性很好，但是周转时间很差。</p>
 <p>老师的PPT还给出其公平性差，我不明白为什么，这是非常公平的算法。有其他资料印证我的想法。</p>
+<h3 id="高响应比优先算法hrrn">高响应比优先算法（HRRN）</h3>
+<p>综合考虑了进程的响应时间与等待时间</p>
+<p>对每个进程计算响应比：（等待时间+执行时间）/ 执行时间，响应比最高的进程优先获得CPU使用权</p>
 <h3 id="多级反馈队列mlfq">多级反馈队列（MLFQ）</h3>
 <p>MLFQ中有许多独立的队列，每个队列有不同的优先级。每个任务只能存在于一个队列之中。MLFQ总是执行优先级较高的队列中的工作。优先级相同的工作则对他们使用轮转法。具体规则为：</p>
 <ol>
@@ -369,7 +384,7 @@
 	
 </figure></p>
 <h2 id="地址重定位">地址重定位</h2>
-<p>当程序被装入内存时，程序的逻辑地址被转换为内存的物理地址，这一过程称为地址重定位。这一过程由MMU（内存管理单元）完成。</p>
+<p>当程序被装入内存时，程序的逻辑地址被转换为内存的物理地址，这一过程称为地址重定位。这一过程由MMU（Memory management unit，内存管理单元）完成。</p>
 <h3 id="绝对装入固定地址再定位">绝对装入/固定地址再定位</h3>
 <p>程序的地址再定位是在程序执行之前被确定的。也就是在编译连接时直接生成物理地址。在此，程序地址空间和内存地址空间是一一对应的。</p>
 <h3 id="可重定位装入">可重定位装入</h3>
@@ -1107,11 +1122,17 @@
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>如果只是实现简单的自旋锁，那么等价于测试并设置。</p>
 <h3 id="链接的加载和条件式存储指令loadstore">链接的加载和条件式存储指令（load/store）</h3>
-<p>TODO</p>
+<p>课上没讲</p>
 <h3 id="获取并增加">获取并增加</h3>
-<p>TODO</p>
+<p>课上没讲</p>
+<h2 id="互斥锁vs自旋锁vssleep-wakeup锁">互斥锁vs自旋锁vsSleep-wakeup锁</h2>
+<p>简中互联网上搜到的：</p>
+<p>互斥锁（mutex），一种阻塞锁，是在线程试图进入临界区时，如果临界区被占用，那么该进程陷入阻塞状态，直到锁被释放。</p>
+<p>自旋锁（spinlock），一种非阻塞锁，在检查时，如果临界区被占用，他会通过无限循环反复检查（即自旋）是否释放。他不会进入阻塞状态从而放弃CPU，所以会消耗大量CPU时钟（称为忙等待）。</p>
+<p>但我个人觉得不太对。所有锁都是“互斥”的吧。也有教材、英文维基印证我的想法。我个人就倾向于分为阻塞锁和非阻塞锁。</p>
+<p>Sleep-wakeup锁其实就是阻塞锁。</p>
 <h2 id="条件变量">条件变量</h2>
-<p>TODO。课堂上没讲，只需要明白使用条件变量可以避免自旋即可。</p>
+<p>课堂上没讲，只需要明白使用条件变量可以避免自旋即可。</p>
 <h2 id="信号量">信号量</h2>
 <h3 id="生产者-消费者模型">生产者-消费者模型</h3>
 <p>也叫做有界缓冲区问题。</p>
@@ -1212,7 +1233,7 @@
 </span></span></code></pre></div><p>消费者的代码同理也不能替换顺序。否则会产生死锁问题，即消费者等待full，而生产者等待mutex，二者都在等待。</p>
 <p><strong>缺点</strong></p>
 <p>信号量解决了同步问题，但是信号量大量分布在各个进程中不便于管理，使用不当会导致死锁。</p>
-<h3 id="读者-写者模型">读者-写者模型</h3>
+<h3 id="读者-写者模型与读写锁">读者-写者模型与读写锁</h3>
 <p>这也是一个经典的Inter-Process Communication（IPC）问题。</p>
 <p>例如，一个数据结构可以被多个进程共享。有的进程负责修改数据，称为“写者”，有的进程只读数据，称为“读者”。规定：“读者”可以同时读取共享数据对象，“写者”不能与任何其他经常同时访问数据对象。</p>
 <p>可以用信号量实现如下</p>
@@ -1240,7 +1261,7 @@
 </span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">sem_wait</span>(<span style="color:#f92672">&amp;</span>rw<span style="color:#f92672">-&gt;</span>lock);
 </span></span><span style="display:flex;"><span>    rw<span style="color:#f92672">-&gt;</span>readers<span style="color:#f92672">--</span>;
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span>(rw<span style="color:#f92672">-&gt;</span>readers<span style="color:#f92672">==</span><span style="color:#ae81ff">0</span>)
-</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">sem_wait</span>(<span style="color:#f92672">&amp;</span>rw<span style="color:#f92672">-&gt;</span>writelock); <span style="color:#75715e">// 即，最后一个读者需要释放write锁
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">sem_post</span>(<span style="color:#f92672">&amp;</span>rw<span style="color:#f92672">-&gt;</span>writelock); <span style="color:#75715e">// 即，最后一个读者需要释放write锁
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">sem_post</span>(<span style="color:#f92672">&amp;</span>rw<span style="color:#f92672">-&gt;</span>lock)
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
@@ -1564,7 +1585,7 @@
 </ol>
 </li>
 </ol>
-<p>TODO</p>
+<p>课堂上讲的一坨，也并没有找到其他资料，鉴定为不考。</p>
 <h3 id="死锁的解除">死锁的解除</h3>
 <p><strong>重新启动</strong></p>
 <p>实现简单，但会造成损失和浪费</p>
@@ -1738,7 +1759,7 @@
 	<figcaption>42.jpg</figcaption>
 	
 </figure></p>
-<p>UNIX系统就采用了一种三级索引结构。UNIX文件系统中设置了一类特殊的索引节点，称为inode。inode包含了文件的控制信息</p>
+<p>UNIX系统就采用了一种三级索引结构。UNIX文件系统中设置了一类特殊的索引节点，称为inode（index node，不止ext文件系统，ntfs和hfs+也有，但是fat没有）。inode包含了文件的控制信息</p>
 <p><figure 
 	
 		class="gallery-image" 
@@ -2364,6 +2385,12 @@
 </figure></p>
 <h3 id="io缓冲">IO缓冲</h3>
 <p>缓冲区是一种交换数据的区域</p>
+<p>引入缓冲的主要目的：</p>
+<ul>
+<li>缓和CPU和I/O设备间速度不匹配的矛盾</li>
+<li>提高CPU与I/O设备间并行操作的程度</li>
+<li>减少CPU的中断频率</li>
+</ul>
 <p><strong>单缓冲技术</strong></p>
 <p>只设置一个缓冲，CPU和外设轮流使用。</p>
 <p><strong>双缓冲技术</strong></p>
@@ -2434,7 +2461,7 @@
 <p>要让其最少，就要磁头移动的磁道数平均最少</p>
 <p><strong>FCFS算法</strong></p>
 <p>严格按照进程请求访问磁盘的先后次序进行调度，是一种最简单的磁盘调度算法。</p>
-<p><strong>SSF（最短寻到时间优先）算法</strong></p>
+<p><strong>SSF（最短寻道时间优先）算法</strong></p>
 <p>思想：要求每次访问的磁道与当前磁头所在的磁道距离最近。</p>
 <p>优点：移臂次数比FCFS少</p>
 <p>缺点：饥饿</p>
@@ -2450,7 +2477,47 @@
 </ul>
 <p>当一次移臂调度将移动臂定位到某一柱面后，还可能要进行多次旋转调度才能得到所有数据。</p>
 <p><strong>信息的优化分布</strong></p>
-<p>TODO</p>
+<p>以一道例题来说明吧</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 334; 
+			flex-basis: 802px"
+	>
+	<a href="/p/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/70.jpg" data-size="910x272">
+		<img src="/p/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/70.jpg"
+			width="910"
+			height="272"
+			srcset="/p/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/70_hu73d63c080ee11ab18bb0bb7ae7e9f1cf_34230_480x0_resize_q75_box.jpg 480w, /p/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/70_hu73d63c080ee11ab18bb0bb7ae7e9f1cf_34230_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="70.jpg">
+	</a>
+	
+	<figcaption>70.jpg</figcaption>
+	
+</figure></p>
+<p>假设<span class="math inline">\(n\)</span>是每个磁道的块数，<span class="math inline">\(t\)</span>是转一周的时间，<span class="math inline">\(h\)</span>是一个记录的读取时间（有<span class="math inline">\(h=t/n\)</span>），<span class="math inline">\(p\)</span>是读取后的处理时间。那么顺序读写的时间为</p>
+<p><span class="math display">\[(n-1)\times(h+t)+h+p
+\]</span></p>
+<p>基本思想是，前<span class="math inline">\(n-1\)</span>个读取，都要消耗一次读取时间，而且平均都需要再转一圈才能得到下一个记录。最后一个读取则只有一次读取时间和一次读取后的处理时间。</p>
+<p>如果按照最佳安排顺序，即在读取后处理的时间中，根据旋转的距离，安排下一个连续记录的位置。那么总的顺序读写时间为</p>
+<p><span class="math display">\[(n-1)\times(\left \lceil \frac{p}{h} \right \rceil +1)\times h+h+p
+\]</span></p>
+<p>假设安排第一个记录的区块为<span class="math inline">\(0\)</span>，那么安排下一个连续区块的位置就是<span class="math inline">\(\left \lceil \frac{p}{h} \right \rceil+1\)</span>。</p>
+<p>在本题中，顺序存放时，顺序读写的时间为<span class="math inline">\(8*(27+3)+3+2=245ms\)</span>，而最佳安排后<span class="math inline">\(8*6+5=53ms\)</span>。而间隔距离<span class="math inline">\(\left \lceil \frac{2}{3} \right \rceil+1=2\)</span>，所以按照AFBGCHDIE的顺序存放。</p>
+<h1 id="系统调用">系统调用</h1>
+<p>不知道放哪就单独拿出来说。</p>
+<h2 id="为什么引入系统调用system-call">为什么引入系统调用（system call）</h2>
+<p>主要目的是为了让用户程序能与操作系统进行交互和访问底层系统资源。</p>
+<p><strong>访问受限资源</strong></p>
+<p>出于系统安全性和稳定性的考虑，有些计算机资源无法直接访问，可以通过系统调用访问受限资源</p>
+<p><strong>提供抽象接口</strong></p>
+<p>隐藏底层硬件和系统实现的复杂性</p>
+<p><strong>系统功能拓展</strong></p>
+<p>系统调用允许用户程序通过它来拓展操作系统的功能</p>
+<p><strong>提供用户空间与内核空间之间的界限</strong></p>
+<p>用户程序在用户空间运行，内核在内核空间运行，用户程序可以通过系统调用请求内核操作，可以防治用户程序对系统资源的滥用</p>
 <h1 id="分布式系统">分布式系统</h1>
 <h2 id="分布式计算机系统">分布式计算机系统</h2>
 <p>分布式计算机系统(Distributed Computer Systems)是由多个分散的计算机经网络连接而形成的统一的计算机系统。其中各个资源单元(物理的或逻辑的)既相互协同又高度自治</p>
@@ -2516,6 +2583,24 @@
 <li>隐通道破坏系统的保密性和完整性。隐通道是指系统的一个用户通过违反系统安全策略的方式传送信息给另一用户的机制。</li>
 <li>无意和偶发性的攻击破坏操作系统的可用性和完整性。包括用户操作上的失误，计算机硬件的故障、其他软件中存在的潜在漏洞，计算机运行环境不达标以及突然断电、火灾等自然灾害</li>
 </ol>
+<p>操作系统安全两个方面：</p>
+<ul>
+<li>设计安全</li>
+<li>使用安全</li>
+</ul>
+<p>实现操作系统安全的手段：</p>
+<ul>
+<li>访问控制</li>
+<li>安全审计</li>
+<li>内存保护等</li>
+</ul>
+<p>开发安全操作系统的步骤：</p>
+<ul>
+<li>建立安全模型</li>
+<li>进行系统设计</li>
+<li>可信度检查</li>
+<li>系统实现</li>
+</ul>
 <h2 id="安全机制">安全机制</h2>
 <p>操作系统安全的主要目标如下：</p>
 <ul>
@@ -2933,6 +3018,7 @@
             <li><a href="#最短完成时间优先stcf">最短完成时间优先（STCF）</a></li>
             <li><a href="#基于优先数的调度算法">基于优先数的调度算法</a></li>
             <li><a href="#时间片轮转法rr">时间片轮转法（RR）</a></li>
+            <li><a href="#高响应比优先算法hrrn">高响应比优先算法（HRRN）</a></li>
             <li><a href="#多级反馈队列mlfq">多级反馈队列（MLFQ）</a></li>
           </ol>
         </li>
@@ -2985,13 +3071,14 @@
             <li><a href="#获取并增加">获取并增加</a></li>
           </ol>
         </li>
+        <li><a href="#互斥锁vs自旋锁vssleep-wakeup锁">互斥锁vs自旋锁vsSleep-wakeup锁</a></li>
         <li><a href="#条件变量">条件变量</a></li>
         <li><a href="#信号量">信号量</a>
           <ol>
             <li><a href="#生产者-消费者模型">生产者-消费者模型</a></li>
             <li><a href="#信号量基本概念">信号量基本概念</a></li>
             <li><a href="#信号量解决生产者-消费者问题">信号量解决生产者-消费者问题</a></li>
-            <li><a href="#读者-写者模型">读者-写者模型</a></li>
+            <li><a href="#读者-写者模型与读写锁">读者-写者模型与读写锁</a></li>
             <li><a href="#理发师问题">理发师问题</a></li>
             <li><a href="#哲学家就餐问题">哲学家就餐问题</a></li>
           </ol>
@@ -3050,6 +3137,11 @@
             <li><a href="#磁盘调度">磁盘调度</a></li>
           </ol>
         </li>
+      </ol>
+    </li>
+    <li><a href="#系统调用">系统调用</a>
+      <ol>
+        <li><a href="#为什么引入系统调用system-call">为什么引入系统调用（system call）</a></li>
       </ol>
     </li>
     <li><a href="#分布式系统">分布式系统</a>
