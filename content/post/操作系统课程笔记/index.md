@@ -846,7 +846,7 @@ int sem_wait(sem_t *s){ // 即P()
 ```
 
 ```c
-int sem_post(sem_t *s){
+int sem_post(sem_t *s){ // 即V()
     s = s + 1;
     if(s<=0){
         // 从s的等待队列里唤醒一个进程
