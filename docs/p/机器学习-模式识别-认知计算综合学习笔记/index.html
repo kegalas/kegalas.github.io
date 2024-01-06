@@ -125,7 +125,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 131 分钟
+                    阅读时长: 153 分钟
                 </time>
             </div>
         
@@ -1380,6 +1380,10 @@ E = \dfrac{1}{2}\sum_{n=1}^N(y_n-t_n)^2
 <p><strong>最小错误率准则（最大后验概率准则）</strong></p>
 <p>于是，如果<span class="math inline">\(P(w_1|x)>P(w_2|x)\)</span>，那么判断为<span class="math inline">\(w_1\)</span>类，否则判断为<span class="math inline">\(w_2\)</span>类。（决策过程）</p>
 <p>此时，真实为<span class="math inline">\(w_2\)</span>却被判定为<span class="math inline">\(w_1\)</span>的概率误差就为<span class="math inline">\(P(w_1|x)\)</span>；真实为<span class="math inline">\(w_1\)</span>却被判定为<span class="math inline">\(w_2\)</span>的概率误差就为<span class="math inline">\(P(w_2|x)\)</span>。无论如何，概率误差为<span class="math inline">\(P(error|x)=\min[P(w_1|x),P(w_2|x)]\)</span></p>
+<p>写成连续形式，有平均错误率</p>
+<p><span class="math display">\[P(error) = \int ^\infty_{-\infty} p(error, x)dx = \int ^\infty_{-\infty} p(error|x)p(x)dx
+\]</span></p>
+<p>总而言之，基于最小错误率的准则会最小化上面的错误率。</p>
 <p>其决策过程有四个等价形式（以二分类为例）</p>
 <ol>
 <li><span class="math inline">\(w = \arg\max_{w_j} P(w_j|x)\)</span></li>
@@ -1456,35 +1460,177 @@ E = \dfrac{1}{2}\sum_{n=1}^N(y_n-t_n)^2
 <p><span class="math inline">\(D_{c,x_i}\)</span>指的是，<span class="math inline">\(D_c\)</span>中，在第<span class="math inline">\(i\)</span>个属性上取值为<span class="math inline">\(x_i\)</span>的样本组成的集合。</p>
 <p>对于连续属性，可以考虑概率密度函数，例如<span class="math inline">\(P(x_i|c)\sim N(\mu_{c,i},\sigma^2_{c,i})\)</span>，其中<span class="math inline">\(\mu_{c,i},\sigma^2_{c,i}\)</span>是第<span class="math inline">\(c\)</span>类样本在第<span class="math inline">\(i\)</span>个属性上取值的均值和方差。</p>
 <h3 id="贝叶斯线性回归">贝叶斯线性回归</h3>
-<p>TODO</p>
-<h3 id="贝叶斯逻辑回归">贝叶斯逻辑回归</h3>
-<p>TODO</p>
-<h3 id="贝叶斯网络">贝叶斯网络</h3>
-<p>贝叶斯网络是一个有向无环图。其中节点代表随机变量<span class="math inline">\(\{X_1,X_2,\cdots,X_n\}\)</span>。如果两个节点之间有因果关系，那么用一条有向边连接，起点是原因，终点是结果。</p>
-<p>这个因果关系由参数<span class="math inline">\(\theta\)</span>描述，所以贝叶斯网络可以表述为一个图<span class="math inline">\(G\)</span>和参数<span class="math inline">\(\theta\)</span>，即<span class="math inline">\(B=< G,\theta >\)</span>。假设属性<span class="math inline">\(x_i\)</span>在图中的父节点为<span class="math inline">\(\pi_i\)</span>（注意可以有多个父节点），则<span class="math inline">\(\theta_{x_i|\pi_i}=P_B(x_i|\pi_i)\)</span></p>
-<p>贝叶斯网假设每个属性与它的非后裔属性独立，于是有</p>
-<p><span class="math display">\[P_B(x_1,x_2,\cdots,x_d) = \prod^d_{i=1}P_B(x_i|\pi_i) = \prod^d_{i=1}\theta_{x_i|\pi_i}
-\]</span></p>
-<p>例如</p>
+<p><strong>最大似然函数和最小二乘法</strong></p>
 <p><figure 
 	
 		class="gallery-image" 
 		style="
-			flex-grow: 239; 
-			flex-basis: 575px"
+			flex-grow: 135; 
+			flex-basis: 326px"
 	>
-	<a href="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/11.jpg" data-size="1071x447">
-		<img src="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/11.jpg"
-			width="1071"
-			height="447"
-			srcset="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/11_huecd321dc78461b419f7ae3f26990f400_26395_480x0_resize_q75_box.jpg 480w, /p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/11_huecd321dc78461b419f7ae3f26990f400_26395_1024x0_resize_q75_box.jpg 1024w"
+	<a href="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/119.jpg" data-size="625x460">
+		<img src="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/119.jpg"
+			width="625"
+			height="460"
+			srcset="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/119_hu60b11fca7fe9a12509d5e3ced0c2d89f_14472_480x0_resize_q75_box.jpg 480w, /p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/119_hu60b11fca7fe9a12509d5e3ced0c2d89f_14472_1024x0_resize_q75_box.jpg 1024w"
 			loading="lazy"
-			alt="11.jpg">
+			alt="119.jpg">
 	</a>
 	
-	<figcaption>11.jpg</figcaption>
+	<figcaption>119.jpg</figcaption>
 	
 </figure></p>
+<p>我们通过通常的线性回归后得到红色的这条拟合线。可以看到，实际的数据点分布在这条线的周围，对于这种偏差，我们可以把它看做是一种噪声，一般是一种高斯分布的随机变量，可以把实际值记为</p>
+<p><span class="math display">\[t = y(x,w)+\epsilon
+\]</span></p>
+<p>其中<span class="math inline">\(y(x,w)=w^Tx\)</span>是拟合出来的线性模型，<span class="math inline">\(\epsilon\)</span>符合均值为<span class="math inline">\(0\)</span>的高斯分布，其精确度为<span class="math inline">\(\beta\)</span>。精确度即为方差的导数。显然，可以知道<span class="math inline">\(E(t)=E(y)=w^Tx, Var(t)=Var(\epsilon)=\sigma^2=\beta^{-1}\)</span>，我们可以记作</p>
+<p><span class="math display">\[p(t|x,w,\beta) = \mathcal{N}(t|y(x,w),\beta^{-1})
+\]</span></p>
+<p>接着我们就可以通过最大似然估计来求解<span class="math inline">\(w\)</span>，首先，对于样本量<span class="math inline">\(N\)</span>，似然函数为</p>
+<p><span class="math display">\[p(t|X,w,\beta) = \prod^N_{n=1} \mathcal{N}(t_n|y(x_n,w),\beta^{-1})
+\]</span></p>
+<p>取对数似然函数，有</p>
+<p><span class="math display">\[\ln p(t|w,\beta) = \sum^N_{n=1} \ln\mathcal{N}(t_n|y(x_n,w),\beta^{-1}) = \dfrac{N}{2}\ln\beta-\dfrac{N}{2}\ln(2\pi)-\beta E_D(w)
+\]</span></p>
+<p>其中</p>
+<p><span class="math display">\[E_D(w) = \dfrac{1}{2}\sum^N_{n=1}[t_n-y(x_n,w)]^2 = \dfrac{1}{2}\sum^N_{n=1}[t_n-w^T\phi(x_n)]^2
+\]</span></p>
+<p>其实就是个SSE，称为平方和的损失函数。</p>
+<p><strong>偏差和方差的分解</strong></p>
+<p>有了平方损失函数，最优预测就是下面的条件期望</p>
+<p><span class="math display">\[h(x) = E[t|x]=\int t\cdot p(t|x)dt
+\]</span></p>
+<p>可以进一步写成</p>
+<p><span class="math display">\[E[L] = \int[y(x)-h(x)]^2p(x)dx + \iint [h(x)-t]^2p(x,t)dxdt
+\]</span></p>
+<p>上式的第二部分，与<span class="math inline">\(y(x)\)</span>无关，是数据集固有的噪声，它代表了最小的可达到的期望误差。</p>
+<p>第一部分是我们优化的目标。如果有无数多样本，那我们可以以任意精度得到<span class="math inline">\(h(x)\)</span>，从而得到<span class="math inline">\(y(x)\)</span>的最优解。但是实践中我们只有有限数量的样本。如果我们在样本集<span class="math inline">\(D\)</span>中对第一项进行一些处理</p>
+<p><span class="math display">\[[y(x;D)-E_{D}[y(x;D)]+E_D[y(x;D)]-h(x)]^2
+\]</span></p>
+<p>展开得</p>
+<p><span class="math display">\[[y(x;D)-E_{D}[y(x;D)]]^2 + [E_{D}[y(x;D)]-y(x;D)]^2 + 2 [y(x;D)-E_{D}[y(x;D)]] [E_{D}[y(x;D)]-y(x;D)]
+\]</span></p>
+<p>那么有</p>
+<p><span class="math display">\[E_D[y(x;D)-h(x)]^2 = [E_D[y(x;D)]-h(x)]^2 + E_D[y(x;D)-E_D[y(x;D)]]^2
+\]</span></p>
+<p>其中第一项称为平方偏差<span class="math inline">\((bias)^2\)</span>，第二项称为方差variance。带回<span class="math inline">\(E(L)\)</span>时，有</p>
+<p><span class="math display">\[\text{expected loss} = (\text{bias})^2+\text{variance} +\text{noise}
+\]</span></p>
+<p><span class="math display">\[(\text{bias})^2 = \int[E_D[y(x;D)]-h(x)]^2 p(x)dx
+\]</span></p>
+<p><span class="math display">\[\text{variance}=\int E_D\bigg[[y(x;D)-E_D[y(x;D)]]^2\bigg] p(x)dx
+\]</span></p>
+<p><span class="math display">\[\text{noise} = \iint [h(x)-t]^2p(x,t)dxdt
+\]</span></p>
+<p>我们的⽬标是最⼩化期望损失，它可以分解为（平⽅）偏差、⽅差和⼀个常数噪声项的和。这里噪声是常数，所以只能调整前两个。我们通常只能二者选其一，要么偏差大方差小，要么方差大偏差小。</p>
+<p><strong>参数分布</strong></p>
+<p>假设噪声精度<span class="math inline">\(\beta\)</span>已知，那么</p>
+<p><span class="math display">\[p(t|w)=\prod ^N_{n=1}\mathcal{N}(t_n|w^T\phi(x_n),\beta^{-1})
+\]</span></p>
+<p>取共轭先验，有</p>
+<p><span class="math display">\[p(w) = \mathcal{N}(w|m_0, S_0)
+\]</span></p>
+<p>则后验为</p>
+<p><span class="math display">\[p(w|t) = \mathcal{N}(w|m_N, S_N)
+\]</span></p>
+<p>其中</p>
+<p><span class="math display">\[m_N = S_N(S^{-1}_0m_0+\beta \Phi^Tt)
+\]</span></p>
+<p><span class="math display">\[S^{-1}_N = S^{-1}_0+\beta\Phi^T\Phi
+\]</span></p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 351; 
+			flex-basis: 843px"
+	>
+	<a href="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/120.jpg" data-size="541x154">
+		<img src="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/120.jpg"
+			width="541"
+			height="154"
+			srcset="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/120_hu69decf8501148972685218732b850d26_8240_480x0_resize_q75_box.jpg 480w, /p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/120_hu69decf8501148972685218732b850d26_8240_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="120.jpg">
+	</a>
+	
+	<figcaption>120.jpg</figcaption>
+	
+</figure></p>
+<p>其中<span class="math inline">\(\phi\)</span>都是进行变换的基函数。</p>
+<p>最大后验概率的权重向量为<span class="math inline">\(w_{MAP}=m_N\)</span></p>
+<p>简单起见，考虑先验为</p>
+<p><span class="math display">\[p(w|\alpha) = \mathcal{N}(w|0, \alpha^{-1}I)
+\]</span></p>
+<p>则后验变为</p>
+<p><span class="math display">\[m_N = \beta S_N\Phi^Tt
+\]</span></p>
+<p><span class="math display">\[S^{-1}_N = \alpha I+\beta\Phi^T\Phi
+\]</span></p>
+<p>考虑当<span class="math inline">\(S_0=\alpha^{-1}I\)</span>中的<span class="math inline">\(\alpha\to 0\)</span>，此时，<span class="math inline">\(m_N\)</span>就是最大似然估计（MLP）的结果</p>
+<p>对后验概率求<span class="math inline">\(\log\)</span>有</p>
+<p><span class="math display">\[\ln p(w|t) = -\dfrac{\beta}{2}\sum^N_{n=1}[t_n-w^T\phi(x_n)]^2-\dfrac{\alpha}{2}w^Tw+const
+\]</span></p>
+<p>最大化这个后验概率局等价于最小化用<span class="math inline">\(\lambda=\alpha/\beta\)</span>正则化的平方和误差函数。</p>
+<p><strong>预测分布</strong></p>
+<p><span class="math display">\[p(t'|t,\alpha,\beta) = \int p(t'|w,\beta)p(w|t,\alpha,\beta)dw
+\]</span></p>
+<p><span class="math display">\[p(t'|x,t,\alpha,\beta) = \mathcal{N}(t|m_N^T\phi(x),\sigma^2_N(x))
+\]</span></p>
+<p><span class="math display">\[\sigma^2_{N} = \dfrac{1}{\beta}+\Phi(x)^TS_N\Phi(x)
+\]</span></p>
+<p><strong>我的评价</strong></p>
+<p>老师像在炫技一样做PPT，符号完全没有介绍，前后文不连贯。完全就是从PRML里面挑着东西复制粘贴到PPT上。</p>
+<h3 id="贝叶斯逻辑回归">贝叶斯逻辑回归</h3>
+<p>因为后验概率不再是高斯分布，那么我们就不能精确地对权重<span class="math inline">\(w\)</span>求积分。因此，有必要介绍一种近似方法，即拉普拉斯近似。它的目标是找到定义在一组连续变量上的概率密度的高斯近似。</p>
+<ol>
+<li>拉普拉斯近似是通过找到后验分布的众数（mode）来得到的，然后拟合以该众数为中心的高斯分布。</li>
+<li>这需要计算对数后验的二阶导数，也就等价于找海瑟矩阵</li>
+</ol>
+<p>首先考虑一个单一的连续变量<span class="math inline">\(z\)</span>，假设其分布为</p>
+<p><span class="math display">\[p(z) = \dfrac{1}{Z}f(z)
+\]</span></p>
+<p>其中<span class="math inline">\(Z=\int f(z)dz\)</span>，是归一化系数，但是其值未知。拉普拉斯方法的目的是找到一个高斯近似<span class="math inline">\(q(z)\)</span>，其中心位于<span class="math inline">\(p(z)\)</span>的众数上。</p>
+<p>第一步，找到<span class="math inline">\(p(z)\)</span>的众数，也就是找到<span class="math inline">\(z_0\)</span>使得<span class="math inline">\(p'(z_0)=0\)</span>，等价地，有</p>
+<p><span class="math display">\[\dfrac{df(z)}{dz}\bigg|_{z=z_0}=0
+\]</span></p>
+<p>将<span class="math inline">\(\ln f(z)\)</span>在<span class="math inline">\(z_0\)</span>处泰勒展开，有</p>
+<p><span class="math display">\[\ln f(z) \approx \ln f(z_0)-\dfrac{1}{2}A(z-z_0)^2
+\]</span></p>
+<p>其中</p>
+<p><span class="math display">\[A = -\dfrac{d^2}{dz^2}\ln f(z)\bigg |_{z=z_0}
+\]</span></p>
+<p>那么</p>
+<p><span class="math display">\[f(z)\approx f(z_0)\exp\bigg\{-\dfrac{A}{2}(z-z_0)^2\bigg\}
+\]</span></p>
+<p>之后，我们可以取一个归一化分布</p>
+<p><span class="math display">\[q(z) = \bigg(\dfrac{A}{2\pi}\bigg)^{1/2}\exp\bigg\{-\dfrac{A}{2}(z-z_0)^2\bigg\}
+\]</span></p>
+<p>注意，高斯近似只有在<span class="math inline">\(A>0\)</span>的时候才定义良好。此时驻点<span class="math inline">\(z_0\)</span>一定取得局部最大值，而这个点的二阶导数一定为负数。</p>
+<p>这之后，可以得到</p>
+<p><span class="math display">\[Z = \int f(z)dz \approx f(z_0)\int \exp\bigg\{-\dfrac{1}{2}A(z-z_0)^2\bigg\}dz
+\]</span></p>
+<p>即</p>
+<p><span class="math display">\[Z = f(z_0)\dfrac{(2\pi)^{1/2}}{|A|^{1/2}}
+\]</span></p>
+<p><strong>模型比较</strong></p>
+<p>设数据集<span class="math inline">\(D\)</span>，各种模型的集合<span class="math inline">\(\{M_i\}\)</span>，每个模型的参数为<span class="math inline">\(\theta_i\)</span>，对于每个模型都定义一个似然函数<span class="math inline">\(p(D|\theta_i, M_i)\)</span>。如果我们引入先验分布<span class="math inline">\(p(\theta_i|M_i)\)</span>，那么我们关注计算模型的证据<span class="math inline">\(p(D|M_i)\)</span></p>
+<p>有</p>
+<p><span class="math display">\[p(D) = \int p(D|\theta)p(\theta)d\theta
+\]</span></p>
+<p>令<span class="math inline">\(f(\theta)=p(D|\theta)p(\theta)\)</span>和<span class="math inline">\(Z=p(D)\)</span>，那么</p>
+<p><span class="math display">\[\ln p(D)\approx \ln p(D|\theta_{MAP})+\ln p(\theta_{MAP}) + \dfrac{M}{2}\ln(2\pi)-\dfrac{1}{2}\ln|A|
+\]</span></p>
+<p>其中，最后三项叫做Occam，其中</p>
+<p><span class="math display">\[A = -\nabla\nabla \ln p(D|\theta_{MAP})p(\theta_{MAP}) = -\nabla\nabla\ln p(\theta_{MAP}|D)
+\]</span></p>
+<p>如果假设高斯分布比较宽，而且海瑟矩阵是满秩的，那么可以非常粗略的近似</p>
+<p><span class="math display">\[\ln p(D)\approx \ln p(D|\theta_{MAP})-\dfrac{1}{2}M\ln N
+\]</span></p>
+<p>其中<span class="math inline">\(N\)</span>为数据集大小。这也被叫做Bayesian Information Criterion（BIC），贝叶斯信息准则。</p>
+<p>TODO，剩下一大坨，老师介绍了半天不知道有什么用。</p>
+<h3 id="贝叶斯网络">贝叶斯网络</h3>
+<p>见概率图模型。</p>
 <h3 id="正态分布下的统计决策">正态分布下的统计决策</h3>
 <p><strong>单变量正态分布</strong></p>
 <p><span class="math display">\[p(x) = \dfrac{1}{\sqrt{2\pi}\sigma}\exp\bigg\{-\dfrac{1}{2}\bigg(\dfrac{x-\mu}{\sigma}\bigg)^2\bigg\}
@@ -1517,6 +1663,14 @@ E = \dfrac{1}{2}\sum_{n=1}^N(y_n-t_n)^2
 	<figcaption>102.jpg</figcaption>
 	
 </figure></p>
+<p><strong>线性变换与正态分布</strong></p>
+<p>假设<span class="math inline">\(x\in R_d, A\in R_{d\times k}, y = A^Tx\in R_k\)</span>，如果有<span class="math inline">\(x\sim N(\mu,\sigma)\)</span>，那么有</p>
+<p><span class="math display">\[y\sim N(A^T\mu, A^T\Sigma A)
+\]</span></p>
+<p>特别的，有白化变换（whitening transform）</p>
+<p><span class="math display">\[A_w = \Phi\Lambda^{-1/2}
+\]</span></p>
+<p>其中<span class="math inline">\(\Phi\)</span>是一个矩阵，每一列都是<span class="math inline">\(\Sigma\)</span>的正交特征向量，<span class="math inline">\(\Lambda\)</span>是对角阵，元素为对应的特征值。这个白化变换，给出了一个等于单位矩阵的协方差矩阵。</p>
 <p><strong>马氏距离（的平方）</strong></p>
 <p><span class="math display">\[\gamma^2 = (x-\mu)^T\Sigma^{-1}(x-\mu) = \sum^n_{i=1}\sum^n_{j=1}p_{ij}(x_i-\mu_i)(x_j-\mu_j)\geq 0
 \]</span></p>
@@ -1543,6 +1697,7 @@ E = \dfrac{1}{2}\sum_{n=1}^N(y_n-t_n)^2
 \]</span></p>
 <p>直观来说，如果<span class="math inline">\(P(w_i)=P(w_j)\)</span>，则<span class="math inline">\(x_0\)</span>位于两中心的终点。否则更靠近先验概率小的方向。</p>
 <p>在先验概率相等的情况下，最优判决的规则为：为将某特征向量<span class="math inline">\(x\)</span>归类，通过测量<span class="math inline">\(x\)</span>到<span class="math inline">\(c\)</span>个均值向量中心的欧氏距离，并将<span class="math inline">\(x\)</span>归为离它最近的那一类。这样的分类器称为“<strong>最小距离分类器</strong>”。</p>
+<p>形式化的说，所有<span class="math inline">\(P(w_i)\)</span>都相等，那么<span class="math inline">\(w = \arg\min_{w_i}||x-\mu_i||\)</span></p>
 <p><figure 
 	
 		class="gallery-image" 
@@ -1641,10 +1796,101 @@ E = \dfrac{1}{2}\sum_{n=1}^N(y_n-t_n)^2
 <p>可以写为</p>
 <p><span class="math display">\[g_i(x) = x^Tw_{i2}x+w_{i1}^Tx+w_{i0}
 \]</span></p>
+<p>其中</p>
+<p><span class="math display">\[w_{i2} = -\dfrac{1}{2}\Sigma_i^{-1}
+\]</span></p>
+<p><span class="math display">\[w_{i1} = \Sigma_i^{-1}\mu_i
+\]</span></p>
+<p><span class="math display">\[w_{i0} = -\dfrac{1}{2}\mu_i^T\Sigma_i^{-1}\mu_i - \ln|\Sigma_i| + \ln P(w_i)
+\]</span></p>
 <p>这样的二次型形式。决策面<span class="math inline">\(g_i(x)=g_j(x)\)</span>为</p>
 <p><span class="math display">\[x^T(W_i-W_j)x+(w_i-w_j)^Tx+w_{i0}-w_{j0}=0
 \]</span></p>
 <p>由上式所决定的决策面为超二次曲面随着参数的不同而呈现为某种超二次曲面，即超球面、超椭球面、超抛物面、超双曲面或超平面。</p>
+<p><strong>错误率</strong></p>
+<p>对于两类，假设<span class="math inline">\(w_1\)</span>的决策空间为<span class="math inline">\(R_1\)</span>，<span class="math inline">\(w_2\)</span>的的决策空间为<span class="math inline">\(R_2\)</span>，那么两分类的错误率为</p>
+<p><span class="math display">\[P(error) = P(x\in R_2, w_1)+P(x\in R_1, w_2) = P(x\in R_2|w_1)P(w_1)+P(x\in R_1| w_2)P(w_2)
+\]</span></p>
+<p>写作积分，则为</p>
+<p><span class="math display">\[P(error) = \int_{R_2}p(x|w_1)P(w_1)dx + \int_{R_1}p(x|w_2)P(w_2)dx
+\]</span></p>
+<p>对于多类，则有</p>
+<p><span class="math display">\[P(error) = 1-P(correct) = 1-\sum^C_{i=1}P(x\in R_{i}, w_i) = 1-\sum^C_{i=1}P(x\in R_{i}|w_i) P(w_i)
+\]</span></p>
+<p>写成积分为</p>
+<p><span class="math display">\[P(error) = 1-\sum^C_{i=1}\int _{R_i} p(x|w_i)P(w_i)dx
+\]</span></p>
+<p><strong>受试者工作特征曲线（ROC，Receiver Operating Characteristics）</strong></p>
+<p>这是一种经常与二分类一起使用的工具，假设<span class="math inline">\(C_1\)</span>类是正类，<span class="math inline">\(C_2\)</span>类是负类，那么有混淆矩阵如下</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 286; 
+			flex-basis: 687px"
+	>
+	<a href="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/121.jpg" data-size="851x297">
+		<img src="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/121.jpg"
+			width="851"
+			height="297"
+			srcset="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/121_hua3beeb7346114e181ad90ec7ff83c7d9_18974_480x0_resize_q75_box.jpg 480w, /p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/121_hua3beeb7346114e181ad90ec7ff83c7d9_18974_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="121.jpg">
+	</a>
+	
+	<figcaption>121.jpg</figcaption>
+	
+</figure></p>
+<p>其中mis-detection也叫做假阴性或者第二类错误，false alarm也叫做假阳性或者第一类错误。</p>
+<p>如果以correct detection占总的比例作为纵轴，false alarm作为横轴，绘制的曲线就叫ROC。一个模型不同超参数的ROC曲线如下</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 97; 
+			flex-basis: 234px"
+	>
+	<a href="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/122.jpg" data-size="626x640">
+		<img src="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/122.jpg"
+			width="626"
+			height="640"
+			srcset="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/122_huf01d9186c4fbd9b82d86b9621d68e9a8_16429_480x0_resize_q75_box.jpg 480w, /p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/122_huf01d9186c4fbd9b82d86b9621d68e9a8_16429_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="122.jpg">
+	</a>
+	
+	<figcaption>122.jpg</figcaption>
+	
+</figure></p>
+<p>越左上角越好。</p>
+<h3 id="生成式模型和判别式模型">生成式模型和判别式模型</h3>
+<p>有三种办法来解决决策的问题</p>
+<ul>
+<li>显式或隐式地对输入和输出的分布建模，称为生成式模型</li>
+<li>对后验概率直接建模的方式称为判别式模型</li>
+<li>直接找到一个判别函数，这之中概率没有发挥作用。</li>
+</ul>
+<p><strong>构造生成式模型</strong></p>
+<ul>
+<li>对类条件概率<span class="math inline">\(p(x|w_i)\)</span>建模</li>
+<li>对类概率<span class="math inline">\(p(w_i)\)</span>建模</li>
+<li>通过贝叶斯公式计算后验概率<span class="math inline">\(p(w_i|x)\)</span></li>
+</ul>
+<p>对于二分类有</p>
+<p><span class="math display">\[p(w_1|x) = \dfrac{p(x|w_1)p(w_1)}{p(x|w_1)p(w_1)+p(x|w_2)p(w_2)} = \dfrac{1}{1+\exp(-a)} = \sigma(a)
+\]</span></p>
+<p>其中</p>
+<p><span class="math display">\[a = \ln\dfrac{p(x|w_1)p(w_1)}{p(x|w_2)p(w_2)}
+\]</span></p>
+<p>对于多分类有</p>
+<p><span class="math display">\[p(w_k|x) = \dfrac{p(x|w_k)p(w_k)}{\sum_jp(x|w_j)p(w_j)} = \dfrac{\exp(-a_k)}{\sum_j\exp(-a_j)}
+\]</span></p>
+<p>这也叫做softmax函数，其中</p>
+<p><span class="math display">\[a_k = \ln p(x|w_k)p(w_k)
+\]</span></p>
+<p><strong>构造判别式式模型</strong></p>
+<p>直接最大化由<span class="math inline">\(p(w_i|x)\)</span>定义的似然函数</p>
+<p>优点是，通常将有更少的自适应参数要确定。它还可能提高预测性能，特别是当类条件密度假设对真实分布的近似度较差时。</p>
 <h3 id="贝叶斯vs其他判别">贝叶斯vs其他判别</h3>
 <p>我们的贝叶斯理论都基于后验概率，所以要先知道先验概率和类条件概率。实际情况下并不一定知道类条件概率，如果样本充足，则可以用估计的办法估计类条件概率。有时候样本不够多，样本维数又比较高，此时估计就会不准确。更适合采用别的方法，例如线性判别。</p>
 <p>线性判别直接假设判别函数，用样本来估计判别函数的参数，而免去估计类条件概率。非贝叶斯的算法基本上都采用这种方式。判别函数最简单的形式是线性函数，决策面是超平面，此时也叫做线性判别。其包含参数<span class="math inline">\(w,w_0\)</span></p>
@@ -2543,6 +2789,32 @@ E = \dfrac{1}{2}\sum_{n=1}^N(y_n-t_n)^2
 <li>最近重构性（Recent reconfigurability）：样本点到这个超平面的距离都足够近。</li>
 <li>最大可分性（Maximum separability）：样本点在这个超平面上的投影能尽可能分开。</li>
 </ul>
+<p>在这个超平面子空间（<span class="math inline">\(d'\)</span>维）中，目标是使得<span class="math inline">\(x_1,\cdots,x_n\in R_d\)</span>的重构误差最小。重构误差的判决函数在最小二乘意义上如下</p>
+<p><span class="math display">\[J_{d'} = \sum^n_{i=1}\bigg|\bigg|\sum^{d'}_{k=1}y_{ik}e_k-x_i\bigg|\bigg|^2
+\]</span></p>
+<p>其中<span class="math inline">\(e_1,\cdots,e_{d'}\)</span>是子空间的基（是吗？写的有问题吧，明明<span class="math inline">\(e\)</span>的维度是<span class="math inline">\(d\)</span>），也就是投影矩阵<span class="math inline">\(A\)</span>的列向量，<span class="math inline">\(y_i = A^Tx_i\)</span></p>
+<p>最小化重构误差（老师的PPT一坨史，前后文有关系吗？）：</p>
+<p><span class="math display">\[J = \dfrac{1}{N}\sum^N_{n=1} ||x_n-\tilde{x}_n||^2
+\]</span></p>
+<p>设<span class="math inline">\(\{u_i\},i=1,\cdots,D\)</span>是原空间的正交基向量，而<span class="math inline">\(u_i^Tu_j=\delta_{ij}\)</span>。然后这个量再也没有用过，老师可能缝合了六七个PPT，变量乱窜，前文没有后文，后文没有前文，我决定不学，改为学周志华的《机器学习》。</p>
+<p>假设数据样本进行了中心化，即<span class="math inline">\(\sum_i x_i=0\)</span>。投影变换后得到的心坐标系为<span class="math inline">\(\{w_1,w_2,\cdots,w_{d'}\}\)</span>，其中<span class="math inline">\(w_i\)</span>是标准正交基向量，<span class="math inline">\(||w_i||_2=1\)</span>。此时，样本点<span class="math inline">\(x_i\)</span>在低维坐标中的投影是<span class="math inline">\(z_i=(z_{i1},z_{i2},\cdots,z_{id'})\)</span>，其中<span class="math inline">\(z_{ij} = w_j^Tx_i\)</span>（或者说，<span class="math inline">\(z_i=W^Tx_i\)</span>）。如果基于<span class="math inline">\(z_i\)</span>来重构<span class="math inline">\(x_i\)</span>，则有<span class="math inline">\(\hat x_i = \sum^{d'}_{j=1}z_{ij}w_j\)</span>。</p>
+<p>考虑整个训练集，原样本点<span class="math inline">\(x_i\)</span>与机遇投影重构的样本点<span class="math inline">\(\hat x_i\)</span>之间的距离为</p>
+<p><span class="math display">\[\sum^m_{i=1}\bigg|\bigg|\sum^{d'}_{j=1}z_{ij}w_j-x_i\bigg|\bigg|^2 = -tr\bigg(W^T\bigg(\sum^m_{i=1}x_ix_i^T\bigg)W\bigg)
+\]</span></p>
+<p>基于最近重构性，上式应该被最小化，</p>
+<p><span class="math display">\[\begin{align*}
+ \min_W\quad & -tr(W^TXX^TW)\\
+ s.t.\quad & W^TW=I
+\end{align*}
+\]</span></p>
+<p>这就是主成分分析的优化目标。即最小化重构误差。</p>
+<p>主成分分析还有另一种解释，即最大化方差，方差为<span class="math inline">\(\sum_iW^Tx_ix_i^TW\)</span>，于是优化目标变为</p>
+<p><span class="math display">\[\begin{align*}
+ \max_W\quad & tr(W^TXX^TW)\\
+ s.t.\quad & W^TW=I
+\end{align*}
+\]</span></p>
+<p>易见二者是等价的。</p>
 <p>算法流程如下，设样本集是<span class="math inline">\(D=\{x_1,x_2,\cdots,x_m\}\)</span>，要将他降维至<span class="math inline">\(d'\)</span>维。</p>
 <ol>
 <li>对所有样本进行中心化：<span class="math inline">\(x_i\rightarrow x_i-\dfrac{1}{m}\sum^m_{i=1}x_i\)</span>，即最后使得<span class="math inline">\(\sum_i x_i=0\)</span></li>
@@ -2551,12 +2823,39 @@ E = \dfrac{1}{2}\sum_{n=1}^N(y_n-t_n)^2
 <li>取<span class="math inline">\(V^T\)</span>中的前<span class="math inline">\(d'\)</span>个列向量<span class="math inline">\(w_1,w_2,\cdots,w_{d'}\)</span></li>
 <li>输出<span class="math inline">\(W=[w_1,w_2,\cdots,w_{d'}]\)</span></li>
 </ol>
-<p>此时，样本点<span class="math inline">\(x_i\)</span>在低维坐标中的投影是<span class="math inline">\(z_i=(z_{i1},z_{i2},\cdots,z_{id'})\)</span>，其中<span class="math inline">\(z_{ij} = w_j^Tx_i\)</span>（或者说，<span class="math inline">\(z_i=W^Tx_i\)</span>）。如果基于<span class="math inline">\(z_i\)</span>来重构<span class="math inline">\(x_i\)</span>，则有<span class="math inline">\(\hat x_i = \sum^{d'}_{j=1}z_{ij}w_j\)</span>。</p>
+<p>此时，样本点<span class="math inline">\(x_i\)</span>在低维坐标中的投影是<span class="math inline">\(z_i=(z_{i1},z_{i2},\cdots,z_{id'})\)</span>，其中<span class="math inline">\(z_{ij} = w_j^Tx_i\)</span>（或者说，<span class="math inline">\(z_i=W^Tx_i\)</span>）。</p>
 <p>至于如何选择<span class="math inline">\(d'\)</span>，则可以使用交叉验证，使用KNN验证不同的<span class="math inline">\(d'\)</span>的效果。</p>
 <p>对PCA，还可从重构的角度设置一个重构阈值，例如<span class="math inline">\(t = 95\%\)</span>，然后选取使下式成立的最小<span class="math inline">\(d'\)</span>值：</p>
 <p><span class="math display">\[\dfrac{\sum^{d'}_{i=1}\lambda_i}{\sum^{d}_{i=1}\lambda_i}\geq t
 \]</span></p>
 <p>其中<span class="math inline">\(\lambda_i\)</span>是特征值，并且特征值从大到小排序。</p>
+<p><strong>概率的PCA</strong></p>
+<p>目标是使用隐变量<span class="math inline">\(z_i\in R_{d'}\)</span>下表示每个<span class="math inline">\(x_i\)</span>，假设隐变量的分布为</p>
+<p><span class="math display">\[p(z) = N(z|0,I)
+\]</span></p>
+<p>通过投影，生成相应的数据点</p>
+<p><span class="math display">\[p(x|z) = N(x|Wz+\mu, \sigma^2I)
+\]</span></p>
+<p>其中<span class="math inline">\(W\in R_{d\times d'}\)</span>称为主轴，于是，从生成的角度来看，概率PCA模型就是</p>
+<p><span class="math display">\[x = Wz+\mu+\epsilon
+\]</span></p>
+<p>假设我们要用最大似然函数来获取这些参数，那么</p>
+<p><span class="math display">\[p(x) = \int p(x|z)p(z)dz = N(x|\mu, C)
+\]</span></p>
+<p>其中协方差矩阵<span class="math inline">\(C\in R_{d\times d}\)</span>为</p>
+<p><span class="math display">\[C = WW^T+\sigma^2I
+\]</span></p>
+<p>其逆矩阵为</p>
+<p><span class="math display">\[C^{-1} = \sigma^{-2}I - \sigma^{-2}WM^{-1}W^T
+\]</span></p>
+<p>其中</p>
+<p><span class="math display">\[M = W^TW+\sigma^2I\in R_{d'\times d'}
+\]</span></p>
+<p>于是后验概率为</p>
+<p><span class="math display">\[p(z|x) = N(z|M^{-1}W^T(x-\mu), \sigma^{-2}M)
+\]</span></p>
+<p><strong>核PCA</strong></p>
+<p>即在非线性空间中使用的PCA。</p>
 <h3 id="独立成分分析independent-component-analysisica">独立成分分析（Independent Component Analysis(ICA)）</h3>
 <p>ICA是一种统计学原理的计算方法，是一种线性变换。这个变幻把数据或信号分为统计学意义上独立的非高斯源的线性组合。其最重要的假设是，假设信号在统计学意义上是独立的。</p>
 <p>经典问题是鸡尾酒会问题（cocktail party problem）。</p>
@@ -2914,43 +3213,8 @@ network）组成。</p>
 </figure></p>
 <p><strong>XGBoost</strong></p>
 <p>一种对多个回归树进行集成的方法，构造出的多个回归树通过优化使得树群的预测值尽可能接近真实值且具有泛化能力</p>
-<h3 id="分类器组合评价">分类器组合评价</h3>
-<p><strong>泛化误差</strong></p>
-<p>假设<span class="math inline">\(E(s)\)</span>表示在数据集<span class="math inline">\(s\)</span>上的组合分类结果，那么<span class="math inline">\(E(s)\)</span>的泛化误差则是根据带类标的样本空间分布对任意数量选定样本的误分类概率。</p>
-<p>可以用之后提到的holdout、bootstrapping、k-fold估计泛化误差。</p>
-<p><strong>计算复杂度</strong></p>
-<p>包括产生一个新的分类器的计算复杂度、更新一个分类器的计算复杂度、将一个新样本进行分类的计算复杂度。</p>
-<p>总体复杂度可以看作是这三种度量方式的总和，特别是当数据集数量较大时，更应当考虑到产生某一新的分类器的损耗。</p>
-<p><strong>其他评价标准</strong></p>
-<p>鲁棒性、稳定性、可解释性、大规模数据的可测量性。</p>
 <h3 id="非监督集成学习">非监督集成学习</h3>
 <p>非监督集成(Unsupervised ensemble)也称聚类集成，被认为在许多方面都能超越单个聚类算法，如：鲁棒性，稳定性和一致性估计以及并行性和可量测性</p>
-<h2 id="分类器准确率评估">分类器准确率评估</h2>
-<h3 id="保留法holdout">保留法（holdout）</h3>
-<p>即划分为两个独立的数据集：训练集、测试集。</p>
-<p><figure 
-	
-		class="gallery-image" 
-		style="
-			flex-grow: 412; 
-			flex-basis: 988px"
-	>
-	<a href="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/98.jpg" data-size="618x150">
-		<img src="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/98.jpg"
-			width="618"
-			height="150"
-			srcset="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/98_hu83eee879ef06d500e0f7fb512ba03479_11297_480x0_resize_q75_box.jpg 480w, /p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/98_hu83eee879ef06d500e0f7fb512ba03479_11297_1024x0_resize_q75_box.jpg 1024w"
-			loading="lazy"
-			alt="98.jpg">
-	</a>
-	
-	<figcaption>98.jpg</figcaption>
-	
-</figure></p>
-<h3 id="k-fold">K-fold</h3>
-<p>将数据分为<span class="math inline">\(k\)</span>个子集。每次训练时，用<span class="math inline">\(k-1\)</span>个子集做训练集，剩下1个子集做测试集，然后<span class="math inline">\(k\)</span>次交叉验证求平均。</p>
-<h3 id="留一法">留一法</h3>
-<p>即K-fold中，每个子集的大小都为<span class="math inline">\(1\)</span>。</p>
 <h1 id="特征选择">特征选择</h1>
 <h2 id="基本概念">基本概念</h2>
 <p>对分类器设计来说，使用什么样的特征描述事物，也就是说使用什么样的特征空间是个很重要的问题。</p>
@@ -2978,6 +3242,7 @@ network）组成。</p>
 	<figcaption>88.jpg</figcaption>
 	
 </figure></p>
+<p>这些特征中对于训练有帮助的叫做相关特征（relevant features），无帮助的叫做无关特征。</p>
 <p><strong>三大类特征</strong></p>
 <p>三大类特征：物理、结构和数字的</p>
 <ul>
@@ -3132,6 +3397,9 @@ network）组成。</p>
 <p>熵函数期望表征类别的分离程度：</p>
 <p><span class="math display">\[J(\cdot)=E\{J_c[P(w_1|x),\cdots,P(w_c|x)]\}
 \]</span></p>
+<h2 id="子集评估机器学习课程">子集评估（机器学习课程）</h2>
+<h3 id="信息增益">信息增益</h3>
+<p>和决策树中的信息增益一样。不再介绍。</p>
 <h2 id="特征子集的搜索策略">特征子集的搜索策略</h2>
 <p><figure 
 	
@@ -3152,10 +3420,16 @@ network）组成。</p>
 	<figcaption>112.png</figcaption>
 	
 </figure></p>
+<h3 id="穷举搜索exhaustive-search">穷举搜索（exhaustive search）</h3>
+<p>即完全搜索所有特征子集。</p>
+<h3 id="分支定界法">分支定界法</h3>
+<p>比穷举好一点，只有所有子集的一部分需要被枚举。说人话就是剪枝。</p>
 <h3 id="单独最优特征组合">单独最优特征组合</h3>
+<p>机器学习中叫（best individual feature）</p>
 <p>计算各特征单独使用时的可分性判据<span class="math inline">\(J\)</span>并加以排序，取前<span class="math inline">\(d\)</span>个作为选择结果。</p>
 <p>问题是组合起来不一定是最优结果，只有当可分性判据对各特征具有（广义）可加性时，才可以选出一组最优特征。例如：各类具有正态分布；各特征统计独立；可分性判据基于Mahalanobis距离</p>
 <h3 id="顺序前进法sfs">顺序前进法（SFS）</h3>
+<p>（机器学习课程中也叫sequencial subset search，序列子集搜索）</p>
 <p>自下而上</p>
 <p>每次从未入选的特征中选择一个特征，使得它与已入选的特征组合在一起时所得的可分性或分类识别率为最大，直到加入的特征数达到<span class="math inline">\(d\)</span></p>
 <p>优点是考虑了所选特征与已入选特征之间的相关性。比单独最优特征组合效果好。</p>
@@ -3169,10 +3443,14 @@ network）组成。</p>
 <p>特点是，计算过程中可以估计每次去掉一个特征所造成的可分性的降低。计算量比前进法大。同样的，一旦被删除就无法再加入。</p>
 <p>也有广义顺序后退法。</p>
 <h3 id="增l减r法">增l减r法</h3>
+<p>（机器学习课程中也叫bidirectional search，双向搜索）</p>
 <p>为了避免一加入就无法剔除，一剔除就无法加入的问题。引入局部回溯手段。</p>
 <p>在第<span class="math inline">\(k\)</span>步先用SFS一个个加入特征到<span class="math inline">\(k+l\)</span>个，再用SBS一个个剔除<span class="math inline">\(r\)</span>个特征。反复进行直到满足<span class="math inline">\(d\)</span>个特征。此时<span class="math inline">\(l>r\)</span>，自下而上，起始时有<span class="math inline">\(0\)</span>个特征。</p>
 <p>如果<span class="math inline">\(l< r\)</span>，则要先剔除，再增加。自上而下，起始时有<span class="math inline">\(D\)</span>个特征。</p>
 <p>也有其推广。即把上面每一步的SFS和SBS换成GSFS和GSBS。</p>
+<h3 id="顺序前进浮动和顺序后退浮动">顺序前进浮动和顺序后退浮动</h3>
+<p>Sequencial forward floating search（SFFS），Sequencial backward floating search（SBFS），</p>
+<p>是增l减r法的一个推广，其中<span class="math inline">\(l\)</span>和<span class="math inline">\(r\)</span>的值在算法过程中是自动动态更新的。</p>
 <h3 id="遗传算法">遗传算法</h3>
 <p>从生物进化论得到启迪。遗传，变异，自然选择。基于该思想发展了遗传优化算法。</p>
 <ul>
@@ -3201,6 +3479,848 @@ network）组成。</p>
 <li>计算个体的累积概率以构造一个轮盘</li>
 <li>轮盘选择：产生一个<span class="math inline">\([0,1]\)</span>区间内的随机数，若该随机数小于或等于个体<span class="math inline">\(a\)</span>的累积概率且大于个体<span class="math inline">\(b\)</span>的累积概率，选择个体<span class="math inline">\(a\)</span>进入子代种群。重复步骤(4)多次次，得到的个体构成新一代种群。</li>
 </ol>
+<h2 id="特征选择算法机器学习课程">特征选择算法（机器学习课程）</h2>
+<p>通过结合子集搜索和子集评估的算法，我们可以构建特征选择的算法。</p>
+<p>这些算法显式或隐式地组合了一个或数个子集搜索和子集评估，分为Filter方法和Wrapper方法</p>
+<h3 id="filter">Filter</h3>
+<p>这个方法中，特征选择是在训练学习器之前。也就是说，特征选择与训练过程无关。</p>
+<p>其使用Relief来设计了一种相关性的统计数据（relevant statistics），来测量特征的重要性。这个统计数据是一个向量，每个元素对应一个特征。</p>
+<p>每个特征子集的重要性，都由这个统计数据的元素和所测量。所以我们可以使用一个阈值<span class="math inline">\(\tau\)</span>去选择统计数据高于<span class="math inline">\(\tau\)</span>的特征。或者给定<span class="math inline">\(k\)</span>个特征，选择<span class="math inline">\(k\)</span>个统计数据最大的特征。</p>
+<p>对于任意一个特征<span class="math inline">\(x_i\)</span>，找到与它同类型的最近邻居<span class="math inline">\(x_{i,nh}\)</span>，叫他near-hit。然后找到与它不同类型的最近邻居<span class="math inline">\(x_{i,nm}\)</span>，叫他near-miss</p>
+<p>那么这个相关统计数据，对于特征<span class="math inline">\(j\)</span>来说，就是</p>
+<p><span class="math display">\[\delta^j = \sum_i-diff(x^j_i, x^j_{i,nh})^2 + diff(x^j_{i}, x^j_{i,nm})^2
+\]</span></p>
+<p>如果这个样本，和near-hit的距离比和near-miss的距离短，那么他是有用的特征。否则，它甚至有副作用。</p>
+<h3 id="wrapper">Wrapper</h3>
+<p>与filter不同，wrapper使用学习器的表现来度量子集。如果从提升学习器的表现的角度来看，wrapper是更好的方法。</p>
+<p>但是，因为要反复对学习器进行训练，所以wrapper方法的时间开销要大得多。</p>
+<p><strong>Las Vegas Wrapper</strong></p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 95; 
+			flex-basis: 229px"
+	>
+	<a href="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/123.jpg" data-size="766x800">
+		<img src="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/123.jpg"
+			width="766"
+			height="800"
+			srcset="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/123_hu3a4cc5314ecdbb4bb2e577f060074198_42415_480x0_resize_q75_box.jpg 480w, /p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/123_hu3a4cc5314ecdbb4bb2e577f060074198_42415_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="123.jpg">
+	</a>
+	
+	<figcaption>123.jpg</figcaption>
+	
+</figure></p>
+<p>一句话：反复选择特征子集，使得交叉验证误差最小。交叉验证误差一样时，选择维数更低的子集。</p>
+<h2 id="稀疏表示sparse-representation机器学习课程">稀疏表示（sparse representation，机器学习课程）</h2>
+<h3 id="嵌入l1正则化项">嵌入L1正则化项</h3>
+<p>在filters和wrappers中，特征选择都是在训练过程之外的。</p>
+<p>而嵌入特征选择，将特征选择和模型训练整合成了一个，并且在同一个数值最优化过程中进行这两个环节。也就是训练的过程中，自动地进行特征选择。</p>
+<p>线性回归中正则化长这样</p>
+<p><span class="math display">\[J(w) = \sum(y^{(i)}-y(x^{(i)},w))^2+\lambda ||w||^2_2
+\]</span></p>
+<p>我们把<span class="math inline">\(\ell_2\)</span>换成<span class="math inline">\(\ell_1\)</span>（即欧拉距离换成曼哈顿距离），得到LASSO</p>
+<p><span class="math display">\[J(w) = \sum(y^{(i)}-y(x^{(i)},w))^2+\lambda ||w||_1
+\]</span></p>
+<p>特点是倾向于得到一个更稀疏（sparse）的解，例如<span class="math inline">\(w\)</span>中的非零项将减少。通常也是由梯度下降来优化的。</p>
+<p>假设有<span class="math inline">\(m\)</span>个样本，那么最简单的字典学习是</p>
+<p><span class="math display">\[\min_{B,\alpha_i}\sum^m_{i=1}||x_i-B\alpha_i||_2^2 + \lambda\sum^m_{i=1}||\alpha_i||_1
+\]</span></p>
+<p>其中<span class="math inline">\(B\in R_{d\times k}\)</span>是字典矩阵，<span class="math inline">\(\alpha_i\in R_k\)</span>是对应的<span class="math inline">\(x_i\in R_d\)</span>的稀疏表示。上式的第一项使得这个构造更好，而第二项约束<span class="math inline">\(\alpha_i\)</span>，使得模型足够稀疏。</p>
+<h3 id="字典学习">字典学习</h3>
+<p>把数据集<span class="math inline">\(D\)</span>当作矩阵，每一行是一个样本，每一列则是一种特征。</p>
+<p>特征选择中，特征被认为是稀疏的。例如，很多列对于学习任务是没有关联的。</p>
+<p>我们考虑另一种稀疏：<span class="math inline">\(D\)</span>的矩阵中有很多的零，但是这些零并不有规律地分布在一列列或者一行行中。</p>
+<p>我们需要找到一个恰当的字典，使这些样本被变换到某些稀疏表示上，从而使得学习过程简化。</p>
+<h1 id="降维和度量学习机器学习课程">降维和度量学习（机器学习课程）</h1>
+<p>在实践上，有些时候，添加新的特征可能不会改善表现，甚至更差。这也称为维度的诅咒（curse of dimensionality）。</p>
+<p>增加特征数量，可能导致：</p>
+<ul>
+<li>分类正确率下降</li>
+<li>分类器的复杂度上升</li>
+</ul>
+<p>分类正确率的下降可能是因为：</p>
+<ul>
+<li>对于模型选择的错误假设</li>
+<li>过拟合</li>
+</ul>
+<p>潜在的解决方法：</p>
+<ul>
+<li>减少维度</li>
+<li>简化对于误差的估计</li>
+</ul>
+<p>维度可以通过以下办法降低：</p>
+<ul>
+<li>重新设计（要选取什么）特征</li>
+<li>选取目前所有特征的一个子集</li>
+<li>把一些特征组合起来</li>
+</ul>
+<p>误差估计可以通过以下方法简化：</p>
+<ul>
+<li>假设所有类的协方差相同</li>
+<li>用正则化</li>
+<li>使用先验知识和贝叶斯估计</li>
+<li>使用启发式方法，例如条件独立</li>
+</ul>
+<p>常见的分类器都会遭受维度诅咒的影响，在实践上，一般使用的每一类的样本数量要是特征数的十倍以上。</p>
+<h2 id="降维">降维</h2>
+<p>降维即是之前提到的，把一些特征组合起来的方法。</p>
+<p>降维需要关注：</p>
+<ul>
+<li>线性和非线性变换的选择</li>
+<li>是否使用类标记信息（这也取决于样本是否有标记）</li>
+<li>训练目标
+<ul>
+<li>最小化分类误差（判别训练，discriminative training）</li>
+<li>最小化重建误差（reconstruction error）（PCA）</li>
+<li>最大化类型分离度（LDA）</li>
+<li>保留interesting方向（投影追踪法）</li>
+<li>使特征尽可能独立（ICA）</li>
+<li>嵌入到低维流形（Isomap，LLE）</li>
+</ul>
+</li>
+</ul>
+<h3 id="线性组合">线性组合</h3>
+<p>线性组合计算和分析都较为简单。</p>
+<p>线性组合方法就是把高维特征投影到低维空间上。</p>
+<p>优点：</p>
+<ul>
+<li>简化了估计和分类的复杂性</li>
+<li>方便可视化检查效果，尤其是投影到二维和三维的时候</li>
+</ul>
+<p>形式化地来说，有原始特征<span class="math inline">\(x\in R_d\)</span>，目标就是找到线性变换<span class="math inline">\(A\)</span>使得<span class="math inline">\(y=A^Tx\in R_{d'}\)</span>，其中<span class="math inline">\(d' < d\)</span></p>
+<p>这有两种方法：主成分分析（PCA）和线性判别分析（LDA）。两种方法的目标都是找到最优的线性变换。PCA是找到一个投影，使得其能在最小二乘意义上最好地表达数据。LDA是找到一个投影，使得其能够在最小二乘意义上最好地分离数据。</p>
+<p><strong>PCA</strong></p>
+<p>见前无监督学习部分。</p>
+<p><strong>自动编码器神经网络</strong></p>
+<p>啥也没讲</p>
+<p><strong>线性判别分析</strong></p>
+<p>见fisher线性判别分析</p>
+<h3 id="流形学习">流形学习</h3>
+<p><strong>等度量映射（Isometric Mapping，Isomap）</strong></p>
+<p>其认为，低维流形在嵌入高维空间之后，直接在高维空间中计算直线距离具有误导性，因为高维空间中的直线距离对于低维流形上是不可达的。就像圆柱体上的蚂蚁，两点间的距离是直线距离，而蚂蚁走的距离叫做“测地线”（geodesic）距离。</p>
+<p>如何计算测地线距离？流形在局部上与欧式空间同胚，所以可以找近邻点建图。图中的近邻点之间有边，非近邻点之间没有边。边权为高维空间直线距离。于是两点的测地线距离就等于近邻连接图上两点的最短路径问题，可以用Dijkstra等算法解决。</p>
+<p>得到两点间的距离，就可以用MDS方法来获得样本在低维空间中的坐标</p>
+<p><strong>局部线性嵌入（LLE）</strong></p>
+<p>与Isomap试图保持近邻样本之间的距离不同，局部线性嵌入试图保持邻域内样本之间的线性关系。</p>
+<p>假设样本点可以通过它邻域的样本组合出来，LLE之后，希望这个线性组合的关系保持。</p>
+<p>优点：</p>
+<ul>
+<li>全局最小</li>
+<li>只有一个自由变量（即近邻点的个数K）</li>
+<li>线性代数计算中只有稀疏矩阵</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>对噪声敏感</li>
+<li>没有理论担保</li>
+</ul>
+<p><strong>随机邻域嵌入（SNE）</strong></p>
+<p>其给近邻点一个概率，每个点不再是“硬”地成为近邻点，而是以一定概率属于近邻点。</p>
+<h2 id="度量学习">度量学习</h2>
+<p>寻找合适的空间，实际上就是在寻找一个合适的距离度量。</p>
+<p>对于<span class="math inline">\(d\)</span>维样本<span class="math inline">\(x_i,x_j\)</span>，它们之间的平方欧氏距离为</p>
+<p><span class="math display">\[dist^2_{ed}(x_i,x_j) = ||x_i-x_j||^2_2 = dist^2_{ij, 1} + dist^2_{ij,2}+\cdots+dist^2_{ij,d}
+\]</span></p>
+<p>如果引入权重，则有</p>
+<p><span class="math display">\[dist^2_{wed}(x_i,x_j) = w_1dist^2_{ij, 1} + w_2dist^2_{ij,2}+\cdots+w_ddist^2_{ij,d} = (x_i-x_j)^TW(x_i-x_j)
+\]</span></p>
+<p>其中<span class="math inline">\(w_i\geq 0\)</span>而<span class="math inline">\(W\)</span>是一个对角矩阵。</p>
+<p>如果再往前走一步，<span class="math inline">\(W\)</span>不只是对角矩阵，把各个属性之间关联起来，<span class="math inline">\(W\)</span>成为一个半正定对称矩阵<span class="math inline">\(M\)</span>，则得到马氏距离</p>
+<p><span class="math display">\[dist^2_{mah}(x_i,x_j) = ||x_i-x_j||^2_M =  (x_i-x_j)^TM(x_i-x_j)
+\]</span></p>
+<p><span class="math inline">\(M\)</span>也称为度量矩阵，度量学习就是对<span class="math inline">\(M\)</span>进行学习。<span class="math inline">\(M\)</span>是半正定对称矩阵，那么一定有正交基<span class="math inline">\(P\)</span>使得<span class="math inline">\(M = PP^T\)</span></p>
+<p>假设我们用<span class="math inline">\(M\)</span>提高近邻分类器的性能。我们把近邻分类器的投票法变为概率投票法，则对于任意样本<span class="math inline">\(x_j\)</span>，其对<span class="math inline">\(x_i\)</span>的分类结果影响的概率为</p>
+<p><span class="math display">\[p_{ij} = \dfrac{\exp(-||x_i-x_j||^2_M)}{\sum_l\exp(-||x_i-x_l||^2_M)}
+\]</span></p>
+<p>如果以留一法正确率的最大化为目标，则可计算<span class="math inline">\(x_i\)</span>的留一法正确率，即它被自身以外的所有样本分类正确的概率为</p>
+<p><span class="math display">\[p_i = \sum_{j\in \Omega_i}p_{ij}
+\]</span></p>
+<p>其中<span class="math inline">\(\Omega_i\)</span>是与<span class="math inline">\(i\)</span>同类型的下标集。于是整个样本集上留一法的正确率为</p>
+<p><span class="math display">\[\sum^m_{i=1}p_{i} = \sum^m_{i=1}\sum_{j\in \Omega_i}p_{ij}
+\]</span></p>
+<p>将<span class="math inline">\(p_{ij}\)</span>代入，考虑到<span class="math inline">\(M=PP^T\)</span>，那么优化目标为</p>
+<p><span class="math display">\[\min_P\quad 1-\sum^m_{i=1}\sum_{j\in \Omega_i}\dfrac{\exp(-||P^Tx_i-P^Tx_j||^2_2)}{\sum_l\exp(-||P^Tx_i-P^Tx_l||^2_2)}
+\]</span></p>
+<h1 id="模型评估与选择">模型评估与选择</h1>
+<h2 id="经验误差empirical-errors">经验误差（empirical errors）</h2>
+<p><strong>错误率</strong></p>
+<p>即错分样本在总样本中的比例</p>
+<p><strong>正确率</strong></p>
+<p>即<span class="math inline">\(1-错误率\)</span></p>
+<p><strong>经验误差</strong></p>
+<p>通常来说，输出和标签之间的不同就是误差。</p>
+<p>学习器在训练集上训练时的误差叫做训练误差或者经验误差</p>
+<p>而学习器在新样本（实践中的样本），上的误差叫做泛化误差（generalization error）</p>
+<p>显然，我们的目的是减小泛化误差，但是我们不能使用未来的新样本，只能尝试去最小化经验误差。</p>
+<p><strong>过拟合和欠拟合</strong></p>
+<p>有许多方法可以处理过拟合，但是过拟合不可完全避免。</p>
+<ul>
+<li>机器学习问题通常是NP-hard的</li>
+<li>高效的学习算法应该在多项式时间之内</li>
+<li>如果我们能完全避免过拟合，那么<span class="math inline">\(P=NP\)</span></li>
+<li>如果<span class="math inline">\(P\neq NP\)</span>，那么过拟合是不可避免的</li>
+</ul>
+<h2 id="评估方法">评估方法</h2>
+<p>对于模型的集合<span class="math inline">\(\mathcal{M}=\{M_1, M_2,\cdots, M_R\}\)</span>，选择一个模型，具有最小的泛化误差。</p>
+<p>这个集合里面可以有</p>
+<ol>
+<li>同一模型，但具有不同超参数</li>
+<li>不同的模型</li>
+</ol>
+<p>我们可以通过实验来估计泛化误差。为此，我们要建立一个测试集，让算法在测试集上计算测试误差，从而近似得到泛化误差。</p>
+<p>通常，测试集是从真实样本的分布中取样得到的。</p>
+<p>注意，测试集和训练集不能有重叠元素。</p>
+<h3 id="hold-out">hold-out</h3>
+<p>把数据集直接分成两个不相交的子集，一个作为训练集，一个作为测试集。</p>
+<p>注意：</p>
+<ul>
+<li>分完之后，两个集合中，各类型的比例应该保持和原数据集一致。</li>
+<li>保持比例可以通过分层抽样来完成</li>
+<li>但是即使如此也有多种分法。不同的训练集和测试集大小的比例会导致不同的评估结果</li>
+<li>当使用hold-out时，重复随机地进行划分是需要的，最终求平均结果</li>
+<li>一般我们会划分<span class="math inline">\(2/3\sim 4/5\)</span>给训练集，剩下的给测试集</li>
+</ul>
+<h3 id="交叉验证k-fold">交叉验证（k-fold）</h3>
+<p>把<span class="math inline">\(D\)</span>划分成<span class="math inline">\(k\)</span>个不相交子集，每个子集的大小相等，每次训练时，<span class="math inline">\(k-1\)</span>个子集作为训练集，剩下的一个作为测试集。总共训练<span class="math inline">\(k\)</span>次，每次的测试集顺着来换。</p>
+<h3 id="交叉验证leave-one-outloo留一法">交叉验证（leave-one-out，LOO，留一法）</h3>
+<p>简单来说，就是让k-fold中，每个子集的大小为<span class="math inline">\(1\)</span>，或者说<span class="math inline">\(k\)</span>等于数据集大小。</p>
+<p>好在，分子集的时候没有引入随机，因为只有一种分法。因为训练集就只差一个样本，所以大多数情况下，模型在测试集上的误差非常接近在训练集上的误差。</p>
+<p>缺点是，时间复杂度巨大。</p>
+<h3 id="bootstrapping">bootstrapping</h3>
+<p>hold-out和k-fold中的训练集大小比起整个数据集来说较小，而LOO虽然大小差不多，但是复杂度太高。</p>
+<p>bootstrapping通过可放回地从数据集中抽样<span class="math inline">\(m\)</span>次，得到大小为<span class="math inline">\(m\)</span>的训练集。可以算出，大概有<span class="math inline">\(36.8\%\)</span>的数据从未出现在训练集中，那么就可以把这些数据用作测试集。这个结果被叫做包外评估（out-of-bag estimate）</p>
+<p>如果不放回，变量的后续选择始终取决于先前的选择，这会使得预判准则不随机。</p>
+<h2 id="参数调整parameter-tuning">参数调整（parameter tuning）</h2>
+<p>我觉得他想说的是超参数。很多算法中都有手动设置的超参数，不同的超参数可以导致不同的效果。</p>
+<p>用于模型评估和选择的测试集叫做验证集（validation set）。而训练集不必多说，测试集是用来估算学习器的泛化误差的。</p>
+<h3 id="网格搜索">网格搜索</h3>
+<p>其实就是爆搜，和手调超参的区别是，它可以自动地并行地执行。遍历给出的超参的范围（离散值），找到最好的超参。</p>
+<p>一般只适用于低维，如一两个超参，多了复杂度太高。</p>
+<h3 id="随机搜索">随机搜索</h3>
+<p>可能类似于模拟退火这样的算法。</p>
+<p>好处是，比起网格搜索更高效，因为不是所有超参数都是同等重要的。</p>
+<h2 id="性能度量performance-measure">性能度量（performance measure）</h2>
+<p>对学习器的泛化性能进行评估，不仅需要有效可行的实验估计方法，还需要有衡量模型泛化能力的评价标准，这就是性能度量。</p>
+<p>性能度量和任务需求有关，使用不同的性能度量时，可能会得出不同的模型结果。也就是说模型的“好坏”是相对的。</p>
+<p>在回归任务中，最常用到的性能度量是“均方误差”（MSE）</p>
+<p><span class="math display">\[E(f;D) = \dfrac{1}{m}\sum^m_{i=1}(f(x_i)-y_i)^2
+\]</span></p>
+<p>对于概率分布情况，</p>
+<p><span class="math display">\[E(f;D) = \int _{x\sim D}(f(x)-y)^2p(x)dx
+\]</span></p>
+<p>分类任务中常用错误率和精度。</p>
+<p><span class="math display">\[E(f;D) = \dfrac{1}{m}\sum^m_{i=1}[f(x_i)\neq y_i]
+\]</span></p>
+<p><span class="math display">\[acc(f;D) = \dfrac{1}{m}\sum^m_{i=1}[f(x_i)= y_i] = 1-E(f;D)
+\]</span></p>
+<p><span class="math display">\[E(f;D) = \int_{x\sim D}[f(x_i)\neq y_i]p(x)dx
+\]</span></p>
+<p><span class="math display">\[acc(f;D) = \int_{x\sim D}[f(x_i)= y_i]p(x)dx = 1-E(f;D)
+\]</span></p>
+<p>分类任务中这两个数据并不能完全满足需求，我们还需要精度（precision）和召回率（recall）来度量。</p>
+<p>对于二分类问题，</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 254; 
+			flex-basis: 611px"
+	>
+	<a href="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/124.jpg" data-size="675x265">
+		<img src="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/124.jpg"
+			width="675"
+			height="265"
+			srcset="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/124_hu9722c4a99bbf49e7a930ff66f44c3583_18078_480x0_resize_q75_box.jpg 480w, /p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/124_hu9722c4a99bbf49e7a930ff66f44c3583_18078_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="124.jpg">
+	</a>
+	
+	<figcaption>124.jpg</figcaption>
+	
+</figure></p>
+<p>精度<span class="math inline">\(P\)</span>和召回率<span class="math inline">\(R\)</span>为</p>
+<p><span class="math display">\[P = \dfrac{TP}{TP+FP}
+\]</span></p>
+<p><span class="math display">\[R = \dfrac{TP}{TP+FN}
+\]</span></p>
+<p>这两个数据是矛盾的数据，召回率高时往往精度低，精度高时往往召回率低。</p>
+<p>在很多情形下，我们可根据学习器的预测结果对样例进行排序，排在前面的是学习器认为“最可能”是正例的样本，排在最后的则是学习器认为“最不可能”是正例的样本。按此顺序逐个把样本作为正例进行预测，则每次可以计算出当前的精度、召回率。以精度为纵轴、召回率为横轴作图，就得到了精度-召回率曲线，简称 “P-R曲线〃</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 113; 
+			flex-basis: 271px"
+	>
+	<a href="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/125.jpg" data-size="590x521">
+		<img src="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/125.jpg"
+			width="590"
+			height="521"
+			srcset="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/125_huee63e95c3dd680192e8f8dd810084a7f_23393_480x0_resize_q75_box.jpg 480w, /p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/125_huee63e95c3dd680192e8f8dd810084a7f_23393_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="125.jpg">
+	</a>
+	
+	<figcaption>125.jpg</figcaption>
+	
+</figure></p>
+<p>这其中的平衡点简称BEP，此时精度等于召回率。平衡点越往右上角，模型越好，但是最好还是要整根曲线包住另一根，才能说更好。但是这个还是过于简化，通常用<span class="math inline">\(F1\)</span>度量</p>
+<p><span class="math display">\[F1 = \dfrac{2PR}{P+R} = \dfrac{2\times TP}{样例总数+TP-TN}
+\]</span></p>
+<p>实际上<span class="math inline">\(F1\)</span>是<span class="math inline">\(P,R\)</span>的调和平均。更近一步</p>
+<p><span class="math display">\[F_\beta = \dfrac{(1+\beta^2)PR}{\beta^2P+R}
+\]</span></p>
+<p>之后我们还有真正率和假正率的的概念和ROC曲线，见前，前面说的一坨史（我真不知道为什么老是的PPT可以自相矛盾的），实际上纵轴是真正率（TPR），横轴是假正率（FPR）。</p>
+<p><span class="math display">\[TPR=\dfrac{TP}{TP+FN},\quad FPR = \dfrac{FP}{TN+FP}
+\]</span></p>
+<p>越往左上角越好。最好是好的曲线包住另一根，这样才能说更好。如果没有包住，则引入AUC，计算ROC曲线下各部分的面积和。</p>
+<p><span class="math display">\[AUC = \dfrac{1}{2}\sum^{m-1}_{i=1}(x_{i+1}-x_i)(y_i+y_{i+1})
+\]</span></p>
+<p>实际中ROC不能绘制出连续曲线，我们给定<span class="math inline">\(m^+\)</span>个正例和<span class="math inline">\(m^-\)</span>个负例，根据学习器预测结果对样例排序，然后把分类阈值设为最大，此时真正率和假正率都为0，于是在坐标轴原点标记一个点。然后分类阈值依次设置为每个样本的预测值。前一个标记点坐标记为<span class="math inline">\((x,y)\)</span>，当前若为真正类，则标记<span class="math inline">\((x,y+\dfrac{1}{m^+})\)</span>，否则标记<span class="math inline">\((x+\dfrac{1}{m^-},y)\)</span></p>
+<h1 id="概率图模型">概率图模型</h1>
+<h2 id="图">图</h2>
+<p>图是由顶点和边组成的。顶点代表一个随机变量，而边权表示两个随机变量之间的概率关系。</p>
+<p>如果图是有向图，则称之为贝叶斯网络，如果为无向图，则称之为马尔科夫随机场。</p>
+<h2 id="贝叶斯网络-1">贝叶斯网络</h2>
+<p>贝叶斯网络是一个有向无环图。其中节点代表随机变量<span class="math inline">\(\{X_1,X_2,\cdots,X_n\}\)</span>。如果两个节点之间有因果关系，那么用一条有向边连接，起点是原因，终点是结果。起点是父节点，终点是子节点。</p>
+<p>这个因果关系由参数<span class="math inline">\(\theta\)</span>描述，所以贝叶斯网络可以表述为一个图<span class="math inline">\(G\)</span>和参数<span class="math inline">\(\theta\)</span>，即<span class="math inline">\(B=< G,\theta >\)</span>。假设属性<span class="math inline">\(x_i\)</span>在图中的父节点为<span class="math inline">\(\pi_i\)</span>（注意可以有多个父节点），则<span class="math inline">\(\theta_{x_i|\pi_i}=P_B(x_i|\pi_i)\)</span></p>
+<p>贝叶斯网假设每个属性与它的非后裔属性独立，于是有</p>
+<p><span class="math display">\[P_B(x_1,x_2,\cdots,x_d) = \prod^d_{i=1}P_B(x_i|\pi_i) = \prod^d_{i=1}\theta_{x_i|\pi_i}
+\]</span></p>
+<p>例如，下图中所有点的联合概率分布可以表示为</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 239; 
+			flex-basis: 575px"
+	>
+	<a href="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/11.jpg" data-size="1071x447">
+		<img src="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/11.jpg"
+			width="1071"
+			height="447"
+			srcset="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/11_huecd321dc78461b419f7ae3f26990f400_26395_480x0_resize_q75_box.jpg 480w, /p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/11_huecd321dc78461b419f7ae3f26990f400_26395_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="11.jpg">
+	</a>
+	
+	<figcaption>11.jpg</figcaption>
+	
+</figure></p>
+<p>这个式子也揭示了联合概率分布的因式分解性质。</p>
+<p>注意，这种图必须要是有向无环图（DAG）</p>
+<p>下面是多项式回归的例子</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 276; 
+			flex-basis: 663px"
+	>
+	<a href="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/126.jpg" data-size="1244x450">
+		<img src="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/126.jpg"
+			width="1244"
+			height="450"
+			srcset="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/126_hu23784339cf985dd47d43187dea8423da_35406_480x0_resize_q75_box.jpg 480w, /p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/126_hu23784339cf985dd47d43187dea8423da_35406_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="126.jpg">
+	</a>
+	
+	<figcaption>126.jpg</figcaption>
+	
+</figure></p>
+<h2 id="条件独立">条件独立</h2>
+<p>如果</p>
+<p><span class="math display">\[p(a|b,c)=p(a|c)
+\]</span></p>
+<p>那么说，<span class="math inline">\(a\)</span>在给定<span class="math inline">\(c\)</span>的情况下与<span class="math inline">\(b\)</span>条件独立，下式可以得出一样的结论</p>
+<p><span class="math display">\[p(a,b|c) = p(a|b,c)p(b|c)=p(a|c)p(b|c)
+\]</span></p>
+<p>我们可以记作<span class="math inline">\(a\perp b|c\)</span></p>
+<p>我们可以用贝叶斯网络来判断条件独立</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 160; 
+			flex-basis: 385px"
+	>
+	<a href="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/127.jpg" data-size="523x326">
+		<img src="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/127.jpg"
+			width="523"
+			height="326"
+			srcset="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/127_hu6284952babf959cca77c1d85439f64ef_8447_480x0_resize_q75_box.jpg 480w, /p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/127_hu6284952babf959cca77c1d85439f64ef_8447_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="127.jpg">
+	</a>
+	
+	<figcaption>127.jpg</figcaption>
+	
+</figure></p>
+<p>上图有</p>
+<p><span class="math display">\[p(a,b,c)=p(a|c)p(b|c)p(c)
+\]</span></p>
+<p>如果三个点的分布都未知，那么检验</p>
+<p><span class="math display">\[p(a,b) = \sum_c p(a|c)p(b|c)p(c)\neq p(a)p(b)
+\]</span></p>
+<p>所以<span class="math inline">\(a\not\perp b|\emptyset\)</span></p>
+<p>如果<span class="math inline">\(p(c)\)</span>分布已知，那么</p>
+<p><span class="math display">\[p(a,b|c) = \dfrac{p(a,b,c)}{p(c)} = p(a|c)p(b|c)
+\]</span></p>
+<p>所以<span class="math inline">\(a\perp b|c\)</span></p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 243; 
+			flex-basis: 584px"
+	>
+	<a href="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/128.jpg" data-size="859x353">
+		<img src="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/128.jpg"
+			width="859"
+			height="353"
+			srcset="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/128_hu55f5c5cef66d24d91e8dfaddefe31e37_34377_480x0_resize_q75_box.jpg 480w, /p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/128_hu55f5c5cef66d24d91e8dfaddefe31e37_34377_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="128.jpg">
+	</a>
+	
+	<figcaption>128.jpg</figcaption>
+	
+</figure></p>
+<p>一道例题</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 278; 
+			flex-basis: 667px"
+	>
+	<a href="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/129.jpg" data-size="1135x408">
+		<img src="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/129.jpg"
+			width="1135"
+			height="408"
+			srcset="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/129_hu1f0ea7fd3ecf0599f2f51a0d7d7c043d_37312_480x0_resize_q75_box.jpg 480w, /p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/129_hu1f0ea7fd3ecf0599f2f51a0d7d7c043d_37312_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="129.jpg">
+	</a>
+	
+	<figcaption>129.jpg</figcaption>
+	
+</figure></p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 155; 
+			flex-basis: 373px"
+	>
+	<a href="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/130.jpg" data-size="1212x778">
+		<img src="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/130.jpg"
+			width="1212"
+			height="778"
+			srcset="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/130_huac61d358fa2e6a747ee004ff19058133_66947_480x0_resize_q75_box.jpg 480w, /p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/130_huac61d358fa2e6a747ee004ff19058133_66947_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="130.jpg">
+	</a>
+	
+	<figcaption>130.jpg</figcaption>
+	
+</figure></p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 242; 
+			flex-basis: 581px"
+	>
+	<a href="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/131.jpg" data-size="1214x501">
+		<img src="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/131.jpg"
+			width="1214"
+			height="501"
+			srcset="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/131_hude571f300857a98540e1905f3dd48df7_40440_480x0_resize_q75_box.jpg 480w, /p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/131_hude571f300857a98540e1905f3dd48df7_40440_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="131.jpg">
+	</a>
+	
+	<figcaption>131.jpg</figcaption>
+	
+</figure></p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 154; 
+			flex-basis: 370px"
+	>
+	<a href="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/132.jpg" data-size="1161x752">
+		<img src="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/132.jpg"
+			width="1161"
+			height="752"
+			srcset="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/132_hu73d63c080ee11ab18bb0bb7ae7e9f1cf_60837_480x0_resize_q75_box.jpg 480w, /p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/132_hu73d63c080ee11ab18bb0bb7ae7e9f1cf_60837_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="132.jpg">
+	</a>
+	
+	<figcaption>132.jpg</figcaption>
+	
+</figure></p>
+<p>为了分析有向图中变量间的条件独立性，可以使用有向分离（D-separation）。先把有向图转位无向图</p>
+<ul>
+<li>找出有向图中所有V型结构，在V型结构中的两个父节点中加上一条无向边</li>
+<li>所有有向边改为无向边</li>
+</ul>
+<p>这样的无向图称为道德图。此时，给出两个点<span class="math inline">\(x,y\)</span>和一个点的集合<span class="math inline">\(z\)</span>，如果在道德图上把<span class="math inline">\(z\)</span>中的节点和所有相连边去除，<span class="math inline">\(x,y\)</span>不再连通，则<span class="math inline">\(x\perp y|z\)</span></p>
+<h2 id="马尔科夫随机场">马尔科夫随机场</h2>
+<p>也叫做马尔科夫网络或者无向图模型。每个节点代表一个变量或者一组变量，</p>
+<p>对于下图</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 150; 
+			flex-basis: 362px"
+	>
+	<a href="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/133.jpg" data-size="623x413">
+		<img src="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/133.jpg"
+			width="623"
+			height="413"
+			srcset="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/133_hud936861fff7142b4eb8ec340a679b0ee_23838_480x0_resize_q75_box.jpg 480w, /p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/133_hud936861fff7142b4eb8ec340a679b0ee_23838_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="133.jpg">
+	</a>
+	
+	<figcaption>133.jpg</figcaption>
+	
+</figure></p>
+<p>若从节点集<span class="math inline">\(A\)</span>中的节点到<span class="math inline">\(B\)</span>中的节点都必须经过节点集<span class="math inline">\(C\)</span>，那么<span class="math inline">\(C\)</span>称为分离集，节点集<span class="math inline">\(A,B\)</span>被<span class="math inline">\(C\)</span>分离，有</p>
+<p><span class="math display">\[A\perp B|C
+\]</span></p>
+<p>如果两个点间没有边，那么这两个点被所有其他点分离。</p>
+<p>对于图中节点的一个子集，如果子集中<strong>任意两个节点之间</strong>都有边，那么该子集称为一个团（clique）。如果加入另外任何的节点，该子集都不成团，则该团为极大团</p>
+<p>记一个团为<span class="math inline">\(C\)</span>，其中的点为<span class="math inline">\(x_C\)</span>。则所有点的联合概率为</p>
+<p><span class="math display">\[p(x) = \dfrac{1}{Z}\prod_C\psi_C(x_C)
+\]</span></p>
+<p>其中<span class="math inline">\(\psi_C\)</span>为<span class="math inline">\(C\)</span>对应的势函数，用于对<span class="math inline">\(C\)</span>中的变量关系建模，<span class="math inline">\(Z=\sum_x\prod_C\psi_C(x_C)\)</span>。</p>
+<p>因为势函数总是严格为正，所以可以简化为一个期望</p>
+<p><span class="math display">\[\psi_C(x_C) = \exp[-E(x_C)]
+\]</span></p>
+<p><span class="math inline">\(E(x_C)\)</span>叫做能量函数，而整个东西叫做玻尔兹曼分布。</p>
+<h1 id="卷积神经网络-1">卷积神经网络</h1>
+<p>卷积层独立地处理图像上的局部区域，但是使用的参数可以在整张图上分享。</p>
+<p>比起全连接网络，其使用的参数更少。其可以利用周围像素的学习结果，而不用对每个像素都学习一整张图。</p>
+<p>使用卷积层的网络就叫卷积神经网络。</p>
+<h2 id="不变性与等变性">不变性与等变性</h2>
+<p>一个函数<span class="math inline">\(f(x)\)</span>对于变换<span class="math inline">\(t(x)\)</span>是不变的，当</p>
+<p><span class="math display">\[f(t(x)) = f(x)
+\]</span></p>
+<p><span class="math inline">\(f(x)\)</span>对变换<span class="math inline">\(t(x)\)</span>是等变的，当</p>
+<p><span class="math display">\[f(t(x)) = t(f(x))
+\]</span></p>
+<h2 id="一维卷积">一维卷积</h2>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 184; 
+			flex-basis: 442px"
+	>
+	<a href="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/134.jpg" data-size="1420x771">
+		<img src="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/134.jpg"
+			width="1420"
+			height="771"
+			srcset="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/134_hu1fc11afc7cbdfcea064f83a12d01c3bd_50718_480x0_resize_q75_box.jpg 480w, /p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/134_hu1fc11afc7cbdfcea064f83a12d01c3bd_50718_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="134.jpg">
+	</a>
+	
+	<figcaption>134.jpg</figcaption>
+	
+</figure></p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 148; 
+			flex-basis: 355px"
+	>
+	<a href="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/135.jpg" data-size="841x568">
+		<img src="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/135.jpg"
+			width="841"
+			height="568"
+			srcset="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/135_huaada950c28951154387dc5b86d55687e_35950_480x0_resize_q75_box.jpg 480w, /p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/135_huaada950c28951154387dc5b86d55687e_35950_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="135.jpg">
+	</a>
+	
+	<figcaption>135.jpg</figcaption>
+	
+</figure></p>
+<p>可以知道，<span class="math inline">\(z\)</span>是等变的，即给<span class="math inline">\(x\)</span>施加变换，等价于给<span class="math inline">\(z\)</span>施加相同的变换。</p>
+<p><strong>zero padding</strong></p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 80; 
+			flex-basis: 193px"
+	>
+	<a href="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/136.jpg" data-size="424x526">
+		<img src="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/136.jpg"
+			width="424"
+			height="526"
+			srcset="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/136_hudaf22b8ae267a0dc8432f95de3d7226d_20081_480x0_resize_q75_box.jpg 480w, /p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/136_hudaf22b8ae267a0dc8432f95de3d7226d_20081_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="136.jpg">
+	</a>
+	
+	<figcaption>136.jpg</figcaption>
+	
+</figure></p>
+<p><strong>“Valid” convolutions</strong></p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 79; 
+			flex-basis: 190px"
+	>
+	<a href="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/137.jpg" data-size="464x584">
+		<img src="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/137.jpg"
+			width="464"
+			height="584"
+			srcset="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/137_hu486193c6b371895ac7192fa37413b6ec_18590_480x0_resize_q75_box.jpg 480w, /p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/137_hu486193c6b371895ac7192fa37413b6ec_18590_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="137.jpg">
+	</a>
+	
+	<figcaption>137.jpg</figcaption>
+	
+</figure></p>
+<p><strong>Stride, kernel size, dialtion</strong></p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 232; 
+			flex-basis: 558px"
+	>
+	<a href="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/138.jpg" data-size="1496x643">
+		<img src="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/138.jpg"
+			width="1496"
+			height="643"
+			srcset="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/138_hu72aae9f5aba3245fb48b63e08a40becf_83935_480x0_resize_q75_box.jpg 480w, /p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/138_hu72aae9f5aba3245fb48b63e08a40becf_83935_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="138.jpg">
+	</a>
+	
+	<figcaption>138.jpg</figcaption>
+	
+</figure></p>
+<p>kernel size不必多解释。stride意味着，卷积核每次移动多远。dilation意味着，卷积项之间的间隔。</p>
+<h2 id="卷积层">卷积层</h2>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 232; 
+			flex-basis: 557px"
+	>
+	<a href="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/139.jpg" data-size="1642x707">
+		<img src="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/139.jpg"
+			width="1642"
+			height="707"
+			srcset="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/139_hu0a3aab9d619b70d33a5e9a29b33cf027_41558_480x0_resize_q75_box.jpg 480w, /p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/139_hu0a3aab9d619b70d33a5e9a29b33cf027_41558_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="139.jpg">
+	</a>
+	
+	<figcaption>139.jpg</figcaption>
+	
+</figure></p>
+<p>卷积层第<span class="math inline">\(i\)</span>个神经元的输出如上，其中<span class="math inline">\(a\)</span>是激活函数。下面展示了全连接网络。</p>
+<h2 id="通道">通道</h2>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 191; 
+			flex-basis: 458px"
+	>
+	<a href="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/140.jpg" data-size="1338x700">
+		<img src="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/140.jpg"
+			width="1338"
+			height="700"
+			srcset="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/140_hub8121b1a2944cf316dbec4cda2235a19_40739_480x0_resize_q75_box.jpg 480w, /p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/140_hub8121b1a2944cf316dbec4cda2235a19_40739_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="140.jpg">
+	</a>
+	
+	<figcaption>140.jpg</figcaption>
+	
+</figure></p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 183; 
+			flex-basis: 440px"
+	>
+	<a href="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/141.jpg" data-size="1456x794">
+		<img src="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/141.jpg"
+			width="1456"
+			height="794"
+			srcset="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/141_hu9dea111b1d1ff7382b360c392671a5f1_89692_480x0_resize_q75_box.jpg 480w, /p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/141_hu9dea111b1d1ff7382b360c392671a5f1_89692_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="141.jpg">
+	</a>
+	
+	<figcaption>141.jpg</figcaption>
+	
+</figure></p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 185; 
+			flex-basis: 444px"
+	>
+	<a href="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/142.jpg" data-size="1432x773">
+		<img src="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/142.jpg"
+			width="1432"
+			height="773"
+			srcset="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/142_hu9b643d3136621f290cf0dcc1d748faf2_58552_480x0_resize_q75_box.jpg 480w, /p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/142_hu9b643d3136621f290cf0dcc1d748faf2_58552_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="142.jpg">
+	</a>
+	
+	<figcaption>142.jpg</figcaption>
+	
+</figure></p>
+<h2 id="感受野">感受野</h2>
+<p>隐藏层的感受野，指的是其受到哪些输入层单元的影响。</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 102; 
+			flex-basis: 246px"
+	>
+	<a href="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/143.jpg" data-size="447x435">
+		<img src="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/143.jpg"
+			width="447"
+			height="435"
+			srcset="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/143_hu847f109fef9ae2bc96afc9bcf58af413_21453_480x0_resize_q75_box.jpg 480w, /p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/143_hu847f109fef9ae2bc96afc9bcf58af413_21453_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="143.jpg">
+	</a>
+	
+	<figcaption>143.jpg</figcaption>
+	
+</figure></p>
+<p>如上，感受野（左侧）大小为3</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 254; 
+			flex-basis: 610px"
+	>
+	<a href="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/144.jpg" data-size="1495x588">
+		<img src="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/144.jpg"
+			width="1495"
+			height="588"
+			srcset="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/144_hu20f3b37751f8dfe321e44f4bf8df54a9_64309_480x0_resize_q75_box.jpg 480w, /p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/144_hu20f3b37751f8dfe321e44f4bf8df54a9_64309_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="144.jpg">
+	</a>
+	
+	<figcaption>144.jpg</figcaption>
+	
+</figure></p>
+<p>如上，第四层隐藏层的感受野大小为11</p>
+<h1 id="计算学习理论">计算学习理论</h1>
+<p>计算学习理论研究的是关于通过“计算”来进行“学习”的理论，即关于机器学习的理论基础，其目的是分析学习任务的困难本质，为学习算法提供理论保证，并根据分析结果指导算法设计。</p>
+<p>支持向量机就很大程度上受到它的影响。计算学习理论起源于概率近似正确（PAC）学习框架。</p>
+<p><strong>近似正确</strong></p>
+<p>算法必须学习到一个函数，该函数与真实函数尽可能接近。时间中，用误差参数<span class="math inline">\(\epsilon\)</span>代表近似正确的程度。</p>
+<p><strong>概率</strong></p>
+<p>学习算法应该有很高的概率，学习到一个近似正确的函数。概率用<span class="math inline">\(\delta\)</span>代表有多高。</p>
+<h2 id="样本复杂度">样本复杂度</h2>
+<p>要有多少样本才足以学习目标概念？有三种情况</p>
+<ul>
+<li>学习者提供实例，向老师查询。即学习者提供<span class="math inline">\(x\)</span>，老师提供<span class="math inline">\(f(x)\)</span></li>
+<li>老师生成训练样本。即生成<span class="math inline">\(\{(x^1,f(x^1)),\cdots,(x^n, f(x^n))\}\)</span></li>
+<li>随机生成（例如自然生成）一些实例，老师提供标签。实例根据<span class="math inline">\(P(X)\)</span>生成</li>
+</ul>
+<p>记实例集为<span class="math inline">\(X\)</span>，假设集为<span class="math inline">\(H=\{h:X\to\{0,1\}\}\)</span>，可能的目标函数集为<span class="math inline">\(C=\{c:X\to\{0,1\}\}\)</span>，用<span class="math inline">\(P(X)\)</span>生成的实例，老师打上的无噪声标签为<span class="math inline">\(c(x)\)</span></p>
+<p>学习者要给出一个假设<span class="math inline">\(h\in H\)</span>，使得</p>
+<p><span class="math display">\[h = \arg\min_{h\in H}error_{train}(h)
+\]</span></p>
+<p>举例，决策树为</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 155; 
+			flex-basis: 373px"
+	>
+	<a href="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/145.jpg" data-size="1078x693">
+		<img src="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/145.jpg"
+			width="1078"
+			height="693"
+			srcset="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/145_huc8b98ad404ac8122b6d3d0b6ff96af6a_59384_480x0_resize_q75_box.jpg 480w, /p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/145_huc8b98ad404ac8122b6d3d0b6ff96af6a_59384_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="145.jpg">
+	</a>
+	
+	<figcaption>145.jpg</figcaption>
+	
+</figure></p>
+<h2 id="假设的真错误true-error-of-a-hypothesis">假设的真错误（True Error of a Hypothesis）</h2>
+<p><span class="math inline">\(h\)</span>的真误差为，它错误分类的概率</p>
+<p><span class="math display">\[error_{true}(h) = Pr[h(x)\neq c(x)]
+\]</span></p>
+<p>对于实际中的实例集<span class="math inline">\(D\)</span></p>
+<p><span class="math display">\[error_{true}(h) = Pr_{x\in D}[h(x)\neq c(x)] = \dfrac{1}{|D|}\sum_{x\in D}\delta(h(x)\neq c(x))
+\]</span></p>
+<p>对于分布<span class="math inline">\(P(X)\)</span></p>
+<p><span class="math display">\[error_{true}(h) = Pr_{x\sim P(X)}[h(x)\neq c(x)]
+\]</span></p>
+<h2 id="过拟合">过拟合</h2>
+<p>考虑在训练集上的错误率<span class="math inline">\(error_{train}(h)\)</span>和在整个数据集上的真错误率为<span class="math inline">\(error_{true}(h)\)</span>。如果<span class="math inline">\(h\)</span>过拟合，那么有</p>
+<p><span class="math display">\[error_{true}(h)>error_{train}(h)
+\]</span></p>
+<p>过拟合的大小为</p>
+<p><span class="math display">\[error_{true}(h)-error_{train}(h)
+\]</span></p>
+<h2 id="vc维">VC维</h2>
+<p>假设空间<span class="math inline">\(H\)</span>的VC维是能被H打散的最大实例集的大小</p>
+<p>即</p>
+<p><span class="math display">\[VC(H) = \max\{m:\Pi_H(m)=2^m\}
+\]</span></p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 189; 
+			flex-basis: 454px"
+	>
+	<a href="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/146.jpg" data-size="1012x534">
+		<img src="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/146.jpg"
+			width="1012"
+			height="534"
+			srcset="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/146_hu8dbdc1b23bf04d2ae10c5788b8d3b25f_54842_480x0_resize_q75_box.jpg 480w, /p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/146_hu8dbdc1b23bf04d2ae10c5788b8d3b25f_54842_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="146.jpg">
+	</a>
+	
+	<figcaption>146.jpg</figcaption>
+	
+</figure></p>
 <h1 id="强化学习">强化学习</h1>
 <h2 id="概论">概论</h2>
 <p>在强化学习中，软件智能体在环境中进行观察并采取行动，作为回报，它会获得奖励。</p>
@@ -4986,9 +6106,6 @@ network）组成。</p>
 <p>机器学习中，一般把标签作为<span class="math inline">\(P\)</span>，预测作为<span class="math inline">\(Q\)</span>，于是就有</p>
 <p><span class="math display">\[-y\log h_\theta(x) - (1-y)\log (1-h_\theta(x))
 \]</span></p>
-<h2 id="bootstrapping">bootstrapping</h2>
-<p>这是一种评估方法。通过可放回地从数据集中抽样<span class="math inline">\(m\)</span>次，得到大小为<span class="math inline">\(m\)</span>的训练集。可以算出，大概有<span class="math inline">\(36.8\%\)</span>的数据从未出现在训练集中，那么就可以把这些数据用作测试集。</p>
-<p>如果不放回，变量的后续选择始终取决于先前的选择，这会使得预判准则不随机。</p>
 <h2 id="矩阵向量求导技术">矩阵/向量求导技术</h2>
 <h3 id="向量变量与标量函数">向量变量与标量函数</h3>
 <p>定义<span class="math inline">\(f(x), x=[x_1,x_2,\cdots,x_n]^T\)</span>，即变量是向量，而函数值是标量，则其导数为</p>
@@ -5391,6 +6508,7 @@ network）组成。</p>
             <li><a href="#贝叶斯逻辑回归">贝叶斯逻辑回归</a></li>
             <li><a href="#贝叶斯网络">贝叶斯网络</a></li>
             <li><a href="#正态分布下的统计决策">正态分布下的统计决策</a></li>
+            <li><a href="#生成式模型和判别式模型">生成式模型和判别式模型</a></li>
             <li><a href="#贝叶斯vs其他判别">贝叶斯vs其他判别</a></li>
           </ol>
         </li>
@@ -5433,15 +6551,7 @@ network）组成。</p>
           <ol>
             <li><a href="#bagging">Bagging</a></li>
             <li><a href="#boosting">Boosting</a></li>
-            <li><a href="#分类器组合评价">分类器组合评价</a></li>
             <li><a href="#非监督集成学习">非监督集成学习</a></li>
-          </ol>
-        </li>
-        <li><a href="#分类器准确率评估">分类器准确率评估</a>
-          <ol>
-            <li><a href="#保留法holdout">保留法（holdout）</a></li>
-            <li><a href="#k-fold">K-fold</a></li>
-            <li><a href="#留一法">留一法</a></li>
           </ol>
         </li>
       </ol>
@@ -5456,16 +6566,92 @@ network）组成。</p>
             <li><a href="#基于熵的可分性依据">基于熵的可分性依据</a></li>
           </ol>
         </li>
+        <li><a href="#子集评估机器学习课程">子集评估（机器学习课程）</a>
+          <ol>
+            <li><a href="#信息增益">信息增益</a></li>
+          </ol>
+        </li>
         <li><a href="#特征子集的搜索策略">特征子集的搜索策略</a>
           <ol>
+            <li><a href="#穷举搜索exhaustive-search">穷举搜索（exhaustive search）</a></li>
+            <li><a href="#分支定界法">分支定界法</a></li>
             <li><a href="#单独最优特征组合">单独最优特征组合</a></li>
             <li><a href="#顺序前进法sfs">顺序前进法（SFS）</a></li>
             <li><a href="#广义顺序前进法gsfs">广义顺序前进法（GSFS）</a></li>
             <li><a href="#顺序后退法sbs">顺序后退法（SBS）</a></li>
             <li><a href="#增l减r法">增l减r法</a></li>
+            <li><a href="#顺序前进浮动和顺序后退浮动">顺序前进浮动和顺序后退浮动</a></li>
             <li><a href="#遗传算法">遗传算法</a></li>
           </ol>
         </li>
+        <li><a href="#特征选择算法机器学习课程">特征选择算法（机器学习课程）</a>
+          <ol>
+            <li><a href="#filter">Filter</a></li>
+            <li><a href="#wrapper">Wrapper</a></li>
+          </ol>
+        </li>
+        <li><a href="#稀疏表示sparse-representation机器学习课程">稀疏表示（sparse representation，机器学习课程）</a>
+          <ol>
+            <li><a href="#嵌入l1正则化项">嵌入L1正则化项</a></li>
+            <li><a href="#字典学习">字典学习</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+    <li><a href="#降维和度量学习机器学习课程">降维和度量学习（机器学习课程）</a>
+      <ol>
+        <li><a href="#降维">降维</a>
+          <ol>
+            <li><a href="#线性组合">线性组合</a></li>
+            <li><a href="#流形学习">流形学习</a></li>
+          </ol>
+        </li>
+        <li><a href="#度量学习">度量学习</a></li>
+      </ol>
+    </li>
+    <li><a href="#模型评估与选择">模型评估与选择</a>
+      <ol>
+        <li><a href="#经验误差empirical-errors">经验误差（empirical errors）</a></li>
+        <li><a href="#评估方法">评估方法</a>
+          <ol>
+            <li><a href="#hold-out">hold-out</a></li>
+            <li><a href="#交叉验证k-fold">交叉验证（k-fold）</a></li>
+            <li><a href="#交叉验证leave-one-outloo留一法">交叉验证（leave-one-out，LOO，留一法）</a></li>
+            <li><a href="#bootstrapping">bootstrapping</a></li>
+          </ol>
+        </li>
+        <li><a href="#参数调整parameter-tuning">参数调整（parameter tuning）</a>
+          <ol>
+            <li><a href="#网格搜索">网格搜索</a></li>
+            <li><a href="#随机搜索">随机搜索</a></li>
+          </ol>
+        </li>
+        <li><a href="#性能度量performance-measure">性能度量（performance measure）</a></li>
+      </ol>
+    </li>
+    <li><a href="#概率图模型">概率图模型</a>
+      <ol>
+        <li><a href="#图">图</a></li>
+        <li><a href="#贝叶斯网络-1">贝叶斯网络</a></li>
+        <li><a href="#条件独立">条件独立</a></li>
+        <li><a href="#马尔科夫随机场">马尔科夫随机场</a></li>
+      </ol>
+    </li>
+    <li><a href="#卷积神经网络-1">卷积神经网络</a>
+      <ol>
+        <li><a href="#不变性与等变性">不变性与等变性</a></li>
+        <li><a href="#一维卷积">一维卷积</a></li>
+        <li><a href="#卷积层">卷积层</a></li>
+        <li><a href="#通道">通道</a></li>
+        <li><a href="#感受野">感受野</a></li>
+      </ol>
+    </li>
+    <li><a href="#计算学习理论">计算学习理论</a>
+      <ol>
+        <li><a href="#样本复杂度">样本复杂度</a></li>
+        <li><a href="#假设的真错误true-error-of-a-hypothesis">假设的真错误（True Error of a Hypothesis）</a></li>
+        <li><a href="#过拟合">过拟合</a></li>
+        <li><a href="#vc维">VC维</a></li>
       </ol>
     </li>
     <li><a href="#强化学习">强化学习</a>
@@ -5566,7 +6752,6 @@ network）组成。</p>
       <ol>
         <li><a href="#熵">熵</a></li>
         <li><a href="#交叉熵">交叉熵</a></li>
-        <li><a href="#bootstrapping">bootstrapping</a></li>
         <li><a href="#矩阵向量求导技术">矩阵/向量求导技术</a>
           <ol>
             <li><a href="#向量变量与标量函数">向量变量与标量函数</a></li>
