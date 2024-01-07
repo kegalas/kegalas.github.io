@@ -125,7 +125,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 31 分钟
+                    阅读时长: 32 分钟
                 </time>
             </div>
         
@@ -1348,6 +1348,163 @@ RET n ; 完成RET（或RETF）后，(SP)&lt;-(SP)+n
 	<figcaption>16.jpg</figcaption>
 	
 </figure></p>
+<h1 id="总线及其形成">总线及其形成</h1>
+<h2 id="基础概念">基础概念</h2>
+<p>一组共用的导线，计算机中各种信息沟通的公共通道</p>
+<ul>
+<li>按照连接对象分类为：内总线、外总线</li>
+<li>传输信息的种类：数据总线、地址总线、控制总线</li>
+<li>握手技术和联络方式：同步传输总线、异步传输总线</li>
+<li>功能层次：片内总线、元件级总线、系统总线、通信总线</li>
+</ul>
+<p>微处理器级总线： 微处理器外部结构中的数量有限的输入输出引脚
+系统级总线：微处理器级总线和其他逻辑电路连接组成的主机板系统</p>
+<h2 id="集中常用芯片">集中常用芯片</h2>
+<h3 id="三态门">三态门</h3>
+<p>典型芯片74LS244</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 282; 
+			flex-basis: 678px"
+	>
+	<a href="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/17.jpg" data-size="1054x373">
+		<img src="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/17.jpg"
+			width="1054"
+			height="373"
+			srcset="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/17_hu675b3686e22dcedb7128a87f34dbcc05_20071_480x0_resize_q75_box.jpg 480w, /p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/17_hu675b3686e22dcedb7128a87f34dbcc05_20071_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="17.jpg">
+	</a>
+	
+	<figcaption>17.jpg</figcaption>
+	
+</figure></p>
+<p>其中Z为高阻态。上图应该G是<span class="math inline">\(\bar G=1\)</span>时高阻</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 168; 
+			flex-basis: 403px"
+	>
+	<a href="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/18.jpg" data-size="1131x673">
+		<img src="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/18.jpg"
+			width="1131"
+			height="673"
+			srcset="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/18_hu41dc6319f0eeaa834b93139aa6d0eb03_95551_480x0_resize_q75_box.jpg 480w, /p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/18_hu41dc6319f0eeaa834b93139aa6d0eb03_95551_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="18.jpg">
+	</a>
+	
+	<figcaption>18.jpg</figcaption>
+	
+</figure></p>
+<h3 id="双向三态门">双向三态门</h3>
+<p>典型芯片74LS245</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 230; 
+			flex-basis: 553px"
+	>
+	<a href="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/19.jpg" data-size="1148x498">
+		<img src="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/19.jpg"
+			width="1148"
+			height="498"
+			srcset="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/19_hueb8b2dbdffec0865547935ad04eab045_34729_480x0_resize_q75_box.jpg 480w, /p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/19_hueb8b2dbdffec0865547935ad04eab045_34729_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="19.jpg">
+	</a>
+	
+	<figcaption>19.jpg</figcaption>
+	
+</figure></p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 169; 
+			flex-basis: 407px"
+	>
+	<a href="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/20.jpg" data-size="1259x742">
+		<img src="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/20.jpg"
+			width="1259"
+			height="742"
+			srcset="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/20_hu414d1af2197da943f69c480b2e9ad0ed_115005_480x0_resize_q75_box.jpg 480w, /p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/20_hu414d1af2197da943f69c480b2e9ad0ed_115005_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="20.jpg">
+	</a>
+	
+	<figcaption>20.jpg</figcaption>
+	
+</figure></p>
+<h3 id="带有三态门输出的锁存器">带有三态门输出的锁存器</h3>
+<p>典型芯片74LS373</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 179; 
+			flex-basis: 430px"
+	>
+	<a href="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/21.jpg" data-size="1084x604">
+		<img src="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/21.jpg"
+			width="1084"
+			height="604"
+			srcset="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/21_hu87b4cc9e164c8461ab1cf44ab9631c29_44751_480x0_resize_q75_box.jpg 480w, /p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/21_hu87b4cc9e164c8461ab1cf44ab9631c29_44751_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="21.jpg">
+	</a>
+	
+	<figcaption>21.jpg</figcaption>
+	
+</figure></p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 167; 
+			flex-basis: 401px"
+	>
+	<a href="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/22.jpg" data-size="1233x737">
+		<img src="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/22.jpg"
+			width="1233"
+			height="737"
+			srcset="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/22_hu892cb6ea6fe3d76c18341f1128809a45_111695_480x0_resize_q75_box.jpg 480w, /p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/22_hu892cb6ea6fe3d76c18341f1128809a45_111695_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="22.jpg">
+	</a>
+	
+	<figcaption>22.jpg</figcaption>
+	
+</figure></p>
+<h2 id="8086的引脚功能及时序">8086的引脚功能及时序</h2>
+<p>P169</p>
+<h3 id="最小方式">最小方式</h3>
+<h3 id="最大方式">最大方式</h3>
+<h2 id="系统总线的形成">系统总线的形成</h2>
+<p>P179</p>
+<h3 id="最小方式-1">最小方式</h3>
+<h3 id="最大方式-1">最大方式</h3>
+<h3 id="8086与8088的差异">8086与8088的差异</h3>
+<h3 id="pcxt-总线">PC/XT 总线</h3>
+<h1 id="存储器设计">存储器设计</h1>
+<h2 id="存储器分类和主要技术指标">存储器分类和主要技术指标</h2>
+<p>P190</p>
+<h2 id="几种常用存储器芯片介绍">几种常用存储器芯片介绍</h2>
+<p>P193</p>
+<h2 id="扩展存储器设计">扩展存储器设计</h2>
+<p>P201</p>
+<h2 id="存储器地址译码电路设计">存储器地址译码电路设计</h2>
+<p>P207</p>
+<h2 id="存储器与cpu的连接">存储器与CPU的连接</h2>
+<p>P209</p>
+<h1 id="常用芯片的接口技术">常用芯片的接口技术</h1>
+<h2 id="io-接口概述">I/O 接口概述</h2>
+<p>P224</p>
 
 </section>
 
@@ -1809,6 +1966,46 @@ RET n ; 完成RET（或RETF）后，(SP)&lt;-(SP)+n
           </ol>
         </li>
         <li><a href="#宏指令">宏指令</a></li>
+      </ol>
+    </li>
+    <li><a href="#总线及其形成">总线及其形成</a>
+      <ol>
+        <li><a href="#基础概念">基础概念</a></li>
+        <li><a href="#集中常用芯片">集中常用芯片</a>
+          <ol>
+            <li><a href="#三态门">三态门</a></li>
+            <li><a href="#双向三态门">双向三态门</a></li>
+            <li><a href="#带有三态门输出的锁存器">带有三态门输出的锁存器</a></li>
+          </ol>
+        </li>
+        <li><a href="#8086的引脚功能及时序">8086的引脚功能及时序</a>
+          <ol>
+            <li><a href="#最小方式">最小方式</a></li>
+            <li><a href="#最大方式">最大方式</a></li>
+          </ol>
+        </li>
+        <li><a href="#系统总线的形成">系统总线的形成</a>
+          <ol>
+            <li><a href="#最小方式-1">最小方式</a></li>
+            <li><a href="#最大方式-1">最大方式</a></li>
+            <li><a href="#8086与8088的差异">8086与8088的差异</a></li>
+            <li><a href="#pcxt-总线">PC/XT 总线</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+    <li><a href="#存储器设计">存储器设计</a>
+      <ol>
+        <li><a href="#存储器分类和主要技术指标">存储器分类和主要技术指标</a></li>
+        <li><a href="#几种常用存储器芯片介绍">几种常用存储器芯片介绍</a></li>
+        <li><a href="#扩展存储器设计">扩展存储器设计</a></li>
+        <li><a href="#存储器地址译码电路设计">存储器地址译码电路设计</a></li>
+        <li><a href="#存储器与cpu的连接">存储器与CPU的连接</a></li>
+      </ol>
+    </li>
+    <li><a href="#常用芯片的接口技术">常用芯片的接口技术</a>
+      <ol>
+        <li><a href="#io-接口概述">I/O 接口概述</a></li>
       </ol>
     </li>
   </ol>

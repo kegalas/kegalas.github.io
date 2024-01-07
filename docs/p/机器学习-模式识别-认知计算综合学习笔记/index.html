@@ -125,7 +125,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 153 分钟
+                    阅读时长: 154 分钟
                 </time>
             </div>
         
@@ -546,7 +546,7 @@
 </figure></p>
 <h1 id="机器学习绪论">机器学习绪论</h1>
 <h2 id="定义">定义</h2>
-<p>机器学习是研究“不通过显式编程的方法让机器能够学习”的领域。</p>
+<p>机器学习是研究“不通过显式编程的方法让机器能够学习”的学问。</p>
 <p>电脑程序通过学习关于任务T的经验E，以及使用一些表现的度量方法P。</p>
 <h2 id="机器学习的算法分类">机器学习的算法分类</h2>
 <p>主要分为两类：监督学习和无监督学习。其他还包括：强化学习、推荐系统等。</p>
@@ -707,6 +707,9 @@
 <p><span class="math display">\[f(x) = \tanh(x)=\dfrac{2}{1+e^{-2x}}-1
 \]</span></p>
 <p>长得和Sigmoid很像，但是其范围为<span class="math inline">\((-1,1)\)</span>，输出中心为<span class="math inline">\(0\)</span>。问题和sigmoid相同。</p>
+<p>特别的，其导数为</p>
+<p><span class="math display">\[\tanh'(x) = 1-\tanh^2(x)
+\]</span></p>
 <p><strong>ReLU</strong></p>
 <p><span class="math display">\[f(x)=\max(0,x)
 \]</span></p>
@@ -994,7 +997,7 @@ E = \dfrac{1}{2}\sum_{n=1}^N(y_n-t_n)^2
 <p>其中蓝色的过程是正向传播，红色的过程是反向传播。假设我们在隐藏层使用的激活函数是<span class="math inline">\(h(\cdot)\)</span>，那么有<span class="math inline">\(\dfrac{\partial a_k}{\partial a_j}=h'(a_j)w_{kj}\)</span>，有</p>
 <p><span class="math display">\[\delta_j = h'(a_j)\sum_k w_{kj}\delta_k
 \]</span></p>
-<p>这样只要我们一层层往回推，就能推出对于输出的偏导公式。每一层的输出记为<span class="math inline">\(z\)</span>的话，每一层的全中的梯度都有如下的形式</p>
+<p>这样只要我们一层层往回推，就能推出对于输出的偏导公式。每一层的输出记为<span class="math inline">\(z\)</span>的话，每一层的权重的梯度都有如下的形式</p>
 <p><span class="math display">\[\dfrac{\partial E_n}{\partial w_{ji}} = \delta_iz_j
 \]</span></p>
 <p>举一个例子</p>
@@ -1132,8 +1135,9 @@ E = \dfrac{1}{2}\sum_{n=1}^N(y_n-t_n)^2
 <h2 id="用变换过的数据来训练">用变换过的数据来训练</h2>
 <p>一种方法是，用原始数据集和变化过的数据集加起来当训练集来训练。</p>
 <h2 id="卷积神经网络">卷积神经网络</h2>
-<p>不考</p>
+<p>见后</p>
 <h2 id="反向传播的推广">反向传播的推广</h2>
+<p>不考</p>
 <h2 id="其他常见网络">其他常见网络</h2>
 <h3 id="som网络">SOM网络</h3>
 <p>SOM是一种自组织（竞争型）神经网络。Kohonen认为：一个神经网络接受外界输入模式时，将会分为不同的对应区域，各区域对输入模式具有不同的响应特征，且该过程是自动完成的。</p>
@@ -1392,9 +1396,9 @@ E = \dfrac{1}{2}\sum_{n=1}^N(y_n-t_n)^2
 <li>若<span class="math inline">\(-\ln P(x|w_1)+\ln P(x|w_2)<\ln\dfrac{P(w_1)}{P(w_2)}\)</span>，则<span class="math inline">\(x\)</span>属于<span class="math inline">\(w_1\)</span>，否则属于<span class="math inline">\(w_2\)</span></li>
 </ol>
 <p><strong>最小风险准则</strong></p>
-<p>假设总共有<span class="math inline">\(N\)</span>类，其label分别为<span class="math inline">\(y=\{c_1,c_2,\cdots,c_N\}\)</span>。对于某个样本，设其属于<span class="math inline">\(c_j\)</span>类，其被错误归类为<span class="math inline">\(c_i\)</span>时，损失大小为<span class="math inline">\(\lambda_{ij}\)</span></p>
-<p>样本<span class="math inline">\(x\)</span>被归类为<span class="math inline">\(c_i\)</span>的条件风险（或期望损失）就为</p>
-<p><span class="math display">\[R(c_i|x) = \sum^N_{j=1}\lambda_{ij}P(c_j|x)
+<p>假设总共有<span class="math inline">\(N\)</span>类，其label分别为<span class="math inline">\(y=\{c_1,c_2,\cdots,c_N\}\)</span>。对于某个样本，设其属于<span class="math inline">\(c_j\)</span>类，其被错误归类为<span class="math inline">\(c_i\)</span>时，损失大小为<span class="math inline">\(\lambda_{ij}\)</span>。或者说，做出决策<span class="math inline">\(\alpha_i\)</span>，也就是判定他为<span class="math inline">\(c_i\)</span>类，而真实情况为<span class="math inline">\(c_j\)</span>类的损失为<span class="math inline">\(\lambda(\alpha_i, c_j)\)</span></p>
+<p>对样本<span class="math inline">\(x\)</span>做出决策<span class="math inline">\(\alpha_i\)</span>的条件风险（或期望损失）就为</p>
+<p><span class="math display">\[R(\alpha_i|x) = \sum^N_{j=1}\lambda_{ij}P(c_j|x)
 \]</span></p>
 <p>我们的任务是最小化损失，即最小化（期望风险）</p>
 <p><span class="math display">\[R(h) = E_x[R(h(x)|x)] = \int R(h(x)|x)p(x)dx
@@ -1483,7 +1487,7 @@ E = \dfrac{1}{2}\sum_{n=1}^N(y_n-t_n)^2
 <p>我们通过通常的线性回归后得到红色的这条拟合线。可以看到，实际的数据点分布在这条线的周围，对于这种偏差，我们可以把它看做是一种噪声，一般是一种高斯分布的随机变量，可以把实际值记为</p>
 <p><span class="math display">\[t = y(x,w)+\epsilon
 \]</span></p>
-<p>其中<span class="math inline">\(y(x,w)=w^Tx\)</span>是拟合出来的线性模型，<span class="math inline">\(\epsilon\)</span>符合均值为<span class="math inline">\(0\)</span>的高斯分布，其精确度为<span class="math inline">\(\beta\)</span>。精确度即为方差的导数。显然，可以知道<span class="math inline">\(E(t)=E(y)=w^Tx, Var(t)=Var(\epsilon)=\sigma^2=\beta^{-1}\)</span>，我们可以记作</p>
+<p>其中<span class="math inline">\(y(x,w)=w^Tx\)</span>是拟合出来的线性模型，<span class="math inline">\(\epsilon\)</span>符合均值为<span class="math inline">\(0\)</span>的高斯分布，其精确度为<span class="math inline">\(\beta\)</span>。精确度即为方差的倒数。显然，可以知道<span class="math inline">\(E(t)=E(y)=w^Tx, Var(t)=Var(\epsilon)=\sigma^2=\beta^{-1}\)</span>，我们可以记作</p>
 <p><span class="math display">\[p(t|x,w,\beta) = \mathcal{N}(t|y(x,w),\beta^{-1})
 \]</span></p>
 <p>接着我们就可以通过最大似然估计来求解<span class="math inline">\(w\)</span>，首先，对于样本量<span class="math inline">\(N\)</span>，似然函数为</p>
@@ -1497,10 +1501,10 @@ E = \dfrac{1}{2}\sum_{n=1}^N(y_n-t_n)^2
 \]</span></p>
 <p>其实就是个SSE，称为平方和的损失函数。</p>
 <p><strong>偏差和方差的分解</strong></p>
-<p>有了平方损失函数，最优预测就是下面的条件期望</p>
+<p>有了平方损失函数，最优预测（最优模型）就是下面的条件期望（不懂老师在说什么鸟语，感觉不如周志华，见后）</p>
 <p><span class="math display">\[h(x) = E[t|x]=\int t\cdot p(t|x)dt
 \]</span></p>
-<p>可以进一步写成</p>
+<p>平方误差的期望为</p>
 <p><span class="math display">\[E[L] = \int[y(x)-h(x)]^2p(x)dx + \iint [h(x)-t]^2p(x,t)dxdt
 \]</span></p>
 <p>上式的第二部分，与<span class="math inline">\(y(x)\)</span>无关，是数据集固有的噪声，它代表了最小的可达到的期望误差。</p>
@@ -1523,6 +1527,28 @@ E = \dfrac{1}{2}\sum_{n=1}^N(y_n-t_n)^2
 <p><span class="math display">\[\text{noise} = \iint [h(x)-t]^2p(x,t)dxdt
 \]</span></p>
 <p>我们的⽬标是最⼩化期望损失，它可以分解为（平⽅）偏差、⽅差和⼀个常数噪声项的和。这里噪声是常数，所以只能调整前两个。我们通常只能二者选其一，要么偏差大方差小，要么方差大偏差小。</p>
+<p>按照周志华的讲法，<span class="math inline">\(y(x;D)\)</span>在这里是模型<span class="math inline">\(y\)</span>在数据集<span class="math inline">\(D\)</span>上训练，对<span class="math inline">\(x\)</span>的预测。而<span class="math inline">\(E_D[y(x;D)]\)</span>则为期望预测。而<span class="math inline">\(h(x)\)</span>则为数据集中的标签（可能存在标错了的情况，或者说，因为噪声的存在，导致标记值和真实值不同）。看起来<span class="math inline">\(t\)</span>是样本的真实标签（即没有错的标签）。</p>
+<p>周志华的符号依次为模型<span class="math inline">\(f(x;D)\)</span>，模型预测期望<span class="math inline">\(\bar f(x)\)</span>，数据集标记<span class="math inline">\(y_D\)</span>，真实标记<span class="math inline">\(y_D\)</span>。方差为<span class="math inline">\(E_D[f(x;D)-\bar f(x)]\)</span>，噪声为<span class="math inline">\(\epsilon^2 = E_D[(y_D-y)^2]\)</span>，偏差为<span class="math inline">\(bias^2(x)=(\bar f(x)-y)^2\)</span>，偏差-方差分解如下</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 153; 
+			flex-basis: 368px"
+	>
+	<a href="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/147.jpg" data-size="1035x674">
+		<img src="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/147.jpg"
+			width="1035"
+			height="674"
+			srcset="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/147_hu25b07cdab905375d8b869f06a92dd136_49453_480x0_resize_q75_box.jpg 480w, /p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/147_hu25b07cdab905375d8b869f06a92dd136_49453_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="147.jpg">
+	</a>
+	
+	<figcaption>147.jpg</figcaption>
+	
+</figure></p>
+<p>其中式2.37指<span class="math inline">\(\bar f(x)=E_D[f(x;D)]\)</span></p>
 <p><strong>参数分布</strong></p>
 <p>假设噪声精度<span class="math inline">\(\beta\)</span>已知，那么</p>
 <p><span class="math display">\[p(t|w)=\prod ^N_{n=1}\mathcal{N}(t_n|w^T\phi(x_n),\beta^{-1})
@@ -2798,7 +2824,7 @@ E = \dfrac{1}{2}\sum_{n=1}^N(y_n-t_n)^2
 \]</span></p>
 <p>设<span class="math inline">\(\{u_i\},i=1,\cdots,D\)</span>是原空间的正交基向量，而<span class="math inline">\(u_i^Tu_j=\delta_{ij}\)</span>。然后这个量再也没有用过，老师可能缝合了六七个PPT，变量乱窜，前文没有后文，后文没有前文，我决定不学，改为学周志华的《机器学习》。</p>
 <p>假设数据样本进行了中心化，即<span class="math inline">\(\sum_i x_i=0\)</span>。投影变换后得到的心坐标系为<span class="math inline">\(\{w_1,w_2,\cdots,w_{d'}\}\)</span>，其中<span class="math inline">\(w_i\)</span>是标准正交基向量，<span class="math inline">\(||w_i||_2=1\)</span>。此时，样本点<span class="math inline">\(x_i\)</span>在低维坐标中的投影是<span class="math inline">\(z_i=(z_{i1},z_{i2},\cdots,z_{id'})\)</span>，其中<span class="math inline">\(z_{ij} = w_j^Tx_i\)</span>（或者说，<span class="math inline">\(z_i=W^Tx_i\)</span>）。如果基于<span class="math inline">\(z_i\)</span>来重构<span class="math inline">\(x_i\)</span>，则有<span class="math inline">\(\hat x_i = \sum^{d'}_{j=1}z_{ij}w_j\)</span>。</p>
-<p>考虑整个训练集，原样本点<span class="math inline">\(x_i\)</span>与机遇投影重构的样本点<span class="math inline">\(\hat x_i\)</span>之间的距离为</p>
+<p>考虑整个训练集，原样本点<span class="math inline">\(x_i\)</span>与基于投影重构的样本点<span class="math inline">\(\hat x_i\)</span>之间的距离为</p>
 <p><span class="math display">\[\sum^m_{i=1}\bigg|\bigg|\sum^{d'}_{j=1}z_{ij}w_j-x_i\bigg|\bigg|^2 = -tr\bigg(W^T\bigg(\sum^m_{i=1}x_ix_i^T\bigg)W\bigg)
 \]</span></p>
 <p>基于最近重构性，上式应该被最小化，</p>
@@ -3526,15 +3552,15 @@ network）组成。</p>
 <p><span class="math display">\[J(w) = \sum(y^{(i)}-y(x^{(i)},w))^2+\lambda ||w||_1
 \]</span></p>
 <p>特点是倾向于得到一个更稀疏（sparse）的解，例如<span class="math inline">\(w\)</span>中的非零项将减少。通常也是由梯度下降来优化的。</p>
-<p>假设有<span class="math inline">\(m\)</span>个样本，那么最简单的字典学习是</p>
-<p><span class="math display">\[\min_{B,\alpha_i}\sum^m_{i=1}||x_i-B\alpha_i||_2^2 + \lambda\sum^m_{i=1}||\alpha_i||_1
-\]</span></p>
-<p>其中<span class="math inline">\(B\in R_{d\times k}\)</span>是字典矩阵，<span class="math inline">\(\alpha_i\in R_k\)</span>是对应的<span class="math inline">\(x_i\in R_d\)</span>的稀疏表示。上式的第一项使得这个构造更好，而第二项约束<span class="math inline">\(\alpha_i\)</span>，使得模型足够稀疏。</p>
 <h3 id="字典学习">字典学习</h3>
 <p>把数据集<span class="math inline">\(D\)</span>当作矩阵，每一行是一个样本，每一列则是一种特征。</p>
 <p>特征选择中，特征被认为是稀疏的。例如，很多列对于学习任务是没有关联的。</p>
 <p>我们考虑另一种稀疏：<span class="math inline">\(D\)</span>的矩阵中有很多的零，但是这些零并不有规律地分布在一列列或者一行行中。</p>
 <p>我们需要找到一个恰当的字典，使这些样本被变换到某些稀疏表示上，从而使得学习过程简化。</p>
+<p>假设有<span class="math inline">\(m\)</span>个样本，那么最简单的字典学习是</p>
+<p><span class="math display">\[\min_{B,\alpha_i}\sum^m_{i=1}||x_i-B\alpha_i||_2^2 + \lambda\sum^m_{i=1}||\alpha_i||_1
+\]</span></p>
+<p>其中<span class="math inline">\(B\in R_{d\times k}\)</span>是字典矩阵，<span class="math inline">\(\alpha_i\in R_k\)</span>是对应的<span class="math inline">\(x_i\in R_d\)</span>的稀疏表示。上式的第一项使得这个构造更好，而第二项约束<span class="math inline">\(\alpha_i\)</span>，使得模型足够稀疏。</p>
 <h1 id="降维和度量学习机器学习课程">降维和度量学习（机器学习课程）</h1>
 <p>在实践上，有些时候，添加新的特征可能不会改善表现，甚至更差。这也称为维度的诅咒（curse of dimensionality）。</p>
 <p>增加特征数量，可能导致：</p>
@@ -3968,7 +3994,7 @@ network）组成。</p>
 	<figcaption>132.jpg</figcaption>
 	
 </figure></p>
-<p>为了分析有向图中变量间的条件独立性，可以使用有向分离（D-separation）。先把有向图转位无向图</p>
+<p>为了分析有向图中变量间的条件独立性，可以使用有向分离（D-separation）。先把有向图转为无向图</p>
 <ul>
 <li>找出有向图中所有V型结构，在V型结构中的两个父节点中加上一条无向边</li>
 <li>所有有向边改为无向边</li>
@@ -4100,7 +4126,7 @@ network）组成。</p>
 	<figcaption>137.jpg</figcaption>
 	
 </figure></p>
-<p><strong>Stride, kernel size, dialtion</strong></p>
+<p><strong>Stride, kernel size, dilation</strong></p>
 <p><figure 
 	
 		class="gallery-image" 
@@ -4281,7 +4307,7 @@ network）组成。</p>
 	
 </figure></p>
 <h2 id="假设的真错误true-error-of-a-hypothesis">假设的真错误（True Error of a Hypothesis）</h2>
-<p><span class="math inline">\(h\)</span>的真误差为，它错误分类的概率</p>
+<p><span class="math inline">\(h\)</span>的真错误为，它错误分类的概率</p>
 <p><span class="math display">\[error_{true}(h) = Pr[h(x)\neq c(x)]
 \]</span></p>
 <p>对于实际中的实例集<span class="math inline">\(D\)</span></p>
@@ -5424,6 +5450,36 @@ network）组成。</p>
 	
 </figure></p>
 <p>另外，基于神经网络的机器翻译和Chat-bot（包括GPT）也是用到了RNN的条件生成，主要用到了编码器-解码器网络。</p>
+<h2 id="词嵌入word-embedding">词嵌入（Word Embedding）</h2>
+<p>现有的机器学习方法往往无法直接处理文本数据，因此需要找到合适的方法，将文本数据转换为数值型数据，由此引出了Word Embedding（词嵌入）的概念。</p>
+<p>具有相同含义的单词具有相似表示。</p>
+<p>使用词嵌入的好处是</p>
+<ul>
+<li>大多数神经网络工具不适合处理高维、稀疏向量（应该是说one-hot的缺点，而词嵌入比较密集）</li>
+<li>密集表示，所以泛化能力强</li>
+</ul>
+<p><strong>Bag of Words</strong></p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 292; 
+			flex-basis: 700px"
+	>
+	<a href="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/148.jpg" data-size="1069x366">
+		<img src="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/148.jpg"
+			width="1069"
+			height="366"
+			srcset="/p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/148_hu1aad821270ab1a51f3b7fe56ef3488a7_25610_480x0_resize_q75_box.jpg 480w, /p/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB-%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E7%BB%BC%E5%90%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/148_hu1aad821270ab1a51f3b7fe56ef3488a7_25610_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="148.jpg">
+	</a>
+	
+	<figcaption>148.jpg</figcaption>
+	
+</figure></p>
+<p><strong>word2vec</strong></p>
+<p>即将词汇向量化。老师介绍的不是很清楚。</p>
 <h2 id="编码器-解码器网络">编码器-解码器网络</h2>
 <p><figure 
 	
@@ -6696,6 +6752,7 @@ network）组成。</p>
           </ol>
         </li>
         <li><a href="#rnn条件生成">RNN条件生成</a></li>
+        <li><a href="#词嵌入word-embedding">词嵌入（Word Embedding）</a></li>
         <li><a href="#编码器-解码器网络">编码器-解码器网络</a></li>
         <li><a href="#注意力机制">注意力机制</a>
           <ol>
