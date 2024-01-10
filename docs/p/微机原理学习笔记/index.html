@@ -125,7 +125,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 32 分钟
+                    阅读时长: 33 分钟
                 </time>
             </div>
         
@@ -498,7 +498,11 @@
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">MOV</span> <span style="color:#66d9ef">AX</span>, <span style="color:#66d9ef">LENGTH</span> <span style="color:#66d9ef">VAR1</span> <span style="color:#75715e">; 获取长度
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">MOV</span> <span style="color:#66d9ef">AL</span>, <span style="color:#66d9ef">SIZE</span>   <span style="color:#66d9ef">VAR1</span> <span style="color:#75715e">; 获取大小
 </span></span></span></code></pre></div><h2 id="ptr操作符">PTR操作符</h2>
-<p>TODO</p>
+<p>相当于汇编的强制类型转换。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ASM" data-lang="ASM"><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">类型</span> <span style="color:#a6e22e">PTR</span> <span style="color:#960050;background-color:#1e0010">表达式</span>
+</span></span></code></pre></div><p>例如</p>
+<pre tabindex="0"><code>WORD PTR [BX]
+</code></pre><p>其将BX指向的内存的大小当作字。避免运算过程中类型不确定的问题。</p>
 <h2 id="数据寻址操作">数据寻址操作</h2>
 <p>即<code>MOV</code>命令。其格式如下</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-asm" data-lang="asm"><span style="display:flex;"><span><span style="color:#a6e22e">MOV</span> <span style="color:#66d9ef">DST</span>, <span style="color:#66d9ef">SRC</span>
@@ -831,8 +835,8 @@ PUSHF
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-asm" data-lang="asm"><span style="display:flex;"><span><span style="color:#a6e22e">DIV</span> <span style="color:#66d9ef">SRC</span>
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">IDIV</span> <span style="color:#66d9ef">SRC</span>
 </span></span></code></pre></div><p>除法指令。其中DIV对应无符号，IDIV对应有符号。总体上和乘法指令类似。</p>
-<p>当SRC为字节时，将AX中的16位二进制数除以8为二进制数（SRC），其结果的商保存在AL中，预属保存在AH中。</p>
-<p>当SRC为字时，DX与AX联合称为32位被除数，SRC作为16为除数。其结果的商存在AX中，余数存在DX中。</p>
+<p>当SRC为字节时，将AX中的16位二进制数除以8为二进制数（SRC），其结果的商保存在AL中，余数保存在AH中。</p>
+<p>当SRC为字时，DX与AX联合成为32位被除数，SRC作为16为除数。其结果的商存在AX中，余数存在DX中。</p>
 <p>商的正负性不用多说，讨论余数的正负性：余数的正负永远和被除数的正负相同（和数学上定义不一样）。</p>
 <p>这两个指令不影响PSW的标志位，但是不允许出现除数为0或者除法溢出。如果出现这两种情况，则没有意义，并且会引发中断。</p>
 <h3 id="cbwcwd">CBW/CWD</h3>
@@ -1175,12 +1179,12 @@ PUSHF
 <h3 id="重复前缀">重复前缀</h3>
 <p>实际应用中经常需要对整个字符串进行操作，此时需要重复指令。</p>
 <p><strong>REP</strong></p>
-<pre tabindex="0"><code>REP STR_OP ; 当CX!=0时，重复执行STR_OP。CX&lt;-CX-1。例如REP STOSB
-</code></pre><p><strong>REPZ/REPE</strong></p>
-<pre tabindex="0"><code>REPZ STR_OP ; 当CX!=0且ZF=1，重复执行STR_OP。CX&lt;-CX-1。例如REP CMPSB比较直到不相同
-</code></pre><p><strong>REPNZ/REPNE</strong></p>
-<pre tabindex="0"><code>REPNZ STR_OP ; 当CX!=0且ZF=1，重复执行STR_OP。CX&lt;-CX-1。例如REP CMPSB比较直到相同
-</code></pre><h2 id="子程序">子程序</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-asm" data-lang="asm"><span style="display:flex;"><span><span style="color:#a6e22e">REP</span> <span style="color:#66d9ef">STR_OP</span> <span style="color:#75715e">; 当CX!=0时，重复执行STR_OP。CX&lt;-CX-1。例如REP STOSB
+</span></span></span></code></pre></div><p><strong>REPZ/REPE</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-asm" data-lang="asm"><span style="display:flex;"><span><span style="color:#a6e22e">REPZ</span> <span style="color:#66d9ef">STR_OP</span> <span style="color:#75715e">; 当CX!=0且ZF=1，重复执行STR_OP。CX&lt;-CX-1。例如REP CMPSB比较直到不相同
+</span></span></span></code></pre></div><p><strong>REPNZ/REPNE</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-asm" data-lang="asm"><span style="display:flex;"><span><span style="color:#a6e22e">REPNZ</span> <span style="color:#66d9ef">STR_OP</span> <span style="color:#75715e">; 当CX!=0且ZF=1，重复执行STR_OP。CX&lt;-CX-1。例如REP CMPSB比较直到相同
+</span></span></span></code></pre></div><h2 id="子程序">子程序</h2>
 <p>子程序是一种汇编语言的封装，在和C语言中的函数是类似的。子程序通过修改CS和/或IP来实现调用，一般通过CALL指令。CALL好处在可以保存CS和IP，方便之后用RET指令返回。</p>
 <h3 id="call">CALL</h3>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-asm" data-lang="asm"><span style="display:flex;"><span><span style="color:#a6e22e">CALL</span> <span style="color:#66d9ef">LABEL</span>
@@ -1357,8 +1361,8 @@ RET n ; 完成RET（或RETF）后，(SP)&lt;-(SP)+n
 <li>握手技术和联络方式：同步传输总线、异步传输总线</li>
 <li>功能层次：片内总线、元件级总线、系统总线、通信总线</li>
 </ul>
-<p>微处理器级总线： 微处理器外部结构中的数量有限的输入输出引脚
-系统级总线：微处理器级总线和其他逻辑电路连接组成的主机板系统</p>
+<p>微处理器级总线： 微处理器外部结构中的数量有限的输入输出引脚</p>
+<p>系统级总线：微处理器级总线和其他逻辑电路连接组成的主机板系统</p>
 <h2 id="集中常用芯片">集中常用芯片</h2>
 <h3 id="三态门">三态门</h3>
 <p>典型芯片74LS244</p>
@@ -1482,26 +1486,349 @@ RET n ; 完成RET（或RETF）后，(SP)&lt;-(SP)+n
 	
 </figure></p>
 <h2 id="8086的引脚功能及时序">8086的引脚功能及时序</h2>
-<p>P169</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 120; 
+			flex-basis: 288px"
+	>
+	<a href="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/23.jpg" data-size="608x505">
+		<img src="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/23.jpg"
+			width="608"
+			height="505"
+			srcset="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/23_huba51d7f006002e516a11c62597dec84d_32795_480x0_resize_q75_box.jpg 480w, /p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/23_huba51d7f006002e516a11c62597dec84d_32795_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="23.jpg">
+	</a>
+	
+	<figcaption>23.jpg</figcaption>
+	
+</figure></p>
+<h3 id="总线周期">总线周期</h3>
+<ul>
+<li>T1状态：表示CPU准备输出存储器地址或I/O地址。</li>
+<li>T2状态：用于输出控制信号。</li>
+<li>T3/Tw状态：在这个状态下，CPU会等待存储器或I/O端口准备好数据传输。</li>
+<li>T4状态：这是数据传输完成的确认阶段。</li>
+</ul>
 <h3 id="最小方式">最小方式</h3>
+<p>引脚功能TODO</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 83; 
+			flex-basis: 200px"
+	>
+	<a href="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/24.jpg" data-size="604x722">
+		<img src="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/24.jpg"
+			width="604"
+			height="722"
+			srcset="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/24_hue35df2b2583f1334f7daf90ca06f7788_36119_480x0_resize_q75_box.jpg 480w, /p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/24_hue35df2b2583f1334f7daf90ca06f7788_36119_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="24.jpg">
+	</a>
+	
+	<figcaption>24.jpg</figcaption>
+	
+</figure></p>
 <h3 id="最大方式">最大方式</h3>
+<p>引脚功能TODO</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 58; 
+			flex-basis: 140px"
+	>
+	<a href="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/25.jpg" data-size="465x794">
+		<img src="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/25.jpg"
+			width="465"
+			height="794"
+			srcset="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/25_hu2835571a5598b6a1773d72c363035f70_29040_480x0_resize_q75_box.jpg 480w, /p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/25_hu2835571a5598b6a1773d72c363035f70_29040_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="25.jpg">
+	</a>
+	
+	<figcaption>25.jpg</figcaption>
+	
+</figure></p>
 <h2 id="系统总线的形成">系统总线的形成</h2>
-<p>P179</p>
 <h3 id="最小方式-1">最小方式</h3>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 99; 
+			flex-basis: 239px"
+	>
+	<a href="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/26.jpg" data-size="513x514">
+		<img src="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/26.jpg"
+			width="513"
+			height="514"
+			srcset="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/26_huc8f155f4b5e31ca5fa316dd43c21e7de_22009_480x0_resize_q75_box.jpg 480w, /p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/26_huc8f155f4b5e31ca5fa316dd43c21e7de_22009_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="26.jpg">
+	</a>
+	
+	<figcaption>26.jpg</figcaption>
+	
+</figure></p>
 <h3 id="最大方式-1">最大方式</h3>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 91; 
+			flex-basis: 218px"
+	>
+	<a href="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/27.jpg" data-size="479x525">
+		<img src="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/27.jpg"
+			width="479"
+			height="525"
+			srcset="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/27_hu61003f34a48b7141b14782d0fb5048ec_23000_480x0_resize_q75_box.jpg 480w, /p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/27_hu61003f34a48b7141b14782d0fb5048ec_23000_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="27.jpg">
+	</a>
+	
+	<figcaption>27.jpg</figcaption>
+	
+</figure></p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 82; 
+			flex-basis: 197px"
+	>
+	<a href="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/28.jpg" data-size="502x609">
+		<img src="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/28.jpg"
+			width="502"
+			height="609"
+			srcset="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/28_hu3d44f390182d1c7e72a5ae77edaa8e33_29952_480x0_resize_q75_box.jpg 480w, /p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/28_hu3d44f390182d1c7e72a5ae77edaa8e33_29952_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="28.jpg">
+	</a>
+	
+	<figcaption>28.jpg</figcaption>
+	
+</figure></p>
 <h3 id="8086与8088的差异">8086与8088的差异</h3>
+<ol>
+<li>在 CPU 内部，8086 CPU 的指令队列寄存器由 6 字节组成，而 8088 CPU 的指令队列寄存器由 4 字节组成。</li>
+<li>在 CPU 外部
+<ol>
+<li>8088只有8位数据线即D0-D7</li>
+<li>8088中为<span class="math inline">\(IO/\bar M\)</span>，而8086中为<span class="math inline">\(M/\overline{IO}\)</span></li>
+</ol>
+</li>
+<li>8086中的<span class="math inline">\(\overline{BHE}/S_7\)</span>在8088中为<span class="math inline">\(\overline{SS_0}\)</span>仅用于在最小方式中提供状态信息，在最大方式中始终为高电平。</li>
+</ol>
 <h3 id="pcxt-总线">PC/XT 总线</h3>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 75; 
+			flex-basis: 180px"
+	>
+	<a href="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/29.jpg" data-size="496x658">
+		<img src="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/29.jpg"
+			width="496"
+			height="658"
+			srcset="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/29_hud442960461802b315b185547dc8289d1_24528_480x0_resize_q75_box.jpg 480w, /p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/29_hud442960461802b315b185547dc8289d1_24528_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="29.jpg">
+	</a>
+	
+	<figcaption>29.jpg</figcaption>
+	
+</figure></p>
+<p>引脚功能todo</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 82; 
+			flex-basis: 198px"
+	>
+	<a href="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/30.jpg" data-size="465x563">
+		<img src="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/30.jpg"
+			width="465"
+			height="563"
+			srcset="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/30_huc49eb68eb8f16e680890e0a793f19295_28891_480x0_resize_q75_box.jpg 480w, /p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/30_huc49eb68eb8f16e680890e0a793f19295_28891_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="30.jpg">
+	</a>
+	
+	<figcaption>30.jpg</figcaption>
+	
+</figure></p>
 <h1 id="存储器设计">存储器设计</h1>
 <h2 id="存储器分类和主要技术指标">存储器分类和主要技术指标</h2>
 <p>P190</p>
 <h2 id="几种常用存储器芯片介绍">几种常用存储器芯片介绍</h2>
-<p>P193</p>
+<p>6264和2114是SRAM，而2764是EPROM</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 210; 
+			flex-basis: 505px"
+	>
+	<a href="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/31.jpg" data-size="590x280">
+		<img src="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/31.jpg"
+			width="590"
+			height="280"
+			srcset="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/31_hu04586cb4bd7644bca8b126635cf0bd0c_20485_480x0_resize_q75_box.jpg 480w, /p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/31_hu04586cb4bd7644bca8b126635cf0bd0c_20485_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="31.jpg">
+	</a>
+	
+	<figcaption>31.jpg</figcaption>
+	
+</figure></p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 129; 
+			flex-basis: 311px"
+	>
+	<a href="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/32.jpg" data-size="313x241">
+		<img src="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/32.jpg"
+			width="313"
+			height="241"
+			srcset="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/32_hubb31d81078fde33533fa870dd05c7741_9035_480x0_resize_q75_box.jpg 480w, /p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/32_hubb31d81078fde33533fa870dd05c7741_9035_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="32.jpg">
+	</a>
+	
+	<figcaption>32.jpg</figcaption>
+	
+</figure></p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 83; 
+			flex-basis: 199px"
+	>
+	<a href="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/33.jpg" data-size="276x332">
+		<img src="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/33.jpg"
+			width="276"
+			height="332"
+			srcset="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/33_hudf1ec546759bdb96550de072c5318af2_12922_480x0_resize_q75_box.jpg 480w, /p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/33_hudf1ec546759bdb96550de072c5318af2_12922_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="33.jpg">
+	</a>
+	
+	<figcaption>33.jpg</figcaption>
+	
+</figure></p>
 <h2 id="扩展存储器设计">扩展存储器设计</h2>
 <p>P201</p>
 <h2 id="存储器地址译码电路设计">存储器地址译码电路设计</h2>
 <p>P207</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 70; 
+			flex-basis: 169px"
+	>
+	<a href="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/34.jpg" data-size="229x324">
+		<img src="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/34.jpg"
+			width="229"
+			height="324"
+			srcset="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/34_hu9bf4f35ce0b6d4e9a10f84aac4c7d8e4_7916_480x0_resize_q75_box.jpg 480w, /p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/34_hu9bf4f35ce0b6d4e9a10f84aac4c7d8e4_7916_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="34.jpg">
+	</a>
+	
+	<figcaption>34.jpg</figcaption>
+	
+</figure></p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 236; 
+			flex-basis: 567px"
+	>
+	<a href="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/35.jpg" data-size="975x412">
+		<img src="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/35.jpg"
+			width="975"
+			height="412"
+			srcset="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/35_hub75cb677286aec630e313330b0b68fdb_36845_480x0_resize_q75_box.jpg 480w, /p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/35_hub75cb677286aec630e313330b0b68fdb_36845_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="35.jpg">
+	</a>
+	
+	<figcaption>35.jpg</figcaption>
+	
+</figure></p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 62; 
+			flex-basis: 150px"
+	>
+	<a href="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/36.jpg" data-size="207x331">
+		<img src="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/36.jpg"
+			width="207"
+			height="331"
+			srcset="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/36_hu842b77a3a03c1156adc7103e115d7089_7889_480x0_resize_q75_box.jpg 480w, /p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/36_hu842b77a3a03c1156adc7103e115d7089_7889_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="36.jpg">
+	</a>
+	
+	<figcaption>36.jpg</figcaption>
+	
+</figure></p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 64; 
+			flex-basis: 155px"
+	>
+	<a href="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/37.jpg" data-size="241x372">
+		<img src="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/37.jpg"
+			width="241"
+			height="372"
+			srcset="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/37_hu99107d1b8d7439fb21325b5e1d756adc_11130_480x0_resize_q75_box.jpg 480w, /p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/37_hu99107d1b8d7439fb21325b5e1d756adc_11130_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="37.jpg">
+	</a>
+	
+	<figcaption>37.jpg</figcaption>
+	
+</figure></p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 100; 
+			flex-basis: 240px"
+	>
+	<a href="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/38.jpg" data-size="716x714">
+		<img src="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/38.jpg"
+			width="716"
+			height="714"
+			srcset="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/38_hu8847e1b69424df0cbf6539bdb7dde717_42925_480x0_resize_q75_box.jpg 480w, /p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/38_hu8847e1b69424df0cbf6539bdb7dde717_42925_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="38.jpg">
+	</a>
+	
+	<figcaption>38.jpg</figcaption>
+	
+</figure></p>
 <h2 id="存储器与cpu的连接">存储器与CPU的连接</h2>
 <p>P209</p>
+<p>本章后面的疑似不用学</p>
 <h1 id="常用芯片的接口技术">常用芯片的接口技术</h1>
 <h2 id="io-接口概述">I/O 接口概述</h2>
 <p>P224</p>
@@ -1519,13 +1846,108 @@ RET n ; 完成RET（或RETF）后，(SP)&lt;-(SP)+n
 <p>P260</p>
 <h2 id="可编程中断控制器-8259a-及其应用">可编程中断控制器 8259A 及其应用</h2>
 <p>P264</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 76; 
+			flex-basis: 183px"
+	>
+	<a href="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/39.jpg" data-size="302x394">
+		<img src="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/39.jpg"
+			width="302"
+			height="394"
+			srcset="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/39_hue6a1e4f7905b586ffe7f3d1ad8e40307_14794_480x0_resize_q75_box.jpg 480w, /p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/39_hue6a1e4f7905b586ffe7f3d1ad8e40307_14794_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="39.jpg">
+	</a>
+	
+	<figcaption>39.jpg</figcaption>
+	
+</figure></p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 175; 
+			flex-basis: 420px"
+	>
+	<a href="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/40.jpg" data-size="534x305">
+		<img src="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/40.jpg"
+			width="534"
+			height="305"
+			srcset="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/40_hudd1584f4a34a41afd5928ec1d3a22d37_24906_480x0_resize_q75_box.jpg 480w, /p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/40_hudd1584f4a34a41afd5928ec1d3a22d37_24906_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="40.jpg">
+	</a>
+	
+	<figcaption>40.jpg</figcaption>
+	
+</figure></p>
 <h1 id="定时计数器-8253-应用设计">定时/计数器 8253 应用设计</h1>
 <h2 id="8253的引脚功能及特点">8253的引脚功能及特点</h2>
 <p>P273</p>
 <h2 id="8253的原理结构及工作原理">8253的原理结构及工作原理</h2>
 <p>P273</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 62; 
+			flex-basis: 149px"
+	>
+	<a href="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/41.jpg" data-size="570x918">
+		<img src="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/41.jpg"
+			width="570"
+			height="918"
+			srcset="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/41_hua49ce108afcb738c6b7ae176e4371f8f_39400_480x0_resize_q75_box.jpg 480w, /p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/41_hua49ce108afcb738c6b7ae176e4371f8f_39400_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="41.jpg">
+	</a>
+	
+	<figcaption>41.jpg</figcaption>
+	
+</figure></p>
 <h2 id="8253的控制字及工作方式">8253的控制字及工作方式</h2>
 <p>P275</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 297; 
+			flex-basis: 714px"
+	>
+	<a href="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/42.jpg" data-size="497x167">
+		<img src="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/42.jpg"
+			width="497"
+			height="167"
+			srcset="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/42_hu1797d69e1ab29cbb7747b27d4060a1ad_10567_480x0_resize_q75_box.jpg 480w, /p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/42_hu1797d69e1ab29cbb7747b27d4060a1ad_10567_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="42.jpg">
+	</a>
+	
+	<figcaption>42.jpg</figcaption>
+	
+</figure></p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 97; 
+			flex-basis: 234px"
+	>
+	<a href="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/43.jpg" data-size="571x584">
+		<img src="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/43.jpg"
+			width="571"
+			height="584"
+			srcset="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/43_hu43dfcda397758e9bf393c2e8e3c2ced4_39066_480x0_resize_q75_box.jpg 480w, /p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/43_hu43dfcda397758e9bf393c2e8e3c2ced4_39066_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="43.jpg">
+	</a>
+	
+	<figcaption>43.jpg</figcaption>
+	
+</figure></p>
 <h2 id="8253与系统总线的接口方法">8253与系统总线的接口方法</h2>
 <p>P287</p>
 <h2 id="8253的应用设计">8253的应用设计</h2>
@@ -1535,8 +1957,65 @@ RET n ; 完成RET（或RETF）后，(SP)&lt;-(SP)+n
 <p>P316</p>
 <h2 id="8255a的原理结构及工作原理">8255A的原理结构及工作原理</h2>
 <p>P316</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 124; 
+			flex-basis: 298px"
+	>
+	<a href="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/44.jpg" data-size="651x523">
+		<img src="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/44.jpg"
+			width="651"
+			height="523"
+			srcset="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/44_hub7935a68115e426b4f89f0e4e0dd7e9b_23282_480x0_resize_q75_box.jpg 480w, /p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/44_hub7935a68115e426b4f89f0e4e0dd7e9b_23282_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="44.jpg">
+	</a>
+	
+	<figcaption>44.jpg</figcaption>
+	
+</figure></p>
 <h2 id="8255a的控制字及工作方式">8255A的控制字及工作方式</h2>
 <p>P317</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 377; 
+			flex-basis: 905px"
+	>
+	<a href="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/45.jpg" data-size="770x204">
+		<img src="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/45.jpg"
+			width="770"
+			height="204"
+			srcset="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/45_hu4123861ebcbb0d142c53cd369e780abc_14235_480x0_resize_q75_box.jpg 480w, /p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/45_hu4123861ebcbb0d142c53cd369e780abc_14235_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="45.jpg">
+	</a>
+	
+	<figcaption>45.jpg</figcaption>
+	
+</figure></p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 435; 
+			flex-basis: 1045px"
+	>
+	<a href="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/46.jpg" data-size="710x163">
+		<img src="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/46.jpg"
+			width="710"
+			height="163"
+			srcset="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/46_hu70788260a4b9a0b3deeb3f2263c301c8_7489_480x0_resize_q75_box.jpg 480w, /p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/46_hu70788260a4b9a0b3deeb3f2263c301c8_7489_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="46.jpg">
+	</a>
+	
+	<figcaption>46.jpg</figcaption>
+	
+</figure></p>
 <h2 id="8255a与系统总线的接口方法">8255A与系统总线的接口方法</h2>
 <p>P323</p>
 <h2 id="8255a的应用设计">8255A的应用设计</h2>
@@ -2016,6 +2495,7 @@ RET n ; 完成RET（或RETF）后，(SP)&lt;-(SP)+n
         </li>
         <li><a href="#8086的引脚功能及时序">8086的引脚功能及时序</a>
           <ol>
+            <li><a href="#总线周期">总线周期</a></li>
             <li><a href="#最小方式">最小方式</a></li>
             <li><a href="#最大方式">最大方式</a></li>
           </ol>
