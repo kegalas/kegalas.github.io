@@ -1404,7 +1404,7 @@ E = \dfrac{1}{2}\sum_{n=1}^N(y_n-t_n)^2
 <p><span class="math display">\[R(h) = E_x[R(h(x)|x)] = \int R(h(x)|x)p(x)dx
 \]</span></p>
 <p>为了最小化总体风险，我们只需要在每个样本上都选择那个能使条件风险最小的类别。即</p>
-<p><span class="math display">\[h^*(x)=\arg\min_{c\in y}R(c|x)
+<p><span class="math display">\[h^*(x)=\arg\min_{\alpha\in y}R(\alpha|x)
 \]</span></p>
 <p>此时<span class="math inline">\(h^*(x)\)</span>就是贝叶斯最优分类器。与之对应的总体风险<span class="math inline">\(R(h^*)\)</span>称为贝叶斯风险。</p>
 <p>具体过程为：</p>
@@ -1528,7 +1528,7 @@ E = \dfrac{1}{2}\sum_{n=1}^N(y_n-t_n)^2
 \]</span></p>
 <p>我们的⽬标是最⼩化期望损失，它可以分解为（平⽅）偏差、⽅差和⼀个常数噪声项的和。这里噪声是常数，所以只能调整前两个。我们通常只能二者选其一，要么偏差大方差小，要么方差大偏差小。</p>
 <p>按照周志华的讲法，<span class="math inline">\(y(x;D)\)</span>在这里是模型<span class="math inline">\(y\)</span>在数据集<span class="math inline">\(D\)</span>上训练，对<span class="math inline">\(x\)</span>的预测。而<span class="math inline">\(E_D[y(x;D)]\)</span>则为期望预测。而<span class="math inline">\(h(x)\)</span>则为数据集中的标签（可能存在标错了的情况，或者说，因为噪声的存在，导致标记值和真实值不同）。看起来<span class="math inline">\(t\)</span>是样本的真实标签（即没有错的标签）。</p>
-<p>周志华的符号依次为模型<span class="math inline">\(f(x;D)\)</span>，模型预测期望<span class="math inline">\(\bar f(x)\)</span>，数据集标记<span class="math inline">\(y_D\)</span>，真实标记<span class="math inline">\(y_D\)</span>。方差为<span class="math inline">\(E_D[f(x;D)-\bar f(x)]\)</span>，噪声为<span class="math inline">\(\epsilon^2 = E_D[(y_D-y)^2]\)</span>，偏差为<span class="math inline">\(bias^2(x)=(\bar f(x)-y)^2\)</span>，偏差-方差分解如下</p>
+<p>周志华的符号依次为模型<span class="math inline">\(f(x;D)\)</span>，模型预测期望<span class="math inline">\(\bar f(x)\)</span>，数据集标记<span class="math inline">\(y_D\)</span>，真实标记<span class="math inline">\(y_D\)</span>。方差为<span class="math inline">\(E_D[(f(x;D)-\bar f(x))^2]\)</span>，噪声为<span class="math inline">\(\epsilon^2 = E_D[(y_D-y)^2]\)</span>，偏差为<span class="math inline">\(bias^2(x)=(\bar f(x)-y)^2\)</span>，偏差-方差分解如下</p>
 <p><figure 
 	
 		class="gallery-image" 
@@ -2208,7 +2208,7 @@ E = \dfrac{1}{2}\sum_{n=1}^N(y_n-t_n)^2
 \]</span></p>
 <p>其中<span class="math inline">\(m\)</span>是样本数量，<span class="math inline">\(y\)</span>的取值为<span class="math inline">\(\{0,1\}\)</span>。目标就是最小化损失函数，可以利用梯度下降法等办法。</p>
 <p>梯度为</p>
-<p><span class="math display">\[\dfrac{\partial}{\partial w_j} J(\theta) = \dfrac{1}{m}\sum^m_{i=1}(h_\theta(x^{(i)})-y^{(i)})x_j^{(i)}
+<p><span class="math display">\[\dfrac{\partial}{\partial \theta_j} J(\theta) = \dfrac{1}{m}\sum^m_{i=1}(h_\theta(x^{(i)})-y^{(i)})x_j^{(i)}
 \]</span></p>
 <p>另外，还是有可能算出属于某个类的概率的，即<span class="math inline">\(p(y|x;\theta)=(h_\theta(x))^y(1-h_\theta(x))^{1-y}\)</span>，或者说<span class="math inline">\(h_\theta(x)\)</span>表示<span class="math inline">\(x\)</span>属于正类的概率。</p>
 <p>非线性可分时，仍然可以使用广义线性模型来升维解决。</p>
@@ -2823,7 +2823,7 @@ E = \dfrac{1}{2}\sum_{n=1}^N(y_n-t_n)^2
 <p><span class="math display">\[J = \dfrac{1}{N}\sum^N_{n=1} ||x_n-\tilde{x}_n||^2
 \]</span></p>
 <p>设<span class="math inline">\(\{u_i\},i=1,\cdots,D\)</span>是原空间的正交基向量，而<span class="math inline">\(u_i^Tu_j=\delta_{ij}\)</span>。然后这个量再也没有用过，老师可能缝合了六七个PPT，变量乱窜，前文没有后文，后文没有前文，我决定不学，改为学周志华的《机器学习》。</p>
-<p>假设数据样本进行了中心化，即<span class="math inline">\(\sum_i x_i=0\)</span>。投影变换后得到的心坐标系为<span class="math inline">\(\{w_1,w_2,\cdots,w_{d'}\}\)</span>，其中<span class="math inline">\(w_i\)</span>是标准正交基向量，<span class="math inline">\(||w_i||_2=1\)</span>。此时，样本点<span class="math inline">\(x_i\)</span>在低维坐标中的投影是<span class="math inline">\(z_i=(z_{i1},z_{i2},\cdots,z_{id'})\)</span>，其中<span class="math inline">\(z_{ij} = w_j^Tx_i\)</span>（或者说，<span class="math inline">\(z_i=W^Tx_i\)</span>）。如果基于<span class="math inline">\(z_i\)</span>来重构<span class="math inline">\(x_i\)</span>，则有<span class="math inline">\(\hat x_i = \sum^{d'}_{j=1}z_{ij}w_j\)</span>。</p>
+<p>假设数据样本进行了中心化，即<span class="math inline">\(\sum_i x_i=0\)</span>。投影变换后得到的新坐标系为<span class="math inline">\(\{w_1,w_2,\cdots,w_{d'}\}\)</span>，其中<span class="math inline">\(w_i\)</span>是标准正交基向量，<span class="math inline">\(||w_i||_2=1\)</span>。此时，样本点<span class="math inline">\(x_i\)</span>在低维坐标中的投影是<span class="math inline">\(z_i=(z_{i1},z_{i2},\cdots,z_{id'})\)</span>，其中<span class="math inline">\(z_{ij} = w_j^Tx_i\)</span>（或者说，<span class="math inline">\(z_i=W^Tx_i\)</span>）。如果基于<span class="math inline">\(z_i\)</span>来重构<span class="math inline">\(x_i\)</span>，则有<span class="math inline">\(\hat x_i = \sum^{d'}_{j=1}z_{ij}w_j\)</span>。</p>
 <p>考虑整个训练集，原样本点<span class="math inline">\(x_i\)</span>与基于投影重构的样本点<span class="math inline">\(\hat x_i\)</span>之间的距离为</p>
 <p><span class="math display">\[\sum^m_{i=1}\bigg|\bigg|\sum^{d'}_{j=1}z_{ij}w_j-x_i\bigg|\bigg|^2 = -tr\bigg(W^T\bigg(\sum^m_{i=1}x_ix_i^T\bigg)W\bigg)
 \]</span></p>
@@ -3774,7 +3774,7 @@ network）组成。</p>
 <p><span class="math display">\[R = \dfrac{TP}{TP+FN}
 \]</span></p>
 <p>这两个数据是矛盾的数据，召回率高时往往精度低，精度高时往往召回率低。</p>
-<p>在很多情形下，我们可根据学习器的预测结果对样例进行排序，排在前面的是学习器认为“最可能”是正例的样本，排在最后的则是学习器认为“最不可能”是正例的样本。按此顺序逐个把样本作为正例进行预测，则每次可以计算出当前的精度、召回率。以精度为纵轴、召回率为横轴作图，就得到了精度-召回率曲线，简称 “P-R曲线〃</p>
+<p>在很多情形下，我们可根据学习器的预测结果对样例进行排序，排在前面的是学习器认为“最可能”是正例的样本，排在最后的则是学习器认为“最不可能”是正例的样本。按此顺序逐个把样本作为正例进行预测，则每次可以计算出当前的精度、召回率。以精度为纵轴、召回率为横轴作图，就得到了精度-召回率曲线，简称“P-R曲线&quot;</p>
 <p><figure 
 	
 		class="gallery-image" 
