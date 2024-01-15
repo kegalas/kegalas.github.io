@@ -1,17 +1,18 @@
 ---
-title: 从零开始的软渲染器 光照初步
+title: 干货 | 从零开始的软渲染器 光照初步
 date: 2023-08-04T21:25:38+08:00
 draft: false
 tags:
   - 图形学
   - 渲染
+  - 干货
 categories: 图形学
 mathjax: true
 markup: goldmark
 image: cover.jpg
 ---
 
-<u>**[导航页面](../从零开始的软渲染器-导航/)**</u>
+<u>**[导航页面](../干货-从零开始的软渲染器-导航/)**</u>
 
 # Blinn-Phong反射模型
 

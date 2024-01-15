@@ -1,10 +1,11 @@
 ---
-title: 算法竞赛常用模板整理
+title: 干货 | 算法竞赛常用模板整理
 date: 2021-12-18T15:57:37+08:00
 draft: false
 tags:
   - 算法
   - 模板
+  - 干货
 description: 包含ICPC竞赛常用的一些模板
 categories: 算法
 mathjax: true

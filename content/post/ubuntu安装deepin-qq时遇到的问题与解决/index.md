@@ -1,13 +1,14 @@
 ---
-title: ubuntu安装deepin-qq时遇到的问题与解决
+title: 干货 | ubuntu安装deepin-qq时遇到的问题与解决
 date: 2021-01-03 12:16:26
-image: "cover.jpg"
-tags: 
-    - Ubuntu
-    - Linux
-    - QQ
+image: cover.jpg
+tags:
+  - Ubuntu
+  - Linux
+  - QQ
+  - 干货
 categories:
-    - Linux
+  - Linux
 description: 关于 libgirepository-1.0-1 破坏 python-gi (< 3.34.0-4~) 但是 3.30.4-1 正要被安装 的报错
 ---
 

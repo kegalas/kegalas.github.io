@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='导航页面 OBJ格式简介 .obj格式是描述几何模型的一种简单办法。它可以描述顶点的坐标、法向量、纹理坐标，以及三角面的顶点数据等等。 注释 .ob'><title>干货 | 从零开始的软渲染器 模型库</title>
+
+<link rel='canonical' href='https://kegalas.top/p/%E5%B9%B2%E8%B4%A7-%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E6%A8%A1%E5%9E%8B%E5%BA%93/'>
+
+<link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='干货 | 从零开始的软渲染器 模型库'>
+<meta property='og:description' content='导航页面 OBJ格式简介 .obj格式是描述几何模型的一种简单办法。它可以描述顶点的坐标、法向量、纹理坐标，以及三角面的顶点数据等等。 注释 .ob'>
+<meta property='og:url' content='https://kegalas.top/p/%E5%B9%B2%E8%B4%A7-%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E6%A8%A1%E5%9E%8B%E5%BA%93/'>
+<meta property='og:site_name' content='KegalaS的个人博客'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='图形学' /><meta property='article:tag' content='渲染' /><meta property='article:tag' content='干货' /><meta property='article:published_time' content='2023-06-25T14:37:37&#43;08:00'/><meta property='article:modified_time' content='2023-06-25T14:37:37&#43;08:00'/><meta property='og:image' content='https://kegalas.top/p/%E5%B9%B2%E8%B4%A7-%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E6%A8%A1%E5%9E%8B%E5%BA%93/cover.jpg' />
+<meta name="twitter:title" content="干货 | 从零开始的软渲染器 模型库">
+<meta name="twitter:description" content="导航页面 OBJ格式简介 .obj格式是描述几何模型的一种简单办法。它可以描述顶点的坐标、法向量、纹理坐标，以及三角面的顶点数据等等。 注释 .ob"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://kegalas.top/p/%E5%B9%B2%E8%B4%A7-%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E6%A8%A1%E5%9E%8B%E5%BA%93/cover.jpg' />
+    <link rel="shortcut icon" href="favicon-16x16.png" />
+
+    </head>
+    <body class="
+    article-page has-toc
+">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex 
+    
+        extended
+    
+">
+    
+        <div id="article-toolbar">
+            <a href="/" class="back-home">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="15 6 9 12 15 18" />
+</svg>
+
+
+
+                <span>返回</span>
+            </a>
+        </div>
+    
+<main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/p/%E5%B9%B2%E8%B4%A7-%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E6%A8%A1%E5%9E%8B%E5%BA%93/">
+                <img src="/p/%E5%B9%B2%E8%B4%A7-%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E6%A8%A1%E5%9E%8B%E5%BA%93/cover_hu1d5ada73bf6b5a759e3568aecd125470_50161_800x0_resize_q75_box.jpg"
+                        srcset="/p/%E5%B9%B2%E8%B4%A7-%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E6%A8%A1%E5%9E%8B%E5%BA%93/cover_hu1d5ada73bf6b5a759e3568aecd125470_50161_800x0_resize_q75_box.jpg 800w, /p/%E5%B9%B2%E8%B4%A7-%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E6%A8%A1%E5%9E%8B%E5%BA%93/cover_hu1d5ada73bf6b5a759e3568aecd125470_50161_1600x0_resize_q75_box.jpg 1600w"
+                        width="800" 
+                        height="496" 
+                        loading="lazy"
+                        alt="Featured image of post 干货 | 从零开始的软渲染器 模型库" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" >
+                图形学
+            </a>
+        
+    </header>
+    
+
+    <h2 class="article-title">
+        <a href="/p/%E5%B9%B2%E8%B4%A7-%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E6%A8%A1%E5%9E%8B%E5%BA%93/">干货 | 从零开始的软渲染器 模型库</a>
+    </h2>
+
+    
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Jun 25, 2023</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 5 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+</div>
+</header>
+
+    <section class="article-content">
+    <p><u><strong><a class="link" href="../%e5%b9%b2%e8%b4%a7-%e4%bb%8e%e9%9b%b6%e5%bc%80%e5%a7%8b%e7%9a%84%e8%bd%af%e6%b8%b2%e6%9f%93%e5%99%a8-%e5%af%bc%e8%88%aa/" >导航页面</a></strong></u></p>
+<h1 id="obj格式简介">OBJ格式简介</h1>
+<p>.obj格式是描述几何模型的一种简单办法。它可以描述顶点的坐标、法向量、纹理坐标，以及三角面的顶点数据等等。</p>
+<p><strong>注释</strong></p>
+<p>.obj格式里的注释是以#开头的一行</p>
+<p><strong>顶点坐标</strong></p>
+<p>例如</p>
+<pre tabindex="0"><code>v 0.511631 -0.845357 0.127832
+v 0.608654 -0.568839 -0.416318
+v 0.424663 -0.649937 -0.567418
+...
+</code></pre><p>以v开头，后面带三个小数。注意这个坐标是模型相对于自己原点的坐标，而不是我们渲染过程中的世界坐标。它不会提供总数，只会一条一条地提供。</p>
+<p>读取的时候需要注意自己统计总数，另外还要记录序号（写在数组里没有这个问题）。以及序号从<span class="math inline">\(1\)</span>开始计数。</p>
+<p><strong>纹理坐标</strong></p>
+<p>例如</p>
+<pre tabindex="0"><code>vt  0.617 0.575 0.000
+vt  0.623 0.573 0.000
+vt  0.627 0.576 0.000
+...
+</code></pre><p>以vt开头，后面还是带三个数。通常我们的纹理是二维的，所以第三个会是零。这里的纹理坐标指的是在纹理图片文件上的坐标。显然你会怀疑，纹理图片的大小不是800x800这种形式的吗？为什么这里是小数？</p>
+<p>我认为是为了统一，我们只要用坐标乘以宽度、长度，再四舍五入即可得到图片上的像素坐标。</p>
+<p><strong>法向量方向</strong></p>
+<p>例如</p>
+<pre tabindex="0"><code>vn  -0.250 0.462 -0.851
+vn  -0.192 0.568 -0.801
+vn  -0.359 0.279 0.891
+...
+</code></pre><p>描述了法向量指向的方向。</p>
+<p>注意可能并不是单位向量，我没有找到限制必须是单位向量的规定。</p>
+<p><strong>注意</strong></p>
+<p>上面这三种数据总数不一定是一样的，它们之间的关联也不是一定是序号对应的。大部分时候不一样，也不对应。它们只是描述了一组这样的数据而已，具体到三角面上，才会体现如何使用这些数据。</p>
+<p>使用这些数据时，序号就变得重要了起来。再次提醒序号从<span class="math inline">\(1\)</span>开始计数。</p>
+<p><strong>三角面信息</strong></p>
+<p>例如</p>
+<pre tabindex="0"><code>f 1206/1252/1206 1207/1254/1207 1205/1255/1205
+f 1206/1252/1206 1208/1256/1208 1086/1257/1086
+f 1206/1252/1206 1086/1257/1086 1087/1253/1087
+...
+</code></pre><p>以f开头，带了三组数据。每组都有三个数字。带有三个数字是因为要描述三角面的三个顶点。</p>
+<p>第一组，描述了三个顶点的（模型）空间坐标。这三个数字是序号，我们用序号去访问数组即可得到坐标。</p>
+<p>第二组，描述了三个顶点的材质uv坐标，也是序号。</p>
+<p>第三组，描述了三个顶点的法向量坐标，也是序号。</p>
+<p>我们目前了解以上信息即可。</p>
+<h1 id="modelh">model.h</h1>
+<p>首先我们需要定义一下model里面要有什么内容。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>geo<span style="color:#f92672">::</span>vec3f<span style="color:#f92672">&gt;</span> vertices{};
+</span></span><span style="display:flex;"><span>std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>geo<span style="color:#f92672">::</span>vec2f<span style="color:#f92672">&gt;</span> tex_coords{};
+</span></span><span style="display:flex;"><span>std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>geo<span style="color:#f92672">::</span>vec3f<span style="color:#f92672">&gt;</span> norms{};
+</span></span><span style="display:flex;"><span>std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>size_t<span style="color:#f92672">&gt;</span> face_vi{};
+</span></span><span style="display:flex;"><span>std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>size_t<span style="color:#f92672">&gt;</span> face_ti{};
+</span></span><span style="display:flex;"><span>std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>size_t<span style="color:#f92672">&gt;</span> face_ni{};
+</span></span></code></pre></div><p>我们需要三维的顶点坐标、二维的纹理uv坐标，以及三维的顶点法向量坐标。同时也需要记录每个三角面它的顶点坐标序号，纹理坐标序号以及法向量坐标序号。</p>
+<p>再看看我们可能需要什么方法：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>Model(std<span style="color:#f92672">::</span>string <span style="color:#66d9ef">const</span> <span style="color:#f92672">&amp;</span> dir);
+</span></span><span style="display:flex;"><span><span style="color:#f92672">~</span>Model();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>size_t <span style="color:#a6e22e">getFaceSize</span>();
+</span></span><span style="display:flex;"><span>geo<span style="color:#f92672">::</span>vec3f getVert(size_t faceid, size_t nth);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">bool</span> <span style="color:#a6e22e">getTriangle</span>(std<span style="color:#f92672">::</span>array<span style="color:#f92672">&lt;</span>geo<span style="color:#f92672">::</span>vec3f,<span style="color:#ae81ff">3</span><span style="color:#f92672">&gt;</span> <span style="color:#f92672">&amp;</span> dist, size_t faceid);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">bool</span> <span style="color:#a6e22e">getTriangle</span>(std<span style="color:#f92672">::</span>array<span style="color:#f92672">&lt;</span>geo<span style="color:#f92672">::</span>vec4f,<span style="color:#ae81ff">3</span><span style="color:#f92672">&gt;</span> <span style="color:#f92672">&amp;</span> dist, size_t faceid);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">bool</span> <span style="color:#a6e22e">getNorm</span>(std<span style="color:#f92672">::</span>array<span style="color:#f92672">&lt;</span>geo<span style="color:#f92672">::</span>vec3f,<span style="color:#ae81ff">3</span><span style="color:#f92672">&gt;</span> <span style="color:#f92672">&amp;</span> dist, size_t faceid);
+</span></span></code></pre></div><p>一个构造函数和一个析构函数不用多说。</p>
+<p>之后我们可能需要提供获取三角面数量的函数、获取（某个特定）顶点坐标的函数，获取一个三角面上所有顶点坐标的函数（在这里我按需要提供了四维坐标和三维坐标的版本），以及获得三角面上所有顶点法向量的函数。</p>
+<p>之后我们还会在读取材质纹理的地方需要提供纹理坐标的函数。这里先略过。</p>
+<p>全部代码可见**<a class="link" href="https://github.com/kegalas/oar/blob/main/tutorial/chapter4/src/model.h"  target="_blank" rel="noopener"
+    >链接</a>**</p>
+<h1 id="modelcpp">model.cpp</h1>
+<p>现在我们来看看具体要怎么实现</p>
+<h2 id="构造函数">构造函数</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>Model<span style="color:#f92672">::</span>Model(std<span style="color:#f92672">::</span>string <span style="color:#66d9ef">const</span> <span style="color:#f92672">&amp;</span> dir){
+</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>ifstream in;
+</span></span><span style="display:flex;"><span>    in.open(dir,std<span style="color:#f92672">::</span>ifstream<span style="color:#f92672">::</span>in);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span>(in.fail()) <span style="color:#66d9ef">return</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>string line;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">while</span>(<span style="color:#f92672">!</span>in.eof()){
+</span></span><span style="display:flex;"><span>        std<span style="color:#f92672">::</span>getline(in,line);
+</span></span><span style="display:flex;"><span>        std<span style="color:#f92672">::</span>istringstream iss(line);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">char</span> discard;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span>(line.compare(<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">2</span>,<span style="color:#e6db74">&#34;v &#34;</span>)<span style="color:#f92672">==</span><span style="color:#ae81ff">0</span>){
+</span></span><span style="display:flex;"><span>            iss<span style="color:#f92672">&gt;&gt;</span>discard;
+</span></span><span style="display:flex;"><span>            geo<span style="color:#f92672">::</span>vec3f v;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>;i<span style="color:#f92672">&lt;</span><span style="color:#ae81ff">3</span>;i<span style="color:#f92672">++</span>) iss<span style="color:#f92672">&gt;&gt;</span>v[i];
+</span></span><span style="display:flex;"><span>            vertices.push_back(v);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">else</span> <span style="color:#a6e22e">if</span>(line.compare(<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">3</span>,<span style="color:#e6db74">&#34;vt &#34;</span>)<span style="color:#f92672">==</span><span style="color:#ae81ff">0</span>){
+</span></span><span style="display:flex;"><span>            iss<span style="color:#f92672">&gt;&gt;</span>discard<span style="color:#f92672">&gt;&gt;</span>discard;
+</span></span><span style="display:flex;"><span>            geo<span style="color:#f92672">::</span>vec2f vt;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>;i<span style="color:#f92672">&lt;</span><span style="color:#ae81ff">2</span>;i<span style="color:#f92672">++</span>) iss<span style="color:#f92672">&gt;&gt;</span>vt[i];
+</span></span><span style="display:flex;"><span>            tex_coords.push_back(vt);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">else</span> <span style="color:#a6e22e">if</span> (line.compare(<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">3</span>,<span style="color:#e6db74">&#34;vn &#34;</span>)<span style="color:#f92672">==</span><span style="color:#ae81ff">0</span>) {
+</span></span><span style="display:flex;"><span>            iss<span style="color:#f92672">&gt;&gt;</span>discard<span style="color:#f92672">&gt;&gt;</span>discard;
+</span></span><span style="display:flex;"><span>            geo<span style="color:#f92672">::</span>vec3f vn;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>;i<span style="color:#f92672">&lt;</span><span style="color:#ae81ff">3</span>;i<span style="color:#f92672">++</span>) iss<span style="color:#f92672">&gt;&gt;</span>vn[i];
+</span></span><span style="display:flex;"><span>            norms.push_back(vn);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">else</span> <span style="color:#a6e22e">if</span>(line.compare(<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">2</span>,<span style="color:#e6db74">&#34;f &#34;</span>)<span style="color:#f92672">==</span><span style="color:#ae81ff">0</span>){
+</span></span><span style="display:flex;"><span>            iss<span style="color:#f92672">&gt;&gt;</span>discard;
+</span></span><span style="display:flex;"><span>            size_t fv,ft,fn;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">while</span>(iss<span style="color:#f92672">&gt;&gt;</span>fv<span style="color:#f92672">&gt;&gt;</span>discard<span style="color:#f92672">&gt;&gt;</span>ft<span style="color:#f92672">&gt;&gt;</span>discard<span style="color:#f92672">&gt;&gt;</span>fn){
+</span></span><span style="display:flex;"><span>                face_vi.push_back(fv<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>);
+</span></span><span style="display:flex;"><span>                face_ti.push_back(ft<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>);
+</span></span><span style="display:flex;"><span>                face_ni.push_back(fn<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>);
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>cerr<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34;v: &#34;</span><span style="color:#f92672">&lt;&lt;</span>vertices.size()<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34; t: &#34;</span><span style="color:#f92672">&lt;&lt;</span>tex_coords.size()<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34; n: &#34;</span><span style="color:#f92672">&lt;&lt;</span>norms.size()<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
+</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>cerr<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34;f: &#34;</span><span style="color:#f92672">&lt;&lt;</span>face_ni.size()<span style="color:#f92672">/</span><span style="color:#ae81ff">3</span><span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>这其实没什么好多说的，把之前说过的OBJ文件格式理解一下，去实际看看obj文件里面怎么写的。如果掌握了ifstream，字符串的操作，整个操作就会了。</p>
+<p>需要注意的是，obj里面提供的序号是从<span class="math inline">\(1\)</span>开始的，而我这里用的是往vector里push_back元素的办法，方便起见把所有序号都减<span class="math inline">\(1\)</span>。</p>
+<h2 id="获取坐标信息的函数">获取坐标信息的函数</h2>
+<p>这一部分其实非常容易理解和实现，就把我们读入的数据，按照下标获取，然后返回即可。全部代码可见**<a class="link" href="https://github.com/kegalas/oar/blob/main/tutorial/chapter4/src/model.cpp"  target="_blank" rel="noopener"
+    >链接</a>**</p>
+<h1 id="使用例子">使用例子</h1>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&#34;tga_image.h&#34;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&#34;raster.h&#34;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&#34;model.h&#34;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;ctime&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;cstdlib&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#66d9ef">const</span> width <span style="color:#f92672">=</span> <span style="color:#ae81ff">1500</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#66d9ef">const</span> height <span style="color:#f92672">=</span> <span style="color:#ae81ff">1500</span>;<span style="color:#75715e">//设置输出图片的长宽
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(){
+</span></span><span style="display:flex;"><span>    Model model(<span style="color:#e6db74">&#34;../obj/african_head.obj&#34;</span>);<span style="color:#75715e">//读取我们的模型
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    TGAImage image(width,height,TGAType<span style="color:#f92672">::</span>rgb);<span style="color:#75715e">//新建一个图对象
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">int</span> nface <span style="color:#f92672">=</span> model.getFaceSize();<span style="color:#75715e">//获取三角面的总数
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    std<span style="color:#f92672">::</span>array<span style="color:#f92672">&lt;</span>geo<span style="color:#f92672">::</span>vec4f,<span style="color:#ae81ff">3</span><span style="color:#f92672">&gt;</span> vert;<span style="color:#75715e">//读取顶点坐标
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    std<span style="color:#f92672">::</span>array<span style="color:#f92672">&lt;</span>geo<span style="color:#f92672">::</span>OARColor,<span style="color:#ae81ff">3</span><span style="color:#f92672">&gt;</span> color;<span style="color:#75715e">//设置顶点颜色
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    std<span style="color:#f92672">::</span>array<span style="color:#f92672">&lt;</span>geo<span style="color:#f92672">::</span>vec2i,<span style="color:#ae81ff">3</span><span style="color:#f92672">&gt;</span> screen;<span style="color:#75715e">//把顶点的空间坐标转化到屏幕像素坐标上
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>;i<span style="color:#f92672">&lt;</span>nface;i<span style="color:#f92672">++</span>){
+</span></span><span style="display:flex;"><span>        model.getTriangle(vert, i);<span style="color:#75715e">//把序号为i的三角形的顶点全部读入vert
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> j<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>;j<span style="color:#f92672">&lt;</span><span style="color:#ae81ff">3</span>;j<span style="color:#f92672">++</span>){
+</span></span><span style="display:flex;"><span>            color[j] <span style="color:#f92672">=</span> geo<span style="color:#f92672">::</span>OARColor(<span style="color:#ae81ff">255</span>,<span style="color:#ae81ff">255</span>,<span style="color:#ae81ff">255</span>,<span style="color:#ae81ff">255</span>);<span style="color:#75715e">//设置颜色为全白
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            screen[j] <span style="color:#f92672">=</span> ras<span style="color:#f92672">::</span>world2screen(vert[j],width,height);<span style="color:#75715e">//转换坐标，函数定义见下
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        }
+</span></span><span style="display:flex;"><span>        ras<span style="color:#f92672">::</span>triangle(image,screen,color);<span style="color:#75715e">//绘制三角形i号
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    }
+</span></span><span style="display:flex;"><span>    image.writeToFile(<span style="color:#e6db74">&#34;./af.tga&#34;</span>);<span style="color:#75715e">//写入图像文件
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>我们使用以上代码来测试我们的效果，具体步骤解释都写在上面的注释里了（模型见**<a class="link" href="https://github.com/kegalas/oar/tree/main/tutorial/chapter4/obj"  target="_blank" rel="noopener"
+    >链接</a>** ）。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>geo<span style="color:#f92672">::</span>vec2i ras<span style="color:#f92672">::</span>world2screen(geo<span style="color:#f92672">::</span>vec4f v, <span style="color:#66d9ef">int</span> width, <span style="color:#66d9ef">int</span> height){
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> geo<span style="color:#f92672">::</span>vec2i(<span style="color:#66d9ef">int</span>((v.x<span style="color:#f92672">+</span><span style="color:#ae81ff">1.f</span>)<span style="color:#f92672">*</span>width<span style="color:#f92672">*</span><span style="color:#ae81ff">.5f</span><span style="color:#f92672">+</span><span style="color:#ae81ff">.5f</span>), <span style="color:#66d9ef">int</span>((v.y<span style="color:#f92672">+</span><span style="color:#ae81ff">1.f</span>)<span style="color:#f92672">*</span>height<span style="color:#f92672">*</span><span style="color:#ae81ff">.5f</span><span style="color:#f92672">+</span><span style="color:#ae81ff">.5f</span>));
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>我们的坐标转换函数如上（放在这里**<a class="link" href="https://github.com/kegalas/oar/blob/main/tutorial/chapter4/src/raster.cpp#L94"  target="_blank" rel="noopener"
+    >链接</a>** ），这里本来应该在坐标转换的地方讲，但是这里不得不用到，我们就提前讲一下。</p>
+<p>我们的物体模型，有他自己的坐标系。这个坐标的范围是<span class="math inline">\([-1,1]^3\)</span>，但我们的显示屏只有两个维度，而且他还只有整数的坐标。为了将模型的坐标映射到显示屏上，我们首先压缩一维，也就是直接不考虑深度（这里是<span class="math inline">\(z\)</span>轴），然后把<span class="math inline">\([-1,1]^2\)</span>映射到<span class="math inline">\(\text{width}\times\text{height}\)</span>这个坐标上。我们分别对<span class="math inline">\(x,y\)</span>进行操作，首先把<span class="math inline">\(x\)</span>整体加<span class="math inline">\(1\)</span>，就得到<span class="math inline">\([0,2]\)</span>，再除以<span class="math inline">\(2\)</span>，就得到<span class="math inline">\([0,1]\)</span>，再乘以<span class="math inline">\(\text{width}\)</span>，再取四舍五入到整数就得到了显示屏上的横坐标，同理就得到了纵坐标。</p>
+<p>更进一步的知识等到坐标转换的地方再讲吧！</p>
+<p>结果如下：</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 99; 
+			flex-basis: 239px"
+	>
+	<a href="/p/%E5%B9%B2%E8%B4%A7-%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E6%A8%A1%E5%9E%8B%E5%BA%93/1.png" data-size="943x946">
+		<img src="/p/%E5%B9%B2%E8%B4%A7-%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E6%A8%A1%E5%9E%8B%E5%BA%93/1.png"
+			width="943"
+			height="946"
+			srcset="/p/%E5%B9%B2%E8%B4%A7-%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E6%A8%A1%E5%9E%8B%E5%BA%93/1_hu0f8a8ae2906e2fa932d21294bc30fca4_26137_480x0_resize_box_3.png 480w, /p/%E5%B9%B2%E8%B4%A7-%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E6%A8%A1%E5%9E%8B%E5%BA%93/1_hu0f8a8ae2906e2fa932d21294bc30fca4_26137_1024x0_resize_box_3.png 1024w"
+			loading="lazy"
+			alt="1.png">
+	</a>
+	
+	<figcaption>1.png</figcaption>
+	
+</figure></p>
+<p>虽然我们没有看清他的面容（因为我们把每个三角形都设置成全白了），但是至少整个形状正确了。稍后我们将介绍光照，来让他的面容展现出来。</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a>
+        
+            <a href="/tags/%E6%B8%B2%E6%9F%93/">渲染</a>
+        
+            <a href="/tags/%E5%B9%B2%E8%B4%A7/">干货</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css"integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js"integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8"crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js"integrity="sha384-vZTG03m&#43;2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl"crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.querySelector(`.article-content`), {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ]
+        });})
+</script>
+    
+</article>
+
+    <aside class="related-contents--wrapper">
+    
+    
+        <h2 class="section-title">相关文章</h2>
+        <div class="related-contents">
+            <div class="flex article-list--tile">
+                
+                    
+<article class="has-image">
+    <a href="/p/%E5%B9%B2%E8%B4%A7-%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%85%89%E7%85%A7%E5%88%9D%E6%AD%A5/">
+        
+        
+            <div class="article-image">
+                <img src="/p/%E5%B9%B2%E8%B4%A7-%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%85%89%E7%85%A7%E5%88%9D%E6%AD%A5/cover.a31dfa1d472e7236ca0da074207d7576_hu04f6e4c5c5d9e8c832c6dfeafddfe37e_257114_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-ox36HUcucjbKDaB0IH11dg==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">干货 | 从零开始的软渲染器 光照初步</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/p/%E5%B9%B2%E8%B4%A7-%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E7%BA%BF%E6%AE%B5%E5%92%8C%E4%B8%89%E8%A7%92%E5%BD%A2%E7%9A%84%E5%85%89%E6%A0%85%E5%8C%96/">
+        
+        
+            <div class="article-image">
+                <img src="/p/%E5%B9%B2%E8%B4%A7-%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E7%BA%BF%E6%AE%B5%E5%92%8C%E4%B8%89%E8%A7%92%E5%BD%A2%E7%9A%84%E5%85%89%E6%A0%85%E5%8C%96/cover.3eba88ce14bf80744d7e83238ed0ec4e_hu72dadf0d98aceb343e3fe7cb76faf398_301126_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-PrqIzhS/gHRNfoMjjtDsTg==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">干货 | 从零开始的软渲染器 线段和三角形的光栅化</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/p/%E5%B9%B2%E8%B4%A7-%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%9B%BE%E7%89%87%E5%A4%84%E7%90%86%E5%BA%93/">
+        
+        
+            <div class="article-image">
+                <img src="/p/%E5%B9%B2%E8%B4%A7-%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%9B%BE%E7%89%87%E5%A4%84%E7%90%86%E5%BA%93/cover.941490c741ffb85644dfdbec13c85e5f_hu2fa2362891bfb402ec26ffe12b2b88a0_64078_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-lBSQx0H/uFZE39vsE8heXw==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">干货 | 从零开始的软渲染器 图片处理库</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/p/%E5%B9%B2%E8%B4%A7-%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E6%95%B0%E5%AD%A6%E5%B7%A5%E5%85%B7%E5%BA%93/">
+        
+        
+            <div class="article-image">
+                <img src="/p/%E5%B9%B2%E8%B4%A7-%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E6%95%B0%E5%AD%A6%E5%B7%A5%E5%85%B7%E5%BA%93/cover.05688f45246317d00a00a986d6147cbd_huc0107afa81d973e7d87fe5de99d27181_24753_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-BWiPRSRjF9AKAKmG1hR8vQ==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">干货 | 从零开始的软渲染器 数学工具库</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/p/%E5%B9%B2%E8%B4%A7-%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%AF%BC%E8%88%AA/">
+        
+        
+            <div class="article-image">
+                <img src="/p/%E5%B9%B2%E8%B4%A7-%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%AF%BC%E8%88%AA/cover.a704c2dab4556c46cd24cc053e56d999_huef498dd5cf38693b5a441291f5d52b83_173498_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-pwTC2rRVbEbNJMwFPlbZmQ==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">干货 | 从零开始的软渲染器 导航</h2>
+        </div>
+    </a>
+</article>
+                
+            </div>
+        </div>
+    
+</aside>
+
+     
+    
+        
+    <script src="https://utteranc.es/client.js" 
+        repo="kegalas/blogComments"
+        issue-term="pathname"
+        
+        crossorigin="anonymous"
+        async
+        >
+</script>
+
+<style>
+    .utterances {
+        max-width: unset;
+    }
+</style>
+
+<script>
+    function setUtterancesTheme(theme) {
+        let utterances = document.querySelector('.utterances iframe');
+        if (utterances) {
+            utterances.contentWindow.postMessage(
+                {
+                    type: 'set-theme',
+                    theme: `github-${theme}`
+                },
+                'https://utteranc.es'
+            );
+        }
+    }
+
+    addEventListener('message', event => {
+        if (event.origin !== 'https://utteranc.es') return;
+        setUtterancesTheme(document.documentElement.dataset.scheme)
+    });
+
+    window.addEventListener('onColorSchemeChange', (e) => {
+        setUtterancesTheme(e.detail)
+    })
+</script>
+
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2024 KegalaS的个人博客
+    </section>
+    
+    <section class="powerby">
+         <br />
+        
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    
+        <aside class="sidebar right-sidebar sticky">
+            <section class="widget archives">
+                <div class="widget-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+                </div>
+                <h2 class="widget-title section-title">目录</h2>
+                
+                <div class="widget--toc">
+                    <nav id="TableOfContents">
+  <ol>
+    <li><a href="#obj格式简介">OBJ格式简介</a></li>
+    <li><a href="#modelh">model.h</a></li>
+    <li><a href="#modelcpp">model.cpp</a>
+      <ol>
+        <li><a href="#构造函数">构造函数</a></li>
+        <li><a href="#获取坐标信息的函数">获取坐标信息的函数</a></li>
+      </ol>
+    </li>
+    <li><a href="#使用例子">使用例子</a></li>
+  </ol>
+</nav>
+                </div>
+            </section>
+        </aside>
+    
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                defer="false"
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

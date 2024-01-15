@@ -1,10 +1,11 @@
 ---
-title: Atcoder Beginner Conteset 263 E（概率DP）
+title: 干货 | Atcoder Beginner Conteset 263 E（概率DP）
 date: 2022-08-07T12:57:17+08:00
 draft: false
 tags:
   - 算法
   - 概率DP
+  - 干货
 categories: 算法
 mathjax: true
 markup: goldmark

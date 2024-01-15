@@ -1,10 +1,11 @@
 ---
-title: "VirtualBox打开虚拟机VERR_INVALID_NAME( 104)错误的解决"
+title: 干货 | VirtualBox打开虚拟机VERR_INVALID_NAME(-104)错误的解决
 date: 2023-10-22T22:33:16+08:00
 draft: false
 tags:
   - VirtualBox
   - Windows
+  - 干货
 categories: 其他计算机科学
 markup: goldmark
 ---

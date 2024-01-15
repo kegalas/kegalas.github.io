@@ -1,8 +1,13 @@
 ---
-title: "MSYS2,MinGW64,Cygwin的使用区别浅谈"
+title: 干货 | MSYS2,MinGW64,Cygwin的使用区别浅谈
 date: 2023-05-06T23:44:47+08:00
 draft: false
-tags: [MSYS2,计算机,Windows,MinGW]
+tags:
+  - MSYS2
+  - 计算机
+  - Windows
+  - MinGW
+  - 干货
 categories: 其他计算机科学
 mathjax: false
 ---

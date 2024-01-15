@@ -1,9 +1,10 @@
 ---
-title: 计算机图形学基础学习笔记-曲面细分
+title: 水文 | 计算机图形学基础学习笔记-曲面细分
 date: 2022-07-20T15:08:04+08:00
 draft: false
 tags:
   - 图形学
+  - 水文
 categories: 图形学
 mathjax: true
 markup: goldmark

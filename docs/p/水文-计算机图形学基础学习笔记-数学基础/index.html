@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Cartesian Product（笛卡尔积） 内容同离散数学。 几个特别的集合 \(S^2\)，在单位球面上的三维点的集合。 映射、函数、反函数 内容同离散数学。 三角'><title>水文 | 计算机图形学基础学习笔记-数学基础</title>
+
+<link rel='canonical' href='https://kegalas.top/p/%E6%B0%B4%E6%96%87-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/'>
+
+<link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='水文 | 计算机图形学基础学习笔记-数学基础'>
+<meta property='og:description' content='Cartesian Product（笛卡尔积） 内容同离散数学。 几个特别的集合 \(S^2\)，在单位球面上的三维点的集合。 映射、函数、反函数 内容同离散数学。 三角'>
+<meta property='og:url' content='https://kegalas.top/p/%E6%B0%B4%E6%96%87-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/'>
+<meta property='og:site_name' content='KegalaS的个人博客'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='图形学' /><meta property='article:tag' content='水文' /><meta property='article:published_time' content='2022-06-27T15:17:29&#43;08:00'/><meta property='article:modified_time' content='2022-06-27T15:17:29&#43;08:00'/>
+<meta name="twitter:title" content="水文 | 计算机图形学基础学习笔记-数学基础">
+<meta name="twitter:description" content="Cartesian Product（笛卡尔积） 内容同离散数学。 几个特别的集合 \(S^2\)，在单位球面上的三维点的集合。 映射、函数、反函数 内容同离散数学。 三角">
+    <link rel="shortcut icon" href="favicon-16x16.png" />
+
+    </head>
+    <body class="
+    article-page has-toc
+">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex 
+    
+        extended
+    
+">
+    
+        <div id="article-toolbar">
+            <a href="/" class="back-home">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="15 6 9 12 15 18" />
+</svg>
+
+
+
+                <span>返回</span>
+            </a>
+        </div>
+    
+<main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" >
+                图形学
+            </a>
+        
+    </header>
+    
+
+    <h2 class="article-title">
+        <a href="/p/%E6%B0%B4%E6%96%87-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/">水文 | 计算机图形学基础学习笔记-数学基础</a>
+    </h2>
+
+    
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Jun 27, 2022</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 2 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+</div>
+</header>
+
+    <section class="article-content">
+    <h2 id="cartesian-product笛卡尔积">Cartesian Product（笛卡尔积）</h2>
+<p>内容同离散数学。</p>
+<h2 id="几个特别的集合">几个特别的集合</h2>
+<p><span class="math inline">\(S^2\)</span>，在单位球面上的三维点的集合。</p>
+<h2 id="映射函数反函数">映射、函数、反函数</h2>
+<p>内容同离散数学。</p>
+<h2 id="三角学">三角学</h2>
+<p>书中提到的正弦余弦定理、半角公式、和差公式都已在高中学过，记录一些没学过的。</p>
+<p><strong>正切定理</strong></p>
+<p><span class="math display">\[\frac{a+b}{a-b}=\frac{tan\left(\frac{A+B}{2}\right)}{tan\left(\frac{A-B}{2}\right)}
+\]</span></p>
+<p><strong>海伦公式</strong></p>
+<p><span class="math display">\[S = \frac{1}{4}\sqrt{(a+b+c)(-a+b+c)(a-b+c)(a+b-c)}
+\]</span></p>
+<h3 id="重心坐标系">重心坐标系</h3>
+<p>可以用三个点<span class="math inline">\(\bm{a,b,c}\)</span>表示三角形。</p>
+<p>假设三点不共线，则<span class="math inline">\(\bm{c-a},\bm{b-a}\)</span>线性无关，即可以作为二维坐标的一组基底。</p>
+<p>二维空间中任何一点都可以由</p>
+<p><span class="math display">\[\bm{p}=\bm a+\beta(\bm{b-a})+\gamma(\bm{c-a})
+\]</span></p>
+<p>表示</p>
+<p>整理得</p>
+<p><span class="math display">\[\bm{p}=(1-\beta-\gamma)\bm a+\beta\bm{b}+\gamma\bm{c}
+\]</span></p>
+<p>令</p>
+<p><span class="math display">\[\alpha\equiv 1-\beta-\gamma
+\]</span></p>
+<p>则有</p>
+<p><span class="math display">\[\bm p(\alpha,\beta,\gamma)=\alpha\bm a+\beta\bm{b}+\gamma\bm{c}
+\]</span></p>
+<p>其中</p>
+<p><span class="math display">\[\alpha+\beta+\gamma = 1
+\]</span></p>
+<p>一个点在三角形内部当且仅当</p>
+<p><span class="math display">\[0<\alpha<1,0<\beta<1,0<\gamma<1
+\]</span></p>
+<p>同时成立。也可以用向量叉乘的办法判断是否在内部。</p>
+<p>对于三角形三个点<span class="math inline">\(A,B,C\)</span>，平面中一点<span class="math inline">\((x,y)\)</span>可以表示为</p>
+<p><span class="math display">\[(x,y) = \alpha A+\beta B+\gamma C
+\]</span></p>
+<p><span class="math display">\[\alpha+\beta+\gamma=1
+\]</span></p>
+<p>其中有</p>
+<p><span class="math display">\[\alpha = \frac{-(x-x_B)(y_C-y_B)+(y-y_B)(x_C-x_B)}{-(x_A-x_B)(y_C-y_B)+(y_A-y_B)(x_C-x_B)}
+\]</span></p>
+<p><span class="math display">\[\beta = \frac{-(x-x_C)(y_A-y_C)+(y-y_C)(x_A-x_C)}{-(x_B-x_C)(y_A-y_C)+(y_B-y_C)(x_A-x_C)}
+\]</span></p>
+<p><span class="math display">\[\gamma = 1-\alpha-\beta
+\]</span></p>
+<p>运用重心坐标系进行颜色插值见第九章笔记。</p>
+<p>另外，从另一个角度思考</p>
+<p><span class="math display">\[\bm p = \alpha\bm a+\beta\bm b+\gamma\bm c\\
+\alpha+\beta+\gamma = 1
+\]</span></p>
+<p>有</p>
+<p><span class="math display">\[\bm p = (1-\beta-\gamma)\bm a+\beta\bm b+\gamma\bm c
+\]</span></p>
+<p><span class="math display">\[\bm p = \bm a+\beta\overrightarrow{AB}+\beta\overrightarrow{AC}
+\]</span></p>
+<p><span class="math display">\[0 = \overrightarrow{PA}+\beta\overrightarrow{AB}+\gamma\overrightarrow{AC}
+\]</span></p>
+<p>也就是说，</p>
+<p><span class="math display">\[\begin{bmatrix}
+1  & \beta & \gamma
+\end{bmatrix}
+\begin{bmatrix}
+PA_x \\ AB_x \\ AC_x
+\end{bmatrix}=0
+\]</span></p>
+<p><span class="math display">\[\begin{bmatrix}
+1  & \beta & \gamma
+\end{bmatrix}
+\begin{bmatrix}
+PA_y \\ AB_y \\ AC_y
+\end{bmatrix}=0
+\]</span></p>
+<p>也就是说，向量<span class="math inline">\((1,\beta,\gamma)\)</span>是向量<span class="math inline">\((PA_x,AB_x,AC_x)\)</span>和<span class="math inline">\((PA_y,AB_y,AC_y)\)</span>的叉积。根据向量第一位是1可以转变一下符号。</p>
+<p>这个方法代码相较于上一个方法比较简单。</p>
+<h2 id="向量">向量</h2>
+<p>同高中和线性代数</p>
+<h2 id="积分">积分</h2>
+<p>内容同高数。不过在计算机图形学里我们更注重数值而不是分析。</p>
+<h2 id="曲线曲面">曲线、曲面</h2>
+<p>内容同高数。</p>
+<h2 id="linear-interpolation线性内插">Linear Interpolation（线性内插）</h2>
+<p><span class="math display">\[f(x)=y_i+\frac{x-x_i}{x_{i+1}-x_i}(y_{i+1}-y_i)
+\]</span></p>
+<h2 id="概率论">概率论</h2>
+<h3 id="随机变量">随机变量</h3>
+<p><span class="math inline">\(X\)</span>，表示任意一个可能取值。</p>
+<h3 id="概率密度函数pdf">概率密度函数(PDF)</h3>
+<p><span class="math inline">\(X\sim p(x)\)</span>，表示随机过程取值为<span class="math inline">\(x\)</span>的相对概率。</p>
+<h3 id="概率的一些属性">概率的一些属性</h3>
+<ol>
+<li><span class="math inline">\(p_i\geq 0\)</span></li>
+<li><span class="math inline">\(\sum_{i=1}^np_i=1\)</span></li>
+</ol>
+<h3 id="期望">期望</h3>
+<p><span class="math display">\[E[X] = \sum_{i=1}^nx_ip_i
+\]</span></p>
+<h3 id="连续的情况">连续的情况</h3>
+<p>当随机变量<span class="math inline">\(X\)</span>可以取一个连续的区间上的值。</p>
+<p>显然此时也会有连续的概率密度函数。</p>
+<p>并且</p>
+<p><span class="math display">\[p(x)\geq 0,\int p(x)dx=1
+\]</span></p>
+<p><span class="math display">\[E[x]=\int xp(x)dx
+\]</span></p>
+<h3 id="随机变量的函数">随机变量的函数</h3>
+<p>随机变量的函数也是一个随机变量。</p>
+<p><span class="math display">\[X\sim p(x)\\
+Y=f(X)
+\]</span></p>
+<p><span class="math display">\[E[Y]=E[f(X)]=\int f(x)p(x)dx
+\]</span></p>
+<h2 id="蒙特卡罗积分">蒙特卡罗积分</h2>
+<p>蒙特卡洛积分的目的：想计算一个定积分，但是难以从分析意义上解出，希望在数值上求解。</p>
+<p>方法：通过平均函数值的随机样本来估计函数的积分。</p>
+<p>定义定积分如下：</p>
+<p><span class="math display">\[\int_a^b f(x)dx
+\]</span></p>
+<p>随机变量如下</p>
+<p><span class="math display">\[X_i\sim p(x)
+\]</span></p>
+<p>则蒙特卡洛估计值是：</p>
+<p><span class="math display">\[F_N=\frac{1}{N}\sum_{i=1}^N\frac{f(X_i)}{p(X_i)}
+\]</span></p>
+<p>如果随机变量是均匀的，或者说</p>
+<p><span class="math display">\[X_i\sim p(x)=C
+\]</span></p>
+<p><span class="math inline">\(C\)</span>是一个常数</p>
+<p>那么，</p>
+<p><span class="math display">\[\int_a^b p(x)dx=1
+\]</span></p>
+<p><span class="math display">\[\int_a^b Cdx=1
+\]</span></p>
+<p><span class="math display">\[C=\frac{1}{b-a}
+\]</span></p>
+<p>此时基础蒙特卡洛估计值(Basic Monte Carlo Estimator)为</p>
+<p><span class="math display">\[F_N=\frac{b-a}{N}\sum_{i=1}^N f(X_i)
+\]</span></p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a>
+        
+            <a href="/tags/%E6%B0%B4%E6%96%87/">水文</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css"integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js"integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8"crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js"integrity="sha384-vZTG03m&#43;2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl"crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.querySelector(`.article-content`), {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ]
+        });})
+</script>
+    
+</article>
+
+    <aside class="related-contents--wrapper">
+    
+    
+        <h2 class="section-title">相关文章</h2>
+        <div class="related-contents">
+            <div class="flex article-list--tile">
+                
+                    
+<article class="">
+    <a href="/p/%E6%B0%B4%E6%96%87-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%8A%A8%E7%94%BB%E4%B8%8E%E6%A8%A1%E6%8B%9F/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">水文 | 计算机图形学基础学习笔记-动画与模拟</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="">
+    <a href="/p/%E6%B0%B4%E6%96%87-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%85%89%E5%9C%BA%E9%A2%9C%E8%89%B2%E5%92%8C%E6%84%9F%E7%9F%A5/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">水文 | 计算机图形学基础学习笔记-光场、颜色和感知</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="">
+    <a href="/p/%E6%B0%B4%E6%96%87-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E7%9B%B8%E6%9C%BA%E4%B8%8E%E9%80%8F%E9%95%9C/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">水文 | 计算机图形学基础学习笔记-相机与透镜</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="">
+    <a href="/p/%E6%B0%B4%E6%96%87-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E9%AB%98%E7%BA%A7%E5%A4%96%E8%A7%82%E6%A8%A1%E5%9E%8B/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">水文 | 计算机图形学基础学习笔记-高级外观模型</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="">
+    <a href="/p/%E6%B0%B4%E6%96%87-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E9%AB%98%E7%BA%A7%E5%85%89%E7%BA%BF%E4%BC%A0%E6%92%AD/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">水文 | 计算机图形学基础学习笔记-高级光线传播</h2>
+        </div>
+    </a>
+</article>
+                
+            </div>
+        </div>
+    
+</aside>
+
+     
+    
+        
+    <script src="https://utteranc.es/client.js" 
+        repo="kegalas/blogComments"
+        issue-term="pathname"
+        
+        crossorigin="anonymous"
+        async
+        >
+</script>
+
+<style>
+    .utterances {
+        max-width: unset;
+    }
+</style>
+
+<script>
+    function setUtterancesTheme(theme) {
+        let utterances = document.querySelector('.utterances iframe');
+        if (utterances) {
+            utterances.contentWindow.postMessage(
+                {
+                    type: 'set-theme',
+                    theme: `github-${theme}`
+                },
+                'https://utteranc.es'
+            );
+        }
+    }
+
+    addEventListener('message', event => {
+        if (event.origin !== 'https://utteranc.es') return;
+        setUtterancesTheme(document.documentElement.dataset.scheme)
+    });
+
+    window.addEventListener('onColorSchemeChange', (e) => {
+        setUtterancesTheme(e.detail)
+    })
+</script>
+
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2024 KegalaS的个人博客
+    </section>
+    
+    <section class="powerby">
+         <br />
+        
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    
+        <aside class="sidebar right-sidebar sticky">
+            <section class="widget archives">
+                <div class="widget-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+                </div>
+                <h2 class="widget-title section-title">目录</h2>
+                
+                <div class="widget--toc">
+                    <nav id="TableOfContents">
+  <ol>
+    <li>
+      <ol>
+        <li><a href="#cartesian-product笛卡尔积">Cartesian Product（笛卡尔积）</a></li>
+        <li><a href="#几个特别的集合">几个特别的集合</a></li>
+        <li><a href="#映射函数反函数">映射、函数、反函数</a></li>
+        <li><a href="#三角学">三角学</a>
+          <ol>
+            <li><a href="#重心坐标系">重心坐标系</a></li>
+          </ol>
+        </li>
+        <li><a href="#向量">向量</a></li>
+        <li><a href="#积分">积分</a></li>
+        <li><a href="#曲线曲面">曲线、曲面</a></li>
+        <li><a href="#linear-interpolation线性内插">Linear Interpolation（线性内插）</a></li>
+        <li><a href="#概率论">概率论</a>
+          <ol>
+            <li><a href="#随机变量">随机变量</a></li>
+            <li><a href="#概率密度函数pdf">概率密度函数(PDF)</a></li>
+            <li><a href="#概率的一些属性">概率的一些属性</a></li>
+            <li><a href="#期望">期望</a></li>
+            <li><a href="#连续的情况">连续的情况</a></li>
+            <li><a href="#随机变量的函数">随机变量的函数</a></li>
+          </ol>
+        </li>
+        <li><a href="#蒙特卡罗积分">蒙特卡罗积分</a></li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+                </div>
+            </section>
+        </aside>
+    
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                defer="false"
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

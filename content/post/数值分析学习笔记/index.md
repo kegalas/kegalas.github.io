@@ -1,10 +1,11 @@
 ---
-title: 数值分析学习笔记
+title: 水文 | 数值分析学习笔记
 date: 2022-10-02T16:42:53+08:00
 draft: false
 tags:
   - 数学
   - 数值分析
+  - 水文
 description: Timothy Sauer所著《数值分析（第二版）》的学习笔记
 categories: 数学
 mathjax: true

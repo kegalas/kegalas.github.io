@@ -1,17 +1,18 @@
 ---
-title: 从零开始的软渲染器 模型库
+title: 干货 | 从零开始的软渲染器 模型库
 date: 2023-06-25T14:37:37+08:00
 draft: false
 tags:
   - 图形学
   - 渲染
+  - 干货
 categories: 图形学
 mathjax: true
 markup: goldmark
 image: cover.jpg
 ---
 
-<u>**[导航页面](../从零开始的软渲染器-导航/)**</u>
+<u>**[导航页面](../干货-从零开始的软渲染器-导航/)**</u>
 
 # OBJ格式简介
 

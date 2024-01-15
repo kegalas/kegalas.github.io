@@ -1,9 +1,13 @@
 ---
-title: "算法题-网络设备管理"
-image: "1.jpg"
+title: 干货 | 算法题-网络设备管理
+image: 1.jpg
 date: 2021-11-21T14:53:54+08:00
 draft: false
-tags: [算法,数据结构,树]
+tags:
+  - 算法
+  - 数据结构
+  - 树
+  - 干货
 description: 叮叮叮！网络设备管理员欢欢在行动欢欢就职于一家庞大的数据管理分析公司公司有一个存储数据的庞大网络，把每个数据存储器看做一。。。
 categories: 算法
 mathjax: true

@@ -1,11 +1,15 @@
 ---
-title: "Msys2中使用mingw64的G++编译，运行报错无法找到入口"
+title: 干货 | Msys2中使用mingw64的G++编译，运行报错无法找到入口
 date: 2022-08-28T16:18:50+08:00
 draft: false
-tags: [MSYS2,计算机,Windows]
+tags:
+  - MSYS2
+  - 计算机
+  - Windows
+  - 干货
 categories: 其他计算机科学
 mathjax: false
-image: "1.jpg"
+image: 1.jpg
 ---
 
 ![1.jpg](1.jpg)

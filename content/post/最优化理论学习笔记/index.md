@@ -1,11 +1,12 @@
 ---
-title: 最优化理论学习笔记
+title: 水文 | 最优化理论学习笔记
 date: 2023-06-16T19:47:47+08:00
 draft: false
 tags:
   - 大学
   - 数学
   - 最优化
+  - 水文
 description: 最优化理论、算法的学习笔记
 categories: 数学
 mathjax: true

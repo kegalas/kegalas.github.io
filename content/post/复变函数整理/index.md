@@ -1,10 +1,11 @@
 ---
-title: 复变函数整理
+title: 水文 | 复变函数整理
 date: 2022-09-01T13:44:54+08:00
 draft: false
 tags:
   - 数学
   - 大学
+  - 水文
 description: 复变函数的学习笔记
 categories: 数学
 mathjax: true

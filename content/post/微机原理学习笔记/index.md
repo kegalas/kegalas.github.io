@@ -1,5 +1,5 @@
 ---
-title: "微机原理学习笔记"
+title: 水文 | 微机原理学习笔记
 date: 2023-11-08T08:23:07+08:00
 draft: false
 tags:
@@ -7,6 +7,7 @@ tags:
   - 汇编
   - 组成原理
   - 计算机
+  - 水文
 description: x86汇编的常见规则、限制，以及x86硬件设计
 categories: 其他计算机科学
 mathjax: true
