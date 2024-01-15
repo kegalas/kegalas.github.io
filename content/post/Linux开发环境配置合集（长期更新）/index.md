@@ -1,12 +1,13 @@
 ---
-title: Linux开发环境配置合集（长期更新）
+title: 水文 | Linux开发环境配置合集（长期更新）
 date: 2023-10-13T19:06:00+08:00
 draft: true
 tags:
   - 计算机
   - Linux
   - 开发环境
-categories: 其他计算机科学
+  - 水文
+categories: Linux
 markup: goldmark
 ---
 
@@ -129,4 +130,4 @@ TODO
 
 # 其他软件安装
 
-可见[个人常用软件列表](../个人常用软件列表)一文。
+可见[个人常用软件列表](../水文-个人常用软件列表)一文。

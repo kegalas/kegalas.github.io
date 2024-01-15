@@ -1,10 +1,11 @@
 ---
-title: 脑科学基础学习笔记
+title: 水文 | 脑科学基础学习笔记
 date: 2023-06-11T15:11:44+08:00
 draft: false
 tags:
   - 大学
   - 脑科学
+  - 水文
 categories: 人工智能
 mathjax: true
 markup: goldmark

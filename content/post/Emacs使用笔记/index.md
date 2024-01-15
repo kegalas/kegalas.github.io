@@ -1,10 +1,11 @@
 ---
-title: Emacs使用笔记
+title: 水文 | Emacs使用笔记
 date: 2023-01-20T16:09:29+08:00
 draft: false
 tags:
   - Emacs
   - 计算机
+  - 水文
 categories: 其他计算机科学
 markup: goldmark
 ---

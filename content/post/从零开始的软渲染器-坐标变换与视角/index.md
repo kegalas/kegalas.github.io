@@ -1,10 +1,11 @@
 ---
-title: 从零开始的软渲染器 坐标变换与视角
+title: 干货 | 从零开始的软渲染器 坐标变换与视角
 date: 2023-08-04T22:53:54+08:00
 draft: true
 tags:
   - 图形学
   - 渲染
+  - 干货
 categories: 图形学
 mathjax: true
 markup: goldmark

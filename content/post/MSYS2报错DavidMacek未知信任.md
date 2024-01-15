@@ -1,8 +1,12 @@
 ---
-title: "MSYS2报错David Macek is unknown trust"
+title: 干货 | MSYS2报错David Macek is unknown trust
 date: 2022-07-01T12:05:59+08:00
 draft: false
-tags: [MSYS2,计算机,Windows]
+tags:
+  - MSYS2
+  - 计算机
+  - Windows
+  - 干货
 categories: 其他计算机科学
 ---
 

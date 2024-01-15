@@ -1,10 +1,11 @@
 ---
-title: 电路基础整理
+title: 水文 | 电路基础整理
 date: 2022-09-02T11:22:59+08:00
 draft: false
 tags:
   - 电路
   - 大学
+  - 水文
 description: 电路基础的学习笔记
 categories: 电路与信号
 mathjax: true

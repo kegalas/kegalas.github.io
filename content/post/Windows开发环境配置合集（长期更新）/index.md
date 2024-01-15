@@ -1,5 +1,5 @@
 ---
-title: Windows开发环境配置合集（长期更新）
+title: 水文 | Windows开发环境配置合集（长期更新）
 date: 2023-09-23T11:30:14+08:00
 draft: false
 tags:
@@ -11,6 +11,7 @@ tags:
   - Latex
   - Python
   - Java
+  - 水文
 categories: 其他计算机科学
 markup: goldmark
 ---
@@ -21,7 +22,7 @@ markup: goldmark
 
 [https://mirrors.tuna.tsinghua.edu.cn/gnu/emacs/windows/](https://mirrors.tuna.tsinghua.edu.cn/gnu/emacs/windows/)，在清华源下载安装，可以更改的只有安装目录。
 
-.emacs.d的部署TODO。
+我的.emacs.d可见[https://github.com/kegalas/dotfiles](https://github.com/kegalas/dotfiles)
 
 现在emacs29自带use-package，直接打开就可以，不需要手动安装。
 
@@ -85,6 +86,8 @@ AVD设置TODO（包括用软连接把安装目录转移等）
 
 其软件设置，我一般会加上Completr插件来为Latex提供补全，安装Solarized主题。设置`严格换行`，`显示行号`，`tab`功能替换为4个空格而非制表符等。
 
+另外Obsidian自带的PDF导出并不能导出目录，我会安装[https://github.com/l1xnan/obsidian-better-export-pdf](https://github.com/l1xnan/obsidian-better-export-pdf)来解决。
+
 ## CP Editor
 
 [https://cpeditor.org](https://cpeditor.org)下载，
@@ -145,6 +148,8 @@ if not exist "%GIT_EXE_DIR%\git.exe" (
 
 ## tabby
 
+## alacritty
+
 # C/C++相关
 
 ## GCC
@@ -173,7 +178,7 @@ if not exist "%GIT_EXE_DIR%\git.exe" (
 
 注意顺序，不能颠倒。
 
-之后我们打开`MSYS`的命令行，安装`pacman -S gcc`，这一步的目的是，我们使用MSYS提供的虚拟Linux的POSIX，方便我们在windows上进行Linux系统调用，这两个gcc的区别可见[MSYS2,MinGW64,Cygwin的使用区别浅谈](../MSYS2,MinGW64,Cygwin的使用区别浅谈)
+之后我们打开`MSYS`的命令行，安装`pacman -S gcc`，这一步的目的是，我们使用MSYS提供的虚拟Linux的POSIX，方便我们在windows上进行Linux系统调用，这两个gcc的区别可见[MSYS2,MinGW64,Cygwin的使用区别浅谈](../干货-msys2mingw64cygwin的使用区别浅谈)
 
 ## Clang
 
@@ -201,7 +206,7 @@ pacman -S mingw-w64-ucrt-x86_64-cmake mingw-w64-ucrt-x86_64-cmake-gui mingw-w64-
 
 安装cmake官网的windows版本会不会更优有待考察TODO。
 
-另外，直接安装`make`后，并不能在powershell里直接使用，见[MSYS2中的make工具安装方法](../MSYS2中的make工具安装方法)
+另外，直接安装`make`后，并不能在powershell里直接使用，见[MSYS2中的make工具安装方法](../干货-msys2中的make工具安装方法)
 
 要让clangd能够检测Cmake项目，还需要进行[https://clangd.llvm.org/installation#project-setup](https://clangd.llvm.org/installation#project-setup)里提到的操作，简单来说
 
@@ -210,9 +215,15 @@ pacman -S mingw-w64-ucrt-x86_64-cmake mingw-w64-ucrt-x86_64-cmake-gui mingw-w64-
 
 ## Lua
 
+TODO
+
 # Rust相关
 
+TODO
+
 # GO相关
+
+TODO
 
 # Java相关
 
@@ -242,9 +253,15 @@ pacman -S mingw-w64-ucrt-x86_64-cmake mingw-w64-ucrt-x86_64-cmake-gui mingw-w64-
 
 ## Scala
 
+TODO
+
 ## Kotlin
 
+TODO
+
 ## Clojure
+
+TODO
 
 # Python相关
 
@@ -302,23 +319,65 @@ Anaconda的软件源也比较慢，推荐参考[https://mirrors.tuna.tsinghua.ed
 
 安装完成后关闭，弹出iso。环境变量已经自动设定在User的Path里。
 
+## Miktex
+
+这个和texlive其实二选一即可。这里列出来是因为我的笔记本居然打不开texlive的安装包。
+
+[https://mirrors.ustc.edu.cn/CTAN/systems/win32/miktex/setup/windows-x64/](https://mirrors.ustc.edu.cn/CTAN/systems/win32/miktex/setup/windows-x64/)找到basic-miktex安装包。
+
+优点是比较小，安装包只有一百多MB，特别是相较于texlive的几GB的安装包。代价是，每用到一个包，需要当场下载这个包，在第一次运行的时候很费鼠标点下载。个人估计最终安装的体积差不了多少。
+
+当然，不想费鼠标的话，可以在安装时选择
+
+![15.jpg](15.jpg)
+
+换源也非常简单，只需要进管理员模式点点鼠标即可
+
+![16.jpg](16.jpg)
+
+![17.jpg](17.jpg)
+
+这之后点击下一步，选择ustc的源后finish。
+
 # SQL相关
 
 ## Postgresql
+
+TODO
+
+## SQLite
+
+大多数时候操作都是在编程语言里面操作的。这里只介绍一个看数据的软件，即SQLiteStudio。
+
+在[https://sqlitestudio.pl/](https://sqlitestudio.pl/)下载，我这里安装全默认，只修改了安装位置。
 
 # JS相关
 
 ## Node.js
 
+TODO
+
 # SSH配置
 
-参考[在校园网中用ssh连接宿舍电脑](../在校园网中用ssh连接宿舍电脑)
+## ssh客户端、服务端
+
+安装的话很简单，在设置里面找到应用-可选功能。
+
+![13.jpg](13.jpg)
+
+点击圈出来这个查看功能，搜索openssh，把客户端和服务器都安装即可。
+
+安装好之后在服务设置里，设置为自动即可开机启动。
+
+![14.jpg](14.jpg)
+
+一般配置文件在`C:\ProgramData\ssh\sshd_config`，具体如何参考[在校园网中用ssh连接宿舍电脑](../干货-在校园网中用ssh连接宿舍电脑)
 
 # 博客（Hugo）
 
 ## Hugo
 
-见我的文章[为Hugo安装goldmark-mathjax插件来更好地支持输入公式](../为Hugo安装goldmark-mathjax插件来更好地支持输入公式)，不推荐使用官网的安装包，推荐自己加插件自己编译。
+见我的文章[为Hugo安装goldmark-mathjax插件来更好地支持输入公式](../干货-为hugo安装goldmark-mathjax插件来更好地支持输入公式)，不推荐使用官网的安装包，推荐自己加插件自己编译。
 
 把编译好生成的`hugo.exe`放到某个你喜欢的地方，比如我的`G:\Program_Files\Hugo\`，并把这个目录设置为环境变量。
 
@@ -348,20 +407,6 @@ Anaconda的软件源也比较慢，推荐参考[https://mirrors.tuna.tsinghua.ed
 
 ![1.jpg](1.jpg)
 
-## ssh客户端、服务端
-
-安装的话很简单，在设置里面找到应用-可选功能。
-
-![13.jpg](13.jpg)
-
-点击圈出来这个查看功能，搜索openssh，把客户端和服务器都安装即可。
-
-安装好之后在服务设置里，设置为自动即可开机启动。
-
-![14.jpg](14.jpg)
-
-一般配置文件在`C:\ProgramData\ssh\sshd_config`，具体如何修改TODO，例如配置管理员登陆，以及默认shell
-
 ## 关闭Windows休眠
 
 C盘下一般会有两个大文件，即`hiberfil.sys`和`pagefile.sys`。前面那个是休眠功能使用的文件，后面的是虚拟内存使用的文件。
@@ -376,4 +421,6 @@ powercfg -h off
 
 # 环境变量顺序
 
-TODO
+众所周知，环境变量越靠前的优先级越高。我当前的设置是：最初就有的、Windows目录下的放在最前面；然后放python、java、其他编程语言编译器或者虚拟机的环境变量，这里java的环境变量把java 8放在了最前；之后才是msys的各种环境变量。其他各种应用软件的环境变量可以比较随意，毕竟不会和msys冲突。
+
+总而言之，优先级遵从以下规则：系统自带的最优先，各种工具链的windows原生版本第二，msys第三，不和msys冲突的应用软件随意。

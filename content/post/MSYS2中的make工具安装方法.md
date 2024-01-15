@@ -1,8 +1,13 @@
 ---
-title: "MSYS2中的make工具安装方法"
+title: 干货 | MSYS2中的make工具安装方法
 date: 2023-05-13T15:15:55+08:00
 draft: false
-tags: [MSYS2,计算机,Windows,MinGW]
+tags:
+  - MSYS2
+  - 计算机
+  - Windows
+  - MinGW
+  - 干货
 categories: 其他计算机科学
 mathjax: false
 ---

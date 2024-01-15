@@ -1,11 +1,12 @@
 ---
-title: 计算机组成原理学习笔记
+title: 水文 | 计算机组成原理学习笔记
 date: 2023-03-29T16:00:26+08:00
 draft: false
 tags:
   - 计算机
   - 组成原理
   - 大学
+  - 水文
 description: 计算机组成原理的学习笔记
 categories: 其他计算机科学
 mathjax: true

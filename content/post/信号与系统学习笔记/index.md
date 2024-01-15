@@ -1,11 +1,12 @@
 ---
-title: 信号与系统学习笔记
+title: 水文 | 信号与系统学习笔记
 date: 2023-04-05T20:24:29+08:00
 draft: false
 tags:
   - 信号
   - 大学
   - 电路
+  - 水文
 categories: 电路与信号
 mathjax: true
 markup: goldmark

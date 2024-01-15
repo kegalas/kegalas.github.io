@@ -1,17 +1,18 @@
 ---
-title: 从零开始的软渲染器 线段和三角形的光栅化
+title: 干货 | 从零开始的软渲染器 线段和三角形的光栅化
 date: 2023-05-17T21:31:12+08:00
 draft: false
 tags:
   - 图形学
   - 渲染
+  - 干货
 categories: 图形学
 mathjax: true
 markup: goldmark
 image: cover.jpg
 ---
 
-<u>**[导航页面](../从零开始的软渲染器-导航/)**</u>
+<u>**[导航页面](../干货-从零开始的软渲染器-导航/)**</u>
 
 # 线段光栅化算法
 
@@ -172,7 +173,7 @@ int maxx = 0, minx = image.getWidth()-1, maxy = 0, miny = image.getHeight()-1;
 
 另外，求重心坐标的代码我写到了geometry.cpp里，方便别处调用。链接在**[这里](https://github.com/kegalas/oar/blob/main/tutorial/chapter3/src/geometry.cpp)**（在文件末尾）
 
-另外，求重心坐标还有一种不那么复杂的公式，见**[计算机图形学基础学习笔记-数学基础](../计算机图形学基础学习笔记-数学基础/#重心坐标系)**
+另外，求重心坐标还有一种不那么复杂的公式，见**[计算机图形学基础学习笔记-数学基础](../水文-计算机图形学基础学习笔记-数学基础/#重心坐标系)**
 
 注意，
 

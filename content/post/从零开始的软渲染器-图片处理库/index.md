@@ -1,21 +1,22 @@
 ---
-title: 从零开始的软渲染器 图片处理库
+title: 干货 | 从零开始的软渲染器 图片处理库
 date: 2022-11-01T14:24:29+08:00
 draft: false
 tags:
   - 图形学
   - 渲染
+  - 干货
 categories: 图形学
 mathjax: true
 markup: goldmark
 image: cover.jpg
 ---
 
-<u>**[导航页面](../从零开始的软渲染器-导航/)**</u>
+<u>**[导航页面](../干货-从零开始的软渲染器-导航/)**</u>
 
 # TGA格式介绍
 
-具体可以参考<u>[http://paulbourke.net/dataformats/tga/](http://paulbourke.net/dataformats/tga/)</u>
+具体可以参考[http://paulbourke.net/dataformats/tga/](http://paulbourke.net/dataformats/tga/)
 
 这里将部分重要的介绍一下。
 

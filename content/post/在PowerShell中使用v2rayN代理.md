@@ -1,8 +1,13 @@
 ---
-title: "在PowerShell中使用v2rayN代理"
+title: 干货 | 在PowerShell中使用v2rayN代理
 date: 2022-08-06T16:33:44+08:00
 draft: false
-tags: [Windows,代理,PowerShell,v2rayN]
+tags:
+  - Windows
+  - 代理
+  - PowerShell
+  - v2rayN
+  - 干货
 categories: 其他计算机科学
 ---
 

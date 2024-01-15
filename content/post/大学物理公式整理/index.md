@@ -1,10 +1,11 @@
 ---
-title: 大学物理公式整理
+title: 水文 | 大学物理公式整理
 date: 2022-06-13T19:13:12+08:00
 draft: false
 tags:
   - 物理
   - 大学
+  - 水文
 description: 大学物理相关的公式（可能还有一些概念）整理
 categories: 物理
 mathjax: true

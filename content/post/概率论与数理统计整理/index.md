@@ -1,10 +1,11 @@
 ---
-title: 概率论与数理统计整理
+title: 水文 | 概率论与数理统计整理
 date: 2022-08-30T10:41:24+08:00
 draft: false
 tags:
   - 数学
   - 大学
+  - 水文
 description: 概率论与数理统计的学习笔记
 categories: 数学
 image: cover.jpg
