@@ -180,6 +180,8 @@ if not exist "%GIT_EXE_DIR%\git.exe" (
 
 之后我们打开`MSYS`的命令行，安装`pacman -S gcc`，这一步的目的是，我们使用MSYS提供的虚拟Linux的POSIX，方便我们在windows上进行Linux系统调用，这两个gcc的区别可见[MSYS2,MinGW64,Cygwin的使用区别浅谈](../干货-msys2mingw64cygwin的使用区别浅谈)
 
+另外，还可以把msys2添加到右键菜单，见[添加msys2到右键菜单](../干货-添加msys2到右键菜单)
+
 ## Clang
 
 我们不去安装LLVM官方给Windows的二进制包了，我们直接在clang64里安装。
