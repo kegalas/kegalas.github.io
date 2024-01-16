@@ -108,7 +108,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 10 分钟
+                    阅读时长: 11 分钟
                 </time>
             </div>
         
@@ -122,7 +122,8 @@
 <h2 id="emacs">Emacs</h2>
 <p><a class="link" href="https://mirrors.tuna.tsinghua.edu.cn/gnu/emacs/windows/"  target="_blank" rel="noopener"
     >https://mirrors.tuna.tsinghua.edu.cn/gnu/emacs/windows/</a>，在清华源下载安装，可以更改的只有安装目录。</p>
-<p>.emacs.d的部署TODO。</p>
+<p>我的.emacs.d可见<a class="link" href="https://github.com/kegalas/dotfiles"  target="_blank" rel="noopener"
+    >https://github.com/kegalas/dotfiles</a></p>
 <p>现在emacs29自带use-package，直接打开就可以，不需要手动安装。</p>
 <p>all-the-icons很奇怪，不会被use-package安装，我们<code>M-x package-install all-the-icons</code>安装重启即可。</p>
 <p>另外，我安装了lsp-pyright来提供python的补全，python里面也要用pip安装pyright才能运行。</p>
@@ -199,6 +200,8 @@
 <p><a class="link" href="https://obsidian.md/"  target="_blank" rel="noopener"
     >https://obsidian.md/</a>，官网下载，不需要设置环境变量。</p>
 <p>其软件设置，我一般会加上Completr插件来为Latex提供补全，安装Solarized主题。设置<code>严格换行</code>，<code>显示行号</code>，<code>tab</code>功能替换为4个空格而非制表符等。</p>
+<p>另外Obsidian自带的PDF导出并不能导出目录，我会安装<a class="link" href="https://github.com/l1xnan/obsidian-better-export-pdf"  target="_blank" rel="noopener"
+    >https://github.com/l1xnan/obsidian-better-export-pdf</a>来解决。</p>
 <h2 id="cp-editor">CP Editor</h2>
 <p><a class="link" href="https://cpeditor.org"  target="_blank" rel="noopener"
     >https://cpeditor.org</a>下载，</p>
@@ -237,6 +240,7 @@
 <h2 id="terminal">Terminal</h2>
 <h3 id="主题">主题</h3>
 <h2 id="tabby">tabby</h2>
+<h2 id="alacritty">alacritty</h2>
 <h1 id="cc相关">C/C++相关</h1>
 <h2 id="gcc">GCC</h2>
 <p>这里使用的是<code>MSYS2</code>，<a class="link" href="https://www.msys2.org/"  target="_blank" rel="noopener"
@@ -290,6 +294,7 @@
 </figure></p>
 <p>注意顺序，不能颠倒。</p>
 <p>之后我们打开<code>MSYS</code>的命令行，安装<code>pacman -S gcc</code>，这一步的目的是，我们使用MSYS提供的虚拟Linux的POSIX，方便我们在windows上进行Linux系统调用，这两个gcc的区别可见<a class="link" href="../%e5%b9%b2%e8%b4%a7-msys2mingw64cygwin%e7%9a%84%e4%bd%bf%e7%94%a8%e5%8c%ba%e5%88%ab%e6%b5%85%e8%b0%88" >MSYS2,MinGW64,Cygwin的使用区别浅谈</a></p>
+<p>另外，还可以把msys2添加到右键菜单，见<a class="link" href="../%e5%b9%b2%e8%b4%a7-%e6%b7%bb%e5%8a%a0msys2%e5%88%b0%e5%8f%b3%e9%94%ae%e8%8f%9c%e5%8d%95" >添加msys2到右键菜单</a></p>
 <h2 id="clang">Clang</h2>
 <p>我们不去安装LLVM官方给Windows的二进制包了，我们直接在clang64里安装。</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>pacman -S mingw-w64-clang-x86_64-toolchain
@@ -309,8 +314,11 @@
 <li>把configure后build目录里生成的compile_commands.json软连接到项目根目录</li>
 </ol>
 <h2 id="lua">Lua</h2>
+<p>TODO</p>
 <h1 id="rust相关">Rust相关</h1>
+<p>TODO</p>
 <h1 id="go相关">GO相关</h1>
+<p>TODO</p>
 <h1 id="java相关">Java相关</h1>
 <h2 id="jre和jdk">JRE和JDK</h2>
 <h3 id="java8运行时">Java8运行时</h3>
@@ -345,8 +353,11 @@
 <p>我这里全都勾选了，但是PATH和JAVA_HOME其实可以不用勾选，因为很多IDE（如IDEA，Android Studio）都支持搜索所有JDK，并且手动选择JDK版本，所以这个其实不是很必要。</p>
 <p>另外，如果你加入了PATH，要记得把JAVA8的PATH放到JDK上面，以防运行不了Minecraft。</p>
 <h2 id="scala">Scala</h2>
+<p>TODO</p>
 <h2 id="kotlin">Kotlin</h2>
+<p>TODO</p>
 <h2 id="clojure">Clojure</h2>
+<p>TODO</p>
 <h1 id="python相关">Python相关</h1>
 <h2 id="普通版">普通版</h2>
 <p><a class="link" href="https://www.python.org/downloads/"  target="_blank" rel="noopener"
@@ -489,49 +500,82 @@
 </figure></p>
 <p>选好位置点击安装。</p>
 <p>安装完成后关闭，弹出iso。环境变量已经自动设定在User的Path里。</p>
-<h1 id="sql相关">SQL相关</h1>
-<h2 id="postgresql">Postgresql</h2>
-<h1 id="js相关">JS相关</h1>
-<h2 id="nodejs">Node.js</h2>
-<h1 id="ssh配置">SSH配置</h1>
-<p>参考<a class="link" href="../%e5%b9%b2%e8%b4%a7-%e5%9c%a8%e6%a0%a1%e5%9b%ad%e7%bd%91%e4%b8%ad%e7%94%a8ssh%e8%bf%9e%e6%8e%a5%e5%ae%bf%e8%88%8d%e7%94%b5%e8%84%91" >在校园网中用ssh连接宿舍电脑</a></p>
-<h1 id="博客hugo">博客（Hugo）</h1>
-<h2 id="hugo">Hugo</h2>
-<p>见我的文章<a class="link" href="../%e5%b9%b2%e8%b4%a7-%e4%b8%bahugo%e5%ae%89%e8%a3%85goldmark-mathjax%e6%8f%92%e4%bb%b6%e6%9d%a5%e6%9b%b4%e5%a5%bd%e5%9c%b0%e6%94%af%e6%8c%81%e8%be%93%e5%85%a5%e5%85%ac%e5%bc%8f" >为Hugo安装goldmark-mathjax插件来更好地支持输入公式</a>，不推荐使用官网的安装包，推荐自己加插件自己编译。</p>
-<p>把编译好生成的<code>hugo.exe</code>放到某个你喜欢的地方，比如我的<code>G:\Program_Files\Hugo\</code>，并把这个目录设置为环境变量。</p>
-<h2 id="pandoc">Pandoc</h2>
-<p><a class="link" href="https://www.pandoc.org/installing.html"  target="_blank" rel="noopener"
-    >https://www.pandoc.org/installing.html</a>，现在有安装包，以前只有压缩文件。我只是选择了为所有用户安装以及选择了安装位置，也没有其他可选项了。</p>
-<p>需要手动配置环境变量，配置在<code>xxx\Pandoc\</code>即可。</p>
-<p>但是我现在不怎么用这个了，hugo对goldmark适配的更好</p>
-<h1 id="matlab">Matlab</h1>
-<p>从各种地方下载安装包，例如学校正版软件服务、官网等，直接安装即可。</p>
-<p>软件包选择TODO</p>
-<p>环境变量一般配置在<code>xxx\MATLAB\R2021b\bin</code>，注意版本<code>R2021b</code>换成自己的版本。</p>
-<h1 id="其他">其他</h1>
-<h2 id="gpg4win">Gpg4win</h2>
-<p>从<a class="link" href="https://www.gpg4win.org/"  target="_blank" rel="noopener"
-    >https://www.gpg4win.org/</a>下载安装，环境变量其会自动配置。我勾选了除了Okular以外的所有选项。</p>
-<p>一般会配置在<code>xxx\Gpg4win\..\GnuPG\bin</code></p>
+<h2 id="miktex">Miktex</h2>
+<p>这个和texlive其实二选一即可。这里列出来是因为我的笔记本居然打不开texlive的安装包。</p>
+<p><a class="link" href="https://mirrors.ustc.edu.cn/CTAN/systems/win32/miktex/setup/windows-x64/"  target="_blank" rel="noopener"
+    >https://mirrors.ustc.edu.cn/CTAN/systems/win32/miktex/setup/windows-x64/</a>找到basic-miktex安装包。</p>
+<p>优点是比较小，安装包只有一百多MB，特别是相较于texlive的几GB的安装包。代价是，每用到一个包，需要当场下载这个包，在第一次运行的时候很费鼠标点下载。个人估计最终安装的体积差不了多少。</p>
+<p>当然，不想费鼠标的话，可以在安装时选择</p>
 <p><figure 
 	
 		class="gallery-image" 
 		style="
-			flex-grow: 138; 
-			flex-basis: 333px"
+			flex-grow: 131; 
+			flex-basis: 315px"
 	>
-	<a href="/p/%E6%B0%B4%E6%96%87-windows%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E5%90%88%E9%9B%86%E9%95%BF%E6%9C%9F%E6%9B%B4%E6%96%B0/1.jpg" data-size="503x362">
-		<img src="/p/%E6%B0%B4%E6%96%87-windows%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E5%90%88%E9%9B%86%E9%95%BF%E6%9C%9F%E6%9B%B4%E6%96%B0/1.jpg"
-			width="503"
-			height="362"
-			srcset="/p/%E6%B0%B4%E6%96%87-windows%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E5%90%88%E9%9B%86%E9%95%BF%E6%9C%9F%E6%9B%B4%E6%96%B0/1_hu94b939312a5731a42416e46615d63dbc_26557_480x0_resize_q75_box.jpg 480w, /p/%E6%B0%B4%E6%96%87-windows%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E5%90%88%E9%9B%86%E9%95%BF%E6%9C%9F%E6%9B%B4%E6%96%B0/1_hu94b939312a5731a42416e46615d63dbc_26557_1024x0_resize_q75_box.jpg 1024w"
+	<a href="/p/%E6%B0%B4%E6%96%87-windows%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E5%90%88%E9%9B%86%E9%95%BF%E6%9C%9F%E6%9B%B4%E6%96%B0/15.jpg" data-size="577x439">
+		<img src="/p/%E6%B0%B4%E6%96%87-windows%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E5%90%88%E9%9B%86%E9%95%BF%E6%9C%9F%E6%9B%B4%E6%96%B0/15.jpg"
+			width="577"
+			height="439"
+			srcset="/p/%E6%B0%B4%E6%96%87-windows%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E5%90%88%E9%9B%86%E9%95%BF%E6%9C%9F%E6%9B%B4%E6%96%B0/15_hue039e43aa4fec75030fb634fa552896f_12277_480x0_resize_q75_box.jpg 480w, /p/%E6%B0%B4%E6%96%87-windows%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E5%90%88%E9%9B%86%E9%95%BF%E6%9C%9F%E6%9B%B4%E6%96%B0/15_hue039e43aa4fec75030fb634fa552896f_12277_1024x0_resize_q75_box.jpg 1024w"
 			loading="lazy"
-			alt="1.jpg">
+			alt="15.jpg">
 	</a>
 	
-	<figcaption>1.jpg</figcaption>
+	<figcaption>15.jpg</figcaption>
 	
 </figure></p>
+<p>换源也非常简单，只需要进管理员模式点点鼠标即可</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 125; 
+			flex-basis: 301px"
+	>
+	<a href="/p/%E6%B0%B4%E6%96%87-windows%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E5%90%88%E9%9B%86%E9%95%BF%E6%9C%9F%E6%9B%B4%E6%96%B0/16.jpg" data-size="802x639">
+		<img src="/p/%E6%B0%B4%E6%96%87-windows%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E5%90%88%E9%9B%86%E9%95%BF%E6%9C%9F%E6%9B%B4%E6%96%B0/16.jpg"
+			width="802"
+			height="639"
+			srcset="/p/%E6%B0%B4%E6%96%87-windows%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E5%90%88%E9%9B%86%E9%95%BF%E6%9C%9F%E6%9B%B4%E6%96%B0/16_hu6340a3b5f406c3c0393de2ecbc6d03ac_67602_480x0_resize_q75_box.jpg 480w, /p/%E6%B0%B4%E6%96%87-windows%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E5%90%88%E9%9B%86%E9%95%BF%E6%9C%9F%E6%9B%B4%E6%96%B0/16_hu6340a3b5f406c3c0393de2ecbc6d03ac_67602_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="16.jpg">
+	</a>
+	
+	<figcaption>16.jpg</figcaption>
+	
+</figure></p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 134; 
+			flex-basis: 323px"
+	>
+	<a href="/p/%E6%B0%B4%E6%96%87-windows%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E5%90%88%E9%9B%86%E9%95%BF%E6%9C%9F%E6%9B%B4%E6%96%B0/17.jpg" data-size="790x586">
+		<img src="/p/%E6%B0%B4%E6%96%87-windows%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E5%90%88%E9%9B%86%E9%95%BF%E6%9C%9F%E6%9B%B4%E6%96%B0/17.jpg"
+			width="790"
+			height="586"
+			srcset="/p/%E6%B0%B4%E6%96%87-windows%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E5%90%88%E9%9B%86%E9%95%BF%E6%9C%9F%E6%9B%B4%E6%96%B0/17_huaa8c526aa97fa35f2f9d22e8758eb21a_52571_480x0_resize_q75_box.jpg 480w, /p/%E6%B0%B4%E6%96%87-windows%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E5%90%88%E9%9B%86%E9%95%BF%E6%9C%9F%E6%9B%B4%E6%96%B0/17_huaa8c526aa97fa35f2f9d22e8758eb21a_52571_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="17.jpg">
+	</a>
+	
+	<figcaption>17.jpg</figcaption>
+	
+</figure></p>
+<p>这之后点击下一步，选择ustc的源后finish。</p>
+<h1 id="sql相关">SQL相关</h1>
+<h2 id="postgresql">Postgresql</h2>
+<p>TODO</p>
+<h2 id="sqlite">SQLite</h2>
+<p>大多数时候操作都是在编程语言里面操作的。这里只介绍一个看数据的软件，即SQLiteStudio。</p>
+<p>在<a class="link" href="https://sqlitestudio.pl/"  target="_blank" rel="noopener"
+    >https://sqlitestudio.pl/</a>下载，我这里安装全默认，只修改了安装位置。</p>
+<h1 id="js相关">JS相关</h1>
+<h2 id="nodejs">Node.js</h2>
+<p>TODO</p>
+<h1 id="ssh配置">SSH配置</h1>
 <h2 id="ssh客户端服务端">ssh客户端、服务端</h2>
 <p>安装的话很简单，在设置里面找到应用-可选功能。</p>
 <p><figure 
@@ -574,14 +618,52 @@
 	<figcaption>14.jpg</figcaption>
 	
 </figure></p>
-<p>一般配置文件在<code>C:\ProgramData\ssh\sshd_config</code>，具体如何修改TODO，例如配置管理员登陆，以及默认shell</p>
+<p>一般配置文件在<code>C:\ProgramData\ssh\sshd_config</code>，具体如何参考<a class="link" href="../%e5%b9%b2%e8%b4%a7-%e5%9c%a8%e6%a0%a1%e5%9b%ad%e7%bd%91%e4%b8%ad%e7%94%a8ssh%e8%bf%9e%e6%8e%a5%e5%ae%bf%e8%88%8d%e7%94%b5%e8%84%91" >在校园网中用ssh连接宿舍电脑</a></p>
+<h1 id="博客hugo">博客（Hugo）</h1>
+<h2 id="hugo">Hugo</h2>
+<p>见我的文章<a class="link" href="../%e5%b9%b2%e8%b4%a7-%e4%b8%bahugo%e5%ae%89%e8%a3%85goldmark-mathjax%e6%8f%92%e4%bb%b6%e6%9d%a5%e6%9b%b4%e5%a5%bd%e5%9c%b0%e6%94%af%e6%8c%81%e8%be%93%e5%85%a5%e5%85%ac%e5%bc%8f" >为Hugo安装goldmark-mathjax插件来更好地支持输入公式</a>，不推荐使用官网的安装包，推荐自己加插件自己编译。</p>
+<p>把编译好生成的<code>hugo.exe</code>放到某个你喜欢的地方，比如我的<code>G:\Program_Files\Hugo\</code>，并把这个目录设置为环境变量。</p>
+<h2 id="pandoc">Pandoc</h2>
+<p><a class="link" href="https://www.pandoc.org/installing.html"  target="_blank" rel="noopener"
+    >https://www.pandoc.org/installing.html</a>，现在有安装包，以前只有压缩文件。我只是选择了为所有用户安装以及选择了安装位置，也没有其他可选项了。</p>
+<p>需要手动配置环境变量，配置在<code>xxx\Pandoc\</code>即可。</p>
+<p>但是我现在不怎么用这个了，hugo对goldmark适配的更好</p>
+<h1 id="matlab">Matlab</h1>
+<p>从各种地方下载安装包，例如学校正版软件服务、官网等，直接安装即可。</p>
+<p>软件包选择TODO</p>
+<p>环境变量一般配置在<code>xxx\MATLAB\R2021b\bin</code>，注意版本<code>R2021b</code>换成自己的版本。</p>
+<h1 id="其他">其他</h1>
+<h2 id="gpg4win">Gpg4win</h2>
+<p>从<a class="link" href="https://www.gpg4win.org/"  target="_blank" rel="noopener"
+    >https://www.gpg4win.org/</a>下载安装，环境变量其会自动配置。我勾选了除了Okular以外的所有选项。</p>
+<p>一般会配置在<code>xxx\Gpg4win\..\GnuPG\bin</code></p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 138; 
+			flex-basis: 333px"
+	>
+	<a href="/p/%E6%B0%B4%E6%96%87-windows%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E5%90%88%E9%9B%86%E9%95%BF%E6%9C%9F%E6%9B%B4%E6%96%B0/1.jpg" data-size="503x362">
+		<img src="/p/%E6%B0%B4%E6%96%87-windows%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E5%90%88%E9%9B%86%E9%95%BF%E6%9C%9F%E6%9B%B4%E6%96%B0/1.jpg"
+			width="503"
+			height="362"
+			srcset="/p/%E6%B0%B4%E6%96%87-windows%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E5%90%88%E9%9B%86%E9%95%BF%E6%9C%9F%E6%9B%B4%E6%96%B0/1_hu94b939312a5731a42416e46615d63dbc_26557_480x0_resize_q75_box.jpg 480w, /p/%E6%B0%B4%E6%96%87-windows%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E5%90%88%E9%9B%86%E9%95%BF%E6%9C%9F%E6%9B%B4%E6%96%B0/1_hu94b939312a5731a42416e46615d63dbc_26557_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="1.jpg">
+	</a>
+	
+	<figcaption>1.jpg</figcaption>
+	
+</figure></p>
 <h2 id="关闭windows休眠">关闭Windows休眠</h2>
 <p>C盘下一般会有两个大文件，即<code>hiberfil.sys</code>和<code>pagefile.sys</code>。前面那个是休眠功能使用的文件，后面的是虚拟内存使用的文件。</p>
 <p>休眠和睡眠不一样，睡眠是电脑低功率运行，但是保持开机，内存的数据就在内存里。而休眠相当于virtualbox里面给虚拟机“快速休眠”的操作，即把内存保存在硬盘中，此时可以不用保持开机。下次开机恢复电脑布局。</p>
 <p>我从来不用这个功能（我甚至从来不知道它，知道了也找不到在哪里），所以关掉，防止占我C盘。办法很简单，管理员powershell运行</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>powercfg -h off
 </span></span></code></pre></div><h1 id="环境变量顺序">环境变量顺序</h1>
-<p>TODO</p>
+<p>众所周知，环境变量越靠前的优先级越高。我当前的设置是：最初就有的、Windows目录下的放在最前面；然后放python、java、其他编程语言编译器或者虚拟机的环境变量，这里java的环境变量把java 8放在了最前；之后才是msys的各种环境变量。其他各种应用软件的环境变量可以比较随意，毕竟不会和msys冲突。</p>
+<p>总而言之，优先级遵从以下规则：系统自带的最优先，各种工具链的windows原生版本第二，msys第三，不和msys冲突的应用软件随意。</p>
 
 </section>
 
@@ -661,6 +743,30 @@
                 
                     
 <article class="">
+    <a href="/p/%E5%B9%B2%E8%B4%A7-%E6%B7%BB%E5%8A%A0msys2%E5%88%B0%E5%8F%B3%E9%94%AE%E8%8F%9C%E5%8D%95/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">干货 | 添加msys2到右键菜单</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="">
+    <a href="/p/%E6%B0%B4%E6%96%87-%E4%B8%AA%E4%BA%BA%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6%E5%88%97%E8%A1%A8/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">水文 | 个人常用软件列表</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="">
     <a href="/p/%E5%B9%B2%E8%B4%A7-msys2%E4%B8%AD%E7%9A%84make%E5%B7%A5%E5%85%B7%E5%AE%89%E8%A3%85%E6%96%B9%E6%B3%95/">
         
         
@@ -691,40 +797,6 @@
 
         <div class="article-details">
             <h2 class="article-title">水文 | Emacs使用笔记</h2>
-        </div>
-    </a>
-</article>
-                
-                    
-<article class="has-image">
-    <a href="/p/%E5%B9%B2%E8%B4%A7-msys2%E4%B8%AD%E4%BD%BF%E7%94%A8mingw64%E7%9A%84g-%E7%BC%96%E8%AF%91%E8%BF%90%E8%A1%8C%E6%8A%A5%E9%94%99%E6%97%A0%E6%B3%95%E6%89%BE%E5%88%B0%E5%85%A5%E5%8F%A3/">
-        
-        
-            <div class="article-image">
-                <img src="/p/%E5%B9%B2%E8%B4%A7-msys2%E4%B8%AD%E4%BD%BF%E7%94%A8mingw64%E7%9A%84g-%E7%BC%96%E8%AF%91%E8%BF%90%E8%A1%8C%E6%8A%A5%E9%94%99%E6%97%A0%E6%B3%95%E6%89%BE%E5%88%B0%E5%85%A5%E5%8F%A3/1.4011394892ad43b7efa8bdd166d30e51_hu8fe568a15a37a7bd8c510c832a970168_16486_250x150_fill_q75_box_smart1.jpg" 
-                        width="250" 
-                        height="150" 
-                        loading="lazy" 
-                        data-key="" 
-                        data-hash="md5-QBE5SJKtQ7fvqL3RZtMOUQ==">
-                
-            </div>
-        
-
-        <div class="article-details">
-            <h2 class="article-title">干货 | Msys2中使用mingw64的G&#43;&#43;编译，运行报错无法找到入口</h2>
-        </div>
-    </a>
-</article>
-                
-                    
-<article class="">
-    <a href="/p/%E5%B9%B2%E8%B4%A7-msys2%E6%8A%A5%E9%94%99david-macek-is-unknown-trust/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">干货 | MSYS2报错David Macek is unknown trust</h2>
         </div>
     </a>
 </article>
@@ -926,6 +998,7 @@
           </ol>
         </li>
         <li><a href="#tabby">tabby</a></li>
+        <li><a href="#alacritty">alacritty</a></li>
       </ol>
     </li>
     <li><a href="#cc相关">C/C++相关</a>
@@ -962,11 +1035,13 @@
       <ol>
         <li><a href="#texstudio-1">TexStudio</a></li>
         <li><a href="#texlive">texlive</a></li>
+        <li><a href="#miktex">Miktex</a></li>
       </ol>
     </li>
     <li><a href="#sql相关">SQL相关</a>
       <ol>
         <li><a href="#postgresql">Postgresql</a></li>
+        <li><a href="#sqlite">SQLite</a></li>
       </ol>
     </li>
     <li><a href="#js相关">JS相关</a>
@@ -974,7 +1049,11 @@
         <li><a href="#nodejs">Node.js</a></li>
       </ol>
     </li>
-    <li><a href="#ssh配置">SSH配置</a></li>
+    <li><a href="#ssh配置">SSH配置</a>
+      <ol>
+        <li><a href="#ssh客户端服务端">ssh客户端、服务端</a></li>
+      </ol>
+    </li>
     <li><a href="#博客hugo">博客（Hugo）</a>
       <ol>
         <li><a href="#hugo">Hugo</a></li>
@@ -985,7 +1064,6 @@
     <li><a href="#其他">其他</a>
       <ol>
         <li><a href="#gpg4win">Gpg4win</a></li>
-        <li><a href="#ssh客户端服务端">ssh客户端、服务端</a></li>
         <li><a href="#关闭windows休眠">关闭Windows休眠</a></li>
       </ol>
     </li>
