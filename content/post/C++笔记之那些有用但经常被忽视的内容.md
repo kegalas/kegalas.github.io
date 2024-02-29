@@ -556,13 +556,41 @@ static_assert(bool_exp); //C++17可用
 g++ -DNDBUG ...
 ```
 
+# 编译器warning的编译参数
+
+默认编译并不会打开很多warning，在生产环境中，推荐使用
+
+```
+-Wall -Wextra -Wpedantic -Wshadow -Werror -fsanitize=undefined,address
+```
+
+来开启更多warning。
+
 # Cmake使用
 
 TODO
 
-# doctest/catch2使用
+# doctest/catch2/gtest使用
 
 TODO
+
+# 不要在调试的时候到处写cout、cerr
+
+首先这会干扰到原本的代码逻辑，你删除的时候可能会删错、忘删。另外，这并不适合写测试样例来检测是否正确，更好的办法是，定义一个函数
+
+```cpp
+void log(std::ostream& os, ...) {...}
+```
+
+把要输出测试的东西放到ostream里，方便测试样例获取
+
+```cpp
+std::ostringstream oss;
+log(oss, ...);
+ASSERT_STREQ(oss.str(), "123");
+```
+
+如果要调试最好使用GDB等工具。
 
 # GDB使用
 
@@ -570,8 +598,46 @@ TODO
 
 # 使用g++/clang检测内存错误使用、未定义行为等
 
-TODO
+即之前介绍到的，只需要添加`-fsanitize=undefined,address`编译选项即可。在运行的时候，如果出现这种错误，就会提供报错信息。
 
-# 使用valgrind检测内存泄漏、锁问题等
+# 使用valgrind检测内存泄漏、死锁问题等
+
+我们首先编译好程序，然后通过
+
+```
+valgrind [options] ./program [program options]
+```
+
+来执行检查。可选参数有
+
+- `--tool=memcheck`，用来检查内存泄漏、对无效内存读写等
+- `--tool=helgrind`，用来检查死锁
+- `--leak-check=full`，用来显示内存泄漏的详细信息
+- `-v/--verbose`，用来显示额外信息
+
+# 使用end迭代器的值是未定义行为
+
+```cpp
+std::vector<int> vec;
+auto it = vec.end();
+std::cout<<*it; // UB
+```
+
+# std::distance
+
+求得左闭右开区间`[it1, it2)`的大小。
+
+```cpp
+std::vector<int> vec{1,2,3};
+auto x = std::distance(std::begin(vec), std::end(vec)); // 3
+```
+
+如果满足老式随机访问迭代器，那么复杂度是常数。否则复杂度为线性。
+
+# RTTI
+
+todo
+
+# typeid().name()
 
 TODO
