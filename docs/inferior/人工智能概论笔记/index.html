@@ -1,0 +1,2351 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='人工智能概论的学习笔记'><title>人工智能概论笔记</title>
+
+<link rel='canonical' href='https://kegalas.top/inferior/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E6%A6%82%E8%AE%BA%E7%AC%94%E8%AE%B0/'>
+
+<link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='人工智能概论笔记'>
+<meta property='og:description' content='人工智能概论的学习笔记'>
+<meta property='og:url' content='https://kegalas.top/inferior/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E6%A6%82%E8%AE%BA%E7%AC%94%E8%AE%B0/'>
+<meta property='og:site_name' content='KegalaS的个人博客'>
+<meta property='og:type' content='article'><meta property='article:section' content='Inferior' /><meta property='article:tag' content='人工智能' /><meta property='article:tag' content='大学' /><meta property='article:tag' content='水文' /><meta property='article:published_time' content='2022-10-31T09:56:28&#43;08:00'/><meta property='article:modified_time' content='2022-10-31T09:56:28&#43;08:00'/><meta property='og:image' content='https://kegalas.top/inferior/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E6%A6%82%E8%AE%BA%E7%AC%94%E8%AE%B0/cover.jpg' />
+<meta name="twitter:title" content="人工智能概论笔记">
+<meta name="twitter:description" content="人工智能概论的学习笔记"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://kegalas.top/inferior/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E6%A6%82%E8%AE%BA%E7%AC%94%E8%AE%B0/cover.jpg' />
+    <link rel="shortcut icon" href="/images/favicon.ico" />
+
+    </head>
+    <body class="
+    article-page has-toc
+">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex 
+    
+        extended
+    
+">
+    
+        <div id="article-toolbar">
+            <a href="/" class="back-home">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="15 6 9 12 15 18" />
+</svg>
+
+
+
+                <span>返回</span>
+            </a>
+        </div>
+    
+<main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/inferior/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E6%A6%82%E8%AE%BA%E7%AC%94%E8%AE%B0/">
+                <img src="/inferior/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E6%A6%82%E8%AE%BA%E7%AC%94%E8%AE%B0/cover_hu729735102c3c060f4a29b2f0df39e169_86954_800x0_resize_q75_box.jpg"
+                        srcset="/inferior/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E6%A6%82%E8%AE%BA%E7%AC%94%E8%AE%B0/cover_hu729735102c3c060f4a29b2f0df39e169_86954_800x0_resize_q75_box.jpg 800w, /inferior/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E6%A6%82%E8%AE%BA%E7%AC%94%E8%AE%B0/cover_hu729735102c3c060f4a29b2f0df39e169_86954_1600x0_resize_q75_box.jpg 1600w"
+                        width="800" 
+                        height="454" 
+                        loading="lazy"
+                        alt="Featured image of post 人工智能概论笔记" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" >
+                人工智能
+            </a>
+        
+    </header>
+    
+
+    <h2 class="article-title">
+        <a href="/inferior/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E6%A6%82%E8%AE%BA%E7%AC%94%E8%AE%B0/">人工智能概论笔记</a>
+    </h2>
+
+    
+    <h3 class="article-subtitle">
+        人工智能概论的学习笔记
+    </h3>
+    
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Oct 31, 2022</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 59 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+</div>
+</header>
+
+    <section class="article-content">
+    <h1 id="一些概念解释">一些概念解释</h1>
+<h2 id="弱人工智能与强人工智能">弱人工智能与强人工智能</h2>
+<p>弱人工智能是指不能真正实现推理和解决问题的智能机器，这些机器表面看像是智能的，但是并不真正拥有智能，也不会有自主意识。</p>
+<p>强人工智能是指真正能思维的智能机器，并且认为这样的机器是有知觉的和自我意识的，这类机器可分为类人（机器的思考和推理类似人的思维）与非类人（机器产生了和人完全不一样的知觉和意识，使用和人完全不一样的推理方式）两大类。</p>
+<h2 id="符号处理系统">符号处理系统</h2>
+<h3 id="六种功能">六种功能</h3>
+<ol>
+<li>输入符号</li>
+<li>输出符号</li>
+<li>存储符号</li>
+<li>复制符号</li>
+<li>建立符号结构：在符号系统中形成符号结构</li>
+<li>条件性迁移：根据已有符号，继续完成活动的过程</li>
+</ol>
+<p>可以把人看作是一个物理符号系统。如果一个物理符号系统具有上述全部6种功能，能够完成这个全过程，那么它就是一个完整的物理符号系统。人具有上述6种功能；现代计算机也具备物理符号系统的这6种功能。</p>
+<p>有一个假设：任何一个系统，如果它能表现出智能，那么它就必定能够执行上述6种功能。反之，任何系统如果具有这6种功能，那么它就能够表现出智能；这种智能指的是人类所具有的那种智能。把这个假设称为物理符号系统的假设。</p>
+<p>这个假设有很多局限性，许多乐观预言都成了泡影。90年代之后人工智能领域形成了很多新的研究模式</p>
+<h2 id="人工智能的学派">人工智能的学派</h2>
+<h3 id="符号主义">符号主义</h3>
+<p>又称：逻辑主义、心理学派或计算机学派</p>
+<p>原理：物理符号系统（即符号操作系统）假设和有限合理性原理</p>
+<p>符号主义认为人的认知基元是符号，认知过程即符号操作过程。认为人是一个物理符号系统，计算机也是一个物理符号系统，因此能够用计算机来模拟人的智能行为。人工智能的核心问题是知识表示、知识推理和知识运用。</p>
+<h3 id="连接主义">连接主义</h3>
+<p>又称：仿生学派或生理学派</p>
+<p>原理：神经网络及神经网络间的连接机制与学习算法。</p>
+<p>连接主义认为思维基元是神经元，而不是符号处理过程。认为人脑不同于电脑，并提出连接主义的大脑工作模式，用于取代符号操作的电脑工作模式。</p>
+<h3 id="行为主义">行为主义</h3>
+<p>又称：进化主义或控制论学派</p>
+<p>原理：控制论及感知—动作型控制系统</p>
+<p>行为主义认为智能取决于感知和行动（所以被称为行为主义），提出智能行为的“感知—动作”模式。认为智能不需要知识、不需要表示、不需要推理；人工智能可以象人类智能一样逐步进化(所以称为进化主义)；智能行为只能在现实世界中与周围环境交互作用而表现出来。</p>
+<h2 id="研究领域">研究领域</h2>
+<h3 id="自然语言理解">自然语言理解</h3>
+<p>是计算机对人类的书面和口头形式的自然语言信息进行处理加工的技术,涉及语言学,数学和计算机科学等多学科知识领域.其主要任务是建立各种自然语言处理系统,如:文字(语音)自动识别系统,电子词典,机器翻译,自动索引系统等.</p>
+<h3 id="模式识别">模式识别</h3>
+<p>模式识别是指用计算机代替人类或帮助人类感知模式，是对人类感知外界功能的模拟，研究的是计算机模式识别系统，也就是使一个计算机系统具有模拟人类通过感官接受外界信息、识别和理解周围环境的感知能力。</p>
+<p>其已在医学图象,指纹识别,天气预报,汽车牌照识别中广泛应用。</p>
+<h3 id="计算机视觉">计算机视觉</h3>
+<p>机器视觉或计算机视觉是一种用计算机实现(或模拟)人的视觉功能，对客观外界进行感知和理解的技术。它是在图像处理和模式识别技术基础上发展起来的一门新兴的学科分支，其主要目的就是用机器识别客观外界景物，即从外界获得二维图像，抽取其特征(如形状、位置、大小、灰度、颜色、纹理等)构成本征描述，然后与已知物体的描述相匹配，从而辨认出所描述的物体。</p>
+<h3 id="专家系统">专家系统</h3>
+<p>专家系统是一个具有大量专门知识和经验的程序系统，它应用于人工智能技术，根据某个领域中一个或多个人类专家提供的知识和经验进行推理和判断，模拟人类专家的决策过程，以解决那些需要专家决定的复杂问题。</p>
+<h3 id="机器学习">机器学习</h3>
+<p>所谓机器学习，就是要使计算机能模拟人的学习行为，自动地通过学习获取知识和技能，不断改善性能，实现自我完善。机器学习就是计算机自动获取知识，它是知识工程的三个分支（使用知识、知识表示、获取知识）之一 。</p>
+<h3 id="神经网络">神经网络</h3>
+<p>也称神经计算,是指一类计算模型,其工作原理模仿了人类大脑的某些工作机制,其利用大量人工神经元组成一个大网络,来实现大规模并行运算。</p>
+<h1 id="状态空间知识表示及其搜索技术">状态空间知识表示及其搜索技术</h1>
+<h2 id="知识">知识</h2>
+<p><strong>知识</strong>是人们在改造客观世界的实践中积累起来的认识和经验。</p>
+<p>一般来说，我们把有关信息关联在一起所形成的信息结构称为知识。</p>
+<p><strong>知识表示</strong>就是对知识的一种描述，一种计算机可以
+接受的用于描述知识的数据结构。</p>
+<p><strong>知识的要素</strong>，一般而言，人工智能系统的知识包含事实、规则、控制和元知识。</p>
+<p><strong>事实</strong>：事物的分类、属性、事物间关系、科学事实、客观事实等。</p>
+<p><strong>规则</strong>：事物的行动、动作和联系的因果关系知识。</p>
+<p><strong>控制</strong>：是有关问题的求解步骤、规划、求解策略等技巧性知识，告诉怎么做一件事。</p>
+<p><strong>元知识</strong>：怎样使用规则、解释规则、校验规则、解释程序结构等知识。是有关知识的知识，是知识库中的高层知识。</p>
+<h2 id="知识表示的一般方法">知识表示的一般方法</h2>
+<p>一般有：状态空间法、问题归约法、谓词逻辑法、语义网络、框架表示、剧本表示、过程表示等。</p>
+<h3 id="状态空间法">状态空间法</h3>
+<p>问题求解(problem solving)是个大课题，它涉及归约、推断、决策、规划、常识推理、定理证明和相关过程的核心概念。在分析了人工智能研究中运用的问题求解方法之后，就会发现许多问题求解方法是采用试探搜索方法的。也就是说，这些方法是通过在某个可能的解空间内寻找一个解来求解问题的。这种基于解答空间的问题表示和求解方法就是状态空间法，它是以状态和算符(operator)为基础来表示和求解问题的。</p>
+<p><strong>状态</strong></p>
+<p>为描述某类不同事物间的差别而引入的一组最少变量<span class="math inline">\(q_0,q_1,\cdots,q_n\)</span>的有序集合</p>
+<p>可用矢量来表示：<span class="math inline">\(Q=[q_0,q_1,\cdots,q_n]^T\)</span></p>
+<p>其中的每一个元素为集合的分量，称为状态变量。</p>
+<p>给定每个分量的一组值就得到一个具体的状态。</p>
+<p><strong>算符</strong></p>
+<p>把问题从一种状态变换为另一种状态的手段。</p>
+<p><strong>问题的状态空间</strong></p>
+<p>是一个表示该问题全部可能状态及其关系的图。</p>
+<p>它包含三种说明的集合,即三元状态（S，F，G），S-初始状态集合，F-操作符集合，G-目标状态集合。</p>
+<p><strong>状态图示法</strong></p>
+<p>用有向带权图来表示，图上的节点代表状态，边代表状态转移的路径以及转移的代价。这个路径通常也和算符有关。</p>
+<h2 id="搜索推理技术">搜索推理技术</h2>
+<p>知识表示是问题求解所必须的，从问题表示到问题的解决，有一个求解过程，也就是搜索推理过程。</p>
+<h3 id="搜索">搜索</h3>
+<p>根据问题的实际情况不断寻找可利用的知识,构造出一条代价较少的推理路线,使问题得到圆满解决的过程称为搜索</p>
+<p>要求，找到一条从初始事实到问题的最终答案的一条推理路径、找到的这条路在时间和空间复杂度上最优。</p>
+<p>在状态空间中搜索时，我们通常会用：图搜索策略、盲目搜索、启发式搜索等方法。</p>
+<h3 id="图搜索策略">图搜索策略</h3>
+<p>这是一种在图中寻找路径的方法。</p>
+<p>图中每个节点对应一个状态，每条连线对应一个操作符。</p>
+<p>搜索方法有很多，例如深度优先搜索等，可以看算法竞赛整理。</p>
+<p>在这里我们通常需要</p>
+<ol>
+<li>必须记住下一步可以走哪些点。OPEN表，记录还没有扩展的节点，用于存放刚生成的节点。</li>
+<li>必须记住哪些点走过了。CLOSED表，记录已经扩展过的节点，用于存放已经扩展或将要扩展的节点</li>
+<li>必须记住从目标返回的路径</li>
+</ol>
+<p>其基本思想是，先把问题的初始状态作为当前扩展节点对其进行扩展，生成一组子节点，然后检查问题的目标状态是否出现在这些子节点中。</p>
+<p>若出现，则找到问题的解。</p>
+<p>若没有出现，则按照某种策略继续扩展。</p>
+<p>重复上述过程，直到找到解或者没有可以操作的节点为止。</p>
+<p>总结如下</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 162; 
+			flex-basis: 389px"
+	>
+	<a href="/inferior/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E6%A6%82%E8%AE%BA%E7%AC%94%E8%AE%B0/1.jpg" data-size="1136x700">
+		<img src="/inferior/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E6%A6%82%E8%AE%BA%E7%AC%94%E8%AE%B0/1.jpg"
+			width="1136"
+			height="700"
+			srcset="/inferior/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E6%A6%82%E8%AE%BA%E7%AC%94%E8%AE%B0/1_hu2cccbb3e003a51ad5dc3487b7ee3f6a3_129395_480x0_resize_q75_box.jpg 480w, /inferior/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E6%A6%82%E8%AE%BA%E7%AC%94%E8%AE%B0/1_hu2cccbb3e003a51ad5dc3487b7ee3f6a3_129395_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="1.jpg">
+	</a>
+	
+	<figcaption>1.jpg</figcaption>
+	
+</figure></p>
+<p>其中第七步的排序可以是任意的即盲目的（属于盲目搜索），也可以用之后讨论的各种启发性思想或其他准则为依据（属于启发式搜索）。</p>
+<h3 id="盲目搜索">盲目搜索</h3>
+<p>这是没有启发信息的一种搜索形式，搜索过程中获得的信息不会用来改进策略。</p>
+<p>一般只适用于求解比较简单的问题。</p>
+<p>不需要重排OPEN表。</p>
+<p>种类主要分为：宽度优先、深度优先、等代价搜索。</p>
+<p>DFS和BFS不再介绍，介绍一个有界深度优先搜索。</p>
+<p><strong>有界深度优先搜索</strong></p>
+<p>对深度优先搜索引入搜索深度的界限（设为<span class="math inline">\(d_m\)</span>），当搜索深度达到了深度界限，而仍未出现目标节点时，就换一个分支进行搜索。</p>
+<p><strong>等代价搜索</strong></p>
+<p>它宽度优先搜索的一种推广。不是沿着等长度路径断层进行扩展，而是沿着等代价路径断层进行扩展。</p>
+<p><strong>代价树的广度优先搜索</strong></p>
+<p>每次从OPEN表中选择节点往CLOSED表传送时，总是选择其中代价最小的节点。</p>
+<p>换句话说就是用二叉堆去维护OPEN表的节点。</p>
+<p><strong>代价树的深度优先搜索</strong></p>
+<p>如果说深度优先搜索是将后继节点按枚举顺序放入OPEN表里，那么代价树的深度优先搜索就是将后继节点按代价从小到大的顺序放入OPEN表。</p>
+<h3 id="启发式搜索">启发式搜索</h3>
+<p>特点是重排OPEN表,选择最有希望的节点加以扩展。种类有：有序搜索、<span class="math inline">\(A^*\)</span>算法等等。</p>
+<p><strong>启发式搜索的估价函数</strong></p>
+<p>估价函数(evaluation function)，是估算节点希望程度的量度，用<span class="math inline">\(f(n)\)</span>表示节点<span class="math inline">\(n\)</span>的估价函数值。</p>
+<p>建立估价函数的一般方法是：提出任意节点与目标集之间的距离量度或差别量度</p>
+<p><strong>有序搜索</strong></p>
+<p>有序搜索，也称最好优先搜索，选择OPEN表上具有最小<span class="math inline">\(f\)</span>值的节点作为下一个要扩展的节点。</p>
+<p><strong><span class="math inline">\(A^*\)</span>算法</strong></p>
+<p>它是有序搜索的一种，其特点在于对估价函数的定义上。</p>
+<p>用<span class="math inline">\(k(n_i,n_j)\)</span>表示任意两个节点<span class="math inline">\(n_i\)</span>和<span class="math inline">\(n_j\)</span>之间最小代价路径的实际代价。</p>
+<p>如果两个节点没有通路，则<span class="math inline">\(k\)</span>没有定义。</p>
+<p>对于一个具体的目标节点<span class="math inline">\(t_i\)</span>，用<span class="math inline">\(h^*(n)\)</span>表示整个目标节点集合<span class="math inline">\(\{t_i\}\)</span>上所有<span class="math inline">\(k(n,t_i)\)</span>中最小的一个，此时<span class="math inline">\(h^*(n)\)</span>就是从<span class="math inline">\(n\)</span>到目标节点最小代价路径的代价，从<span class="math inline">\(n\)</span>到目标节点的代价为<span class="math inline">\(h^*(n)\)</span>的任一路径就是一条最佳路径。</p>
+<p>估价函数设计如下(S是初始状态)</p>
+<p><span class="math display">\[g^*(n) = k(S,n)
+\]</span></p>
+<p><span class="math display">\[f^*(n) = g^*(n)+h^*(n)
+\]</span></p>
+<p><span class="math inline">\(f^*(n)\)</span>就是从<span class="math inline">\(S\)</span>开始约束通过节点<span class="math inline">\(n\)</span>的一条最佳路径的代价。</p>
+<p>希望估价函数<span class="math inline">\(f\)</span>是<span class="math inline">\(f^*\)</span>的一个估计，<span class="math inline">\(g\)</span>是<span class="math inline">\(g^*\)</span>的一个估计，<span class="math inline">\(h\)</span>是<span class="math inline">\(h^*\)</span>的一个估计，<span class="math inline">\(h\)</span>叫做启发函数</p>
+<p><span class="math display">\[f(n) = g(n)+h(n)
+\]</span></p>
+<p>在图搜索中，如果OPEN表的重排是根据<span class="math inline">\(f(n) = g(n)+h(n)\)</span>来进行的，那么称为<span class="math inline">\(A\)</span>算法。</p>
+<p>在<span class="math inline">\(A\)</span>算法中,如果对所有的<span class="math inline">\(n\)</span>存在<span class="math inline">\(h(n)\leq h^*(n)\)</span> ,则称<span class="math inline">\(h(n)\)</span>为<span class="math inline">\(h^*(n)\)</span>的下界,它表示某种偏于保守的估计;</p>
+<p>采用<span class="math inline">\(h^*(n)\)</span>的下界<span class="math inline">\(h(n)\)</span>为启发函数的<span class="math inline">\(A\)</span>算法，称为<span class="math inline">\(A^*\)</span>算法。</p>
+<h1 id="问题归约知识表示及其搜索技术">问题归约知识表示及其搜索技术</h1>
+<p>已知问题的描述，通过一系列变换把此问题最终变为一个子问题集合；这些子问题的解可以直接得到，从而解决了初始问题。</p>
+<p>该方法也就是从目标(要解决的问题)出发逆向推理，建立子问题以及子问题的子问题，直至最后把初始问题归约为一个平凡的本原问题集合。这就是问题归约的实质。</p>
+<p>问题归约法的组成部分：</p>
+<ol>
+<li>一个初始问题描述</li>
+<li>一套把问题变为子问题的操作符</li>
+<li>一套本原问题描述</li>
+</ol>
+<p>举个例子</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 155; 
+			flex-basis: 372px"
+	>
+	<a href="/inferior/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E6%A6%82%E8%AE%BA%E7%AC%94%E8%AE%B0/2.jpg" data-size="1072x691">
+		<img src="/inferior/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E6%A6%82%E8%AE%BA%E7%AC%94%E8%AE%B0/2.jpg"
+			width="1072"
+			height="691"
+			srcset="/inferior/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E6%A6%82%E8%AE%BA%E7%AC%94%E8%AE%B0/2_hu8f5e2db5d359f690483626b9c84adbc1_43546_480x0_resize_q75_box.jpg 480w, /inferior/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E6%A6%82%E8%AE%BA%E7%AC%94%E8%AE%B0/2_hu8f5e2db5d359f690483626b9c84adbc1_43546_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="2.jpg">
+	</a>
+	
+	<figcaption>2.jpg</figcaption>
+	
+</figure></p>
+<h2 id="与或图表示">与或图表示</h2>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 243; 
+			flex-basis: 583px"
+	>
+	<a href="/inferior/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E6%A6%82%E8%AE%BA%E7%AC%94%E8%AE%B0/3.jpg" data-size="1014x417">
+		<img src="/inferior/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E6%A6%82%E8%AE%BA%E7%AC%94%E8%AE%B0/3.jpg"
+			width="1014"
+			height="417"
+			srcset="/inferior/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E6%A6%82%E8%AE%BA%E7%AC%94%E8%AE%B0/3_hu72c2651ae782cb14234fdb7059068d8d_26146_480x0_resize_q75_box.jpg 480w, /inferior/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E6%A6%82%E8%AE%BA%E7%AC%94%E8%AE%B0/3_hu72c2651ae782cb14234fdb7059068d8d_26146_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="3.jpg">
+	</a>
+	
+	<figcaption>3.jpg</figcaption>
+	
+</figure></p>
+<p><strong>或节点</strong>：只要解决某个问题就可以解决其父节点的问题</p>
+<p><strong>与节点</strong>：只有解决所有子问题才可以解决其父节点的问题</p>
+<p><strong>终叶节点</strong>：对应本原问题的节点</p>
+<p><strong>可解节点</strong>：如下定义</p>
+<ol>
+<li>终叶节点是可解节点</li>
+<li>如果某个非终叶节点含有<strong>或</strong>后继节点，那么只有当其后继节点至少有一个是可解的时，此非终叶节点才是可解的。</li>
+<li>如果某个非终叶节点含有<strong>与</strong>后继节点，那么只要当其后继节点全部为可解时，此非终叶节点才是可解的</li>
+</ol>
+<p><strong>不可解节点</strong>：如下定义</p>
+<ol>
+<li>没有后裔的非终叶节点为不可解节点</li>
+<li>如果某个非终叶节点含有<strong>或</strong>后继节点，那么只有当其全部后裔为不可解时，此非终叶节点才是不可解的。</li>
+<li>如果某个非终叶节点含有<strong>与</strong>后继节点，那么只要当其后裔至少有一个为不可解时，此非终叶节点才是不可解的。</li>
+</ol>
+<h2 id="与或图搜索">与或图搜索</h2>
+<p>整体与之前提到的图搜索基础没有差别，只是要去记录节点的可解性。如果最终初始节点可解，原问题就有解，否则就无解。</p>
+<h2 id="max-min搜索">Max-Min搜索</h2>
+<ul>
+<li>目的是为博弈的双方中的一方寻找一个最优行动方案</li>
+<li>要寻找这个最优方案，就要通过计算当前所有可能的方案来进行比较；</li>
+<li>方案的比较是根据问题的特征来定义一个估价函数，用来估算当前博弈树端节点的得分；</li>
+<li>当计算出端节点的估值后，再推算出父节点的得分（即计算倒推值）；</li>
+<li>
+<ul>
+<li>对或节点，选其子节点中一个最大得分作为父节点的得分</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>对与节点，选其子节点中一个最小得分作为父节点的得分</li>
+</ul>
+</li>
+<li>如果一个行动方案能获得较大的倒推值，则它就是当前最好的行动方案。</li>
+</ul>
+<p>假设Max是机器人下棋，Min是人类对手下棋，搜索的步骤是</p>
+<ol>
+<li>以<span class="math inline">\(c(o)\)</span>为根，生成<span class="math inline">\(k\)</span>-步博弈树；</li>
+<li>评估博弈树叶节点对应的博弈状态(棋局)；</li>
+<li>进行极大极小运算 (Max-Min 运算)；</li>
+<li>等待 Min 行棋，产生新的 c(o)，返回 step1.</li>
+</ol>
+<p>其实和人类思考差不多，往下多想<span class="math inline">\(k\)</span>步可能的局面，选择自己最优，对方最差的局面。但是机器暴力地枚举了所有可能。</p>
+<h2 id="alpha-beta剪枝"><span class="math inline">\(\alpha-\beta\)</span>剪枝</h2>
+<p>之前说的暴力算法，先生成一棵博弈树，然后再计算其倒推值，效率非常低。</p>
+<p>而<span class="math inline">\(\alpha-\beta\)</span>剪枝技术的基本思想是，边生成博弈树边计算评估各节点的倒推值并且根据评估出的倒推值范围，及时停止扩展那些已无必要再扩展的子节点，即相当于剪去了博弈树上的一些分枝，从而节约了机器开销，提高了搜索效率。</p>
+<h1 id="谓词逻辑表示与推理技术">谓词逻辑表示与推理技术</h1>
+<p>谓词逻辑的概念和离散数学中讲授的一样，不再重复。具体可见<u><strong><a class="link" href="../%e7%a6%bb%e6%95%a3%e6%95%b0%e5%ad%a6%e6%95%b4%e7%90%86" >离散数学整理</a></strong></u></p>
+<h2 id="谓词逻辑法">谓词逻辑法</h2>
+<p>谓词逻辑法采用谓词合式公式和一阶谓词演算把要解决的问题变为一个有待证明的问题,然后采用消解原理和消解反演来证明一个新语句是从已知的正确语句导出的,从而证明新语句也是正确的.</p>
+<h2 id="利用谓词公式进行知识表示的步骤">利用谓词公式进行知识表示的步骤</h2>
+<ol>
+<li>定义谓词及个体，确定其含义</li>
+<li>根据要表达的事物或概念,为每个谓词中的变元赋值</li>
+<li>根据表达的知识的含义,用适当的连接符号将各个谓词连接起来,形成谓词公式。</li>
+</ol>
+<h2 id="置换与合一">置换与合一</h2>
+<h3 id="置换">置换</h3>
+<p>介绍一下在离散数学中不是很详细的部分。</p>
+<p>一个表达式的置换就是在该表达式中用置换项置换变量。</p>
+<p>置换是形如</p>
+<p><span class="math display">\[\{t_1/x_1,t_2/x_2,\cdots,t_n/x_n\}
+\]</span></p>
+<p>的有限集合。其中，<span class="math inline">\(t_i\)</span>是不同于<span class="math inline">\(x_i\)</span>的项（常量、变量、函数）；<span class="math inline">\(x_1,x_2,\cdots,x_n\)</span>是互不相同的变量；<span class="math inline">\(t_i/x_i\)</span>表示用<span class="math inline">\(t_i\)</span>代换<span class="math inline">\(x_i\)</span></p>
+<p>令置换<span class="math inline">\(s=\{t_1/x_1,t_2/x_2,\cdots,t_n/x_n\}\)</span>，而<span class="math inline">\(E\)</span>是一个谓词公式，那么<span class="math inline">\(s\)</span>作用于<span class="math inline">\(E\)</span>，就是将<span class="math inline">\(E\)</span>中出现的<span class="math inline">\(x_i\)</span>都以<span class="math inline">\(t_i\)</span>代入。结果以<span class="math inline">\(Es\)</span>表示，并称为<span class="math inline">\(E\)</span>的一个例</p>
+<p>而合成，也称为置换乘法，是置换之间的一种运算，若</p>
+<p><span class="math display">\[\theta = \{t_1/x_1,\cdots,t_n/x_n\}
+\]</span></p>
+<p><span class="math display">\[\lambda = \{u_1/y_1,\cdots,u_m/y_m\}
+\]</span></p>
+<p>置换的乘积<span class="math inline">\(\theta\cdot\lambda\)</span>是个新的置换，作用于<span class="math inline">\(E\)</span>相当于先<span class="math inline">\(\theta\)</span>后<span class="math inline">\(\lambda\)</span>对<span class="math inline">\(E\)</span>的作用。</p>
+<p>先作置换</p>
+<p><span class="math display">\[\{t_1\cdot\lambda/x_1,\cdots,t_n\cdot\lambda/x_n,u_1/y_1,\cdots,u_m/y_m\}
+\]</span></p>
+<p>若<span class="math inline">\(y_i\in\{x_1,\cdots,x_n\}\)</span>时，先从中删除<span class="math inline">\(u_i/y_i\)</span>；<span class="math inline">\(t_i\cdot\lambda=x_i\)</span>时，再从中删除<span class="math inline">\(t_i\cdot\lambda/x_i\)</span></p>
+<p>所得的置换称为<span class="math inline">\(\theta\)</span>与<span class="math inline">\(\lambda\)</span>的乘积，记作<span class="math inline">\(\theta\cdot\lambda\)</span></p>
+<p>置换的乘法是有结合律的，但没有交换率。</p>
+<h3 id="合一">合一</h3>
+<p>合一是寻找项对变量的置换，以使两表达式一致。</p>
+<p>如果一个置换<span class="math inline">\(s\)</span>作用于表达式集<span class="math inline">\(\{E_i\}\)</span>的每个元素，则我们用<span class="math inline">\(\{E_i\}s\)</span>来表示置换例的集。</p>
+<p>称表达式集<span class="math inline">\(\{E_i\}\)</span>是可合一的。如果存在一个置换<span class="math inline">\(s\)</span>，使得：</p>
+<p><span class="math display">\[E_1s=E_2s=E_3s=\cdots
+\]</span></p>
+<p>那么我们称此<span class="math inline">\(s\)</span>为<span class="math inline">\(\{E_i\}\)</span>的合一者，因为<span class="math inline">\(s\)</span>的作用是使
+集合<span class="math inline">\(\{E_i\}\)</span>成为单一形式。</p>
+<p>通过置换最少的变量以使表达式一致，这个置换就叫最一般合一者,记为mgu。</p>
+<h2 id="消解原理">消解原理</h2>
+<p>消解原理又称为归结原理。该原理是Robinson提出的一种基于逻辑的、采用反证法的推理方法。</p>
+<p>消解法的基本原理是采用反证法或者称为反演推理方法，将待证明的表达式（定理）转换成为逻辑公式（谓词公式），然后再进行归结，归结能够顺利完成，则证明原公式(定理）是正确性的。</p>
+<h2 id="子句集的求解">子句集的求解</h2>
+<p>先给出一些定义</p>
+<p><strong>文字</strong></p>
+<p>一个原子公式和原子公式的否定都叫做文字</p>
+<p><strong>子句</strong></p>
+<p>由文字的析取组成的公式</p>
+<p><strong>空子句</strong></p>
+<p>不包含任何文字的子句</p>
+<p><strong>子句集</strong></p>
+<p>由子句构成的集合</p>
+<p>任一谓词演算公式可以化成一个子句集。由九个步骤组成</p>
+<ol>
+<li>
+<p>消去蕴涵符号（使用蕴含律）</p>
+</li>
+<li>
+<p>减少否定符号的辖域，应用德摩根定律等使得每个否定符号都只结合一个谓词符号</p>
+</li>
+<li>
+<p>对变量标准化。在任一量词辖域内，受该量词约束的变量为一哑元(虚构变量)，它可以在该辖域内处处统一地被另一个没有出现过的任意变量所代替，而不改变公式的真值。</p>
+</li>
+<li>
+<p>消去存在量词</p>
+<ol>
+<li>如果要消去的存在量词在某些全称量词的辖域内，例如<span class="math inline">\((\forall y)[(\exists x)P(x,y)]\)</span>中，中，存在量词是在全称量词的辖域内，我们允许所存在的<span class="math inline">\(x\)</span>可能依赖于<span class="math inline">\(y\)</span>值。令这种依赖关系明显地由函数<span class="math inline">\(g(y)\)</span>所定义，它把每个<span class="math inline">\(y\)</span>值映射到存在的那个<span class="math inline">\(x\)</span>。这种函数叫做Skolem函数。如果用Skolem函数代替存在的<span class="math inline">\(x\)</span>,我们就可以消去全部存在量词，并写成：<span class="math inline">\((\forall y)P(g(y),y)\)</span></li>
+<li>如果不在全称量词的辖域内，直接用一个新的常量符号来替代即可。</li>
+</ol>
+</li>
+<li>
+<p>化为前束形。把所有全称量词移到公式的左边，并使每个量词的辖域包括这个量词后面公式的整个部分。所得公式称为前束形。前束形公式由前缀和母式组成，前缀由全称量词串组成，母式由没有量词的公式组成。</p>
+</li>
+<li>
+<p>把母式化为合取范式</p>
+</li>
+<li>
+<p>消去全称量词</p>
+</li>
+<li>
+<p>消去连词符号<span class="math inline">\(\wedge\)</span>。用<span class="math inline">\(\{(A\vee B),(A\vee C)\}\)</span>替代<span class="math inline">\((A\vee B)\wedge(A\vee C)\)</span></p>
+</li>
+<li>
+<p>更换变量名称，把每个子句中重复变量的名称换成不同的。</p>
+</li>
+</ol>
+<h2 id="消解反演">消解反演</h2>
+<p>一般过程</p>
+<ol>
+<li>建立子句集<span class="math inline">\(S\)</span></li>
+<li>从子句集<span class="math inline">\(S\)</span>出发,仅对<span class="math inline">\(S\)</span>的子句间使用归结推理规则（也即反证法）</li>
+<li>如果得出空子句, 则结束;否则转下一步</li>
+<li>将所得归结式仍放入<span class="math inline">\(S\)</span>中</li>
+<li>对新的子句集使用归结推理规则</li>
+<li>转3.</li>
+</ol>
+<p>空子句不含有文字,它不能被任何解释满足,所以空子句是永假的,不可满足的。</p>
+<p>归结过程出现空子句,说明出现互补文字,说明S中有矛盾,因此S是不可满足的。</p>
+<h2 id="语义网络法">语义网络法</h2>
+<p>语义网络是知识的一种结构化图解表示，它由节点和弧线组成。节点用于表示实体、概念和情况等，节点之间的弧线用于表示节点间的关系。</p>
+<h2 id="框架表示">框架表示</h2>
+<p>框架是一种结构化表示法，通常采用语义网络中的节点-槽-值表示结构。</p>
+<h1 id="规则演绎系统">规则演绎系统</h1>
+<p>基于规则的演绎推理是一种直接的推理方法，它不像消解反演把知识转化为子句集，而是把有关问题的知识和信息划分为规则和事实两种类型。</p>
+<p>规则由包含蕴含形式的表达式表示，事实由无蕴含形式的表达式表示，并画出相应的与或图，然后通过规则进行演绎推理。</p>
+<p>规则演绎系统可以分为规则正向演绎推理、规则逆向演绎系统和规则双向演绎系统。</p>
+<p>基于规则的问题求解系统运用下述规则来建立：</p>
+<p><span class="math display">\[If\to Then
+\]</span></p>
+<p>其中，If部分可能由几个if组成，而Then部分可能由一个或一个以上的then组成。</p>
+<p>在这种系统中，通常称每个if部分为前项，称每个then部分为后项。</p>
+<h2 id="规则正向演绎系统">规则正向演绎系统</h2>
+<p>规则正向演绎系统是从事实到目标进行操作的，即从状况条件到动作进行推理的，也就是从if到then的方向进行推理的。</p>
+<p>过程</p>
+<ol>
+<li>事实表达式的与或形变换。把事实表示为非蕴涵形式的与或形，作为系统的总数据库。具体变换步骤与前述化为子句形类似。</li>
+<li>事实表达式的与或图表示，即用与或图来表达事实表达式。</li>
+<li>与或图的F规则变换</li>
+</ol>
+<blockquote>
+<p>这些规则是建立在某个问题辖域中普通陈述性知识的蕴涵公式基础上的。我们把允许用作规则的公式类型限制为下列形式：</p>
+</blockquote>
+<p><span class="math display">\[L\Rightarrow W
+\]</span></p>
+<blockquote>
+<p>式中：<span class="math inline">\(L\)</span>是单文字；<span class="math inline">\(W\)</span>为与或形的公式。</p>
+</blockquote>
+<ol start="4">
+<li>作为终止条件的目标公式</li>
+</ol>
+<blockquote>
+<p>基于规则的正向演绎推理的基本原理是：应用F规则作
+用于表示事实的与或图，改变与或图的结构，从而产生
+新的事实，直到推出目标公式，则推理成功结束。</p>
+</blockquote>
+<blockquote>
+<p>其推理过程为</p>
+</blockquote>
+<blockquote>
+<ol>
+<li>首先用与或图把已知事实表示出来。</li>
+<li>用F规则的左部和与或图的叶节点进行匹配，并将匹配成功的F规则加入到与或图中，即利用F规则转换与或图。</li>
+<li>重复第（2）步，直到产生一个含有以目标节点作为终止节点的解图为止。</li>
+</ol>
+</blockquote>
+<h2 id="规则逆向演绎系统">规则逆向演绎系统</h2>
+<p>规则逆向演绎系统是从then向if进行推理的，即从目标或动作向事实或状况条件进行推理的。</p>
+<p>逆向演绎系统能够处理任意形式的目标表达式。采用和变换事实表达式类似的过程，把目标公式化成与或形。</p>
+<p><strong>与或图的B规则变换</strong></p>
+<p>这个B规则是建立在确定的蕴涵式基础上的，正如正向系统的F规则一样。不过，我们现在把这些B规则限制为: <span class="math inline">\(W\Rightarrow L\)</span>形式的表达式。</p>
+<p>其中，W为任一与或形公式，L为文字，而且蕴涵式中任何变量的量词辖域为整个蕴涵式。其次，把B规则限制为这种形式的蕴涵式还可以简化匹配，使之不会引起重大的实际困难。</p>
+<p>此外，可以把像<span class="math inline">\(W\Rightarrow(L1\wedge L2)\)</span>这样的蕴涵式化为两个规则<span class="math inline">\(W\Rightarrow L1\)</span>和<span class="math inline">\(W\Rightarrow L2\)</span>。</p>
+<p><strong>作为终止条件的事实节点的一致解图</strong></p>
+<p>逆向系统中的事实表达式均限制为文字合取形，它可以表示为一个文字集。当一个事实文字和标在该图文字节点上的文字相匹配时，就可把相应的后裔事实节点添加到该与或图中去。这个事实节点通过标有mgu的匹配弧与匹配的子目标文字节点连接起来。同一个事实文字可以多次重复使用(每次用不同变量)，以便建立多重事实节点。逆向系统成功的终止条件是与或图包含有某个终止在事实节点上的一致解图。</p>
+<h2 id="规则双向演绎系统">规则双向演绎系统</h2>
+<p>正向和逆向组合系统是建立在两个系统相结合的基础上的。此组合系统的总数据库由表示目标和表示事实的两个与或图结构组成，并分别用F规则和B规则来修正。</p>
+<p>双向演绎系统的主要复杂之处在于其终止条件，终止涉及两个图结构之间的适当交接处。这些结构可由标有合一文字的节点上的匹配棱线来连接。</p>
+<h2 id="产生式系统">产生式系统</h2>
+<p>用来描述若干个不同的以一个基本概念为基础的系统。这个基本概念就是产生式规则或产生式条件和操作对的概念。</p>
+<p>在产生式系统中，论域的知识分为两部分：用事实表示静态知识，如事物、事件和它们之间的关系；用产生式规则表示推理过程和行为。由于这类系统的知识库主要用于存储规则，因此又把此类系统称为基于规则的系统。</p>
+<h1 id="不确定性推理">不确定性推理</h1>
+<h2 id="模糊计算和模糊推理">模糊计算和模糊推理</h2>
+<p>与二值逻辑这样的非真即假的概念不同，模糊概念中，从属于该概念到不属于该概念之间无明显分界线。</p>
+<p>比如快慢、大小、软硬、强弱等。</p>
+<p>其基本思想是，用属于程度替代属于或不属于。</p>
+<h3 id="经典集合">经典集合</h3>
+<p>设<span class="math inline">\(A\)</span>是论域<span class="math inline">\(U\)</span>上的一个集合，对任意<span class="math inline">\(u\in U\)</span>，令</p>
+<p><span class="math display">\[C_A(u) = \left\{\begin{matrix}
+1,u\in A\\
+0,u\notin A
+\end{matrix}\right.
+\]</span></p>
+<p>则称<span class="math inline">\(C_A(u)\)</span>为集合<span class="math inline">\(A\)</span>的特征函数。</p>
+<h3 id="模糊理论基本概念">模糊理论基本概念</h3>
+<p><strong>模糊集合</strong></p>
+<p>论域<span class="math inline">\(U\)</span>中的模糊集<span class="math inline">\(F\)</span>用一个在区间<span class="math inline">\([0,1]\)</span>的取值的隶属函数<span class="math inline">\(\mu_F\)</span>来表示，即：</p>
+<p><span class="math display">\[\mu_F:U\to[0,1]
+\]</span></p>
+<p><span class="math inline">\(\mu_F\)</span>称为<span class="math inline">\(F\)</span>的隶属函数，<span class="math inline">\(\mu_F(u)\)</span>称为<span class="math inline">\(u\)</span>对<span class="math inline">\(A\)</span>的隶属度。</p>
+<p>直观上来说，就是将一些元素属于某个集合的程度映射到连续的<span class="math inline">\([0,1]\)</span>上。</p>
+<h3 id="模糊集的表示方法">模糊集的表示方法</h3>
+<p>若<span class="math inline">\(U\)</span>为离散域且为有限集合时，模糊集合可以表示为：</p>
+<p><strong>扎德表示法</strong></p>
+<p><span class="math display">\[F = \sum^n_{i=1}\mu_F(u_i)/u_i
+\]</span></p>
+<p>其中“<span class="math inline">\(/\)</span>”符号表示的意思是，分母是论域中的元素，分子是该元素对模糊子集<span class="math inline">\(F\)</span>的隶属度。<span class="math inline">\(\sum\)</span>也不是表示相加，只是一个记号。</p>
+<p>比如我们写出来的可能是<span class="math inline">\(A = 1/u_1+0.7/u_2+0/u_3+0.5/u_4\)</span>这样的形式。如果隶属度为<span class="math inline">\(0\)</span>可以省略不写。</p>
+<p><strong>序偶表示法</strong></p>
+<p><span class="math display">\[F=\{(u_1,\mu(u_1)),(u_2,\mu(u_2)),\cdots,(u_n,\mu(u_n))\}
+\]</span></p>
+<p><strong>向量表示法</strong></p>
+<p><span class="math display">\[F = \{\mu(u_1),\mu(u_2),\cdots,\mu(u_n)\}
+\]</span></p>
+<p>无论论域是有限的还是无限的，连续的还是离散的，扎德都用如下记号作为模糊子集的一般表示形式：</p>
+<p><span class="math display">\[F = \int_U\frac{\mu_F}{u}
+\]</span></p>
+<p>这里的积分号不是数学中的积分，也不是求和，只是表示论域中各元素与其隶属度对应关系的总括，是一个记号。</p>
+<h3 id="集合运算">集合运算</h3>
+<p><strong>定义1</strong></p>
+<p>设<span class="math inline">\(A,B\)</span>是论域<span class="math inline">\(U\)</span>的模糊集，即<span class="math inline">\(A,B\in F(U)\)</span>，若对于任一<span class="math inline">\(u\in U\)</span>都有<span class="math inline">\(\mu_B(u)\leq\mu_A(A)\)</span>，则称<span class="math inline">\(B\)</span>包含于<span class="math inline">\(A\)</span>，或者说<span class="math inline">\(B\)</span>是<span class="math inline">\(A\)</span>的一个子集，记作<span class="math inline">\(B\subseteq A\)</span>。若对于任一<span class="math inline">\(u\in U\)</span>都有<span class="math inline">\(\mu_B(u)=\mu_A(A)\)</span>，则称<span class="math inline">\(B\)</span>等于<span class="math inline">\(A\)</span>，记作<span class="math inline">\(B=A\)</span></p>
+<p><strong>定义2</strong></p>
+<p>并运算（<span class="math inline">\(A\bigcup B\)</span>）的隶属度函数<span class="math inline">\(\mu_{A\bigcup B}\)</span>对所有的<span class="math inline">\(u\in U\)</span>被逐点定义为取大运算，即</p>
+<p><span class="math display">\[\mu_{A\bigcup B} = \mu_A(u)\vee\mu_B(u)
+\]</span></p>
+<p>式中，<span class="math inline">\(\vee\)</span>符号取极大值运算。</p>
+<p><strong>定义3</strong></p>
+<p>交运算（<span class="math inline">\(A\bigcap B\)</span>）的隶属度函数<span class="math inline">\(\mu_{A\bigcap B}\)</span>对所有的<span class="math inline">\(u\in U\)</span>被逐点定义为取小运算，即</p>
+<p><span class="math display">\[\mu_{A\bigcap B} = \mu_A(u)\wedge\mu_B(u)
+\]</span></p>
+<p>式中，<span class="math inline">\(\wedge\)</span>符号取极小值运算。</p>
+<p><strong>定义4</strong></p>
+<p>补，隶属度函数<span class="math inline">\(\mu_{\bar A}\)</span>，对所有的<span class="math inline">\(u\in U\)</span>，被逐点定义为<span class="math inline">\(\mu_{\bar A}(u) = 1-\mu_{A}(u)\)</span></p>
+<p>模糊集合中有时会用<span class="math inline">\(\neg A\)</span>表示<span class="math inline">\(A\)</span>的补集。</p>
+<p><strong>定理</strong></p>
+<p>集合运算的定理和经典的集合没有区别，例如结合、分配律，德摩根律等等。</p>
+<h3 id="模糊集的截集">模糊集的截集</h3>
+<p><strong>定义1</strong></p>
+<p>设<span class="math inline">\(A\in F(u),\lambda\in[0,1]\)</span>，则</p>
+<ol>
+<li><span class="math inline">\(A_\lambda=\{u|u\in U,\mu_A(u)\geq\lambda\}\)</span>，称<span class="math inline">\(A_\lambda\)</span>为<span class="math inline">\(A\)</span>的一个<span class="math inline">\(\lambda\)</span>截集，称<span class="math inline">\(\lambda\)</span>为阈值（置信水平）</li>
+<li><span class="math inline">\(A_\lambda=\{u|u\in U,\mu_A(u)>\lambda\}\)</span>，称<span class="math inline">\(A_\lambda\)</span>为<span class="math inline">\(A\)</span>的一个<span class="math inline">\(\lambda\)</span>强截集</li>
+<li><span class="math inline">\(SuppA=\{u|u\in U,\mu_A(u)>0\}\)</span>为<span class="math inline">\(A\)</span>的支集</li>
+<li><span class="math inline">\(KerA=\{u|u\in U,\mu_A(u)=1\}\)</span>为<span class="math inline">\(A\)</span>的核</li>
+</ol>
+<p>当<span class="math inline">\(A\)</span>的核不为空，则称<span class="math inline">\(A\)</span>为正规<span class="math inline">\(F\)</span>集。</p>
+<h3 id="模糊集合的模糊度">模糊集合的模糊度</h3>
+<p>模糊度是模糊集模糊程度的一种度量</p>
+<p><strong>定义</strong></p>
+<p>设<span class="math inline">\(A\in F(U)\)</span>，<span class="math inline">\(d\)</span>是定义在<span class="math inline">\(F(U)\)</span>上的一个实函数，如果它满足以下条件：</p>
+<ol>
+<li>对任意<span class="math inline">\(A\in F(U)\)</span>，有<span class="math inline">\(d(A)\in[0,1]\)</span></li>
+<li>当且仅当<span class="math inline">\(A\)</span>是一个普通集合时，<span class="math inline">\(d(A) = 0\)</span></li>
+<li>若<span class="math inline">\(A\)</span>的隶属函数<span class="math inline">\(\mu_A(U)\equiv0.5\)</span>，则<span class="math inline">\(d(A)=1\)</span></li>
+<li>若<span class="math inline">\(A,B\in F(U)\)</span>，且对任意<span class="math inline">\(u\in U\)</span>，满足</li>
+</ol>
+<p><span class="math display">\[\mu_B(u)\leq\mu_A(u)\leq0.5或者\mu_B(u)\geq\mu_A(u)\geq0.5
+\]</span></p>
+<p>则有<span class="math inline">\(d(B)\leq d(A)\)</span></p>
+<ol start="5">
+<li>对任意<span class="math inline">\(A\in F(U)\)</span>，有<span class="math inline">\(d(A)=d(\neg A)\)</span></li>
+</ol>
+<p>则称<span class="math inline">\(d\)</span>为定义在<span class="math inline">\(F(U)\)</span>上的一个模糊度，<span class="math inline">\(d(A)\)</span>称为<span class="math inline">\(A\)</span>的模糊度。</p>
+<p>直观地理解</p>
+<ul>
+<li>模糊度是<span class="math inline">\([0,1]\)</span>上的一个数</li>
+<li>普通集合的模糊度是<span class="math inline">\(0\)</span>，也就代表其不模糊</li>
+<li>越靠近<span class="math inline">\(0.5\)</span>就越模糊，<span class="math inline">\(\mu_A(u)=0.5\)</span>时最模糊</li>
+<li>模糊集<span class="math inline">\(A\)</span>与其补集<span class="math inline">\(\neg A\)</span>具有相同的模糊度</li>
+</ul>
+<p><strong>模糊度的计算方法</strong></p>
+<p><em>Haming（海明）模糊度</em></p>
+<p><span class="math display">\[d_1(A) = \frac{2}{n}\sum^n_{i=1}|\mu_A(u_i)-\mu_{A_{0.5}}(u_i)|
+\]</span></p>
+<p>其中，<span class="math inline">\(\mu_{A_{0.5}}(u_i)\)</span>是<span class="math inline">\(A\)</span>的<span class="math inline">\(\lambda=0.5\)</span>截集的隶属函数。由于<span class="math inline">\(A_{0.5}\)</span>是一个普通集合，所以<span class="math inline">\(\mu_{A_{0.5}}(u_i)\)</span>实际上是特征函数</p>
+<p><em>Euclid（欧几里得）模糊度</em></p>
+<p><span class="math display">\[d_2(A) = \frac{2}{\sqrt n }(\sum^n_{i=1}|\mu_A(u_i)-\mu_{A_{0.5}}(u_i)|^2)^{1/2}
+\]</span></p>
+<p><em>Minkowski（明可夫斯基）模糊度</em></p>
+<p><span class="math display">\[d_p(A) = \frac{2}{n^{1/p}}(\sum^n_{i=1}|\mu_A(u_i)-\mu_{A_{0.5}}(u_i)|^p)^{1/p}
+\]</span></p>
+<p><em>Shannon（香农）模糊度</em></p>
+<p><span class="math display">\[d(A) = \frac{1}{n\ln 2}\sum^n_{i=1}S(\mu_A(u_i))
+\]</span></p>
+<p>其中<span class="math inline">\(S(x)\)</span>是定义在<span class="math inline">\([0,1]\)</span>上的香农函数，即</p>
+<p><span class="math display">\[S(x) = \left\{\begin{matrix}
+-x\ln x-(1-x)ln(1-x),\quad &x\in(0,1) \\
+0,\quad &x=1\ or\ x = 0
+\end{matrix}\right.
+\]</span></p>
+<h3 id="模糊数">模糊数</h3>
+<p>模糊的数量，例如：500人左右，大约0.6等</p>
+<p><strong>定义</strong></p>
+<p>如果实数域<span class="math inline">\(R\)</span>上的模糊集<span class="math inline">\(A\)</span>的隶属函数<span class="math inline">\(\mu_A(u)\)</span>在<span class="math inline">\(R\)</span>上连续且具有如下性质</p>
+<ol>
+<li><span class="math inline">\(A\)</span>是凸模糊集，即对任意<span class="math inline">\(\lambda\in[0,1]\)</span>，<span class="math inline">\(A_\lambda\)</span>是闭区间</li>
+<li><span class="math inline">\(A\)</span>是正规模糊集，即存在<span class="math inline">\(u\in R\)</span>，使得<span class="math inline">\(\mu_A(u)=1\)</span></li>
+</ol>
+<p>则称<span class="math inline">\(A\)</span>为一个模糊数</p>
+<p>直观上模糊数的隶属函数图形是单峰的，且在峰顶使隶属度达到<span class="math inline">\(1\)</span></p>
+<h3 id="模糊关系">模糊关系</h3>
+<p>在普通集合上定义的关系已经在离散数学中介绍过了。这种关系是一种确定性的关系，要么有，要么没有。</p>
+<p>而模糊关系就不是非常明确的。</p>
+<p><strong>定义</strong></p>
+<p>设论域<span class="math inline">\(U,V\)</span>，则<span class="math inline">\(U\times V\)</span>（笛卡尔积）的一个子集<span class="math inline">\(R\)</span>就是从<span class="math inline">\(U\)</span>到<span class="math inline">\(V\)</span>的模糊关系，记作</p>
+<p><span class="math display">\[U\overset{R}{\rightarrow} V 
+\]</span></p>
+<p>这里的模糊关系<span class="math inline">\(R\)</span>是属于模糊二元关系。</p>
+<p>其隶属函数为映射<span class="math inline">\(\mu_R:U\times V\to[0,1]\)</span></p>
+<p>隶属度<span class="math inline">\(\mu_R(u_0,v_0)\)</span>，表示<span class="math inline">\(u_0\)</span>与<span class="math inline">\(v_0\)</span>具有关系<span class="math inline">\(R\)</span>的程度。</p>
+<p>对于有限论域<span class="math inline">\(U = \{u_1,u_2,\cdots,u_m\},V = \{v_1,v_2,\cdots,v_n\}\)</span>，则<span class="math inline">\(U\)</span>对<span class="math inline">\(V\)</span>的模糊关系的隶属函数可以用<span class="math inline">\(m\times n\)</span>阶模糊矩阵<span class="math inline">\(R\)</span>来表示，即</p>
+<p><span class="math display">\[R = (r_{ij})_{m\times n}
+\]</span></p>
+<p><strong>模糊集的笛卡尔乘积</strong></p>
+<p>模糊集<span class="math inline">\(A,B\)</span>的笛卡尔乘积为</p>
+<p><span class="math display">\[A\times B = \int_{U\times V}\min(\mu_A(u),\mu_B(v))/(u,v)
+\]</span></p>
+<p><strong>模糊关系的合成</strong></p>
+<p>设<span class="math inline">\(R_1\)</span>与<span class="math inline">\(R_2\)</span>分别是<span class="math inline">\(u\times v\)</span>及<span class="math inline">\(v\times w\)</span>上的两个模糊关系，则<span class="math inline">\(R_1\)</span>与<span class="math inline">\(R_2\)</span>的合成是指从<span class="math inline">\(u\)</span>到<span class="math inline">\(w\)</span>的一个模糊关系，记为<span class="math inline">\(R_1\circ R_2\)</span>，其隶属度为</p>
+<p><span class="math display">\[\mu_{R_1\circ R_2}(u,w) = \{\bigvee^{v}\mu_{R_1}(u,v)\wedge\mu_{R_2}(v,w) \}
+\]</span></p>
+<h3 id="模糊推理">模糊推理</h3>
+<p><strong>模糊命题</strong></p>
+<p>含有模糊概念、模糊数据的语句称为模糊命题。</p>
+<p>它的一般表示形式为</p>
+<p><span class="math display">\[x\quad is \quad A
+\]</span></p>
+<p>或者</p>
+<p><span class="math display">\[x\quad is \quad A(CF)
+\]</span></p>
+<p>其中<span class="math inline">\(A\)</span>是模糊概念或模糊数，用相应的模糊集及隶属函数刻画；<span class="math inline">\(x\)</span>是论域上的变量，用以代表所论述对象的属性； <span class="math inline">\(CF\)</span>是该模糊命题的可信度，它既可以是一个确定的数，也可以是一个模糊数或者模糊语言值。</p>
+<p>模糊语言值是指表示大小、长短、多少等程度的一些词汇。如：极大、很大、相当大、比较大。模糊语言值同样可用模糊集描述。</p>
+<h2 id="模糊的知识表示">模糊的知识表示</h2>
+<ol>
+<li>模糊产生式规则的一般形式是</li>
+</ol>
+<p><span class="math display">\[IF\quad E\quad THEN\quad H\quad (CF,\lambda)
+\]</span></p>
+<p>其中<span class="math inline">\(E\)</span>是用模糊命题表示的模糊条件；<span class="math inline">\(H\)</span>是用模糊命题表示的模糊结论；<span class="math inline">\(CF\)</span>是知识的可信度因子，它既可以是一个确定的数，也可以是一个模糊数或模糊语言值。<span class="math inline">\(\lambda\)</span>是匹配度的阈值，用以指出知识被运用的条件。</p>
+<ol start="2">
+<li>推理中所用的证据也用模糊命题表示，一般形式为</li>
+</ol>
+<p><span class="math display">\[x\quad is \quad A'
+\]</span></p>
+<p>或者</p>
+<p><span class="math display">\[x\quad is \quad A'(CF)
+\]</span></p>
+<ol start="3">
+<li>模糊推理要解决的问题：证据与知识的条件是否匹配；如果匹配，如何利用知识及证据推出结论。</li>
+</ol>
+<h2 id="模糊匹配与冲突消解">模糊匹配与冲突消解</h2>
+<h3 id="贴近度">贴近度</h3>
+<p>设<span class="math inline">\(A,B\)</span>分别是论域<span class="math inline">\(U=\{u_1,u_2,\cdots,u_n\}\)</span>上的两个模糊集，则它们的贴近度定义为：</p>
+<p><span class="math display">\[(A,B) = [A\cdot B+(1-A\odot B)]/2
+\]</span></p>
+<p>其中</p>
+<p><span class="math display">\[A\cdot B = \bigvee_U(\mu_A(u_i)\wedge\mu_B(u_i))
+\]</span></p>
+<p>是内积</p>
+<p><span class="math display">\[A\odot B = \bigwedge_U(\mu_A(u_i)\vee\mu_B(u_i))
+\]</span></p>
+<p>是外积。</p>
+<h3 id="语义距离">语义距离</h3>
+<p><strong>海明距离</strong></p>
+<p><span class="math display">\[d(A,B) = \frac{1}{n}\sum^n_{i=1}|\mu_A(u_i)-\mu_B(u_i)|
+\]</span></p>
+<p><span class="math display">\[d(A,B) = \frac{1}{b-a}\int^b_a|\mu_A(u)-\mu_B(u)|du
+\]</span></p>
+<p><strong>欧几里得距离</strong></p>
+<p><span class="math display">\[d(A,B) = \frac{1}{\sqrt n}\sqrt{\sum^n_{i=1}(\mu_A(u_i)-\mu_B(u_i))^2}
+\]</span></p>
+<p><strong>明可夫斯基距离</strong></p>
+<p><span class="math display">\[d(A,B) = [\frac{1}{n}\sum^n_{i=1}|\mu_A(u_i)-\mu_{A_{0.5}}(u_i)|^p]^{1/p},\quad p\geq1
+\]</span></p>
+<p><strong>切比雪夫距离</strong></p>
+<p><span class="math display">\[d(A,B) = \underset{1\leq i\leq n}{\max}|\mu_A(u_i)-\mu_B(u_i)|
+\]</span></p>
+<p>匹配度为<span class="math inline">\(1-d(A,B)\)</span></p>
+<h3 id="相似度">相似度</h3>
+<ol>
+<li>最大最小法</li>
+</ol>
+<p><span class="math display">\[r(A,B) = \frac{\sum\min\{\mu_A(u_i),\mu_B(u_i)\}}{\sum\max\{\mu_A(u_i),\mu_B(u_i)\}}
+\]</span></p>
+<ol start="2">
+<li>算术平均法</li>
+</ol>
+<p><span class="math display">\[r(A,B) = \frac{\sum\min\{\mu_A(u_i),\mu_B(u_i)\}}{\frac{1}{2}\sum(\mu_A(u_i)+\mu_B(u_i))}
+\]</span></p>
+<ol start="3">
+<li>几何平均最小法</li>
+</ol>
+<p><span class="math display">\[r(A,B) = \frac{\sum\min\{\mu_A(u_i),\mu_B(u_i)\}}{\sum\sqrt {(\mu_A(u_i)\times\mu_B(u_i))}}
+\]</span></p>
+<ol start="4">
+<li>相关系数法</li>
+</ol>
+<p><span class="math display">\[r(A,B) = \frac{\sum(\mu_A(u_i)-\bar\mu_A)\times(\mu_B(u_i)-\bar\mu_B)}{\sqrt{[\sum(\mu_A(u_i)-\bar\mu_A)^2]\times[\sum(\mu_B(u_i)-\bar\mu_B)^2]}}
+\]</span></p>
+<p><span class="math display">\[\bar\mu_A = \frac{1}{n}\sum\mu_A(u_i),\quad\bar\mu_B = \frac{1}{n}\sum\mu_B(u_i)
+\]</span></p>
+<ol start="5">
+<li>指数法</li>
+</ol>
+<p><span class="math display">\[r(A,B) = \exp\bigg(-\sum|\mu_A(u_i)-\mu_B(u_i)|\bigg)
+\]</span></p>
+<h3 id="复合条件的模糊匹配">复合条件的模糊匹配</h3>
+<ol>
+<li>分别计算出每一个子条件与其证据的匹配度</li>
+<li>求出整个前提条件与证据的总匹配度。目前常用的方法有“取极小”和“相乘”等。</li>
+<li>检查总匹配度是否满足阈值条件，如果满足就可以匹配，否则为不可匹配。</li>
+</ol>
+<h3 id="冲突消解">冲突消解</h3>
+<ol>
+<li>按匹配度大小排序</li>
+<li>按加权平均值排序</li>
+<li>按广义顺序关系排序</li>
+</ol>
+<h2 id="模糊推理的基本形式">模糊推理的基本形式</h2>
+<ol>
+<li>模糊假言推理</li>
+</ol>
+<p>知识：<span class="math inline">\(IF\quad x\ is\ A\quad THEN\quad y\ is\ B\)</span></p>
+<p>证据：<span class="math inline">\(x\ is\ A'\)</span></p>
+<p>结论：<span class="math inline">\(y\ is\ B'\)</span></p>
+<ol start="2">
+<li>模糊拒取式推理</li>
+</ol>
+<p>知识：<span class="math inline">\(IF\quad x\ is\ A\quad THEN\quad y\ is\ B\)</span></p>
+<p>证据：<span class="math inline">\(y\ is\ B'\)</span></p>
+<p>结论：<span class="math inline">\(x\ is\ A'\)</span></p>
+<p>知识中只含有简单条件，且不带可信度因子的模糊推理称为简单模糊推理。</p>
+<p><strong>合成推理知识</strong></p>
+<p>对于知识<span class="math inline">\(IF\quad x\ is\ A\quad THEN\quad y\ is\ B\)</span></p>
+<p>首先构造出<span class="math inline">\(A,B\)</span>之间的模糊关系<span class="math inline">\(R\)</span>，</p>
+<ul>
+<li>
+<p>如果已知证据是<span class="math inline">\(x\ is\ A'\)</span>，且<span class="math inline">\(A,A'\)</span>之间可以进行模糊匹配，则<span class="math inline">\(B' = A'\circ R\)</span></p>
+</li>
+<li>
+<p>如果已知证据是<span class="math inline">\(y\ is\ B'\)</span>，且<span class="math inline">\(B,B'\)</span>之间可以进行模糊匹配，则<span class="math inline">\(A' = R\circ B'\)</span></p>
+</li>
+</ul>
+<h2 id="构造模糊关系r的方法">构造模糊关系R的方法</h2>
+<h3 id="扎德方法">扎德方法</h3>
+<p>扎德提出了两种方法：一种称为条件命题的极大极小规则。另一种称为条件命题的算术规则，由它们获得的模糊关系分别记为<span class="math inline">\(R_m\)</span>和<span class="math inline">\(R_a\)</span></p>
+<p>设<span class="math inline">\(A\in F(U), B\in F(V)\)</span>，其分别表示为</p>
+<p><span class="math display">\[A = \int_U \mu_A(u)/u, B = \int_V \mu_B(u)/u
+\]</span></p>
+<p>则</p>
+<p><span class="math display">\[R_m = (A\times B)\cup(\neg A\times V) = \int_{U\times V}(\mu_A(u)\wedge\mu_B(v))\vee(1-\mu_A(u))/(u,v)
+\]</span></p>
+<p><span class="math display">\[R_a = (\neg A\times V)\oplus(U\times B) = \int_{U\times V}1\wedge(1-\mu_A(u)+\mu_B(v))/(u,v)
+\]</span></p>
+<p>其中<span class="math inline">\(\times\)</span>是笛卡尔积；有界和<span class="math inline">\(x\oplus y=\min\{1,x+y\}\)</span></p>
+<h3 id="mamdani方法">Mamdani方法</h3>
+<p>对于知识<span class="math inline">\(IF\quad x\ is\ A\quad THEN\quad y\ is\ B\)</span></p>
+<p><span class="math display">\[R_C = A\times B = \int_{U\times V}\mu_A(u)\wedge\mu_B(v)/(u,v)
+\]</span></p>
+<h3 id="mizumoto方法">Mizumoto方法</h3>
+<p>米祖莫托等人根据多值逻辑中计算<span class="math inline">\(T(AB)\)</span>的定义，提出了一组构造模糊关系的方法，分别记为<span class="math inline">\(R_s,R_g,R_{sg},R_{gs},R_{gg},R_{ss}\)</span>等等。</p>
+<p><span class="math display">\[R_s = A\times V \underset{s}{\Rightarrow} U\times B = \int_{U\times V}[\mu_A(u)\underset{s}{\to}\mu_B(v)]/(u,v)
+\]</span></p>
+<p>其中</p>
+<p><span class="math display">\[\mu_A(u)\underset{s}{\to}\mu_B(v) = \left\{\begin{matrix}
+1,\mu_A(u)\leq\mu_B(v) \\
+0,\mu_A(u)>\mu_B(v)
+\end{matrix}\right.
+\]</span></p>
+<p><span class="math display">\[R_s = A\times V \underset{g}{\Rightarrow} U\times B = \int_{U\times V}[\mu_A(u)\underset{g}{\to}\mu_B(v)]/(u,v)
+\]</span></p>
+<p>其中</p>
+<p><span class="math display">\[\mu_A(u)\underset{g}{\to}\mu_B(v) = \left\{\begin{matrix}
+1,&\mu_A(u)\leq\mu_B(v) \\
+\mu_B(v),&\mu_A(u)>\mu_B(v)
+\end{matrix}\right.
+\]</span></p>
+<h2 id="模糊判决方法">模糊判决方法</h2>
+<p>在推理得到的模糊集合中取一个相对最能代表这个模糊集合的单值的过程就称作解模糊（去模糊）或模糊判决(Defuzzification)。</p>
+<p>方法有：重心法、最大隶属度方法、加权平均法、隶属度限幅元素平均法等等。</p>
+<h3 id="重心法">重心法</h3>
+<p>所谓重心法就是取模糊隶属函数曲线与横坐标轴围成面积的重心作为代表点。理论上应该计算输出范围内一系列连续点的重心，即</p>
+<p><span class="math display">\[u = \frac{\int_x x\mu_N(x)dx}{\int_x \mu_N(x)dx}
+\]</span></p>
+<h3 id="最大隶属度法">最大隶属度法</h3>
+<p>这种方法最简单，只要在推理结论的模糊集合中取隶属度最大的那个元素作为输出量即可。不过，要求这种情况下的隶属函数曲线一定是单峰曲线。如果该曲线是梯形平顶，那么具有最大隶属度的元素就可能不只一个，这时就要对所有取最大隶属度的元素求其平均值。</p>
+<h3 id="系数加权平均法">系数加权平均法</h3>
+<p><span class="math display">\[u = \sum k_i\cdot x_i/\sum k_i
+\]</span></p>
+<p>其中系数<span class="math inline">\(k_i\)</span>的选择要根据实际情况而定。</p>
+<h3 id="隶属度限幅元素平均法">隶属度限幅元素平均法</h3>
+<p>用所确定的隶属度值 a对隶属度函数曲线进行切割，再对切割后大于等于该隶属度的所有元素进行平均，用这个平均值作为输出执行量，这种方法就称为隶属度限幅元素平均法。</p>
+<h2 id="不确定性推理的基本概念">不确定性推理的基本概念</h2>
+<p>不确定性推理是建立在非经典逻辑基础上的一种推理，它是对不确定性知识的运用与处理。</p>
+<p>具体地说，所谓不确定性推理就是从不确定性的初始证据（即事实）出发，通过运用不确定性的知识，最终推出具有一定程度不确定性的结论。</p>
+<h2 id="不确定性推理中的基本问题">不确定性推理中的基本问题</h2>
+<ol>
+<li>不确定性的表示与度量</li>
+</ol>
+<p>不确定性一般分为两类，一类是知识的不确定性，一类是证据的不确定性。</p>
+<p>知识不确定性的表示：目前在专家系统中知识的不确定性一般是由领域专家给出的，通常用一个数值表示，它表示相应知识的不确定性程度，称为知识的静态强度。</p>
+<p>证据不确定性的表示：证据不确定性的表示方法与知识不确定性的表示方法一致，通常也用一个数值表示，代表相应证据的不确定性程度，称之为动态强度。</p>
+<ol start="2">
+<li>不确定性匹配算法及阈值的选择</li>
+</ol>
+<p>推理是不断运用知识的过程,为了找到所需的知
+识,需要在这一过程中用知识的前提与已知证据进
+行匹配.只有匹配成功的知识才有可能被应用.</p>
+<ol start="3">
+<li>组合证据不确定性的计算方法</li>
+</ol>
+<p>即已知证据<span class="math inline">\(E_1\)</span>和<span class="math inline">\(E_2\)</span>的不确定性度量，求证据<span class="math inline">\(E_1\)</span>和<span class="math inline">\(E_2\)</span>的析取和合取的不确定性，常用的方法有：</p>
+<ul>
+<li>最大最小法</li>
+</ul>
+<p><span class="math display">\[T(E_1\ AND\ E_2) = \min\{T(E_1),T(E_2)\}
+\]</span></p>
+<p><span class="math display">\[T(E_1\ OR\ E_2) = \max\{T(E_1),T(E_2)\}
+\]</span></p>
+<ul>
+<li>概率法</li>
+</ul>
+<p><span class="math display">\[T(E_1\ AND\ E_2) = T(E_1)\times T(E_2)
+\]</span></p>
+<p><span class="math display">\[T(E_1\ OR\ E_2) = T(E_1)+T(E_2) - T(E_1)\times T(E_2)
+\]</span></p>
+<ul>
+<li>有界法</li>
+</ul>
+<p><span class="math display">\[T(E_1\ AND\ E_2) = \max\{0,T(E_1)+T(E_2)-1\}
+\]</span></p>
+<p><span class="math display">\[T(E_1\ OR\ E_2) = \min\{1,T(E_1)+T(E_2)\}
+\]</span></p>
+<p>其中，<span class="math inline">\(T(E)\)</span>表示证据<span class="math inline">\(E\)</span>为真的程度（动态强度），如可信度、概率等。</p>
+<ol start="4">
+<li>不确定性的传递算法</li>
+</ol>
+<ul>
+<li>在每一步推理中，如何把证据及知识的不确定性传递给结论</li>
+<li>在多步推理中，如何把初始证据的不确定性传递给最终结论</li>
+</ul>
+<ol start="5">
+<li>结论不确定性的合成</li>
+</ol>
+<p>用不同知识进行推理得到了相同结论，但所得结论的
+不确定性却不同。此时，需要用合适的算法对结论的
+不确定性进行合成。</p>
+<h2 id="不确定性推理方法的分类">不确定性推理方法的分类</h2>
+<p>不确定性推理方法主要可分为模型法与控制法。</p>
+<p>模型法：在推理一级对确定性推理进行扩展，引入证据的不确定性及知识的不确定性。</p>
+<p>模型方法又分为数值方法和非数值方法两类。数值方法对不确定性进行定量的描述，按其所依据的理论又可分为基于概率的方法和基于模糊理论的方法。</p>
+<p>本节主要针对模型方法中相关的典型算法展开.</p>
+<h3 id="逆概率法">逆概率法</h3>
+<p><em>经典概率方法</em></p>
+<ol>
+<li>设有如下产生式规则：</li>
+</ol>
+<p><span class="math display">\[\text{IF\quad E\quad\quad THEN\quad H}
+\]</span></p>
+<p>其中，<span class="math inline">\(E\)</span>为前提条件，<span class="math inline">\(H\)</span>为结论。条件概率<span class="math inline">\(P(H|E)\)</span>可以作为在证据<span class="math inline">\(E\)</span>出现时结论<span class="math inline">\(H\)</span>的确定性程度，即规则的静态强度。</p>
+<ol start="2">
+<li>对于复合条件</li>
+</ol>
+<p><span class="math display">\[E=E_1\ \text{AND}\ E_2\ \text{AND}\cdots\text{AND}\ E_n
+\]</span></p>
+<p>当已知条件概率<span class="math inline">\(P(H|E_1,E_2,\cdots,E_n)\)</span>时，就可把它作为在证
+据<span class="math inline">\(E_1,E_2,\cdots,E_n\)</span>出现时结论H的确定性程度。</p>
+<ol start="3">
+<li>先验概率：<span class="math inline">\(P(H)\)</span>，后验概率<span class="math inline">\(P(H|E)\)</span></li>
+</ol>
+<p>经典概率方法要求给出条件概率<span class="math inline">\(P(H|E)\)</span>，在实际中通常比较困难。例如<span class="math inline">\(E\)</span>代表咳嗽，<span class="math inline">\(H\)</span>代表支气管炎，则<span class="math inline">\(P(H|E)\)</span>表示在咳嗽的人群中患支气管炎的概率，这个比较困难，因为样本空间太大。而<span class="math inline">\(P(E|H)\)</span>表示在得支气管炎的人群中咳嗽的概率，这个就比较容易获得。我们可以根据Bayes定理从<span class="math inline">\(P(E|H)\)</span>推出<span class="math inline">\(P(H|E)\)</span></p>
+<p><em>优点</em></p>
+<p>逆概率法有较强的理论背景和良好的数学特性，当证据彼此独立时计算的复杂度比较低。</p>
+<p><em>缺点</em></p>
+<p>逆概率法要求给出结论<span class="math inline">\(H_i\)</span>的先验概率<span class="math inline">\(P(H_i)\)</span>及条件概率<span class="math inline">\(P(E_j|H_i)\)</span>。</p>
+<h3 id="可信度方法">可信度方法</h3>
+<p>可信度方法是在确定性理论的基础上，结合概率论等提出的一种不确定性推理方法，简称C-F模型。该方法首先在医疗系统MYCIN中得到成功的应用。</p>
+<p><em>可信度的概念</em></p>
+<p>根据经验对一个事物和现象为真的相信程度称为可信度。</p>
+<p>在可信度方法中，由专家给出规则或知识的可信度，从而可避免对先验概率、或条件概率的要求。</p>
+<h4 id="1知识不确定性的表示">1.知识不确定性的表示</h4>
+<p>在C-F模型中，知识是用产生式规则表示的，其一般形式为：</p>
+<p><span class="math display">\[\text{IF}\quad E\quad \text{THEN}\quad H\quad (CF(H,E))
+\]</span></p>
+<p>其中</p>
+<ol>
+<li>前提<span class="math inline">\(E\)</span>可以是命题的合取和析取组合</li>
+<li>结论<span class="math inline">\(H\)</span>可为单一命题，也可以是复合命题</li>
+<li><span class="math inline">\(CF(H,E)\)</span>为确定性因子(Certainty factor)，简称可信度，用以量度规则的确定性（可信）程度。取值于<span class="math inline">\([-1，1]\)</span>，表示<span class="math inline">\(E\)</span>为真时，对<span class="math inline">\(H\)</span>的支持程度。<span class="math inline">\(CF(H,E)\)</span>值越大，<span class="math inline">\(E\)</span>就越支持<span class="math inline">\(H\)</span>为真。</li>
+</ol>
+<p><em>可信度因子的定义</em></p>
+<p><span class="math inline">\(CF(H,E)\)</span>定义为</p>
+<p><span class="math display">\[CF(H,E) = MB(H,E) - MD(H,E)
+\]</span></p>
+<p>MB反映了证据对结论有利的一面，MD反映了证据对结论不利的一面。MB(Measure Belief) 表示因与<span class="math inline">\(E\)</span>匹配的证据出现，使<span class="math inline">\(H\)</span>为真的信任增长度。MD(Measure Disbelief)指不信任增长度，表示因与<span class="math inline">\(E\)</span>匹配的证据出现，使<span class="math inline">\(H\)</span>为真的不信任增长度。 MB和MD的定义为：</p>
+<p><span class="math display">\[MB(H,E) = \left\{\begin{matrix}
+1 & ,P(H)=1\\
+\dfrac{max\{P(H|E),P(H)\}-P(H)}{1-P(H)} & ,\text{other}
+\end{matrix}\right.
+\]</span></p>
+<p><span class="math display">\[MD(H,E) = \left\{\begin{matrix}
+1 & ,P(H)=0\\
+\dfrac{min\{P(H|E),P(H)\}-P(H)}{-P(H)} & ,\text{other}
+\end{matrix}\right.
+\]</span></p>
+<ul>
+<li>当<span class="math inline">\(P(H|E)>P(H)\)</span>时：表示证据E支持结论<span class="math inline">\(H\)</span>，<span class="math inline">\(MB(H,E)>0，MD(H,E)=0\)</span>。</li>
+<li>当<span class="math inline">\(P(H|E)< P(H)\)</span>时，表示<span class="math inline">\(E\)</span>不支持<span class="math inline">\(H\)</span>，<span class="math inline">\(MD(H,E)>0， MB(H,E)=0\)</span>。当<span class="math inline">\(p(H|E)=p(H)\)</span>时，表示<span class="math inline">\(E\)</span>对<span class="math inline">\(H\)</span>无影响，则有<span class="math inline">\(MB=MD=0\)</span></li>
+<li><span class="math inline">\(MB(H,E)\)</span>与<span class="math inline">\(MD(H,E)\)</span>是互斥的：当<span class="math inline">\(MB(H,E)>0\)</span>时，<span class="math inline">\(MD(H,E)=0\)</span>;当<span class="math inline">\(MD(H,E)>0\)</span>时，<span class="math inline">\(MB(H,E)=0\)</span></li>
+</ul>
+<p><em><span class="math inline">\(CF(H,E)\)</span>的计算公式</em></p>
+<p>根据上述定义，可知</p>
+<p><span class="math display">\[CF(H,E) = \left\{\begin{matrix}
+MB(H,E)-0=\dfrac{P(H|E)-P(H)}{1-P(H)} & ,P(H|E) > P(H)\\
+0 & ,P(H|E)=P(H)\\
+0-MD(H,E)=-\dfrac{P(H)-P(H|E)}{P(H)}& ,P(H|E) < P(H)
+\end{matrix}\right.
+\]</span></p>
+<p>从上式可以看出</p>
+<p><span class="math inline">\(CF(H,E)>0\)</span>对应于<span class="math inline">\(P(H|E)>P(H)\)</span></p>
+<p><span class="math inline">\(CF(H,E)=0\)</span>对应于<span class="math inline">\(P(H|E)=P(H)\)</span></p>
+<p><span class="math inline">\(CF(H,E) < 0\)</span>对应于<span class="math inline">\(P(H|E) < P(H)\)</span></p>
+<p>当且仅当<span class="math inline">\(P(H|E)=1\)</span>时,<span class="math inline">\(CF(H,E)=1\)</span></p>
+<p>当且仅当<span class="math inline">\(P(H|E)=0\)</span>时,<span class="math inline">\(CF(H,E)=-1\)</span></p>
+<p><span class="math inline">\(CF(H,E)\)</span>定性地反映了<span class="math inline">\(P(H|E)\)</span>的大小,因此可以用<span class="math inline">\(CF(H,E)\)</span>近似表示<span class="math inline">\(P(H|E)\)</span>的大小,从而描述了规则的可信度。</p>
+<h4 id="2证据不确定性的表示">2.证据不确定性的表示</h4>
+<p>证据的不确定性也用可信度因子表示。如：<span class="math inline">\(CF(E)=0.6\)</span></p>
+<p><span class="math inline">\(CF(E)\)</span>的取值范围：<span class="math inline">\([-1，+1]\)</span>。</p>
+<p><span class="math inline">\(CF(E)>0\)</span>:表示证据以某种程度为真。</p>
+<p><span class="math inline">\(CF(E)<0\)</span>:表示证据以某种程度为假。</p>
+<p><span class="math inline">\(CF(E)\)</span>表示证据的强度，即动态强度。</p>
+<p>设证据E所在的环境为<span class="math inline">\(S\)</span>，则可用可信度<span class="math inline">\(CF(E,S)\)</span>来表示<span class="math inline">\(E在$S\)</span>下的确定性程度，并有：</p>
+<p><span class="math display">\[CF(E,S) = MB(E,S)-MD(E,S)
+\]</span></p>
+<p>若<span class="math inline">\(S\)</span>下<span class="math inline">\(E\)</span>为真，则<span class="math inline">\(CF(E,S) = 1\)</span>；</p>
+<p>若<span class="math inline">\(E\)</span>为假，则<span class="math inline">\(CF(E,S) =-1\)</span>；</p>
+<p>若<span class="math inline">\(S\)</span>对<span class="math inline">\(E\)</span>的真值无影响，则<span class="math inline">\(CF(E,S)= 0\)</span>。</p>
+<p>类似于规则的不确定性，证据的可信度往往可由领域专家凭经验主观确定。</p>
+<p>证据的可信度值来源于两种情况：</p>
+<ol>
+<li>初始证据由领域专家或用户给出；</li>
+<li>中间结论由不确定性传递算法计算得到。</li>
+</ol>
+<h4 id="3组合证据不确定性的算法">3.组合证据不确定性的算法</h4>
+<ol>
+<li>当组合证据是多个单一证据的合取时，即:</li>
+</ol>
+<p><span class="math display">\[E=E_1\ \text{AND}\ E_2\ \text{AND}\cdots\text{AND}\ E_n
+\]</span></p>
+<p>则<span class="math inline">\(CF(E)=min\{CF(E_1),CF(E_2),\cdots,CF(E_n)\}\)</span></p>
+<ol start="2">
+<li>当组合证据是多个单一证据的析取时，即:</li>
+</ol>
+<p><span class="math display">\[E=E_1\ \text{OR}\ E_2\ \text{OR}\cdots\text{OR}\ E_n
+\]</span></p>
+<p>则<span class="math inline">\(CF(E)=max\{CF(E_1),CF(E_2),\cdots,CF(E_n)\}\)</span></p>
+<h4 id="4-不确定性的传递">4. 不确定性的传递</h4>
+<p>不确定性的传递算法定义如下：</p>
+<p><span class="math display">\[CF(H) = CF(H,E)\times max\{0,CF(E)\}
+\]</span></p>
+<p>由上式可以看出:</p>
+<ol>
+<li><span class="math inline">\(CF(E)<0\)</span>时,<span class="math inline">\(CF(H)=0\)</span>,说明该模型没有考虑证据为假时对结论<span class="math inline">\(H\)</span>所产生的影响。</li>
+<li><span class="math inline">\(CF(E)=1\)</span>时,<span class="math inline">\(CF(H)=CF(H,E)\)</span>,说明规则可信度<span class="math inline">\(CF(H,E)\)</span>就是证据为真时的结论<span class="math inline">\(H\)</span>的可信度。</li>
+</ol>
+<h4 id="5-结论不确定性的合成算法">5. 结论不确定性的合成算法</h4>
+<p>若由多条不同知识推出了相同的结论，但可信度不同，则可用合成算法求出综合的可信度。由于对多条知识的综合可通过两两的合成实现，所以下面只考虑两条知识的情况。</p>
+<p>设有如下知识：</p>
+<p><span class="math display">\[\text{IF}\quad E_1\quad \text{THEN}\quad H\quad\quad (CF(H,E_1))
+\]</span></p>
+<p><span class="math display">\[\text{IF}\quad E_2\quad \text{THEN}\quad H\quad\quad (CF(H,E_2))
+\]</span></p>
+<p>则结论H的综合可信度可分为如下两步算出：</p>
+<ol>
+<li>首先分别对每一条知识求出<span class="math inline">\(CF(H)\)</span></li>
+</ol>
+<p><span class="math display">\[CF_1(H) = CF(H,E_1)\times max\{0,CF(E_1)\}
+\]</span></p>
+<p><span class="math display">\[CF_2(H) = CF(H,E_2)\times max\{0,CF(E_2)\}
+\]</span></p>
+<ol start="2">
+<li>然后用下述公式求出<span class="math inline">\(E_1\)</span>与<span class="math inline">\(E_2\)</span>对<span class="math inline">\(H\)</span>的综合可信度<span class="math inline">\(CF_{12}(H)\)</span>:</li>
+</ol>
+<p><span class="math display">\[CF_{12}(H) = \left\{\begin{matrix}
+CF_1(H)+CF_2(H)-CF_1(H)\times CF_2(H) &,CF_1(H)\geq 0,CF_2(H)\geq 0\\
+CF_1(H)+CF_2(H)+CF_1(H)\times CF_2(H) &,CF_1(H)<0,CF_2(H)<0\\
+\dfrac{CF_1(H)+CF_2(H)}{1-min\{|CF_1(H)|,|CF_2(H)|\}} &,CF_1(H)\times CF_2(H)<0\\
+\end{matrix}\right.
+\]</span></p>
+<p><em>冲突消解</em></p>
+<p><span class="math display">\[r_1: \text{IF}\quad \{E_1(\omega_1)\}\quad \text{THEN}\quad H_1\quad\quad (CF(H_1,E_1),\lambda_1)
+\]</span></p>
+<p><span class="math display">\[r_2: \text{IF}\quad \{E_2(\omega_2)\}\quad \text{THEN}\quad H_2\quad\quad (CF(H_2,E_2),\lambda_2)
+\]</span></p>
+<p>且<span class="math inline">\(CF(\{E_1(\omega_1)\})\geq\lambda_1,CF(\{E_2(\omega_2)\})\geq\lambda_2\)</span></p>
+<p>若<span class="math inline">\(CF(\{E_1(\omega_1)\})\geq CF(\{E_2(\omega_2)\})\)</span>，则优先使用<span class="math inline">\(r_1\)</span>进行推理。</p>
+<h3 id="加权的不确定性推理">加权的不确定性推理</h3>
+<h4 id="1-知识的不确定性的表示">1. 知识的不确定性的表示</h4>
+<p><span class="math display">\[\text{IF}\quad \{E_1(\omega_1)\}\quad \text{AND}\quad \{E_2(\omega_2)\}\quad \text{AND}\cdots\text{AND}\quad \{E_n(\omega_n)\}
+\]</span></p>
+<p><span class="math display">\[\text{THEN}\quad H\quad (CF(H,E),\lambda)
+\]</span></p>
+<p>其中<span class="math inline">\(\omega_i(i=1,2,\cdots,n)\)</span>是加权因子，<span class="math inline">\(λ\)</span>是阈值，其值均由专家给出。</p>
+<p>其中</p>
+<p><span class="math display">\[0\leq \omega_i\leq 1,\sum\omega_i=1
+\]</span></p>
+<h4 id="2-组合证据不确定性的算法">2. 组合证据不确定性的算法</h4>
+<p>若有<span class="math inline">\(CF(E_1),CF(E_2),\cdots,CF(E_n)\)</span>，则组合证据的可信度为：</p>
+<p><span class="math display">\[CF(E)=\sum(\omega_i\times CF(E_i))
+\]</span></p>
+<h4 id="3-不确定性的传递算法">3. 不确定性的传递算法</h4>
+<p>当一条知识的<span class="math inline">\(CF(E)\)</span>满足如下条件时，</p>
+<p><span class="math display">\[CF(E)\geq\lambda
+\]</span></p>
+<p>该知识就可被应用。结论<span class="math inline">\(H\)</span>的可信度为：</p>
+<p><span class="math display">\[CF(H) = CF(H,E)\times CF(E)
+\]</span></p>
+<p>加权因子的引入不仅可以区分不同证据的重要性同时还可以解决证据不全时的推理问题。</p>
+<p><strong>基于可信度的不确定性推理方法的特点</strong></p>
+<p><em>优点</em></p>
+<p>简单、直观。</p>
+<p><em>缺点</em></p>
+<p>可信度因子依赖于专家主观指定，没有统一、客观的尺度，容易产生片面性。</p>
+<p>随着推理延伸，可信度越来越不可靠，误差越来越大。当推理深度达到一定深度时，有可能出现推出的结论不再可信的情况。</p>
+<h1 id="遗传算法">遗传算法</h1>
+<h2 id="计算智能">计算智能</h2>
+<p>计算智能就是受自然界（生物界）规律的启迪，根据其原理，模仿设计求解问题的算法。</p>
+<p>计算智能:生物智能的计算模拟, 是一种智力方式的低层认知，它与人工智能的区别只是认知层次从中层下降至低层而已。中层系统含有知识，低层系统则没有。</p>
+<p>当一个系统只涉及数值（低层）数据，含有模式识别部分，不应用人工智能意义上的知识，而且能够呈现出：</p>
+<ol>
+<li>计算适应性</li>
+<li>计算容错性</li>
+<li>接近人的速度</li>
+<li>误差率与人相近</li>
+</ol>
+<p>则该系统就是计算智能系统。</p>
+<p>当一个智能计算系统以非数值方式加上知识，即成为人工智能系统。</p>
+<h2 id="进化计算">进化计算</h2>
+<p>进化计算是一类模拟生物进化过程与机制求解问题的自组织、自适应技术。</p>
+<p>生物种群的生存过程普遍遵循达尔文的物竞天择、适者生存的进化准则；生物通过个体间的选择、交叉、变异来适应大自然环境。</p>
+<p>依照达尔文的自然选择和孟德尔的遗传变异理论，生物的进化是通过繁殖、变异、竞争、选择来实现的，进化算法就是建立在上述生物模型基础上的一种随机搜索技术。</p>
+<p>几十年来的研究与应用已经清楚地表明：虽然模拟自然进化搜索过程的一些模型还只是自然界生物体的粗糙简化，但是已经可以产生非常鲁棒的计算方法。</p>
+<p>进化算法（Evolutionary Algorithm—EA）就是基于这种思想发展起来的，目前研究的进化算法主要有三种典型的算法：遗传算法、进化规划和进化策略。这三种算法是彼此独立发展起来的。</p>
+<p>种群搜索策略和种群中个体之间的信息交换是进化算法的两大特点。它们的优越性主要表现在：</p>
+<ol>
+<li>进化算法在搜索过程中不容易陷入局部最优</li>
+<li>由于它们固有的并行性，进化算法非常适合于并行机</li>
+<li>由于它们容易介入到已有的模型中并且具有可扩展性，以及易于同别的技术混合等因素，因而进化算法目前已经在最优化、机器学习和并行处理等领域得到越来越广泛的应用。</li>
+</ol>
+<h2 id="基本思想">基本思想</h2>
+<p>遗传算法把问题的解表示成“染色体”，在算法中即是以一定方式编码的串。并且，在执行遗传算法之前，给出一群“染色体”，也即假设解（候选解）。然后，把这些假设解置于问题的“环境”中，并按适者生存的原则，从中选择出较适应环境的“染色体”进行复制，再通过交叉，变异过程产生更适应环境的新一代“染色体”群。这样，一代一代地进化，最后就会收敛到最适应环境的一个“染色体”上，它就是问题的最优解。</p>
+<p>其算法框图为</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 135; 
+			flex-basis: 324px"
+	>
+	<a href="/inferior/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E6%A6%82%E8%AE%BA%E7%AC%94%E8%AE%B0/4.jpg" data-size="1224x904">
+		<img src="/inferior/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E6%A6%82%E8%AE%BA%E7%AC%94%E8%AE%B0/4.jpg"
+			width="1224"
+			height="904"
+			srcset="/inferior/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E6%A6%82%E8%AE%BA%E7%AC%94%E8%AE%B0/4_hufcf6de50b64079d63d56a8c37006da93_100268_480x0_resize_q75_box.jpg 480w, /inferior/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E6%A6%82%E8%AE%BA%E7%AC%94%E8%AE%B0/4_hufcf6de50b64079d63d56a8c37006da93_100268_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="4.jpg">
+	</a>
+	
+	<figcaption>4.jpg</figcaption>
+	
+</figure></p>
+<h2 id="一些基本概念">一些基本概念</h2>
+<ul>
+<li>串(String)</li>
+<li>
+<ul>
+<li>它是个体(Individual)的形式，在算法中为二进制串或者其它编码方式的串，并且对应于遗传学中的染色体(Chromosome)。</li>
+</ul>
+</li>
+<li>种群(Population)</li>
+<li>
+<ul>
+<li>个体的集合称为种群，串是种群的元素</li>
+</ul>
+</li>
+<li>种群规模(Population Size)</li>
+<li>
+<ul>
+<li>在种群中个体的数量称为种群的规模。</li>
+</ul>
+</li>
+<li>基因(Gene)</li>
+<li>
+<ul>
+<li>基因是串中的元素，基因用于表示个体的特征</li>
+</ul>
+</li>
+<li>适应度(Fitness)</li>
+<li>
+<ul>
+<li>表示某一个体对于环境的适应程度</li>
+</ul>
+</li>
+</ul>
+<h2 id="基本机理">基本机理</h2>
+<ul>
+<li>一般的遗传算法由四个部分组成:</li>
+<li>
+<ul>
+<li>编码机制、适应度函数、控制参数、遗传算子</li>
+</ul>
+</li>
+<li>编码机制(encoding mechanism)</li>
+<li>
+<ul>
+<li>用遗传算法解决问题时，首先要对待解决问题的模型结构和参数进行编码，一般用字符串表示。</li>
+</ul>
+</li>
+<li>编码机制是GA的基础</li>
+<li>
+<ul>
+<li>GA不是对研究对象直接进行讨论,而是通过某种编码机制把对象统一赋于由特定符号(字母)按一定顺序排成的串(string)。正如研究生物遗传,是从染色体着手,染色体则是由基因排成的串。</li>
+</ul>
+</li>
+<li>适应度函数</li>
+<li>
+<ul>
+<li>优胜劣败是自然进化的原则。优、劣要有标准。在GA中，用适应度函数描述每一个体的适应程度。</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>对优化问题,适应度函数与目标函数直接相关。引进适应度函数的目的在于可根据其适应度对个体进行评估比较,定出优劣程度。</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>在遗传算法的执行过程中,每一代有许多不同的个体(染色体)同时存在。这些染色体中哪个保留(生存)、哪个淘汰(死亡),是根据它们对环境的适应能力来决定的,适应性强的有更多的机会保留下来。</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>适应性强弱是通过计算适应度函数f(x)的值来判别的,这个值称为适应值。适应度函数f(x)的构成与目标函数有密切关系。</li>
+</ul>
+</li>
+<li>算法参数；在GA的实际操作时,需适当确定某些参数的值以提高选优的效果。这些参数包含：</li>
+<li>
+<ul>
+<li>字符串所含字符的个数,即串长。这一长度为常数,即为定长,记为<span class="math inline">\(L\)</span></li>
+</ul>
+</li>
+<li>
+<ul>
+<li>每一代种群的大小,即所包含字符串的个数,也称种群规模,记为<span class="math inline">\(n\)</span></li>
+</ul>
+</li>
+<li>
+<ul>
+<li>交叉概率(crossover rate),即施行交叉算子的概率,记为<span class="math inline">\(P_c\)</span></li>
+</ul>
+</li>
+<li>
+<ul>
+<li>变异概率(mutation rate),即施行变异算子的概率,记为<span class="math inline">\(P_m\)</span></li>
+</ul>
+</li>
+<li>在GA中,种群规模<span class="math inline">\(n\)</span>太小时难以求出最优解，太大则增长收敛时间。一般<span class="math inline">\(n=30\sim 160\)</span>。</li>
+<li>交叉概率<span class="math inline">\(P_c\)</span>太小时难以向前搜索，太大则容易破坏高适应值的结构。一般取<span class="math inline">\(P_c=0.25\sim 0.75\)</span>。</li>
+<li>变异概率<span class="math inline">\(P_m\)</span>太小时难以产生新的基因结构，太大使遗传算法成了单纯的随机搜索。一般取<span class="math inline">\(P_m=0.01\sim 0.2\)</span>。系统参数对算法的收敛速度及结果有很大的影响，应视具体问题选取不同的值。</li>
+</ul>
+<h2 id="遗传算子">遗传算子</h2>
+<ol>
+<li>选择算子(Selection/Reproduction): 选择算子从 种群中按某一概率成对选择个体，某个体<span class="math inline">\(x_i\)</span>被选择的概率<span class="math inline">\(P_i\)</span>与其适应度值成正比。最通常的实现方法是轮盘赌(roulette wheel)模型。</li>
+<li>交叉算子(Crossover): 交叉算子将被选中的两个个体的基因链按概率<span class="math inline">\(P_c\)</span>进行交叉，生成两个新的个体，交叉位置是随机的。其中<span class="math inline">\(P_c\)</span>是一个系统参数。</li>
+<li>变异算子(Mutation): 变异算子将新个体的基因链的各位按概率<span class="math inline">\(P_m\)</span>进行变异，对二值基因链(0,1编码)来说即是取反。上述各种算子的实现是多种多样的，而且许多新的算子正在不断地提出，以改进GA的某些性能。</li>
+</ol>
+<h2 id="编码与解码">编码与解码</h2>
+<p>GA中的编码方法可分为三大类：二进制编码方法、浮点数编码方法和符号编码方法。</p>
+<p><strong>二进制编码方案</strong></p>
+<p>是GA中最常用的一种编码方法。它所构成的个体基因型是一个二进制编码符号串。</p>
+<p>二进制编码符号串的长度与问题所要求的求解精度有关。设某一参数的取值范围是<span class="math inline">\([A, B]，A< B\)</span>。则二进制编码的编码精度为：</p>
+<p><span class="math display">\[\delta = \dfrac{B-A}{2^l-1}
+\]</span></p>
+<p>假设某一个体的编码是：<span class="math inline">\(X:b_lb_{l-1}b_{l-2}\cdots b_2b_1\)</span>，则对应的解码公式为：</p>
+<p><span class="math display">\[x = A+\dfrac{B-A}{2^l-1}\bigg(\sum^l_{i=1}b_i2^{i-1}\bigg)
+\]</span></p>
+<p><strong>格雷码</strong></p>
+<p>格雷码是这样的一种编码方法，其连续的两个整数所对应的编码值之间仅仅有一个码位是不相同的，其余码位都完全相同。</p>
+<p><strong>浮点编码</strong></p>
+<p>所谓浮点数编码方法是指个体染色体编码串中的基因值用某一范围内的一个浮点数来表示，个体的编码长度等于其决策变量的个数。因为这种编码方法使用的是决策变量的真实值，所以浮点数编码方法也叫做真值编码方法。</p>
+<p><strong>符号编码</strong></p>
+<p>符号编码方法是指个体染色体编码串中的基因值取自一个无数值含义、而只有代码含义的符号集。</p>
+<p>这个符号集可以是一个字母表，如<span class="math inline">\(\{A,B,C,D,\cdots\}\)</span>；也可以是一个数字序号表，如<span class="math inline">\(\{1,2,3,\cdots\}\)</span>；还可以是一个代码表，如<span class="math inline">\(\{A_1,A_2,A_3,\cdots\}\)</span>等等。</p>
+<h2 id="适应度函数">适应度函数</h2>
+<p>为了体现染色体的适应能力，引入了对问题中的每一个染色体都能进行度量的函数，叫适应度函数。通过适应度函数来衡量染色体的优、劣程度，它体现了自然进化中的优胜劣汰原则。一般，对于最大化的优化问题，适应度函数就是目标函数。</p>
+<h2 id="交叉算子">交叉算子</h2>
+<p>对于选中用于繁殖下一代的个体，随机地选择两个个体的相同位置，按交叉概率<span class="math inline">\(P_c\)</span>在选中的位置实行交叉。这个过程反映了随机信息交换；</p>
+<p>目的在于产生新的基因组合，也即产生新的个体。交叉时，可实行单点交叉或多点交叉。</p>
+<p>例如有个体</p>
+<p><span class="math display">\[P1 = 10010110\\
+P2 = 01011110
+\]</span></p>
+<p>选择它们的左边<span class="math inline">\(3\)</span>位进行交叉操作，则有</p>
+<p><span class="math display">\[P1 = 01010110\\
+P2 = 10011110
+\]</span></p>
+<h2 id="变异算子">变异算子</h2>
+<p>根据生物遗传中基因变异的原理，以变异概率<span class="math inline">\(P_m\)</span>对某些个体的某些位执行变异。</p>
+<p>在变异时，对执行变异的串的对应位求反，即把<span class="math inline">\(1\)</span>变为<span class="math inline">\(0\)</span>，把<span class="math inline">\(0\)</span>变为<span class="math inline">\(1\)</span>。</p>
+<p>变异概率<span class="math inline">\(P_m\)</span>与生物变异极小的情况一致，所以，<span class="math inline">\(P_m\)</span>的取值较小。</p>
+<p>变异能保证算法过程不会产生无法进化的单一种群。因为在所有的个体一样时，交叉是无法产生新的个体的，这时只能靠变异产生新的个体。</p>
+<h2 id="选择算子">选择算子</h2>
+<p>选择操作：根据适应度函数值所度量的个体的优、劣程度决定它在下一代是被淘汰还是被保留。</p>
+<p>简单遗传算法采用轮盘赌选择机制</p>
+<p><strong>轮盘赌选择机制</strong></p>
+<p>令<span class="math inline">\(\sum f_i\)</span>表示种群的适应度值之总和，<span class="math inline">\(f_i\)</span>表示种群中第<span class="math inline">\(i\)</span>个染色体的适应度值，则它产生后代的能力正好为其适应度值所占份额<span class="math inline">\(f_i/\sum f_i\)</span>。</p>
+<p>显然，从上式可知：</p>
+<ol>
+<li>适应度较高的个体，繁殖下一代的能力就较强。</li>
+<li>适应度较小的个体，繁殖下一代的能力就较弱，甚至被淘汰。</li>
+</ol>
+<p>这样，就产生了对环境适应能力较强的后代。对于问题求解角度来讲，就是选择出和最优解较接近的中间解。</p>
+<h2 id="停止条件">停止条件</h2>
+<ol>
+<li>完成了预先给定的进化代数则停止；</li>
+<li>种群中的最优个体在连续若干代没有改进</li>
+<li>平均适应度在连续若干代基本没有改进时停止</li>
+</ol>
+<h2 id="特点">特点</h2>
+<ol>
+<li>遗传算法是从问题解的编码组开始而非从单个解开始搜索；</li>
+<li>遗传算法利用目标函数的适应度这一信息而非利用导数或其它辅助信息来指导搜索；</li>
+<li>遗传算法利用选择、交叉、变异等算子而不是利用确定性规则进行随机操作。</li>
+</ol>
+<h2 id="不足">不足</h2>
+<ol>
+<li>在变量多，取值范围大或无给定范围时，收敛速度下降；</li>
+<li>可找到最优解附近，但无法精确确定最优解位置；</li>
+<li>遗传算法的参数选择尚未有定量方法。</li>
+</ol>
+<h2 id="进化策略概述">进化策略概述</h2>
+<p>进化策略 (Evolution Strategies，ES)是一类模仿自然进化原理以求解参数优化问题的算法。</p>
+<p>进化策略与遗传算法的结构类似，只是在算法的具体策略上存在差异。</p>
+<ul>
+<li>染色体编码：浮点数编码</li>
+<li>交叉：离散重组、中值重组、混杂重组</li>
+<li>变异：在每个分量上面加上零均值、某一方差的高斯分布的变化产生新的个体</li>
+<li>选择：<span class="math inline">\((\mu+\lambda)-ES\)</span>、<span class="math inline">\((\mu, \lambda)-ES\)</span></li>
+</ul>
+<h2 id="进化规划概述">进化规划概述</h2>
+<p>进化规划（Evolutionary Programming）又称为进化编程，是由福格尔（Fogel）在1962年提出的一种模仿人类智能的方法。进化规划根据正确预测的符号数来度量适应值。通过变异，为父代群体中的每个机器状态产生一个子代。父代和子代中最好的部分被选择生存下来。</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 135; 
+			flex-basis: 324px"
+	>
+	<a href="/inferior/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E6%A6%82%E8%AE%BA%E7%AC%94%E8%AE%B0/5.jpg" data-size="987x730">
+		<img src="/inferior/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E6%A6%82%E8%AE%BA%E7%AC%94%E8%AE%B0/5.jpg"
+			width="987"
+			height="730"
+			srcset="/inferior/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E6%A6%82%E8%AE%BA%E7%AC%94%E8%AE%B0/5_hu908e607b5ec90d7689d461e953456878_95493_480x0_resize_q75_box.jpg 480w, /inferior/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E6%A6%82%E8%AE%BA%E7%AC%94%E8%AE%B0/5_hu908e607b5ec90d7689d461e953456878_95493_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="5.jpg">
+	</a>
+	
+	<figcaption>5.jpg</figcaption>
+	
+</figure></p>
+<h2 id="遗传算法进化策略进化规划的对比">遗传算法、进化策略、进化规划的对比</h2>
+<p>进化计算的三种算法——遗传算法、进化策略和进化规划都是模拟生物界自然进化过程而建立的鲁棒性计算机算法。在统一框架下对三种算法进行比较，可以发现它们有许多
+相似之处，同时也存在较大的差别。</p>
+<p>进化策略和进化规划都把变异作为主要搜索算子，而在标准的遗传算法中，变异只处于次要位置。交叉在遗传算法中起着重要作用，而在进化规划中却被完全省去，在进化策略中与自适应结合使用，起了很重要的作用。标准遗传算法和进化规划都强调随机选择机制的重要性，而从进化策略的角度看，选择是完全确定的。</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 153; 
+			flex-basis: 368px"
+	>
+	<a href="/inferior/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E6%A6%82%E8%AE%BA%E7%AC%94%E8%AE%B0/6.jpg" data-size="960x626">
+		<img src="/inferior/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E6%A6%82%E8%AE%BA%E7%AC%94%E8%AE%B0/6.jpg"
+			width="960"
+			height="626"
+			srcset="/inferior/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E6%A6%82%E8%AE%BA%E7%AC%94%E8%AE%B0/6_huc91214bf3b9f8fb115beb17e6c314482_139012_480x0_resize_q75_box.jpg 480w, /inferior/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E6%A6%82%E8%AE%BA%E7%AC%94%E8%AE%B0/6_huc91214bf3b9f8fb115beb17e6c314482_139012_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="6.jpg">
+	</a>
+	
+	<figcaption>6.jpg</figcaption>
+	
+</figure></p>
+<h2 id="进化计算的应用">进化计算的应用</h2>
+<ol>
+<li>复杂的非线性最优化问题</li>
+<li>复杂的组合规划或整数规划问题</li>
+<li>生物学：小生境理论、生物物种的形成</li>
+<li>计算机科学：图像处理、自动识别、文档自动处理</li>
+<li>工程应用：通讯网络的优化、超大规模集成电路布线、飞机外形设计</li>
+<li>社会科学：人类行为规范进化过程的模拟、人口迁移模型</li>
+</ol>
+<h2 id="人工生命">人工生命</h2>
+<p>人工生命(试图通过人工方法建造具有自然生命特征的人造系统。人工生命(Artificial Life ，AL))</p>
+<p>1987年兰德提出的人工生命定义为：“人工生命是研究能够演示出自然生命系统特征行为的人造系统”。</p>
+<h3 id="人工生命的研究内容">人工生命的研究内容</h3>
+<p>人工生命的研究对象包括人工动物、人工植物和人工人等，而人工人的研究又涉及人工脑和其它人工器官。</p>
+<p>研究内容包括</p>
+<ol>
+<li>构成生物体的内部系统，包括脑、神经系统、内分泌系统、免疫系统、遗传系统、酶系统、代谢系统等。</li>
+<li>生物体及其种群的外部系统，包括环境适应系统和遗传进化系统等。</li>
+</ol>
+<h3 id="人工生命的科学框架">人工生命的科学框架</h3>
+<ul>
+<li>生命现象仿生系统</li>
+<li>生命现象的建模与仿真</li>
+<li>进化动力学</li>
+<li>人工生命的计算理论和工具</li>
+<li>进化机器人</li>
+<li>进化和学习等方面的结合</li>
+<li>人工生命的应用</li>
+</ul>
+<h3 id="人工生命的研究方法">人工生命的研究方法</h3>
+<p>从生物体内部和外部系统的各种信息出发，可得到人工生命的不同研究方法，主要可分为两类：</p>
+<ol>
+<li>信息模型法。</li>
+<li>工作原理法。</li>
+</ol>
+<p>人工生命的研究技术途径也可分为两种：</p>
+<ol>
+<li>工程技术途径。</li>
+<li>生物科学途径。</li>
+</ol>
+<h3 id="人工生命的实例">人工生命的实例</h3>
+<p>人工脑、计算机病毒、计算机进程、细胞自动机、人工核苷酸</p>
+<h1 id="群智能算法">群智能算法</h1>
+<h2 id="群智能概述">群智能概述</h2>
+<p><strong>群智能（Swarm Intelligence, SI）</strong></p>
+<p>群（swarm）：某种交互作用的组织或agent的结构集合。</p>
+<p>对于群居昆虫，如蚂蚁、蜜蜂、鱼群、鸟群等，个体在结构上是很简单的，而它们的集体行为却可能变得相当复杂。</p>
+<p>人们把群居昆虫的集体行为称作“群智能”，即低智能的主体通过合作表现出高智能行为的特性。</p>
+<p>群智能算法是一种基于生物群体行为规律的计算技术。</p>
+<p><strong>特点</strong></p>
+<ol>
+<li>
+<p>个体的行为很简单，但当它们一起协同工作时却能够突现出非常复杂（智能）的行为特征。</p>
+</li>
+<li>
+<p>群智能优化在没有集中控制且不提供全局模型的前提下，为寻找复杂的分布式问题求解方案提供了基础。</p>
+</li>
+</ol>
+<p><strong>优点</strong></p>
+<ol>
+<li>灵活性：群体可以适应随时变化的环境；</li>
+<li>稳健性：个体失败，群体仍能完成任务；</li>
+<li>自组织：活动既不受中央控制，也不受局部监管。</li>
+</ol>
+<p><strong>典型算法</strong></p>
+<p>粒子群优化算法（鸟群捕食），蚁群算法（蚂蚁觅食）</p>
+<h2 id="粒子群优化算法">粒子群优化算法</h2>
+<p><strong>简述</strong></p>
+<p>粒子群优化算法（Particle Swarm Optimization，PSO），也称为粒子群算法，是近几年来发展起来的一种新的群体搜索算法。</p>
+<p>和遗传算法相似，它也是从随机的解出发，通过迭代寻找最优解，通过适应度来评价解的品质。</p>
+<p>比遗传算法规则更为简单，它没有遗传算法的“交叉”(Crossover) 和“变异”(Mutation) 操作，而是追随当前搜索到的最优值来寻找全局最优。</p>
+<p><strong>原理描述</strong></p>
+<p>假设存在一个区域，所有的鸟都不知道食物的位置，但是它们知道当前的位置离食物还有多远。找到食物的最优策略是什么呢？搜寻目前离食物最近的鸟的周围区域。</p>
+<p>在该算法中，每个解看作一只鸟，称为粒子(particle)，所有的粒子都有一个适应值，每个粒子都有一个速度决定它们的飞翔方向和距离，粒子们追随当前最优粒子在解空间中搜索。</p>
+<p>当其它鸟发现了更佳的觅食地点，鸟群间会有某种类似广播的沟通行为，渐渐的将其它鸟群引领至较佳的地点。这样的觅食行为是利用社会中所存在的互相影响的概念，来引领所有个体朝向最佳解位置。</p>
+<p><em>假设在D维搜索空间中，有m个粒子；</em></p>
+<ol>
+<li>其中第i个粒子的位置矢量表示为：</li>
+</ol>
+<p><span class="math display">\[\overrightarrow{x_i} = (x_{i1},x_{i2},\cdots,x_{iD})
+\]</span></p>
+<ol start="2">
+<li>飞翔速度矢量表示为：</li>
+</ol>
+<p><span class="math display">\[\overrightarrow{v_i} = (v_{i1},v_{i2},\cdots,v_{iD})
+\]</span></p>
+<ol start="3">
+<li>第 i个粒子搜索到的最优位置为：</li>
+</ol>
+<p><span class="math display">\[\overrightarrow{p_i} = (p_{i1},p_{i2},\cdots,p_{iD})
+\]</span></p>
+<ol start="4">
+<li>整个粒子群搜索到的最优位置为：</li>
+</ol>
+<p><span class="math display">\[\overrightarrow{p}_{gbest} = (p_{gbest1},p_{gbest2},\cdots,p_{gbestD})
+\]</span></p>
+<p><em>粒子速度和位置的更新</em></p>
+<p><span class="math display">\[v_{id}^{k+1} = wv_{id}^k+c_1\text{rand}()(p_{id}-x_{id}^k)+c_2\text{rand}()(p_{gbest}-x_{id}^k)
+\]</span></p>
+<p><span class="math display">\[x_{id}^{k+1} = x_{id}^k + v_{id}^{k+1}
+\]</span></p>
+<p>其中<span class="math inline">\(w\)</span>为惯性权重，<span class="math inline">\(d=1,2,\cdots,D,\quad i=1,2,\cdots,M\)</span>。<span class="math inline">\(c_1,c_2\)</span>为两个正常数称为加速因子，<span class="math inline">\(\text{rand}()\)</span>为分布于<span class="math inline">\([0,1]\)</span>的随机数</p>
+<p><span class="math inline">\(v_{id}^{k+1}\)</span>分为三项，第一项是惯性部分，第二项是认知部分，第三项是社会部分</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 180; 
+			flex-basis: 432px"
+	>
+	<a href="/inferior/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E6%A6%82%E8%AE%BA%E7%AC%94%E8%AE%B0/7.jpg" data-size="1043x579">
+		<img src="/inferior/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E6%A6%82%E8%AE%BA%E7%AC%94%E8%AE%B0/7.jpg"
+			width="1043"
+			height="579"
+			srcset="/inferior/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E6%A6%82%E8%AE%BA%E7%AC%94%E8%AE%B0/7_hu500e7815aa0181d1cc462f9d20467b28_110639_480x0_resize_q75_box.jpg 480w, /inferior/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E6%A6%82%E8%AE%BA%E7%AC%94%E8%AE%B0/7_hu500e7815aa0181d1cc462f9d20467b28_110639_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="7.jpg">
+	</a>
+	
+	<figcaption>7.jpg</figcaption>
+	
+</figure></p>
+<p><em>参数分析</em></p>
+<ol>
+<li>惯性权重<span class="math inline">\(w\)</span></li>
+</ol>
+<p>使粒子保持运动惯性，使其有搜索扩展空间的趋势，有能力探索新的区域。</p>
+<p>也表示微粒对当前自身运动状态的信任，依据自身的速度进行惯性运动。</p>
+<p>较大的<span class="math inline">\(w\)</span>有利于跳出局部极值，而较小的<span class="math inline">\(w\)</span>有利于算法收敛。</p>
+<ol start="2">
+<li>改进的惯性权重<span class="math inline">\(w\)</span></li>
+</ol>
+<p>在优化实际优化问题时，往往希望先采用全局搜索，使搜索空间快速收敛于某一区域，然后采用局部精细搜索以获得高精度的解。</p>
+<p>因此提出了自适应调整的策略，即随着迭代的进行，线性地减小<span class="math inline">\(w\)</span>的值。</p>
+<p><span class="math display">\[w = w_{\text{max}} - \dfrac{w_{\text{max}}-w_{\text{min}}}{iter_{\text{max}}}\times iter
+\]</span></p>
+<p>其中<span class="math inline">\(iter,iter_{\text{max}}\)</span>分别是当前迭代次数和最大迭代次数</p>
+<ol start="3">
+<li>加速因子<span class="math inline">\(c_1,c_2\)</span></li>
+</ol>
+<p>使代表将微粒推向<span class="math inline">\(pbest\)</span>和<span class="math inline">\(gbest\)</span>位置的统计加速项的权重。</p>
+<p>表示粒子的动作来源于自己经验的部分和其它粒子经验的部分。</p>
+<p>低的值粒子在目标区域外徘徊，而高的值导致粒子越过目标域。</p>
+<ol start="4">
+<li>改进的加速因子<span class="math inline">\(c_1\)</span>和<span class="math inline">\(c_2\)</span></li>
+</ol>
+<p>通常将<span class="math inline">\(c_1\)</span>和<span class="math inline">\(c_2\)</span>统一为一个控制参数，<span class="math inline">\(\varphi=c_1+c_2\)</span></p>
+<p>如果<span class="math inline">\(\varphi\)</span>很小，微粒群运动轨迹将非常缓慢；</p>
+<p>如果<span class="math inline">\(\varphi\)</span>很大，则微粒位置变化非常快；</p>
+<p>通过仿真可以获得<span class="math inline">\(\varphi\)</span>的经验值，当<span class="math inline">\(\varphi=4.0(c_1=2.0,c_2=2.0)\)</span>时，具有很好的收敛效果。</p>
+<ol start="5">
+<li>粒子数</li>
+</ol>
+<p>通常一般取20～40，对较难或特定类别的问
+题可以取100～200。</p>
+<ol start="6">
+<li>最大速度<span class="math inline">\(v_{max}\)</span></li>
+</ol>
+<p>决定粒子在一个循环中最大的移动距离，通常设定为粒子的范围宽度。</p>
+<p><em>粒子群算法与遗传算法的比较</em></p>
+<p>共性：</p>
+<ol>
+<li>都属于仿生算法；</li>
+<li>都属于全局优化方法；</li>
+<li>都属于随机搜索算法；</li>
+<li>都隐含并行性；</li>
+<li>根据个体的适配信息进行搜索，因此不受函数约束条件的限制，如连续性、可导性。</li>
+<li>对高维复杂问题，无法保证收敛到最优点。</li>
+</ol>
+<p>差异：</p>
+<ol>
+<li>PSO有记忆，所有粒子都保存较优解的知识，而GA，以前的知识随着种群的改变被改变；</li>
+<li>PSO中的粒子是一种单向共享信息机制。而GA中的染色体之间相互共享信息；</li>
+<li>GA需要编码和遗传操作，粒子只是通过内部速度进行更新，实现更容易。</li>
+</ol>
+<h2 id="蚁群算法">蚁群算法</h2>
+<p><strong>蚂蚁可以找出最短路径，为什么？</strong></p>
+<ol>
+<li>
+<p>信息素（pheromone）：蚂蚁在寻找食物时，其经过的路 上释放的一种易挥发的物质。该信息素 可以被其它的蚂蚁感知，并且信息素的浓度越高，对应的路径越短。</p>
+</li>
+<li>
+<p>正反馈：蚂蚁会以较大的概率选择信息素浓度较高的路径，并释放一定量的信息素以增强该路径上的信息素浓素，从而距离较短的路径被加强，形成一个正反馈。</p>
+</li>
+</ol>
+<p><strong>蚁群算法的模型与实现&mdash;-TSP</strong></p>
+<ol>
+<li>
+<p>不失一般性设蚂蚁的数量为<span class="math inline">\(m\)</span>，城市的数量为<span class="math inline">\(n\)</span>，城市<span class="math inline">\(i\)</span>和城市<span class="math inline">\(j\)</span>的距离为<span class="math inline">\(d(i,j)\)</span>，距离选用欧式距离，<span class="math inline">\(t\)</span>时刻城市<span class="math inline">\(i\)</span>和城市<span class="math inline">\(j\)</span>连接路径的信息素浓度为<span class="math inline">\(\tau(i,j)\)</span>。</p>
+</li>
+<li>
+<p>在算法初始时刻，设各城市连接路径的信息素浓度具有相同的值，<span class="math inline">\(m\)</span>只蚂蚁放到<span class="math inline">\(n\)</span>座城市。</p>
+</li>
+<li>
+<p>蚂蚁的初始分布</p>
+</li>
+</ol>
+<ul>
+<li>所有蚂蚁初始时刻放在同一城市。</li>
+<li>所有蚂蚁初始时刻分布在不同城市中。</li>
+</ul>
+<p>显而易见，第二种方法将蚂蚁放在不同的城市中算法具有较高的性能。在不同城市分布时，随机分布与统一均匀分布的效果差别不大。</p>
+<ol start="4">
+<li>每只蚂蚁根据路径上的信息素和启发式信息，独立地访问下一座城市，概率公式如下</li>
+</ol>
+<p><span class="math display">\[p^k(i,j)=\left\{\begin{align*}
+& \dfrac{[\tau(i,j)]^\alpha\cdot[\eta(i,j)]^\beta}{\displaystyle{\sum_{s\notin tabu_k}}[\tau(i,s)]^\alpha\cdot[\eta(i,s)]^\beta},\ &if\ j\notin tabu_k\\
+& 0,\ &otherwise
+\end{align*}\right.
+\]</span></p>
+<p>其中<span class="math inline">\(\eta(i,j) = 1/d(i,j)\)</span>是启发函数，表示蚂蚁从城<span class="math inline">\(i\)</span>到城<span class="math inline">\(j\)</span>的期望程度，距离越短函数值越大。</p>
+<p><span class="math inline">\(\alpha\)</span>是信息素重要程度因子。<span class="math inline">\(\beta\)</span>是启发函数重要程度因子。</p>
+<p><span class="math inline">\(tabu_k\)</span>为禁忌表，表示已经访问的城市集合</p>
+<ol start="5">
+<li>
+<p>蚂蚁从当前城市访问下一城市的概率确定后，通常采用轮盘赌法选择下一城市，概率大被选中机会就大。</p>
+</li>
+<li>
+<p>当所有蚂蚁完成一次访问后，各路径上的信息素将进行更新，信息素公式更新如下</p>
+</li>
+</ol>
+<p><span class="math display">\[\tau_{i,j}(t+1) = (1-\rho)\cdot\tau_{i,j}(t)+\Delta\tau_{ij}
+\]</span></p>
+<p><span class="math display">\[\Delta\tau_{ij} = \sum^m_{k=1}\Delta\tau_{ij}^k
+\]</span></p>
+<p>其中<span class="math inline">\(ρ\)</span>的取值为<span class="math inline">\(0<ρ<1\)</span>，表示路径上信
+素的挥发系数。</p>
+<ol start="7">
+<li>针对蚂蚁释放信息素问题，比较常用的有如下三种模型：</li>
+</ol>
+<p><em>Ant cycle system</em></p>
+<p><span class="math display">\[\Delta\tau^k_{ij}=\left\{\begin{align*}
+& \dfrac{Q}{L_k},\ &ij\in l_k\\
+& 0,\ &otherwise
+\end{align*}\right.
+\]</span></p>
+<p><span class="math inline">\(Q\)</span>为正常数，<span class="math inline">\(L_k\)</span>表示第<span class="math inline">\(k\)</span>只蚂蚁在本次访问城市中所走过路径的长度</p>
+<p><em>Ant quantity system</em></p>
+<p><span class="math display">\[\Delta\tau^k_{ij}=\left\{\begin{align*}
+& \dfrac{Q}{D_{ij}},\ &ij\in l_k\\
+& 0,\ &otherwise
+\end{align*}\right.
+\]</span></p>
+<p><span class="math inline">\(Q\)</span>为正常数，<span class="math inline">\(D_{ij}\)</span>表示第<span class="math inline">\(k\)</span>只蚂蚁在本次访问中城市<span class="math inline">\(i\)</span>和城市<span class="math inline">\(j\)</span>的距离</p>
+<p><em>Ant density system</em></p>
+<p><span class="math display">\[\Delta\tau^k_{ij}=\left\{\begin{align*}
+& Q,\ &ij\in l_k\\
+& 0,\ &otherwise
+\end{align*}\right.
+\]</span></p>
+<p><span class="math inline">\(Q\)</span>为正常数，在整个访问过程中密度始终保持不变。</p>
+<p>这三种模型分别对应路径的整体信息（蚂蚁所访问路径的总长）、局部信息（蚂蚁所访问城市间的距离）和不考虑路径信息。</p>
+<p>以下优化TSP问题，选用ant cycle system模型，即路径的整体信息路径越短，释放的信息素度越高</p>
+<ol start="8">
+<li>蚁群算法解决TSP问题基本流程</li>
+</ol>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 216; 
+			flex-basis: 520px"
+	>
+	<a href="/inferior/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E6%A6%82%E8%AE%BA%E7%AC%94%E8%AE%B0/8.jpg" data-size="1000x461">
+		<img src="/inferior/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E6%A6%82%E8%AE%BA%E7%AC%94%E8%AE%B0/8.jpg"
+			width="1000"
+			height="461"
+			srcset="/inferior/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E6%A6%82%E8%AE%BA%E7%AC%94%E8%AE%B0/8_huc83f2f7e2c69e740045fa372faa62ddc_75636_480x0_resize_q75_box.jpg 480w, /inferior/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E6%A6%82%E8%AE%BA%E7%AC%94%E8%AE%B0/8_huc83f2f7e2c69e740045fa372faa62ddc_75636_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="8.jpg">
+	</a>
+	
+	<figcaption>8.jpg</figcaption>
+	
+</figure></p>
+<p><strong>优点</strong></p>
+<ol>
+<li>蚁群算法与其他启发式算法相比，在求解性能上，具有很强的鲁棒性（对基本蚁群算法模型稍加修改，便可以应用于其他问题）和搜索较好解的能力。</li>
+<li>蚁群算法是一种基于种群的进化算法，具有本质并行性，易于并行实现。</li>
+<li>蚁群算法很容易与多种启发式算法结合如遗传算法、粒子群算法，以改善算法性能。</li>
+</ol>
+<p><strong>不足</strong></p>
+<ol>
+<li>如果初始化参数设置不当，导致求解速度很慢且所得解的质量特别差。</li>
+<li>基本蚁群算法即无改进的蚁群算法计算量大，求解所需时间较长。</li>
+<li>基本蚁群算法理论上要求所有的蚂蚁选择同一路线，该线路即为所求的最优线路；但在实际计算中，在给定一定循环数的条件下很难达到这种情况。</li>
+</ol>
+<p><strong>改进</strong></p>
+<ol>
+<li>最优解保留策略（Ant System with Elitist）该策略能够以更快的速度获得最好解，但是如果选择的精英过多则算法会由于较早收敛于局部次优解而导致搜索的过早停滞。</li>
+<li>局部信息素更新使已选的路径对后来的蚂蚁具有较小的影响力，从而使蚂蚁对没有选中的路径有更强的探索能力。</li>
+<li>最大&ndash;最小蚂蚁系统（max-min ant system）</li>
+</ol>
+<ul>
+<li>每次迭代后，只有最优解（最优蚂蚁）所属路径上的信息被更新；</li>
+<li>为了避免过早收敛，将各条路径可能的信息素限制于<span class="math inline">\([\tau_{min},\tau_{max}]\)</span>；</li>
+<li>在算法初始时刻，<span class="math inline">\(\rho\)</span>取较小值，算法有更好的发现较好解的能力。随着迭代次数的增加，<span class="math inline">\(\rho\)</span>变大加快算法的收敛。</li>
+</ul>
+<h2 id="群智能优化的特点与不足">群智能优化的特点与不足</h2>
+<p><strong>共同特点：</strong></p>
+<p>基于概率计算的随机搜索进化算法，在结 构、研究内容、方法以及步骤上有较大的相似性；结果偏随机性。</p>
+<p><strong>存在的问题：</strong></p>
+<ol>
+<li>数学理论基础相对薄弱；</li>
+<li>参数设置没有确切的理论依据，对具体问题和应用环境的依赖性大；</li>
+</ol>
+<p><strong>进一步的改进：</strong></p>
+<ol>
+<li>进一步研究真实群居动物的行为特征，建立合适的数学模型；</li>
+<li>进一步研究算法的收敛性；</li>
+<li>进一步提高收敛速度，从而解决大规模优化问题；</li>
+<li>进一步研究各种参数设置问题；</li>
+<li>研究群智能的并行算法；</li>
+<li>进一步研究各算法的适用范围；</li>
+<li>研究与其它算法的混合技术。</li>
+</ol>
+<h1 id="人工神经网络">人工神经网络</h1>
+<h2 id="神经计算">神经计算</h2>
+<p>智慧（思维）是人的大脑的功能的表现。</p>
+<p>大脑是由无数的脑细胞组成。既然“思维”是大脑的功能的表现，即智慧是脑神经网络的功能。那么人们希望利用人工神经网络来模拟人脑的神经网络，研究其性能，希望从中悟出人的思维的一些“奥秘”。这就是所谓的人工神经网络技术，这种技术为人工智能提供新的解决问题的方法,并广泛应用于各个领域。</p>
+<h2 id="生物神经系统">生物神经系统</h2>
+<p>生物神经系统是一个有高度组织和相互作用的数量巨大的细胞组织群体。</p>
+<p>神经细胞也称神经元，是神经系统的基本单元，它们按不同的结合方式构成了复杂的神经网络。通过神经元及其联接的可塑性，使得大脑具有学习、记忆和认知等各种智能。</p>
+<p>生物神经元主要由以下3个部分组成：</p>
+<ul>
+<li>细胞体，是神经细胞的本体;</li>
+<li>树突，用于接受来自其它细胞元的信号;</li>
+<li>轴突，用于输出信号，与多个神经元连接;</li>
+</ul>
+<p>突触，是神经元之间相互连接的的接口部分，即一个神经元的神经末梢与另一个神经元的树突相接触的交界面，位于神经元的神经末梢尾端。</p>
+<p><strong>生物神经元的基本工作机制</strong></p>
+<p>一个神经元有两种状态-兴奋和抑制。</p>
+<p>平时处于抑制状态的神经元，其树突和细胞体接受其它神经元经由突触传来的兴奋电位，多个输入在神经元中以代数和的方式叠加。</p>
+<p>如输入兴奋总量超过阈值，神经元被激发进入兴奋状态，发出输出脉冲，由轴突的突触传递给其它神经元。</p>
+<p><strong>生物神经特性</strong></p>
+<ol>
+<li>并行分布处理的工作模式。</li>
+<li>神经系统的可塑性和自组织性。</li>
+<li>信息处理与信息存贮合二为一。</li>
+<li>信息处理的系统性。</li>
+<li>能接受和处理模糊的、模拟的、随机的信息。</li>
+<li>求满意解而不是精确解。</li>
+<li>系统的恰当退化和冗余备份(鲁棒性和容错性)</li>
+</ol>
+<h2 id="人工神经网络-1">人工神经网络</h2>
+<p>人工神经网络（Artificial Neural Network，ANN）是由大量处理单元经广泛互连而组成的人工网络，用来模拟脑神经系统的结构和功能。而这些处理单元称作人工神经元。</p>
+<p><strong>人工神经网络的结构</strong></p>
+<p>人工神经网络（ANN）可以看成是以人工神经元为结点，用有向加权弧连接起来的有向图。</p>
+<p>在此有向图中，人工神经元就是对生物神经元的模拟，而有向弧则是树突—突触—轴突对的模拟。有向弧的权值表示相互连接的两个人工神经元间相互作用的强弱。</p>
+<p><strong>人工神经网络的进展</strong></p>
+<ul>
+<li>初创阶段（二十世纪四十年代至六十年代）</li>
+<li>过渡阶段（二十世纪六十年代初至七十年代）</li>
+<li>高潮阶段（二十世纪八十年代）</li>
+<li>平稳发展阶段（二十世纪九十年代以后）</li>
+</ul>
+<p><strong>人工神经网络的特性</strong></p>
+<ol>
+<li>可以充分逼近任意复杂的非线性关系</li>
+<li>所有定量或定性的信息都等势分布贮存于网络内的各神经元，故有很强的鲁棒性和容错性</li>
+<li>采用并行分布处理方法，使得快速进行大量运算成为可能</li>
+<li>可学习和自适应不知道或不确定的系统</li>
+<li>能够同时处理定量、定性知识。</li>
+<li>可以通过软件和硬件实现。</li>
+</ol>
+<p><strong>人工神经元模型</strong></p>
+<p>神经元单元由多个输入<span class="math inline">\(x_i,i=1,2,\cdots,n\)</span>和一个输出<span class="math inline">\(y\)</span>组成。中间状态由输入信号的权和表示，而输出为</p>
+<p><span class="math display">\[y_j = a\bigg(\sum^n_{i=1}\omega_{ji}x_i-\theta_j \bigg)
+\]</span></p>
+<p>式中，<span class="math inline">\(\theta_j\)</span>为神经元单元的偏置或阈值，<span class="math inline">\(w_{ji}\)</span>为连接权系数。<span class="math inline">\(n\)</span>为输入信号数目，<span class="math inline">\(y_j\)</span>为神经元输出，
+<span class="math inline">\(a(\cdots)\)</span>为输出变换函数,也叫激励函数，特性函数。</p>
+<p><strong>神经网络的基本特性和结构</strong></p>
+<p>人工神经网络是具有下列特性的有向图</p>
+<ul>
+<li>对于每个节点<span class="math inline">\(i\)</span>，存在一个状态变量<span class="math inline">\(x_i\)</span>；</li>
+<li>从节点<span class="math inline">\(i\)</span>至节点<span class="math inline">\(j\)</span>,存在一个连接权系数<span class="math inline">\(w_{ij}\)</span>；</li>
+<li>对于每个节点<span class="math inline">\(i\)</span>，存在一个阈值<span class="math inline">\(\theta_i\)</span>；</li>
+<li>对于每个节点<span class="math inline">\(i\)</span>，定义一个激活函数。</li>
+</ul>
+<p><strong>神经网络中的常见模型</strong></p>
+<p>主要有前馈神经网络（也叫前向神经网络）；反馈神经网络（也叫递归神经网络）。</p>
+<ul>
+<li>
+<p>前馈神经网络：具有递阶分层结构,神经元从一层连接至下一层，不存在同层神经元间的连接。</p>
+</li>
+<li>
+<p>反馈神经网络：有些神经元的输出被反馈至同层或前层神经元。其输入数据决定反馈系统的初始状态，然后系统经过一系列的状态转移后逐渐收敛于平衡状态，即为反馈神经网络经过计算后的输出结果。</p>
+</li>
+</ul>
+<h2 id="前馈神经网络">前馈神经网络</h2>
+<p>前馈网络具有递阶分层结构，由同层神经元间不存在互连的层级组成。</p>
+<p>从输入层至输出层的信号通过单向连接流通；神经元从一层连接至下一层，不存在同层神经元间的连接，前馈网络的例子有：</p>
+<ul>
+<li>反向传播神经网络（BP）</li>
+<li>径向基神经网络（RBF）</li>
+<li>多层感知器（MLP）</li>
+<li>学习矢量量化（LVQ）网络</li>
+<li>小脑模型联接控制（CMAC）网络</li>
+</ul>
+<h2 id="反馈神经网络">反馈神经网络</h2>
+<p>反馈网络又叫做递归网络。在反馈（递归）神经网络中，多个神经元互连以组织一个互连神经网络。如图所示。有些经元的输出被反馈至同层或前层神经元。因此，信号能够从正向和反向流通。</p>
+<p>Hopfield网络，Elmman网络和Jordan网络是递归网络有代表性的例子。</p>
+<h2 id="神经网络的主要学习算法">神经网络的主要学习算法</h2>
+<p>学习是神经网络研究的一个重要内容，它的适应性是通过学习实现的。根据环境的变化，对权值进行调整，改善系统的行为。</p>
+<p>神经网络主要通过指导式（有师）学习算法和非指导式（无师）学习算法。此外，还存在第三种学习算法，即强化学习算法；可把它看做有师学习的一种特例。</p>
+<p><strong>有师学习</strong></p>
+<p>有师学习算法能够根据期望的和实际的网络输出（对应于给定输入）间的差来调整神经元间连接的强度或权。因此，有师学习需要有个老师或导师来提供期望或目标输出信号。</p>
+<p>有师学习算法的例子包括<span class="math inline">\(\delta\)</span>规则、广义<span class="math inline">\(\delta\)</span>规则或反向传播算法以及LVQ算法等。</p>
+<p><strong>无师学习</strong></p>
+<p>无师学习算法不需要知道期望输出。在训练过程中，只要向神经网络提供输入模式，神经网络就能够自动地适应连接权，以便按相似特征把输入模式分组聚集。</p>
+<p>无师学习算法的例子包括Kohonen算法和
+Carpenter-Grossberg自适应谐振理论(ART)
+等.</p>
+<p><strong>强化学习</strong></p>
+<p>强化（增强）学习是有师学习的特例。它不需要老师给出目标输出。强化学习算法采用一个“评论员”来评价与给定输入相对应的神经网络输出的优度（质量因数）。</p>
+<h2 id="基于神经网络的知识表示">基于神经网络的知识表示</h2>
+<p>在基于神经网络的系统中，知识的表示方法与传统人工智能系统中所用的方法（如产生式系统、框架、语义网络等）完全不同。人工智能系统中所用的方法是知识的显式表示，而神经网络中的知识是一种隐式的表示方法。在这里，知识并不像在产生式系统中那样独立地表示为每一条规则, 而是将某一问题的若干知识在同一网络中表示。</p>
+<h2 id="基于神经网络的知识推理">基于神经网络的知识推理</h2>
+<p>基于神经网络的知识推理实质上是在一个已经训练成熟的网络基础上对未知样本进行反应或者判断。</p>
+<p>神经网络的训练是一个网络对训练样本内在规律的学习过程，而对网络进行训练的目的主要是为了让网络模型对训练样本以外的数据具有正确的映射能力。</p>
+<p>通常将神经网络在训练完成后输入其训练样本以外的新数据时获得正确输出的能力定义为神经网络的泛化能力（推广能力）。</p>
+<p>它是人工神经网络的一个属性，称为泛化性能。</p>
+<p>泛化性能的好坏取决于人工神经网络是否
+从训练样本中找到内在的真正规律。</p>
+<p>影响泛化能力的因素主要有：</p>
+<ol>
+<li>训练样本的质量和数量</li>
+<li>网络结构</li>
+<li>问题本身的复杂程度</li>
+</ol>
+<p>神经网络的训练次数也称为神经网络的学
+习时间。在一定范围内，训练次数的增加
+可以提高神经网络的泛化能力。</p>
+<p>然而，在神经网络的训练过程中经常出现一种过拟合现象，即在训练样本的误差逐渐减小并达到某个定值以后，往往会出现网络对训练样本以外的测试样本的误差反而开始增加的情况。因而，对网络的训练，并不是使训练误差越小越好，而是要从实际出发，提高泛化能力。</p>
+<p>最佳的泛化能力往往出现在训练误差的全局最小点出现之前，最佳泛化点出现存在一定的时间范围。只要训练时间合适，较大的神经网络也会有好的泛化能力。</p>
+<p>训练完成后，基于神经网络的推理是通过网络计算实现的。把用户提供的初始证据用作网络的输入，通过网络计算最终得到输出结果。</p>
+<p>网络推理的大致过程。一般来说，正向网络推理的步聚如下：</p>
+<ol>
+<li>把已知数据输入网络输入层的各个节点。</li>
+<li>利用特性函数分别计算网络中各层的输出。计算中，前一层的输出作为后一层有关节点的输入，逐层进行计算 ，直至计算出输出层的输出值为止。</li>
+<li>用阈值函数对输出层的输出进行判定，从而得到输出结果。</li>
+</ol>
+<h1 id="机器学习-1">机器学习</h1>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">人工智能</a>
+        
+            <a href="/tags/%E5%A4%A7%E5%AD%A6/">大学</a>
+        
+            <a href="/tags/%E6%B0%B4%E6%96%87/">水文</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css"integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js"integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8"crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js"integrity="sha384-vZTG03m&#43;2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl"crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.querySelector(`.article-content`), {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ]
+        });})
+</script>
+    
+</article>
+
+    <aside class="related-contents--wrapper">
+    
+    
+        <h2 class="section-title">相关文章</h2>
+        <div class="related-contents">
+            <div class="flex article-list--tile">
+                
+                    
+<article class="has-image">
+    <a href="/inferior/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+        
+        
+            <div class="article-image">
+                <img src="/inferior/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/cover.2aeb7d3afbb199eb18340059cba0cad9_hudfaf5e1d7526a380ad7b29f8ee060abf_123913_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-Kut9OvuxmesYNABZy6DK2Q==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">机器学习&#43;模式识别&#43;认知计算综合学习笔记</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="">
+    <a href="/inferior/%E8%84%91%E7%A7%91%E5%AD%A6%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">脑科学基础学习笔记</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/inferior/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/">
+        
+        
+            <div class="article-image">
+                <img src="/inferior/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/cover.d98d9343d552f7609cb2faab261c59fd_hucd8e14c4efc19cc77fb7e62d6a8c22d5_18667_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-2Y2TQ9VS92CcsvqrJhxZ/Q==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">操作系统课程笔记</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/inferior/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+        
+        
+            <div class="article-image">
+                <img src="/inferior/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/cover.e854b56daa550dc940cfe938a5e554af_hu9ed3e3d7509314fb7a01cf1769564f25_44442_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-6FS1bapVDclAz&#43;k4peVUrw==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">微机原理学习笔记</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/inferior/%E6%9C%80%E4%BC%98%E5%8C%96%E7%90%86%E8%AE%BA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+        
+        
+            <div class="article-image">
+                <img src="/inferior/%E6%9C%80%E4%BC%98%E5%8C%96%E7%90%86%E8%AE%BA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/cover.db75db1f2038182bd4ef09bc672c23ea_hu54576080547634ea0a125cfdafb2aa8f_63775_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-23XbHyA4GCvU7wm8Zywj6g==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">最优化理论学习笔记</h2>
+        </div>
+    </a>
+</article>
+                
+            </div>
+        </div>
+    
+</aside>
+
+     
+    
+        
+    <script src="https://utteranc.es/client.js" 
+        repo="kegalas/blogComments"
+        issue-term="pathname"
+        
+        crossorigin="anonymous"
+        async
+        >
+</script>
+
+<style>
+    .utterances {
+        max-width: unset;
+    }
+</style>
+
+<script>
+    function setUtterancesTheme(theme) {
+        let utterances = document.querySelector('.utterances iframe');
+        if (utterances) {
+            utterances.contentWindow.postMessage(
+                {
+                    type: 'set-theme',
+                    theme: `github-${theme}`
+                },
+                'https://utteranc.es'
+            );
+        }
+    }
+
+    addEventListener('message', event => {
+        if (event.origin !== 'https://utteranc.es') return;
+        setUtterancesTheme(document.documentElement.dataset.scheme)
+    });
+
+    window.addEventListener('onColorSchemeChange', (e) => {
+        setUtterancesTheme(e.detail)
+    })
+</script>
+
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2024 KegalaS的个人博客
+    </section>
+    
+    <section class="powerby">
+         <br />
+        
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    
+        <aside class="sidebar right-sidebar sticky">
+            <section class="widget archives">
+                <div class="widget-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+                </div>
+                <h2 class="widget-title section-title">目录</h2>
+                
+                <div class="widget--toc">
+                    <nav id="TableOfContents">
+  <ol>
+    <li><a href="#一些概念解释">一些概念解释</a>
+      <ol>
+        <li><a href="#弱人工智能与强人工智能">弱人工智能与强人工智能</a></li>
+        <li><a href="#符号处理系统">符号处理系统</a>
+          <ol>
+            <li><a href="#六种功能">六种功能</a></li>
+          </ol>
+        </li>
+        <li><a href="#人工智能的学派">人工智能的学派</a>
+          <ol>
+            <li><a href="#符号主义">符号主义</a></li>
+            <li><a href="#连接主义">连接主义</a></li>
+            <li><a href="#行为主义">行为主义</a></li>
+          </ol>
+        </li>
+        <li><a href="#研究领域">研究领域</a>
+          <ol>
+            <li><a href="#自然语言理解">自然语言理解</a></li>
+            <li><a href="#模式识别">模式识别</a></li>
+            <li><a href="#计算机视觉">计算机视觉</a></li>
+            <li><a href="#专家系统">专家系统</a></li>
+            <li><a href="#机器学习">机器学习</a></li>
+            <li><a href="#神经网络">神经网络</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+    <li><a href="#状态空间知识表示及其搜索技术">状态空间知识表示及其搜索技术</a>
+      <ol>
+        <li><a href="#知识">知识</a></li>
+        <li><a href="#知识表示的一般方法">知识表示的一般方法</a>
+          <ol>
+            <li><a href="#状态空间法">状态空间法</a></li>
+          </ol>
+        </li>
+        <li><a href="#搜索推理技术">搜索推理技术</a>
+          <ol>
+            <li><a href="#搜索">搜索</a></li>
+            <li><a href="#图搜索策略">图搜索策略</a></li>
+            <li><a href="#盲目搜索">盲目搜索</a></li>
+            <li><a href="#启发式搜索">启发式搜索</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+    <li><a href="#问题归约知识表示及其搜索技术">问题归约知识表示及其搜索技术</a>
+      <ol>
+        <li><a href="#与或图表示">与或图表示</a></li>
+        <li><a href="#与或图搜索">与或图搜索</a></li>
+        <li><a href="#max-min搜索">Max-Min搜索</a></li>
+        <li><a href="#alpha-beta剪枝">\alpha-\beta剪枝</a></li>
+      </ol>
+    </li>
+    <li><a href="#谓词逻辑表示与推理技术">谓词逻辑表示与推理技术</a>
+      <ol>
+        <li><a href="#谓词逻辑法">谓词逻辑法</a></li>
+        <li><a href="#利用谓词公式进行知识表示的步骤">利用谓词公式进行知识表示的步骤</a></li>
+        <li><a href="#置换与合一">置换与合一</a>
+          <ol>
+            <li><a href="#置换">置换</a></li>
+            <li><a href="#合一">合一</a></li>
+          </ol>
+        </li>
+        <li><a href="#消解原理">消解原理</a></li>
+        <li><a href="#子句集的求解">子句集的求解</a></li>
+        <li><a href="#消解反演">消解反演</a></li>
+        <li><a href="#语义网络法">语义网络法</a></li>
+        <li><a href="#框架表示">框架表示</a></li>
+      </ol>
+    </li>
+    <li><a href="#规则演绎系统">规则演绎系统</a>
+      <ol>
+        <li><a href="#规则正向演绎系统">规则正向演绎系统</a></li>
+        <li><a href="#规则逆向演绎系统">规则逆向演绎系统</a></li>
+        <li><a href="#规则双向演绎系统">规则双向演绎系统</a></li>
+        <li><a href="#产生式系统">产生式系统</a></li>
+      </ol>
+    </li>
+    <li><a href="#不确定性推理">不确定性推理</a>
+      <ol>
+        <li><a href="#模糊计算和模糊推理">模糊计算和模糊推理</a>
+          <ol>
+            <li><a href="#经典集合">经典集合</a></li>
+            <li><a href="#模糊理论基本概念">模糊理论基本概念</a></li>
+            <li><a href="#模糊集的表示方法">模糊集的表示方法</a></li>
+            <li><a href="#集合运算">集合运算</a></li>
+            <li><a href="#模糊集的截集">模糊集的截集</a></li>
+            <li><a href="#模糊集合的模糊度">模糊集合的模糊度</a></li>
+            <li><a href="#模糊数">模糊数</a></li>
+            <li><a href="#模糊关系">模糊关系</a></li>
+            <li><a href="#模糊推理">模糊推理</a></li>
+          </ol>
+        </li>
+        <li><a href="#模糊的知识表示">模糊的知识表示</a></li>
+        <li><a href="#模糊匹配与冲突消解">模糊匹配与冲突消解</a>
+          <ol>
+            <li><a href="#贴近度">贴近度</a></li>
+            <li><a href="#语义距离">语义距离</a></li>
+            <li><a href="#相似度">相似度</a></li>
+            <li><a href="#复合条件的模糊匹配">复合条件的模糊匹配</a></li>
+            <li><a href="#冲突消解">冲突消解</a></li>
+          </ol>
+        </li>
+        <li><a href="#模糊推理的基本形式">模糊推理的基本形式</a></li>
+        <li><a href="#构造模糊关系r的方法">构造模糊关系R的方法</a>
+          <ol>
+            <li><a href="#扎德方法">扎德方法</a></li>
+            <li><a href="#mamdani方法">Mamdani方法</a></li>
+            <li><a href="#mizumoto方法">Mizumoto方法</a></li>
+          </ol>
+        </li>
+        <li><a href="#模糊判决方法">模糊判决方法</a>
+          <ol>
+            <li><a href="#重心法">重心法</a></li>
+            <li><a href="#最大隶属度法">最大隶属度法</a></li>
+            <li><a href="#系数加权平均法">系数加权平均法</a></li>
+            <li><a href="#隶属度限幅元素平均法">隶属度限幅元素平均法</a></li>
+          </ol>
+        </li>
+        <li><a href="#不确定性推理的基本概念">不确定性推理的基本概念</a></li>
+        <li><a href="#不确定性推理中的基本问题">不确定性推理中的基本问题</a></li>
+        <li><a href="#不确定性推理方法的分类">不确定性推理方法的分类</a>
+          <ol>
+            <li><a href="#逆概率法">逆概率法</a></li>
+            <li><a href="#可信度方法">可信度方法</a>
+              <ol>
+                <li><a href="#1知识不确定性的表示">1.知识不确定性的表示</a></li>
+                <li><a href="#2证据不确定性的表示">2.证据不确定性的表示</a></li>
+                <li><a href="#3组合证据不确定性的算法">3.组合证据不确定性的算法</a></li>
+                <li><a href="#4-不确定性的传递">4. 不确定性的传递</a></li>
+                <li><a href="#5-结论不确定性的合成算法">5. 结论不确定性的合成算法</a></li>
+              </ol>
+            </li>
+            <li><a href="#加权的不确定性推理">加权的不确定性推理</a>
+              <ol>
+                <li><a href="#1-知识的不确定性的表示">1. 知识的不确定性的表示</a></li>
+                <li><a href="#2-组合证据不确定性的算法">2. 组合证据不确定性的算法</a></li>
+                <li><a href="#3-不确定性的传递算法">3. 不确定性的传递算法</a></li>
+              </ol>
+            </li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+    <li><a href="#遗传算法">遗传算法</a>
+      <ol>
+        <li><a href="#计算智能">计算智能</a></li>
+        <li><a href="#进化计算">进化计算</a></li>
+        <li><a href="#基本思想">基本思想</a></li>
+        <li><a href="#一些基本概念">一些基本概念</a></li>
+        <li><a href="#基本机理">基本机理</a></li>
+        <li><a href="#遗传算子">遗传算子</a></li>
+        <li><a href="#编码与解码">编码与解码</a></li>
+        <li><a href="#适应度函数">适应度函数</a></li>
+        <li><a href="#交叉算子">交叉算子</a></li>
+        <li><a href="#变异算子">变异算子</a></li>
+        <li><a href="#选择算子">选择算子</a></li>
+        <li><a href="#停止条件">停止条件</a></li>
+        <li><a href="#特点">特点</a></li>
+        <li><a href="#不足">不足</a></li>
+        <li><a href="#进化策略概述">进化策略概述</a></li>
+        <li><a href="#进化规划概述">进化规划概述</a></li>
+        <li><a href="#遗传算法进化策略进化规划的对比">遗传算法、进化策略、进化规划的对比</a></li>
+        <li><a href="#进化计算的应用">进化计算的应用</a></li>
+        <li><a href="#人工生命">人工生命</a>
+          <ol>
+            <li><a href="#人工生命的研究内容">人工生命的研究内容</a></li>
+            <li><a href="#人工生命的科学框架">人工生命的科学框架</a></li>
+            <li><a href="#人工生命的研究方法">人工生命的研究方法</a></li>
+            <li><a href="#人工生命的实例">人工生命的实例</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+    <li><a href="#群智能算法">群智能算法</a>
+      <ol>
+        <li><a href="#群智能概述">群智能概述</a></li>
+        <li><a href="#粒子群优化算法">粒子群优化算法</a></li>
+        <li><a href="#蚁群算法">蚁群算法</a></li>
+        <li><a href="#群智能优化的特点与不足">群智能优化的特点与不足</a></li>
+      </ol>
+    </li>
+    <li><a href="#人工神经网络">人工神经网络</a>
+      <ol>
+        <li><a href="#神经计算">神经计算</a></li>
+        <li><a href="#生物神经系统">生物神经系统</a></li>
+        <li><a href="#人工神经网络-1">人工神经网络</a></li>
+        <li><a href="#前馈神经网络">前馈神经网络</a></li>
+        <li><a href="#反馈神经网络">反馈神经网络</a></li>
+        <li><a href="#神经网络的主要学习算法">神经网络的主要学习算法</a></li>
+        <li><a href="#基于神经网络的知识表示">基于神经网络的知识表示</a></li>
+        <li><a href="#基于神经网络的知识推理">基于神经网络的知识推理</a></li>
+      </ol>
+    </li>
+    <li><a href="#机器学习-1">机器学习</a></li>
+  </ol>
+</nav>
+                </div>
+            </section>
+        </aside>
+    
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                defer="false"
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

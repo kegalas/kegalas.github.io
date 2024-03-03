@@ -9,10 +9,10 @@
 <meta property='og:description' content='注：本文内容可能不再推荐使用，因为pandoc无法生成正确的代码高亮，也没有更多的参数可以选择。并且添加目录的方式比较DIY，而我本人暂时不'>
 <meta property='og:url' content='https://kegalas.top/p/%E9%87%8D%E6%96%B0%E7%BC%96%E8%AF%91hugo%E6%9D%A5%E4%BD%BF%E5%BE%97pandoc%E5%8F%AF%E4%BB%A5%E7%94%9F%E6%88%90%E7%9B%AE%E5%BD%95/'>
 <meta property='og:site_name' content='KegalaS的个人博客'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Hugo' /><meta property='article:tag' content='Pandoc' /><meta property='article:published_time' content='2022-08-06T16:41:53&#43;08:00'/><meta property='article:modified_time' content='2022-08-06T16:41:53&#43;08:00'/>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Hugo' /><meta property='article:tag' content='Pandoc' /><meta property='article:tag' content='干货' /><meta property='article:published_time' content='2022-08-06T16:41:53&#43;08:00'/><meta property='article:modified_time' content='2022-08-06T16:41:53&#43;08:00'/>
 <meta name="twitter:title" content="重新编译hugo来使得pandoc可以生成目录">
 <meta name="twitter:description" content="注：本文内容可能不再推荐使用，因为pandoc无法生成正确的代码高亮，也没有更多的参数可以选择。并且添加目录的方式比较DIY，而我本人暂时不">
-    <link rel="shortcut icon" href="favicon-16x16.png" />
+    <link rel="shortcut icon" href="/images/favicon.ico" />
 
     </head>
     <body class="
@@ -222,7 +222,7 @@
 
 
                 
-                <span>Home</span>
+                <span>首页</span>
             </a>
         </li>
         
@@ -242,7 +242,7 @@
 
 
                 
-                <span>About</span>
+                <span>关于</span>
             </a>
         </li>
         
@@ -263,7 +263,7 @@
 
 
                 
-                <span>Archives</span>
+                <span>档案</span>
             </a>
         </li>
         
@@ -283,7 +283,28 @@
 
 
                 
-                <span>Search</span>
+                <span>搜索</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/inferior' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>水文区</span>
             </a>
         </li>
         
@@ -375,7 +396,7 @@
     <blockquote>
 <p>注：本文内容可能不再推荐使用，因为pandoc无法生成正确的代码高亮，也没有更多的参数可以选择。并且添加目录的方式比较DIY，而我本人暂时不会Go语言相关的东西，无法进一步跟进官方版本的更新。</p>
 <p>现在推荐去给Hugo默认的goldmark引擎添加mathjax支持。</p>
-<p>详情见这篇文章<a class="link" href="../%e4%b8%baHugo%e5%ae%89%e8%a3%85goldmark-mathjax%e6%8f%92%e4%bb%b6%e6%9d%a5%e6%9b%b4%e5%a5%bd%e5%9c%b0%e6%94%af%e6%8c%81%e8%be%93%e5%85%a5%e5%85%ac%e5%bc%8f" >为Hugo安装goldmark-mathjax插件来更好地支持输入公式</a></p>
+<p>详情见这篇文章<a class="link" href="../%e4%b8%bahugo%e5%ae%89%e8%a3%85goldmark-mathjax%e6%8f%92%e4%bb%b6%e6%9d%a5%e6%9b%b4%e5%a5%bd%e5%9c%b0%e6%94%af%e6%8c%81%e8%be%93%e5%85%a5%e5%85%ac%e5%bc%8f" >为Hugo安装goldmark-mathjax插件来更好地支持输入公式</a></p>
 </blockquote>
 <p>根据<a class="link" href="https://github.com/olOwOlo/hugo-theme-even/issues/139"  target="_blank" rel="noopener"
     >https://github.com/olOwOlo/hugo-theme-even/issues/139</a>，hugo无法正确生成目录的原因是，没有加入&ndash;toc参数。</p>
@@ -400,6 +421,8 @@
             <a href="/tags/hugo/">Hugo</a>
         
             <a href="/tags/pandoc/">Pandoc</a>
+        
+            <a href="/tags/%E5%B9%B2%E8%B4%A7/">干货</a>
         
     </section>
 
@@ -487,57 +510,37 @@
 </article>
                 
                     
-<article class="has-image">
-    <a href="/p/%E6%B0%B4%E6%96%87-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/">
+<article class="">
+    <a href="/p/%E5%9C%A8%E6%A0%A1%E5%9B%AD%E7%BD%91%E4%B8%AD%E7%94%A8ssh%E8%BF%9E%E6%8E%A5%E5%AE%BF%E8%88%8D%E7%94%B5%E8%84%91/">
         
-        
-            <div class="article-image">
-                <img src="/p/%E6%B0%B4%E6%96%87-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/cover.d98d9343d552f7609cb2faab261c59fd_hucd8e14c4efc19cc77fb7e62d6a8c22d5_18667_250x150_fill_q75_box_smart1.jpg" 
-                        width="250" 
-                        height="150" 
-                        loading="lazy" 
-                        data-key="" 
-                        data-hash="md5-2Y2TQ9VS92CcsvqrJhxZ/Q==">
-                
-            </div>
         
 
         <div class="article-details">
-            <h2 class="article-title">水文 | 操作系统课程笔记</h2>
-        </div>
-    </a>
-</article>
-                
-                    
-<article class="has-image">
-    <a href="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
-        
-        
-            <div class="article-image">
-                <img src="/p/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/cover.e854b56daa550dc940cfe938a5e554af_hu9ed3e3d7509314fb7a01cf1769564f25_44442_250x150_fill_q75_box_smart1.jpg" 
-                        width="250" 
-                        height="150" 
-                        loading="lazy" 
-                        data-key="" 
-                        data-hash="md5-6FS1bapVDclAz&#43;k4peVUrw==">
-                
-            </div>
-        
-
-        <div class="article-details">
-            <h2 class="article-title">微机原理学习笔记</h2>
+            <h2 class="article-title">在校园网中用ssh连接宿舍电脑</h2>
         </div>
     </a>
 </article>
                 
                     
 <article class="">
-    <a href="/p/virtualbox%E6%89%93%E5%BC%80%E8%99%9A%E6%8B%9F%E6%9C%BAverr_invalid_name-104%E9%94%99%E8%AF%AF%E7%9A%84%E8%A7%A3%E5%86%B3/">
+    <a href="/p/c-%E7%AC%94%E8%AE%B0%E4%B9%8B%E9%82%A3%E4%BA%9B%E6%9C%89%E7%94%A8%E4%BD%86%E7%BB%8F%E5%B8%B8%E8%A2%AB%E5%BF%BD%E8%A7%86%E7%9A%84%E5%86%85%E5%AE%B9/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">VirtualBox打开虚拟机VERR_INVALID_NAME( 104)错误的解决</h2>
+            <h2 class="article-title">C&#43;&#43;笔记之那些有用但经常被忽视的内容</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="">
+    <a href="/p/msys2mingw64cygwin%E7%9A%84%E4%BD%BF%E7%94%A8%E5%8C%BA%E5%88%AB%E6%B5%85%E8%B0%88/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">MSYS2,MinGW64,Cygwin的使用区别浅谈</h2>
         </div>
     </a>
 </article>

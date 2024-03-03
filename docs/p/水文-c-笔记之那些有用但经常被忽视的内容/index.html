@@ -12,7 +12,7 @@
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='C&#43;&#43;' /><meta property='article:tag' content='水文' /><meta property='article:published_time' content='2023-09-06T21:52:23&#43;08:00'/><meta property='article:modified_time' content='2023-09-06T21:52:23&#43;08:00'/>
 <meta name="twitter:title" content="水文 | C&#43;&#43;笔记之那些有用但经常被忽视的内容">
 <meta name="twitter:description" content="本笔记会记录一些C&#43;&#43;中，不是很常用（对于我自己来说）、可能被忽视（对于我自己来说）、我自己不是很熟悉需要记录来复习的、新标准（相较于C&#43;&#43;">
-    <link rel="shortcut icon" href="favicon-16x16.png" />
+    <link rel="shortcut icon" href="/images/favicon.ico" />
 
     </head>
     <body class="
@@ -108,7 +108,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 15 分钟
+                    阅读时长: 16 分钟
                 </time>
             </div>
         
@@ -475,15 +475,48 @@ static_assert(bool_exp); //C++17可用
 </code></pre><h1 id="用-dndbug忽略所有assert">用-DNDBUG忽略所有assert</h1>
 <p>这是g++的编译选项，只需使用这个参数即可</p>
 <pre tabindex="0"><code>g++ -DNDBUG ...
-</code></pre><h1 id="cmake使用">Cmake使用</h1>
+</code></pre><h1 id="编译器warning的编译参数">编译器warning的编译参数</h1>
+<p>默认编译并不会打开很多warning，在生产环境中，推荐使用</p>
+<pre tabindex="0"><code>-Wall -Wextra -Wpedantic -Wshadow -Werror -fsanitize=undefined,address
+</code></pre><p>来开启更多warning。</p>
+<h1 id="cmake使用">Cmake使用</h1>
 <p>TODO</p>
-<h1 id="doctestcatch2使用">doctest/catch2使用</h1>
+<h1 id="doctestcatch2gtest使用">doctest/catch2/gtest使用</h1>
 <p>TODO</p>
+<h1 id="不要在调试的时候到处写coutcerr">不要在调试的时候到处写cout、cerr</h1>
+<p>首先这会干扰到原本的代码逻辑，你删除的时候可能会删错、忘删。另外，这并不适合写测试样例来检测是否正确，更好的办法是，定义一个函数</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">log</span>(std<span style="color:#f92672">::</span>ostream<span style="color:#f92672">&amp;</span> os, ...) {...}
+</span></span></code></pre></div><p>把要输出测试的东西放到ostream里，方便测试样例获取</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>std<span style="color:#f92672">::</span>ostringstream oss;
+</span></span><span style="display:flex;"><span>log(oss, ...);
+</span></span><span style="display:flex;"><span>ASSERT_STREQ(oss.str(), <span style="color:#e6db74">&#34;123&#34;</span>);
+</span></span></code></pre></div><p>如果要调试最好使用GDB等工具。</p>
 <h1 id="gdb使用">GDB使用</h1>
 <p>TODO</p>
 <h1 id="使用gclang检测内存错误使用未定义行为等">使用g++/clang检测内存错误使用、未定义行为等</h1>
-<p>TODO</p>
-<h1 id="使用valgrind检测内存泄漏锁问题等">使用valgrind检测内存泄漏、锁问题等</h1>
+<p>即之前介绍到的，只需要添加<code>-fsanitize=undefined,address</code>编译选项即可。在运行的时候，如果出现这种错误，就会提供报错信息。</p>
+<h1 id="使用valgrind检测内存泄漏死锁问题等">使用valgrind检测内存泄漏、死锁问题等</h1>
+<p>我们首先编译好程序，然后通过</p>
+<pre tabindex="0"><code>valgrind [options] ./program [program options]
+</code></pre><p>来执行检查。可选参数有</p>
+<ul>
+<li><code>--tool=memcheck</code>，用来检查内存泄漏、对无效内存读写等</li>
+<li><code>--tool=helgrind</code>，用来检查死锁</li>
+<li><code>--leak-check=full</code>，用来显示内存泄漏的详细信息</li>
+<li><code>-v/--verbose</code>，用来显示额外信息</li>
+</ul>
+<h1 id="使用end迭代器的值是未定义行为">使用end迭代器的值是未定义行为</h1>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span> vec;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">auto</span> it <span style="color:#f92672">=</span> vec.end();
+</span></span><span style="display:flex;"><span>std<span style="color:#f92672">::</span>cout<span style="color:#f92672">&lt;&lt;*</span>it; <span style="color:#75715e">// UB
+</span></span></span></code></pre></div><h1 id="stddistance">std::distance</h1>
+<p>求得左闭右开区间<code>[it1, it2)</code>的大小。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span> vec{<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">3</span>};
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">auto</span> x <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>distance(std<span style="color:#f92672">::</span>begin(vec), std<span style="color:#f92672">::</span>end(vec)); <span style="color:#75715e">// 3
+</span></span></span></code></pre></div><p>如果满足老式随机访问迭代器，那么复杂度是常数。否则复杂度为线性。</p>
+<h1 id="rtti">RTTI</h1>
+<p>todo</p>
+<h1 id="typeidname">typeid().name()</h1>
 <p>TODO</p>
 
 </section>
@@ -550,11 +583,11 @@ static_assert(bool_exp); //C++17可用
                 
                     
 <article class="has-image">
-    <a href="/p/%E6%B0%B4%E6%96%87-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/">
+    <a href="/inferior/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/">
         
         
             <div class="article-image">
-                <img src="/p/%E6%B0%B4%E6%96%87-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/cover.d98d9343d552f7609cb2faab261c59fd_hucd8e14c4efc19cc77fb7e62d6a8c22d5_18667_250x150_fill_q75_box_smart1.jpg" 
+                <img src="/inferior/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/cover.d98d9343d552f7609cb2faab261c59fd_hucd8e14c4efc19cc77fb7e62d6a8c22d5_18667_250x150_fill_q75_box_smart1.jpg" 
                         width="250" 
                         height="150" 
                         loading="lazy" 
@@ -572,11 +605,11 @@ static_assert(bool_exp); //C++17可用
                 
                     
 <article class="has-image">
-    <a href="/p/%E6%B0%B4%E6%96%87-%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+    <a href="/inferior/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
         
         
             <div class="article-image">
-                <img src="/p/%E6%B0%B4%E6%96%87-%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/cover.e854b56daa550dc940cfe938a5e554af_hu9ed3e3d7509314fb7a01cf1769564f25_44442_250x150_fill_q75_box_smart1.jpg" 
+                <img src="/inferior/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/cover.e854b56daa550dc940cfe938a5e554af_hu9ed3e3d7509314fb7a01cf1769564f25_44442_250x150_fill_q75_box_smart1.jpg" 
                         width="250" 
                         height="150" 
                         loading="lazy" 
@@ -594,7 +627,7 @@ static_assert(bool_exp); //C++17可用
                 
                     
 <article class="">
-    <a href="/p/%E6%B0%B4%E6%96%87-%E4%B8%AA%E4%BA%BA%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6%E5%88%97%E8%A1%A8/">
+    <a href="/inferior/%E4%B8%AA%E4%BA%BA%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6%E5%88%97%E8%A1%A8/">
         
         
 
@@ -606,7 +639,7 @@ static_assert(bool_exp); //C++17可用
                 
                     
 <article class="">
-    <a href="/p/%E6%B0%B4%E6%96%87-windows%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E5%90%88%E9%9B%86%E9%95%BF%E6%9C%9F%E6%9B%B4%E6%96%B0/">
+    <a href="/inferior/windows%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E5%90%88%E9%9B%86%E9%95%BF%E6%9C%9F%E6%9B%B4%E6%96%B0/">
         
         
 
@@ -618,7 +651,7 @@ static_assert(bool_exp); //C++17可用
                 
                     
 <article class="">
-    <a href="/p/%E6%B0%B4%E6%96%87-firefox%E4%B9%A0%E6%83%AF%E8%AE%BE%E7%BD%AE%E8%AE%B0%E5%BD%95%E5%8C%85%E5%90%AB%E5%8F%8C%E5%87%BB%E5%85%B3%E9%97%AD%E6%8B%96%E6%8B%BD%E6%89%8B%E5%8A%BF%E6%96%B0%E5%BB%BA%E6%A0%87%E7%AD%BE%E9%A1%B5%E4%BD%8D%E7%BD%AE%E7%AD%89/">
+    <a href="/inferior/firefox%E4%B9%A0%E6%83%AF%E8%AE%BE%E7%BD%AE%E8%AE%B0%E5%BD%95%E5%8C%85%E5%90%AB%E5%8F%8C%E5%87%BB%E5%85%B3%E9%97%AD%E6%8B%96%E6%8B%BD%E6%89%8B%E5%8A%BF%E6%96%B0%E5%BB%BA%E6%A0%87%E7%AD%BE%E9%A1%B5%E4%BD%8D%E7%BD%AE%E7%AD%89/">
         
         
 
@@ -834,11 +867,17 @@ static_assert(bool_exp); //C++17可用
     <li><a href="#注意给assert的参数加上括号">注意给assert的参数加上括号</a></li>
     <li><a href="#static_assert">static_assert</a></li>
     <li><a href="#用-dndbug忽略所有assert">用-DNDBUG忽略所有assert</a></li>
+    <li><a href="#编译器warning的编译参数">编译器warning的编译参数</a></li>
     <li><a href="#cmake使用">Cmake使用</a></li>
-    <li><a href="#doctestcatch2使用">doctest/catch2使用</a></li>
+    <li><a href="#doctestcatch2gtest使用">doctest/catch2/gtest使用</a></li>
+    <li><a href="#不要在调试的时候到处写coutcerr">不要在调试的时候到处写cout、cerr</a></li>
     <li><a href="#gdb使用">GDB使用</a></li>
     <li><a href="#使用gclang检测内存错误使用未定义行为等">使用g++/clang检测内存错误使用、未定义行为等</a></li>
-    <li><a href="#使用valgrind检测内存泄漏锁问题等">使用valgrind检测内存泄漏、锁问题等</a></li>
+    <li><a href="#使用valgrind检测内存泄漏死锁问题等">使用valgrind检测内存泄漏、死锁问题等</a></li>
+    <li><a href="#使用end迭代器的值是未定义行为">使用end迭代器的值是未定义行为</a></li>
+    <li><a href="#stddistance">std::distance</a></li>
+    <li><a href="#rtti">RTTI</a></li>
+    <li><a href="#typeidname">typeid().name()</a></li>
   </ol>
 </nav>
                 </div>
