@@ -7,7 +7,7 @@
         </div>
         <h2 class="widget-title section-title">{{ T "widget.archives.title" }}</h2>
 
-        {{ $pages := where .Site.RegularPages "Type" "in" .Site.Params.mainSections }}
+        {{ $pages := .Site.RegularPages}}
         {{ $notHidden := where .Site.RegularPages "Params.hidden" "!=" true }}
         {{ $filtered := ($pages | intersect $notHidden) }}
         {{ $archives := $filtered.GroupByDate "2006" }}
