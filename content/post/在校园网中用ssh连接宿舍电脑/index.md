@@ -1,5 +1,5 @@
 ---
-title: 干货 | 在校园网中用ssh连接宿舍电脑
+title: 在校园网中用ssh连接宿舍电脑
 date: 2023-10-20T15:33:36+08:00
 draft: false
 tags:

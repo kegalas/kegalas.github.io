@@ -1,5 +1,5 @@
 ---
-title: 干货 | Hugo的Stack皮肤中使得mailto超链接能够直接打开电子邮件客户端
+title: Hugo的Stack皮肤中使得mailto超链接能够直接打开电子邮件客户端
 date: 2022-06-25T23:46:57+08:00
 draft: false
 tags:

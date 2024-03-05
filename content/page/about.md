@@ -1,7 +1,8 @@
 ---
-title: About
+title: 关于
 description: 博主个人简介
 date: '2021-11-14'
+slug: "about"
 aliases:
   - about-us
   - contact

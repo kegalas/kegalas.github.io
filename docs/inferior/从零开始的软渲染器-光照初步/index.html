@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='导航页面 Blinn-Phong反射模型 Blinn-Phong反射模型将光的反射分为了三个部分。 漫反射 镜面反射 环境光反射 我们在具体实现光照的时'><title>干货 | 从零开始的软渲染器 光照初步</title>
+
+<link rel='canonical' href='https://kegalas.top/inferior/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%85%89%E7%85%A7%E5%88%9D%E6%AD%A5/'>
+
+<link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='干货 | 从零开始的软渲染器 光照初步'>
+<meta property='og:description' content='导航页面 Blinn-Phong反射模型 Blinn-Phong反射模型将光的反射分为了三个部分。 漫反射 镜面反射 环境光反射 我们在具体实现光照的时'>
+<meta property='og:url' content='https://kegalas.top/inferior/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%85%89%E7%85%A7%E5%88%9D%E6%AD%A5/'>
+<meta property='og:site_name' content='KegalaS的个人博客'>
+<meta property='og:type' content='article'><meta property='article:section' content='Inferior' /><meta property='article:tag' content='图形学' /><meta property='article:tag' content='渲染' /><meta property='article:tag' content='干货' /><meta property='article:published_time' content='2023-08-04T21:25:38&#43;08:00'/><meta property='article:modified_time' content='2023-08-04T21:25:38&#43;08:00'/><meta property='og:image' content='https://kegalas.top/inferior/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%85%89%E7%85%A7%E5%88%9D%E6%AD%A5/cover.jpg' />
+<meta name="twitter:title" content="干货 | 从零开始的软渲染器 光照初步">
+<meta name="twitter:description" content="导航页面 Blinn-Phong反射模型 Blinn-Phong反射模型将光的反射分为了三个部分。 漫反射 镜面反射 环境光反射 我们在具体实现光照的时"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://kegalas.top/inferior/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%85%89%E7%85%A7%E5%88%9D%E6%AD%A5/cover.jpg' />
+    <link rel="shortcut icon" href="/images/favicon.ico" />
+
+    </head>
+    <body class="
+    article-page has-toc
+">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex 
+    
+        extended
+    
+">
+    
+        <div id="article-toolbar">
+            <a href="/" class="back-home">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="15 6 9 12 15 18" />
+</svg>
+
+
+
+                <span>返回</span>
+            </a>
+        </div>
+    
+<main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/inferior/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%85%89%E7%85%A7%E5%88%9D%E6%AD%A5/">
+                <img src="/inferior/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%85%89%E7%85%A7%E5%88%9D%E6%AD%A5/cover_hu04f6e4c5c5d9e8c832c6dfeafddfe37e_257114_800x0_resize_q75_box.jpg"
+                        srcset="/inferior/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%85%89%E7%85%A7%E5%88%9D%E6%AD%A5/cover_hu04f6e4c5c5d9e8c832c6dfeafddfe37e_257114_800x0_resize_q75_box.jpg 800w, /inferior/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%85%89%E7%85%A7%E5%88%9D%E6%AD%A5/cover_hu04f6e4c5c5d9e8c832c6dfeafddfe37e_257114_1600x0_resize_q75_box.jpg 1600w"
+                        width="800" 
+                        height="400" 
+                        loading="lazy"
+                        alt="Featured image of post 干货 | 从零开始的软渲染器 光照初步" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" >
+                图形学
+            </a>
+        
+    </header>
+    
+
+    <h2 class="article-title">
+        <a href="/inferior/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%85%89%E7%85%A7%E5%88%9D%E6%AD%A5/">干货 | 从零开始的软渲染器 光照初步</a>
+    </h2>
+
+    
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Aug 04, 2023</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 4 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+</div>
+</header>
+
+    <section class="article-content">
+    <p><u><strong><a class="link" href="../%e5%b9%b2%e8%b4%a7-%e4%bb%8e%e9%9b%b6%e5%bc%80%e5%a7%8b%e7%9a%84%e8%bd%af%e6%b8%b2%e6%9f%93%e5%99%a8-%e5%af%bc%e8%88%aa/" >导航页面</a></strong></u></p>
+<h1 id="blinn-phong反射模型">Blinn-Phong反射模型</h1>
+<p>Blinn-Phong反射模型将光的反射分为了三个部分。</p>
+<ul>
+<li>漫反射</li>
+<li>镜面反射</li>
+<li>环境光反射</li>
+</ul>
+<p>我们在具体实现光照的时候，会把这三个光照分开计算，然后最后显示出来的时候叠加显示。</p>
+<p>为了方便，我们作出如下约定，对于物体表面上的一点<span class="math inline">\(\bm p\)</span>，其单位法向量为<span class="math inline">\(\bm n\)</span>，从<span class="math inline">\(\bm p\)</span>指向摄像机的单位向量为<span class="math inline">\(\bm v\)</span>，指向光源的单位向量为<span class="math inline">\(\bm l\)</span></p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 182; 
+			flex-basis: 438px"
+	>
+	<a href="/inferior/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%85%89%E7%85%A7%E5%88%9D%E6%AD%A5/3.jpg" data-size="1124x615">
+		<img src="/inferior/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%85%89%E7%85%A7%E5%88%9D%E6%AD%A5/3.jpg"
+			width="1124"
+			height="615"
+			srcset="/inferior/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%85%89%E7%85%A7%E5%88%9D%E6%AD%A5/3_hu9cd1ea2d39973934209a7a15bb7f5c26_27188_480x0_resize_q75_box.jpg 480w, /inferior/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%85%89%E7%85%A7%E5%88%9D%E6%AD%A5/3_hu9cd1ea2d39973934209a7a15bb7f5c26_27188_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="3.jpg">
+	</a>
+	
+	<figcaption>3.jpg</figcaption>
+	
+</figure></p>
+<h2 id="漫反射">漫反射</h2>
+<p>漫反射意味着，从四面八方看过来，这个位置的颜色（亮度）是一致的。</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 138; 
+			flex-basis: 332px"
+	>
+	<a href="/inferior/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%85%89%E7%85%A7%E5%88%9D%E6%AD%A5/2.jpg" data-size="903x652">
+		<img src="/inferior/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%85%89%E7%85%A7%E5%88%9D%E6%AD%A5/2.jpg"
+			width="903"
+			height="652"
+			srcset="/inferior/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%85%89%E7%85%A7%E5%88%9D%E6%AD%A5/2_hu9ea0f1f7b3e71ea83035044bbb674bea_23528_480x0_resize_q75_box.jpg 480w, /inferior/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%85%89%E7%85%A7%E5%88%9D%E6%AD%A5/2_hu9ea0f1f7b3e71ea83035044bbb674bea_23528_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="2.jpg">
+	</a>
+	
+	<figcaption>2.jpg</figcaption>
+	
+</figure></p>
+<p>如图，光到了反射点后，朝着四面八方反射，并且并没有哪个方向特别突出。</p>
+<p>处理漫反射的规则也叫做Lambert&rsquo;s Cosine Law，这个规则指明，如果光源照射到<span class="math inline">\(\bm p\)</span>点上的光照强度为<span class="math inline">\(I\)</span>，则其漫反射的光照强度为<span class="math inline">\(L_d=I\cos\theta\)</span>，其中<span class="math inline">\(\theta\)</span>是<span class="math inline">\(\bm l\)</span>和<span class="math inline">\(\bm n\)</span>的夹角。同时为了防止从物体表面以下的光线射过来影响亮度，以及考虑各种物体的反射性能不一样，我们写为</p>
+<p><span class="math display">\[L_d = k_d I \max(0,\bm n\cdot\bm l)
+\]</span></p>
+<p>其中<span class="math inline">\(k_d\)</span>是该物体的材质的漫反射系数。这里<span class="math inline">\(k_d\)</span>一般是三维向量，而同时<span class="math inline">\(I\)</span>和<span class="math inline">\(L_d\)</span>也是三维向量。这么做的原因是，我们的光是有颜色的，并且反射的时候物体也会对某种颜色反射的多，某种颜色反射的少。这里<span class="math inline">\(k_d\)</span>和<span class="math inline">\(I\)</span>是分量之间各自相乘的乘法，在我们的库里就是operator*，而不是dot函数。</p>
+<p>并且由于我们在这里做乘法，试想一下我们用<span class="math inline">\(255\times255\)</span>，得到的数超过了<span class="math inline">\(255\)</span>，也就是颜色的上限值，是不对的。我们转化一下，把<span class="math inline">\(RGB\)</span>三个分量的值定为<span class="math inline">\([0,1]\)</span>，用这个数字去进行计算。在最后屏幕上着色的时候，再转换回整数<span class="math inline">\([0,255]\)</span>。</p>
+<p>你可能会问，我知道光有颜色，但是亮度怎么办？简单认为，一个颜色的0.9倍亮度，就是把每个分量都乘以0.9。更详细的我会在以后介绍（TODO）。</p>
+<h2 id="镜面反射">镜面反射</h2>
+<p>有时候，这个材质比较光滑，在反射角（指<span class="math inline">\(\bm v\)</span>和<span class="math inline">\(\bm n\)</span>的夹角）等于入射角（指<span class="math inline">\(\bm l\)</span>和<span class="math inline">\(\bm n\)</span>的夹角），或者反射角很接近入射角时，光强会明显强于其他角度。</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 221; 
+			flex-basis: 531px"
+	>
+	<a href="/inferior/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%85%89%E7%85%A7%E5%88%9D%E6%AD%A5/4.jpg" data-size="1195x540">
+		<img src="/inferior/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%85%89%E7%85%A7%E5%88%9D%E6%AD%A5/4.jpg"
+			width="1195"
+			height="540"
+			srcset="/inferior/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%85%89%E7%85%A7%E5%88%9D%E6%AD%A5/4_hu281d9399fec7514fa067dd0e23ccc467_20616_480x0_resize_q75_box.jpg 480w, /inferior/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%85%89%E7%85%A7%E5%88%9D%E6%AD%A5/4_hu281d9399fec7514fa067dd0e23ccc467_20616_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="4.jpg">
+	</a>
+	
+	<figcaption>4.jpg</figcaption>
+	
+</figure></p>
+<p>出现这种情况的时候，不仅反射角很接近入射角，而且可以推出，半程向量<span class="math inline">\(\bm h\)</span>非常接近法向量<span class="math inline">\(\bm n\)</span></p>
+<p>所谓的半程向量就是<span class="math inline">\(\bm l,\bm v\)</span>的角平分线的单位向量，有</p>
+<p><span class="math display">\[\bm h = \dfrac{\bm v+\bm l}{||\bm v+\bm l||}
+\]</span></p>
+<p>此时相机接收到的光强就是</p>
+<p><span class="math display">\[L_s = k_s I \max(0,\bm n\cdot\bm h)^p
+\]</span></p>
+<p>其中<span class="math inline">\(k_s\)</span>是镜面反射系数，而<span class="math inline">\(p\)</span>决定了<span class="math inline">\(\bm n\)</span>和<span class="math inline">\(\bm h\)</span>有多接近才算触发镜面反射。<span class="math inline">\(p\)</span>越大，触发的范围越小，通常<span class="math inline">\(p\geq 100\)</span>。</p>
+<p><span class="math inline">\(L_s,k_s,I\)</span>也都是三维向量，并且乘法也是分量各自相乘。<span class="math inline">\(k_s\)</span>会采用比较亮的白色，而不是其他颜色。</p>
+<h2 id="环境光反射">环境光反射</h2>
+<p>你可以把环境光当成是房间里的其他物体的漫反射经过非常多次再-漫反射，最终照射到该物体上的光。Blinn-Phong模型中，直接采取了取用常数的简单处理办法。</p>
+<p><span class="math display">\[L_a = k_aI_a
+\]</span></p>
+<p><span class="math inline">\(L_a,k_a,I_a\)</span>也都是三维向量，并且乘法也是分量各自相乘。<span class="math inline">\(k_s\)</span>会采用比较暗的白色，而不是其他颜色。<span class="math inline">\(I_a\)</span>通常也是比较暗的颜色。</p>
+<h2 id="反射组合">反射组合</h2>
+<p>直接加一起即可</p>
+<p><span class="math display">\[L = L_a+L_d+L_s
+\]</span></p>
+<h1 id="使用例子">使用例子</h1>
+<p>我们把上一节所讲的人物模型拿出来使用一下。</p>
+<p>用**<a class="link" href="https://github.com/kegalas/oar/blob/main/tutorial/chapter5/src/main.cpp"  target="_blank" rel="noopener"
+    >这个链接</a>** 中的代码（需要去下载模型文件放到代码中的指定文件夹，见**<a class="link" href="https://github.com/kegalas/oar/blob/main/tutorial/chapter5/obj/african_head.obj"  target="_blank" rel="noopener"
+    >链接</a>** ），我们可以得到如下的效果图</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 100; 
+			flex-basis: 240px"
+	>
+	<a href="/inferior/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%85%89%E7%85%A7%E5%88%9D%E6%AD%A5/1.jpg" data-size="945x945">
+		<img src="/inferior/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%85%89%E7%85%A7%E5%88%9D%E6%AD%A5/1.jpg"
+			width="945"
+			height="945"
+			srcset="/inferior/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%85%89%E7%85%A7%E5%88%9D%E6%AD%A5/1_huf68c6aef16018f114d0b18a34e2c98a9_29888_480x0_resize_q75_box.jpg 480w, /inferior/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%85%89%E7%85%A7%E5%88%9D%E6%AD%A5/1_huf68c6aef16018f114d0b18a34e2c98a9_29888_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="1.jpg">
+	</a>
+	
+	<figcaption>1.jpg</figcaption>
+	
+</figure></p>
+<p>看上去还好，细看的话发现眼睛、嘴巴、耳朵一塌糊涂，这实际上是因为三角形的前后关系导致覆盖而出现的结果，在下一部分我们将介绍Z-buffer算法来解决这个问题。</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a>
+        
+            <a href="/tags/%E6%B8%B2%E6%9F%93/">渲染</a>
+        
+            <a href="/tags/%E5%B9%B2%E8%B4%A7/">干货</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css"integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js"integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8"crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js"integrity="sha384-vZTG03m&#43;2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl"crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.querySelector(`.article-content`), {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ]
+        });})
+</script>
+    
+</article>
+
+    <aside class="related-contents--wrapper">
+    
+    
+        <h2 class="section-title">相关文章</h2>
+        <div class="related-contents">
+            <div class="flex article-list--tile">
+                
+                    
+<article class="has-image">
+    <a href="/p/%E5%B9%B2%E8%B4%A7-%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%85%89%E7%85%A7%E5%88%9D%E6%AD%A5/">
+        
+        
+            <div class="article-image">
+                <img src="/p/%E5%B9%B2%E8%B4%A7-%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%85%89%E7%85%A7%E5%88%9D%E6%AD%A5/cover.a31dfa1d472e7236ca0da074207d7576_hu04f6e4c5c5d9e8c832c6dfeafddfe37e_257114_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-ox36HUcucjbKDaB0IH11dg==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">干货 | 从零开始的软渲染器 光照初步</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/p/%E5%B9%B2%E8%B4%A7-%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E6%A8%A1%E5%9E%8B%E5%BA%93/">
+        
+        
+            <div class="article-image">
+                <img src="/p/%E5%B9%B2%E8%B4%A7-%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E6%A8%A1%E5%9E%8B%E5%BA%93/cover.30e111997b0a8b14a681475f99347374_hu1d5ada73bf6b5a759e3568aecd125470_50161_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-MOERmXsKixSmgUdfmTRzdA==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">干货 | 从零开始的软渲染器 模型库</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/p/%E5%B9%B2%E8%B4%A7-%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E7%BA%BF%E6%AE%B5%E5%92%8C%E4%B8%89%E8%A7%92%E5%BD%A2%E7%9A%84%E5%85%89%E6%A0%85%E5%8C%96/">
+        
+        
+            <div class="article-image">
+                <img src="/p/%E5%B9%B2%E8%B4%A7-%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E7%BA%BF%E6%AE%B5%E5%92%8C%E4%B8%89%E8%A7%92%E5%BD%A2%E7%9A%84%E5%85%89%E6%A0%85%E5%8C%96/cover.3eba88ce14bf80744d7e83238ed0ec4e_hu72dadf0d98aceb343e3fe7cb76faf398_301126_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-PrqIzhS/gHRNfoMjjtDsTg==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">干货 | 从零开始的软渲染器 线段和三角形的光栅化</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/p/%E5%B9%B2%E8%B4%A7-%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%9B%BE%E7%89%87%E5%A4%84%E7%90%86%E5%BA%93/">
+        
+        
+            <div class="article-image">
+                <img src="/p/%E5%B9%B2%E8%B4%A7-%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%9B%BE%E7%89%87%E5%A4%84%E7%90%86%E5%BA%93/cover.941490c741ffb85644dfdbec13c85e5f_hu2fa2362891bfb402ec26ffe12b2b88a0_64078_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-lBSQx0H/uFZE39vsE8heXw==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">干货 | 从零开始的软渲染器 图片处理库</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/p/%E5%B9%B2%E8%B4%A7-%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E6%95%B0%E5%AD%A6%E5%B7%A5%E5%85%B7%E5%BA%93/">
+        
+        
+            <div class="article-image">
+                <img src="/p/%E5%B9%B2%E8%B4%A7-%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E6%95%B0%E5%AD%A6%E5%B7%A5%E5%85%B7%E5%BA%93/cover.05688f45246317d00a00a986d6147cbd_huc0107afa81d973e7d87fe5de99d27181_24753_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-BWiPRSRjF9AKAKmG1hR8vQ==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">干货 | 从零开始的软渲染器 数学工具库</h2>
+        </div>
+    </a>
+</article>
+                
+            </div>
+        </div>
+    
+</aside>
+
+     
+    
+        
+    <script src="https://utteranc.es/client.js" 
+        repo="kegalas/blogComments"
+        issue-term="pathname"
+        
+        crossorigin="anonymous"
+        async
+        >
+</script>
+
+<style>
+    .utterances {
+        max-width: unset;
+    }
+</style>
+
+<script>
+    function setUtterancesTheme(theme) {
+        let utterances = document.querySelector('.utterances iframe');
+        if (utterances) {
+            utterances.contentWindow.postMessage(
+                {
+                    type: 'set-theme',
+                    theme: `github-${theme}`
+                },
+                'https://utteranc.es'
+            );
+        }
+    }
+
+    addEventListener('message', event => {
+        if (event.origin !== 'https://utteranc.es') return;
+        setUtterancesTheme(document.documentElement.dataset.scheme)
+    });
+
+    window.addEventListener('onColorSchemeChange', (e) => {
+        setUtterancesTheme(e.detail)
+    })
+</script>
+
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2024 KegalaS的个人博客
+    </section>
+    
+    <section class="powerby">
+         <br />
+        
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    
+        <aside class="sidebar right-sidebar sticky">
+            <section class="widget archives">
+                <div class="widget-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+                </div>
+                <h2 class="widget-title section-title">目录</h2>
+                
+                <div class="widget--toc">
+                    <nav id="TableOfContents">
+  <ol>
+    <li><a href="#blinn-phong反射模型">Blinn-Phong反射模型</a>
+      <ol>
+        <li><a href="#漫反射">漫反射</a></li>
+        <li><a href="#镜面反射">镜面反射</a></li>
+        <li><a href="#环境光反射">环境光反射</a></li>
+        <li><a href="#反射组合">反射组合</a></li>
+      </ol>
+    </li>
+    <li><a href="#使用例子">使用例子</a></li>
+  </ol>
+</nav>
+                </div>
+            </section>
+        </aside>
+    
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                defer="false"
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
