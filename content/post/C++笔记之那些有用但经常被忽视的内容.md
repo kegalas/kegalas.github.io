@@ -1,10 +1,10 @@
 ---
-title: 水文 | C++笔记之那些有用但经常被忽视的内容
+title: C++笔记之那些有用但经常被忽视的内容
 date: 2023-09-06T21:52:23+08:00
 draft: false
 tags:
   - C++
-  - 水文
+  - 干货
 categories: 其他计算机科学
 markup: goldmark
 ---

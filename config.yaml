@@ -29,7 +29,7 @@ params:
         - post
     featuredImageField: image
     rssFullContent: true
-    favicon: favicon-16x16.png
+    favicon: /images/favicon.ico
 
     footer:
         since: 2020
@@ -45,7 +45,7 @@ params:
         avatar:
             enabled: true
             local: true
-            src: img/avatar.png
+            src: /img/avatar.png
 
     article:
         math: true
@@ -176,9 +176,18 @@ params:
 menu:
     main:
         - identifier: home
-          name: Home
+          name: 首页
           url: /
           weight: -100
+          params:
+              ### For demonstration purpose, the home link will be open in a new tab
+              newTab: false
+              icon: home
+
+        - identifier: inferior
+          name: 水文区
+          url: /inferior
+          weight: -60
           params:
               ### For demonstration purpose, the home link will be open in a new tab
               newTab: false

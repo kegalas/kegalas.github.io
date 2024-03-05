@@ -1,5 +1,5 @@
 ---
-title: 干货 | 算法题-网络设备管理
+title: 算法题-网络设备管理
 image: 1.jpg
 date: 2021-11-21T14:53:54+08:00
 draft: false

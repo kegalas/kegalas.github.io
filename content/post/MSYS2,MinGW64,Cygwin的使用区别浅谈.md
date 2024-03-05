@@ -1,5 +1,5 @@
 ---
-title: 干货 | MSYS2,MinGW64,Cygwin的使用区别浅谈
+title: MSYS2,MinGW64,Cygwin的使用区别浅谈
 date: 2023-05-06T23:44:47+08:00
 draft: false
 tags:
