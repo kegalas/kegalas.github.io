@@ -112,7 +112,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 113 分钟
+                    阅读时长: 114 分钟
                 </time>
             </div>
         
@@ -7443,6 +7443,127 @@ std::cout&lt;&lt;(int)x&lt;&lt;&#34;\n&#34;;
 </span></span><span style="display:flex;"><span>        }
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h2 id="线性规划">线性规划</h2>
+<p>有<span class="math inline">\(n\)</span>个变量，<span class="math inline">\(m\)</span>条约束，其中第<span class="math inline">\(i\)</span>条约束为<span class="math inline">\(\sum^n_{j=1}a_{ij}x_j\leq b_i\)</span></p>
+<p>另外，所有变量都满足<span class="math inline">\(x_j\geq 0\)</span>。此时要求求出<span class="math inline">\(\sum^n_{j=1}c_jx_j\)</span>的最大值，以及对应的变量值。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#75715e">// UOJ179 线性规划
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;cstring&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#66d9ef">const</span> MAXN <span style="color:#f92672">=</span> <span style="color:#ae81ff">31</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> DB <span style="color:#f92672">=</span> <span style="color:#66d9ef">long</span> <span style="color:#66d9ef">double</span>;
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#define double DB
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">LP</span> {
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> n, m;  <span style="color:#75715e">// 变量个数，约束个数
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">double</span> cons
+</span></span><span style="display:flex;"><span>        [MAXN]
+</span></span><span style="display:flex;"><span>        [MAXN];  <span style="color:#75715e">// 0维为c_i,
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>                 <span style="color:#75715e">// 1~m维为约束条件，共m个，每个长度为n+1，第0维为b，1~n维为a_ij
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">double</span> <span style="color:#66d9ef">const</span> EPS <span style="color:#f92672">=</span> <span style="color:#ae81ff">1e-8</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> idx[MAXN <span style="color:#f92672">*</span> <span style="color:#ae81ff">2</span>];
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">bool</span> <span style="color:#a6e22e">solve</span>() {
+</span></span><span style="display:flex;"><span>        std<span style="color:#f92672">::</span>memset(idx, <span style="color:#ae81ff">0</span>, <span style="color:#66d9ef">sizeof</span>(idx));
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>; i <span style="color:#f92672">&lt;=</span> n; i<span style="color:#f92672">++</span>) idx[i] <span style="color:#f92672">=</span> i;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> (;;) {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">int</span> l <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>, e <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;  <span style="color:#75715e">// 换入、换出变量
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>; i <span style="color:#f92672">&lt;=</span> m; i<span style="color:#f92672">++</span>) {
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> (cons[i][<span style="color:#ae81ff">0</span>] <span style="color:#f92672">&lt;</span> <span style="color:#f92672">-</span>EPS <span style="color:#f92672">&amp;&amp;</span> (<span style="color:#f92672">!</span>l <span style="color:#f92672">||</span> (rand() <span style="color:#f92672">&amp;</span> <span style="color:#ae81ff">1</span>)))
+</span></span><span style="display:flex;"><span>                    l <span style="color:#f92672">=</span> i;  <span style="color:#75715e">// rand可以提升运行效率，避免TLE
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            }
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>l) <span style="color:#66d9ef">return</span> Simplex();
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> j <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>; j <span style="color:#f92672">&lt;=</span> n; j<span style="color:#f92672">++</span>) {
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> (cons[l][j] <span style="color:#f92672">&lt;</span> <span style="color:#f92672">-</span>EPS <span style="color:#f92672">&amp;&amp;</span> (<span style="color:#f92672">!</span>e <span style="color:#f92672">||</span> (rand() <span style="color:#f92672">&amp;</span> <span style="color:#ae81ff">1</span>))) e <span style="color:#f92672">=</span> j;
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>e) {
+</span></span><span style="display:flex;"><span>                std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;Infeasible</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;  <span style="color:#75715e">// 无解
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>                <span style="color:#66d9ef">return</span> false;
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            Pivot(l, e);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">bool</span> <span style="color:#a6e22e">Simplex</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> (;;) {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">int</span> l <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>, e <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> j <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>; j <span style="color:#f92672">&lt;=</span> n; j<span style="color:#f92672">++</span>) {
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> (cons[<span style="color:#ae81ff">0</span>][j] <span style="color:#f92672">&gt;</span> EPS) {
+</span></span><span style="display:flex;"><span>                    e <span style="color:#f92672">=</span> j;
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">break</span>;
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>e) <span style="color:#66d9ef">return</span> true;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">double</span> minv <span style="color:#f92672">=</span> <span style="color:#ae81ff">1e18</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>; i <span style="color:#f92672">&lt;=</span> m; i<span style="color:#f92672">++</span>) {
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> (cons[i][e] <span style="color:#f92672">&gt;</span> EPS <span style="color:#f92672">&amp;&amp;</span> cons[i][<span style="color:#ae81ff">0</span>] <span style="color:#f92672">/</span> cons[i][e] <span style="color:#f92672">&lt;</span> minv) {
+</span></span><span style="display:flex;"><span>                    minv <span style="color:#f92672">=</span> cons[i][<span style="color:#ae81ff">0</span>] <span style="color:#f92672">/</span> cons[i][e];
+</span></span><span style="display:flex;"><span>                    l <span style="color:#f92672">=</span> i;
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>l) {
+</span></span><span style="display:flex;"><span>                std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;Unbounded</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span> false;
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            Pivot(l, e);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">Pivot</span>(<span style="color:#66d9ef">int</span> l, <span style="color:#66d9ef">int</span> e) {
+</span></span><span style="display:flex;"><span>        std<span style="color:#f92672">::</span>swap(idx[n <span style="color:#f92672">+</span> l], idx[e]);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">double</span> t <span style="color:#f92672">=</span> cons[l][e];
+</span></span><span style="display:flex;"><span>        cons[l][e] <span style="color:#f92672">=</span> <span style="color:#ae81ff">1.0</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> j <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; j <span style="color:#f92672">&lt;=</span> n; j<span style="color:#f92672">++</span>) cons[l][j] <span style="color:#f92672">/=</span> t;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;=</span> m; i<span style="color:#f92672">++</span>) {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (i <span style="color:#f92672">!=</span> l <span style="color:#f92672">&amp;&amp;</span> std<span style="color:#f92672">::</span>abs(cons[i][e]) <span style="color:#f92672">&gt;</span> EPS) {
+</span></span><span style="display:flex;"><span>                t <span style="color:#f92672">=</span> cons[i][e];
+</span></span><span style="display:flex;"><span>                cons[i][e] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.0</span>;
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> j <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; j <span style="color:#f92672">&lt;=</span> n; j<span style="color:#f92672">++</span>) {
+</span></span><span style="display:flex;"><span>                    cons[i][j] <span style="color:#f92672">-=</span> t <span style="color:#f92672">*</span> cons[l][j];
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">double</span> ans[<span style="color:#ae81ff">31</span>];
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>ios<span style="color:#f92672">::</span>sync_with_stdio(false);
+</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>cin.tie(<span style="color:#ae81ff">0</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    LP lp;
+</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>cin <span style="color:#f92672">&gt;&gt;</span> lp.n <span style="color:#f92672">&gt;&gt;</span> lp.m;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> type;
+</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>cin <span style="color:#f92672">&gt;&gt;</span> type;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>; i <span style="color:#f92672">&lt;=</span> lp.n; i<span style="color:#f92672">++</span>) {
+</span></span><span style="display:flex;"><span>        std<span style="color:#f92672">::</span>cin <span style="color:#f92672">&gt;&gt;</span> lp.cons[<span style="color:#ae81ff">0</span>][i];
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>; i <span style="color:#f92672">&lt;=</span> lp.m; i<span style="color:#f92672">++</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> j <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>; j <span style="color:#f92672">&lt;=</span> lp.n; j<span style="color:#f92672">++</span>) {
+</span></span><span style="display:flex;"><span>            std<span style="color:#f92672">::</span>cin <span style="color:#f92672">&gt;&gt;</span> lp.cons[i][j];
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        std<span style="color:#f92672">::</span>cin <span style="color:#f92672">&gt;&gt;</span> lp.cons[i][<span style="color:#ae81ff">0</span>];
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>fixed;
+</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>cout.precision(<span style="color:#ae81ff">10</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (lp.solve()) {
+</span></span><span style="display:flex;"><span>        std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#f92672">-</span>lp.cons[<span style="color:#ae81ff">0</span>][<span style="color:#ae81ff">0</span>] <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (type) {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>; i <span style="color:#f92672">&lt;=</span> lp.m; i<span style="color:#f92672">++</span>)
+</span></span><span style="display:flex;"><span>                ans[lp.idx[i <span style="color:#f92672">+</span> lp.n]] <span style="color:#f92672">=</span> lp.cons[i][<span style="color:#ae81ff">0</span>];
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>; i <span style="color:#f92672">&lt;=</span> lp.n; i<span style="color:#f92672">++</span>) std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> ans[i] <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34; &#34;</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><h1 id="c-stl用法">C++ STL用法</h1>
 <h2 id="stdswap">std::swap</h2>
 <p>交换两个元素的内容（也可以交换数组，不重要不介绍）。复杂度：常数。</p>
@@ -8554,6 +8675,7 @@ std::cout&lt;&lt;(int)x&lt;&lt;&#34;\n&#34;;
         <li><a href="#艾弗森括号">艾弗森括号</a></li>
         <li><a href="#向上向下取整">向上、向下取整</a></li>
         <li><a href="#滚动哈希">滚动哈希</a></li>
+        <li><a href="#线性规划">线性规划</a></li>
       </ol>
     </li>
     <li><a href="#c-stl用法">C++ STL用法</a>

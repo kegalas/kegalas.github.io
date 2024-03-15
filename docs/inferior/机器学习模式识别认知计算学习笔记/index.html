@@ -2915,7 +2915,7 @@ network）组成。</p>
 <p><span class="math display">\[\min_G\max_D V(D,G)=E_{x\sim p_{data}(x)}[\log D(x)] + E_{z\sim p_z(z)}[\log(1-D(G(z)))]
 \]</span></p>
 <p>其中<span class="math inline">\(E_{x\sim p}[\log Q(x)]\)</span>这种形式的东西是交叉熵，见附录。</p>
-<p><span class="math inline">\(E_{x\sim p_{data}(x)}[\log D(x)]\)</span>描述的是真实数据的交叉熵，其中<span class="math inline">\(x\)</span>是真实数据。而<span class="math inline">\(E_{z\sim p_z(z)}[\log(1-D(G(z)))]\)</span>是从潜在空间中生成的东西的交叉熵，其中<span class="math inline">\(z\)</span>是从中生成的东西。</p>
+<p><span class="math inline">\(E_{x\sim p_{data}(x)}[\log D(x)]\)</span>描述的是真实数据的交叉熵，其中<span class="math inline">\(x\)</span>是真实数据。而<span class="math inline">\(E_{z\sim p_z(z)}[\log(1-D(G(z)))]\)</span>是从潜在空间中生成的东西的交叉熵，其中<span class="math inline">\(G(z)\)</span>是从该空间中生成的东西。</p>
 <p><span class="math inline">\(V(D,G)\)</span>相当于表示真实样本和生成样本的差异程度，其中G是生成器，D是判别器。<span class="math inline">\(min_G\max_D\)</span>代表，首先固定<span class="math inline">\(G\)</span>，最大化判别器的判别效果。然后最大化判别器之后将其固定，要求最小化生成器生成的东西和真实数据的差异。</p>
 <h2 id="半监督学习">半监督学习</h2>
 <h3 id="通用理论">通用理论</h3>
