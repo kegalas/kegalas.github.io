@@ -87,6 +87,8 @@ vec3f normalized(vec3f const & v);//返回v的单位向量，但v不变
 
 由于扩容的时候要复制，这是很大的开销。所以如果你提前知道数据个数的具体、或者大概的范围，那么最好使用`vector<int> vec(n);`或者`vec.reserve(n);`（区别是前者会有`n`个初值为`0`的元素，后者没有元素，只有`capacity==n`；当然`resize(n)`时，如果新大小大于原来的大小，会把多出来的空间用`0`填补）来提前给够空间。如果你不确定那么没有什么办法，大概只能这样。
 
+另外，扩容之后，之前的迭代器、指针都可能会失效。包括指向vector对象的指针和指向元素的指针。
+
 # auto与“C-Like”字符串字面量
 
 `auto a = "test";`这个语句，`a`不会是`std::string`类型，而是`char const[]`类型。这也就意味着你也无法使用`auto b = "123"+"456";`。
@@ -106,6 +108,17 @@ vec3f normalized(vec3f const & v);//返回v的单位向量，但v不变
 # std::string_view
 
 `C++17`引入的功能，具体的用法和应该使用的地方都和`std::string const &`差不多，都是对于一个`string`的只读，并且不开额外空间。区别是，`const &`版本是建立了对原`string`的引用。`string`和`vector`很像，都是对象和`buffer`分开，而`std::string_view`就是一个对原`string`的`buffer`的只读的工具。推荐在新版本`C++`中使用这个功能。
+
+比`const &`有一个好处，如果用在函数参数里，而传入的是字符串字面量，则`const &`会有一次复制操作，而`string_view`没有。
+
+但是，如果你不在函数参数里使用，而是
+
+```cpp
+std::string_view sv2 {"std::string Literal"s};
+cout << sv2;
+```
+
+则是错误的，因为字符串对象已经被销毁。所以推荐只在函数参数里使用。
 
 # 函数参数什么时候用const &?
 
@@ -633,6 +646,83 @@ auto x = std::distance(std::begin(vec), std::end(vec)); // 3
 ```
 
 如果满足老式随机访问迭代器，那么复杂度是常数。否则复杂度为线性。
+
+# 所有序列容器都是所谓的regular types
+
+也即下面四个特点：
+
+1. 深可拷贝：在拷贝赋值、拷贝构造的时候，都是把容器内的每个值拷贝到新容器中
+2. 深可赋值：即给容器内的元素赋值时，都是把源数据进行拷贝（而非移动）
+3. 深可比较：即两个容器相等时，当且仅当每个元素相等
+4. 深所有权：容器析构时会析构所有元素
+
+# std::span
+
+C++20引入的功能。span对于vector、array，相当于string_view对于string。声明方法如下
+
+```cpp
+std::span<int> // 声明一个可修改的
+std::span<int const> // 声明一个不可更改的
+std::span<int, 5> // 声明一个固定大小的，大小需要是编译期常数
+```
+
+和string_view一样，推荐只用在函数参数中。对于字面量，也会存在访问已经销毁的对象的问题。
+
+```cpp
+void foo(std::span<int const> s);
+
+std::vector<int> v{1,2,3,4};
+foo(v);
+foo({v.begin()+1, v.end()});
+```
+
+span可以使用size、empty等获取大小信息，可以通过`[]`获取数据。对于比较两个span是否相同，和其他序列容器略有不同
+
+```cpp
+sv.data() == sw.data();  // 对比sv和sw是否是同一个内存位置上的对象
+std::ranges::equal(sv,sw);  // 对比sv和sw的值是否都相同
+```
+
+# Map和Set查询元素是否存在的新方法
+
+在C++20之后，引入了`contains`函数。如下
+
+```cpp
+std::set<int> s{1, 2, 3};
+if (s.contains(7)) {…} 
+```
+
+比起`find`简单，比`count`不用转换类型。
+
+# 用equal_range获取multiset中所有给定值
+
+```cpp
+std::multiset<int> s {2,4,4,4,6};
+auto e4 = s.equal_range(4);
+cout << *(e4.first)
+     << *(e4.second);// e4.first是第一个元素的迭代器，e4.second是最后一个元素之后的元素的迭代器
+```
+
+# 不要用迭代器遍历unordered_map和unordered_set
+
+这两个容器的begin和end迭代器指向的是bucket，而不是元素。所以用迭代器遍历是不能达到目的的。但是可以使用`for(auto x:ust)`来遍历
+
+# 自定义unordered容器的哈希函数
+
+一般都会新建一个类，重定义其函数调用运算符，返回值是size_t。
+
+```cpp
+struct MyHash{
+  constexpr std::size_t
+  operator () (A const & a) const noexcept {
+      //...
+  }
+};
+
+std::unordered_set<A, MyHash> s;
+```
+
+默认使用的是`std::hash<Key>`，设计新哈希时，可以考虑把自定义类型的各个成员变量的`std::hash`组合起来，形成新哈希。
 
 # RTTI
 
