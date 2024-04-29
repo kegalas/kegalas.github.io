@@ -1,5 +1,5 @@
 ---
-title: C++笔记之那些有用但经常被忽视的内容
+title: 现代C++学习笔记
 date: 2023-09-06T21:52:23+08:00
 draft: false
 tags:
@@ -9,7 +9,7 @@ categories: 其他计算机科学
 markup: goldmark
 ---
 
-本笔记会记录一些`C++`中，不是很常用（对于我自己来说）、可能被忽视（对于我自己来说）、我自己不是很熟悉需要记录来复习的、新标准（相较于`C++11`）引入的、可能有用的功能。不适合详细阅读过某一本`C++`大部头教材的人，比较适合对于`C++`的知识只停留在算法竞赛的人。
+本笔记会记录一些`C++`中，自己以前不常用、不是很熟悉需要记录来复习的、新标准（相较于`C++11`）引入的、可能有用的功能。不适合详细阅读过某一本`C++`大部头教材的人，比较适合对于`C++`的知识只停留在算法竞赛的人。
 
 # std::endl
 
@@ -707,6 +707,17 @@ cout << *(e4.first)
 
 这两个容器的begin和end迭代器指向的是bucket，而不是元素。所以用迭代器遍历是不能达到目的的。但是可以使用`for(auto x:ust)`来遍历
 
+# map和set的判断元素相同的依据
+
+这两个容器一样，都不是按照equal的意义去判断两个元素是否相同，而是按照equivalent去判断。
+
+```cpp
+a==b // equal
+!(a<b) && !(b<a) // equivalent
+```
+
+所以说，我们只要重载小于运算符，就可以让map和set运行起来，不需要大于和等于运算符。
+
 # 自定义unordered容器的哈希函数
 
 一般都会新建一个类，重定义其函数调用运算符，返回值是size_t。
@@ -723,6 +734,50 @@ std::unordered_set<A, MyHash> s;
 ```
 
 默认使用的是`std::hash<Key>`，设计新哈希时，可以考虑把自定义类型的各个成员变量的`std::hash`组合起来，形成新哈希。
+
+# 标准库算法的执行策略
+
+在C++17之后，许多标准库里的算法都可以选择执行策略，例如
+
+```cpp
+sort(std::execution::par, begin(v), end(v), cmp);
+```
+
+这是`sort`函数的又一个重载，其函数声明为
+
+```cpp
+template< class ExecutionPolicy, class RandomIt, class Compare > 
+void sort( ExecutionPolicy&& policy,  
+           RandomIt first, RandomIt last, Compare comp );
+```
+
+其中执行策略有四种：
+
+```cpp
+std::execution::seq // 算法的执行不能并行化、向量化
+std::execution::par // 算法的执行可以并行化，但是不能向量化
+std::execution::par_unseq // 算法的执行可以并行化、向量化
+std::execution::unseq // 算法的执行不可以并行化，但是可以向量化。C++20后可用
+```
+
+并行执行时，算法本身不会避免数据竞争，这是程序员需要考虑的事，例如
+
+```cpp
+int a[] = {0, 1};
+std::vector<int> v;
+std::for_each(std::execution::par, std::begin(a), std::end(a), [&](int i)
+{
+  v.push_back(i*2+1); // 错误：数据竞争
+});
+```
+
+# 新for循环反向遍历的方法
+
+C++20可用，让`for(:)`也能反向遍历。
+
+```cpp
+for (int x : v | std::views::reverse) { cout << x << '\n'; }
+```
 
 # RTTI
 
