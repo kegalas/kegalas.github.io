@@ -6,7 +6,7 @@
         <description>Recent content on KegalaS的个人博客</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Mon, 15 Jan 2024 22:40:43 +0800</lastBuildDate><atom:link href="https://kegalas.top/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Mon, 29 Apr 2024 14:09:51 +0800</lastBuildDate><atom:link href="https://kegalas.top/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>在校园网中用ssh连接宿舍电脑</title>
         <link>https://kegalas.top/p/%E5%9C%A8%E6%A0%A1%E5%9B%AD%E7%BD%91%E4%B8%AD%E7%94%A8ssh%E8%BF%9E%E6%8E%A5%E5%AE%BF%E8%88%8D%E7%94%B5%E8%84%91/</link>
         <pubDate>Fri, 20 Oct 2023 15:33:36 +0800</pubDate>
@@ -215,12 +215,12 @@ PasswordAuthentication yes
 </description>
         </item>
         <item>
-        <title>C&#43;&#43;笔记之那些有用但经常被忽视的内容</title>
-        <link>https://kegalas.top/p/c-%E7%AC%94%E8%AE%B0%E4%B9%8B%E9%82%A3%E4%BA%9B%E6%9C%89%E7%94%A8%E4%BD%86%E7%BB%8F%E5%B8%B8%E8%A2%AB%E5%BF%BD%E8%A7%86%E7%9A%84%E5%86%85%E5%AE%B9/</link>
+        <title>现代C&#43;&#43;学习笔记</title>
+        <link>https://kegalas.top/p/%E7%8E%B0%E4%BB%A3c-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</link>
         <pubDate>Wed, 06 Sep 2023 21:52:23 +0800</pubDate>
         
-        <guid>https://kegalas.top/p/c-%E7%AC%94%E8%AE%B0%E4%B9%8B%E9%82%A3%E4%BA%9B%E6%9C%89%E7%94%A8%E4%BD%86%E7%BB%8F%E5%B8%B8%E8%A2%AB%E5%BF%BD%E8%A7%86%E7%9A%84%E5%86%85%E5%AE%B9/</guid>
-        <description>&lt;p&gt;本笔记会记录一些&lt;code&gt;C++&lt;/code&gt;中，不是很常用（对于我自己来说）、可能被忽视（对于我自己来说）、我自己不是很熟悉需要记录来复习的、新标准（相较于&lt;code&gt;C++11&lt;/code&gt;）引入的、可能有用的功能。不适合详细阅读过某一本&lt;code&gt;C++&lt;/code&gt;大部头教材的人，比较适合对于&lt;code&gt;C++&lt;/code&gt;的知识只停留在算法竞赛的人。&lt;/p&gt;
+        <guid>https://kegalas.top/p/%E7%8E%B0%E4%BB%A3c-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</guid>
+        <description>&lt;p&gt;本笔记会记录一些&lt;code&gt;C++&lt;/code&gt;中，自己以前不常用、不是很熟悉需要记录来复习的、新标准（相较于&lt;code&gt;C++11&lt;/code&gt;）引入的、可能有用的功能。不适合详细阅读过某一本&lt;code&gt;C++&lt;/code&gt;大部头教材的人，比较适合对于&lt;code&gt;C++&lt;/code&gt;的知识只停留在算法竞赛的人。&lt;/p&gt;
 &lt;h1 id=&#34;stdendl&#34;&gt;std::endl&lt;/h1&gt;
 &lt;p&gt;&lt;code&gt;std::endl&lt;/code&gt;会立即刷新字符缓冲区，然后输出。但是&lt;code&gt;&#39;\n&#39;&lt;/code&gt;不会。如果频繁地使用&lt;code&gt;std::endl&lt;/code&gt;换行可能会导致性能问题，除非你非常确定这条消息在换行后必须要立即输出。&lt;/p&gt;
 &lt;h1 id=&#34;stdclog&#34;&gt;std::clog&lt;/h1&gt;
@@ -262,6 +262,7 @@ PasswordAuthentication yes
 &lt;p&gt;当&lt;code&gt;size=capacity&lt;/code&gt;时，此时如果我们进行&lt;code&gt;push_back&lt;/code&gt;，容量不够，不能放进去。之后&lt;code&gt;vector&lt;/code&gt;就要进行扩容。此时，实际上的内存不是在&lt;code&gt;buffer&lt;/code&gt;后面再给你新分配一些，与前面的连起来。而是重新找一块更大的内存，将原来的&lt;code&gt;buffer&lt;/code&gt;整体复制到堆中的新位置，再把新的插入元素放到最后。栈中的&lt;code&gt;vector&lt;/code&gt;对象则简单的把指向的&lt;code&gt;buffer&lt;/code&gt;地址改成新的即可（当然还有修改&lt;code&gt;size&lt;/code&gt;和&lt;code&gt;capacity&lt;/code&gt;）。&lt;/p&gt;
 &lt;p&gt;每次扩容，&lt;code&gt;capacity&lt;/code&gt;会变为原来大小的&lt;span class=&#34;math inline&#34;&gt;\(1.1\)&lt;/span&gt;至&lt;span class=&#34;math inline&#34;&gt;\(2\)&lt;/span&gt;倍。&lt;/p&gt;
 &lt;p&gt;由于扩容的时候要复制，这是很大的开销。所以如果你提前知道数据个数的具体、或者大概的范围，那么最好使用&lt;code&gt;vector&amp;lt;int&amp;gt; vec(n);&lt;/code&gt;或者&lt;code&gt;vec.reserve(n);&lt;/code&gt;（区别是前者会有&lt;code&gt;n&lt;/code&gt;个初值为&lt;code&gt;0&lt;/code&gt;的元素，后者没有元素，只有&lt;code&gt;capacity==n&lt;/code&gt;；当然&lt;code&gt;resize(n)&lt;/code&gt;时，如果新大小大于原来的大小，会把多出来的空间用&lt;code&gt;0&lt;/code&gt;填补）来提前给够空间。如果你不确定那么没有什么办法，大概只能这样。&lt;/p&gt;
+&lt;p&gt;另外，扩容之后，之前的迭代器、指针都可能会失效。包括指向vector对象的指针和指向元素的指针。&lt;/p&gt;
 &lt;h1 id=&#34;auto与c-like字符串字面量&#34;&gt;auto与“C-Like”字符串字面量&lt;/h1&gt;
 &lt;p&gt;&lt;code&gt;auto a = &amp;quot;test&amp;quot;;&lt;/code&gt;这个语句，&lt;code&gt;a&lt;/code&gt;不会是&lt;code&gt;std::string&lt;/code&gt;类型，而是&lt;code&gt;char const[]&lt;/code&gt;类型。这也就意味着你也无法使用&lt;code&gt;auto b = &amp;quot;123&amp;quot;+&amp;quot;456&amp;quot;;&lt;/code&gt;。&lt;/p&gt;
 &lt;h1 id=&#34;stdstring的字符串字面量&#34;&gt;std::string的字符串字面量&lt;/h1&gt;
@@ -272,6 +273,11 @@ PasswordAuthentication yes
 &lt;p&gt;另外，&lt;code&gt;auto s = R&amp;quot;(C:\Windows\SysWOW64\IME\SHARED)&amp;quot;&lt;/code&gt;还是被推断为&lt;code&gt;char const[]&lt;/code&gt;，在&lt;code&gt;C++14&lt;/code&gt;之后，声明&lt;code&gt;using namespace std::string_literals;&lt;/code&gt;，之后&lt;code&gt;auto s = R&amp;quot;(C:\Windows\SysWOW64\IME\SHARED)&amp;quot;s;&lt;/code&gt;可以推断为&lt;code&gt;std::string&lt;/code&gt;&lt;/p&gt;
 &lt;h1 id=&#34;stdstring_view&#34;&gt;std::string_view&lt;/h1&gt;
 &lt;p&gt;&lt;code&gt;C++17&lt;/code&gt;引入的功能，具体的用法和应该使用的地方都和&lt;code&gt;std::string const &amp;amp;&lt;/code&gt;差不多，都是对于一个&lt;code&gt;string&lt;/code&gt;的只读，并且不开额外空间。区别是，&lt;code&gt;const &amp;amp;&lt;/code&gt;版本是建立了对原&lt;code&gt;string&lt;/code&gt;的引用。&lt;code&gt;string&lt;/code&gt;和&lt;code&gt;vector&lt;/code&gt;很像，都是对象和&lt;code&gt;buffer&lt;/code&gt;分开，而&lt;code&gt;std::string_view&lt;/code&gt;就是一个对原&lt;code&gt;string&lt;/code&gt;的&lt;code&gt;buffer&lt;/code&gt;的只读的工具。推荐在新版本&lt;code&gt;C++&lt;/code&gt;中使用这个功能。&lt;/p&gt;
+&lt;p&gt;比&lt;code&gt;const &amp;amp;&lt;/code&gt;有一个好处，如果用在函数参数里，而传入的是字符串字面量，则&lt;code&gt;const &amp;amp;&lt;/code&gt;会有一次复制操作，而&lt;code&gt;string_view&lt;/code&gt;没有。&lt;/p&gt;
+&lt;p&gt;但是，如果你不在函数参数里使用，而是&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;std&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;string_view sv2 {&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;std::string Literal&amp;#34;&lt;/span&gt;s};
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cout &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; sv2;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;则是错误的，因为字符串对象已经被销毁。所以推荐只在函数参数里使用。&lt;/p&gt;
 &lt;h1 id=&#34;函数参数什么时候用const-&#34;&gt;函数参数什么时候用const &amp;amp;?&lt;/h1&gt;
 &lt;p&gt;可能会有人在第一次学习到用&lt;code&gt;const &amp;amp;&lt;/code&gt;来修饰形参，觉得这东西简直太好了，可以不用花费额外开销去复制。但其实不总是这样。&lt;/p&gt;
 &lt;p&gt;如果你传入的数据是&lt;code&gt;double&lt;/code&gt;，&lt;code&gt;int&lt;/code&gt;等开销本来就很小的变量，根本就不需要用&lt;code&gt;const &amp;amp;&lt;/code&gt;，那反而还会增加开销。&lt;/p&gt;
@@ -616,7 +622,79 @@ static_assert(bool_exp); //C++17可用
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;std&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;vector&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; vec{&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;,&lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;,&lt;span style=&#34;color:#ae81ff&#34;&gt;3&lt;/span&gt;};
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;auto&lt;/span&gt; x &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; std&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;distance(std&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;begin(vec), std&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;end(vec)); &lt;span style=&#34;color:#75715e&#34;&gt;// 3
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;如果满足老式随机访问迭代器，那么复杂度是常数。否则复杂度为线性。&lt;/p&gt;
-&lt;h1 id=&#34;rtti&#34;&gt;RTTI&lt;/h1&gt;
+&lt;h1 id=&#34;所有序列容器都是所谓的regular-types&#34;&gt;所有序列容器都是所谓的regular types&lt;/h1&gt;
+&lt;p&gt;也即下面四个特点：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;深可拷贝：在拷贝赋值、拷贝构造的时候，都是把容器内的每个值拷贝到新容器中&lt;/li&gt;
+&lt;li&gt;深可赋值：即给容器内的元素赋值时，都是把源数据进行拷贝（而非移动）&lt;/li&gt;
+&lt;li&gt;深可比较：即两个容器相等时，当且仅当每个元素相等&lt;/li&gt;
+&lt;li&gt;深所有权：容器析构时会析构所有元素&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h1 id=&#34;stdspan&#34;&gt;std::span&lt;/h1&gt;
+&lt;p&gt;C++20引入的功能。span对于vector、array，相当于string_view对于string。声明方法如下&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;std&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;span&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#75715e&#34;&gt;// 声明一个可修改的
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;std&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;span&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#75715e&#34;&gt;// 声明一个不可更改的
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;std&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;span&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;5&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#75715e&#34;&gt;// 声明一个固定大小的，大小需要是编译期常数
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;和string_view一样，推荐只用在函数参数中。对于字面量，也会存在访问已经销毁的对象的问题。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;foo&lt;/span&gt;(std&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;span&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; s);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;std&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;vector&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; v{&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;,&lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;,&lt;span style=&#34;color:#ae81ff&#34;&gt;3&lt;/span&gt;,&lt;span style=&#34;color:#ae81ff&#34;&gt;4&lt;/span&gt;};
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;foo(v);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;foo({v.begin()&lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;, v.end()});
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;span可以使用size、empty等获取大小信息，可以通过&lt;code&gt;[]&lt;/code&gt;获取数据。对于比较两个span是否相同，和其他序列容器略有不同&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sv.data() &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; sw.data();  &lt;span style=&#34;color:#75715e&#34;&gt;// 对比sv和sw是否是同一个内存位置上的对象
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;std&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;ranges&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;equal(sv,sw);  &lt;span style=&#34;color:#75715e&#34;&gt;// 对比sv和sw的值是否都相同
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id=&#34;map和set查询元素是否存在的新方法&#34;&gt;Map和Set查询元素是否存在的新方法&lt;/h1&gt;
+&lt;p&gt;在C++20之后，引入了&lt;code&gt;contains&lt;/code&gt;函数。如下&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;std&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;set&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; s{&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;3&lt;/span&gt;};
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; (s.contains(&lt;span style=&#34;color:#ae81ff&#34;&gt;7&lt;/span&gt;)) {&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;…&lt;/span&gt;} 
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;比起&lt;code&gt;find&lt;/code&gt;简单，比&lt;code&gt;count&lt;/code&gt;不用转换类型。&lt;/p&gt;
+&lt;h1 id=&#34;用equal_range获取multiset中所有给定值&#34;&gt;用equal_range获取multiset中所有给定值&lt;/h1&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;std&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;multiset&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; s {&lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;,&lt;span style=&#34;color:#ae81ff&#34;&gt;4&lt;/span&gt;,&lt;span style=&#34;color:#ae81ff&#34;&gt;4&lt;/span&gt;,&lt;span style=&#34;color:#ae81ff&#34;&gt;4&lt;/span&gt;,&lt;span style=&#34;color:#ae81ff&#34;&gt;6&lt;/span&gt;};
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;auto&lt;/span&gt; e4 &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; s.equal_range(&lt;span style=&#34;color:#ae81ff&#34;&gt;4&lt;/span&gt;);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cout &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;(e4.first)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;     &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;(e4.second);&lt;span style=&#34;color:#75715e&#34;&gt;// e4.first是第一个元素的迭代器，e4.second是最后一个元素之后的元素的迭代器
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id=&#34;不要用迭代器遍历unordered_map和unordered_set&#34;&gt;不要用迭代器遍历unordered_map和unordered_set&lt;/h1&gt;
+&lt;p&gt;这两个容器的begin和end迭代器指向的是bucket，而不是元素。所以用迭代器遍历是不能达到目的的。但是可以使用&lt;code&gt;for(auto x:ust)&lt;/code&gt;来遍历&lt;/p&gt;
+&lt;h1 id=&#34;map和set的判断元素相同的依据&#34;&gt;map和set的判断元素相同的依据&lt;/h1&gt;
+&lt;p&gt;这两个容器一样，都不是按照equal的意义去判断两个元素是否相同，而是按照equivalent去判断。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;a&lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt;b &lt;span style=&#34;color:#75715e&#34;&gt;// equal
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;!&lt;/span&gt;(a&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;b) &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;!&lt;/span&gt;(b&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;a) &lt;span style=&#34;color:#75715e&#34;&gt;// equivalent
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;所以说，我们只要重载小于运算符，就可以让map和set运行起来，不需要大于和等于运算符。&lt;/p&gt;
+&lt;h1 id=&#34;自定义unordered容器的哈希函数&#34;&gt;自定义unordered容器的哈希函数&lt;/h1&gt;
+&lt;p&gt;一般都会新建一个类，重定义其函数调用运算符，返回值是size_t。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;struct&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;MyHash&lt;/span&gt;{
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#66d9ef&#34;&gt;constexpr&lt;/span&gt; std&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;size_t
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#66d9ef&#34;&gt;operator&lt;/span&gt; () (A &lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt; a) &lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;noexcept&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#75715e&#34;&gt;//...
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;  }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;};
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;std&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;unordered_set&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;A, MyHash&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; s;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;默认使用的是&lt;code&gt;std::hash&amp;lt;Key&amp;gt;&lt;/code&gt;，设计新哈希时，可以考虑把自定义类型的各个成员变量的&lt;code&gt;std::hash&lt;/code&gt;组合起来，形成新哈希。&lt;/p&gt;
+&lt;h1 id=&#34;标准库算法的执行策略&#34;&gt;标准库算法的执行策略&lt;/h1&gt;
+&lt;p&gt;在C++17之后，许多标准库里的算法都可以选择执行策略，例如&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sort(std&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;execution&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;par, begin(v), end(v), cmp);
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这是&lt;code&gt;sort&lt;/code&gt;函数的又一个重载，其函数声明为&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;template&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;ExecutionPolicy&lt;/span&gt;, &lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;RandomIt&lt;/span&gt;, &lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Compare&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;void&lt;/span&gt; sort( ExecutionPolicy&lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; policy,  
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;           RandomIt first, RandomIt last, Compare comp );
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;其中执行策略有四种：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;std&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;execution&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;seq &lt;span style=&#34;color:#75715e&#34;&gt;// 算法的执行不能并行化、向量化
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;std&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;execution&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;par &lt;span style=&#34;color:#75715e&#34;&gt;// 算法的执行可以并行化，但是不能向量化
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;std&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;execution&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;par_unseq &lt;span style=&#34;color:#75715e&#34;&gt;// 算法的执行可以并行化、向量化
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;std&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;execution&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;unseq &lt;span style=&#34;color:#75715e&#34;&gt;// 算法的执行不可以并行化，但是可以向量化。C++20后可用
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;并行执行时，算法本身不会避免数据竞争，这是程序员需要考虑的事，例如&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; a[] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; {&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;};
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;std&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;vector&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; v;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;std&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;for_each(std&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;execution&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;par, std&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;begin(a), std&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;end(a), [&lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt;](&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; i)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;{
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  v.push_back(i&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;); &lt;span style=&#34;color:#75715e&#34;&gt;// 错误：数据竞争
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;});
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id=&#34;新for循环反向遍历的方法&#34;&gt;新for循环反向遍历的方法&lt;/h1&gt;
+&lt;p&gt;C++20可用，让&lt;code&gt;for(:)&lt;/code&gt;也能反向遍历。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; (&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; x : v &lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt; std&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;views&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;reverse) { cout &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; x &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;\n&amp;#39;&lt;/span&gt;; }
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id=&#34;rtti&#34;&gt;RTTI&lt;/h1&gt;
 &lt;p&gt;todo&lt;/p&gt;
 &lt;h1 id=&#34;typeidname&#34;&gt;typeid().name()&lt;/h1&gt;
 &lt;p&gt;TODO&lt;/p&gt;
@@ -795,10 +873,9 @@ vn  -0.359 0.279 0.891
 f 1206/1252/1206 1208/1256/1208 1086/1257/1086
 f 1206/1252/1206 1086/1257/1086 1087/1253/1087
 ...
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;以f开头，带了三组数据。每组都有三个数字。带有三个数字是因为要描述三角面的三个顶点。&lt;/p&gt;
-&lt;p&gt;第一组，描述了三个顶点的（模型）空间坐标。这三个数字是序号，我们用序号去访问数组即可得到坐标。&lt;/p&gt;
-&lt;p&gt;第二组，描述了三个顶点的材质uv坐标，也是序号。&lt;/p&gt;
-&lt;p&gt;第三组，描述了三个顶点的法向量坐标，也是序号。&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;以f开头，带了三组数据。每组都有三个数字。带有三个数字是因为每个顶点有三个坐标要描述。&lt;/p&gt;
+&lt;p&gt;形如&lt;code&gt;a/b/c&lt;/code&gt;这样的形式，描述了一个顶点的信息。从上面的结构来看，每一行有三组，也就有三个顶点，代表着这个面是三角面。如果有四组，则代表为四边形面。&lt;/p&gt;
+&lt;p&gt;其中&lt;code&gt;a&lt;/code&gt;代表的是该顶点的局部空间坐标，其是一个序号，对应第&lt;code&gt;a&lt;/code&gt;个&lt;code&gt;v&lt;/code&gt;信息（从1开始计数）。其中&lt;code&gt;b&lt;/code&gt;代表该顶点的uv坐标，也是一个序号，代表第&lt;code&gt;b&lt;/code&gt;个&lt;code&gt;vt&lt;/code&gt;信息。&lt;code&gt;c&lt;/code&gt;代表该顶点的法向量信息，也是一个序号，代表第&lt;code&gt;c&lt;/code&gt;个&lt;code&gt;vn&lt;/code&gt;信息。&lt;/p&gt;
 &lt;p&gt;我们目前了解以上信息即可。&lt;/p&gt;
 &lt;h1 id=&#34;modelh&#34;&gt;model.h&lt;/h1&gt;
 &lt;p&gt;首先我们需要定义一下model里面要有什么内容。&lt;/p&gt;

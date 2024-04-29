@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='为了应对面试官的拷打，写下此文，方便我复习这个数据库的实现方法。 Project 1 Task 1 这一部分主要是要求实现一个LRU-K的替换算法。 LRU是最近最少使用'><title>CMU15445(2023 Fall)数据库组件功能速查</title>
+
+<link rel='canonical' href='https://kegalas.top/inferior/cmu154452023fall%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BB%84%E4%BB%B6%E5%8A%9F%E8%83%BD%E9%80%9F%E6%9F%A5/'>
+
+<link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='CMU15445(2023 Fall)数据库组件功能速查'>
+<meta property='og:description' content='为了应对面试官的拷打，写下此文，方便我复习这个数据库的实现方法。 Project 1 Task 1 这一部分主要是要求实现一个LRU-K的替换算法。 LRU是最近最少使用'>
+<meta property='og:url' content='https://kegalas.top/inferior/cmu154452023fall%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BB%84%E4%BB%B6%E5%8A%9F%E8%83%BD%E9%80%9F%E6%9F%A5/'>
+<meta property='og:site_name' content='KegalaS的个人博客'>
+<meta property='og:type' content='article'><meta property='article:section' content='Inferior' /><meta property='article:tag' content='C&#43;&#43;' /><meta property='article:tag' content='水文' /><meta property='article:tag' content='数据库' /><meta property='article:published_time' content='2024-04-29T14:09:51&#43;08:00'/><meta property='article:modified_time' content='2024-04-29T14:09:51&#43;08:00'/><meta property='og:image' content='https://kegalas.top/inferior/cmu154452023fall%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BB%84%E4%BB%B6%E5%8A%9F%E8%83%BD%E9%80%9F%E6%9F%A5/cover.jpg' />
+<meta name="twitter:title" content="CMU15445(2023 Fall)数据库组件功能速查">
+<meta name="twitter:description" content="为了应对面试官的拷打，写下此文，方便我复习这个数据库的实现方法。 Project 1 Task 1 这一部分主要是要求实现一个LRU-K的替换算法。 LRU是最近最少使用"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://kegalas.top/inferior/cmu154452023fall%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BB%84%E4%BB%B6%E5%8A%9F%E8%83%BD%E9%80%9F%E6%9F%A5/cover.jpg' />
+    <link rel="shortcut icon" href="/images/favicon.ico" />
+
+    </head>
+    <body class="
+    article-page has-toc
+">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex 
+    
+        extended
+    
+">
+    
+        <div id="article-toolbar">
+            <a href="/" class="back-home">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="15 6 9 12 15 18" />
+</svg>
+
+
+
+                <span>返回</span>
+            </a>
+        </div>
+    
+<main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/inferior/cmu154452023fall%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BB%84%E4%BB%B6%E5%8A%9F%E8%83%BD%E9%80%9F%E6%9F%A5/">
+                <img src="/inferior/cmu154452023fall%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BB%84%E4%BB%B6%E5%8A%9F%E8%83%BD%E9%80%9F%E6%9F%A5/cover_hub2bee36093f48e478e5566d6bf8cc572_110686_800x0_resize_q75_box.jpg"
+                        srcset="/inferior/cmu154452023fall%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BB%84%E4%BB%B6%E5%8A%9F%E8%83%BD%E9%80%9F%E6%9F%A5/cover_hub2bee36093f48e478e5566d6bf8cc572_110686_800x0_resize_q75_box.jpg 800w, /inferior/cmu154452023fall%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BB%84%E4%BB%B6%E5%8A%9F%E8%83%BD%E9%80%9F%E6%9F%A5/cover_hub2bee36093f48e478e5566d6bf8cc572_110686_1600x0_resize_q75_box.jpg 1600w"
+                        width="800" 
+                        height="260" 
+                        loading="lazy"
+                        alt="Featured image of post CMU15445(2023 Fall)数据库组件功能速查" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/%E5%85%B6%E4%BB%96%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/" >
+                其他计算机科学
+            </a>
+        
+    </header>
+    
+
+    <h2 class="article-title">
+        <a href="/inferior/cmu154452023fall%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BB%84%E4%BB%B6%E5%8A%9F%E8%83%BD%E9%80%9F%E6%9F%A5/">CMU15445(2023 Fall)数据库组件功能速查</a>
+    </h2>
+
+    
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Apr 29, 2024</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 10 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+</div>
+</header>
+
+    <section class="article-content">
+    <p>为了应对面试官的拷打，写下此文，方便我复习这个数据库的实现方法。</p>
+<h1 id="project-1">Project 1</h1>
+<h2 id="task-1">Task 1</h2>
+<p>这一部分主要是要求实现一个LRU-K的替换算法。</p>
+<p>LRU是最近最少使用算法，也就是把buffer里面，上次使用时间距离现在最远的元素换出去。但是LRU的问题在于，如果有很多“偶发性”数据访问，即只访问一两次的数据，那么LRU会替换掉几乎所有元素，从而降低命中率。</p>
+<p>LRU-K的想法是，访问过K次及以上的数据和其他数据分开来算。显然，前者是更需要放在缓存里的，而后者是“偶发性”数据。</p>
+<p>这里同样定义了距离，当访问次数大于等于<span class="math inline">\(K\)</span>时，该元素的距离为当前时间点减去之前的第<span class="math inline">\(K\)</span>次访问的时间点。如果一个元素的访问次数不足<span class="math inline">\(K\)</span>，则距离无限大。换出的规则仍然是，把距离最大的元素换出。如果有多个元素距离无限大，则把最近访问最远的那个元素换出。相当于对它们进行朴素的LRU。</p>
+<p>下面具体解析一下在<code>src/include/buffer/lru_k_replacer.h</code>里面的东西的作用</p>
+<ul>
+<li><code>LRUNode</code>：这里记录我们刚刚提到的元素的信息。其中：
+<ul>
+<li><code>history_</code>记录了最近的至多<span class="math inline">\(K\)</span>次访问的时间戳，表头为最远的，表尾为最近的。</li>
+<li><code>k_</code>代表累计有几次访问，最大等于LRU-K算法设定的<span class="math inline">\(K\)</span>值，不能超过。</li>
+<li><code>fid_</code>代表在buffer pool中的帧号，其作用在于通过帧号找到页号，具体会用在buffer pool中。</li>
+<li><code>is_evictable_</code>，为真时代表此元素可以换出。</li>
+</ul>
+</li>
+<li><code>LRUKReplacer</code>：这个就是具体实现LRU-K的地方。
+<ul>
+<li>先看看它的成员变量：
+<ul>
+<li><code>node_store_</code>，用于存储帧号对应的LRUNode。</li>
+<li><code>current_timestamp_</code>用于记录现在的时间戳，不需要用unix时间戳什么的，我们只要每次访问后将其加一即可。</li>
+<li><code>curr_size_</code>指的是目前有多少个evictable的帧。</li>
+<li><code>replacer_size_</code>指LRU-K能容纳多少Node</li>
+<li><code>k_</code>即代表LRU-K中的<span class="math inline">\(K\)</span>值。</li>
+<li><code>latch_</code>即我们使用的互斥锁。</li>
+</ul>
+</li>
+<li>再来看看成员函数：
+<ul>
+<li>构造析构略</li>
+<li><code>Evict</code>指换出一个帧，参数为换出的帧其帧号的指针，返回真时换出成功，否则换出失败。换出规则即之前介绍的规则。</li>
+<li><code>RecordAccess</code>记录给定帧的一次访问。每次访问都要增加<code>current_timestamp_</code>，如果不在<code>node_store_</code>中还需要新建。然后修改<code>frame_id</code>对应的node的数据，包括<code>k_</code>和<code>history_</code>。如果已经有<span class="math inline">\(K\)</span>次访问了，还需要注意不要自增超过<span class="math inline">\(K\)</span>，以及<code>history_</code>不要多于<span class="math inline">\(K\)</span>个记录。</li>
+<li><code>SetEvictable</code>即修改给定帧的可换出属性，同时会影响<code>curr_size_</code>的值。</li>
+<li><code>Remove</code>即删除给定帧的访问记录。注意只有evictable的帧才能换出。同时会影响<code>curr_size_</code>的值。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>这里面所有的<code>frame_id</code>的范围都在<code>[0,replacer_size_)</code>中，否则为非法访问。</p>
+<h2 id="task-2">Task 2</h2>
+<p>这里要求实现一个磁盘调度算法。不过这个算法并不高深，就是一个简单的FIFO，使用一个并发安全的队列实现。</p>
+<p><code>src/include/storage/disk/disk_scheduler.h</code>中，有：</p>
+<ul>
+<li><code>DiskRequest</code>：代表一次磁盘访问的属性，包括
+<ul>
+<li><code>is_write_</code>即是读还是写</li>
+<li><code>data_</code>一个指针。读磁盘时，指向要读入的内存数组的开头。写磁盘时，指向要写入的内存数组的开头。大小是固定的，为Page的大小，在bustub中为4096，不足的都会补0</li>
+<li><code>page_id_</code>即写入磁盘的第几页。在后面会详细介绍，我们只用知道bustub的<code>xxx.db</code>文件是一页一页顺着排列的就行。页号从<code>0</code>开始。</li>
+<li><code>callback_</code>一个线程同步的变量，后面（task 3）介绍。</li>
+</ul>
+</li>
+<li><code>DiskScheduler</code>：即实现磁盘调度算法的部分
+<ul>
+<li>其成员变量有：
+<ul>
+<li><code>disk_manager_</code>磁盘调度算法要向其发送磁盘操作请求，之后介绍</li>
+<li><code>request_queue_</code>即FIFO算法所用到的队列</li>
+<li><code>background_thread_</code>即在后台不断把队列里的请求拿出来，发送给<code>disk_manager</code>的线程</li>
+</ul>
+</li>
+<li>其成员函数有：
+<ul>
+<li>构造函数，在构造的时候，就启动了<code>background_thread_</code>线程，其执行<code>StartWorkerThread</code></li>
+<li><code>Schedule</code>，即简单地把一个<code>DiskRequest</code>放入队列中</li>
+<li><code>StartWorkerThread</code>，可以看作是生产者-消费者模型中的消费者。其不断地从队列中拿出请求，向<code>disk_manager_</code>发送对应请求，然后将<code>callback_</code>赋值。无限循环直到拿出的请求是一个<code>std::nullopt</code>（队列中存的是<code>std::optional&lt;DiskRequest&gt;</code>）</li>
+<li>析构函数，主要负责向队列中放入<code>nullopt</code>，让其停止。然后和后台的线程进行<code>join</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>这个队列在这个项目里是已经提供好了的，不需要自己实现。不过为了防止被面试官拷打，我们来解析一下这个队列的实现方式。其被称作<code>Channel</code>，在<code>src/include/common/channel.h</code>。其底层是STL的<code>queue</code>，在此基础上加入了一个互斥锁和一个条件变量。只支持两个方法，即<code>Put</code>在队尾放入元素，<code>Get</code>取出队头元素（相当于front和pop二合一）。实现也非常经典，值得抄下来学习</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">Put</span>(T element){
+</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>unique_lock<span style="color:#f92672">&lt;</span>std<span style="color:#f92672">::</span>mutex<span style="color:#f92672">&gt;</span> lk(m_);
+</span></span><span style="display:flex;"><span>    q_.push(std<span style="color:#f92672">::</span>move(element));
+</span></span><span style="display:flex;"><span>    lk.unlock();
+</span></span><span style="display:flex;"><span>    cv_.notify_all();
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>T <span style="color:#a6e22e">Get</span>(){
+</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>unique_lock<span style="color:#f92672">&lt;</span>std<span style="color:#f92672">::</span>mutex<span style="color:#f92672">&gt;</span> lk(m_);
+</span></span><span style="display:flex;"><span>    cv_.wait(lk, [<span style="color:#f92672">&amp;</span>](){<span style="color:#66d9ef">return</span> <span style="color:#f92672">!</span>q_.empty()})
+</span></span><span style="display:flex;"><span>    T element <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>move(q_.front());
+</span></span><span style="display:flex;"><span>    q_.pop();
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> element;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>然后我们来看看<code>DiskManager</code>具体怎么访问硬盘的。抛去一些不重要的，有这些成员变量：</p>
+<ul>
+<li><code>db_io_</code>，它是一个<code>std::fstream</code>，至此真相大白，根本没有什么更底层的东西，只是一个STL自带的文件流而已。</li>
+<li><code>file_name_</code>，数据库文件的名字。</li>
+<li><code>db_io_latch_</code>，在硬盘读写的时候持有锁，防止冲突。</li>
+</ul>
+<p>再来看看其中比较重要的几个成员函数：</p>
+<ul>
+<li>构造函数，传入文件名，打开fstream。</li>
+<li><code>WritePage</code>，传入页号，以及data的指针。前面也提到过，bustub的数据文件就是把页顺序排列，我们知道页号、知道页大小，就知道页的开头在文件中的位置。这里需要使用<code>fstream</code>的<code>seekp</code>先定位，然后再<code>write</code>写出数据。</li>
+<li><code>ReadPage</code>，传入页号，以及data的指针。基本上同上。只是需要注意，如果文件的最后一页不足4096，那么需要在内存中把后面全部填充0</li>
+</ul>
+<h2 id="task-3">Task 3</h2>
+<p>这里就是真正实现buffer pool的地方。buffer pool对于数据库的作用，类似于cache对于cpu的作用。cpu一般是先把内存中的东西放到cache中，然后之后读取就会更快了。基于空间局部性和时间局部性，虽然cache比内存小，但是也可以提升访问速度。而buffer pool所做的，就是把磁盘中的东西拿到内存。</p>
+<p>buffer pool中的东西分为两部分，第一部分是Project 1中实现的，其只实现了基本的操作。而Project 2中实现的下半部分主要是负责更好的自动控制，不再需要手动进行Unpin等操作，解放程序员。</p>
+<p>还是先介绍<code>BufferPoolManager</code>中的成员变量：</p>
+<ul>
+<li><code>pool_size_</code>，代表这个buffer pool中能容纳多少个page。LRUKReplacer的大小将会和它一致</li>
+<li><code>next_page_id_</code>，其为一个<code>std::atomic&lt;page_id_t&gt;</code>，也就是说可以并发地访问。其中<code>page_id_t</code>在这里定义为了<code>uint32_t</code>。之后创建一个新页的时候需要用到这个值。</li>
+<li><code>pages_</code>，一个数组，用于存放所有page的</li>
+<li><code>disk_scheduler_</code>，即task 2实现的东西</li>
+<li><code>page_table_</code>，通过页号找到帧号</li>
+<li><code>replacer_</code>，即我们的LRU-K算法</li>
+<li><code>free_list_</code>，其最初的大小等于<code>pool_size_</code>，存储了所有空闲的帧的帧号</li>
+<li><code>latch_</code>，自己的互斥量。</li>
+</ul>
+<p>成员函数：</p>
+<ul>
+<li>构造函数，主要就是传入大小、<span class="math inline">\(K\)</span>值，<code>DiskManager</code>等。这里要初始化<code>pages_ = new Page[pool_size_]</code>，初始化<code>replacer_</code>，同时把所有帧号放到<code>free_list_</code>里</li>
+<li>析构函数，主要进行<code>delete[] pages_</code></li>
+<li><code>NewPage</code>，分配一个新页，返回这个新页的指针，新页的页号通过参数中的指针返回。由于我们是在内存中分配新页的，所以要先找一个位置，如果有空闲的帧就直接获取一个帧号，否则换出一个帧到硬盘上（即判断是否为脏页，为脏则要向<code>DiskManager</code>发出一个写请求，然后从<code>page_table_</code>中删掉这一项。否则直接从<code>page_table_</code>中删掉。这里删除的时候，需要<code>auto future = r.callback_.get_future()</code>，然后再发送请求，然后<code>future.wait()</code>，这样在删除完成之前就会被阻隔，从而线程同步。），然后继续使用这个换出的帧号。在<code>pages_</code>数组上，直接对这个元素进行初始化。例如重置数据、分配页号、设置脏位、设置<code>pin_count_</code>。然后写入<code>page_table_</code>，并在<code>replacer_</code>中记录一次访问，以及设定<code>evictable</code>为<code>false</code>。这里可能所有页面都被设置为不能换出，这里要返回<code>nullptr</code></li>
+<li><code>FetchPage</code>，根据页号获取一个页。这个页可能已经在buffer pool里了，那么直接读这个页。否则，要去硬盘里找。同前，有空闲帧就分配、否则换出，等等操作。在之后，我们要给这个page的<code>pin_count_</code>加一，表明又有一个新的线程在访问这个页。以及，同样地更新<code>page_table_</code>、<code>replacer_</code>等。</li>
+<li><code>UnpinPage</code>，一个线程不再需要这个页时，需要将其unpin，也就意味着对应的<code>pin_count_</code>减一。同时<code>UnpinPage</code>的参数里会带有<code>is_dirty</code>，用于标注这个页的脏位。注意，如果页不在buffer pool里，或者<code>pin_count_</code>已经归零，就不需要进行操作了。页的这些元信息只存在于内存中，硬盘中只有data，所以<code>pin_count_</code>不需要从硬盘里拿出来减一。如果成功进行了减一，并且计数器归零，就可以在<code>replacer_</code>中把<code>evictable</code>设置为<code>true</code>了</li>
+<li><code>FlushPage</code>，给定页号，无论是否为脏页，都写回硬盘中。之后设置为非脏页。其他信息不做改动。</li>
+<li><code>FlushAllPages</code>，刷新所有页。</li>
+<li><code>DeletePage</code>，这里说的不是删掉硬盘上的页。是删掉buffer pool中的页，并标记为空闲帧。当然，如果给出的页号本来就不在buffer pool里，则什么改动都不做。删除的时候已经假定引用计数归零了，所以如果非零，则是非法操作。需要从<code>page_table_</code>、<code>replacer_</code>中删掉相应的元素。然后插入到<code>free_list_</code>中，把原来<code>pages_</code>这个位置上的页元信息重置。</li>
+<li><code>AllocatePage</code>，其实就是分配了一个新页号<code>return next_page_id_++</code></li>
+<li><code>DeallocatePage</code>，这就是个空函数，bustub里根本不考虑这个。</li>
+</ul>
+<p>之后我们来关注一下这个<code>Page</code>里面都有什么东西，在<code>src/include/storage/page/page.h</code>中，成员变量：</p>
+<ul>
+<li><code>data_</code>，一个指针，和读写硬盘的那个<code>data</code>指针类似，就是指向一个数组的头。大小固定为4096，即页大小。在构造函数中分配内存。析构中释放。</li>
+<li><code>page_id_</code>，页号。</li>
+<li><code>pin_count_</code>，表示有多少线程正在使用这个页。</li>
+<li><code>is_dirty_</code>，脏位。</li>
+<li><code>rwlatch_</code>，读写锁。实际上是用<code>std::shared_mutex</code>实现的，写的时候进行<code>lock()</code>和<code>unlock()</code>，读的时候进行<code>lock_shared()</code>和<code>unlock_shared()</code>。</li>
+</ul>
+<p>成员函数可说的反而不多，除了一大堆getter和setter、读写上锁之外，有：</p>
+<ul>
+<li><code>ResetMemory</code>，就是一个<code>memset</code>，把<code>data_</code>的内容初始化。</li>
+</ul>
+<p>这里面还有两个叫<code>GetLSN</code>和<code>SetLSN</code>的函数，不知道干嘛的，整个项目里倒也没用过这两个函数。</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/c&#43;&#43;/">C&#43;&#43;</a>
+        
+            <a href="/tags/%E6%B0%B4%E6%96%87/">水文</a>
+        
+            <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css"integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js"integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8"crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js"integrity="sha384-vZTG03m&#43;2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl"crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.querySelector(`.article-content`), {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ]
+        });})
+</script>
+    
+</article>
+
+    <aside class="related-contents--wrapper">
+    
+    
+        <h2 class="section-title">相关文章</h2>
+        <div class="related-contents">
+            <div class="flex article-list--tile">
+                
+                    
+<article class="">
+    <a href="/inferior/%E6%B7%BB%E5%8A%A0msys2%E5%88%B0%E5%8F%B3%E9%94%AE%E8%8F%9C%E5%8D%95/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">添加msys2到右键菜单</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/inferior/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/">
+        
+        
+            <div class="article-image">
+                <img src="/inferior/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/cover.d98d9343d552f7609cb2faab261c59fd_hucd8e14c4efc19cc77fb7e62d6a8c22d5_18667_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-2Y2TQ9VS92CcsvqrJhxZ/Q==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">操作系统课程笔记</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/inferior/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+        
+        
+            <div class="article-image">
+                <img src="/inferior/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/cover.e854b56daa550dc940cfe938a5e554af_hu9ed3e3d7509314fb7a01cf1769564f25_44442_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-6FS1bapVDclAz&#43;k4peVUrw==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">微机原理学习笔记</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="">
+    <a href="/inferior/virtualbox%E6%89%93%E5%BC%80%E8%99%9A%E6%8B%9F%E6%9C%BAverr_invalid_name-104%E9%94%99%E8%AF%AF%E7%9A%84%E8%A7%A3%E5%86%B3/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">VirtualBox打开虚拟机VERR_INVALID_NAME(-104)错误的解决</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="">
+    <a href="/inferior/%E4%B8%AA%E4%BA%BA%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6%E5%88%97%E8%A1%A8/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">个人常用软件列表</h2>
+        </div>
+    </a>
+</article>
+                
+            </div>
+        </div>
+    
+</aside>
+
+     
+    
+        
+    <script src="https://utteranc.es/client.js" 
+        repo="kegalas/blogComments"
+        issue-term="pathname"
+        
+        crossorigin="anonymous"
+        async
+        >
+</script>
+
+<style>
+    .utterances {
+        max-width: unset;
+    }
+</style>
+
+<script>
+    function setUtterancesTheme(theme) {
+        let utterances = document.querySelector('.utterances iframe');
+        if (utterances) {
+            utterances.contentWindow.postMessage(
+                {
+                    type: 'set-theme',
+                    theme: `github-${theme}`
+                },
+                'https://utteranc.es'
+            );
+        }
+    }
+
+    addEventListener('message', event => {
+        if (event.origin !== 'https://utteranc.es') return;
+        setUtterancesTheme(document.documentElement.dataset.scheme)
+    });
+
+    window.addEventListener('onColorSchemeChange', (e) => {
+        setUtterancesTheme(e.detail)
+    })
+</script>
+
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2024 KegalaS的个人博客
+    </section>
+    
+    <section class="powerby">
+         <br />
+        
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    
+        <aside class="sidebar right-sidebar sticky">
+            <section class="widget archives">
+                <div class="widget-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+                </div>
+                <h2 class="widget-title section-title">目录</h2>
+                
+                <div class="widget--toc">
+                    <nav id="TableOfContents">
+  <ol>
+    <li><a href="#project-1">Project 1</a>
+      <ol>
+        <li><a href="#task-1">Task 1</a></li>
+        <li><a href="#task-2">Task 2</a></li>
+        <li><a href="#task-3">Task 3</a></li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+                </div>
+            </section>
+        </aside>
+    
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                defer="false"
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
