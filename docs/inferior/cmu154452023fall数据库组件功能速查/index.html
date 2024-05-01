@@ -121,7 +121,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 10 分钟
+                    阅读时长: 14 分钟
                 </time>
             </div>
         
@@ -235,7 +235,7 @@
 <h2 id="task-3">Task 3</h2>
 <p>这里就是真正实现buffer pool的地方。buffer pool对于数据库的作用，类似于cache对于cpu的作用。cpu一般是先把内存中的东西放到cache中，然后之后读取就会更快了。基于空间局部性和时间局部性，虽然cache比内存小，但是也可以提升访问速度。而buffer pool所做的，就是把磁盘中的东西拿到内存。</p>
 <p>buffer pool中的东西分为两部分，第一部分是Project 1中实现的，其只实现了基本的操作。而Project 2中实现的下半部分主要是负责更好的自动控制，不再需要手动进行Unpin等操作，解放程序员。</p>
-<p>还是先介绍<code>BufferPoolManager</code>中的成员变量：</p>
+<p>还是先介绍<code>BufferPoolManager</code>（<code>src/include/buffer/buffer_pool_manager.h</code>）中的成员变量：</p>
 <ul>
 <li><code>pool_size_</code>，代表这个buffer pool中能容纳多少个page。LRUKReplacer的大小将会和它一致</li>
 <li><code>next_page_id_</code>，其为一个<code>std::atomic&lt;page_id_t&gt;</code>，也就是说可以并发地访问。其中<code>page_id_t</code>在这里定义为了<code>uint32_t</code>。之后创建一个新页的时候需要用到这个值。</li>
@@ -272,6 +272,87 @@
 <li><code>ResetMemory</code>，就是一个<code>memset</code>，把<code>data_</code>的内容初始化。</li>
 </ul>
 <p>这里面还有两个叫<code>GetLSN</code>和<code>SetLSN</code>的函数，不知道干嘛的，整个项目里倒也没用过这两个函数。</p>
+<h1 id="project-2">Project 2</h1>
+<h2 id="task-1-1">Task 1</h2>
+<p>在上一部分，我们实现的<code>BufferPoolManager</code>实现的比较底层的操作。程序员需要手动创建页、获取页、删除页、Unpin页。本部分要求我们，实现一个wrapper，能够在构造的时候获取页，析构的时候Unpin、删除页。同时，实现要求我们保证并发安全，我们也要自动地控制锁。</p>
+<p>首先关注<code>src/include/storage/page/page_guard.h</code>，其中有三个类：</p>
+<ul>
+<li><code>BasicPageGuard</code></li>
+<li><code>ReadPageGuard</code></li>
+<li><code>WritePageGuard</code></li>
+</ul>
+<p>这三个类都是独占资源的类，所以类似于<code>unique_ptr</code>，它们的拷贝构造和拷贝赋值被禁用了。看看它们的成员变量：</p>
+<ul>
+<li><code>BasicPageGuard</code>
+<ul>
+<li><code>bpm_</code>指向一个<code>BufferPoolManager</code>的指针</li>
+<li><code>page_</code>指向自己所管理的页的指针</li>
+<li><code>is_dirty_</code>脏位</li>
+</ul>
+</li>
+<li><code>ReadPageGuard</code>
+<ul>
+<li><code>guard_</code>是一个<code>BasicPageGuard</code>。本类的成员函数的实现方式，使得本页只读，后面介绍。</li>
+</ul>
+</li>
+<li><code>WritePageGuard</code>
+<ul>
+<li><code>guard_</code>是一个<code>BasicPageGuard</code>。本类的成员函数的实现方式，使得本页可读写，后面介绍。</li>
+</ul>
+</li>
+</ul>
+<p>看看它们的前几个成员函数：</p>
+<ul>
+<li><code>BasicPageGuard</code>
+<ul>
+<li>默认构造函数，其传入<code>bpm</code>和<code>page</code>指针来初始化。</li>
+<li>移动构造函数，把另外一个guard的<code>page_</code>，<code>is_dirty_</code>，<code>bpm_</code>全部都移动过来，之前的清空。</li>
+<li><code>Drop</code>，即废弃掉这个页，或者说放弃控制权。这里就需要调用<code>bpm_</code>中的<code>UnpinPage</code>了，传入自己的页号和脏位。之后再把成员变量清空。</li>
+<li>移动赋值函数，和移动构造类似，但是要先把自己的资源<code>Drop</code>掉，再去考虑移动的事。</li>
+<li>析构函数，可以直接调用<code>Drop</code></li>
+</ul>
+</li>
+<li><code>ReadPageGuard</code>
+<ul>
+<li>默认构造函数，传入的也是<code>bpm</code>和<code>page</code>指针，其用来初始化<code>guard_</code>成员。其实我不是很明白这里为什么没有上读者锁（项目原版的代码），可能是因为项目里根本没有地方直接构造<code>ReadPageGuard</code>吧。</li>
+<li>移动构造函数，我们只用移动<code>guard_</code>即可。虽然我写了先把<code>that</code>解锁再把<code>this</code>加锁，但我想了一下好像没有必要，甚至可能是错的。不过评测没有问题。</li>
+<li><code>Drop</code>，废弃页。注意如果<code>this</code>已经有一个页，需要先解锁，然后再<code>Unpin</code>。之后再把<code>guard_</code>的信息清空。如果弄反了，可能<code>Unpin</code>后页立刻换出，然后我们再解锁，解锁的就是其他页的锁了。</li>
+<li>移动赋值函数，同前，如果需要，先考虑<code>Drop</code>掉自己。</li>
+<li>析构函数，调用<code>Drop</code></li>
+</ul>
+</li>
+<li><code>WritePageGuard</code>，和<code>ReadPageGuard</code>基本一样，只不过加锁的时候加的是写者锁。</li>
+</ul>
+<p>前面也提到，一般不会直接调用<code>ReadPageGuard</code>和<code>WritePageGuard</code>的默认构造函数，我们会通过<code>BasicPageGuard</code>中内置的两个函数来“升级”成另外两个：</p>
+<ul>
+<li><code>UpgradeRead</code>，首先给<code>page_</code>上读者锁，然后记录下<code>page_</code>和<code>bpm_</code>的指针，清空自己的成员变量，调用默认构造函数返回一个<code>ReadPageGuard</code></li>
+<li><code>UpgradeWrite</code>，同上，只不过上的是写者锁。</li>
+</ul>
+<p>这三个类还有几个读取数据的成员函数</p>
+<ul>
+<li><code>BasicPageGuard</code>
+<ul>
+<li><code>PageId</code>，获取<code>page_</code>的页号</li>
+<li><code>GetData</code>，获取<code>page_</code>的<code>data_</code>指针，一个<code>const char *</code>，也即不可修改内容</li>
+<li><code>As</code>，将<code>GetData</code>中获得的指针转化为另一个类型的指针，即<code>const T *</code></li>
+<li><code>GetDataMut</code>，同<code>GetData</code>，只不过将<code>is_dirty_</code>设置为<code>true</code>，返回<code>char *</code></li>
+<li><code>AsMut</code>，将<code>GetDataMut</code>获得的指针转为<code>T *</code></li>
+</ul>
+</li>
+<li><code>ReadPageGuard</code>，只包含<code>PageId</code>，<code>GetData</code>，<code>As</code></li>
+<li><code>WritePageGuard</code>，包含全部五个函数。</li>
+</ul>
+<p>之后我们回到<code>src/include/buffer/buffer_pool_manager.h</code>中，解决上个Project的遗留问题</p>
+<ul>
+<li><code>FetchPageBasic</code>，首先调用自己的<code>FetchPage</code>获取页号，然后调用<code>BasicPageGuard</code>的默认构造函数构造，然后返回</li>
+<li><code>FetchPageRead</code>，调用<code>FetchPageBasic</code>后进行<code>UpgradeRead</code>，返回</li>
+<li><code>FetchPageWrite</code>，类似于上条。</li>
+<li><code>NewPageGuarded</code>，类似于第一条，使用<code>NewPage</code>的页号。</li>
+</ul>
+<h2 id="task-2-1">Task 2</h2>
+<p>从这里开始要求我们实现一个可扩哈希。我们先把可扩哈希的原理说明一下，从一张图开始</p>
+<p>![占位符]</p>
+<p>首先可以看到，它是一个三层结构。第一层是<code>header</code>，其大小固定。</p>
 
 </section>
 
@@ -587,6 +668,12 @@
         <li><a href="#task-1">Task 1</a></li>
         <li><a href="#task-2">Task 2</a></li>
         <li><a href="#task-3">Task 3</a></li>
+      </ol>
+    </li>
+    <li><a href="#project-2">Project 2</a>
+      <ol>
+        <li><a href="#task-1-1">Task 1</a></li>
+        <li><a href="#task-2-1">Task 2</a></li>
       </ol>
     </li>
   </ol>

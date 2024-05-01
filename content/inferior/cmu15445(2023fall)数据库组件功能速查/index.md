@@ -109,7 +109,7 @@ T Get(){
 
 buffer pool中的东西分为两部分，第一部分是Project 1中实现的，其只实现了基本的操作。而Project 2中实现的下半部分主要是负责更好的自动控制，不再需要手动进行Unpin等操作，解放程序员。
 
-还是先介绍`BufferPoolManager`中的成员变量：
+还是先介绍`BufferPoolManager`（`src/include/buffer/buffer_pool_manager.h`）中的成员变量：
 
 - `pool_size_`，代表这个buffer pool中能容纳多少个page。LRUKReplacer的大小将会和它一致
 - `next_page_id_`，其为一个`std::atomic<page_id_t>`，也就是说可以并发地访问。其中`page_id_t`在这里定义为了`uint32_t`。之后创建一个新页的时候需要用到这个值。
@@ -146,3 +146,73 @@ buffer pool中的东西分为两部分，第一部分是Project 1中实现的，
 - `ResetMemory`，就是一个`memset`，把`data_`的内容初始化。
 
 这里面还有两个叫`GetLSN`和`SetLSN`的函数，不知道干嘛的，整个项目里倒也没用过这两个函数。
+
+# Project 2
+
+## Task 1
+
+在上一部分，我们实现的`BufferPoolManager`实现的比较底层的操作。程序员需要手动创建页、获取页、删除页、Unpin页。本部分要求我们，实现一个wrapper，能够在构造的时候获取页，析构的时候Unpin、删除页。同时，实现要求我们保证并发安全，我们也要自动地控制锁。
+
+首先关注`src/include/storage/page/page_guard.h`，其中有三个类：
+
+- `BasicPageGuard`
+- `ReadPageGuard`
+- `WritePageGuard`
+
+这三个类都是独占资源的类，所以类似于`unique_ptr`，它们的拷贝构造和拷贝赋值被禁用了。看看它们的成员变量：
+
+- `BasicPageGuard`
+    - `bpm_`指向一个`BufferPoolManager`的指针
+    - `page_`指向自己所管理的页的指针
+    - `is_dirty_`脏位
+- `ReadPageGuard`
+    - `guard_`是一个`BasicPageGuard`。本类的成员函数的实现方式，使得本页只读，后面介绍。
+- `WritePageGuard`
+    - `guard_`是一个`BasicPageGuard`。本类的成员函数的实现方式，使得本页可读写，后面介绍。
+
+看看它们的前几个成员函数：
+
+- `BasicPageGuard`
+    - 默认构造函数，其传入`bpm`和`page`指针来初始化。
+    - 移动构造函数，把另外一个guard的`page_`，`is_dirty_`，`bpm_`全部都移动过来，之前的清空。
+    - `Drop`，即废弃掉这个页，或者说放弃控制权。这里就需要调用`bpm_`中的`UnpinPage`了，传入自己的页号和脏位。之后再把成员变量清空。
+    - 移动赋值函数，和移动构造类似，但是要先把自己的资源`Drop`掉，再去考虑移动的事。
+    - 析构函数，可以直接调用`Drop`
+- `ReadPageGuard`
+    - 默认构造函数，传入的也是`bpm`和`page`指针，其用来初始化`guard_`成员。其实我不是很明白这里为什么没有上读者锁（项目原版的代码），可能是因为项目里根本没有地方直接构造`ReadPageGuard`吧。
+    - 移动构造函数，我们只用移动`guard_`即可。虽然我写了先把`that`解锁再把`this`加锁，但我想了一下好像没有必要，甚至可能是错的。不过评测没有问题。
+    - `Drop`，废弃页。注意如果`this`已经有一个页，需要先解锁，然后再`Unpin`。之后再把`guard_`的信息清空。如果弄反了，可能`Unpin`后页立刻换出，然后我们再解锁，解锁的就是其他页的锁了。
+    - 移动赋值函数，同前，如果需要，先考虑`Drop`掉自己。
+    - 析构函数，调用`Drop`
+- `WritePageGuard`，和`ReadPageGuard`基本一样，只不过加锁的时候加的是写者锁。
+
+前面也提到，一般不会直接调用`ReadPageGuard`和`WritePageGuard`的默认构造函数，我们会通过`BasicPageGuard`中内置的两个函数来“升级”成另外两个：
+
+- `UpgradeRead`，首先给`page_`上读者锁，然后记录下`page_`和`bpm_`的指针，清空自己的成员变量，调用默认构造函数返回一个`ReadPageGuard`
+- `UpgradeWrite`，同上，只不过上的是写者锁。
+
+这三个类还有几个读取数据的成员函数
+
+- `BasicPageGuard`
+    - `PageId`，获取`page_`的页号
+    - `GetData`，获取`page_`的`data_`指针，一个`const char *`，也即不可修改内容
+    - `As`，将`GetData`中获得的指针转化为另一个类型的指针，即`const T *`
+    - `GetDataMut`，同`GetData`，只不过将`is_dirty_`设置为`true`，返回`char *`
+    - `AsMut`，将`GetDataMut`获得的指针转为`T *`
+- `ReadPageGuard`，只包含`PageId`，`GetData`，`As`
+- `WritePageGuard`，包含全部五个函数。
+
+之后我们回到`src/include/buffer/buffer_pool_manager.h`中，解决上个Project的遗留问题
+
+- `FetchPageBasic`，首先调用自己的`FetchPage`获取页号，然后调用`BasicPageGuard`的默认构造函数构造，然后返回
+- `FetchPageRead`，调用`FetchPageBasic`后进行`UpgradeRead`，返回
+- `FetchPageWrite`，类似于上条。
+- `NewPageGuarded`，类似于第一条，使用`NewPage`的页号。
+
+## Task 2
+
+从这里开始要求我们实现一个可扩哈希。我们先把可扩哈希的原理说明一下，从一张图开始
+
+![占位符]
+
+首先可以看到，它是一个三层结构。第一层是`header`，其大小固定。
