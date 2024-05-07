@@ -213,6 +213,166 @@ buffer pool中的东西分为两部分，第一部分是Project 1中实现的，
 
 从这里开始要求我们实现一个可扩哈希。我们先把可扩哈希的原理说明一下，从一张图开始
 
-![占位符]
+![1.jpg](1.jpg)
 
-首先可以看到，它是一个三层结构。第一层是`header`，其大小固定。
+首先可以看到，它是一个三层结构。第一层是`header`，其大小固定。第二层是`directory`，其大小可以变化，从只有一项，到大小上限。而第三层是`bucket`。
+
+`header`的每一项指向了一个`directory`（当然如果没有数据的话就指向空指针），而`directory`的每一项指向了一个`bucket`，数据实际上是存在`bucket`里。所以，如果我们要读写一个数据，我们要经过以下步骤：
+
+1. 找到该数据对应与`header`中的哪一项。
+2. 从`header`的这一项中找到其对应的`directory`，然后在找到该数据对应该`directory`中的哪一项
+3. 从`directory`中的这一项找到其对应的`bucket`，然后在`bucket`中遍历（`bucket`可以看做是固定大小的数组），找到所需的数据位置。
+
+具体是根据什么方法来找的呢？
+
+首先，我们会获得该数据的哈希值。假设我们这里得到的哈希值是一个32位无符号整数，那么，根据`header`的`max_depth`，提取出哈希值的高`max_depth`位。如上图，其`max_depth`为$2$。如果我们的哈希值是`01...111`，那么就要映射到`header`中的第`1`项（从`0`开始计数）。如果是`10...111`就映射到第`2`项，以此类推。
+
+接下来，我们在对应的`directory`里，根据其`global_depth`，找到哈希值的低`global_depth`位。例如在`global_depth`为$2$时，`01...111`就映射到`directory`的第`3`项。
+
+可扩哈希具体指的是哪里可扩呢？实际上指的是`directory`可扩。我们画个简单的情况来介绍：
+
+![2.jpg](2.jpg)
+
+如图，我们省去了`header`，并且现在`directory`的`global_depth`的大小为`0`，也就是只有第`0`项。我们这里假设`bucket`大小为$2$。这里我们有一个放了两个数据的`bucket`，这里用哈希值表示数据。
+
+整个`directory`有一个`global_depth`，主要是代表项数，也用来找哈希值对应的`bucket`。而每一项，有一个`local_depth`，代表的是，该项指向的`bucket`中，保证所有数据的哈希值最低的`local_depth`位是相同的。上图中，`local_depth`为`0`，即没有一位是保证相同的。
+
+如果我们要再插入一个数据（假设是`...10`）到其中，怎么做呢？这里显然已经插入满了，所以我们要扩容。首先，把`global_depth`加一，同时`directory`的大小也就增加了（大小为$1<<{global\_depth}$），所以我们要增加`directory`的项数，其还是指向这个`bucket`。
+
+![3.jpg](3.jpg)
+
+现在，`directory`的`global_depth`是`1`，而两项的`local_depth`都是`0`。观察我们要插入的数据`...10`，其最低`1`位是`0`，所以要插入第`0`项。而第`0`项指向的`bucket`仍然是满的。所以我们现在要把`bucket`分裂。如下：
+
+![4.jpg](4.jpg)
+
+这里分裂的时候，需要按照`directory`的映射关系，将`bucket`的数据分别放到相应的新`bucket`中。这里，我们就可以增加`local_depth`了，都是`1`。然后我们再插入数据`...10`，就可以正常插入了。
+
+![5.jpg](5.jpg)
+
+再例如下图
+
+![6.jpg](6.jpg)
+
+我们插入`...100`，和之前一样，我们需要先扩容`directory`
+
+![7.jpg](7.jpg)
+
+这里`global_depth`变成了`2`，写在了上方。而`local_depth`都是`1`，写在左边。然后我们的数据`...100`是映射到第`0`项，其`bucket`是满的，所以要分裂`bucket`，再插入，如下
+
+![8.jpg](8.jpg)
+
+目前为止，插入和查询就说明白了。删除数据放到之后再说，先来看看代码，首先是`src/include/storage/page/extendible_htable_header_page.h`
+
+首先，源代码注释中给出了这个`page`的布局
+
+```cpp
+/**
+* Header page format:
+*  ---------------------------------------------------
+* | DirectoryPageIds(2048) | MaxDepth (4) | Free(2044)
+*  ---------------------------------------------------
+*/
+```
+
+这里我们也可以知道，无论是`header`、`directory`还是`bucket`，都是作为一个页存在硬盘上的。大小都依然是`4096`。
+
+这段注释指出，`header`存储的数据有两个，一个是`MaxDepth`，一个是表项。通过阅读后面的代码可知，这个类有两个成员变量。
+
+```cpp
+page_id_t directory_page_ids_[HTABLE_HEADER_ARRAY_SIZE];
+uint32_t max_depth_;
+```
+
+表项是用一个数组来表示的，其类型为`page_id_t`，被`using page_id_t = uint32_t`定义。而另一个就是代表表的最大大小。因为`uint32_t`是`4`字节的，而`DirectoryPageIds`占`2048`字节，所以最多有`512`项。这里也说明，实现上表项不是一个指向`directory`的指针，而是存储了对应的页号，找到`directory`需要读取硬盘上的另一个页。
+
+接下来我们看看其中定义的三个静态变量
+
+```cpp
+static constexpr uint64_t HTABLE_HEADER_PAGE_METADATA_SIZE = sizeof(uint32_t);
+static constexpr uint64_t HTABLE_HEADER_MAX_DEPTH = 9;
+static constexpr uint64_t HTABLE_HEADER_ARRAY_SIZE = 1 << HTABLE_HEADER_MAX_DEPTH;
+```
+
+第一个定义了元信息的大小，第二个定义了`bustub`默认的`max_depth`，第三个定义了默认的表大小。接下来我们看`ExtendibleHTableHeaderPage`的成员函数
+
+- 所有构造函数和析构函数都被禁用了，根据代码的注释说这样是为了保证内存安全。我水平不够暂时不了解原理。
+- `Init`，传入`max_depth`，让我们对`header`进行初始化。我们照做即可，注意表项要全部初始化为`INVALID_PAGE_ID`，代表没有指向任何一个`directory`
+- `HashToDirectoryIndex`，传入32位无符号整数的哈希值，找到对应的表项。就像我们之前说的一样，找到高`max_depth`位就行。`return hash>>(32-max_depth_);`。可能要特殊处理`0`深度的情况。
+- `GetDirectoryPageId`，传入表项下标，返回页号。说白了就是根据数组下标返回数组元素。
+- `SetDirectoryPageId`，说白了就是根据数组下标设置元素。
+- `MaxSize`，返回表大小。
+
+之后，我们来看`src/include/storage/page/extendible_htable_directory_page.h`，首先同样是看`page`的布局
+
+```cpp
+/**
+* Directory page format:
+*  --------------------------------------------------------------------------------------
+* | MaxDepth (4) | GlobalDepth (4) | LocalDepths (512) | BucketPageIds(2048) | Free(1528)
+*  --------------------------------------------------------------------------------------
+*/
+```
+
+存储了四种数据，首先是`max_depth_`，代表`global_depth_`的上限，然后就是`global_depth_`自己，用于表示`directory`现在的大小，以及用于映射关系。之后是`local_depths_`，这是一个数组，每个元素都是`8`位无符号整数，代表对应表项的`local_depth`，可知最多有`512`个表项。最后的`bucket_page_ids_`也是一个数组，类型为`page_id_t`的数组，存储表项对应的`bucket`的页号。
+
+```cpp
+static constexpr uint64_t HTABLE_DIRECTORY_MAX_DEPTH = 9;
+static constexpr uint64_t HTABLE_DIRECTORY_ARRAY_SIZE = 1 << HTABLE_DIRECTORY_MAX_DEPTH;
+```
+
+静态变量和之前相似。接下来我们看看成员函数
+
+- 所有构造函数和析构函数都被禁用
+- `Init`，传入`max_depth`，初始化`max_depth_`，`global_depth`，以及各个表项的信息。
+- `HashToBucketIndex`，传入`32`位无符号哈希值，算出对应第几个表项。从前面的讨论可以得到，取`hash % (1<<global_depth_)`即可。
+- `GetSplitImageIndex`，传入下标，获得其镜像`bucket`的下标。这里的镜像`bucket`指的是，前面进行`directory`扩容时，表项会翻倍，指向同一个`bucket`的表项数也会翻倍。每一个旧表项都会有一个新表项与它指向同一个`bucket`。这两个表项互为镜像。该项的`local_depth`已知，则当`local_depth`为零时，镜像为自己。否则镜像下标为`bucket_idx ^ (1<<(local_depth-1))`。无非是翻转一个二进制位。
+- `IncrGlobalDepth`，我这里把扩容操作一起做进来了。具体来说，假设原来的大小是`sz`，那么，`global_depth_++`之后，新的大小变为`sz*2`。其中的表项有`element[sz+i]=element[i]`，顺着复制表项即可。
+- `DecrGlobalDepth`，这里只需要`global_depth_--`。因为具体的缩容操作更复杂，需要在`bucket`层面才能执行。这里不需要清空数组多余的部分。
+- `CanShrink`，具体怎么缩容后面再说。这里只要记住，所有的`local_depth`都小于`global_depth`，则可以缩容。
+
+省略掉了一些简单的`getter`和`setter`。
+
+之后，我们来看`src/include/storage/page/extendible_htable_bucket_page.h`，首先同样是看`page`的布局
+
+```cpp
+/**
+* Bucket page format:
+*  ----------------------------------------------------------------------------
+* | METADATA | KEY(1) + VALUE(1) | KEY(2) + VALUE(2) | ... | KEY(n) + VALUE(n)
+*  ----------------------------------------------------------------------------
+*
+* Metadata format (size in byte, 8 bytes in total):
+*  --------------------------------
+* | CurrentSize (4) | MaxSize (4)
+*  --------------------------------
+*/
+```
+
+首先是`METADATA`，八个字节组成，分别是`bucket`的当前大小和最大大小。之后就是实际存储的键值对（KV）。每个键值对的键和值的大小不定（括号后面的是序号），具体存的什么数据，之后会介绍。
+
+直接来看成员函数
+
+- 所有构造函数和析构函数都被禁用
+- `Init`，负责初始化`max_size_`和`size_`
+- `LookUp`，传入`key`和比较`key`的比较函数，查找这个`bucket`里有没有`key`相等的元素，返回`value`。（本课程不考虑`key`冲突，也不考虑`multimap`这样的情况）
+- `Insert`，传入`key, value, cmp`，插入到`bucket`中，只要`key`没出现过并且空间还有空闲就可以插入。
+- `Remove`，传入`key, cmp`，删除`key`对应的元素。注意，删除的时候，要把后面的所有元素往前移动一个来填补空缺。因为我们的插入是顺着插入，找到第一个空闲就插入。
+
+省略掉其他的`getter`和`setter`，现在我们来讨论一下，它`bucket`里面的KV究竟是在存什么。
+
+在`extendible_htable_bucket_page.cpp`中，代码末尾有：
+
+```cpp
+template class ExtendibleHTableBucketPage<int, int, IntComparator>;
+template class ExtendibleHTableBucketPage<GenericKey<4>, RID, GenericComparator<4>>;
+template class ExtendibleHTableBucketPage<GenericKey<8>, RID, GenericComparator<8>>;
+template class ExtendibleHTableBucketPage<GenericKey<16>, RID, GenericComparator<16>>;
+template class ExtendibleHTableBucketPage<GenericKey<32>, RID, GenericComparator<32>>;
+template class ExtendibleHTableBucketPage<GenericKey<64>, RID, GenericComparator<64>>;
+```
+
+这样的模板特化。首先我们知道了，KV中的V是`RID`（第一个除外，应该只是用来调试的）。什么是`RID`？实际上，又可以看做是一种指针。`RID`存储了两个成员变量`page_id_`和`slot_num_`，也就是说，具体的数据是存在别的页中，存在序号为`slot_num_`的部分。这一部分具体可以阅读`src/include/common/rid.h`
+
+然后是前面的`GenericKey<>`是什么？他其实是一个包装的数组，当作哈希值来使用。这个数组里面可以存我们数据库里的具体的数据（称作`Tuple`，以后再说），也可以直接存整数值（仅用于测试意义）。`GenericKey<4>`代表数组长度为`4`（数组类型为`char[]`）。具体可见`src/include/storage/index/generic_key.h`。
+
+同样的这个文件里，定义了`GenericComparator<>`，具体做的事就是比较`GenericKey<>`之间的大小关系，当然，也就是通过比较数组，或者说比较`Tuple`来实现的。
