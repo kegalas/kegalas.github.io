@@ -11,6 +11,8 @@ markup: goldmark
 
 本笔记会记录一些`C++`中，自己以前不常用、不是很熟悉需要记录来复习的、新标准（相较于`C++11`）引入的、可能有用的功能。不适合详细阅读过某一本`C++`大部头教材的人，比较适合对于`C++`的知识只停留在算法竞赛的人。
 
+本文的内容大多是我看了`cppreference`、`hackingcpp.com`、`freegeektime.com`、知乎和各类博客网站的文章、部分经典教材后，加上自己的理解，写作而成的。
+
 # std::endl
 
 `std::endl`会立即刷新字符缓冲区，然后输出。但是`'\n'`不会。如果频繁地使用`std::endl`换行可能会导致性能问题，除非你非常确定这条消息在换行后必须要立即输出。
@@ -778,6 +780,442 @@ C++20可用，让`for(:)`也能反向遍历。
 ```cpp
 for (int x : v | std::views::reverse) { cout << x << '\n'; }
 ```
+
+# 泛型Lambda
+
+泛型lambda不需要`template`，只需要用`auto`即可，例如
+
+```cpp
+[] (auto a, auto b){ return a+b;}
+[] (auto const & a, auto const & b){ return a+b;}
+```
+
+# std::memcpy的重叠问题
+
+`memcpy`的定义如下：
+
+```cpp
+void* memcpy( void* dest, const void* src, std::size_t count );
+```
+
+其把`src`中的字节复制到`dest`中，但是，如果`src+count>dest`，就会出现重叠的问题。根据cppreference，这是未定义的。此时我们要使用`std::memmove`。它可以规避这个问题，标准规定其要如同复制字符到临时数组，再从该数组到`dest`一般发生复制。
+
+同时，cppreference补充说，尽管说明了“如同”使用临时缓冲区，此函数的实际实现并不会带来二次复制或额外内存的开销。对于小`count`，它可能加载并写入寄存器；对于更大的内存块，常用方法是若目标在源之前开始，则从缓冲区开始正向复制，否则从末尾反向复制，完全无重叠时回落到更高效的`std::memcpy`。 
+
+我自己看过gnu实现的标准库，确实是这样。内存中，若`dest`在`src`之前，就正向复制，否则，逆向复制类似于如下的循环
+
+```cpp
+for(int i=count-1;i>=0;i--){
+    dest[i] = src[i];
+}
+```
+
+# std::copy的重叠问题
+
+类似于上一节的纯C库，这个C++库也有这个问题。
+
+```cpp
+template< class InputIt, class OutputIt >
+OutputIt copy( InputIt first, InputIt last,
+               OutputIt d_first );
+```
+
+如果`d_first`在`[first, last)`中，行为未定义。此时用`std::copy_backward`替代（如果`d_last`在`[first, last)`中，则未定义，应该用`std::copy`）。
+
+# std::random_shuffle随机重排数组
+
+```cpp
+std::vector<int> v {0,1,2,3,4,5,6,7,8};
+std::random_shuffle(begin(v)+2, begin(v)+7);  
+```
+
+在pytorch中打乱数据集用到了类似的东西。
+
+# std::fill
+
+在某种意义上是比`memset`好的，`memset`是按字节赋值的，而`std::fill`是按元素赋值。比如
+
+```cpp
+int arr[100];
+std::fill(arr, arr+100, 100000);
+```
+
+这个是memset不方便做到的。
+
+# std::generate
+
+```cpp
+auto gen = [i=0]() mutable { i += 2; return i; };
+
+std::vector<int> v(7, 0);
+generate(begin(v)+1, begin(v)+5, gen);
+for (int x : v) { cout << x << ' '; }  // 0 2 4 6 8 0 0
+```
+
+即在迭代器的这个范围内，每个元素使用一次`gen`并对其赋值。
+
+# std::transform
+
+```cpp
+template< class InputIt, class OutputIt, class UnaryOp >
+OutputIt transform( InputIt first1, InputIt last1,
+                    OutputIt d_first, UnaryOp unary_op );
+```
+
+对每一个`[first1, last1)`中的元素使用一元函数`unary_op`，然后将值依次赋值给`d_first`开始的元素。
+
+```cpp
+template< class InputIt1, class InputIt2,
+          class OutputIt, class BinaryOp >
+OutputIt transform( InputIt1 first1, InputIt1 last1, InputIt2 first2,
+                    OutputIt d_first, BinaryOp binary_op );
+```
+
+对每一个`[first1, last1)`中的元素，和`first2`开始的对应元素，使用二元函数`binary_op`，然后将值依次赋值给`d_first`开始的元素。
+
+# std::accumulate和std::reduce
+
+二者都是进行`[first, last)`的加和（或自定义运算）的操作，区别在于`std::reduce`是可以并行化的。
+
+```cpp
+reduce(v.begin(), v.end()); // 执行累加，返回累加和，初值默认为T()
+reduce(v.begin(), v.end(), 1.0, std::multiplies<>{}); // 第三个参数为初值，第四个参数为运算。这里就是累乘
+```
+
+# std::tuple
+
+可以说是一个扩展维度的`std::pair`。使用例如下
+
+```cpp
+std::tuple<double, int, char> t{1.2, 3, 'a'};
+std::cout<<std::get<0>(t);
+std::cout<<std::get<1>(t);
+std::cout<<std::get<2>(t);
+```
+
+比`std::array`好的地方在于其可以有不同的元素类型。但是，用作函数返回值、参数可能不是一个很好的想法。因为可读性较差，不如`struct`。
+
+`std::tie`可以返回左值引用的元组。如下场景会比较好用
+
+```cpp
+struct S
+{
+    int n;
+    std::string s;
+    float d;
+ 
+    friend bool operator<(const S& lhs, const S& rhs) noexcept
+    {
+        // 比较 lhs.n 与 rhs.n,
+        // 然后为 lhs.s 与 rhs.s,
+        // 然后为 lhs.d 与 rhs.d
+        // 返回这个次序中第一个不相等的结果
+        // 或者当所有元素都相等时返回 false
+        return std::tie(lhs.n, lhs.s, lhs.d) < std::tie(rhs.n, rhs.s, rhs.d);
+    }
+};
+```
+
+以及，拆包函数返回值，
+
+```cpp
+std::tuple<int, int, double> foo(){
+    return {1, 2, 0.3};
+}
+
+int main(){
+    int a, b;
+    double c;
+    std::tie(a, b, c) = foo(); // 或者可以写 auto [a, b, c] = foo()，只不过前者可以在c++11后使用，后者只能在c++17后使用
+    return 0;
+}
+```
+
+# std::optional
+
+C++17引入的新工具，在以前，我们生成新的资源时，通常会返回指向该资源的指针。如果返回的是`nullptr`，则说明分配失败。更现代的方法是使用`std::optional`
+
+```cpp
+std::optional<std::string> create(bool b)
+{
+    if (b)
+        return "test";
+    return {}; // 等价于返回 std::nullopt
+}
+```
+
+检测返回的东西是否有效，可以像`bool`类型一样使用
+
+```cpp
+auto r = create(true);
+if(r){
+    //...
+}
+else{
+    //...
+}
+```
+
+也可以使用`r.has_value()`。如果要使用其包装的值，则可以使用如下两种办法
+
+```cpp
+r->push_back('b'); // 像指针一样使用
+r.value().push_back('c'); // 把值拿出来，再使用
+```
+
+# std::variant
+
+是在C++17提供的一种类型安全的联合体。一个 `std::variant` 的实例在任意时刻要么保有它的可选类型之一的值，要么在错误情况下无值。`union`的问题是，如果成员之一需要析构函数来释放资源，那么`union`定义的变量在结束生命周期时，不会自动调用析构函数。或者类似于，三个成员分别为`int,double,char*`的`union`，其被分配了一个`new char[]`给`char *`，那么在生命周期末尾时，不会自动调用`delete []`去释放空间。`std::variant`的出现解决了这个问题
+
+```cpp
+std::variant<int, double, std::string> x, y;
+x = 1;
+y = "test";
+x = 2.0;
+```
+
+`std::variant`的变量在同时只能拥有一个具体的类型。如上，`x`不是`int`，就是`double`或者`std::string`。不过，可以方便地通过重新赋值的方式改变其具体类型。如果要知道当前的是哪种类型，可以通过
+
+```cpp
+x.index()
+```
+
+来获取，是`int`就返回`0`，`double`就返回`1`，即为声明时的下标，以此类推。
+
+获取值可以用
+
+```cpp
+std::get<double>(x);
+std::get<1>(x);
+```
+
+来获取当前的值。如果试图获取非当前类型的值，就会抛出异常
+
+```cpp
+try
+{
+    std::get<int>(x); // x 含 double 而非 int：会抛出异常
+}
+catch (const std::bad_variant_access& ex)
+{
+    std::cout << ex.what() << '\n';
+}
+```
+
+如果获取本就不可能存在的值，则会编译报错，例如`std::get<float>, std::get<3>`。当然，不想抛异常的话，可以使用
+
+```cpp
+int *i = std::get_if<int>(&x);
+if(i==nullptr){}
+else{}
+```
+
+# std::any
+
+实现了一种类似于`python`的动态类型，可以把任何可复制构造类型的单个值放在里面。
+
+```cpp
+std::any a = 1;
+std::cout << a.type().name() << ": " << std::any_cast<int>(a) << '\n';
+a = 3.14;
+std::cout << a.type().name() << ": " << std::any_cast<double>(a) << '\n';
+a = true;
+std::cout << a.type().name() << ": " << std::any_cast<bool>(a) << '\n';
+```
+
+有点类似于C语言中的`void *`，想赋值什么就赋值什么，需要的时候再转成具体类型（对应这里的`std::any_cast<...>(...)`）。当然，这里可能会有转换失败的场景，会抛出异常。
+
+```cpp
+try
+{
+    a = 1;
+    std::cout << std::any_cast<float>(a) << '\n';
+}
+catch (const std::bad_any_cast& e)
+{
+    std::cout << e.what() << '\n';
+}
+```
+
+可以通过`has_value`来检测有没有值，`reset`来清除值。
+
+# C++构建模型
+
+基本上都是继承C语言的框架，C++的源码文件也分为头文件`.h, .hpp`和翻译单元（Translation Units，TUs）`.cpp, .cc, .cxx`两部分。编译成可执行文件的流程，可以看下图
+
+![1.jpg](1.jpg)
+
+预处理器一般是进行文本替换的，就是把翻译单元中`#define`，`#include`的内容换成对应的内容等操作。然后送进编译阶段，将翻译单元转换成汇编，再转成目标文件。最后通过链接器将各个目标文件链接成可执行文件（主要负责将机器码组合，以及确定函数调用的地址等）。
+
+可以通过
+
+```bash
+g++ -E A.cpp -o A.i # 生成预处理后的结果
+g++ -S A.cpp -o A.s # 生成编译后的汇编代码
+g++ -c A.cpp -o A.o # 生成编译后的目标文件
+```
+
+# 重复include导致的编译错误
+
+重复`include`会导致重复定义，从而无法通过编译，例如
+
+```cpp
+// a.h
+void foo(){}
+```
+
+```cpp
+// b.h
+#include "a.h"
+void bar(){
+    foo();
+}
+```
+
+```cpp
+// c.cpp
+#include "a.h"
+#include "b.h"
+
+int main(){
+    foo();
+    bar();
+}
+```
+
+在预处理过后，`c.cpp`就会变成
+
+```cpp
+//这部分来源于a.h
+void foo(){}
+
+//这部分来源于b.h
+void foo(){}
+void bar(){
+    foo();
+}
+
+int main(){
+    foo();
+    bar();
+    return 0;
+}
+```
+
+于是`foo()`就重复定义了，编译报错。一般来说处理办法是
+
+```cpp
+// a.h
+#ifndef A_H
+#define A_H
+
+void foo(){}
+
+#endif
+```
+
+```cpp
+// b.h
+#ifndef B_H
+#define B_H
+
+#include "a.h"
+void bar(){
+    foo();
+}
+
+#endif
+```
+
+这样在其他文件里就可以随意`include`了。
+
+# 重复include导致的链接报错
+
+发生在如下情况
+
+```cpp
+// foo.h
+void foo(){}
+```
+
+```cpp
+// a.cpp
+#include "foo.h"
+void bar1(){
+    foo();
+}
+```
+
+```cpp
+// b.cpp
+#include "foo.h"
+void bar2(){
+    foo();
+}
+```
+
+如果，最终需要把`a.cpp`和`b.cpp`链接在一起形成一个可执行文件，那么，由于两个目标文件中都有一份`foo()`的完整定义，链接器就不知道具体调用的是哪个`foo`，产生报错。
+
+解决办法：
+
+1. 新建一个`foo.cpp`，头文件中只声明，`foo.cpp`中定义，让其他两个目标文件来链接它
+2. 使用`inline`
+3. 使用`namespace{}`（匿名）
+
+```cpp
+inline void foo(){}
+```
+
+```cpp
+namespace{
+    void foo(){}
+}
+```
+
+其中前一种被称作`External Linkage`，后面这两种称为`Internal Linkage`
+
+类似的，`static`类型的成员变量（但其实大部分`static`并不是外部链接），也是默认进行外部链接，需要把定义和声明分在两个文件里。否则需要使用`static inline`变量，才可以直接在头文件里定义。
+
+具体有哪些东西是外部链接，哪些东西是内部链接，可以看[https://zh.cppreference.com/w/cpp/language/storage_duration](https://zh.cppreference.com/w/cpp/language/storage_duration)
+
+# 使用namespace来防止命名冲突
+
+```cpp
+namespace n1{
+    class set{...};
+}
+
+namespace n2{
+    class set{...};
+}
+
+```
+
+如上，区分了两种不同的`set`，也和`std::set`区分开。
+
+`namespace`可以嵌套。可以通过`using n1::set`，来免去前置的命名空间说明，直接使用`set`来表示`n1`中的`set`。可以使用`using namespace n1`来导入整个`n1`中的东西。区别相当于python中的`from n1 import set`和`from n1 import *`之间的区别。
+
+可以使用`using sc = std::chrono`来给命名空间取别名，当然我也常用`using LL = long long`来给类型取别名。
+
+# inline namespace
+
+标准的描述是：命名空间内的声明将在它的外围命名空间可见。例如
+
+```cpp
+namespace n1{
+    inline namespace current{
+        class A{...};
+    }
+    namespace old{
+        class A{...};
+    }
+}
+
+n1::A a; // 调用的current的A
+n1::old::A aa;
+```
+
+用在这里，可以说是一种嵌套命名空间中的默认值，默认使用最新版本。
 
 # RTTI
 
