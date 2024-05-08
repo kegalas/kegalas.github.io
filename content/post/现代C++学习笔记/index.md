@@ -440,7 +440,51 @@ if(p!=nullptr){}
 
 所以说，我更推荐`T const`的写法，而不是`const T`。但是我们也要知道，`const T *`是修饰值不可变。
 
-# 智能指针 TODO
+# 智能指针
+
+C++11后只有三种智能指针，`unique_ptr`，`shared_ptr`，`weak_ptr`。还有一种`auto_ptr`已经移除。智能指针可以方便管理资源的所有权，以及提供对于资源的RAII。
+
+`unique_ptr`，如同名字一样，是独占资源的。在实现上，他只能移动构造和赋值，而不能拷贝构造和赋值，保证了其所有权无法复制，同一时间只能有一个`unique_ptr`拥有该资源的所有权。
+
+```cpp
+std::unique_ptr<int> p = std::make_unique<int>(1);
+std::cout<<*p<<"\n"; // 输出1
+```
+
+这里的`p`就独占了一个`int`对象的所有权。
+
+```cpp
+auto p2 = p; // 报错，无法拷贝构造
+auto p3 = std::move(p); // 可以编译，p3获得所有权而p失去所有权
+```
+
+在`make_unique`时（C++14之后），相当于调用了`unique_ptr<T>(new T(std::forward<Args>(args)...))`。然后在`unique_ptr`生命周期结束（和所有权转移）时，会自动调用删除器来释放资源。默认的删除器通过`delete`实现，即对其包装的指针进行`delete`。
+
+`shared_ptr`，也如同名字一样，允许多个`shared_ptr`拥有同一个资源。在实现上，他可以移动构造移动赋值，也可以拷贝构造和拷贝赋值。其RAII的实现方法是，加入一个引用计数器，表明有多少`shared_ptr`在使用这个资源，每次复制时计数器加一，每当一个`shared_ptr`析构时计数器减一。如果计数器归零，那么销毁分配的对象。
+
+`weak_ptr`，它的出现是为了解决`shared_ptr`中的一个问题。假如我们有一个双向链表，它支持多个线程来读数据，所以我们理所当然地使用`shared_ptr`来管理其中的指针（例如`next`和`prev`）。但是在某种情况下就有问题，假设我们在局部作用域分配了一个链表，插入两个元素，然后就等待作用域结束后析构。此时会发生内存泄漏，为什么呢？
+
+我们就分析这两个节点的引用计数。其中第一个节点被`head`和第二个节点的`prev`指针指向，而第二个节点被`tail`和第一个节点的`next`指针指向。当`list`析构时，`list`只包含`head`和`tail`指针，这两个`shared_ptr`析构，将两个节点的计数器各减一，但是两个节点仍然互相有指针指向对面，所以两个节点的计数器都为一。所以两个节点无法自动销毁，造成内存泄漏。
+
+`weak_ptr`的思想在于，创建一个弱引用，不增加引用计数器的值。当我们需要使用被管理的对象时，手动转换成`shared_ptr`（此时计数器加一），再进行使用。而使用结束后再变回弱引用（计数器减一）。
+
+```cpp
+std::weak_ptr<int> wp;
+{
+    auto sp = std::make_shared<int>(42);
+    wp = sp;
+
+    std::cout<<wp.use_count()<<"\n";// 输出1
+    if(std::shared_ptr<int> spt = wp.lock()) // 需要手动转化shared_ptr
+        std::cout<<*spt<<"\n";
+}
+std::cout<<wp.use_count()<<"\n";// 输出0
+if(std::shared_ptr<int> spt = wp.lock()) // spt为nullptr
+    std::cout<<*spt<<"\n";
+
+```
+
+对于上面所说的链表，只需要把内部的`next`和`prev`换成`weak_ptr`即可解决问题。
 
 # this指针
 
@@ -1217,10 +1261,94 @@ n1::old::A aa;
 
 用在这里，可以说是一种嵌套命名空间中的默认值，默认使用最新版本。
 
+# friend
+
+`friend`关键词提供了一种让其他类、函数访问自己私有成员的方法。例如
+
+```cpp
+class A{
+    friend class B;
+    friend void foo(A const &);
+};
+```
+
+标准规定，如果在非局部的类定义中，定义一个友元函数（而非仅仅声明），那么他是一个非成员函数。可以通过函数名直接从外部调用
+
+```cpp
+class A{
+    friend void bar(){} // 非成员函数
+};
+
+bar();// 直接调用
+```
+
+# public, protected, private
+
+用在成员声明时，`public`声明的成员可在任意位置访问；`protected`成员只能被该类成员、友元、子类的成员和友元访问；`private`成员只能被该类成员和友元访问。注意这里说的都是类的成员，而不要求必须是同一个实例才能访问自己的`private`成员，同一类的各个实例可以访问各自的`private`
+
+用在继承时，代表了三种继承方式。`public`继承时，保留父类的成员访问说明符；`protected`继承时，父类的`public`成员在子类中转为`protected`；`private`继承时，所有父类成员在子类中都是`private`的。注意，如果不提供继承方式，则默认为`private`继承。
+
+# override标识符
+
+这是一个可选的标识符，使用或者不使用并不影响子类函数是否复写基类函数。只要签名一致，并且该父类函数是`virtual`函数，就会复写。但是，他是一种检测手段，写在子类函数中，如果忘写`virtual`，或者签名不一致，就会编译报错（因为没有复写任何函数）。
+
+# 析构函数务必声明为virtual
+
+原因是，如果使用父类指针指向子类实例，在析构时，应当通过多态来调用子类的析构函数。如果没有声明为`virtual`，那么就会调用父类的析构函数，从而无法对子类析构，从而内存泄漏。
+
+# final标识符
+
+`class A final : public B{};`代表这个类`A`无法被继承
+
+```cpp
+class A : public B{
+public:
+    void print() const override final;
+};
+```
+
+代表这个`print`无法被子类复写。
+
+# 不要继承成员变量，组合优于继承
+
+这是一种设计规范，即父类不应该设置成员变量。原因在于，子类并不一定会用上所有的父类成员变量，这会导致浪费内存。并且，子类实现可能和父类成员变量有冲突。与直接在父类中定义数据相反，我们应该单独定义一个数据的类。
+
+```cpp
+class A{
+public:
+    // 只定义一些函数接口
+};
+
+class Data{};
+
+class B : public A{
+public:
+    // ...
+private:
+    Data d_;
+};
+
+class C : public A{
+public:
+    // ...
+    // 假设C无须数据，就不需要声明
+};
+```
+
+# 不要在构造函数里调用virtual函数
+
+我们都知道，构造的时候会从父类一路构造下来。所以，如果在构造函数里调用`virtual`函数，则会调用父类的函数。
+
 # RTTI
+
+全称Runtime type identification，即运行时类型识别。如果我们想要知道父类指针具体指向了哪种对象，就需要用到这个东西。这里用到的关键词是`typeid`
+
+如果指针指向的是同一种对象，那么`typeid(a)==typeid(b)`。如果指向不同的子类对象，或者一个指向父类一个指向子类，那么`typeid(a)!=typeid(b)`。用`typeid(a).name()`可以输出具体类型的名字，不过这个名字被编译器加工过，不是你声明的类名。
+
+# 移动语义
 
 todo
 
-# typeid().name()
+# copy & swap
 
-TODO
+todo
