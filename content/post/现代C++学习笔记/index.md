@@ -133,27 +133,89 @@ cout << sv2;
 - 如果你想要修改实参，则显然必须加且只加`&`传入引用（例如swap函数）
 - 如果你传入的复制开销很大（例如一个图片类），又不需要修改，加`const &`
 
-# 左值、右值（初步）
+# 左值、纯右值、亡值
 
-**左值**
+![2.jpg](2.jpg)
 
-左值指的是可以获取地址的表达式，例如变量、函数形参等。
+曾经是只有左值和右值的。左值意味着可以取地址，而右值意味着不可以取地址。叫左值右值则是因为左值一般在赋值号左边，而右值在右边。
 
-**右值**
+现代C++中，值类别必定属于三者其一：左值、亡值、纯右值。
 
-右值正好相反，就是不可获取地址的表达式。例如字面常量（除了字符串字面量），操作符的临时结果（例如`a=b+c;`中的`b+c`），函数的返回值。
+**左值（lvalue）**
 
-具体什么是右值什么是左值可以在[https://zh.cppreference.com/w/cpp/language/value_category](https://zh.cppreference.com/w/cpp/language/value_category)查询。这里面还介绍了纯右值，亡值，将来我会出一篇博客介绍（TODO）。
+左值是有标识符、可以取地址的表达式。例如变量名、函数名确定的值。返回类型为左值引用的函数返回的值（除了自定义的，还有赋值运算符、`++a`、`--a`）。字符串字面量（`const char*`类型的左值）
+
+**纯右值（prvalue）**
+
+右值正好相反，就是没有标识符、不可获取地址的表达式。例如字面常量（除了字符串字面量），操作符的临时结果（例如`a=b+c;`中的`b+c`）（其实可以归类为下一条的），函数的返回值（除了返回左值引用和右值引用的）（例如`x++`）。
+
+但是，右值引用变量，是一个左值。因为它再怎么说也是一个变量。
+
+**亡值（xvalue）**
+
+可以看作是有名字的右值，跟无名的纯右值区分开。所以实际上`std::move(x)`这样的函数，返回的是亡值。返回类型是对象的右值引用的函数调用，返回的都是亡值。
+
+**泛左值（glvalue）**
+
+即左值和亡值。其特点是有标识符。但左值不可移动而亡值可移动。
+
+**右值（rvalue）**
+
+即纯右值和亡值。其特点是可移动。但亡值有标识符而纯右值没有。
 
 **&引用**
 
-`&`只能引用左值。也就是说`void fun(int & a);`这个函数，你传入`fun(1);`会编译失败，但是`int b=1;fun(b);`是可以编译成功的。
+`&`只能引用左值。也就是说`void fun(int & a);`这个函数，你传入`fun(1);`会编译失败，但是`int b=1;fun(b);`是可以编译成功的。引用本身是个左值。
 
 **const &引用**
 
-`const &`既可以引用左值，又可以引用右值。
+`const &`既可以引用左值，又可以引用右值。其本身是一个左值。
 
-左右值的名称是来源于它们在与等号的位置关系，一般情况下左值在等号左边，右值在等号右边。不过不能用一个东西能否被赋值去判断左右值。最好的办法是看能否被引用。
+**&&引用**
+
+即右值引用，只能绑定右值。本身是个左值。
+
+如果函数重载里只有`const &`，那么传入右值会调用这个函数重载。如果重载有`&&`形式的，那么会优先调用`&&`形式的重载。这种特性允许了移动构造函数的存在。
+
+**转发引用（万能引用）**
+
+这个只会出现在模板中
+
+```cpp
+template<class T>
+int f(T&& x){                  // x 是转发引用
+    return g(std::forward<T>(x)); // 从而能被转发
+}
+```
+
+见后写的完美转发部分。
+
+# 右值引用（或常左值引用）延长生命周期
+
+```cpp
+std::string s1 = "test";
+std::string const & s2 = s1+s1; // 这个右值的生命周期被延长到和s2一样，但是不可修改
+std::string && s3 = s1+s1; // 同上，但是可修改
+```
+
+但是，延长生命周期只能对纯右值使用，而不能对亡值使用。例如`A && x = std::move(y)`，此时对`x`进行解引用，是未定义行为。因为`y`已经析构。
+
+# 移动语义
+
+把一头大象从一台冰箱里移动到另一台冰箱里需要几步？C++曾经的做法是，首先完整地在冰箱B里复制一个一模一样的大象，然后蒸发掉冰箱A中的大象。
+
+正常人的想法是，把大象从A中拉出来，把大象推进B冰箱中，关上冰箱门。
+
+C++11的移动语义实现了这个正常人的想法。例如
+
+```cpp
+std::vector<int> v1{1,2,3,4,5,6};
+std::vector<int> v2(std::move(v1));
+```
+
+可以把`v1`移动到`v2`中，而非拷贝一个一样的到`v2`中。发挥了关键作用的是`std::move`和其对应的移动构造（和移动赋值）函数。
+
+注意，`std::move`仅仅是将一个值强制转换到右值（亡值），而不进行其他操作。真正的移动行为是在移动构造（和移动赋值）函数中实现的。
 
 # 小心返回引用的函数
 
@@ -485,6 +547,29 @@ if(std::shared_ptr<int> spt = wp.lock()) // spt为nullptr
 ```
 
 对于上面所说的链表，只需要把内部的`next`和`prev`换成`weak_ptr`即可解决问题。
+
+# make_shared和make_unique
+
+[https://zh.cppreference.com/w/cpp/memory/unique_ptr/make_unique](https://zh.cppreference.com/w/cpp/memory/unique_ptr/make_unique)，其中指出，`make_unique`和`unique_ptr<T>(new ...)`是等价的。但我觉得下面关于`make_shared`的几点也适用于`make_unique`
+
+而[https://zh.cppreference.com/w/cpp/memory/shared_ptr/make_shared](https://zh.cppreference.com/w/cpp/memory/shared_ptr/make_shared)中指出，`make_shared`和`shared_ptr<T>(new ...)`是有略微的区别的：
+
+1. 因为`shared_ptr`有引用计数器，所以使用`shared_ptr<T>(new ...)`会先`new`出一个对象，然后再`new`一个控制块。这就是两次`new`，并且这两次的内存是可能不连续的。而`make_shared`只进行一次`new`并且控制块和对象连续分配（标准推荐而非强制）
+2. `make_shared`创造出来的资源，在所有`shared_ptr`生命期结束后，如果还有`weak_ptr`引用，则该资源会持续存在，直到所有`weak_ptr`结束。
+3. 如果当前语境可以访问非公开构造函数，那么`shared_ptr<T>(new ...)`可以正常使用。但`make_shared`只能调用公开的构造函数。
+4. `make_shared`不能自定义删除器
+5. `make_shared`使用`::new`，如果类重载了`new`运算符，则不同于`shared_ptr<T>(new ...)`
+
+# placement new
+
+`A *p = new A;`完成了两个操作首先是在堆上分配了一块内存，然后将`A`在这块内存上默认构造。
+
+而placement new做的操作是，给定一块内存的首地址，在这块内存上构造对象。这样，我们就可以在栈上构造对象了。这样做的好处可以参考内存池，如果有一块内存可以复用，就不用反复分配内存了，节约开销。
+
+```cpp
+char mem[100];
+A *p = new (mem) A;
+```
 
 # this指针
 
@@ -1339,16 +1424,100 @@ public:
 
 我们都知道，构造的时候会从父类一路构造下来。所以，如果在构造函数里调用`virtual`函数，则会调用父类的函数。
 
+# 不能被继承的成员函数
+
+分别是构造函数、析构函数、赋值运算符、友元函数。
+
+不过构造函数可以委托构造，并且在构造子类时，会从祖先一路构造下来。析构子类时，会从子类往上析构所有祖先。
+
 # RTTI
 
 全称Runtime type identification，即运行时类型识别。如果我们想要知道父类指针具体指向了哪种对象，就需要用到这个东西。这里用到的关键词是`typeid`
 
 如果指针指向的是同一种对象，那么`typeid(a)==typeid(b)`。如果指向不同的子类对象，或者一个指向父类一个指向子类，那么`typeid(a)!=typeid(b)`。用`typeid(a).name()`可以输出具体类型的名字，不过这个名字被编译器加工过，不是你声明的类名。
 
-# 移动语义
+# C++四个异常安全等级
 
-todo
+从子集到超集排列的话
+
+1. 不抛出。函数始终不会抛出异常。c++中`noexcept`表示此等级，析构函数默认是`noexcept`的。`swap`、移动构造函数、及为提供强异常保证所使用的其他函数，都被期待为不会失败（函数总是成功）。 
+2. 强异常保证。如果函数抛出异常，那么程序的状态会恰好被回滚到该函数调用前的状态。（例如 std::vector::push_back）。
+3. 基本异常保证。如果函数抛出异常，那么程序处于某个有效状态。不泄漏任何资源，且所有对象的不变式都保持完好。 
+4. 无异常保证。如果函数抛出异常，那么程序可能不会处于有效的状态：可能已经发生了资源泄漏、内存损坏，或其他摧毁不变式的错误。 
+
+# 普通构造和拷贝构造是可以抛异常的，但是移动构造和析构最好noexcept
+
+[https://isocpp.org/wiki/faq/exceptions#ctor-exceptions](https://isocpp.org/wiki/faq/exceptions#ctor-exceptions)，[https://isocpp.org/wiki/faq/exceptions#ctors-can-throw](https://isocpp.org/wiki/faq/exceptions#ctors-can-throw)
+
+这里说明，当你无法正确初始化时，就可以抛出异常。如果构造函数通过抛出异常来结束，那么与对象本身相关联的内存就会被清理掉——不存在内存泄漏。另外，如果在抛出之前，构造函数已经进行了一些在失败时需要修改的操作，也是需要恢复的。更好的办法是使用`shared_ptr`之类的包装类，在失败时会自动恢复原状。
+
+移动构造函数只是推荐`noexcept`，但是析构理应`noexcept`，否则会出现很多糟糕的情况。
+
+当析构失败的时候，上面的网站提到，最好就是记录日志，终止程序，但是不要抛异常。
+
+# vector的元素最好有noexcept的移动构造函数
+
+因为`vector`通常有强异常保证，如果元素不拥有`noexcept`的移动构造函数，那么`vector`就会用拷贝构造函数。这在`vector`内部的元素移动时会有很大的性能开销。
 
 # copy & swap
 
-todo
+具体可看[https://stackoverflow.com/questions/3279543/what-is-the-copy-and-swap-idiom/3279550#3279550](https://stackoverflow.com/questions/3279543/what-is-the-copy-and-swap-idiom/3279550#3279550)，我这里也简单解释下。
+
+这里以一个拷贝赋值运算符为例
+
+```cpp
+array& operator=(array const & other){
+    if(this==&other) return *this;
+    delete [] data_;
+    data_ = nullptr;
+
+    size_ = other.size_;
+    data_ = mSize_ ? new int[size_] : nullptr;
+    std::copy(other.data_, other.data_ + size_, data_);
+}
+```
+
+这里有几个问题：
+
+1. 首先是判断是否自赋值。众所周知，条件分支会降低CPU的效率，而实际工程中，出现自赋值的情况是比较少的，所以CPU的周期被白白浪费在了这个判断上。
+2. 这不提供强异常保证。如果`new`的时候失败了，不仅自己的`size_`被改了，自己之前的`data_`更是消失了。无法再分配失败之后保持之前的状态。
+3. 代码整体和拷贝构造函数很像，累赘。
+
+更好的方法如下
+
+```cpp
+class array{
+public:
+    //...
+    friend void swap(array& first, array& second) noexcept {
+        using std::swap;
+
+        swap(first.size_, second.size_);
+        swap(first.data_, second.data_);
+    }
+
+    array(array const & other): size_(other.size_), 
+                                data_(size_?new int[size_]:nullptr){
+        std::copy(other.data_, other.data_ + size_, data_);
+    } // 即使分配失败，也不会内存泄漏，更不会改变原有的状态（因为没有原有的状态）
+
+    array& operator=(array other){ // 在参数中拷贝构造了，少写代码
+        swap(*this, other); 
+        return *this;
+    }
+private:
+    std::size_t size_;
+    int* data_;
+};
+```
+
+在`c++11`之后还可以方便地实现移动构造
+
+```cpp
+array(array && other) noexcept
+    : array(){
+    swap(*this, other);
+}
+```
+
+# 完美转发，类型折叠
