@@ -153,15 +153,15 @@ cout << sv2;
 
 **亡值（xvalue）**
 
-可以看作是有名字的右值，跟无名的纯右值区分开。所以实际上`std::move(x)`这样的函数，返回的是亡值。返回类型是对象的右值引用的函数调用，返回的都是亡值。
+可以看作是有名字、有地址的右值，跟无名的纯右值区分开。所以实际上`std::move(x)`这样的函数，返回的是亡值。返回类型是对象的右值引用的函数调用，返回的也都是亡值。
 
 **泛左值（glvalue）**
 
-即左值和亡值。其特点是有标识符。但左值不可移动而亡值可移动。
+即左值和亡值。其特点是有标识符，有地址。但左值不可移动而亡值可移动。
 
 **右值（rvalue）**
 
-即纯右值和亡值。其特点是可移动。但亡值有标识符而纯右值没有。
+即纯右值和亡值。其特点是可移动。但亡值有标识符和地址而纯右值没有。
 
 **&引用**
 
@@ -281,7 +281,11 @@ Point p2 = p1;
 
 ## 拷贝构造函数
 
+todo
+
 ## 赋值构造函数
+
+todo
 
 # argc, argv
 
@@ -368,27 +372,6 @@ std::cout<<Vec(2.0,3.0)<<"\n";//可以像对int一样使用cin cout
 ```
 
 主要是方便打印、输入数据，例如你在编写一个数值计算库，需要用到很多向量、矩阵的输出。
-
-# mutable和const的成员函数
-
-```cpp
-class Vec{
-public:
-    double x,y;
-    int mutable sth;
-    int sth2;
-
-    void foo() const {
-        sth++;//不会报错
-    }
-
-    void bar() const{
-        sth2++;//会报错
-    }
-};
-```
-
-把类成员函数用const修饰（放在参数列表之后），意味着，这个函数声称不会改变类内的所有成员变量的值。如果你想让几个特例可以修改，那么就把那个特例变量声明为mutable的即可。
 
 # 类成员初始化
 
@@ -487,6 +470,90 @@ if(p!=nullptr){}
 
 如果你懒得管，那么就永远使用nullptr。
 
+# C++四种类型转换
+
+之前有隐式转换、C风格强制转换`(int)a`、函数风格转换`int(a)`，C++提供了四个新的类型转换来规避老的显式转换的一些问题。这四种转换是关键词，而非stl库。
+
+- `static_cast<type>(exp)`，将`exp`转换为`type`类型。没有运行时类型检查来保证转换的安全性。主要用于基本类型的转化，例如`double`转`int`。
+- `dynamic_cast<type>(exp)`，主要用于子类父类指针之间的转化，见后。
+- `const_cast<type>(exp)`，用于修改变量的`cv`属性。`type`和`exp`应当具有同样的“类型”，只是`cv`修饰不同。
+- `reinterpret_cast<type>(exp)`，用于将指针地址转为整数，或者反过来。
+
+在子类父类指针的转换中，`static_cast`把子类指针转为父类指针是安全的，而反过来向下转换是不安全的。而`dynamic_cast`两者都可以进行。上行时等价于`static_cast`，下行时加入了类型检查的功能，更加安全
+
+```cpp
+Derive* d1 = new Derive();
+cout << "d1: " << d1 << endl;
+Base* b1 = dynamic_cast<Base*>(d1);
+cout << "b1: " << b1 << endl; // 这里的内存地址和上面的是一样的
+
+Base* b2 = new Base();
+cout << "b2: " << b2 << endl;
+Derive* d2 = dynamic_cast<Derive*>(b2);
+cout << "d2: " << d2 << endl; // 这里是nullptr，而非b2的地址。
+// 如果使用是父类引用转化为子类引用，会抛出std::bad_cast
+// 只有当b2本来就指向一个Derive时，转化才会成功
+// 如果是static_cast，则不会抛出，也不会在失败时nullptr。只有当b2指向Derive时，程序才会符合预期。否则之后可能会调用不存在的成员。
+```
+
+# cv限定符
+
+即`const`和`volatile`类型限定符，其中`const`用于定义类型为常量类型，`volatile`用于定义易变类型。
+
+`const`意味着，这种对象不能被修改。直接修改时，编译报错。间接修改时（如通过指针修改），行为未定义。
+
+`volatile`意味着，每次对该变量的访问都可能造成副作用。编译器不应该对其进行优化（例如连续两次读取优化为一次）。例如，不能简单地放到寄存器里应对多次连续访问，而是每次访问都要去内存里面去取，防止其值变化（例如被外部设备修改）。间接通过非`volatile`变量访问`volatile`变量是未定义的。
+
+`const volatile`，从前面的定义看得出来，这两个限定符不冲突，可以同时使用。
+
+函数类型本身不存在`cv`限定，但是函数可以返回`cv`限定类型，也有“cv限定函数”类型。如果有任何 cv 限定符被添加到到函数类型的别名，那么它会被忽略。
+
+`cv`限定函数指的是在非静态成员函数中使用的`cv`限定。例如
+
+```cpp
+class A{
+public:
+    void foo() {}
+    void foo() const {}
+    void foo() volatile {}
+    void foo() const volatile {}
+};
+```
+
+这个可以用于函数重载，其重载决议取决于`*this`的类型，如果`*this`是`const`的，那么调用`foo()`调用的就是`void foo() const {}`，以此类推。或者说`A const a;`调用的也是这个函数。`const`的成员函数意味着不能修改内部变量，除非有`mutable`修饰。
+
+注意，我个人觉得把`const`称作常量是有些误导的，应该称作不变量。并不是所有`const`都可以用在常量表达式、模板实参中的。例如
+
+```cpp
+int n;
+std::cin>>n;
+int const sz = n;
+std::array<int, sz> ar; // 报错
+```
+
+这里的`sz`仍然是运行时确定的，并不是一个编译期常量。真正应该被叫做常量的应该是`constexpr`，见后。
+
+# mutable和const的成员函数
+
+```cpp
+class Vec{
+public:
+    double x,y;
+    int mutable sth;
+    int sth2;
+
+    void foo() const {
+        sth++;//不会报错
+    }
+
+    void bar() const{
+        sth2++;//会报错
+    }
+};
+```
+
+把类成员函数用const修饰（放在参数列表之后），意味着，这个函数声称不会改变类内的所有成员变量的值。如果你想让几个特例可以修改，那么就把那个特例变量声明为mutable的即可。
+
 # const与指针
 
 众所周知，在指针类型的声明里，const放的位置不同会导致语义的不同。主要是指针是否可变，以及指针指向的内容是否可变。 如下表
@@ -501,6 +568,47 @@ if(p!=nullptr){}
 简单来说就是const在星号右边则指针自己不可变，在左边则所指内容不可变。也可以理解为，const修饰的是它左边的东西。要么修饰指针（即星号），要么修饰值（即T）
 
 所以说，我更推荐`T const`的写法，而不是`const T`。但是我们也要知道，`const T *`是修饰值不可变。
+
+# 成员函数引用限定符
+
+类似于`cv`限定的成员函数。不过引用限定不影响`*this`的性质，`*this`都是左值表达式。可以和`cv`限定同时使用
+
+```cpp
+#include <iostream>
+ 
+struct S
+{
+    void f() &  { std::cout << "左值\n"; }
+    void f() && { std::cout << "右值\n"; }
+};
+ 
+int main()
+{
+    S s;
+    s.f();            // 打印“左值”
+    std::move(s).f(); // 打印“右值”
+    S().f();          // 打印“右值”
+}
+```
+
+# constexpr
+
+有`constexpr`修饰的变量是一个真正的编译期确定的常量。有`constexpr`修饰的函数，在传入的参数都是编译期常量时，返回一个编译期常量。也就是说，这种函数也可以当做普通函数来使用，只不过返回的值是不是编译期常量，是根据传入的参数来决定的。
+
+`constexpr`声明的对象成员蕴含`const`，函数声明中的`constexpr`蕴含了`inline`。
+
+举个例子，
+
+```cpp
+constexpr int foo(int n){
+    return n+1;
+}
+int main(){
+    constexpr int n = foo(1);
+    std::array<int, n> ar;
+    return 0;
+}
+```
 
 # 智能指针
 
@@ -1520,4 +1628,51 @@ array(array && other) noexcept
 }
 ```
 
-# 完美转发，类型折叠
+# 实参依赖查找（ADL）
+
+简单理解来说，如果在函数调用的上下文中找不到该函数的定义，C++就会从实参的命名空间中查找该函数的定义。例如
+
+```cpp
+#include <iostream>
+int main()
+{
+    std::cout << "测试\n"; // 全局命名空间中没有 operator<<，但 ADL 检验 std 命名空间，
+                           // 因为左实参在 std 命名空间中
+                           // 并找到 std::operator<<(std::ostream&, const char*)
+    operator<<(std::cout, "测试\n"); // 同上，用函数调用记法
+ 
+    // 然而，
+    std::cout << endl; // 错误：'endl' 未在此命名空间中声明。
+                       // 这不是对 endl() 的函数调用，所以不适用 ADL
+ 
+    endl(std::cout); // OK：这是函数调用：ADL 检验 std 命名空间，
+                     // 因为 endl 的实参在 std 中，并找到了 std::endl
+ 
+    (endl)(std::cout); // 错误：'endl' 未在此命名空间声明。
+                       // 子表达式 (endl) 不是函数调用表达式
+}
+```
+
+# 完美转发，引用折叠
+
+正如前面所说，
+
+```cpp
+template<class T>
+int f(T&& x){                  // x 是转发引用
+    return g(std::forward<T>(x)); // 从而能被转发
+}
+```
+
+模板中的`T&&`是一个转发引用。当我们传入`int & a`时，`T`实际上就是`int &`，于是函数调用就变成了`int & &&`这样的类型，此时它是左值引用还是右值引用呢？这就要引入类型折叠。
+
+C++规定：`type & &, type & &&, type && &`都变成左值引用`type &`，`type && &&`仍然是右值引用`type &&`。那如果我们
+
+```cpp
+template<class T>
+int f(T&& x){
+    return g(x);
+}
+```
+
+
