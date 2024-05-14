@@ -1659,20 +1659,629 @@ int main()
 
 ```cpp
 template<class T>
-int f(T&& x){                  // x 是转发引用
-    return g(std::forward<T>(x)); // 从而能被转发
+void f(T&& x){                  // x 是转发引用
+    g(std::forward<T>(x)); // 从而能被转发
 }
 ```
 
 模板中的`T&&`是一个转发引用。当我们传入`int & a`时，`T`实际上就是`int &`，于是函数调用就变成了`int & &&`这样的类型，此时它是左值引用还是右值引用呢？这就要引入类型折叠。
 
-C++规定：`type & &, type & &&, type && &`都变成左值引用`type &`，`type && &&`仍然是右值引用`type &&`。那如果我们
+C++规定：`type & &, type & &&, type && &`都变成左值引用`type &`，只有`type && &&`仍然是右值引用`type &&`。那如果我们
 
 ```cpp
-template<class T>
-int f(T&& x){
-    return g(x);
+void g(int& x) { std::cout << "int &\n"; }
+void g(int&& x) { std::cout << "int &&\n"; }
+
+template <class T>
+void f(T&& x) {
+    g(x);
+}
+
+void solve() {
+    int a;
+    f(a); // 打印int &
+    f(std::move(a)); // 还是打印int &
 }
 ```
 
+这样进行调用，`x`可能是左值引用或者右值引用，但是`x`自己作为一个变量，它是左值。我们就无法把右值的参数传递给`g()`，就无法调用`g(int &&)`，只会调用到`g(int &)`。
 
+为了解决这个问题，C++使用`std::forward<T>(x)`来保持值类型不变，来传递参数。就如同开头的代码。此时就可以分别打印出`int &`和`int &&`了。
+
+另外，转发引用会保留实参的`cv`属性。
+
+注意
+
+```cpp
+template<class T>
+void f1(T&& x);                 // x 是转发引用
+
+struct A{
+    template<class T>
+    void f2(T&& x);                 // x 是转发引用
+};
+
+template<class U>
+struct B{
+    void f3(U&& x);                 // 这个x不是转发引用
+
+    template<class T>
+    void f4(T&& x);                 // x 是转发引用
+};
+```
+
+用上形参包，完美转发例如：
+
+```cpp
+template<class T, class... Args>
+auto f(Args&&... args){
+    return std::pari<T, int>{std::forward<Args>(args)..., 0};
+}
+```
+
+# 模板类暴露类型给外部
+
+```cpp
+template<class T>
+struct Point{
+    using value_type = T; // 外部可以使用typename Point::value_type;来获取类型
+    T x;
+    T y;
+};
+```
+
+# 类模板实参推导指引
+
+```cpp
+// 模板的声明
+template<class T>
+struct container
+{
+    container(T t) {}
+ 
+    template<class Iter>
+    container(Iter beg, Iter end);
+};
+ 
+// 额外的推导指引
+template<class Iter>
+container(Iter b, Iter e) -> container<typename std::iterator_traits<Iter>::value_type>;
+ 
+// 使用
+container c(7); // OK：用隐式生成的指引推导出 T=int
+std::vector<double> v = {/* ... */};
+auto d = container(v.begin(), v.end()); // OK：推导出 T=double
+container e{5, 6}; // 错误：std::iterator_traits<int>::value_type 不存在
+```
+
+总而言之，通过对构造函数里传入的参数进行分析，得到类模板的实参。但有时候隐式生成的推导指引没有那么厉害，看不透用户的想法。此时就需要一个额外的用户定义的推导指引。如上面的代码，我们把`container(Iter b, Iter e)`这样的构造函数，推导出其实参为`typename std::iterator_traits<Iter>::value_type`。这样就能正确实例化模板了。
+
+用户定义的推导指引必须指名一个类模板，且必须在类模板的同一语义作用域（可以是命名空间或外围类）中引入，而且对于成员类模板必须拥有同样的访问，但推导指引不会成为该作用域的成员。
+
+推导指引不是函数且没有函数体。推导指引不会被名字查找所找到，并且除了在推导类模板实参时与其他推导指引之间的重载决议之外不会参与重载决议。不能在同一翻译单元中为同一类模板再次声明推导指引。 
+
+# 模板实例化和模板特化
+
+以前我没分清楚这两个东西。
+
+```cpp
+template<class T>
+class A{
+    // ...
+};
+
+A<int> a;
+```
+
+上面这个代码叫做模板实例化。没有实例化的模板不会作为汇编指令生成。只有当实际调用到这个模板类、模板函数的时候，才会生成一个匹配的类、函数，生成汇编指令。
+
+```cpp
+template<class T>
+class A{
+    // ...
+};
+
+template<>
+class A<int>{
+    // ...
+};
+```
+
+上面的代码叫做模板特化。就是把其中的一种情况拿出来，单独有自己的逻辑。在模板实例化的时候，会先查找最特殊的模板。可以通过只声明、不定义、另外定义特化的方式来限制类型。
+
+```cpp
+template<class T>
+class A;
+
+template<>
+class A<int>{
+    //...
+};
+
+template<>
+class A<double>{
+    //...
+};
+```
+
+以上代码，声明`A<int>, A<double>`的变量都会成功，而`A<float>`则会报错。
+
+# 模板最好都写在头文件里
+
+如果不全写在头文件里会有什么问题呢？见下例
+
+```cpp
+// B.h
+template<class T>
+class B{
+public:
+	void foo(T x);
+};
+```
+
+```cpp
+// B.cpp
+#include "B.h"
+#include <iostream>
+
+template<class T>
+void B<T>::foo(T x){
+	std::cout<<x<<"\n";
+}
+```
+
+```cpp
+// A.cpp
+#include "B.h"
+
+int main(){
+	B<int> b;
+	b.foo(666);
+	
+	return 0;
+}
+```
+
+如上，我们把`B`中函数的定义和声明分离了。此时我们用`g++ A.cpp B.cpp -o .\A.exe`编译，链接器会报错：
+
+```
+x86_64-w64-mingw32/bin/ld.exe: C:\Users\Kegalas\AppData\Local\Temp\ccCn8we2.o:A.cpp:(.text+0x1a): undefined reference to `B<int>::foo(int)'
+collect2.exe: error: ld returned 1 exit status
+```
+
+未定义？我们看看汇编后的代码是什么
+
+```asm
+	.file	"A.cpp"
+	.text
+	.def	__main;	.scl	2;	.type	32;	.endef
+	.globl	main
+	.def	main;	.scl	2;	.type	32;	.endef
+	.seh_proc	main
+main:
+.LFB0:
+	pushq	%rbp
+	.seh_pushreg	%rbp
+	movq	%rsp, %rbp
+	.seh_setframe	%rbp, 0
+	subq	$48, %rsp
+	.seh_stackalloc	48
+	.seh_endprologue
+	call	__main
+	leaq	-1(%rbp), %rax
+	movl	$666, %edx
+	movq	%rax, %rcx
+	call	_ZN1BIiE3fooEi # 调用b.foo(666)
+	movl	$0, %eax
+	addq	$48, %rsp
+	popq	%rbp
+	ret
+	.seh_endproc
+	.ident	"GCC: (Rev7, Built by MSYS2 project) 13.1.0"
+	.def	_ZN1BIiE3fooEi;	.scl	2;	.type	32;	.endef
+```
+
+这里好像没有什么问题，直接去调用了`foo`，然后我们来看看`B.cpp`的汇编
+
+```cpp
+	.file	"B.cpp"
+	.text
+	.section .rdata,"dr"
+_ZNSt8__detail30__integer_to_chars_is_unsignedIjEE:
+	.byte	1
+_ZNSt8__detail30__integer_to_chars_is_unsignedImEE:
+	.byte	1
+_ZNSt8__detail30__integer_to_chars_is_unsignedIyEE:
+	.byte	1
+	.ident	"GCC: (Rev7, Built by MSYS2 project) 13.1.0"
+```
+
+什么？里面居然没有`_ZN1BIiE3fooEi`这个符号？为什么呢？前面也提到过，只有当模板被实例化的时候，才会生成对应的汇编指令。这里的问题正是，没有实例化。
+
+`A.cpp`中`include`了`B.h`，确实在`B<int> b`的时候对类模板进行了实例化。但是，类模板里面的成员函数只是声明！没有实际定义。而在编译`B.cpp`的时候，就没有类似于`B<int> b`这样的东西对它进行实例化了（`A.cpp`和`B.cpp`不是同一个翻译单元）。于是`void B<T>::foo(T x)`就没有进行实例化，也就没有实际的汇编指令，也就没有`_ZN1BIiE3fooEi`这个符号。所以链接的时候就提示无法找到定义。
+
+应该怎么做？我们只需要显式实例化即可：
+
+```cpp
+// B.cpp
+#include "B.h"
+#include <iostream>
+
+template<class T>
+void B<T>::foo(T x){
+	std::cout<<x<<"\n";
+}
+
+template class B<int>;
+```
+
+即加上了最后一行。再来看看现在的汇编代码
+
+```cpp
+	.file	"B.cpp"
+	.text
+	.section .rdata,"dr"
+.LC0:
+	.ascii "\12\0"
+	.section	.text$_ZN1BIiE3fooEi,"x"
+	.linkonce discard
+	.align 2
+	.globl	_ZN1BIiE3fooEi
+	.def	_ZN1BIiE3fooEi;	.scl	2;	.type	32;	.endef
+	.seh_proc	_ZN1BIiE3fooEi
+_ZN1BIiE3fooEi:
+.LFB2470:
+	pushq	%rbp
+	.seh_pushreg	%rbp
+	movq	%rsp, %rbp
+	.seh_setframe	%rbp, 0
+	subq	$32, %rsp
+	.seh_stackalloc	32
+	.seh_endprologue
+	movq	%rcx, 16(%rbp)
+	movl	%edx, 24(%rbp)
+	movl	24(%rbp), %eax
+	movl	%eax, %edx
+	movq	.refptr._ZSt4cout(%rip), %rax
+	movq	%rax, %rcx
+	call	_ZNSolsEi
+	movq	%rax, %rcx
+	leaq	.LC0(%rip), %rax
+	movq	%rax, %rdx
+	call	_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc
+	nop
+	addq	$32, %rsp
+	popq	%rbp
+	ret
+	.seh_endproc
+	.section .rdata,"dr"
+_ZNSt8__detail30__integer_to_chars_is_unsignedIjEE:
+	.byte	1
+_ZNSt8__detail30__integer_to_chars_is_unsignedImEE:
+	.byte	1
+_ZNSt8__detail30__integer_to_chars_is_unsignedIyEE:
+	.byte	1
+	.ident	"GCC: (Rev7, Built by MSYS2 project) 13.1.0"
+	.def	_ZNSolsEi;	.scl	2;	.type	32;	.endef
+	.def	_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc;	.scl	2;	.type	32;	.endef
+	.section	.rdata$.refptr._ZSt4cout, "dr"
+	.globl	.refptr._ZSt4cout
+	.linkonce	discard
+.refptr._ZSt4cout:
+	.quad	_ZSt4cout
+```
+
+可见`_ZN1BIiE3fooEi:`已经在其中了。
+
+不过本小节的标题是“模板最好都写在头文件里”，我们不可能显式实例化所有可能情况。一切的罪魁祸首可能就是头文件中只进行了声明，而没有定义。于是无法正常实例化。我们应该做的，就是把定义放在头文件里。实际上包括stl在内的很多模板库都是`head-only`的。
+
+不过如果我们要限制用户只能使用特定的几种类型，分离定义和声明，显式实例化这几种特定的类型，是可以考虑的。
+
+# concept
+
+todo
+
+# auto类型推断
+
+`auto x = y`，会抛弃`y`的`cv`、引用类别。例如
+
+```cpp
+int i = 1;
+int &j = i;
+int const & k = i;
+
+auto x = i; // int
+auto y = j; // int
+auto z = k; // int
+```
+
+我们可以根据自己的需求去加`cv`和引用类别
+
+```cpp
+auto x = i; // int
+auto &y = i; // int &
+auto const & y = i; // int const &
+```
+
+注意，C++11下
+
+```cpp
+auto x = {3}; // 推断为std::initializer_list<int>
+auto y{3}; // 推断为std::initializer_list<int>
+auto z{3, 4}; // 推断为std::initializer_list<int>
+```
+
+这其实是不符合我们的直觉的，在C++17后，第二行被推断为`int`，而第三行报错。
+
+# decltype
+
+和`auto`不同，不会抛弃`cv`和引用。如果如果实参是没有括号的标识表达式或没有括号的类成员访问表达式：
+
+```cpp
+int i = 1;
+int &j = i;
+int const & k = i;
+
+using T1 = decltype(i); // int
+using T2 = decltype(j); // int &
+using T3 = decltype(k); // int const &
+```
+
+并且，可以用`decltype`保留`auto`中会去除的`cv`和引用，例如（C++14）
+
+```cpp
+int i = 1;
+int &j = i;
+int const & k = i;
+
+decltype(auto) x = i; // int
+decltype(auto) y = j; // int &
+decltype(auto) z = k; // int const &
+```
+
+如果`decltype`的实参是类型为`T`的任何其他表达式。表达式为亡值时，产生`T&&`；为左值时，产生`T&`；纯右值时产生`T`
+
+# std::declval
+
+将任意类型`T`转换为（右值）引用类型，使得在 decltype 说明符的操作数中不必经过构造函数就能使用成员函数。 
+
+注意，`std::declval`只能用于不求值语境，且不要求有定义；求值包含此函数的表达式是错误的。此函数不能被调用，因此不会返回值。返回类型是`T&&`，除非`T`是（可有`cv`限定的）void，此时返回类型是`T`。 
+
+```cpp
+#include <iostream>
+#include <utility>
+ 
+struct Default
+{
+    int foo() const { return 1; }
+};
+ 
+struct NonDefault
+{
+    NonDefault() = delete;
+    int foo() const { return 1; }
+};
+ 
+int main()
+{
+    decltype(Default().foo()) n1 = 1;                   // n1 的类型是 int
+//  decltype(NonDefault().foo()) n2 = n1;               // 错误：无默认构造函数
+    decltype(std::declval<NonDefault>().foo()) n2 = n1; // n2 的类型是 int
+    std::cout << "n1 = " << n1 << '\n'
+              << "n2 = " << n2 << '\n';
+}
+```
+
+# type_traits库
+
+[https://zh.cppreference.com/w/cpp/header/type_traits](https://zh.cppreference.com/w/cpp/header/type_traits)
+
+有很多用于判断类型特性的模板。例如`is_const, is_class, is_pointer, is_pod, is_unsigned`等等。太多不能一一介绍，见上面的链接。使用方法都是类似的
+
+```cpp
+template<class T>
+void foo(T const& x){
+    constexpr bool check = std::is_unsigned<T>::value; // C++11
+    constexpr bool check2 = std::is_unsigned_v<T>;// C++17后
+}
+```
+
+除了判断类型的，还有转换类型的。如`add_const, remove_const, make_signed`。这里主要讲一下`decay`和`result_of`
+
+`decay`就是将变量的指针、引用、`cv`全部去掉，得到纯的`T`类型，如
+
+```cpp
+#include <type_traits>
+ 
+template<typename T, typename U>
+constexpr bool is_decay_equ = std::is_same_v<std::decay_t<T>, U>;
+// c++14可用
+// c++11为typename std::decay<T>::type
+ 
+int main()
+{
+    static_assert
+    (
+        is_decay_equ<int, int> &&
+        ! is_decay_equ<int, float> &&
+        is_decay_equ<int&, int> &&
+        is_decay_equ<int&&, int> &&
+        is_decay_equ<const int&, int> &&
+        is_decay_equ<int[2], int*> &&
+        ! is_decay_equ<int[4][2], int*> &&
+        ! is_decay_equ<int[4][2], int**> &&
+        is_decay_equ<int[4][2], int(*)[2]> &&
+        is_decay_equ<int(int), int(*)(int)>
+    );
+    return 0;
+}
+```
+
+`result_of`得到某个可调用对象的返回值的类型
+
+```cpp
+struct S
+{
+    double operator()(char, int&);
+    float operator()(int) { return 1.0; }
+};
+
+std::result_of<S(char, int&)>::type d = 3.14; // d 拥有 double 类型
+```
+
+```cpp
+double f(char c, int& a){
+	return 0.1;
+}
+
+std::result_of<decltype(&f)(char, int&)>::type d = 3.14;
+```
+
+`invoke_result`是在C++17后加入的，用以取代`result_of`，后者已经在C++17中废弃，C++20中移除。语法略有不同，主要是没有括号。
+
+```cpp
+std::invoke_result<S,char,int&>::type b = 3.14;
+std::invoke_result<decltype(f), char, int&>::type d = 3.14;
+```
+
+# CRTP
+
+奇特重现模板模式（Curiously Recurring Template Pattern, CRTP）是一种惯用手法。
+
+主要就是父类是一个模板类，而子类继承父类，并且在模板实参里面填写子类。
+
+```cpp
+template<class T>
+class Y {};
+ 
+class X : public Y<X> {};
+```
+
+主要用来实现编译期多态。
+
+```cpp
+template <class Derived>
+struct Base { void name() { (static_cast<Derived*>(this))->impl(); } };
+struct D1 : public Base<D1> { void impl() { std::puts("D1::impl()"); } };
+struct D2 : public Base<D2> { void impl() { std::puts("D2::impl()"); } };
+ 
+void test()
+{
+    // Base<D1> b1; b1.name(); // 未定义行为
+    // Base<D2> b2; b2.name(); // 未定义行为
+    D1 d1; d1.name();
+    D2 d2; d2.name();
+}
+```
+
+可以看[https://zhuanlan.zhihu.com/p/460497652](https://zhuanlan.zhihu.com/p/460497652)学一些使用例。
+
+# SFINAE
+
+“替换失败不是错误” (Substitution Failure Is Not An Error)
+
+首先举个例子，即函数重载中
+
+```cpp
+class A {};
+class B: public A {};
+class C {};
+
+void foo(A const&) {}
+void foo(B const&) {}
+
+void bar() {
+  foo(A());
+  foo(B());
+  foo(C());
+}
+```
+
+其中`foo(A());`匹配`void foo(B const&) {}`失败了，但是不报错。而匹配`void foo(A const&) {}`成功了，所以调用了这个重载。`foo(B());`两个都能匹配成功，但是`void foo(B const&) {}`更特殊，所以调用这个重载。而`foo(C());`的所有匹配的失败了，才会进行编译报错。
+
+# 极简concept
+
+如果我们要限定`template`里面的泛型`T`的性质，要怎么做呢？`C++20`提供了一个新的方法，即`concept`
+
+他有很多种使用方法，例如假设我们要求一个类型是可排序的，我们假设这个`concept`叫做`Sortable`，以有以下几种使用方法
+
+```cpp
+template<class T> requires Sortable<T>
+void sort(T& s);
+
+template<class T>
+void sort(T& s) requires Sortable<T> ; // 换了下位置而已
+
+template<Sortable T>
+void sort(T& s);
+
+void sort(Sortable auto& s); // 当然也可以用在返回值上，据说Stroustrup最喜欢这种
+```
+
+如何定义一个概念（`concept`）？
+
+```cpp
+template < 模板形参列表 >
+concept 概念名 属性 ﻿(可选) = 约束表达式;
+```
+
+其中这个约束表达式，是一个在编译期可以被eval为bool的表达式或者编译期函数。如果代入模板形参，可以得到`true`的值，则返回成功，否则不成功。
+
+```cpp
+template <class T>
+concept always_satisfied = true;  // 永远成功
+
+template <class T>
+concept integral = std::is_integral_v<T>; // 整型时成功
+
+template <class T>
+concept signed_integral = integral<T> && std::is_signed_v<T>; // 满足两者时成功
+```
+
+这里，一个概念不能提到自己，也不能用另一个概念来约束这个概念，例如
+
+```cpp
+template <class T>
+concept integral = std::is_integral_v<T>;
+
+template <integral T>
+concept signed_integral = std::is_signed_v<T>;
+```
+
+就是不行的。必须通过逻辑运算（包括与、或、非）得到复合的概念。同样的，requires语句也可以加入逻辑运算
+
+```cpp
+template <class T>
+requires Integral<T> && std::is_signed_v<T>
+T add(T a, T b);
+```
+
+可以通过`requires`语句定义概念
+
+```cpp
+template <class T>
+concept Addable = requires (T a, T b) { a+b; };
+
+template <class T>
+requires requires (T x) { x + x; } // ad-hoc式定义
+T add(T a, T b) {
+  return a + b;
+}
+```
+
+它不会检查是否返回`true`，只要里面的表达式合法，就可以成功。我们还可以写出
+
+```cpp
+template<class C>
+concept cpt1 = requires{
+    typename C::value_type;
+    typename C::iterator;
+    typename std::vector<C>;
+};
+```
+
+这样的代码，来判断其符不符合这样的使用方法。
+
+# 形参包
+
+todo
