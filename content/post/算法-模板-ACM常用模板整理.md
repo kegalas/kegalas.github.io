@@ -4526,6 +4526,11 @@ bool ge(db a, db b)  {return a - b          > EPS;}//大于
 bool le(db a, db b)  {return a - b          < -EPS;}//小于
 bool geq(db a, db b) {return a - b          > -EPS;}//大于等于
 bool leq(db a, db b) {return a - b          < EPS;}//小于等于
+int sgn(db x) {
+    if (std::abs(x) < EPS) return 0;
+    if (x < 0) return -1;
+    return 1;
+} // 符号，等于零返回0，大于零返回1，小于零返回-1
 
 /////////////////////////////////////////////////
 //基础运算
@@ -4545,6 +4550,7 @@ db slope(Vec v){return v.y/v.x;}//斜率，不存在时，用后面的paral_y函
 /////////////////////////////////////////////////
 //向量操作
 
+db sin_v(Vec a, Vec b){return (a^b)/len(a)/len(b);}//向量内积，右手定则
 db cos_v(Vec a, Vec b){return a*b/len(a)/len(b);}//向量夹角余弦
 Vec norm(Vec v){return {v.x/len(v), v.y/len(v)};}//求其单位向量
 Vec pnorm(Vec v){return (v.x<0?-1:1)/len(v)*v;}//与原向量平行且横坐标大于零的单位向量
@@ -4578,6 +4584,7 @@ bool paral_x(Vec v){return eq(v.y,0.0);}//是否平行x轴
 bool paral_y(Vec v){return eq(v.x,0.0);}//是否平行y轴
 bool on(Point p, Line l){return eq((p.x-l.p.x)*l.v.y, (p.y-l.p.y)*l.v.x);}//点是否在直线上
 bool on(Point p, Seg l){return eq(len(p-l.a)+len(p-l.b),len(l.a-l.b));}//点是否在线段上
+//bool on(Point p, Seg l){return sgn((p-l.a)^(l.b-l.a))==0 && sgn((p-l.a)*(p-l.b))<=0 ;}//点是否在线段上，无须len的判断法
 bool operator==(Point a, Point b){return eq(a.x,b.x)&&eq(a.y,b.y);}//点重合
 bool operator==(Line a, Line b){return on(a.p,b)&&on(a.p+a.v,b);}//直线重合
 bool operator==(Seg a, Seg b){return ((a.a==b.a&&a.b==b.b)||(a.a==b.b&&a.b==b.a));}//线段（完全）重合
@@ -4591,6 +4598,14 @@ bool tangency(Circle c1, Circle c2){return eq(len(c1.o-c2.o),c1.r+c2.r);}//两�
 db dis(Point a, Point b){return len(a-b);}//两点距离
 db dis(Point p, Line l){return std::abs((p^l.v)-(l.p^l.v))/len(l.v);}//点到直线的距离
 db dis(Line a, Line b){return std::abs((a.p^pnorm(a.v))-(b.p^pnorm(b.v)));}//两直线距离，需要确保平行
+db dis(Point p, Seg s){ // 点到线段的距离
+    if(sgn(cos_v(p-s.a, s.b-s.a))<0 || sgn(cos_v(p-s.b, s.a-s.b))<0)
+        return std::min(dis(p, s.a), dis(p, s.b));
+    return dis(p, line(s));
+}
+db dis(Seg s1, Seg s2){ // 线段之间的距离，前提是不相交。相交时为0，需要自己判断
+    return std::min(std::min(dis(s1.a, s2), dis(s1.b, s2)), std::min(dis(s2.a, s1), dis(s2.b, s1)));
+}
 
 /////////////////////////////////////////////////
 //平移
@@ -4623,12 +4638,42 @@ Seg reflect(Seg l, Line ax){return {reflect(l.a, ax), reflect(l.b, ax)};}
 
 std::vector<Point> inter(Line a, Line b){
     //两直线的交点，没有交点返回空vector，否则返回一个大小为1的vector
+    // 不能重叠
     db c = a.v^b.v;
     std::vector<Point> ret;
     if(eq(c,0.0)) return ret;
     Vec v = 1/c*Vec{a.p^(a.p+a.v), b.p^(b.p+b.v)};
     ret.push_back({v*Vec{-b.v.x, a.v.x},v*Vec{-b.v.y, a.v.y}});
     return ret;
+}
+
+std::vector<Point> inter(Seg s1, Seg s2) {
+    // 两线段的交点，没有交点返回空vector，否则返回一个大小为1的vector
+    // 这里特别规定，如果两条线段有重叠线段，会返回第一条线段的两个端点
+    std::vector<Point> ret;
+    using std::max;
+    using std::min;
+    bool check = true;
+    check = check && geq(max(s1.a.x, s1.b.x), min(s2.a.x, s2.b.x));
+    check = check && geq(max(s2.a.x, s2.b.x), min(s1.a.x, s1.b.x));
+    check = check && geq(max(s1.a.y, s1.b.y), min(s2.a.y, s2.b.y));
+    check = check && geq(max(s2.a.y, s2.b.y), min(s1.a.y, s1.b.y));
+    if (!check) return ret;
+
+    db pd1 = (s2.a - s1.a) ^ (s1.b - s1.a);
+    db pd2 = (s2.b - s1.a) ^ (s1.b - s1.a);
+    if (sgn(pd1 * pd2) == 1) return ret;
+    std::swap(s1, s2);  // 双方都要跨立实验
+    pd1 = (s2.a - s1.a) ^ (s1.b - s1.a);
+    pd2 = (s2.b - s1.a) ^ (s1.b - s1.a);
+    if (sgn(pd1 * pd2) == 1) return ret;
+
+    if (sgn(pd1) == 0 && sgn(pd2) == 0) {
+        ret.push_back(s2.a);
+        ret.push_back(s2.a);
+        return ret;
+    }
+    return inter(line(s2), line(s1));
 }
 
 std::vector<Point> inter(Line l, Circle c){
@@ -4656,6 +4701,52 @@ std::vector<Point> inter(Circle c1, Circle c2){
     Vec av = a/len(v1)*v1, hv = h/len(v2)*v2;
     ret.push_back(c1.o+av+hv);ret.push_back(c1.o+av-hv);
     return ret;
+}
+
+/////////////////////////////////////////////////
+//多边形相关
+
+db area(std::vector<Point> const & ps){
+    // 逆时针排序的多边形的顶点，计算面积
+    db ret = 0.0;
+    for(int i=0, sz=ps.size();i<sz;i++){
+        ret += (ps[i]^ps[(i+1)%sz])/2.0;
+    }
+    return ret;
+}
+
+bool isconvex(std::vector<Point> const & poly){
+    // 多边形是否为凸
+    std::vector<bool> s(3, false);
+    for(int i=0, n=poly.size();i<n;i++){
+        int j = (i+1)%n;
+        int k = (j+1)%n;
+        s[sgn((poly[j]-poly[i])^(poly[k]-poly[i]))+1] = true;
+        if(s[0] && s[2]) return false;
+    }
+    return true;
+}
+
+int inpoly(std::vector<Point> const & poly, Point p){
+    // 一个点是否在多边形内？
+    // 0外部，1内部，2边上，3顶点上
+    int n=poly.size();
+    for(int i=0;i<n;i++){
+        if(poly[i]==p) return 3;
+    }
+    for(int i=0;i<n;i++){
+        if(on(p, Seg{poly[(i+1)%n],poly[i]})) return 2;
+    }
+    int cnt = 0;
+    for(int i=0;i<n;i++){
+         int j = (i+1)%n;
+         int k = sgn((p-poly[j])^(poly[i]-poly[j]));
+         int u = sgn(poly[i].y-p.y);
+         int v = sgn(poly[j].y-p.y);
+         if(k>0 && u<0 && v>=0) cnt++;
+         if(k<0 && v<0 && u>=0) cnt--;
+    }
+    return cnt != 0;
 }
 
 /////////////////////////////////////////////////
@@ -4688,90 +4779,124 @@ Point orthocenter(Point a, Point b, Point c){
 }
 ```
 
+## 基本公式
+
+### 正弦定理
+
+在$\triangle ABC$中，设角$A,B,C$对应的边为$a,b,c$，则
+
+$$
+\dfrac{a}{\sin A} = \dfrac{b}{\sin B} = \dfrac{c}{\sin C} = 2R
+$$
+
+其中$R$是外接圆半径
+
+### 余弦定理
+
+$$
+a^2 = b^2+c^2-2bc\cos A
+$$
+
+$$
+b^2 = a^2+c^2-2ac\cos B
+$$
+
+$$
+c^2 = a^2+b^2-2ab\cos C
+$$
+
+### 向量积
+
+$$
+\vec{a}\cdot\vec{b} = a_1b_1+a_2b_2+\cdots+a_nb_n =|\vec{a}||\vec{b}|\cos\theta
+$$
+
+$$
+\vec{a}\times\vec{b} = |\vec{a}||\vec{b}|\sin\theta
+$$
+
+实际上外积只在三维中有定义。用在二维向量上时，只能算出这个标量值，用右手定则判断正负。其也代表两个向量构成的平行四边形的面积。三维中的定义为
+
+$$
+\vec{s} = \vec{u}\times\vec{v} = (u_2v_3-u_3v_2, u_3v_1-u_1v_3,u_1v_2-u_2v_1)
+$$
+
+其中$\vec{s}$垂直于$\vec{u},\vec{v}$构成的屏幕。
+
+### 求任意多边形的周长
+
+使用我们提供的`len`函数计算所有边即可。
+
+### 求任意多边形的面积
+
+将多边形上的点逆时针标记为$p_1, p_2,\cdots,p_n$，再选一个辅助点$O$，记$v_i=p_i-O$，那么
+
+$$
+S = \dfrac{1}{2}\sum^n_{i=1}v_i\times v_{i\%n+1}
+$$
+
 ## 二维凸包
 
 ### Andrew扫描法
 
 ```cpp
 //复杂度 nlogn
-#include <iostream>
-#include <cstdio>
-#include <cstring>
-#include <vector>
-#include <algorithm>
+//luogu P2742，求凸包周长
+//注意题给条件，如果是整数坐标，务必切换到long long来避免误差
 
-#define MAXN 50005
-
-using namespace std;
-
-struct Point{
-    double x,y;
-    Point()=default;
-    Point(double x, double y):x(x),y(y){}
-    Point operator + (Point p){
-        return Point(x+p.x, y+p.y);
-    }
-    Point operator - (Point p){
-        return Point(x-p.x, y-p.y);
-    }
-    Point operator * (double d){
-        return Point(x*d, y*d);
-    }
-    double dot(Point p){//点积
-        return x*p.x+y*p.y;
-    }
-    double det(Point p){//叉积
-        return x*(p.y)-(p.x)*y;
-    }
-};
-
-int n;
-Point po[MAXN*2];
-
-bool cmp(Point& a, Point& b){
-    if(a.x!=b.x) return a.x<b.x;
-    return a.y<b.y;
-}
-
-vector<Point> convexHull(){
-	//返回凸包上的点
+std::vector<Point> convexHull(std::vector<Point> const & poly){
+	// 返回凸包上的点，逆时针顺序
+	// 如果要判断一个多边形是不是凸包，也可以用其生成一个凸包，判断点数是否相同
+	// 此时要将下面的sgn(...)<=0改成sgn(...)<0
+	// 另外要特判所有点共线的情况，否则得不到正确的点数
     int k = 0;
-    vector<Point> qs;
+    int n = poly.size();
+    std::vector<Point> qs;
     for(int i=0;i<n;i++){
-        while(k>1&&(qs[k-1]-qs[k-2]).det(po[i]-qs[k-1])<=0){
-            qs.erase(qs.end()-1);
+        while(k>1&&sgn((qs[k-1]-qs[k-2])^(poly[i]-qs[k-1]))<=0){
+            qs.pop_back();
             k--;
         }
-        qs.push_back(po[i]);
+        qs.push_back(poly[i]);
         k++;
     }
     for(int i=n-2,t=k;i>=0;i--){
-        while(k>t&&(qs[k-1]-qs[k-2]).det(po[i]-qs[k-1])<=0) {
-            qs.erase(qs.end()-1);
+        while(k>t&&sgn((qs[k-1]-qs[k-2])^(poly[i]-qs[k-1]))<=0) {
+            qs.pop_back();
             k--;
         }
-        qs.push_back(po[i]);
+        qs.push_back(poly[i]);
         k++;
     }
-    qs.erase(qs.end()-1);
+    qs.pop_back();
     return qs;
 }
 
 int main(){
-    cin>>n;
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(0);
+    
+    int n;
+    std::cin>>n;
+    std::vector<Point> po(n);
     for(int i=0;i<n;i++){
-        cin>>po[i].x>>po[i].y;
+        std::cin>>po[i].x>>po[i].y;
         //输入点的横纵坐标
     }
 
-    sort(po,po+n,cmp);
-
-    for(auto p:convexHull()){
-        cout<<p.x<<" "<<p.y<<endl;
+    std::sort(po.begin(), po.end());
+    std::vector<Point> ch = convexHull(po);
+    db ans = 0.0;
+    for(int i=0,sz=ch.size();i<sz;i++){
+        ans += len(ch[(i+1)%sz]-ch[i]);
     }
+    std::cout<<std::fixed;
+    std::cout.precision(2);
+    std::cout<<ans<<"\n";
 
     return 0;
 }
+
 ```
 
 ## 旋转卡壳求最远点对
@@ -4780,91 +4905,25 @@ int main(){
 //复杂度 nlogn，其中求凸包nlogn，旋转卡壳本身为n
 //Luogu P1452
 //旋转卡壳和凸包
-#include <iostream>
-#include <cstring>
-#include <vector>
-#include <algorithm>
+//注意题给条件，如果是整数坐标，务必切换到long long来避免误差
 
-#define MAXN 50005
-
-using namespace std;
-
-struct Point{
-    int x,y;
-    Point()=default;
-    Point(int x, int y):x(x),y(y){}
-    Point operator - (Point p){
-        return Point(x-p.x, y-p.y);
-    }
-    Point operator + (Point p){
-        return Point(x+p.x, y+p.y);
-    }
-    Point operator * (int d){
-        return Point(x*d, y*d);
-    }
-    int dot(Point p){
-        return x*p.x+y*p.y;
-    }
-    int det(Point p){
-        return x*(p.y)-y*(p.x);
-    }
-};
-
-bool cmp(Point& a, Point& b){
-    if(a.x!=b.x) return a.x<b.x;
-    return a.y<b.y;
-}
-
-int n;
-Point po[MAXN];
-
-vector<Point> convexHull(){
-	//返回凸包上的点
-    vector<Point> ans;
-    int k = 0;
-    for(int i=0;i<n;i++){
-        while(k>1&&(ans[k-1]-ans[k-2]).det(po[i]-ans[k-1])<=0){
-            ans.erase(ans.end()-1);
-            k--;
-        }
-        ans.push_back(po[i]);
-        k++;
-    }
-    for(int i=n-2,t=k;i>=0;i--){
-        while(k>t&&(ans[k-1]-ans[k-2]).det(po[i]-ans[k-1])<=0){
-            ans.erase(ans.end()-1);
-            k--;
-        }
-        ans.push_back(po[i]);
-        k++;
-    }
-    ans.erase(ans.end()-1);
-    return ans;
-}
-
-inline long long dist(Point a, Point b){//计算距离的平方
-    return (a-b).dot(a-b);
-}
-
-
-
-void rc(vector<Point> ans){
-    int tn = ans.size();
+db rc(std::vector<Point> const & ch){
+    // 返回凸包直径的平方
+    int tn = ch.size();
     int cnt=0;
     if(tn==2){
-        cout<<dist(ans[0],ans[1])<<endl;
-        return;
+        return len2(ch[0]-ch[1]);
     }
     int i=0,j=0;
     for(int k=0;k<tn;k++){
-        if(!cmp(ans[i],ans[k])) i=k;
-        if(cmp(ans[j],ans[k])) j=k;
+        if(!(ch[i]<ch[k])) i=k;
+        if(ch[j]<ch[k]) j=k;
     }
-    long long res = 0;
+    db res = 0;
     int si=i,sj=j;
     while(i!=sj||j!=si){
-        res = max(res,dist(ans[i],ans[j]));
-        if((ans[(i+1)%tn]-ans[i]).det(ans[(j+1)%tn]-ans[j])<0){
+        res = std::max(res, len2(ch[i]-ch[j]));
+        if(sgn((ch[(i+1)%tn]-ch[i])^(ch[(j+1)%tn]-ch[j]))<0){
             i = (i+1)%tn;
         }else{
             j = (j+1)%tn;
@@ -4872,20 +4931,25 @@ void rc(vector<Point> ans){
         
         cnt++;
     }
-    //返回凸包最远点对的距离的平方
-    cout<<res<<endl;
+
+    return res;
 }
 
 int main(){
-    cin>>n;
-    vector<Point> qs;
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(0);
+    
+    int n;
+    std::cin>>n;
+    std::vector<Point> po(n);
     for(int i=0;i<n;i++){
-        cin>>po[i].x>>po[i].y;
-        //按横纵坐标输入点对
+        std::cin>>po[i].x>>po[i].y;
+        //输入点的横纵坐标
     }
-    sort(po,po+n,cmp);
-    qs = convexHull();
-    rc(qs);
+    
+    std::sort(po.begin(), po.end());
+    std::vector<Point> ch = convexHull(po);
+    std::cout<<rc(ch)<<"\n";
     return 0;
 }
 ```
