@@ -112,7 +112,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 114 分钟
+                    阅读时长: 116 分钟
                 </time>
             </div>
         
@@ -4223,6 +4223,11 @@ x_{c_m}-x_{c_m'}\leq y_m
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">bool</span> <span style="color:#a6e22e">le</span>(db a, db b)  {<span style="color:#66d9ef">return</span> a <span style="color:#f92672">-</span> b          <span style="color:#f92672">&lt;</span> <span style="color:#f92672">-</span>EPS;}<span style="color:#75715e">//小于
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">bool</span> <span style="color:#a6e22e">geq</span>(db a, db b) {<span style="color:#66d9ef">return</span> a <span style="color:#f92672">-</span> b          <span style="color:#f92672">&gt;</span> <span style="color:#f92672">-</span>EPS;}<span style="color:#75715e">//大于等于
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">bool</span> <span style="color:#a6e22e">leq</span>(db a, db b) {<span style="color:#66d9ef">return</span> a <span style="color:#f92672">-</span> b          <span style="color:#f92672">&lt;</span> EPS;}<span style="color:#75715e">//小于等于
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">sgn</span>(db x) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (std<span style="color:#f92672">::</span>abs(x) <span style="color:#f92672">&lt;</span> EPS) <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (x <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>) <span style="color:#66d9ef">return</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span>;
+</span></span><span style="display:flex;"><span>} <span style="color:#75715e">// 符号，等于零返回0，大于零返回1，小于零返回-1
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
 </span></span><span style="display:flex;"><span><span style="color:#75715e">/////////////////////////////////////////////////
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">//基础运算
@@ -4242,7 +4247,8 @@ x_{c_m}-x_{c_m'}\leq y_m
 </span></span><span style="display:flex;"><span><span style="color:#75715e">/////////////////////////////////////////////////
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">//向量操作
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
-</span></span><span style="display:flex;"><span>db <span style="color:#a6e22e">cos_v</span>(Vec a, Vec b){<span style="color:#66d9ef">return</span> a<span style="color:#f92672">*</span>b<span style="color:#f92672">/</span>len(a)<span style="color:#f92672">/</span>len(b);}<span style="color:#75715e">//向量夹角余弦
+</span></span><span style="display:flex;"><span>db <span style="color:#a6e22e">sin_v</span>(Vec a, Vec b){<span style="color:#66d9ef">return</span> (a<span style="color:#f92672">^</span>b)<span style="color:#f92672">/</span>len(a)<span style="color:#f92672">/</span>len(b);}<span style="color:#75715e">//向量内积，右手定则
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>db <span style="color:#a6e22e">cos_v</span>(Vec a, Vec b){<span style="color:#66d9ef">return</span> a<span style="color:#f92672">*</span>b<span style="color:#f92672">/</span>len(a)<span style="color:#f92672">/</span>len(b);}<span style="color:#75715e">//向量夹角余弦
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>Vec <span style="color:#a6e22e">norm</span>(Vec v){<span style="color:#66d9ef">return</span> {v.x<span style="color:#f92672">/</span>len(v), v.y<span style="color:#f92672">/</span>len(v)};}<span style="color:#75715e">//求其单位向量
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>Vec <span style="color:#a6e22e">pnorm</span>(Vec v){<span style="color:#66d9ef">return</span> (v.x<span style="color:#f92672">&lt;</span><span style="color:#ae81ff">0</span><span style="color:#f92672">?-</span><span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">/</span>len(v)<span style="color:#f92672">*</span>v;}<span style="color:#75715e">//与原向量平行且横坐标大于零的单位向量
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>Vec <span style="color:#a6e22e">dvec</span>(Seg l){<span style="color:#66d9ef">return</span> l.b<span style="color:#f92672">-</span>l.a;}<span style="color:#75715e">//线段转化为向量（没有归一化）
@@ -4275,6 +4281,7 @@ x_{c_m}-x_{c_m'}\leq y_m
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">bool</span> <span style="color:#a6e22e">paral_y</span>(Vec v){<span style="color:#66d9ef">return</span> eq(v.x,<span style="color:#ae81ff">0.0</span>);}<span style="color:#75715e">//是否平行y轴
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">bool</span> <span style="color:#a6e22e">on</span>(Point p, Line l){<span style="color:#66d9ef">return</span> eq((p.x<span style="color:#f92672">-</span>l.p.x)<span style="color:#f92672">*</span>l.v.y, (p.y<span style="color:#f92672">-</span>l.p.y)<span style="color:#f92672">*</span>l.v.x);}<span style="color:#75715e">//点是否在直线上
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">bool</span> <span style="color:#a6e22e">on</span>(Point p, Seg l){<span style="color:#66d9ef">return</span> eq(len(p<span style="color:#f92672">-</span>l.a)<span style="color:#f92672">+</span>len(p<span style="color:#f92672">-</span>l.b),len(l.a<span style="color:#f92672">-</span>l.b));}<span style="color:#75715e">//点是否在线段上
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//bool on(Point p, Seg l){return sgn((p-l.a)^(l.b-l.a))==0 &amp;&amp; sgn((p-l.a)*(p-l.b))&lt;=0 ;}//点是否在线段上，无须len的判断法
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">bool</span> <span style="color:#66d9ef">operator</span><span style="color:#f92672">==</span>(Point a, Point b){<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">eq</span>(a.x,b.x)<span style="color:#f92672">&amp;&amp;</span>eq(a.y,b.y);}<span style="color:#75715e">//点重合
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">bool</span> <span style="color:#66d9ef">operator</span><span style="color:#f92672">==</span>(Line a, Line b){<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">on</span>(a.p,b)<span style="color:#f92672">&amp;&amp;</span>on(a.p<span style="color:#f92672">+</span>a.v,b);}<span style="color:#75715e">//直线重合
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">bool</span> <span style="color:#66d9ef">operator</span><span style="color:#f92672">==</span>(Seg a, Seg b){<span style="color:#66d9ef">return</span> ((a.a<span style="color:#f92672">==</span>b.a<span style="color:#f92672">&amp;&amp;</span>a.b<span style="color:#f92672">==</span>b.b)<span style="color:#f92672">||</span>(a.a<span style="color:#f92672">==</span>b.b<span style="color:#f92672">&amp;&amp;</span>a.b<span style="color:#f92672">==</span>b.a));}<span style="color:#75715e">//线段（完全）重合
@@ -4288,7 +4295,15 @@ x_{c_m}-x_{c_m'}\leq y_m
 </span></span><span style="display:flex;"><span>db <span style="color:#a6e22e">dis</span>(Point a, Point b){<span style="color:#66d9ef">return</span> len(a<span style="color:#f92672">-</span>b);}<span style="color:#75715e">//两点距离
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>db <span style="color:#a6e22e">dis</span>(Point p, Line l){<span style="color:#66d9ef">return</span> std<span style="color:#f92672">::</span>abs((p<span style="color:#f92672">^</span>l.v)<span style="color:#f92672">-</span>(l.p<span style="color:#f92672">^</span>l.v))<span style="color:#f92672">/</span>len(l.v);}<span style="color:#75715e">//点到直线的距离
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>db <span style="color:#a6e22e">dis</span>(Line a, Line b){<span style="color:#66d9ef">return</span> std<span style="color:#f92672">::</span>abs((a.p<span style="color:#f92672">^</span>pnorm(a.v))<span style="color:#f92672">-</span>(b.p<span style="color:#f92672">^</span>pnorm(b.v)));}<span style="color:#75715e">//两直线距离，需要确保平行
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>db <span style="color:#a6e22e">dis</span>(Point p, Seg s){ <span style="color:#75715e">// 点到线段的距离
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span>(sgn(cos_v(p<span style="color:#f92672">-</span>s.a, s.b<span style="color:#f92672">-</span>s.a))<span style="color:#f92672">&lt;</span><span style="color:#ae81ff">0</span> <span style="color:#f92672">||</span> sgn(cos_v(p<span style="color:#f92672">-</span>s.b, s.a<span style="color:#f92672">-</span>s.b))<span style="color:#f92672">&lt;</span><span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> std<span style="color:#f92672">::</span>min(dis(p, s.a), dis(p, s.b));
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> dis(p, line(s));
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>db <span style="color:#a6e22e">dis</span>(Seg s1, Seg s2){ <span style="color:#75715e">// 线段之间的距离，前提是不相交。相交时为0，需要自己判断
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">return</span> std<span style="color:#f92672">::</span>min(std<span style="color:#f92672">::</span>min(dis(s1.a, s2), dis(s1.b, s2)), std<span style="color:#f92672">::</span>min(dis(s2.a, s1), dis(s2.b, s1)));
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#75715e">/////////////////////////////////////////////////
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">//平移
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
@@ -4320,12 +4335,42 @@ x_{c_m}-x_{c_m'}\leq y_m
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
 </span></span><span style="display:flex;"><span>std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>Point<span style="color:#f92672">&gt;</span> inter(Line a, Line b){
 </span></span><span style="display:flex;"><span>    <span style="color:#75715e">//两直线的交点，没有交点返回空vector，否则返回一个大小为1的vector
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 不能重叠
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    db c <span style="color:#f92672">=</span> a.v<span style="color:#f92672">^</span>b.v;
 </span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>Point<span style="color:#f92672">&gt;</span> ret;
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span>(eq(c,<span style="color:#ae81ff">0.0</span>)) <span style="color:#66d9ef">return</span> ret;
 </span></span><span style="display:flex;"><span>    Vec v <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">/</span>c<span style="color:#f92672">*</span>Vec{a.p<span style="color:#f92672">^</span>(a.p<span style="color:#f92672">+</span>a.v), b.p<span style="color:#f92672">^</span>(b.p<span style="color:#f92672">+</span>b.v)};
 </span></span><span style="display:flex;"><span>    ret.push_back({v<span style="color:#f92672">*</span>Vec{<span style="color:#f92672">-</span>b.v.x, a.v.x},v<span style="color:#f92672">*</span>Vec{<span style="color:#f92672">-</span>b.v.y, a.v.y}});
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> ret;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>Point<span style="color:#f92672">&gt;</span> inter(Seg s1, Seg s2) {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 两线段的交点，没有交点返回空vector，否则返回一个大小为1的vector
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 这里特别规定，如果两条线段有重叠线段，会返回第一条线段的两个端点
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>Point<span style="color:#f92672">&gt;</span> ret;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">using</span> std<span style="color:#f92672">::</span>max;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">using</span> std<span style="color:#f92672">::</span>min;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">bool</span> check <span style="color:#f92672">=</span> true;
+</span></span><span style="display:flex;"><span>    check <span style="color:#f92672">=</span> check <span style="color:#f92672">&amp;&amp;</span> geq(max(s1.a.x, s1.b.x), min(s2.a.x, s2.b.x));
+</span></span><span style="display:flex;"><span>    check <span style="color:#f92672">=</span> check <span style="color:#f92672">&amp;&amp;</span> geq(max(s2.a.x, s2.b.x), min(s1.a.x, s1.b.x));
+</span></span><span style="display:flex;"><span>    check <span style="color:#f92672">=</span> check <span style="color:#f92672">&amp;&amp;</span> geq(max(s1.a.y, s1.b.y), min(s2.a.y, s2.b.y));
+</span></span><span style="display:flex;"><span>    check <span style="color:#f92672">=</span> check <span style="color:#f92672">&amp;&amp;</span> geq(max(s2.a.y, s2.b.y), min(s1.a.y, s1.b.y));
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>check) <span style="color:#66d9ef">return</span> ret;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    db pd1 <span style="color:#f92672">=</span> (s2.a <span style="color:#f92672">-</span> s1.a) <span style="color:#f92672">^</span> (s1.b <span style="color:#f92672">-</span> s1.a);
+</span></span><span style="display:flex;"><span>    db pd2 <span style="color:#f92672">=</span> (s2.b <span style="color:#f92672">-</span> s1.a) <span style="color:#f92672">^</span> (s1.b <span style="color:#f92672">-</span> s1.a);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (sgn(pd1 <span style="color:#f92672">*</span> pd2) <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>) <span style="color:#66d9ef">return</span> ret;
+</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>swap(s1, s2);  <span style="color:#75715e">// 双方都要跨立实验
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    pd1 <span style="color:#f92672">=</span> (s2.a <span style="color:#f92672">-</span> s1.a) <span style="color:#f92672">^</span> (s1.b <span style="color:#f92672">-</span> s1.a);
+</span></span><span style="display:flex;"><span>    pd2 <span style="color:#f92672">=</span> (s2.b <span style="color:#f92672">-</span> s1.a) <span style="color:#f92672">^</span> (s1.b <span style="color:#f92672">-</span> s1.a);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (sgn(pd1 <span style="color:#f92672">*</span> pd2) <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>) <span style="color:#66d9ef">return</span> ret;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (sgn(pd1) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> <span style="color:#f92672">&amp;&amp;</span> sgn(pd2) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>) {
+</span></span><span style="display:flex;"><span>        ret.push_back(s2.a);
+</span></span><span style="display:flex;"><span>        ret.push_back(s2.a);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> ret;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">inter</span>(line(s2), line(s1));
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>Point<span style="color:#f92672">&gt;</span> inter(Line l, Circle c){
@@ -4356,6 +4401,52 @@ x_{c_m}-x_{c_m'}\leq y_m
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#75715e">/////////////////////////////////////////////////
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//多边形相关
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>db <span style="color:#a6e22e">area</span>(std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>Point<span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">const</span> <span style="color:#f92672">&amp;</span> ps){
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 逆时针排序的多边形的顶点，计算面积
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    db ret <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.0</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>, sz<span style="color:#f92672">=</span>ps.size();i<span style="color:#f92672">&lt;</span>sz;i<span style="color:#f92672">++</span>){
+</span></span><span style="display:flex;"><span>        ret <span style="color:#f92672">+=</span> (ps[i]<span style="color:#f92672">^</span>ps[(i<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">%</span>sz])<span style="color:#f92672">/</span><span style="color:#ae81ff">2.0</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> ret;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">bool</span> <span style="color:#a6e22e">isconvex</span>(std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>Point<span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">const</span> <span style="color:#f92672">&amp;</span> poly){
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 多边形是否为凸
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">bool</span><span style="color:#f92672">&gt;</span> s(<span style="color:#ae81ff">3</span>, false);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>, n<span style="color:#f92672">=</span>poly.size();i<span style="color:#f92672">&lt;</span>n;i<span style="color:#f92672">++</span>){
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">int</span> j <span style="color:#f92672">=</span> (i<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">%</span>n;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">int</span> k <span style="color:#f92672">=</span> (j<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">%</span>n;
+</span></span><span style="display:flex;"><span>        s[sgn((poly[j]<span style="color:#f92672">-</span>poly[i])<span style="color:#f92672">^</span>(poly[k]<span style="color:#f92672">-</span>poly[i]))<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> true;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span>(s[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">&amp;&amp;</span> s[<span style="color:#ae81ff">2</span>]) <span style="color:#66d9ef">return</span> false;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> true;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">inpoly</span>(std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>Point<span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">const</span> <span style="color:#f92672">&amp;</span> poly, Point p){
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 一个点是否在多边形内？
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 0外部，1内部，2边上，3顶点上
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">int</span> n<span style="color:#f92672">=</span>poly.size();
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>;i<span style="color:#f92672">&lt;</span>n;i<span style="color:#f92672">++</span>){
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span>(poly[i]<span style="color:#f92672">==</span>p) <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">3</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>;i<span style="color:#f92672">&lt;</span>n;i<span style="color:#f92672">++</span>){
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span>(on(p, Seg{poly[(i<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">%</span>n],poly[i]})) <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">2</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> cnt <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>;i<span style="color:#f92672">&lt;</span>n;i<span style="color:#f92672">++</span>){
+</span></span><span style="display:flex;"><span>         <span style="color:#66d9ef">int</span> j <span style="color:#f92672">=</span> (i<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">%</span>n;
+</span></span><span style="display:flex;"><span>         <span style="color:#66d9ef">int</span> k <span style="color:#f92672">=</span> sgn((p<span style="color:#f92672">-</span>poly[j])<span style="color:#f92672">^</span>(poly[i]<span style="color:#f92672">-</span>poly[j]));
+</span></span><span style="display:flex;"><span>         <span style="color:#66d9ef">int</span> u <span style="color:#f92672">=</span> sgn(poly[i].y<span style="color:#f92672">-</span>p.y);
+</span></span><span style="display:flex;"><span>         <span style="color:#66d9ef">int</span> v <span style="color:#f92672">=</span> sgn(poly[j].y<span style="color:#f92672">-</span>p.y);
+</span></span><span style="display:flex;"><span>         <span style="color:#66d9ef">if</span>(k<span style="color:#f92672">&gt;</span><span style="color:#ae81ff">0</span> <span style="color:#f92672">&amp;&amp;</span> u<span style="color:#f92672">&lt;</span><span style="color:#ae81ff">0</span> <span style="color:#f92672">&amp;&amp;</span> v<span style="color:#f92672">&gt;=</span><span style="color:#ae81ff">0</span>) cnt<span style="color:#f92672">++</span>;
+</span></span><span style="display:flex;"><span>         <span style="color:#66d9ef">if</span>(k<span style="color:#f92672">&lt;</span><span style="color:#ae81ff">0</span> <span style="color:#f92672">&amp;&amp;</span> v<span style="color:#f92672">&lt;</span><span style="color:#ae81ff">0</span> <span style="color:#f92672">&amp;&amp;</span> u<span style="color:#f92672">&gt;=</span><span style="color:#ae81ff">0</span>) cnt<span style="color:#f92672">--</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> cnt <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/////////////////////////////////////////////////
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">//三角形四心
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
 </span></span><span style="display:flex;"><span>Point <span style="color:#a6e22e">barycenter</span>(Point a, Point b, Point c){
@@ -4383,84 +4474,89 @@ x_{c_m}-x_{c_m'}\leq y_m
 </span></span><span style="display:flex;"><span>    db d <span style="color:#f92672">=</span> (b<span style="color:#f92672">-</span>c)<span style="color:#f92672">^</span>(a<span style="color:#f92672">-</span>c);
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">/</span>d <span style="color:#f92672">*</span> r90c(n<span style="color:#f92672">*</span>(c<span style="color:#f92672">-</span>b)<span style="color:#f92672">-</span>m<span style="color:#f92672">*</span>(c<span style="color:#f92672">-</span>a));
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><h2 id="二维凸包">二维凸包</h2>
+</span></span></code></pre></div><h2 id="基本公式">基本公式</h2>
+<h3 id="正弦定理">正弦定理</h3>
+<p>在<span class="math inline">\(\triangle ABC\)</span>中，设角<span class="math inline">\(A,B,C\)</span>对应的边为<span class="math inline">\(a,b,c\)</span>，则</p>
+<p><span class="math display">\[\dfrac{a}{\sin A} = \dfrac{b}{\sin B} = \dfrac{c}{\sin C} = 2R
+\]</span></p>
+<p>其中<span class="math inline">\(R\)</span>是外接圆半径</p>
+<h3 id="余弦定理">余弦定理</h3>
+<p><span class="math display">\[a^2 = b^2+c^2-2bc\cos A
+\]</span></p>
+<p><span class="math display">\[b^2 = a^2+c^2-2ac\cos B
+\]</span></p>
+<p><span class="math display">\[c^2 = a^2+b^2-2ab\cos C
+\]</span></p>
+<h3 id="向量积">向量积</h3>
+<p><span class="math display">\[\vec{a}\cdot\vec{b} = a_1b_1+a_2b_2+\cdots+a_nb_n =|\vec{a}||\vec{b}|\cos\theta
+\]</span></p>
+<p><span class="math display">\[\vec{a}\times\vec{b} = |\vec{a}||\vec{b}|\sin\theta
+\]</span></p>
+<p>实际上外积只在三维中有定义。用在二维向量上时，只能算出这个标量值，用右手定则判断正负。其也代表两个向量构成的平行四边形的面积。三维中的定义为</p>
+<p><span class="math display">\[\vec{s} = \vec{u}\times\vec{v} = (u_2v_3-u_3v_2, u_3v_1-u_1v_3,u_1v_2-u_2v_1)
+\]</span></p>
+<p>其中<span class="math inline">\(\vec{s}\)</span>垂直于<span class="math inline">\(\vec{u},\vec{v}\)</span>构成的屏幕。</p>
+<h3 id="求任意多边形的周长">求任意多边形的周长</h3>
+<p>使用我们提供的<code>len</code>函数计算所有边即可。</p>
+<h3 id="求任意多边形的面积">求任意多边形的面积</h3>
+<p>将多边形上的点逆时针标记为<span class="math inline">\(p_1, p_2,\cdots,p_n\)</span>，再选一个辅助点<span class="math inline">\(O\)</span>，记<span class="math inline">\(v_i=p_i-O\)</span>，那么</p>
+<p><span class="math display">\[S = \dfrac{1}{2}\sum^n_{i=1}v_i\times v_{i\%n+1}
+\]</span></p>
+<h2 id="二维凸包">二维凸包</h2>
 <h3 id="andrew扫描法">Andrew扫描法</h3>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#75715e">//复杂度 nlogn
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;cstdio&gt;</span><span style="color:#75715e">
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;cstring&gt;</span><span style="color:#75715e">
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;vector&gt;</span><span style="color:#75715e">
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;algorithm&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//luogu P2742，求凸包周长
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//注意题给条件，如果是整数坐标，务必切换到long long来避免误差
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#define MAXN 50005
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> <span style="color:#66d9ef">namespace</span> std;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">Point</span>{
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">double</span> x,y;
-</span></span><span style="display:flex;"><span>    Point()<span style="color:#f92672">=</span><span style="color:#66d9ef">default</span>;
-</span></span><span style="display:flex;"><span>    Point(<span style="color:#66d9ef">double</span> x, <span style="color:#66d9ef">double</span> y)<span style="color:#f92672">:</span>x(x),y(y){}
-</span></span><span style="display:flex;"><span>    Point <span style="color:#66d9ef">operator</span> <span style="color:#f92672">+</span> (Point p){
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">Point</span>(x<span style="color:#f92672">+</span>p.x, y<span style="color:#f92672">+</span>p.y);
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    Point <span style="color:#66d9ef">operator</span> <span style="color:#f92672">-</span> (Point p){
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">Point</span>(x<span style="color:#f92672">-</span>p.x, y<span style="color:#f92672">-</span>p.y);
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    Point <span style="color:#66d9ef">operator</span> <span style="color:#f92672">*</span> (<span style="color:#66d9ef">double</span> d){
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">Point</span>(x<span style="color:#f92672">*</span>d, y<span style="color:#f92672">*</span>d);
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">double</span> <span style="color:#a6e22e">dot</span>(Point p){<span style="color:#75715e">//点积
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#66d9ef">return</span> x<span style="color:#f92672">*</span>p.x<span style="color:#f92672">+</span>y<span style="color:#f92672">*</span>p.y;
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">double</span> <span style="color:#a6e22e">det</span>(Point p){<span style="color:#75715e">//叉积
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#66d9ef">return</span> x<span style="color:#f92672">*</span>(p.y)<span style="color:#f92672">-</span>(p.x)<span style="color:#f92672">*</span>y;
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>};
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> n;
-</span></span><span style="display:flex;"><span>Point po[MAXN<span style="color:#f92672">*</span><span style="color:#ae81ff">2</span>];
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">bool</span> <span style="color:#a6e22e">cmp</span>(Point<span style="color:#f92672">&amp;</span> a, Point<span style="color:#f92672">&amp;</span> b){
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span>(a.x<span style="color:#f92672">!=</span>b.x) <span style="color:#66d9ef">return</span> a.x<span style="color:#f92672">&lt;</span>b.x;
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> a.y<span style="color:#f92672">&lt;</span>b.y;
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>vector<span style="color:#f92672">&lt;</span>Point<span style="color:#f92672">&gt;</span> convexHull(){
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">//返回凸包上的点
+</span></span><span style="display:flex;"><span>std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>Point<span style="color:#f92672">&gt;</span> convexHull(std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>Point<span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">const</span> <span style="color:#f92672">&amp;</span> poly){
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// 返回凸包上的点，逆时针顺序
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#75715e">// 如果要判断一个多边形是不是凸包，也可以用其生成一个凸包，判断点数是否相同
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#75715e">// 此时要将下面的sgn(...)&lt;=0改成sgn(...)&lt;0
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#75715e">// 另外要特判所有点共线的情况，否则得不到正确的点数
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">int</span> k <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
-</span></span><span style="display:flex;"><span>    vector<span style="color:#f92672">&lt;</span>Point<span style="color:#f92672">&gt;</span> qs;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> n <span style="color:#f92672">=</span> poly.size();
+</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>Point<span style="color:#f92672">&gt;</span> qs;
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>;i<span style="color:#f92672">&lt;</span>n;i<span style="color:#f92672">++</span>){
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">while</span>(k<span style="color:#f92672">&gt;</span><span style="color:#ae81ff">1</span><span style="color:#f92672">&amp;&amp;</span>(qs[k<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]<span style="color:#f92672">-</span>qs[k<span style="color:#f92672">-</span><span style="color:#ae81ff">2</span>]).det(po[i]<span style="color:#f92672">-</span>qs[k<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>])<span style="color:#f92672">&lt;=</span><span style="color:#ae81ff">0</span>){
-</span></span><span style="display:flex;"><span>            qs.erase(qs.end()<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">while</span>(k<span style="color:#f92672">&gt;</span><span style="color:#ae81ff">1</span><span style="color:#f92672">&amp;&amp;</span>sgn((qs[k<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]<span style="color:#f92672">-</span>qs[k<span style="color:#f92672">-</span><span style="color:#ae81ff">2</span>])<span style="color:#f92672">^</span>(poly[i]<span style="color:#f92672">-</span>qs[k<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]))<span style="color:#f92672">&lt;=</span><span style="color:#ae81ff">0</span>){
+</span></span><span style="display:flex;"><span>            qs.pop_back();
 </span></span><span style="display:flex;"><span>            k<span style="color:#f92672">--</span>;
 </span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>        qs.push_back(po[i]);
+</span></span><span style="display:flex;"><span>        qs.push_back(poly[i]);
 </span></span><span style="display:flex;"><span>        k<span style="color:#f92672">++</span>;
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span>n<span style="color:#f92672">-</span><span style="color:#ae81ff">2</span>,t<span style="color:#f92672">=</span>k;i<span style="color:#f92672">&gt;=</span><span style="color:#ae81ff">0</span>;i<span style="color:#f92672">--</span>){
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">while</span>(k<span style="color:#f92672">&gt;</span>t<span style="color:#f92672">&amp;&amp;</span>(qs[k<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]<span style="color:#f92672">-</span>qs[k<span style="color:#f92672">-</span><span style="color:#ae81ff">2</span>]).det(po[i]<span style="color:#f92672">-</span>qs[k<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>])<span style="color:#f92672">&lt;=</span><span style="color:#ae81ff">0</span>) {
-</span></span><span style="display:flex;"><span>            qs.erase(qs.end()<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">while</span>(k<span style="color:#f92672">&gt;</span>t<span style="color:#f92672">&amp;&amp;</span>sgn((qs[k<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]<span style="color:#f92672">-</span>qs[k<span style="color:#f92672">-</span><span style="color:#ae81ff">2</span>])<span style="color:#f92672">^</span>(poly[i]<span style="color:#f92672">-</span>qs[k<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]))<span style="color:#f92672">&lt;=</span><span style="color:#ae81ff">0</span>) {
+</span></span><span style="display:flex;"><span>            qs.pop_back();
 </span></span><span style="display:flex;"><span>            k<span style="color:#f92672">--</span>;
 </span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>        qs.push_back(po[i]);
+</span></span><span style="display:flex;"><span>        qs.push_back(poly[i]);
 </span></span><span style="display:flex;"><span>        k<span style="color:#f92672">++</span>;
 </span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    qs.erase(qs.end()<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>);
+</span></span><span style="display:flex;"><span>    qs.pop_back();
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> qs;
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(){
-</span></span><span style="display:flex;"><span>    cin<span style="color:#f92672">&gt;&gt;</span>n;
+</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>ios<span style="color:#f92672">::</span>sync_with_stdio(false);
+</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>cin.tie(<span style="color:#ae81ff">0</span>);
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> n;
+</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>cin<span style="color:#f92672">&gt;&gt;</span>n;
+</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>Point<span style="color:#f92672">&gt;</span> po(n);
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>;i<span style="color:#f92672">&lt;</span>n;i<span style="color:#f92672">++</span>){
-</span></span><span style="display:flex;"><span>        cin<span style="color:#f92672">&gt;&gt;</span>po[i].x<span style="color:#f92672">&gt;&gt;</span>po[i].y;
+</span></span><span style="display:flex;"><span>        std<span style="color:#f92672">::</span>cin<span style="color:#f92672">&gt;&gt;</span>po[i].x<span style="color:#f92672">&gt;&gt;</span>po[i].y;
 </span></span><span style="display:flex;"><span>        <span style="color:#75715e">//输入点的横纵坐标
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    }
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    sort(po,po<span style="color:#f92672">+</span>n,cmp);
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">auto</span> p:convexHull()){
-</span></span><span style="display:flex;"><span>        cout<span style="color:#f92672">&lt;&lt;</span>p.x<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34; &#34;</span><span style="color:#f92672">&lt;&lt;</span>p.y<span style="color:#f92672">&lt;&lt;</span>endl;
+</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>sort(po.begin(), po.end());
+</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>Point<span style="color:#f92672">&gt;</span> ch <span style="color:#f92672">=</span> convexHull(po);
+</span></span><span style="display:flex;"><span>    db ans <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.0</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>,sz<span style="color:#f92672">=</span>ch.size();i<span style="color:#f92672">&lt;</span>sz;i<span style="color:#f92672">++</span>){
+</span></span><span style="display:flex;"><span>        ans <span style="color:#f92672">+=</span> len(ch[(i<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">%</span>sz]<span style="color:#f92672">-</span>ch[i]);
 </span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>cout<span style="color:#f92672">&lt;&lt;</span>std<span style="color:#f92672">::</span>fixed;
+</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>cout.precision(<span style="color:#ae81ff">2</span>);
+</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>cout<span style="color:#f92672">&lt;&lt;</span>ans<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
 </span></span><span style="display:flex;"><span>}
@@ -4468,91 +4564,25 @@ x_{c_m}-x_{c_m'}\leq y_m
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#75715e">//复杂度 nlogn，其中求凸包nlogn，旋转卡壳本身为n
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">//Luogu P1452
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">//旋转卡壳和凸包
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;cstring&gt;</span><span style="color:#75715e">
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;vector&gt;</span><span style="color:#75715e">
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;algorithm&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//注意题给条件，如果是整数坐标，务必切换到long long来避免误差
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#define MAXN 50005
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> <span style="color:#66d9ef">namespace</span> std;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">Point</span>{
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> x,y;
-</span></span><span style="display:flex;"><span>    Point()<span style="color:#f92672">=</span><span style="color:#66d9ef">default</span>;
-</span></span><span style="display:flex;"><span>    Point(<span style="color:#66d9ef">int</span> x, <span style="color:#66d9ef">int</span> y)<span style="color:#f92672">:</span>x(x),y(y){}
-</span></span><span style="display:flex;"><span>    Point <span style="color:#66d9ef">operator</span> <span style="color:#f92672">-</span> (Point p){
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">Point</span>(x<span style="color:#f92672">-</span>p.x, y<span style="color:#f92672">-</span>p.y);
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    Point <span style="color:#66d9ef">operator</span> <span style="color:#f92672">+</span> (Point p){
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">Point</span>(x<span style="color:#f92672">+</span>p.x, y<span style="color:#f92672">+</span>p.y);
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    Point <span style="color:#66d9ef">operator</span> <span style="color:#f92672">*</span> (<span style="color:#66d9ef">int</span> d){
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">Point</span>(x<span style="color:#f92672">*</span>d, y<span style="color:#f92672">*</span>d);
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">dot</span>(Point p){
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> x<span style="color:#f92672">*</span>p.x<span style="color:#f92672">+</span>y<span style="color:#f92672">*</span>p.y;
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">det</span>(Point p){
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> x<span style="color:#f92672">*</span>(p.y)<span style="color:#f92672">-</span>y<span style="color:#f92672">*</span>(p.x);
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>};
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">bool</span> <span style="color:#a6e22e">cmp</span>(Point<span style="color:#f92672">&amp;</span> a, Point<span style="color:#f92672">&amp;</span> b){
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span>(a.x<span style="color:#f92672">!=</span>b.x) <span style="color:#66d9ef">return</span> a.x<span style="color:#f92672">&lt;</span>b.x;
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> a.y<span style="color:#f92672">&lt;</span>b.y;
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> n;
-</span></span><span style="display:flex;"><span>Point po[MAXN];
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>vector<span style="color:#f92672">&lt;</span>Point<span style="color:#f92672">&gt;</span> convexHull(){
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">//返回凸包上的点
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    vector<span style="color:#f92672">&lt;</span>Point<span style="color:#f92672">&gt;</span> ans;
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> k <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>;i<span style="color:#f92672">&lt;</span>n;i<span style="color:#f92672">++</span>){
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">while</span>(k<span style="color:#f92672">&gt;</span><span style="color:#ae81ff">1</span><span style="color:#f92672">&amp;&amp;</span>(ans[k<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]<span style="color:#f92672">-</span>ans[k<span style="color:#f92672">-</span><span style="color:#ae81ff">2</span>]).det(po[i]<span style="color:#f92672">-</span>ans[k<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>])<span style="color:#f92672">&lt;=</span><span style="color:#ae81ff">0</span>){
-</span></span><span style="display:flex;"><span>            ans.erase(ans.end()<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>);
-</span></span><span style="display:flex;"><span>            k<span style="color:#f92672">--</span>;
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>        ans.push_back(po[i]);
-</span></span><span style="display:flex;"><span>        k<span style="color:#f92672">++</span>;
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span>n<span style="color:#f92672">-</span><span style="color:#ae81ff">2</span>,t<span style="color:#f92672">=</span>k;i<span style="color:#f92672">&gt;=</span><span style="color:#ae81ff">0</span>;i<span style="color:#f92672">--</span>){
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">while</span>(k<span style="color:#f92672">&gt;</span>t<span style="color:#f92672">&amp;&amp;</span>(ans[k<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]<span style="color:#f92672">-</span>ans[k<span style="color:#f92672">-</span><span style="color:#ae81ff">2</span>]).det(po[i]<span style="color:#f92672">-</span>ans[k<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>])<span style="color:#f92672">&lt;=</span><span style="color:#ae81ff">0</span>){
-</span></span><span style="display:flex;"><span>            ans.erase(ans.end()<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>);
-</span></span><span style="display:flex;"><span>            k<span style="color:#f92672">--</span>;
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>        ans.push_back(po[i]);
-</span></span><span style="display:flex;"><span>        k<span style="color:#f92672">++</span>;
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    ans.erase(ans.end()<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>);
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> ans;
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">inline</span> <span style="color:#66d9ef">long</span> <span style="color:#66d9ef">long</span> <span style="color:#a6e22e">dist</span>(Point a, Point b){<span style="color:#75715e">//计算距离的平方
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">return</span> (a<span style="color:#f92672">-</span>b).dot(a<span style="color:#f92672">-</span>b);
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">rc</span>(vector<span style="color:#f92672">&lt;</span>Point<span style="color:#f92672">&gt;</span> ans){
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> tn <span style="color:#f92672">=</span> ans.size();
+</span></span><span style="display:flex;"><span>db <span style="color:#a6e22e">rc</span>(std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>Point<span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">const</span> <span style="color:#f92672">&amp;</span> ch){
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 返回凸包直径的平方
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">int</span> tn <span style="color:#f92672">=</span> ch.size();
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> cnt<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>;
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span>(tn<span style="color:#f92672">==</span><span style="color:#ae81ff">2</span>){
-</span></span><span style="display:flex;"><span>        cout<span style="color:#f92672">&lt;&lt;</span>dist(ans[<span style="color:#ae81ff">0</span>],ans[<span style="color:#ae81ff">1</span>])<span style="color:#f92672">&lt;&lt;</span>endl;
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> len2(ch[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">-</span>ch[<span style="color:#ae81ff">1</span>]);
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>,j<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>;
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> k<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>;k<span style="color:#f92672">&lt;</span>tn;k<span style="color:#f92672">++</span>){
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span>(<span style="color:#f92672">!</span>cmp(ans[i],ans[k])) i<span style="color:#f92672">=</span>k;
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span>(cmp(ans[j],ans[k])) j<span style="color:#f92672">=</span>k;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span>(<span style="color:#f92672">!</span>(ch[i]<span style="color:#f92672">&lt;</span>ch[k])) i<span style="color:#f92672">=</span>k;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span>(ch[j]<span style="color:#f92672">&lt;</span>ch[k]) j<span style="color:#f92672">=</span>k;
 </span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">long</span> <span style="color:#66d9ef">long</span> res <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>    db res <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> si<span style="color:#f92672">=</span>i,sj<span style="color:#f92672">=</span>j;
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">while</span>(i<span style="color:#f92672">!=</span>sj<span style="color:#f92672">||</span>j<span style="color:#f92672">!=</span>si){
-</span></span><span style="display:flex;"><span>        res <span style="color:#f92672">=</span> max(res,dist(ans[i],ans[j]));
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span>((ans[(i<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">%</span>tn]<span style="color:#f92672">-</span>ans[i]).det(ans[(j<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">%</span>tn]<span style="color:#f92672">-</span>ans[j])<span style="color:#f92672">&lt;</span><span style="color:#ae81ff">0</span>){
+</span></span><span style="display:flex;"><span>        res <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>max(res, len2(ch[i]<span style="color:#f92672">-</span>ch[j]));
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span>(sgn((ch[(i<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">%</span>tn]<span style="color:#f92672">-</span>ch[i])<span style="color:#f92672">^</span>(ch[(j<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">%</span>tn]<span style="color:#f92672">-</span>ch[j]))<span style="color:#f92672">&lt;</span><span style="color:#ae81ff">0</span>){
 </span></span><span style="display:flex;"><span>            i <span style="color:#f92672">=</span> (i<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">%</span>tn;
 </span></span><span style="display:flex;"><span>        }<span style="color:#66d9ef">else</span>{
 </span></span><span style="display:flex;"><span>            j <span style="color:#f92672">=</span> (j<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">%</span>tn;
@@ -4560,20 +4590,25 @@ x_{c_m}-x_{c_m'}\leq y_m
 </span></span><span style="display:flex;"><span>        
 </span></span><span style="display:flex;"><span>        cnt<span style="color:#f92672">++</span>;
 </span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//返回凸包最远点对的距离的平方
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    cout<span style="color:#f92672">&lt;&lt;</span>res<span style="color:#f92672">&lt;&lt;</span>endl;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> res;
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(){
-</span></span><span style="display:flex;"><span>    cin<span style="color:#f92672">&gt;&gt;</span>n;
-</span></span><span style="display:flex;"><span>    vector<span style="color:#f92672">&lt;</span>Point<span style="color:#f92672">&gt;</span> qs;
+</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>ios<span style="color:#f92672">::</span>sync_with_stdio(false);
+</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>cin.tie(<span style="color:#ae81ff">0</span>);
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> n;
+</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>cin<span style="color:#f92672">&gt;&gt;</span>n;
+</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>Point<span style="color:#f92672">&gt;</span> po(n);
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>;i<span style="color:#f92672">&lt;</span>n;i<span style="color:#f92672">++</span>){
-</span></span><span style="display:flex;"><span>        cin<span style="color:#f92672">&gt;&gt;</span>po[i].x<span style="color:#f92672">&gt;&gt;</span>po[i].y;
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">//按横纵坐标输入点对
+</span></span><span style="display:flex;"><span>        std<span style="color:#f92672">::</span>cin<span style="color:#f92672">&gt;&gt;</span>po[i].x<span style="color:#f92672">&gt;&gt;</span>po[i].y;
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">//输入点的横纵坐标
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    }
-</span></span><span style="display:flex;"><span>    sort(po,po<span style="color:#f92672">+</span>n,cmp);
-</span></span><span style="display:flex;"><span>    qs <span style="color:#f92672">=</span> convexHull();
-</span></span><span style="display:flex;"><span>    rc(qs);
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>sort(po.begin(), po.end());
+</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>Point<span style="color:#f92672">&gt;</span> ch <span style="color:#f92672">=</span> convexHull(po);
+</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>cout<span style="color:#f92672">&lt;&lt;</span>rc(ch)<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><h2 id="平面最近点对">平面最近点对</h2>
@@ -8569,6 +8604,15 @@ std::cout&lt;&lt;(int)x&lt;&lt;&#34;\n&#34;;
     <li><a href="#计算几何-todo">计算几何 TODO</a>
       <ol>
         <li><a href="#基础板子">基础板子</a></li>
+        <li><a href="#基本公式">基本公式</a>
+          <ol>
+            <li><a href="#正弦定理">正弦定理</a></li>
+            <li><a href="#余弦定理">余弦定理</a></li>
+            <li><a href="#向量积">向量积</a></li>
+            <li><a href="#求任意多边形的周长">求任意多边形的周长</a></li>
+            <li><a href="#求任意多边形的面积">求任意多边形的面积</a></li>
+          </ol>
+        </li>
         <li><a href="#二维凸包">二维凸包</a>
           <ol>
             <li><a href="#andrew扫描法">Andrew扫描法</a></li>

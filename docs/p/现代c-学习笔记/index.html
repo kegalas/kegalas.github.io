@@ -108,7 +108,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 19 分钟
+                    阅读时长: 50 分钟
                 </time>
             </div>
         
@@ -119,6 +119,7 @@
 
     <section class="article-content">
     <p>本笔记会记录一些<code>C++</code>中，自己以前不常用、不是很熟悉需要记录来复习的、新标准（相较于<code>C++11</code>）引入的、可能有用的功能。不适合详细阅读过某一本<code>C++</code>大部头教材的人，比较适合对于<code>C++</code>的知识只停留在算法竞赛的人。</p>
+<p>本文的内容大多是我看了<code>cppreference</code>、<code>hackingcpp.com</code>、<code>freegeektime.com</code>、知乎和各类博客网站的文章、部分经典教材后，加上自己的理解，写作而成的。</p>
 <h1 id="stdendl">std::endl</h1>
 <p><code>std::endl</code>会立即刷新字符缓冲区，然后输出。但是<code>'\n'</code>不会。如果频繁地使用<code>std::endl</code>换行可能会导致性能问题，除非你非常确定这条消息在换行后必须要立即输出。</p>
 <h1 id="stdclog">std::clog</h1>
@@ -185,18 +186,66 @@
 <li>如果你想要修改实参，则显然必须加且只加<code>&amp;</code>传入引用（例如swap函数）</li>
 <li>如果你传入的复制开销很大（例如一个图片类），又不需要修改，加<code>const &amp;</code></li>
 </ul>
-<h1 id="左值右值初步">左值、右值（初步）</h1>
-<p><strong>左值</strong></p>
-<p>左值指的是可以获取地址的表达式，例如变量、函数形参等。</p>
-<p><strong>右值</strong></p>
-<p>右值正好相反，就是不可获取地址的表达式。例如字面常量（除了字符串字面量），操作符的临时结果（例如<code>a=b+c;</code>中的<code>b+c</code>），函数的返回值。</p>
-<p>具体什么是右值什么是左值可以在<a class="link" href="https://zh.cppreference.com/w/cpp/language/value_category"  target="_blank" rel="noopener"
-    >https://zh.cppreference.com/w/cpp/language/value_category</a>查询。这里面还介绍了纯右值，亡值，将来我会出一篇博客介绍（TODO）。</p>
+<h1 id="左值纯右值亡值">左值、纯右值、亡值</h1>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 153; 
+			flex-basis: 367px"
+	>
+	<a href="/p/%E7%8E%B0%E4%BB%A3c-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2.jpg" data-size="736x481">
+		<img src="/p/%E7%8E%B0%E4%BB%A3c-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2.jpg"
+			width="736"
+			height="481"
+			srcset="/p/%E7%8E%B0%E4%BB%A3c-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2_hu4143b18d484754e5bf722b972f62f72c_22580_480x0_resize_q75_box.jpg 480w, /p/%E7%8E%B0%E4%BB%A3c-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2_hu4143b18d484754e5bf722b972f62f72c_22580_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="2.jpg">
+	</a>
+	
+	<figcaption>2.jpg</figcaption>
+	
+</figure></p>
+<p>曾经是只有左值和右值的。左值意味着可以取地址，而右值意味着不可以取地址。叫左值右值则是因为左值一般在赋值号左边，而右值在右边。</p>
+<p>现代C++中，值类别必定属于三者其一：左值、亡值、纯右值。</p>
+<p><strong>左值（lvalue）</strong></p>
+<p>左值是有标识符、可以取地址的表达式。例如变量名、函数名确定的值。返回类型为左值引用的函数返回的值（除了自定义的，还有赋值运算符、<code>++a</code>、<code>--a</code>）。字符串字面量（<code>const char*</code>类型的左值）</p>
+<p><strong>纯右值（prvalue）</strong></p>
+<p>右值正好相反，就是没有标识符、不可获取地址的表达式。例如字面常量（除了字符串字面量），操作符的临时结果（例如<code>a=b+c;</code>中的<code>b+c</code>）（其实可以归类为下一条的），函数的返回值（除了返回左值引用和右值引用的）（例如<code>x++</code>）。</p>
+<p>但是，右值引用变量，是一个左值。因为它再怎么说也是一个变量。</p>
+<p><strong>亡值（xvalue）</strong></p>
+<p>可以看作是有名字、有地址的右值，跟无名的纯右值区分开。所以实际上<code>std::move(x)</code>这样的函数，返回的是亡值。返回类型是对象的右值引用的函数调用，返回的也都是亡值。</p>
+<p><strong>泛左值（glvalue）</strong></p>
+<p>即左值和亡值。其特点是有标识符，有地址。但左值不可移动而亡值可移动。</p>
+<p><strong>右值（rvalue）</strong></p>
+<p>即纯右值和亡值。其特点是可移动。但亡值有标识符和地址而纯右值没有。</p>
 <p><strong>&amp;引用</strong></p>
-<p><code>&amp;</code>只能引用左值。也就是说<code>void fun(int &amp; a);</code>这个函数，你传入<code>fun(1);</code>会编译失败，但是<code>int b=1;fun(b);</code>是可以编译成功的。</p>
+<p><code>&amp;</code>只能引用左值。也就是说<code>void fun(int &amp; a);</code>这个函数，你传入<code>fun(1);</code>会编译失败，但是<code>int b=1;fun(b);</code>是可以编译成功的。引用本身是个左值。</p>
 <p><strong>const &amp;引用</strong></p>
-<p><code>const &amp;</code>既可以引用左值，又可以引用右值。</p>
-<p>左右值的名称是来源于它们在与等号的位置关系，一般情况下左值在等号左边，右值在等号右边。不过不能用一个东西能否被赋值去判断左右值。最好的办法是看能否被引用。</p>
+<p><code>const &amp;</code>既可以引用左值，又可以引用右值。其本身是一个左值。</p>
+<p><strong>&amp;&amp;引用</strong></p>
+<p>即右值引用，只能绑定右值。本身是个左值。</p>
+<p>如果函数重载里只有<code>const &amp;</code>，那么传入右值会调用这个函数重载。如果重载有<code>&amp;&amp;</code>形式的，那么会优先调用<code>&amp;&amp;</code>形式的重载。这种特性允许了移动构造函数的存在。</p>
+<p><strong>转发引用（万能引用）</strong></p>
+<p>这个只会出现在模板中</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">T</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> f(T<span style="color:#f92672">&amp;&amp;</span> x){                  <span style="color:#75715e">// x 是转发引用
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">g</span>(std<span style="color:#f92672">::</span>forward<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span>(x)); <span style="color:#75715e">// 从而能被转发
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
+</span></span></code></pre></div><p>见后写的完美转发部分。</p>
+<h1 id="右值引用或常左值引用延长生命周期">右值引用（或常左值引用）延长生命周期</h1>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>std<span style="color:#f92672">::</span>string s1 <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;test&#34;</span>;
+</span></span><span style="display:flex;"><span>std<span style="color:#f92672">::</span>string <span style="color:#66d9ef">const</span> <span style="color:#f92672">&amp;</span> s2 <span style="color:#f92672">=</span> s1<span style="color:#f92672">+</span>s1; <span style="color:#75715e">// 这个右值的生命周期被延长到和s2一样，但是不可修改
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>std<span style="color:#f92672">::</span>string <span style="color:#f92672">&amp;&amp;</span> s3 <span style="color:#f92672">=</span> s1<span style="color:#f92672">+</span>s1; <span style="color:#75715e">// 同上，但是可修改
+</span></span></span></code></pre></div><p>但是，延长生命周期只能对纯右值使用，而不能对亡值使用。例如<code>A &amp;&amp; x = std::move(y)</code>，此时对<code>x</code>进行解引用，是未定义行为。因为<code>y</code>已经析构。</p>
+<h1 id="移动语义">移动语义</h1>
+<p>把一头大象从一台冰箱里移动到另一台冰箱里需要几步？C++曾经的做法是，首先完整地在冰箱B里复制一个一模一样的大象，然后蒸发掉冰箱A中的大象。</p>
+<p>正常人的想法是，把大象从A中拉出来，把大象推进B冰箱中，关上冰箱门。</p>
+<p>C++11的移动语义实现了这个正常人的想法。例如</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span> v1{<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">4</span>,<span style="color:#ae81ff">5</span>,<span style="color:#ae81ff">6</span>};
+</span></span><span style="display:flex;"><span>std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span> v2(std<span style="color:#f92672">::</span>move(v1));
+</span></span></code></pre></div><p>可以把<code>v1</code>移动到<code>v2</code>中，而非拷贝一个一样的到<code>v2</code>中。发挥了关键作用的是<code>std::move</code>和其对应的移动构造（和移动赋值）函数。</p>
+<p>注意，<code>std::move</code>仅仅是将一个值强制转换到右值（亡值），而不进行其他操作。真正的移动行为是在移动构造（和移动赋值）函数中实现的。</p>
 <h1 id="小心返回引用的函数">小心返回引用的函数</h1>
 <p>例如</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">int</span><span style="color:#f92672">&amp;</span> fun(<span style="color:#66d9ef">int</span> x){
@@ -233,7 +282,9 @@
 <p>除了是否新建一个对象以为，这两者的生命周期也不同。C++的对象在<code>p1</code>销毁时就销毁了，而在Java中<code>p1</code>销毁之后，由于还有<code>p2</code>指向这个对象，所以对象本身不会销毁。如果所有指向全都销毁，那么垃圾回收机制才会销毁这个对象。</p>
 <p>另外，通常“相等”的概念也不同。在Java中，对两个对象变量使用<code>==</code>运算符，如果它们指向不同的对象，则不相等，否则相等。在C++中，我们一般会重载<code>==</code>运算符，判断两者的内容是否相等。</p>
 <h2 id="拷贝构造函数">拷贝构造函数</h2>
+<p>todo</p>
 <h2 id="赋值构造函数">赋值构造函数</h2>
+<p>todo</p>
 <h1 id="argc-argv">argc, argv</h1>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">int</span> argc, <span style="color:#66d9ef">char</span><span style="color:#f92672">*</span> argv[]){
 </span></span><span style="display:flex;"><span>    <span style="color:#75715e">//...
@@ -291,22 +342,6 @@
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>std<span style="color:#f92672">::</span>cout<span style="color:#f92672">&lt;&lt;</span>Vec(<span style="color:#ae81ff">2.0</span>,<span style="color:#ae81ff">3.0</span>)<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;<span style="color:#75715e">//可以像对int一样使用cin cout
 </span></span></span></code></pre></div><p>主要是方便打印、输入数据，例如你在编写一个数值计算库，需要用到很多向量、矩阵的输出。</p>
-<h1 id="mutable和const的成员函数">mutable和const的成员函数</h1>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Vec</span>{
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">double</span> x,y;
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> <span style="color:#66d9ef">mutable</span> sth;
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> sth2;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">foo</span>() <span style="color:#66d9ef">const</span> {
-</span></span><span style="display:flex;"><span>        sth<span style="color:#f92672">++</span>;<span style="color:#75715e">//不会报错
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">bar</span>() <span style="color:#66d9ef">const</span>{
-</span></span><span style="display:flex;"><span>        sth2<span style="color:#f92672">++</span>;<span style="color:#75715e">//会报错
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    }
-</span></span><span style="display:flex;"><span>};
-</span></span></code></pre></div><p>把类成员函数用const修饰（放在参数列表之后），意味着，这个函数声称不会改变类内的所有成员变量的值。如果你想让几个特例可以修改，那么就把那个特例变量声明为mutable的即可。</p>
 <h1 id="类成员初始化">类成员初始化</h1>
 <p>在C++ 11以前，我们初始化类成员一般只能在构造函数里进行，如</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Vec</span>{
@@ -361,6 +396,64 @@
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span>(p<span style="color:#f92672">!=</span><span style="color:#66d9ef">nullptr</span>){}
 </span></span></code></pre></div><p>这更多的是一种风格问题，争论这个似乎是无用的。但是之前的二义性还是要小心的。</p>
 <p>如果你懒得管，那么就永远使用nullptr。</p>
+<h1 id="c四种类型转换">C++四种类型转换</h1>
+<p>之前有隐式转换、C风格强制转换<code>(int)a</code>、函数风格转换<code>int(a)</code>，C++提供了四个新的类型转换来规避老的显式转换的一些问题。这四种转换是关键词，而非stl库。</p>
+<ul>
+<li><code>static_cast&lt;type&gt;(exp)</code>，将<code>exp</code>转换为<code>type</code>类型。没有运行时类型检查来保证转换的安全性。主要用于基本类型的转化，例如<code>double</code>转<code>int</code>。</li>
+<li><code>dynamic_cast&lt;type&gt;(exp)</code>，主要用于子类父类指针之间的转化，见后。</li>
+<li><code>const_cast&lt;type&gt;(exp)</code>，用于修改变量的<code>cv</code>属性。<code>type</code>和<code>exp</code>应当具有同样的“类型”，只是<code>cv</code>修饰不同。</li>
+<li><code>reinterpret_cast&lt;type&gt;(exp)</code>，用于将指针地址转为整数，或者反过来。</li>
+</ul>
+<p>在子类父类指针的转换中，<code>static_cast</code>把子类指针转为父类指针是安全的，而反过来向下转换是不安全的。而<code>dynamic_cast</code>两者都可以进行。上行时等价于<code>static_cast</code>，下行时加入了类型检查的功能，更加安全</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>Derive<span style="color:#f92672">*</span> d1 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Derive();
+</span></span><span style="display:flex;"><span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;d1: &#34;</span> <span style="color:#f92672">&lt;&lt;</span> d1 <span style="color:#f92672">&lt;&lt;</span> endl;
+</span></span><span style="display:flex;"><span>Base<span style="color:#f92672">*</span> b1 <span style="color:#f92672">=</span> <span style="color:#66d9ef">dynamic_cast</span><span style="color:#f92672">&lt;</span>Base<span style="color:#f92672">*&gt;</span>(d1);
+</span></span><span style="display:flex;"><span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;b1: &#34;</span> <span style="color:#f92672">&lt;&lt;</span> b1 <span style="color:#f92672">&lt;&lt;</span> endl; <span style="color:#75715e">// 这里的内存地址和上面的是一样的
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>Base<span style="color:#f92672">*</span> b2 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Base();
+</span></span><span style="display:flex;"><span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;b2: &#34;</span> <span style="color:#f92672">&lt;&lt;</span> b2 <span style="color:#f92672">&lt;&lt;</span> endl;
+</span></span><span style="display:flex;"><span>Derive<span style="color:#f92672">*</span> d2 <span style="color:#f92672">=</span> <span style="color:#66d9ef">dynamic_cast</span><span style="color:#f92672">&lt;</span>Derive<span style="color:#f92672">*&gt;</span>(b2);
+</span></span><span style="display:flex;"><span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;d2: &#34;</span> <span style="color:#f92672">&lt;&lt;</span> d2 <span style="color:#f92672">&lt;&lt;</span> endl; <span style="color:#75715e">// 这里是nullptr，而非b2的地址。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 如果使用是父类引用转化为子类引用，会抛出std::bad_cast
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 只有当b2本来就指向一个Derive时，转化才会成功
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 如果是static_cast，则不会抛出，也不会在失败时nullptr。只有当b2指向Derive时，程序才会符合预期。否则之后可能会调用不存在的成员。
+</span></span></span></code></pre></div><h1 id="cv限定符">cv限定符</h1>
+<p>即<code>const</code>和<code>volatile</code>类型限定符，其中<code>const</code>用于定义类型为常量类型，<code>volatile</code>用于定义易变类型。</p>
+<p><code>const</code>意味着，这种对象不能被修改。直接修改时，编译报错。间接修改时（如通过指针修改），行为未定义。</p>
+<p><code>volatile</code>意味着，每次对该变量的访问都可能造成副作用。编译器不应该对其进行优化（例如连续两次读取优化为一次）。例如，不能简单地放到寄存器里应对多次连续访问，而是每次访问都要去内存里面去取，防止其值变化（例如被外部设备修改）。间接通过非<code>volatile</code>变量访问<code>volatile</code>变量是未定义的。</p>
+<p><code>const volatile</code>，从前面的定义看得出来，这两个限定符不冲突，可以同时使用。</p>
+<p>函数类型本身不存在<code>cv</code>限定，但是函数可以返回<code>cv</code>限定类型，也有“cv限定函数”类型。如果有任何 cv 限定符被添加到到函数类型的别名，那么它会被忽略。</p>
+<p><code>cv</code>限定函数指的是在非静态成员函数中使用的<code>cv</code>限定。例如</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">A</span>{
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">void</span> foo() {}
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">foo</span>() <span style="color:#66d9ef">const</span> {}
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">foo</span>() <span style="color:#66d9ef">volatile</span> {}
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">foo</span>() <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">volatile</span> {}
+</span></span><span style="display:flex;"><span>};
+</span></span></code></pre></div><p>这个可以用于函数重载，其重载决议取决于<code>*this</code>的类型，如果<code>*this</code>是<code>const</code>的，那么调用<code>foo()</code>调用的就是<code>void foo() const {}</code>，以此类推。或者说<code>A const a;</code>调用的也是这个函数。<code>const</code>的成员函数意味着不能修改内部变量，除非有<code>mutable</code>修饰。</p>
+<p>注意，我个人觉得把<code>const</code>称作常量是有些误导的，应该称作不变量。并不是所有<code>const</code>都可以用在常量表达式、模板实参中的。例如</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">int</span> n;
+</span></span><span style="display:flex;"><span>std<span style="color:#f92672">::</span>cin<span style="color:#f92672">&gt;&gt;</span>n;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#66d9ef">const</span> sz <span style="color:#f92672">=</span> n;
+</span></span><span style="display:flex;"><span>std<span style="color:#f92672">::</span>array<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span>, sz<span style="color:#f92672">&gt;</span> ar; <span style="color:#75715e">// 报错
+</span></span></span></code></pre></div><p>这里的<code>sz</code>仍然是运行时确定的，并不是一个编译期常量。真正应该被叫做常量的应该是<code>constexpr</code>，见后。</p>
+<h1 id="mutable和const的成员函数">mutable和const的成员函数</h1>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Vec</span>{
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">double</span> x,y;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> <span style="color:#66d9ef">mutable</span> sth;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> sth2;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">foo</span>() <span style="color:#66d9ef">const</span> {
+</span></span><span style="display:flex;"><span>        sth<span style="color:#f92672">++</span>;<span style="color:#75715e">//不会报错
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">bar</span>() <span style="color:#66d9ef">const</span>{
+</span></span><span style="display:flex;"><span>        sth2<span style="color:#f92672">++</span>;<span style="color:#75715e">//会报错
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    }
+</span></span><span style="display:flex;"><span>};
+</span></span></code></pre></div><p>把类成员函数用const修饰（放在参数列表之后），意味着，这个函数声称不会改变类内的所有成员变量的值。如果你想让几个特例可以修改，那么就把那个特例变量声明为mutable的即可。</p>
 <h1 id="const与指针">const与指针</h1>
 <p>众所周知，在指针类型的声明里，const放的位置不同会导致语义的不同。主要是指针是否可变，以及指针指向的内容是否可变。 如下表</p>
 <table>
@@ -396,8 +489,79 @@
 </table>
 <p>简单来说就是const在星号右边则指针自己不可变，在左边则所指内容不可变。也可以理解为，const修饰的是它左边的东西。要么修饰指针（即星号），要么修饰值（即T）</p>
 <p>所以说，我更推荐<code>T const</code>的写法，而不是<code>const T</code>。但是我们也要知道，<code>const T *</code>是修饰值不可变。</p>
-<h1 id="智能指针-todo">智能指针 TODO</h1>
-<h1 id="this指针">this指针</h1>
+<h1 id="成员函数引用限定符">成员函数引用限定符</h1>
+<p>类似于<code>cv</code>限定的成员函数。不过引用限定不影响<code>*this</code>的性质，<code>*this</code>都是左值表达式。可以和<code>cv</code>限定同时使用</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span> 
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">S</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">f</span>() <span style="color:#f92672">&amp;</span>  { std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;左值</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>; }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">f</span>() <span style="color:#f92672">&amp;&amp;</span> { std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;右值</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>; }
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>()
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    S s;
+</span></span><span style="display:flex;"><span>    s.f();            <span style="color:#75715e">// 打印“左值”
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    std<span style="color:#f92672">::</span>move(s).f(); <span style="color:#75715e">// 打印“右值”
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    S().f();          <span style="color:#75715e">// 打印“右值”
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
+</span></span></code></pre></div><h1 id="constexpr">constexpr</h1>
+<p>有<code>constexpr</code>修饰的变量是一个真正的编译期确定的常量。有<code>constexpr</code>修饰的函数，在传入的参数都是编译期常量时，返回一个编译期常量。也就是说，这种函数也可以当做普通函数来使用，只不过返回的值是不是编译期常量，是根据传入的参数来决定的。</p>
+<p><code>constexpr</code>声明的对象成员蕴含<code>const</code>，函数声明中的<code>constexpr</code>蕴含了<code>inline</code>。</p>
+<p>举个例子，</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">constexpr</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">foo</span>(<span style="color:#66d9ef">int</span> n){
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> n<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(){
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">constexpr</span> <span style="color:#66d9ef">int</span> n <span style="color:#f92672">=</span> foo(<span style="color:#ae81ff">1</span>);
+</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>array<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span>, n<span style="color:#f92672">&gt;</span> ar;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h1 id="智能指针">智能指针</h1>
+<p>C++11后只有三种智能指针，<code>unique_ptr</code>，<code>shared_ptr</code>，<code>weak_ptr</code>。还有一种<code>auto_ptr</code>已经移除。智能指针可以方便管理资源的所有权，以及提供对于资源的RAII。</p>
+<p><code>unique_ptr</code>，如同名字一样，是独占资源的。在实现上，他只能移动构造和赋值，而不能拷贝构造和赋值，保证了其所有权无法复制，同一时间只能有一个<code>unique_ptr</code>拥有该资源的所有权。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>std<span style="color:#f92672">::</span>unique_ptr<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span> p <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>make_unique<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span>(<span style="color:#ae81ff">1</span>);
+</span></span><span style="display:flex;"><span>std<span style="color:#f92672">::</span>cout<span style="color:#f92672">&lt;&lt;*</span>p<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>; <span style="color:#75715e">// 输出1
+</span></span></span></code></pre></div><p>这里的<code>p</code>就独占了一个<code>int</code>对象的所有权。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">auto</span> p2 <span style="color:#f92672">=</span> p; <span style="color:#75715e">// 报错，无法拷贝构造
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">auto</span> p3 <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>move(p); <span style="color:#75715e">// 可以编译，p3获得所有权而p失去所有权
+</span></span></span></code></pre></div><p>在<code>make_unique</code>时（C++14之后），相当于调用了<code>unique_ptr&lt;T&gt;(new T(std::forward&lt;Args&gt;(args)...))</code>。然后在<code>unique_ptr</code>生命周期结束（和所有权转移）时，会自动调用删除器来释放资源。默认的删除器通过<code>delete</code>实现，即对其包装的指针进行<code>delete</code>。</p>
+<p><code>shared_ptr</code>，也如同名字一样，允许多个<code>shared_ptr</code>拥有同一个资源。在实现上，他可以移动构造移动赋值，也可以拷贝构造和拷贝赋值。其RAII的实现方法是，加入一个引用计数器，表明有多少<code>shared_ptr</code>在使用这个资源，每次复制时计数器加一，每当一个<code>shared_ptr</code>析构时计数器减一。如果计数器归零，那么销毁分配的对象。</p>
+<p><code>weak_ptr</code>，它的出现是为了解决<code>shared_ptr</code>中的一个问题。假如我们有一个双向链表，它支持多个线程来读数据，所以我们理所当然地使用<code>shared_ptr</code>来管理其中的指针（例如<code>next</code>和<code>prev</code>）。但是在某种情况下就有问题，假设我们在局部作用域分配了一个链表，插入两个元素，然后就等待作用域结束后析构。此时会发生内存泄漏，为什么呢？</p>
+<p>我们就分析这两个节点的引用计数。其中第一个节点被<code>head</code>和第二个节点的<code>prev</code>指针指向，而第二个节点被<code>tail</code>和第一个节点的<code>next</code>指针指向。当<code>list</code>析构时，<code>list</code>只包含<code>head</code>和<code>tail</code>指针，这两个<code>shared_ptr</code>析构，将两个节点的计数器各减一，但是两个节点仍然互相有指针指向对面，所以两个节点的计数器都为一。所以两个节点无法自动销毁，造成内存泄漏。</p>
+<p><code>weak_ptr</code>的思想在于，创建一个弱引用，不增加引用计数器的值。当我们需要使用被管理的对象时，手动转换成<code>shared_ptr</code>（此时计数器加一），再进行使用。而使用结束后再变回弱引用（计数器减一）。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>std<span style="color:#f92672">::</span>weak_ptr<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span> wp;
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">auto</span> sp <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>make_shared<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span>(<span style="color:#ae81ff">42</span>);
+</span></span><span style="display:flex;"><span>    wp <span style="color:#f92672">=</span> sp;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>cout<span style="color:#f92672">&lt;&lt;</span>wp.use_count()<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;<span style="color:#75715e">// 输出1
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span>(std<span style="color:#f92672">::</span>shared_ptr<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span> spt <span style="color:#f92672">=</span> wp.lock()) <span style="color:#75715e">// 需要手动转化shared_ptr
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        std<span style="color:#f92672">::</span>cout<span style="color:#f92672">&lt;&lt;*</span>spt<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>std<span style="color:#f92672">::</span>cout<span style="color:#f92672">&lt;&lt;</span>wp.use_count()<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;<span style="color:#75715e">// 输出0
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">if</span>(std<span style="color:#f92672">::</span>shared_ptr<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span> spt <span style="color:#f92672">=</span> wp.lock()) <span style="color:#75715e">// spt为nullptr
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    std<span style="color:#f92672">::</span>cout<span style="color:#f92672">&lt;&lt;*</span>spt<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
+</span></span></code></pre></div><p>对于上面所说的链表，只需要把内部的<code>next</code>和<code>prev</code>换成<code>weak_ptr</code>即可解决问题。</p>
+<h1 id="make_shared和make_unique">make_shared和make_unique</h1>
+<p><a class="link" href="https://zh.cppreference.com/w/cpp/memory/unique_ptr/make_unique"  target="_blank" rel="noopener"
+    >https://zh.cppreference.com/w/cpp/memory/unique_ptr/make_unique</a>，其中指出，<code>make_unique</code>和<code>unique_ptr&lt;T&gt;(new ...)</code>是等价的。但我觉得下面关于<code>make_shared</code>的几点也适用于<code>make_unique</code></p>
+<p>而<a class="link" href="https://zh.cppreference.com/w/cpp/memory/shared_ptr/make_shared"  target="_blank" rel="noopener"
+    >https://zh.cppreference.com/w/cpp/memory/shared_ptr/make_shared</a>中指出，<code>make_shared</code>和<code>shared_ptr&lt;T&gt;(new ...)</code>是有略微的区别的：</p>
+<ol>
+<li>因为<code>shared_ptr</code>有引用计数器，所以使用<code>shared_ptr&lt;T&gt;(new ...)</code>会先<code>new</code>出一个对象，然后再<code>new</code>一个控制块。这就是两次<code>new</code>，并且这两次的内存是可能不连续的。而<code>make_shared</code>只进行一次<code>new</code>并且控制块和对象连续分配（标准推荐而非强制）</li>
+<li><code>make_shared</code>创造出来的资源，在所有<code>shared_ptr</code>生命期结束后，如果还有<code>weak_ptr</code>引用，则该资源会持续存在，直到所有<code>weak_ptr</code>结束。</li>
+<li>如果当前语境可以访问非公开构造函数，那么<code>shared_ptr&lt;T&gt;(new ...)</code>可以正常使用。但<code>make_shared</code>只能调用公开的构造函数。</li>
+<li><code>make_shared</code>不能自定义删除器</li>
+<li><code>make_shared</code>使用<code>::new</code>，如果类重载了<code>new</code>运算符，则不同于<code>shared_ptr&lt;T&gt;(new ...)</code></li>
+</ol>
+<h1 id="placement-new">placement new</h1>
+<p><code>A *p = new A;</code>完成了两个操作首先是在堆上分配了一块内存，然后将<code>A</code>在这块内存上默认构造。</p>
+<p>而placement new做的操作是，给定一块内存的首地址，在这块内存上构造对象。这样，我们就可以在栈上构造对象了。这样做的好处可以参考内存池，如果有一块内存可以复用，就不用反复分配内存了，节约开销。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">char</span> mem[<span style="color:#ae81ff">100</span>];
+</span></span><span style="display:flex;"><span>A <span style="color:#f92672">*</span>p <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> (mem) A;
+</span></span></code></pre></div><h1 id="this指针">this指针</h1>
 <p>有点类似于Python里的self参数，都是只能用在类里的。是一个指向对象自己的指针。</p>
 <h1 id="析构函数的析构顺序">析构函数的析构顺序</h1>
 <p>在析构函数执行完毕后，类成员变量的析构顺序，是按照其声明顺序的反方向进行的。</p>
@@ -592,10 +756,872 @@ static_assert(bool_exp); //C++17可用
 </span></span></code></pre></div><h1 id="新for循环反向遍历的方法">新for循环反向遍历的方法</h1>
 <p>C++20可用，让<code>for(:)</code>也能反向遍历。</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> x : v <span style="color:#f92672">|</span> std<span style="color:#f92672">::</span>views<span style="color:#f92672">::</span>reverse) { cout <span style="color:#f92672">&lt;&lt;</span> x <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#39;\n&#39;</span>; }
-</span></span></code></pre></div><h1 id="rtti">RTTI</h1>
+</span></span></code></pre></div><h1 id="泛型lambda">泛型Lambda</h1>
+<p>泛型lambda不需要<code>template</code>，只需要用<code>auto</code>即可，例如</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>[] (<span style="color:#66d9ef">auto</span> a, <span style="color:#66d9ef">auto</span> b){ <span style="color:#66d9ef">return</span> a<span style="color:#f92672">+</span>b;}
+</span></span><span style="display:flex;"><span>[] (<span style="color:#66d9ef">auto</span> <span style="color:#66d9ef">const</span> <span style="color:#f92672">&amp;</span> a, <span style="color:#66d9ef">auto</span> <span style="color:#66d9ef">const</span> <span style="color:#f92672">&amp;</span> b){ <span style="color:#66d9ef">return</span> a<span style="color:#f92672">+</span>b;}
+</span></span></code></pre></div><h1 id="stdmemcpy的重叠问题">std::memcpy的重叠问题</h1>
+<p><code>memcpy</code>的定义如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">void</span><span style="color:#f92672">*</span> <span style="color:#a6e22e">memcpy</span>( <span style="color:#66d9ef">void</span><span style="color:#f92672">*</span> dest, <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">void</span><span style="color:#f92672">*</span> src, std<span style="color:#f92672">::</span>size_t count );
+</span></span></code></pre></div><p>其把<code>src</code>中的字节复制到<code>dest</code>中，但是，如果<code>src+count&gt;dest</code>，就会出现重叠的问题。根据cppreference，这是未定义的。此时我们要使用<code>std::memmove</code>。它可以规避这个问题，标准规定其要如同复制字符到临时数组，再从该数组到<code>dest</code>一般发生复制。</p>
+<p>同时，cppreference补充说，尽管说明了“如同”使用临时缓冲区，此函数的实际实现并不会带来二次复制或额外内存的开销。对于小<code>count</code>，它可能加载并写入寄存器；对于更大的内存块，常用方法是若目标在源之前开始，则从缓冲区开始正向复制，否则从末尾反向复制，完全无重叠时回落到更高效的<code>std::memcpy</code>。</p>
+<p>我自己看过gnu实现的标准库，确实是这样。内存中，若<code>dest</code>在<code>src</code>之前，就正向复制，否则，逆向复制类似于如下的循环</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span>count<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>;i<span style="color:#f92672">&gt;=</span><span style="color:#ae81ff">0</span>;i<span style="color:#f92672">--</span>){
+</span></span><span style="display:flex;"><span>    dest[i] <span style="color:#f92672">=</span> src[i];
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h1 id="stdcopy的重叠问题">std::copy的重叠问题</h1>
+<p>类似于上一节的纯C库，这个C++库也有这个问题。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">InputIt</span>, <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">OutputIt</span> <span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>OutputIt copy( InputIt first, InputIt last,
+</span></span><span style="display:flex;"><span>               OutputIt d_first );
+</span></span></code></pre></div><p>如果<code>d_first</code>在<code>[first, last)</code>中，行为未定义。此时用<code>std::copy_backward</code>替代（如果<code>d_last</code>在<code>[first, last)</code>中，则未定义，应该用<code>std::copy</code>）。</p>
+<h1 id="stdrandom_shuffle随机重排数组">std::random_shuffle随机重排数组</h1>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span> v {<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">4</span>,<span style="color:#ae81ff">5</span>,<span style="color:#ae81ff">6</span>,<span style="color:#ae81ff">7</span>,<span style="color:#ae81ff">8</span>};
+</span></span><span style="display:flex;"><span>std<span style="color:#f92672">::</span>random_shuffle(begin(v)<span style="color:#f92672">+</span><span style="color:#ae81ff">2</span>, begin(v)<span style="color:#f92672">+</span><span style="color:#ae81ff">7</span>);  
+</span></span></code></pre></div><p>在pytorch中打乱数据集用到了类似的东西。</p>
+<h1 id="stdfill">std::fill</h1>
+<p>在某种意义上是比<code>memset</code>好的，<code>memset</code>是按字节赋值的，而<code>std::fill</code>是按元素赋值。比如</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">int</span> arr[<span style="color:#ae81ff">100</span>];
+</span></span><span style="display:flex;"><span>std<span style="color:#f92672">::</span>fill(arr, arr<span style="color:#f92672">+</span><span style="color:#ae81ff">100</span>, <span style="color:#ae81ff">100000</span>);
+</span></span></code></pre></div><p>这个是memset不方便做到的。</p>
+<h1 id="stdgenerate">std::generate</h1>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">auto</span> gen <span style="color:#f92672">=</span> [i<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>]() <span style="color:#66d9ef">mutable</span> { i <span style="color:#f92672">+=</span> <span style="color:#ae81ff">2</span>; <span style="color:#66d9ef">return</span> i; };
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span> v(<span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">0</span>);
+</span></span><span style="display:flex;"><span>generate(begin(v)<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>, begin(v)<span style="color:#f92672">+</span><span style="color:#ae81ff">5</span>, gen);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> x : v) { cout <span style="color:#f92672">&lt;&lt;</span> x <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#39; &#39;</span>; }  <span style="color:#75715e">// 0 2 4 6 8 0 0
+</span></span></span></code></pre></div><p>即在迭代器的这个范围内，每个元素使用一次<code>gen</code>并对其赋值。</p>
+<h1 id="stdtransform">std::transform</h1>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">InputIt</span>, <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">OutputIt</span>, <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">UnaryOp</span> <span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>OutputIt transform( InputIt first1, InputIt last1,
+</span></span><span style="display:flex;"><span>                    OutputIt d_first, UnaryOp unary_op );
+</span></span></code></pre></div><p>对每一个<code>[first1, last1)</code>中的元素使用一元函数<code>unary_op</code>，然后将值依次赋值给<code>d_first</code>开始的元素。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">InputIt1</span>, <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">InputIt2</span>,
+</span></span><span style="display:flex;"><span>          <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">OutputIt</span>, <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">BinaryOp</span> <span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>OutputIt transform( InputIt1 first1, InputIt1 last1, InputIt2 first2,
+</span></span><span style="display:flex;"><span>                    OutputIt d_first, BinaryOp binary_op );
+</span></span></code></pre></div><p>对每一个<code>[first1, last1)</code>中的元素，和<code>first2</code>开始的对应元素，使用二元函数<code>binary_op</code>，然后将值依次赋值给<code>d_first</code>开始的元素。</p>
+<h1 id="stdaccumulate和stdreduce">std::accumulate和std::reduce</h1>
+<p>二者都是进行<code>[first, last)</code>的加和（或自定义运算）的操作，区别在于<code>std::reduce</code>是可以并行化的。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>reduce(v.begin(), v.end()); <span style="color:#75715e">// 执行累加，返回累加和，初值默认为T()
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>reduce(v.begin(), v.end(), <span style="color:#ae81ff">1.0</span>, std<span style="color:#f92672">::</span>multiplies<span style="color:#f92672">&lt;&gt;</span>{}); <span style="color:#75715e">// 第三个参数为初值，第四个参数为运算。这里就是累乘
+</span></span></span></code></pre></div><h1 id="stdtuple">std::tuple</h1>
+<p>可以说是一个扩展维度的<code>std::pair</code>。使用例如下</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>std<span style="color:#f92672">::</span>tuple<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">double</span>, <span style="color:#66d9ef">int</span>, <span style="color:#66d9ef">char</span><span style="color:#f92672">&gt;</span> t{<span style="color:#ae81ff">1.2</span>, <span style="color:#ae81ff">3</span>, <span style="color:#e6db74">&#39;a&#39;</span>};
+</span></span><span style="display:flex;"><span>std<span style="color:#f92672">::</span>cout<span style="color:#f92672">&lt;&lt;</span>std<span style="color:#f92672">::</span>get<span style="color:#f92672">&lt;</span><span style="color:#ae81ff">0</span><span style="color:#f92672">&gt;</span>(t);
+</span></span><span style="display:flex;"><span>std<span style="color:#f92672">::</span>cout<span style="color:#f92672">&lt;&lt;</span>std<span style="color:#f92672">::</span>get<span style="color:#f92672">&lt;</span><span style="color:#ae81ff">1</span><span style="color:#f92672">&gt;</span>(t);
+</span></span><span style="display:flex;"><span>std<span style="color:#f92672">::</span>cout<span style="color:#f92672">&lt;&lt;</span>std<span style="color:#f92672">::</span>get<span style="color:#f92672">&lt;</span><span style="color:#ae81ff">2</span><span style="color:#f92672">&gt;</span>(t);
+</span></span></code></pre></div><p>比<code>std::array</code>好的地方在于其可以有不同的元素类型。但是，用作函数返回值、参数可能不是一个很好的想法。因为可读性较差，不如<code>struct</code>。</p>
+<p><code>std::tie</code>可以返回左值引用的元组。如下场景会比较好用</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">S</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> n;
+</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>string s;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">float</span> d;
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">friend</span> <span style="color:#66d9ef">bool</span> <span style="color:#66d9ef">operator</span><span style="color:#f92672">&lt;</span>(<span style="color:#66d9ef">const</span> S<span style="color:#f92672">&amp;</span> lhs, <span style="color:#66d9ef">const</span> S<span style="color:#f92672">&amp;</span> rhs) <span style="color:#66d9ef">noexcept</span>
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 比较 lhs.n 与 rhs.n,
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#75715e">// 然后为 lhs.s 与 rhs.s,
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#75715e">// 然后为 lhs.d 与 rhs.d
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#75715e">// 返回这个次序中第一个不相等的结果
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#75715e">// 或者当所有元素都相等时返回 false
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#66d9ef">return</span> std<span style="color:#f92672">::</span>tie(lhs.n, lhs.s, lhs.d) <span style="color:#f92672">&lt;</span> std<span style="color:#f92672">::</span>tie(rhs.n, rhs.s, rhs.d);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>};
+</span></span></code></pre></div><p>以及，拆包函数返回值，</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>std<span style="color:#f92672">::</span>tuple<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span>, <span style="color:#66d9ef">int</span>, <span style="color:#66d9ef">double</span><span style="color:#f92672">&gt;</span> foo(){
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> {<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">0.3</span>};
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(){
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> a, b;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">double</span> c;
+</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>tie(a, b, c) <span style="color:#f92672">=</span> foo(); <span style="color:#75715e">// 或者可以写 auto [a, b, c] = foo()，只不过前者可以在c++11后使用，后者只能在c++17后使用
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h1 id="stdoptional">std::optional</h1>
+<p>C++17引入的新工具，在以前，我们生成新的资源时，通常会返回指向该资源的指针。如果返回的是<code>nullptr</code>，则说明分配失败。更现代的方法是使用<code>std::optional</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>std<span style="color:#f92672">::</span>optional<span style="color:#f92672">&lt;</span>std<span style="color:#f92672">::</span>string<span style="color:#f92672">&gt;</span> create(<span style="color:#66d9ef">bool</span> b)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (b)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;test&#34;</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> {}; <span style="color:#75715e">// 等价于返回 std::nullopt
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
+</span></span></code></pre></div><p>检测返回的东西是否有效，可以像<code>bool</code>类型一样使用</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">auto</span> r <span style="color:#f92672">=</span> create(true);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span>(r){
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">else</span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
+</span></span></code></pre></div><p>也可以使用<code>r.has_value()</code>。如果要使用其包装的值，则可以使用如下两种办法</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>r<span style="color:#f92672">-&gt;</span>push_back(<span style="color:#e6db74">&#39;b&#39;</span>); <span style="color:#75715e">// 像指针一样使用
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>r.value().push_back(<span style="color:#e6db74">&#39;c&#39;</span>); <span style="color:#75715e">// 把值拿出来，再使用
+</span></span></span></code></pre></div><h1 id="stdvariant">std::variant</h1>
+<p>是在C++17提供的一种类型安全的联合体。一个 <code>std::variant</code> 的实例在任意时刻要么保有它的可选类型之一的值，要么在错误情况下无值。<code>union</code>的问题是，如果成员之一需要析构函数来释放资源，那么<code>union</code>定义的变量在结束生命周期时，不会自动调用析构函数。或者类似于，三个成员分别为<code>int,double,char*</code>的<code>union</code>，其被分配了一个<code>new char[]</code>给<code>char *</code>，那么在生命周期末尾时，不会自动调用<code>delete []</code>去释放空间。<code>std::variant</code>的出现解决了这个问题</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>std<span style="color:#f92672">::</span>variant<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span>, <span style="color:#66d9ef">double</span>, std<span style="color:#f92672">::</span>string<span style="color:#f92672">&gt;</span> x, y;
+</span></span><span style="display:flex;"><span>x <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;
+</span></span><span style="display:flex;"><span>y <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;test&#34;</span>;
+</span></span><span style="display:flex;"><span>x <span style="color:#f92672">=</span> <span style="color:#ae81ff">2.0</span>;
+</span></span></code></pre></div><p><code>std::variant</code>的变量在同时只能拥有一个具体的类型。如上，<code>x</code>不是<code>int</code>，就是<code>double</code>或者<code>std::string</code>。不过，可以方便地通过重新赋值的方式改变其具体类型。如果要知道当前的是哪种类型，可以通过</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>x.index()
+</span></span></code></pre></div><p>来获取，是<code>int</code>就返回<code>0</code>，<code>double</code>就返回<code>1</code>，即为声明时的下标，以此类推。</p>
+<p>获取值可以用</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>std<span style="color:#f92672">::</span>get<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">double</span><span style="color:#f92672">&gt;</span>(x);
+</span></span><span style="display:flex;"><span>std<span style="color:#f92672">::</span>get<span style="color:#f92672">&lt;</span><span style="color:#ae81ff">1</span><span style="color:#f92672">&gt;</span>(x);
+</span></span></code></pre></div><p>来获取当前的值。如果试图获取非当前类型的值，就会抛出异常</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">try</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>get<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span>(x); <span style="color:#75715e">// x 含 double 而非 int：会抛出异常
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">catch</span> (<span style="color:#66d9ef">const</span> std<span style="color:#f92672">::</span>bad_variant_access<span style="color:#f92672">&amp;</span> ex)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> ex.what() <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#39;\n&#39;</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>如果获取本就不可能存在的值，则会编译报错，例如<code>std::get&lt;float&gt;, std::get&lt;3&gt;</code>。当然，不想抛异常的话，可以使用</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#f92672">*</span>i <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>get_if<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span>(<span style="color:#f92672">&amp;</span>x);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span>(i<span style="color:#f92672">==</span><span style="color:#66d9ef">nullptr</span>){}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">else</span>{}
+</span></span></code></pre></div><h1 id="stdany">std::any</h1>
+<p>实现了一种类似于<code>python</code>的动态类型，可以把任何可复制构造类型的单个值放在里面。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>std<span style="color:#f92672">::</span>any a <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;
+</span></span><span style="display:flex;"><span>std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> a.type().name() <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;: &#34;</span> <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>any_cast<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span>(a) <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#39;\n&#39;</span>;
+</span></span><span style="display:flex;"><span>a <span style="color:#f92672">=</span> <span style="color:#ae81ff">3.14</span>;
+</span></span><span style="display:flex;"><span>std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> a.type().name() <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;: &#34;</span> <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>any_cast<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">double</span><span style="color:#f92672">&gt;</span>(a) <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#39;\n&#39;</span>;
+</span></span><span style="display:flex;"><span>a <span style="color:#f92672">=</span> true;
+</span></span><span style="display:flex;"><span>std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> a.type().name() <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;: &#34;</span> <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>any_cast<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">bool</span><span style="color:#f92672">&gt;</span>(a) <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#39;\n&#39;</span>;
+</span></span></code></pre></div><p>有点类似于C语言中的<code>void *</code>，想赋值什么就赋值什么，需要的时候再转成具体类型（对应这里的<code>std::any_cast&lt;...&gt;(...)</code>）。当然，这里可能会有转换失败的场景，会抛出异常。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">try</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    a <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;
+</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>any_cast<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">float</span><span style="color:#f92672">&gt;</span>(a) <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#39;\n&#39;</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">catch</span> (<span style="color:#66d9ef">const</span> std<span style="color:#f92672">::</span>bad_any_cast<span style="color:#f92672">&amp;</span> e)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> e.what() <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#39;\n&#39;</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>可以通过<code>has_value</code>来检测有没有值，<code>reset</code>来清除值。</p>
+<h1 id="c构建模型">C++构建模型</h1>
+<p>基本上都是继承C语言的框架，C++的源码文件也分为头文件<code>.h, .hpp</code>和翻译单元（Translation Units，TUs）<code>.cpp, .cc, .cxx</code>两部分。编译成可执行文件的流程，可以看下图</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 286; 
+			flex-basis: 688px"
+	>
+	<a href="/p/%E7%8E%B0%E4%BB%A3c-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/1.jpg" data-size="671x234">
+		<img src="/p/%E7%8E%B0%E4%BB%A3c-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/1.jpg"
+			width="671"
+			height="234"
+			srcset="/p/%E7%8E%B0%E4%BB%A3c-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/1_huec27c099c6d2527504f841f0674fe5a6_19744_480x0_resize_q75_box.jpg 480w, /p/%E7%8E%B0%E4%BB%A3c-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/1_huec27c099c6d2527504f841f0674fe5a6_19744_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="1.jpg">
+	</a>
+	
+	<figcaption>1.jpg</figcaption>
+	
+</figure></p>
+<p>预处理器一般是进行文本替换的，就是把翻译单元中<code>#define</code>，<code>#include</code>的内容换成对应的内容等操作。然后送进编译阶段，将翻译单元转换成汇编，再转成目标文件。最后通过链接器将各个目标文件链接成可执行文件（主要负责将机器码组合，以及确定函数调用的地址等）。</p>
+<p>可以通过</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>g++ -E A.cpp -o A.i <span style="color:#75715e"># 生成预处理后的结果</span>
+</span></span><span style="display:flex;"><span>g++ -S A.cpp -o A.s <span style="color:#75715e"># 生成编译后的汇编代码</span>
+</span></span><span style="display:flex;"><span>g++ -c A.cpp -o A.o <span style="color:#75715e"># 生成编译后的目标文件</span>
+</span></span></code></pre></div><h1 id="重复include导致的编译错误">重复include导致的编译错误</h1>
+<p>重复<code>include</code>会导致重复定义，从而无法通过编译，例如</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#75715e">// a.h
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">foo</span>(){}
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#75715e">// b.h
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#75715e">#include</span> <span style="color:#75715e">&#34;a.h&#34;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">bar</span>(){
+</span></span><span style="display:flex;"><span>    foo();
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#75715e">// c.cpp
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#75715e">#include</span> <span style="color:#75715e">&#34;a.h&#34;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&#34;b.h&#34;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(){
+</span></span><span style="display:flex;"><span>    foo();
+</span></span><span style="display:flex;"><span>    bar();
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>在预处理过后，<code>c.cpp</code>就会变成</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#75715e">//这部分来源于a.h
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">foo</span>(){}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">//这部分来源于b.h
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">foo</span>(){}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">bar</span>(){
+</span></span><span style="display:flex;"><span>    foo();
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(){
+</span></span><span style="display:flex;"><span>    foo();
+</span></span><span style="display:flex;"><span>    bar();
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>于是<code>foo()</code>就重复定义了，编译报错。一般来说处理办法是</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#75715e">// a.h
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#75715e">#ifndef A_H
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#define A_H
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">foo</span>(){}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#endif
+</span></span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#75715e">// b.h
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#75715e">#ifndef B_H
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#define B_H
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&#34;a.h&#34;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">bar</span>(){
+</span></span><span style="display:flex;"><span>    foo();
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#endif
+</span></span></span></code></pre></div><p>这样在其他文件里就可以随意<code>include</code>了。</p>
+<h1 id="重复include导致的链接报错">重复include导致的链接报错</h1>
+<p>发生在如下情况</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#75715e">// foo.h
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">foo</span>(){}
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#75715e">// a.cpp
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#75715e">#include</span> <span style="color:#75715e">&#34;foo.h&#34;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">bar1</span>(){
+</span></span><span style="display:flex;"><span>    foo();
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#75715e">// b.cpp
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#75715e">#include</span> <span style="color:#75715e">&#34;foo.h&#34;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">bar2</span>(){
+</span></span><span style="display:flex;"><span>    foo();
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>如果，最终需要把<code>a.cpp</code>和<code>b.cpp</code>链接在一起形成一个可执行文件，那么，由于两个目标文件中都有一份<code>foo()</code>的完整定义，链接器就不知道具体调用的是哪个<code>foo</code>，产生报错。</p>
+<p>解决办法：</p>
+<ol>
+<li>新建一个<code>foo.cpp</code>，头文件中只声明，<code>foo.cpp</code>中定义，让其他两个目标文件来链接它</li>
+<li>使用<code>inline</code></li>
+<li>使用<code>namespace{}</code>（匿名）</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">inline</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">foo</span>(){}
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">namespace</span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">foo</span>(){}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>其中前一种被称作<code>External Linkage</code>，后面这两种称为<code>Internal Linkage</code></p>
+<p>类似的，<code>static</code>类型的成员变量（但其实大部分<code>static</code>并不是外部链接），也是默认进行外部链接，需要把定义和声明分在两个文件里。否则需要使用<code>static inline</code>变量，才可以直接在头文件里定义。</p>
+<p>具体有哪些东西是外部链接，哪些东西是内部链接，可以看<a class="link" href="https://zh.cppreference.com/w/cpp/language/storage_duration"  target="_blank" rel="noopener"
+    >https://zh.cppreference.com/w/cpp/language/storage_duration</a></p>
+<h1 id="使用namespace来防止命名冲突">使用namespace来防止命名冲突</h1>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">namespace</span> n1{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">set</span>{...};
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">namespace</span> n2{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">set</span>{...};
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>如上，区分了两种不同的<code>set</code>，也和<code>std::set</code>区分开。</p>
+<p><code>namespace</code>可以嵌套。可以通过<code>using n1::set</code>，来免去前置的命名空间说明，直接使用<code>set</code>来表示<code>n1</code>中的<code>set</code>。可以使用<code>using namespace n1</code>来导入整个<code>n1</code>中的东西。区别相当于python中的<code>from n1 import set</code>和<code>from n1 import *</code>之间的区别。</p>
+<p>可以使用<code>using sc = std::chrono</code>来给命名空间取别名，当然我也常用<code>using LL = long long</code>来给类型取别名。</p>
+<h1 id="inline-namespace">inline namespace</h1>
+<p>标准的描述是：命名空间内的声明将在它的外围命名空间可见。例如</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">namespace</span> n1{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">inline</span> <span style="color:#66d9ef">namespace</span> current{
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">A</span>{...};
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">namespace</span> old{
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">A</span>{...};
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>n1<span style="color:#f92672">::</span>A a; <span style="color:#75715e">// 调用的current的A
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>n1<span style="color:#f92672">::</span>old<span style="color:#f92672">::</span>A aa;
+</span></span></code></pre></div><p>用在这里，可以说是一种嵌套命名空间中的默认值，默认使用最新版本。</p>
+<h1 id="friend">friend</h1>
+<p><code>friend</code>关键词提供了一种让其他类、函数访问自己私有成员的方法。例如</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">A</span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">friend</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">B</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">friend</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">foo</span>(A <span style="color:#66d9ef">const</span> <span style="color:#f92672">&amp;</span>);
+</span></span><span style="display:flex;"><span>};
+</span></span></code></pre></div><p>标准规定，如果在非局部的类定义中，定义一个友元函数（而非仅仅声明），那么他是一个非成员函数。可以通过函数名直接从外部调用</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">A</span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">friend</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">bar</span>(){} <span style="color:#75715e">// 非成员函数
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>bar();<span style="color:#75715e">// 直接调用
+</span></span></span></code></pre></div><h1 id="public-protected-private">public, protected, private</h1>
+<p>用在成员声明时，<code>public</code>声明的成员可在任意位置访问；<code>protected</code>成员只能被该类成员、友元、子类的成员和友元访问；<code>private</code>成员只能被该类成员和友元访问。注意这里说的都是类的成员，而不要求必须是同一个实例才能访问自己的<code>private</code>成员，同一类的各个实例可以访问各自的<code>private</code></p>
+<p>用在继承时，代表了三种继承方式。<code>public</code>继承时，保留父类的成员访问说明符；<code>protected</code>继承时，父类的<code>public</code>成员在子类中转为<code>protected</code>；<code>private</code>继承时，所有父类成员在子类中都是<code>private</code>的。注意，如果不提供继承方式，则默认为<code>private</code>继承。</p>
+<h1 id="override标识符">override标识符</h1>
+<p>这是一个可选的标识符，使用或者不使用并不影响子类函数是否复写基类函数。只要签名一致，并且该父类函数是<code>virtual</code>函数，就会复写。但是，他是一种检测手段，写在子类函数中，如果忘写<code>virtual</code>，或者签名不一致，就会编译报错（因为没有复写任何函数）。</p>
+<h1 id="析构函数务必声明为virtual">析构函数务必声明为virtual</h1>
+<p>原因是，如果使用父类指针指向子类实例，在析构时，应当通过多态来调用子类的析构函数。如果没有声明为<code>virtual</code>，那么就会调用父类的析构函数，从而无法对子类析构，从而内存泄漏。</p>
+<h1 id="final标识符">final标识符</h1>
+<p><code>class A final : public B{};</code>代表这个类<code>A</code>无法被继承</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">A</span> <span style="color:#f92672">:</span> <span style="color:#66d9ef">public</span> B{
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">void</span> print() <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">final</span>;
+</span></span><span style="display:flex;"><span>};
+</span></span></code></pre></div><p>代表这个<code>print</code>无法被子类复写。</p>
+<h1 id="不要继承成员变量组合优于继承">不要继承成员变量，组合优于继承</h1>
+<p>这是一种设计规范，即父类不应该设置成员变量。原因在于，子类并不一定会用上所有的父类成员变量，这会导致浪费内存。并且，子类实现可能和父类成员变量有冲突。与直接在父类中定义数据相反，我们应该单独定义一个数据的类。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">A</span>{
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 只定义一些函数接口
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Data</span>{};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">B</span> <span style="color:#f92672">:</span> <span style="color:#66d9ef">public</span> A{
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// ...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">private</span><span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>    Data d_;
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">C</span> <span style="color:#f92672">:</span> <span style="color:#66d9ef">public</span> A{
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// ...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 假设C无须数据，就不需要声明
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>};
+</span></span></code></pre></div><h1 id="不要在构造函数里调用virtual函数">不要在构造函数里调用virtual函数</h1>
+<p>我们都知道，构造的时候会从父类一路构造下来。所以，如果在构造函数里调用<code>virtual</code>函数，则会调用父类的函数。</p>
+<h1 id="不能被继承的成员函数">不能被继承的成员函数</h1>
+<p>分别是构造函数、析构函数、赋值运算符、友元函数。</p>
+<p>不过构造函数可以委托构造，并且在构造子类时，会从祖先一路构造下来。析构子类时，会从子类往上析构所有祖先。</p>
+<h1 id="rtti">RTTI</h1>
+<p>全称Runtime type identification，即运行时类型识别。如果我们想要知道父类指针具体指向了哪种对象，就需要用到这个东西。这里用到的关键词是<code>typeid</code></p>
+<p>如果指针指向的是同一种对象，那么<code>typeid(a)==typeid(b)</code>。如果指向不同的子类对象，或者一个指向父类一个指向子类，那么<code>typeid(a)!=typeid(b)</code>。用<code>typeid(a).name()</code>可以输出具体类型的名字，不过这个名字被编译器加工过，不是你声明的类名。</p>
+<h1 id="c四个异常安全等级">C++四个异常安全等级</h1>
+<p>从子集到超集排列的话</p>
+<ol>
+<li>不抛出。函数始终不会抛出异常。c++中<code>noexcept</code>表示此等级，析构函数默认是<code>noexcept</code>的。<code>swap</code>、移动构造函数、及为提供强异常保证所使用的其他函数，都被期待为不会失败（函数总是成功）。</li>
+<li>强异常保证。如果函数抛出异常，那么程序的状态会恰好被回滚到该函数调用前的状态。（例如 std::vector::push_back）。</li>
+<li>基本异常保证。如果函数抛出异常，那么程序处于某个有效状态。不泄漏任何资源，且所有对象的不变式都保持完好。</li>
+<li>无异常保证。如果函数抛出异常，那么程序可能不会处于有效的状态：可能已经发生了资源泄漏、内存损坏，或其他摧毁不变式的错误。</li>
+</ol>
+<h1 id="普通构造和拷贝构造是可以抛异常的但是移动构造和析构最好noexcept">普通构造和拷贝构造是可以抛异常的，但是移动构造和析构最好noexcept</h1>
+<p><a class="link" href="https://isocpp.org/wiki/faq/exceptions#ctor-exceptions"  target="_blank" rel="noopener"
+    >https://isocpp.org/wiki/faq/exceptions#ctor-exceptions</a>，<a class="link" href="https://isocpp.org/wiki/faq/exceptions#ctors-can-throw"  target="_blank" rel="noopener"
+    >https://isocpp.org/wiki/faq/exceptions#ctors-can-throw</a></p>
+<p>这里说明，当你无法正确初始化时，就可以抛出异常。如果构造函数通过抛出异常来结束，那么与对象本身相关联的内存就会被清理掉——不存在内存泄漏。另外，如果在抛出之前，构造函数已经进行了一些在失败时需要修改的操作，也是需要恢复的。更好的办法是使用<code>shared_ptr</code>之类的包装类，在失败时会自动恢复原状。</p>
+<p>移动构造函数只是推荐<code>noexcept</code>，但是析构理应<code>noexcept</code>，否则会出现很多糟糕的情况。</p>
+<p>当析构失败的时候，上面的网站提到，最好就是记录日志，终止程序，但是不要抛异常。</p>
+<h1 id="vector的元素最好有noexcept的移动构造函数">vector的元素最好有noexcept的移动构造函数</h1>
+<p>因为<code>vector</code>通常有强异常保证，如果元素不拥有<code>noexcept</code>的移动构造函数，那么<code>vector</code>就会用拷贝构造函数。这在<code>vector</code>内部的元素移动时会有很大的性能开销。</p>
+<h1 id="copy--swap">copy &amp; swap</h1>
+<p>具体可看<a class="link" href="https://stackoverflow.com/questions/3279543/what-is-the-copy-and-swap-idiom/3279550#3279550"  target="_blank" rel="noopener"
+    >https://stackoverflow.com/questions/3279543/what-is-the-copy-and-swap-idiom/3279550#3279550</a>，我这里也简单解释下。</p>
+<p>这里以一个拷贝赋值运算符为例</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>array<span style="color:#f92672">&amp;</span> <span style="color:#66d9ef">operator</span><span style="color:#f92672">=</span>(array <span style="color:#66d9ef">const</span> <span style="color:#f92672">&amp;</span> other){
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span>(<span style="color:#66d9ef">this</span><span style="color:#f92672">==&amp;</span>other) <span style="color:#66d9ef">return</span> <span style="color:#f92672">*</span><span style="color:#66d9ef">this</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">delete</span> [] data_;
+</span></span><span style="display:flex;"><span>    data_ <span style="color:#f92672">=</span> <span style="color:#66d9ef">nullptr</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    size_ <span style="color:#f92672">=</span> other.size_;
+</span></span><span style="display:flex;"><span>    data_ <span style="color:#f92672">=</span> mSize_ <span style="color:#f92672">?</span> <span style="color:#66d9ef">new</span> <span style="color:#66d9ef">int</span>[size_] <span style="color:#f92672">:</span> <span style="color:#66d9ef">nullptr</span>;
+</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>copy(other.data_, other.data_ <span style="color:#f92672">+</span> size_, data_);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>这里有几个问题：</p>
+<ol>
+<li>首先是判断是否自赋值。众所周知，条件分支会降低CPU的效率，而实际工程中，出现自赋值的情况是比较少的，所以CPU的周期被白白浪费在了这个判断上。</li>
+<li>这不提供强异常保证。如果<code>new</code>的时候失败了，不仅自己的<code>size_</code>被改了，自己之前的<code>data_</code>更是消失了。无法再分配失败之后保持之前的状态。</li>
+<li>代码整体和拷贝构造函数很像，累赘。</li>
+</ol>
+<p>更好的方法如下</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">array</span>{
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">friend</span> <span style="color:#66d9ef">void</span> swap(array<span style="color:#f92672">&amp;</span> first, array<span style="color:#f92672">&amp;</span> second) <span style="color:#66d9ef">noexcept</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">using</span> std<span style="color:#f92672">::</span>swap;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        swap(first.size_, second.size_);
+</span></span><span style="display:flex;"><span>        swap(first.data_, second.data_);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    array(array <span style="color:#66d9ef">const</span> <span style="color:#f92672">&amp;</span> other)<span style="color:#f92672">:</span> size_(other.size_), 
+</span></span><span style="display:flex;"><span>                                data_(size_<span style="color:#f92672">?</span><span style="color:#66d9ef">new</span> <span style="color:#66d9ef">int</span>[size_]<span style="color:#f92672">:</span><span style="color:#66d9ef">nullptr</span>){
+</span></span><span style="display:flex;"><span>        std<span style="color:#f92672">::</span>copy(other.data_, other.data_ <span style="color:#f92672">+</span> size_, data_);
+</span></span><span style="display:flex;"><span>    } <span style="color:#75715e">// 即使分配失败，也不会内存泄漏，更不会改变原有的状态（因为没有原有的状态）
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>    array<span style="color:#f92672">&amp;</span> <span style="color:#66d9ef">operator</span><span style="color:#f92672">=</span>(array other){ <span style="color:#75715e">// 在参数中拷贝构造了，少写代码
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        swap(<span style="color:#f92672">*</span><span style="color:#66d9ef">this</span>, other); 
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#f92672">*</span><span style="color:#66d9ef">this</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">private</span><span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>size_t size_;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span><span style="color:#f92672">*</span> data_;
+</span></span><span style="display:flex;"><span>};
+</span></span></code></pre></div><p>在<code>c++11</code>之后还可以方便地实现移动构造</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>array(array <span style="color:#f92672">&amp;&amp;</span> other) <span style="color:#66d9ef">noexcept</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">:</span> array(){
+</span></span><span style="display:flex;"><span>    swap(<span style="color:#f92672">*</span><span style="color:#66d9ef">this</span>, other);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h1 id="实参依赖查找adl">实参依赖查找（ADL）</h1>
+<p>简单理解来说，如果在函数调用的上下文中找不到该函数的定义，C++就会从实参的命名空间中查找该函数的定义。例如</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>()
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;测试</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>; <span style="color:#75715e">// 全局命名空间中没有 operator&lt;&lt;，但 ADL 检验 std 命名空间，
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>                           <span style="color:#75715e">// 因为左实参在 std 命名空间中
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>                           <span style="color:#75715e">// 并找到 std::operator&lt;&lt;(std::ostream&amp;, const char*)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">operator</span><span style="color:#f92672">&lt;&lt;</span>(std<span style="color:#f92672">::</span>cout, <span style="color:#e6db74">&#34;测试</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>); <span style="color:#75715e">// 同上，用函数调用记法
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 然而，
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> endl; <span style="color:#75715e">// 错误：&#39;endl&#39; 未在此命名空间中声明。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>                       <span style="color:#75715e">// 这不是对 endl() 的函数调用，所以不适用 ADL
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span> 
+</span></span><span style="display:flex;"><span>    endl(std<span style="color:#f92672">::</span>cout); <span style="color:#75715e">// OK：这是函数调用：ADL 检验 std 命名空间，
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>                     <span style="color:#75715e">// 因为 endl 的实参在 std 中，并找到了 std::endl
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span> 
+</span></span><span style="display:flex;"><span>    (endl)(std<span style="color:#f92672">::</span>cout); <span style="color:#75715e">// 错误：&#39;endl&#39; 未在此命名空间声明。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>                       <span style="color:#75715e">// 子表达式 (endl) 不是函数调用表达式
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
+</span></span></code></pre></div><h1 id="完美转发引用折叠">完美转发，引用折叠</h1>
+<p>正如前面所说，</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">T</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> f(T<span style="color:#f92672">&amp;&amp;</span> x){                  <span style="color:#75715e">// x 是转发引用
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    g(std<span style="color:#f92672">::</span>forward<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span>(x)); <span style="color:#75715e">// 从而能被转发
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
+</span></span></code></pre></div><p>模板中的<code>T&amp;&amp;</code>是一个转发引用。当我们传入<code>int &amp; a</code>时，<code>T</code>实际上就是<code>int &amp;</code>，于是函数调用就变成了<code>int &amp; &amp;&amp;</code>这样的类型，此时它是左值引用还是右值引用呢？这就要引入类型折叠。</p>
+<p>C++规定：<code>type &amp; &amp;, type &amp; &amp;&amp;, type &amp;&amp; &amp;</code>都变成左值引用<code>type &amp;</code>，只有<code>type &amp;&amp; &amp;&amp;</code>仍然是右值引用<code>type &amp;&amp;</code>。那如果我们</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">g</span>(<span style="color:#66d9ef">int</span><span style="color:#f92672">&amp;</span> x) { std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;int &amp;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>; }
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">g</span>(<span style="color:#66d9ef">int</span><span style="color:#f92672">&amp;&amp;</span> x) { std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;int &amp;&amp;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>; }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">template</span> <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">T</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> f(T<span style="color:#f92672">&amp;&amp;</span> x) {
+</span></span><span style="display:flex;"><span>    g(x);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">solve</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> a;
+</span></span><span style="display:flex;"><span>    f(a); <span style="color:#75715e">// 打印int &amp;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    f(std<span style="color:#f92672">::</span>move(a)); <span style="color:#75715e">// 还是打印int &amp;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
+</span></span></code></pre></div><p>这样进行调用，<code>x</code>可能是左值引用或者右值引用，但是<code>x</code>自己作为一个变量，它是左值。我们就无法把右值的参数传递给<code>g()</code>，就无法调用<code>g(int &amp;&amp;)</code>，只会调用到<code>g(int &amp;)</code>。</p>
+<p>为了解决这个问题，C++使用<code>std::forward&lt;T&gt;(x)</code>来保持值类型不变，来传递参数。就如同开头的代码。此时就可以分别打印出<code>int &amp;</code>和<code>int &amp;&amp;</code>了。</p>
+<p>另外，转发引用会保留实参的<code>cv</code>属性。</p>
+<p>注意</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">T</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> f1(T<span style="color:#f92672">&amp;&amp;</span> x);                 <span style="color:#75715e">// x 是转发引用
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">A</span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">T</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">void</span> f2(T<span style="color:#f92672">&amp;&amp;</span> x);                 <span style="color:#75715e">// x 是转发引用
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">U</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">B</span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">f3</span>(U<span style="color:#f92672">&amp;&amp;</span> x);                 <span style="color:#75715e">// 这个x不是转发引用
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">T</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">void</span> f4(T<span style="color:#f92672">&amp;&amp;</span> x);                 <span style="color:#75715e">// x 是转发引用
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>};
+</span></span></code></pre></div><p>用上形参包，完美转发例如：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">T</span>, <span style="color:#66d9ef">class</span><span style="color:#960050;background-color:#1e0010">... </span><span style="color:#a6e22e">Args</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">auto</span> f(Args<span style="color:#f92672">&amp;&amp;</span>... args){
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> std<span style="color:#f92672">::</span>pari<span style="color:#f92672">&lt;</span>T, <span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span>{std<span style="color:#f92672">::</span>forward<span style="color:#f92672">&lt;</span>Args<span style="color:#f92672">&gt;</span>(args)..., <span style="color:#ae81ff">0</span>};
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h1 id="模板类暴露类型给外部">模板类暴露类型给外部</h1>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">T</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">Point</span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">using</span> value_type <span style="color:#f92672">=</span> T; <span style="color:#75715e">// 外部可以使用typename Point::value_type;来获取类型
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    T x;
+</span></span><span style="display:flex;"><span>    T y;
+</span></span><span style="display:flex;"><span>};
+</span></span></code></pre></div><h1 id="类模板实参推导指引">类模板实参推导指引</h1>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#75715e">// 模板的声明
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">T</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">container</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    container(T t) {}
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Iter</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>    container(Iter beg, Iter end);
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 额外的推导指引
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Iter</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>container(Iter b, Iter e) <span style="color:#f92672">-&gt;</span> container<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">typename</span> std<span style="color:#f92672">::</span>iterator_traits<span style="color:#f92672">&lt;</span>Iter<span style="color:#f92672">&gt;::</span>value_type<span style="color:#f92672">&gt;</span>;
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 使用
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>container <span style="color:#a6e22e">c</span>(<span style="color:#ae81ff">7</span>); <span style="color:#75715e">// OK：用隐式生成的指引推导出 T=int
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">double</span><span style="color:#f92672">&gt;</span> v <span style="color:#f92672">=</span> {<span style="color:#75715e">/* ... */</span>};
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">auto</span> d <span style="color:#f92672">=</span> container(v.begin(), v.end()); <span style="color:#75715e">// OK：推导出 T=double
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>container e{<span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">6</span>}; <span style="color:#75715e">// 错误：std::iterator_traits&lt;int&gt;::value_type 不存在
+</span></span></span></code></pre></div><p>总而言之，通过对构造函数里传入的参数进行分析，得到类模板的实参。但有时候隐式生成的推导指引没有那么厉害，看不透用户的想法。此时就需要一个额外的用户定义的推导指引。如上面的代码，我们把<code>container(Iter b, Iter e)</code>这样的构造函数，推导出其实参为<code>typename std::iterator_traits&lt;Iter&gt;::value_type</code>。这样就能正确实例化模板了。</p>
+<p>用户定义的推导指引必须指名一个类模板，且必须在类模板的同一语义作用域（可以是命名空间或外围类）中引入，而且对于成员类模板必须拥有同样的访问，但推导指引不会成为该作用域的成员。</p>
+<p>推导指引不是函数且没有函数体。推导指引不会被名字查找所找到，并且除了在推导类模板实参时与其他推导指引之间的重载决议之外不会参与重载决议。不能在同一翻译单元中为同一类模板再次声明推导指引。</p>
+<h1 id="模板实例化和模板特化">模板实例化和模板特化</h1>
+<p>以前我没分清楚这两个东西。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">T</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">A</span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// ...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>A<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span> a;
+</span></span></code></pre></div><p>上面这个代码叫做模板实例化。没有实例化的模板不会作为汇编指令生成。只有当实际调用到这个模板类、模板函数的时候，才会生成一个匹配的类、函数，生成汇编指令。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">T</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">A</span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// ...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">A</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// ...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>};
+</span></span></code></pre></div><p>上面的代码叫做模板特化。就是把其中的一种情况拿出来，单独有自己的逻辑。在模板实例化的时候，会先查找最特殊的模板。可以通过只声明、不定义、另外定义特化的方式来限制类型。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">T</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">A</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">A</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">A</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">double</span><span style="color:#f92672">&gt;</span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>};
+</span></span></code></pre></div><p>以上代码，声明<code>A&lt;int&gt;, A&lt;double&gt;</code>的变量都会成功，而<code>A&lt;float&gt;</code>则会报错。</p>
+<h1 id="模板最好都写在头文件里">模板最好都写在头文件里</h1>
+<p>如果不全写在头文件里会有什么问题呢？见下例</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#75715e">// B.h
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">T</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">B</span>{
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">void</span> foo(T x);
+</span></span><span style="display:flex;"><span>};
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#75715e">// B.cpp
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#75715e">#include</span> <span style="color:#75715e">&#34;B.h&#34;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">T</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> B<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;::</span>foo(T x){
+</span></span><span style="display:flex;"><span>	std<span style="color:#f92672">::</span>cout<span style="color:#f92672">&lt;&lt;</span>x<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#75715e">// A.cpp
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#75715e">#include</span> <span style="color:#75715e">&#34;B.h&#34;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(){
+</span></span><span style="display:flex;"><span>	B<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span> b;
+</span></span><span style="display:flex;"><span>	b.foo(<span style="color:#ae81ff">666</span>);
+</span></span><span style="display:flex;"><span>	
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>如上，我们把<code>B</code>中函数的定义和声明分离了。此时我们用<code>g++ A.cpp B.cpp -o .\A.exe</code>编译，链接器会报错：</p>
+<pre tabindex="0"><code>x86_64-w64-mingw32/bin/ld.exe: C:\Users\Kegalas\AppData\Local\Temp\ccCn8we2.o:A.cpp:(.text+0x1a): undefined reference to `B&lt;int&gt;::foo(int)&#39;
+collect2.exe: error: ld returned 1 exit status
+</code></pre><p>未定义？我们看看汇编后的代码是什么</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-asm" data-lang="asm"><span style="display:flex;"><span>	<span style="color:#a6e22e">.file</span>	<span style="color:#e6db74">&#34;A.cpp&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">.text</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">.def</span>	<span style="color:#66d9ef">__main</span><span style="color:#75715e">;	.scl	2;	.type	32;	.endef
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">.globl</span>	<span style="color:#66d9ef">main</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">.def</span>	<span style="color:#66d9ef">main</span><span style="color:#75715e">;	.scl	2;	.type	32;	.endef
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">.seh_proc</span>	<span style="color:#66d9ef">main</span>
+</span></span><span style="display:flex;"><span>main:
+</span></span><span style="display:flex;"><span>.LFB0:
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">pushq</span>	%rbp
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">.seh_pushreg</span>	%rbp
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">movq</span>	%rsp, %rbp
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">.seh_setframe</span>	%rbp, <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">subq</span>	<span style="color:#66d9ef">$48</span>, %rsp
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">.seh_stackalloc</span>	<span style="color:#ae81ff">48</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">.seh_endprologue</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">call</span>	<span style="color:#66d9ef">__main</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">leaq</span>	-<span style="color:#ae81ff">1</span>(%rbp), %rax
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">movl</span>	<span style="color:#66d9ef">$666</span>, %edx
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">movq</span>	%rax, %rcx
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">call</span>	<span style="color:#66d9ef">_ZN1BIiE3fooEi</span> <span style="color:#75715e"># 调用b.foo(666)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">movl</span>	<span style="color:#66d9ef">$0</span>, %eax
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">addq</span>	<span style="color:#66d9ef">$48</span>, %rsp
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">popq</span>	%rbp
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">ret</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">.seh_endproc</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">.ident</span>	<span style="color:#e6db74">&#34;GCC: (Rev7, Built by MSYS2 project) 13.1.0&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">.def</span>	<span style="color:#66d9ef">_ZN1BIiE3fooEi</span><span style="color:#75715e">;	.scl	2;	.type	32;	.endef
+</span></span></span></code></pre></div><p>这里好像没有什么问题，直接去调用了<code>foo</code>，然后我们来看看<code>B.cpp</code>的汇编</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>	.file	<span style="color:#e6db74">&#34;B.cpp&#34;</span>
+</span></span><span style="display:flex;"><span>	.text
+</span></span><span style="display:flex;"><span>	.section .rdata,<span style="color:#e6db74">&#34;dr&#34;</span>
+</span></span><span style="display:flex;"><span>_ZNSt8__detail30__integer_to_chars_is_unsignedIjEE:
+</span></span><span style="display:flex;"><span>	.byte	<span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>_ZNSt8__detail30__integer_to_chars_is_unsignedImEE:
+</span></span><span style="display:flex;"><span>	.byte	<span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>_ZNSt8__detail30__integer_to_chars_is_unsignedIyEE:
+</span></span><span style="display:flex;"><span>	.byte	<span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>	.ident	<span style="color:#e6db74">&#34;GCC: (Rev7, Built by MSYS2 project) 13.1.0&#34;</span>
+</span></span></code></pre></div><p>什么？里面居然没有<code>_ZN1BIiE3fooEi</code>这个符号？为什么呢？前面也提到过，只有当模板被实例化的时候，才会生成对应的汇编指令。这里的问题正是，没有实例化。</p>
+<p><code>A.cpp</code>中<code>include</code>了<code>B.h</code>，确实在<code>B&lt;int&gt; b</code>的时候对类模板进行了实例化。但是，类模板里面的成员函数只是声明！没有实际定义。而在编译<code>B.cpp</code>的时候，就没有类似于<code>B&lt;int&gt; b</code>这样的东西对它进行实例化了（<code>A.cpp</code>和<code>B.cpp</code>不是同一个翻译单元）。于是<code>void B&lt;T&gt;::foo(T x)</code>就没有进行实例化，也就没有实际的汇编指令，也就没有<code>_ZN1BIiE3fooEi</code>这个符号。所以链接的时候就提示无法找到定义。</p>
+<p>应该怎么做？我们只需要显式实例化即可：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#75715e">// B.cpp
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#75715e">#include</span> <span style="color:#75715e">&#34;B.h&#34;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">T</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> B<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;::</span>foo(T x){
+</span></span><span style="display:flex;"><span>	std<span style="color:#f92672">::</span>cout<span style="color:#f92672">&lt;&lt;</span>x<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">template</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">B</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span>;
+</span></span></code></pre></div><p>即加上了最后一行。再来看看现在的汇编代码</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>	.file	<span style="color:#e6db74">&#34;B.cpp&#34;</span>
+</span></span><span style="display:flex;"><span>	.text
+</span></span><span style="display:flex;"><span>	.section .rdata,<span style="color:#e6db74">&#34;dr&#34;</span>
+</span></span><span style="display:flex;"><span>.LC0:
+</span></span><span style="display:flex;"><span>	.ascii <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\12\0</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>	.section	.text<span style="color:#960050;background-color:#1e0010">$</span>_ZN1BIiE3fooEi,<span style="color:#e6db74">&#34;x&#34;</span>
+</span></span><span style="display:flex;"><span>	.linkonce discard
+</span></span><span style="display:flex;"><span>	.align <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>	.globl	_ZN1BIiE3fooEi
+</span></span><span style="display:flex;"><span>	.def	_ZN1BIiE3fooEi;	.scl	<span style="color:#ae81ff">2</span>;	.type	<span style="color:#ae81ff">32</span>;	.endef
+</span></span><span style="display:flex;"><span>	.seh_proc	_ZN1BIiE3fooEi
+</span></span><span style="display:flex;"><span>_ZN1BIiE3fooEi:
+</span></span><span style="display:flex;"><span>.LFB2470:
+</span></span><span style="display:flex;"><span>	pushq	<span style="color:#f92672">%</span>rbp
+</span></span><span style="display:flex;"><span>	.seh_pushreg	<span style="color:#f92672">%</span>rbp
+</span></span><span style="display:flex;"><span>	movq	<span style="color:#f92672">%</span>rsp, <span style="color:#f92672">%</span>rbp
+</span></span><span style="display:flex;"><span>	.seh_setframe	<span style="color:#f92672">%</span>rbp, <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>	subq	<span style="color:#960050;background-color:#1e0010">$</span><span style="color:#ae81ff">32</span>, <span style="color:#f92672">%</span>rsp
+</span></span><span style="display:flex;"><span>	.seh_stackalloc	<span style="color:#ae81ff">32</span>
+</span></span><span style="display:flex;"><span>	.seh_endprologue
+</span></span><span style="display:flex;"><span>	movq	<span style="color:#f92672">%</span>rcx, <span style="color:#ae81ff">16</span>(<span style="color:#f92672">%</span>rbp)
+</span></span><span style="display:flex;"><span>	movl	<span style="color:#f92672">%</span>edx, <span style="color:#ae81ff">24</span>(<span style="color:#f92672">%</span>rbp)
+</span></span><span style="display:flex;"><span>	movl	<span style="color:#ae81ff">24</span>(<span style="color:#f92672">%</span>rbp), <span style="color:#f92672">%</span>eax
+</span></span><span style="display:flex;"><span>	movl	<span style="color:#f92672">%</span>eax, <span style="color:#f92672">%</span>edx
+</span></span><span style="display:flex;"><span>	movq	.refptr._ZSt4cout(<span style="color:#f92672">%</span>rip), <span style="color:#f92672">%</span>rax
+</span></span><span style="display:flex;"><span>	movq	<span style="color:#f92672">%</span>rax, <span style="color:#f92672">%</span>rcx
+</span></span><span style="display:flex;"><span>	call	_ZNSolsEi
+</span></span><span style="display:flex;"><span>	movq	<span style="color:#f92672">%</span>rax, <span style="color:#f92672">%</span>rcx
+</span></span><span style="display:flex;"><span>	leaq	.LC0(<span style="color:#f92672">%</span>rip), <span style="color:#f92672">%</span>rax
+</span></span><span style="display:flex;"><span>	movq	<span style="color:#f92672">%</span>rax, <span style="color:#f92672">%</span>rdx
+</span></span><span style="display:flex;"><span>	call	_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc
+</span></span><span style="display:flex;"><span>	nop
+</span></span><span style="display:flex;"><span>	addq	<span style="color:#960050;background-color:#1e0010">$</span><span style="color:#ae81ff">32</span>, <span style="color:#f92672">%</span>rsp
+</span></span><span style="display:flex;"><span>	popq	<span style="color:#f92672">%</span>rbp
+</span></span><span style="display:flex;"><span>	ret
+</span></span><span style="display:flex;"><span>	.seh_endproc
+</span></span><span style="display:flex;"><span>	.section .rdata,<span style="color:#e6db74">&#34;dr&#34;</span>
+</span></span><span style="display:flex;"><span>_ZNSt8__detail30__integer_to_chars_is_unsignedIjEE:
+</span></span><span style="display:flex;"><span>	.byte	<span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>_ZNSt8__detail30__integer_to_chars_is_unsignedImEE:
+</span></span><span style="display:flex;"><span>	.byte	<span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>_ZNSt8__detail30__integer_to_chars_is_unsignedIyEE:
+</span></span><span style="display:flex;"><span>	.byte	<span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>	.ident	<span style="color:#e6db74">&#34;GCC: (Rev7, Built by MSYS2 project) 13.1.0&#34;</span>
+</span></span><span style="display:flex;"><span>	.def	_ZNSolsEi;	.scl	<span style="color:#ae81ff">2</span>;	.type	<span style="color:#ae81ff">32</span>;	.endef
+</span></span><span style="display:flex;"><span>	.def	_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc;	.scl	<span style="color:#ae81ff">2</span>;	.type	<span style="color:#ae81ff">32</span>;	.endef
+</span></span><span style="display:flex;"><span>	.section	.rdata<span style="color:#960050;background-color:#1e0010">$</span>.refptr._ZSt4cout, <span style="color:#e6db74">&#34;dr&#34;</span>
+</span></span><span style="display:flex;"><span>	.globl	.refptr._ZSt4cout
+</span></span><span style="display:flex;"><span>	.linkonce	discard
+</span></span><span style="display:flex;"><span>.refptr._ZSt4cout:
+</span></span><span style="display:flex;"><span>	.quad	_ZSt4cout
+</span></span></code></pre></div><p>可见<code>_ZN1BIiE3fooEi:</code>已经在其中了。</p>
+<p>不过本小节的标题是“模板最好都写在头文件里”，我们不可能显式实例化所有可能情况。一切的罪魁祸首可能就是头文件中只进行了声明，而没有定义。于是无法正常实例化。我们应该做的，就是把定义放在头文件里。实际上包括stl在内的很多模板库都是<code>head-only</code>的。</p>
+<p>不过如果我们要限制用户只能使用特定的几种类型，分离定义和声明，显式实例化这几种特定的类型，是可以考虑的。</p>
+<h1 id="concept">concept</h1>
 <p>todo</p>
-<h1 id="typeidname">typeid().name()</h1>
-<p>TODO</p>
+<h1 id="auto类型推断">auto类型推断</h1>
+<p><code>auto x = y</code>，会抛弃<code>y</code>的<code>cv</code>、引用类别。例如</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#f92672">&amp;</span>j <span style="color:#f92672">=</span> i;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#66d9ef">const</span> <span style="color:#f92672">&amp;</span> k <span style="color:#f92672">=</span> i;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">auto</span> x <span style="color:#f92672">=</span> i; <span style="color:#75715e">// int
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">auto</span> y <span style="color:#f92672">=</span> j; <span style="color:#75715e">// int
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">auto</span> z <span style="color:#f92672">=</span> k; <span style="color:#75715e">// int
+</span></span></span></code></pre></div><p>我们可以根据自己的需求去加<code>cv</code>和引用类别</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">auto</span> x <span style="color:#f92672">=</span> i; <span style="color:#75715e">// int
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">auto</span> <span style="color:#f92672">&amp;</span>y <span style="color:#f92672">=</span> i; <span style="color:#75715e">// int &amp;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">auto</span> <span style="color:#66d9ef">const</span> <span style="color:#f92672">&amp;</span> y <span style="color:#f92672">=</span> i; <span style="color:#75715e">// int const &amp;
+</span></span></span></code></pre></div><p>注意，C++11下</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">auto</span> x <span style="color:#f92672">=</span> {<span style="color:#ae81ff">3</span>}; <span style="color:#75715e">// 推断为std::initializer_list&lt;int&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">auto</span> y{<span style="color:#ae81ff">3</span>}; <span style="color:#75715e">// 推断为std::initializer_list&lt;int&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">auto</span> z{<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>}; <span style="color:#75715e">// 推断为std::initializer_list&lt;int&gt;
+</span></span></span></code></pre></div><p>这其实是不符合我们的直觉的，在C++17后，第二行被推断为<code>int</code>，而第三行报错。</p>
+<h1 id="decltype">decltype</h1>
+<p>和<code>auto</code>不同，不会抛弃<code>cv</code>和引用。如果如果实参是没有括号的标识表达式或没有括号的类成员访问表达式：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#f92672">&amp;</span>j <span style="color:#f92672">=</span> i;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#66d9ef">const</span> <span style="color:#f92672">&amp;</span> k <span style="color:#f92672">=</span> i;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> T1 <span style="color:#f92672">=</span> <span style="color:#66d9ef">decltype</span>(i); <span style="color:#75715e">// int
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">using</span> T2 <span style="color:#f92672">=</span> <span style="color:#66d9ef">decltype</span>(j); <span style="color:#75715e">// int &amp;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">using</span> T3 <span style="color:#f92672">=</span> <span style="color:#66d9ef">decltype</span>(k); <span style="color:#75715e">// int const &amp;
+</span></span></span></code></pre></div><p>并且，可以用<code>decltype</code>保留<code>auto</code>中会去除的<code>cv</code>和引用，例如（C++14）</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#f92672">&amp;</span>j <span style="color:#f92672">=</span> i;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#66d9ef">const</span> <span style="color:#f92672">&amp;</span> k <span style="color:#f92672">=</span> i;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">decltype</span>(<span style="color:#66d9ef">auto</span>) x <span style="color:#f92672">=</span> i; <span style="color:#75715e">// int
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">decltype</span>(<span style="color:#66d9ef">auto</span>) y <span style="color:#f92672">=</span> j; <span style="color:#75715e">// int &amp;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">decltype</span>(<span style="color:#66d9ef">auto</span>) z <span style="color:#f92672">=</span> k; <span style="color:#75715e">// int const &amp;
+</span></span></span></code></pre></div><p>如果<code>decltype</code>的实参是类型为<code>T</code>的任何其他表达式。表达式为亡值时，产生<code>T&amp;&amp;</code>；为左值时，产生<code>T&amp;</code>；纯右值时产生<code>T</code></p>
+<h1 id="stddeclval">std::declval</h1>
+<p>将任意类型<code>T</code>转换为（右值）引用类型，使得在 decltype 说明符的操作数中不必经过构造函数就能使用成员函数。</p>
+<p>注意，<code>std::declval</code>只能用于不求值语境，且不要求有定义；求值包含此函数的表达式是错误的。此函数不能被调用，因此不会返回值。返回类型是<code>T&amp;&amp;</code>，除非<code>T</code>是（可有<code>cv</code>限定的）void，此时返回类型是<code>T</code>。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;utility&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span> 
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">Default</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">foo</span>() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span>; }
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">NonDefault</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    NonDefault() <span style="color:#f92672">=</span> <span style="color:#66d9ef">delete</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">foo</span>() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span>; }
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>()
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">decltype</span>(Default().foo()) n1 <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;                   <span style="color:#75715e">// n1 的类型是 int
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//  decltype(NonDefault().foo()) n2 = n1;               // 错误：无默认构造函数
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">decltype</span>(std<span style="color:#f92672">::</span>declval<span style="color:#f92672">&lt;</span>NonDefault<span style="color:#f92672">&gt;</span>().foo()) n2 <span style="color:#f92672">=</span> n1; <span style="color:#75715e">// n2 的类型是 int
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;n1 = &#34;</span> <span style="color:#f92672">&lt;&lt;</span> n1 <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#39;\n&#39;</span>
+</span></span><span style="display:flex;"><span>              <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;n2 = &#34;</span> <span style="color:#f92672">&lt;&lt;</span> n2 <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#39;\n&#39;</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h1 id="type_traits库">type_traits库</h1>
+<p><a class="link" href="https://zh.cppreference.com/w/cpp/header/type_traits"  target="_blank" rel="noopener"
+    >https://zh.cppreference.com/w/cpp/header/type_traits</a></p>
+<p>有很多用于判断类型特性的模板。例如<code>is_const, is_class, is_pointer, is_pod, is_unsigned</code>等等。太多不能一一介绍，见上面的链接。使用方法都是类似的</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">T</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> foo(T <span style="color:#66d9ef">const</span><span style="color:#f92672">&amp;</span> x){
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">constexpr</span> <span style="color:#66d9ef">bool</span> check <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>is_unsigned<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;::</span>value; <span style="color:#75715e">// C++11
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">constexpr</span> <span style="color:#66d9ef">bool</span> check2 <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>is_unsigned_v<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span>;<span style="color:#75715e">// C++17后
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
+</span></span></code></pre></div><p>除了判断类型的，还有转换类型的。如<code>add_const, remove_const, make_signed</code>。这里主要讲一下<code>decay</code>和<code>result_of</code></p>
+<p><code>decay</code>就是将变量的指针、引用、<code>cv</code>全部去掉，得到纯的<code>T</code>类型，如</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;type_traits&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span> 
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">typename</span> T, <span style="color:#66d9ef">typename</span> U<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">constexpr</span> <span style="color:#66d9ef">bool</span> is_decay_equ <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>is_same_v<span style="color:#f92672">&lt;</span>std<span style="color:#f92672">::</span>decay_t<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span>, U<span style="color:#f92672">&gt;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// c++14可用
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// c++11为typename std::decay&lt;T&gt;::type
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span> 
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>()
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">static_assert</span>
+</span></span><span style="display:flex;"><span>    (
+</span></span><span style="display:flex;"><span>        is_decay_equ<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span>, <span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span> <span style="color:#f92672">&amp;&amp;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">!</span> is_decay_equ<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span>, <span style="color:#66d9ef">float</span><span style="color:#f92672">&gt;</span> <span style="color:#f92672">&amp;&amp;</span>
+</span></span><span style="display:flex;"><span>        is_decay_equ<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&amp;</span>, <span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span> <span style="color:#f92672">&amp;&amp;</span>
+</span></span><span style="display:flex;"><span>        is_decay_equ<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&amp;&amp;</span>, <span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span> <span style="color:#f92672">&amp;&amp;</span>
+</span></span><span style="display:flex;"><span>        is_decay_equ<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">const</span> <span style="color:#66d9ef">int</span><span style="color:#f92672">&amp;</span>, <span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span> <span style="color:#f92672">&amp;&amp;</span>
+</span></span><span style="display:flex;"><span>        is_decay_equ<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span>[<span style="color:#ae81ff">2</span>], <span style="color:#66d9ef">int</span><span style="color:#f92672">*&gt;</span> <span style="color:#f92672">&amp;&amp;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">!</span> is_decay_equ<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span>[<span style="color:#ae81ff">4</span>][<span style="color:#ae81ff">2</span>], <span style="color:#66d9ef">int</span><span style="color:#f92672">*&gt;</span> <span style="color:#f92672">&amp;&amp;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">!</span> is_decay_equ<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span>[<span style="color:#ae81ff">4</span>][<span style="color:#ae81ff">2</span>], <span style="color:#66d9ef">int</span><span style="color:#f92672">**&gt;</span> <span style="color:#f92672">&amp;&amp;</span>
+</span></span><span style="display:flex;"><span>        is_decay_equ<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span>[<span style="color:#ae81ff">4</span>][<span style="color:#ae81ff">2</span>], <span style="color:#66d9ef">int</span>(<span style="color:#f92672">*</span>)[<span style="color:#ae81ff">2</span>]<span style="color:#f92672">&gt;</span> <span style="color:#f92672">&amp;&amp;</span>
+</span></span><span style="display:flex;"><span>        is_decay_equ<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span>(<span style="color:#66d9ef">int</span>), <span style="color:#66d9ef">int</span>(<span style="color:#f92672">*</span>)(<span style="color:#66d9ef">int</span>)<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>    );
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><code>result_of</code>得到某个可调用对象的返回值的类型</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">S</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">double</span> <span style="color:#a6e22e">operator</span>()(<span style="color:#66d9ef">char</span>, <span style="color:#66d9ef">int</span><span style="color:#f92672">&amp;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">float</span> <span style="color:#a6e22e">operator</span>()(<span style="color:#66d9ef">int</span>) { <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1.0</span>; }
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>std<span style="color:#f92672">::</span>result_of<span style="color:#f92672">&lt;</span>S(<span style="color:#66d9ef">char</span>, <span style="color:#66d9ef">int</span><span style="color:#f92672">&amp;</span>)<span style="color:#f92672">&gt;::</span>type d <span style="color:#f92672">=</span> <span style="color:#ae81ff">3.14</span>; <span style="color:#75715e">// d 拥有 double 类型
+</span></span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">double</span> <span style="color:#a6e22e">f</span>(<span style="color:#66d9ef">char</span> c, <span style="color:#66d9ef">int</span><span style="color:#f92672">&amp;</span> a){
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0.1</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>std<span style="color:#f92672">::</span>result_of<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">decltype</span>(<span style="color:#f92672">&amp;</span>f)(<span style="color:#66d9ef">char</span>, <span style="color:#66d9ef">int</span><span style="color:#f92672">&amp;</span>)<span style="color:#f92672">&gt;::</span>type d <span style="color:#f92672">=</span> <span style="color:#ae81ff">3.14</span>;
+</span></span></code></pre></div><p><code>invoke_result</code>是在C++17后加入的，用以取代<code>result_of</code>，后者已经在C++17中废弃，C++20中移除。语法略有不同，主要是没有括号。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>std<span style="color:#f92672">::</span>invoke_result<span style="color:#f92672">&lt;</span>S,<span style="color:#66d9ef">char</span>,<span style="color:#66d9ef">int</span><span style="color:#f92672">&amp;&gt;::</span>type b <span style="color:#f92672">=</span> <span style="color:#ae81ff">3.14</span>;
+</span></span><span style="display:flex;"><span>std<span style="color:#f92672">::</span>invoke_result<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">decltype</span>(f), <span style="color:#66d9ef">char</span>, <span style="color:#66d9ef">int</span><span style="color:#f92672">&amp;&gt;::</span>type d <span style="color:#f92672">=</span> <span style="color:#ae81ff">3.14</span>;
+</span></span></code></pre></div><h1 id="crtp">CRTP</h1>
+<p>奇特重现模板模式（Curiously Recurring Template Pattern, CRTP）是一种惯用手法。</p>
+<p>主要就是父类是一个模板类，而子类继承父类，并且在模板实参里面填写子类。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">T</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Y</span> {};
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">X</span> <span style="color:#f92672">:</span> <span style="color:#66d9ef">public</span> Y<span style="color:#f92672">&lt;</span>X<span style="color:#f92672">&gt;</span> {};
+</span></span></code></pre></div><p>主要用来实现编译期多态。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">template</span> <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Derived</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">Base</span> { <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">name</span>() { (<span style="color:#66d9ef">static_cast</span><span style="color:#f92672">&lt;</span>Derived<span style="color:#f92672">*&gt;</span>(<span style="color:#66d9ef">this</span>))<span style="color:#f92672">-&gt;</span>impl(); } };
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">D1</span> <span style="color:#f92672">:</span> <span style="color:#66d9ef">public</span> Base<span style="color:#f92672">&lt;</span>D1<span style="color:#f92672">&gt;</span> { <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">impl</span>() { std<span style="color:#f92672">::</span>puts(<span style="color:#e6db74">&#34;D1::impl()&#34;</span>); } };
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">D2</span> <span style="color:#f92672">:</span> <span style="color:#66d9ef">public</span> Base<span style="color:#f92672">&lt;</span>D2<span style="color:#f92672">&gt;</span> { <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">impl</span>() { std<span style="color:#f92672">::</span>puts(<span style="color:#e6db74">&#34;D2::impl()&#34;</span>); } };
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">test</span>()
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Base&lt;D1&gt; b1; b1.name(); // 未定义行为
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// Base&lt;D2&gt; b2; b2.name(); // 未定义行为
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    D1 d1; d1.name();
+</span></span><span style="display:flex;"><span>    D2 d2; d2.name();
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>可以看<a class="link" href="https://zhuanlan.zhihu.com/p/460497652"  target="_blank" rel="noopener"
+    >https://zhuanlan.zhihu.com/p/460497652</a>学一些使用例。</p>
+<h1 id="sfinae">SFINAE</h1>
+<p>“替换失败不是错误” (Substitution Failure Is Not An Error)</p>
+<p>首先举个例子，即函数重载中</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">A</span> {};
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">B</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">public</span> A {};
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">C</span> {};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">foo</span>(A <span style="color:#66d9ef">const</span><span style="color:#f92672">&amp;</span>) {}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">foo</span>(B <span style="color:#66d9ef">const</span><span style="color:#f92672">&amp;</span>) {}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">bar</span>() {
+</span></span><span style="display:flex;"><span>  foo(A());
+</span></span><span style="display:flex;"><span>  foo(B());
+</span></span><span style="display:flex;"><span>  foo(C());
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>其中<code>foo(A());</code>匹配<code>void foo(B const&amp;) {}</code>失败了，但是不报错。而匹配<code>void foo(A const&amp;) {}</code>成功了，所以调用了这个重载。<code>foo(B());</code>两个都能匹配成功，但是<code>void foo(B const&amp;) {}</code>更特殊，所以调用这个重载。而<code>foo(C());</code>的所有匹配的失败了，才会进行编译报错。</p>
+<h1 id="极简concept">极简concept</h1>
+<p>如果我们要限定<code>template</code>里面的泛型<code>T</code>的性质，要怎么做呢？<code>C++20</code>提供了一个新的方法，即<code>concept</code></p>
+<p>他有很多种使用方法，例如假设我们要求一个类型是可排序的，我们假设这个<code>concept</code>叫做<code>Sortable</code>，以有以下几种使用方法</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">T</span><span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">requires</span> Sortable<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> sort(T<span style="color:#f92672">&amp;</span> s);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">T</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> sort(T<span style="color:#f92672">&amp;</span> s) <span style="color:#66d9ef">requires</span> Sortable<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> ; <span style="color:#75715e">// 换了下位置而已
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span>Sortable T<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> sort(T<span style="color:#f92672">&amp;</span> s);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">sort</span>(Sortable <span style="color:#66d9ef">auto</span><span style="color:#f92672">&amp;</span> s); <span style="color:#75715e">// 当然也可以用在返回值上，据说Stroustrup最喜欢这种
+</span></span></span></code></pre></div><p>如何定义一个概念（<code>concept</code>）？</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">template</span> <span style="color:#f92672">&lt;</span> <span style="color:#960050;background-color:#1e0010">模板形参列表</span> <span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">concept</span> <span style="color:#960050;background-color:#1e0010">概念名</span> <span style="color:#960050;background-color:#1e0010">属性</span> <span style="color:#960050;background-color:#1e0010">﻿</span>(<span style="color:#960050;background-color:#1e0010">可选</span>) <span style="color:#f92672">=</span> <span style="color:#960050;background-color:#1e0010">约束表达式</span>;
+</span></span></code></pre></div><p>其中这个约束表达式，是一个在编译期可以被eval为bool的表达式或者编译期函数。如果代入模板形参，可以得到<code>true</code>的值，则返回成功，否则不成功。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">template</span> <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">T</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">concept</span> always_satisfied <span style="color:#f92672">=</span> true;  <span style="color:#75715e">// 永远成功
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">template</span> <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">T</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">concept</span> integral <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>is_integral_v<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span>; <span style="color:#75715e">// 整型时成功
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">template</span> <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">T</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">concept</span> signed_integral <span style="color:#f92672">=</span> integral<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> <span style="color:#f92672">&amp;&amp;</span> std<span style="color:#f92672">::</span>is_signed_v<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span>; <span style="color:#75715e">// 满足两者时成功
+</span></span></span></code></pre></div><p>这里，一个概念不能提到自己，也不能用另一个概念来约束这个概念，例如</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">template</span> <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">T</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">concept</span> integral <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>is_integral_v<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">template</span> <span style="color:#f92672">&lt;</span>integral T<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">concept</span> signed_integral <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>is_signed_v<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span>;
+</span></span></code></pre></div><p>就是不行的。必须通过逻辑运算（包括与、或、非）得到复合的概念。同样的，requires语句也可以加入逻辑运算</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">template</span> <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">T</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">requires</span> Integral<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> <span style="color:#f92672">&amp;&amp;</span> std<span style="color:#f92672">::</span>is_signed_v<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>T add(T a, T b);
+</span></span></code></pre></div><p>可以通过<code>requires</code>语句定义概念</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">template</span> <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">T</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">concept</span> Addable <span style="color:#f92672">=</span> <span style="color:#66d9ef">requires</span> (T a, T b) { a<span style="color:#f92672">+</span>b; };
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">template</span> <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">T</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">requires</span> <span style="color:#66d9ef">requires</span> (T x) { x <span style="color:#f92672">+</span> x; } <span style="color:#75715e">// ad-hoc式定义
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>T <span style="color:#a6e22e">add</span>(T a, T b) {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> a <span style="color:#f92672">+</span> b;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>它不会检查是否返回<code>true</code>，只要里面的表达式合法，就可以成功。我们还可以写出</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">C</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">concept</span> cpt1 <span style="color:#f92672">=</span> <span style="color:#66d9ef">requires</span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">typename</span> C<span style="color:#f92672">::</span>value_type;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">typename</span> C<span style="color:#f92672">::</span>iterator;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">typename</span> std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>C<span style="color:#f92672">&gt;</span>;
+</span></span><span style="display:flex;"><span>};
+</span></span></code></pre></div><p>这样的代码，来判断其符不符合这样的使用方法。</p>
+<h1 id="形参包">形参包</h1>
+<p>todo</p>
 
 </section>
 
@@ -916,7 +1942,9 @@ static_assert(bool_exp); //C++17可用
     <li><a href="#原始字符串字面量">原始字符串字面量</a></li>
     <li><a href="#stdstring_view">std::string_view</a></li>
     <li><a href="#函数参数什么时候用const-">函数参数什么时候用const &amp;?</a></li>
-    <li><a href="#左值右值初步">左值、右值（初步）</a></li>
+    <li><a href="#左值纯右值亡值">左值、纯右值、亡值</a></li>
+    <li><a href="#右值引用或常左值引用延长生命周期">右值引用（或常左值引用）延长生命周期</a></li>
+    <li><a href="#移动语义">移动语义</a></li>
     <li><a href="#小心返回引用的函数">小心返回引用的函数</a></li>
     <li><a href="#引用可能会像迭代器一样失效">引用可能会像迭代器一样失效</a></li>
     <li><a href="#不要用引用来延长函数返回值的生命周期">不要用引用来延长函数返回值的生命周期</a></li>
@@ -930,13 +1958,19 @@ static_assert(bool_exp); //C++17可用
     <li><a href="#argc-argv">argc, argv</a></li>
     <li><a href="#file-stream">file stream</a></li>
     <li><a href="#重载和运算符">重载&laquo;和&raquo;运算符</a></li>
-    <li><a href="#mutable和const的成员函数">mutable和const的成员函数</a></li>
     <li><a href="#类成员初始化">类成员初始化</a></li>
     <li><a href="#explicit关键字">explicit关键字</a></li>
     <li><a href="#构造函数相互调用">构造函数相互调用</a></li>
     <li><a href="#在c里最好用nullptr而不是null">在C++里最好用nullptr而不是null</a></li>
+    <li><a href="#c四种类型转换">C++四种类型转换</a></li>
+    <li><a href="#cv限定符">cv限定符</a></li>
+    <li><a href="#mutable和const的成员函数">mutable和const的成员函数</a></li>
     <li><a href="#const与指针">const与指针</a></li>
-    <li><a href="#智能指针-todo">智能指针 TODO</a></li>
+    <li><a href="#成员函数引用限定符">成员函数引用限定符</a></li>
+    <li><a href="#constexpr">constexpr</a></li>
+    <li><a href="#智能指针">智能指针</a></li>
+    <li><a href="#make_shared和make_unique">make_shared和make_unique</a></li>
+    <li><a href="#placement-new">placement new</a></li>
     <li><a href="#this指针">this指针</a></li>
     <li><a href="#析构函数的析构顺序">析构函数的析构顺序</a></li>
     <li><a href="#有时候可以尝试集中处理exception">有时候可以尝试集中处理Exception</a></li>
@@ -963,8 +1997,51 @@ static_assert(bool_exp); //C++17可用
     <li><a href="#自定义unordered容器的哈希函数">自定义unordered容器的哈希函数</a></li>
     <li><a href="#标准库算法的执行策略">标准库算法的执行策略</a></li>
     <li><a href="#新for循环反向遍历的方法">新for循环反向遍历的方法</a></li>
+    <li><a href="#泛型lambda">泛型Lambda</a></li>
+    <li><a href="#stdmemcpy的重叠问题">std::memcpy的重叠问题</a></li>
+    <li><a href="#stdcopy的重叠问题">std::copy的重叠问题</a></li>
+    <li><a href="#stdrandom_shuffle随机重排数组">std::random_shuffle随机重排数组</a></li>
+    <li><a href="#stdfill">std::fill</a></li>
+    <li><a href="#stdgenerate">std::generate</a></li>
+    <li><a href="#stdtransform">std::transform</a></li>
+    <li><a href="#stdaccumulate和stdreduce">std::accumulate和std::reduce</a></li>
+    <li><a href="#stdtuple">std::tuple</a></li>
+    <li><a href="#stdoptional">std::optional</a></li>
+    <li><a href="#stdvariant">std::variant</a></li>
+    <li><a href="#stdany">std::any</a></li>
+    <li><a href="#c构建模型">C++构建模型</a></li>
+    <li><a href="#重复include导致的编译错误">重复include导致的编译错误</a></li>
+    <li><a href="#重复include导致的链接报错">重复include导致的链接报错</a></li>
+    <li><a href="#使用namespace来防止命名冲突">使用namespace来防止命名冲突</a></li>
+    <li><a href="#inline-namespace">inline namespace</a></li>
+    <li><a href="#friend">friend</a></li>
+    <li><a href="#public-protected-private">public, protected, private</a></li>
+    <li><a href="#override标识符">override标识符</a></li>
+    <li><a href="#析构函数务必声明为virtual">析构函数务必声明为virtual</a></li>
+    <li><a href="#final标识符">final标识符</a></li>
+    <li><a href="#不要继承成员变量组合优于继承">不要继承成员变量，组合优于继承</a></li>
+    <li><a href="#不要在构造函数里调用virtual函数">不要在构造函数里调用virtual函数</a></li>
+    <li><a href="#不能被继承的成员函数">不能被继承的成员函数</a></li>
     <li><a href="#rtti">RTTI</a></li>
-    <li><a href="#typeidname">typeid().name()</a></li>
+    <li><a href="#c四个异常安全等级">C++四个异常安全等级</a></li>
+    <li><a href="#普通构造和拷贝构造是可以抛异常的但是移动构造和析构最好noexcept">普通构造和拷贝构造是可以抛异常的，但是移动构造和析构最好noexcept</a></li>
+    <li><a href="#vector的元素最好有noexcept的移动构造函数">vector的元素最好有noexcept的移动构造函数</a></li>
+    <li><a href="#copy--swap">copy &amp; swap</a></li>
+    <li><a href="#实参依赖查找adl">实参依赖查找（ADL）</a></li>
+    <li><a href="#完美转发引用折叠">完美转发，引用折叠</a></li>
+    <li><a href="#模板类暴露类型给外部">模板类暴露类型给外部</a></li>
+    <li><a href="#类模板实参推导指引">类模板实参推导指引</a></li>
+    <li><a href="#模板实例化和模板特化">模板实例化和模板特化</a></li>
+    <li><a href="#模板最好都写在头文件里">模板最好都写在头文件里</a></li>
+    <li><a href="#concept">concept</a></li>
+    <li><a href="#auto类型推断">auto类型推断</a></li>
+    <li><a href="#decltype">decltype</a></li>
+    <li><a href="#stddeclval">std::declval</a></li>
+    <li><a href="#type_traits库">type_traits库</a></li>
+    <li><a href="#crtp">CRTP</a></li>
+    <li><a href="#sfinae">SFINAE</a></li>
+    <li><a href="#极简concept">极简concept</a></li>
+    <li><a href="#形参包">形参包</a></li>
   </ol>
 </nav>
                 </div>

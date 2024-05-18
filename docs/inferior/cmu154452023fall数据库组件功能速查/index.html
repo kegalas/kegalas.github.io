@@ -121,7 +121,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 14 分钟
+                    阅读时长: 23 分钟
                 </time>
             </div>
         
@@ -351,8 +351,256 @@
 </ul>
 <h2 id="task-2-1">Task 2</h2>
 <p>从这里开始要求我们实现一个可扩哈希。我们先把可扩哈希的原理说明一下，从一张图开始</p>
-<p>![占位符]</p>
-<p>首先可以看到，它是一个三层结构。第一层是<code>header</code>，其大小固定。</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 148; 
+			flex-basis: 355px"
+	>
+	<a href="/inferior/cmu154452023fall%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BB%84%E4%BB%B6%E5%8A%9F%E8%83%BD%E9%80%9F%E6%9F%A5/1.jpg" data-size="641x433">
+		<img src="/inferior/cmu154452023fall%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BB%84%E4%BB%B6%E5%8A%9F%E8%83%BD%E9%80%9F%E6%9F%A5/1.jpg"
+			width="641"
+			height="433"
+			srcset="/inferior/cmu154452023fall%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BB%84%E4%BB%B6%E5%8A%9F%E8%83%BD%E9%80%9F%E6%9F%A5/1_hu4f7488cd09156c19a630bf7980fd9d9e_30843_480x0_resize_q75_box.jpg 480w, /inferior/cmu154452023fall%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BB%84%E4%BB%B6%E5%8A%9F%E8%83%BD%E9%80%9F%E6%9F%A5/1_hu4f7488cd09156c19a630bf7980fd9d9e_30843_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="1.jpg">
+	</a>
+	
+	<figcaption>1.jpg</figcaption>
+	
+</figure></p>
+<p>首先可以看到，它是一个三层结构。第一层是<code>header</code>，其大小固定。第二层是<code>directory</code>，其大小可以变化，从只有一项，到大小上限。而第三层是<code>bucket</code>。</p>
+<p><code>header</code>的每一项指向了一个<code>directory</code>（当然如果没有数据的话就指向空指针），而<code>directory</code>的每一项指向了一个<code>bucket</code>，数据实际上是存在<code>bucket</code>里。所以，如果我们要读写一个数据，我们要经过以下步骤：</p>
+<ol>
+<li>找到该数据对应与<code>header</code>中的哪一项。</li>
+<li>从<code>header</code>的这一项中找到其对应的<code>directory</code>，然后在找到该数据对应该<code>directory</code>中的哪一项</li>
+<li>从<code>directory</code>中的这一项找到其对应的<code>bucket</code>，然后在<code>bucket</code>中遍历（<code>bucket</code>可以看做是固定大小的数组），找到所需的数据位置。</li>
+</ol>
+<p>具体是根据什么方法来找的呢？</p>
+<p>首先，我们会获得该数据的哈希值。假设我们这里得到的哈希值是一个32位无符号整数，那么，根据<code>header</code>的<code>max_depth</code>，提取出哈希值的高<code>max_depth</code>位。如上图，其<code>max_depth</code>为<span class="math inline">\(2\)</span>。如果我们的哈希值是<code>01...111</code>，那么就要映射到<code>header</code>中的第<code>1</code>项（从<code>0</code>开始计数）。如果是<code>10...111</code>就映射到第<code>2</code>项，以此类推。</p>
+<p>接下来，我们在对应的<code>directory</code>里，根据其<code>global_depth</code>，找到哈希值的低<code>global_depth</code>位。例如在<code>global_depth</code>为<span class="math inline">\(2\)</span>时，<code>01...111</code>就映射到<code>directory</code>的第<code>3</code>项。</p>
+<p>可扩哈希具体指的是哪里可扩呢？实际上指的是<code>directory</code>可扩。我们画个简单的情况来介绍：</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 276; 
+			flex-basis: 664px"
+	>
+	<a href="/inferior/cmu154452023fall%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BB%84%E4%BB%B6%E5%8A%9F%E8%83%BD%E9%80%9F%E6%9F%A5/2.jpg" data-size="783x283">
+		<img src="/inferior/cmu154452023fall%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BB%84%E4%BB%B6%E5%8A%9F%E8%83%BD%E9%80%9F%E6%9F%A5/2.jpg"
+			width="783"
+			height="283"
+			srcset="/inferior/cmu154452023fall%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BB%84%E4%BB%B6%E5%8A%9F%E8%83%BD%E9%80%9F%E6%9F%A5/2_hu857367ad5f5780eae0a707c305224ed7_11752_480x0_resize_q75_box.jpg 480w, /inferior/cmu154452023fall%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BB%84%E4%BB%B6%E5%8A%9F%E8%83%BD%E9%80%9F%E6%9F%A5/2_hu857367ad5f5780eae0a707c305224ed7_11752_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="2.jpg">
+	</a>
+	
+	<figcaption>2.jpg</figcaption>
+	
+</figure></p>
+<p>如图，我们省去了<code>header</code>，并且现在<code>directory</code>的<code>global_depth</code>的大小为<code>0</code>，也就是只有第<code>0</code>项。我们这里假设<code>bucket</code>大小为<span class="math inline">\(2\)</span>。这里我们有一个放了两个数据的<code>bucket</code>，这里用哈希值表示数据。</p>
+<p>整个<code>directory</code>有一个<code>global_depth</code>，主要是代表项数，也用来找哈希值对应的<code>bucket</code>。而每一项，有一个<code>local_depth</code>，代表的是，该项指向的<code>bucket</code>中，保证所有数据的哈希值最低的<code>local_depth</code>位是相同的。上图中，<code>local_depth</code>为<code>0</code>，即没有一位是保证相同的。</p>
+<p>如果我们要再插入一个数据（假设是<code>...10</code>）到其中，怎么做呢？这里显然已经插入满了，所以我们要扩容。首先，把<code>global_depth</code>加一，同时<code>directory</code>的大小也就增加了（大小为<span class="math inline">\(1<<{global\_depth}\)</span>），所以我们要增加<code>directory</code>的项数，其还是指向这个<code>bucket</code>。</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 246; 
+			flex-basis: 592px"
+	>
+	<a href="/inferior/cmu154452023fall%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BB%84%E4%BB%B6%E5%8A%9F%E8%83%BD%E9%80%9F%E6%9F%A5/3.jpg" data-size="906x367">
+		<img src="/inferior/cmu154452023fall%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BB%84%E4%BB%B6%E5%8A%9F%E8%83%BD%E9%80%9F%E6%9F%A5/3.jpg"
+			width="906"
+			height="367"
+			srcset="/inferior/cmu154452023fall%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BB%84%E4%BB%B6%E5%8A%9F%E8%83%BD%E9%80%9F%E6%9F%A5/3_hu04bfafe129fad31caa634a26d82f144f_15063_480x0_resize_q75_box.jpg 480w, /inferior/cmu154452023fall%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BB%84%E4%BB%B6%E5%8A%9F%E8%83%BD%E9%80%9F%E6%9F%A5/3_hu04bfafe129fad31caa634a26d82f144f_15063_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="3.jpg">
+	</a>
+	
+	<figcaption>3.jpg</figcaption>
+	
+</figure></p>
+<p>现在，<code>directory</code>的<code>global_depth</code>是<code>1</code>，而两项的<code>local_depth</code>都是<code>0</code>。观察我们要插入的数据<code>...10</code>，其最低<code>1</code>位是<code>0</code>，所以要插入第<code>0</code>项。而第<code>0</code>项指向的<code>bucket</code>仍然是满的。所以我们现在要把<code>bucket</code>分裂。如下：</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 192; 
+			flex-basis: 463px"
+	>
+	<a href="/inferior/cmu154452023fall%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BB%84%E4%BB%B6%E5%8A%9F%E8%83%BD%E9%80%9F%E6%9F%A5/4.jpg" data-size="710x368">
+		<img src="/inferior/cmu154452023fall%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BB%84%E4%BB%B6%E5%8A%9F%E8%83%BD%E9%80%9F%E6%9F%A5/4.jpg"
+			width="710"
+			height="368"
+			srcset="/inferior/cmu154452023fall%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BB%84%E4%BB%B6%E5%8A%9F%E8%83%BD%E9%80%9F%E6%9F%A5/4_hu81260e9d8b1e61e32228e9dcd98b2453_15626_480x0_resize_q75_box.jpg 480w, /inferior/cmu154452023fall%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BB%84%E4%BB%B6%E5%8A%9F%E8%83%BD%E9%80%9F%E6%9F%A5/4_hu81260e9d8b1e61e32228e9dcd98b2453_15626_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="4.jpg">
+	</a>
+	
+	<figcaption>4.jpg</figcaption>
+	
+</figure></p>
+<p>这里分裂的时候，需要按照<code>directory</code>的映射关系，将<code>bucket</code>的数据分别放到相应的新<code>bucket</code>中。这里，我们就可以增加<code>local_depth</code>了，都是<code>1</code>。然后我们再插入数据<code>...10</code>，就可以正常插入了。</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 172; 
+			flex-basis: 414px"
+	>
+	<a href="/inferior/cmu154452023fall%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BB%84%E4%BB%B6%E5%8A%9F%E8%83%BD%E9%80%9F%E6%9F%A5/5.jpg" data-size="699x405">
+		<img src="/inferior/cmu154452023fall%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BB%84%E4%BB%B6%E5%8A%9F%E8%83%BD%E9%80%9F%E6%9F%A5/5.jpg"
+			width="699"
+			height="405"
+			srcset="/inferior/cmu154452023fall%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BB%84%E4%BB%B6%E5%8A%9F%E8%83%BD%E9%80%9F%E6%9F%A5/5_hu83875de2f4435cdc1150d3ce4ed86327_16449_480x0_resize_q75_box.jpg 480w, /inferior/cmu154452023fall%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BB%84%E4%BB%B6%E5%8A%9F%E8%83%BD%E9%80%9F%E6%9F%A5/5_hu83875de2f4435cdc1150d3ce4ed86327_16449_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="5.jpg">
+	</a>
+	
+	<figcaption>5.jpg</figcaption>
+	
+</figure></p>
+<p>再例如下图</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 191; 
+			flex-basis: 460px"
+	>
+	<a href="/inferior/cmu154452023fall%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BB%84%E4%BB%B6%E5%8A%9F%E8%83%BD%E9%80%9F%E6%9F%A5/6.jpg" data-size="761x397">
+		<img src="/inferior/cmu154452023fall%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BB%84%E4%BB%B6%E5%8A%9F%E8%83%BD%E9%80%9F%E6%9F%A5/6.jpg"
+			width="761"
+			height="397"
+			srcset="/inferior/cmu154452023fall%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BB%84%E4%BB%B6%E5%8A%9F%E8%83%BD%E9%80%9F%E6%9F%A5/6_hu146c07101f691f9dfd971320da78f4a7_21333_480x0_resize_q75_box.jpg 480w, /inferior/cmu154452023fall%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BB%84%E4%BB%B6%E5%8A%9F%E8%83%BD%E9%80%9F%E6%9F%A5/6_hu146c07101f691f9dfd971320da78f4a7_21333_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="6.jpg">
+	</a>
+	
+	<figcaption>6.jpg</figcaption>
+	
+</figure></p>
+<p>我们插入<code>...100</code>，和之前一样，我们需要先扩容<code>directory</code></p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 204; 
+			flex-basis: 491px"
+	>
+	<a href="/inferior/cmu154452023fall%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BB%84%E4%BB%B6%E5%8A%9F%E8%83%BD%E9%80%9F%E6%9F%A5/7.jpg" data-size="889x434">
+		<img src="/inferior/cmu154452023fall%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BB%84%E4%BB%B6%E5%8A%9F%E8%83%BD%E9%80%9F%E6%9F%A5/7.jpg"
+			width="889"
+			height="434"
+			srcset="/inferior/cmu154452023fall%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BB%84%E4%BB%B6%E5%8A%9F%E8%83%BD%E9%80%9F%E6%9F%A5/7_hu751c868bb50644c97e7f6806629826af_31187_480x0_resize_q75_box.jpg 480w, /inferior/cmu154452023fall%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BB%84%E4%BB%B6%E5%8A%9F%E8%83%BD%E9%80%9F%E6%9F%A5/7_hu751c868bb50644c97e7f6806629826af_31187_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="7.jpg">
+	</a>
+	
+	<figcaption>7.jpg</figcaption>
+	
+</figure></p>
+<p>这里<code>global_depth</code>变成了<code>2</code>，写在了上方。而<code>local_depth</code>都是<code>1</code>，写在左边。然后我们的数据<code>...100</code>是映射到第<code>0</code>项，其<code>bucket</code>是满的，所以要分裂<code>bucket</code>，再插入，如下</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 166; 
+			flex-basis: 399px"
+	>
+	<a href="/inferior/cmu154452023fall%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BB%84%E4%BB%B6%E5%8A%9F%E8%83%BD%E9%80%9F%E6%9F%A5/8.jpg" data-size="873x525">
+		<img src="/inferior/cmu154452023fall%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BB%84%E4%BB%B6%E5%8A%9F%E8%83%BD%E9%80%9F%E6%9F%A5/8.jpg"
+			width="873"
+			height="525"
+			srcset="/inferior/cmu154452023fall%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BB%84%E4%BB%B6%E5%8A%9F%E8%83%BD%E9%80%9F%E6%9F%A5/8_hu5f9a92c4a05dfcb632d442f8750c795f_37011_480x0_resize_q75_box.jpg 480w, /inferior/cmu154452023fall%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BB%84%E4%BB%B6%E5%8A%9F%E8%83%BD%E9%80%9F%E6%9F%A5/8_hu5f9a92c4a05dfcb632d442f8750c795f_37011_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="8.jpg">
+	</a>
+	
+	<figcaption>8.jpg</figcaption>
+	
+</figure></p>
+<p>目前为止，插入和查询就说明白了。删除数据放到之后再说，先来看看代码，首先是<code>src/include/storage/page/extendible_htable_header_page.h</code></p>
+<p>首先，源代码注释中给出了这个<code>page</code>的布局</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">* Header page format:
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">*  ---------------------------------------------------
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">* | DirectoryPageIds(2048) | MaxDepth (4) | Free(2044)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">*  ---------------------------------------------------
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">*/</span>
+</span></span></code></pre></div><p>这里我们也可以知道，无论是<code>header</code>、<code>directory</code>还是<code>bucket</code>，都是作为一个页存在硬盘上的。大小都依然是<code>4096</code>。</p>
+<p>这段注释指出，<code>header</code>存储的数据有两个，一个是<code>MaxDepth</code>，一个是表项。通过阅读后面的代码可知，这个类有两个成员变量。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>page_id_t directory_page_ids_[HTABLE_HEADER_ARRAY_SIZE];
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">uint32_t</span> max_depth_;
+</span></span></code></pre></div><p>表项是用一个数组来表示的，其类型为<code>page_id_t</code>，被<code>using page_id_t = uint32_t</code>定义。而另一个就是代表表的最大大小。因为<code>uint32_t</code>是<code>4</code>字节的，而<code>DirectoryPageIds</code>占<code>2048</code>字节，所以最多有<code>512</code>项。这里也说明，实现上表项不是一个指向<code>directory</code>的指针，而是存储了对应的页号，找到<code>directory</code>需要读取硬盘上的另一个页。</p>
+<p>接下来我们看看其中定义的三个静态变量</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">constexpr</span> <span style="color:#66d9ef">uint64_t</span> HTABLE_HEADER_PAGE_METADATA_SIZE <span style="color:#f92672">=</span> <span style="color:#66d9ef">sizeof</span>(<span style="color:#66d9ef">uint32_t</span>);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">constexpr</span> <span style="color:#66d9ef">uint64_t</span> HTABLE_HEADER_MAX_DEPTH <span style="color:#f92672">=</span> <span style="color:#ae81ff">9</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">constexpr</span> <span style="color:#66d9ef">uint64_t</span> HTABLE_HEADER_ARRAY_SIZE <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">&lt;&lt;</span> HTABLE_HEADER_MAX_DEPTH;
+</span></span></code></pre></div><p>第一个定义了元信息的大小，第二个定义了<code>bustub</code>默认的<code>max_depth</code>，第三个定义了默认的表大小。接下来我们看<code>ExtendibleHTableHeaderPage</code>的成员函数</p>
+<ul>
+<li>所有构造函数和析构函数都被禁用了，根据代码的注释说这样是为了保证内存安全。我水平不够暂时不了解原理。</li>
+<li><code>Init</code>，传入<code>max_depth</code>，让我们对<code>header</code>进行初始化。我们照做即可，注意表项要全部初始化为<code>INVALID_PAGE_ID</code>，代表没有指向任何一个<code>directory</code></li>
+<li><code>HashToDirectoryIndex</code>，传入32位无符号整数的哈希值，找到对应的表项。就像我们之前说的一样，找到高<code>max_depth</code>位就行。<code>return hash&gt;&gt;(32-max_depth_);</code>。可能要特殊处理<code>0</code>深度的情况。</li>
+<li><code>GetDirectoryPageId</code>，传入表项下标，返回页号。说白了就是根据数组下标返回数组元素。</li>
+<li><code>SetDirectoryPageId</code>，说白了就是根据数组下标设置元素。</li>
+<li><code>MaxSize</code>，返回表大小。</li>
+</ul>
+<p>之后，我们来看<code>src/include/storage/page/extendible_htable_directory_page.h</code>，首先同样是看<code>page</code>的布局</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">* Directory page format:
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">*  --------------------------------------------------------------------------------------
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">* | MaxDepth (4) | GlobalDepth (4) | LocalDepths (512) | BucketPageIds(2048) | Free(1528)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">*  --------------------------------------------------------------------------------------
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">*/</span>
+</span></span></code></pre></div><p>存储了四种数据，首先是<code>max_depth_</code>，代表<code>global_depth_</code>的上限，然后就是<code>global_depth_</code>自己，用于表示<code>directory</code>现在的大小，以及用于映射关系。之后是<code>local_depths_</code>，这是一个数组，每个元素都是<code>8</code>位无符号整数，代表对应表项的<code>local_depth</code>，可知最多有<code>512</code>个表项。最后的<code>bucket_page_ids_</code>也是一个数组，类型为<code>page_id_t</code>的数组，存储表项对应的<code>bucket</code>的页号。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">constexpr</span> <span style="color:#66d9ef">uint64_t</span> HTABLE_DIRECTORY_MAX_DEPTH <span style="color:#f92672">=</span> <span style="color:#ae81ff">9</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">constexpr</span> <span style="color:#66d9ef">uint64_t</span> HTABLE_DIRECTORY_ARRAY_SIZE <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">&lt;&lt;</span> HTABLE_DIRECTORY_MAX_DEPTH;
+</span></span></code></pre></div><p>静态变量和之前相似。接下来我们看看成员函数</p>
+<ul>
+<li>所有构造函数和析构函数都被禁用</li>
+<li><code>Init</code>，传入<code>max_depth</code>，初始化<code>max_depth_</code>，<code>global_depth</code>，以及各个表项的信息。</li>
+<li><code>HashToBucketIndex</code>，传入<code>32</code>位无符号哈希值，算出对应第几个表项。从前面的讨论可以得到，取<code>hash % (1&lt;&lt;global_depth_)</code>即可。</li>
+<li><code>GetSplitImageIndex</code>，传入下标，获得其镜像<code>bucket</code>的下标。这里的镜像<code>bucket</code>指的是，前面进行<code>directory</code>扩容时，表项会翻倍，指向同一个<code>bucket</code>的表项数也会翻倍。每一个旧表项都会有一个新表项与它指向同一个<code>bucket</code>。这两个表项互为镜像。该项的<code>local_depth</code>已知，则当<code>local_depth</code>为零时，镜像为自己。否则镜像下标为<code>bucket_idx ^ (1&lt;&lt;(local_depth-1))</code>。无非是翻转一个二进制位。</li>
+<li><code>IncrGlobalDepth</code>，我这里把扩容操作一起做进来了。具体来说，假设原来的大小是<code>sz</code>，那么，<code>global_depth_++</code>之后，新的大小变为<code>sz*2</code>。其中的表项有<code>element[sz+i]=element[i]</code>，顺着复制表项即可。</li>
+<li><code>DecrGlobalDepth</code>，这里只需要<code>global_depth_--</code>。因为具体的缩容操作更复杂，需要在<code>bucket</code>层面才能执行。这里不需要清空数组多余的部分。</li>
+<li><code>CanShrink</code>，具体怎么缩容后面再说。这里只要记住，所有的<code>local_depth</code>都小于<code>global_depth</code>，则可以缩容。</li>
+</ul>
+<p>省略掉了一些简单的<code>getter</code>和<code>setter</code>。</p>
+<p>之后，我们来看<code>src/include/storage/page/extendible_htable_bucket_page.h</code>，首先同样是看<code>page</code>的布局</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">* Bucket page format:
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">*  ----------------------------------------------------------------------------
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">* | METADATA | KEY(1) + VALUE(1) | KEY(2) + VALUE(2) | ... | KEY(n) + VALUE(n)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">*  ----------------------------------------------------------------------------
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">*
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">* Metadata format (size in byte, 8 bytes in total):
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">*  --------------------------------
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">* | CurrentSize (4) | MaxSize (4)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">*  --------------------------------
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">*/</span>
+</span></span></code></pre></div><p>首先是<code>METADATA</code>，八个字节组成，分别是<code>bucket</code>的当前大小和最大大小。之后就是实际存储的键值对（KV）。每个键值对的键和值的大小不定（括号后面的是序号），具体存的什么数据，之后会介绍。</p>
+<p>直接来看成员函数</p>
+<ul>
+<li>所有构造函数和析构函数都被禁用</li>
+<li><code>Init</code>，负责初始化<code>max_size_</code>和<code>size_</code></li>
+<li><code>LookUp</code>，传入<code>key</code>和比较<code>key</code>的比较函数，查找这个<code>bucket</code>里有没有<code>key</code>相等的元素，返回<code>value</code>。（本课程不考虑<code>key</code>冲突，也不考虑<code>multimap</code>这样的情况）</li>
+<li><code>Insert</code>，传入<code>key, value, cmp</code>，插入到<code>bucket</code>中，只要<code>key</code>没出现过并且空间还有空闲就可以插入。</li>
+<li><code>Remove</code>，传入<code>key, cmp</code>，删除<code>key</code>对应的元素。注意，删除的时候，要把后面的所有元素往前移动一个来填补空缺。因为我们的插入是顺着插入，找到第一个空闲就插入。</li>
+</ul>
+<p>省略掉其他的<code>getter</code>和<code>setter</code>，现在我们来讨论一下，它<code>bucket</code>里面的KV究竟是在存什么。</p>
+<p>在<code>extendible_htable_bucket_page.cpp</code>中，代码末尾有：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">template</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ExtendibleHTableBucketPage</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span>, <span style="color:#66d9ef">int</span>, IntComparator<span style="color:#f92672">&gt;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">template</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ExtendibleHTableBucketPage</span><span style="color:#f92672">&lt;</span>GenericKey<span style="color:#f92672">&lt;</span><span style="color:#ae81ff">4</span><span style="color:#f92672">&gt;</span>, RID, GenericComparator<span style="color:#f92672">&lt;</span><span style="color:#ae81ff">4</span><span style="color:#f92672">&gt;&gt;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">template</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ExtendibleHTableBucketPage</span><span style="color:#f92672">&lt;</span>GenericKey<span style="color:#f92672">&lt;</span><span style="color:#ae81ff">8</span><span style="color:#f92672">&gt;</span>, RID, GenericComparator<span style="color:#f92672">&lt;</span><span style="color:#ae81ff">8</span><span style="color:#f92672">&gt;&gt;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">template</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ExtendibleHTableBucketPage</span><span style="color:#f92672">&lt;</span>GenericKey<span style="color:#f92672">&lt;</span><span style="color:#ae81ff">16</span><span style="color:#f92672">&gt;</span>, RID, GenericComparator<span style="color:#f92672">&lt;</span><span style="color:#ae81ff">16</span><span style="color:#f92672">&gt;&gt;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">template</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ExtendibleHTableBucketPage</span><span style="color:#f92672">&lt;</span>GenericKey<span style="color:#f92672">&lt;</span><span style="color:#ae81ff">32</span><span style="color:#f92672">&gt;</span>, RID, GenericComparator<span style="color:#f92672">&lt;</span><span style="color:#ae81ff">32</span><span style="color:#f92672">&gt;&gt;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">template</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ExtendibleHTableBucketPage</span><span style="color:#f92672">&lt;</span>GenericKey<span style="color:#f92672">&lt;</span><span style="color:#ae81ff">64</span><span style="color:#f92672">&gt;</span>, RID, GenericComparator<span style="color:#f92672">&lt;</span><span style="color:#ae81ff">64</span><span style="color:#f92672">&gt;&gt;</span>;
+</span></span></code></pre></div><p>这样的模板特化。首先我们知道了，KV中的V是<code>RID</code>（第一个除外，应该只是用来调试的）。什么是<code>RID</code>？实际上，又可以看做是一种指针。<code>RID</code>存储了两个成员变量<code>page_id_</code>和<code>slot_num_</code>，也就是说，具体的数据是存在别的页中，存在序号为<code>slot_num_</code>的部分。这一部分具体可以阅读<code>src/include/common/rid.h</code></p>
+<p>然后是前面的<code>GenericKey&lt;&gt;</code>是什么？他其实是一个包装的数组，当作哈希值来使用。这个数组里面可以存我们数据库里的具体的数据（称作<code>Tuple</code>，以后再说），也可以直接存整数值（仅用于测试意义）。<code>GenericKey&lt;4&gt;</code>代表数组长度为<code>4</code>（数组类型为<code>char[]</code>）。具体可见<code>src/include/storage/index/generic_key.h</code>。</p>
+<p>同样的这个文件里，定义了<code>GenericComparator&lt;&gt;</code>，具体做的事就是比较<code>GenericKey&lt;&gt;</code>之间的大小关系，当然，也就是通过比较数组，或者说比较<code>Tuple</code>来实现的。</p>
 
 </section>
 
