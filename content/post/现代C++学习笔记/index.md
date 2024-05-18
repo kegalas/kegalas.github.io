@@ -1977,10 +1977,6 @@ _ZNSt8__detail30__integer_to_chars_is_unsignedIyEE:
 
 不过如果我们要限制用户只能使用特定的几种类型，分离定义和声明，显式实例化这几种特定的类型，是可以考虑的。
 
-# concept
-
-todo
-
 # auto类型推断
 
 `auto x = y`，会抛弃`y`的`cv`、引用类别。例如
@@ -2176,6 +2172,23 @@ void test()
 
 可以看[https://zhuanlan.zhihu.com/p/460497652](https://zhuanlan.zhihu.com/p/460497652)学一些使用例。
 
+# typename消歧
+
+```cpp
+template<class T>
+class B{
+public:
+    typedef int type;
+};
+
+template<class T>
+class A{
+    typename B<T>::type a; // 在C++不那么先进的版本，不加typename会报错
+};
+```
+
+这被称作待决名的typename消歧义符，因为`B<T>::type`一般会被理解为静态成员。这里它作为一个`typedef`，需要我们用`typename`来消除歧义。
+
 # SFINAE
 
 “替换失败不是错误” (Substitution Failure Is Not An Error)
@@ -2198,6 +2211,72 @@ void bar() {
 ```
 
 其中`foo(A());`匹配`void foo(B const&) {}`失败了，但是不报错。而匹配`void foo(A const&) {}`成功了，所以调用了这个重载。`foo(B());`两个都能匹配成功，但是`void foo(B const&) {}`更特殊，所以调用这个重载。而`foo(C());`的所有匹配的失败了，才会进行编译报错。
+
+模板替换也是类似的，一个模板替换失败了，并不会直接导致编译错误，编译器会继续查询其他可以替换的模板，只要有一个成功，编译就可以通过。用cppreference的话来说：
+
+    在函数模板的重载决议中会应用此规则：当模板形参在替换成显式指定的类型或推导出的类型失败时，从重载集中丢弃这个特化，而非导致编译失败。
+
+例子：
+
+```cpp
+struct A{
+    typedef int t;
+};
+
+template<class T>
+void foo(typename T::t);
+
+template<class T>
+void foo(T);
+
+void bar(){
+    foo<A>(10); // 调用第一个重载，第二个重载匹配失败，因为10不能被隐式转化为A
+    foo<int>(10); // 调用第二个重载，第一个重载匹配失败，因为int没有t成员
+}
+```
+
+这只是最简单的使用例子，更为复杂一点的，STL提供了`std::enable_if`，来在编译时求值，从而开启或关闭某个特定的函数重载。
+
+```cpp
+template< bool B, class T = void >
+struct enable_if;
+```
+
+如果`B`是`true`，那么`enable_if`含有`typedef type`，否则不含有。
+
+使用例：
+
+```cpp
+template<class T>
+void destroy(
+    T*, 
+    typename std::enable_if<
+        std::is_trivially_destructible<T>::value
+    >::type* = 0)
+{
+    std::cout << "销毁可平凡析构的 T\n";
+}
+```
+
+这里，如果`T`不是可平凡析构的，那么他就没有`type`这个成员，匹配就会失败，这个模板就会从重载集中移除。
+
+C++11中还添加了一个表达式SFINAE，例如：
+
+```cpp
+struct X {};
+struct Y { Y(X){} }; // X 可以转换到 Y
+ 
+template<class T>
+auto f(T t1, T t2) -> decltype(t1 + t2); // 重载 #1
+ 
+X f(Y, Y);                               // 重载 #2
+ 
+X x1, x2;
+X x3 = f(x1, x2);  // 推导在 #1 上失败（表达式 x1+x2 非良构）
+                   // 重载集中只有 #2，调用它
+```
+
+这里由于`X`没有重载加法运算符，所以重载1的`decltype(t1 + t2)`非良构。在C++11时，这会被SFINAE使用，而在之前，这会直接导致编译错误。
 
 # 极简concept
 
@@ -2282,6 +2361,258 @@ concept cpt1 = requires{
 
 这样的代码，来判断其符不符合这样的使用方法。
 
+# 变长实参
+
+```cpp
+#include <cstdarg>
+#include <iostream>
+ 
+int add_nums(int count...)
+{
+    int result = 0;
+    std::va_list args;
+    va_start(args, count);
+    for (int i = 0; i < count; ++i)
+        result += va_arg(args, int);
+    va_end(args);
+    return result;
+}
+ 
+int main()
+{
+    std::cout << add_nums(4, 25, 25, 50, 50) << '\n';
+}
+```
+
+这里`int count...`就是一个变长实参的声明。我们通过`cstdarg`中的函数来访问变长实参，首先要用`std::va_list`来声明一个变量，用来访问实参。然后通过`va_start`来开启遍历，其中第一个参数为`std::va_list`，第二个参数为我们的变长实参。之后我们用`va_arg`来访问下一个实参，传入的是`std::va_list`和希望转为的类型。用`va_end`来结束遍历。
+
 # 形参包
 
+这里指的是变长模板形参，例如
+
+```cpp
+template<class... Types>
+struct Tuple {};
+ 
+Tuple<> t0;           // Types 不包含实参
+Tuple<int> t1;        // Types 包含一个实参：int
+Tuple<int, float> t2; // Types 包含两个实参：int 与 float
+Tuple<0> error;       // 错误：0 不是类型
+```
+
+在有模板实参推导后，可以使用：
+
+```cpp
+template<class... Types>
+void f(Types... args);
+ 
+f();       // OK：args 不包含实参
+f(1);      // OK：args 包含一个实参：int
+f(2, 1.0); // OK：args 包含两个实参：int 与 double
+```
+
+上面的`Types... args`是一个包展开。后随省略号且其中至少有一个形参包的名字的模式会被展开_﻿成零个或更多个逗号分隔的模式实例 ，其中形参包的名字按顺序被替换成包中的各个元素。
+
+```cpp
+template<class... Us>
+void f(Us... pargs) {}
+ 
+template<class... Ts>
+void g(Ts... args)
+{
+    f(&args...); // “&args...” 是包展开
+                 // “&args” 是它的模式
+}
+ 
+g(1, 0.2, "a"); // Ts... args 会展开成 int E1, double E2, const char* E3
+                // &args... 会展开成 &E1, &E2, &E3
+                // Us... 会展开成 int* E1, double* E2, const char** E3
+```
+
+`sizeof...`运算符，用于获取形参包的长度，例如`sizeof...(args)`，在上例中返回`3`
+
+# 内存池和Allocators
+
 todo
+
+# 线程池
+
+todo
+
+# PIMPL
+
+Pointer to implementation，也就是指向实现的指针。具体来说，我们不再在某个类中直接定义它的变量，例如：
+
+```cpp
+// A.h
+class A{
+public:
+    A();
+    void foo();
+private:
+    int x, y;
+};
+
+//A.cpp
+
+A::A() = default;
+void A::foo(){}
+```
+
+而是，我们加一个私有的`struct`和`unique_ptr`，在这个`struct`中去定义它的变量。
+
+```cpp
+class A{
+public:
+    A();
+    void foo();
+private:
+    struct Impl;
+    unique_ptr<Impl> const p_;
+};
+
+//A.cpp
+struct A::Impl{
+    int x, y;
+};
+
+A::A():p_(make_unique<Impl>(0, 0)){}
+void A::foo(){} // 对p_中的变量进行种种操作
+```
+
+这样做有什么好处？如果是之前的代码，当我们修改这个类的成员变量时，所有`#include`了这个头文件的翻译单元都要重新编译，大大增加了编译时间。而后者，其成员变量是在翻译单元中，我们只需要重新编译这个`cpp`，然后在链接的时候重新链接即可。
+
+目前来说，上面的代码还无法通过编译，因为析构函数需要知道完整的类型，而`Impl`是不完整的类型，所以我们也需要把析构函数拿出来。
+
+```cpp
+//A.cpp
+A::~A()=default;
+```
+
+类似的，你也需要把其他构造函数移出来。
+
+# 返回值优化
+
+推荐在函数返回对象的时候，直接在`return`语句上构造对象。例如
+
+```cpp
+A foo(){
+    return A(1,2);
+}
+
+int main(){
+    auto a = foo();
+}
+```
+
+（大多数）编译器即使关闭优化，也只会调用一次构造函数，而不会有复制和移动。如果改成
+
+```cpp
+A foo(){
+    A a(1,2);
+    return a;
+}
+```
+
+则部分编译器可能就不会只调用一次构造了，可能会进行移动。如果
+
+```cpp
+A foo(int x){
+    A a1;
+    A a2;
+    if(x>3){
+        return a1;
+    }
+    else{
+        return a2;
+    }
+}
+```
+
+这样更复杂的情况，编译器可能都不能进行返回值优化了。
+
+所以，还是推荐直接在`return`语句中构造对象（如果可能）
+
+# 多继承
+
+虽然争议颇多，但是C++确实支持多继承
+
+```cpp
+class B1{};
+class B2{};
+class D : public B1, public B2{}
+```
+
+如上，类`D`同时继承了`B1,B2`，而`D`的构造函数
+
+```cpp
+D():B1(), B2(){}
+```
+
+其构造顺序，类似于之前提到的构造顺序，其并不是以初始化列表的顺序进行的，而是以继承的顺序进行的。
+
+在多继承下有命名冲突的问题，需要用`::`来指定使用哪个继承
+
+```cpp
+class B1{
+public:
+    void foo(){}
+};
+class B2{
+public:
+    void foo(){}
+};
+class D : public B1, public B2{};
+
+void bar(){
+    D d;
+    d.foo(); // 错误，不知道使用B1还是B2的foo
+    d.B1::foo();
+    d.B2::foo();
+}
+```
+
+菱形继承是多继承的一种特殊情况，如
+
+```cpp
+class B{
+public:
+    int age = 100;
+};
+class B1 : public B{};
+class B2 : public B{};
+class D : public B1, public B2{};
+```
+
+这里`D`间接地继承了`B`两次，有什么问题呢？
+
+```cpp
+D d;
+d.age = 10;
+```
+
+上面这个肯定会报错，和之前的多继承一样，无法区分是使用哪一个`age`变量。如果我们加上`::`呢？
+
+```cpp
+D d;
+d.B1::age = 10;
+d.B2::age = 20;
+std::cout<<d.B1::age<<"\n";
+std::cout<<d.B2::age<<"\n";
+```
+
+这里会输出`10`和`20`，而不是两个`20`。这虽然在代码意义上是对的，但是很显然我们是想要这个`d`只有一个`age`。这里我们就可以引入虚继承。
+
+```cpp
+class B1 : virtual public B{};
+class B2 : virtual public B{};
+class D : public B1, public B2{};
+```
+
+此时，`d.age, d.B1::age, d.B2::age`都可以通过编译，并且三者指向的是同一个变量。
+
+这些东西编译器是怎么实现的呢？可以参考下面的对象模型介绍文章。
+
+# 对象模型
+
+[https://www.cnblogs.com/QG-whz/p/4909359.html](https://www.cnblogs.com/QG-whz/p/4909359.html)
