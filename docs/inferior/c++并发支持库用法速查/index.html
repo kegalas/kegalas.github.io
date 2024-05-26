@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='thread C&#43;&#43;启动一个新线程，只要构造一个std::thread对象就可以了。使用join()方法可以等待线程汇入，使用detach()可以不等待'><title>C&#43;&#43;并发支持库用法速查</title>
+
+<link rel='canonical' href='https://kegalas.top/inferior/c&#43;&#43;%E5%B9%B6%E5%8F%91%E6%94%AF%E6%8C%81%E5%BA%93%E7%94%A8%E6%B3%95%E9%80%9F%E6%9F%A5/'>
+
+<link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='C&#43;&#43;并发支持库用法速查'>
+<meta property='og:description' content='thread C&#43;&#43;启动一个新线程，只要构造一个std::thread对象就可以了。使用join()方法可以等待线程汇入，使用detach()可以不等待'>
+<meta property='og:url' content='https://kegalas.top/inferior/c&#43;&#43;%E5%B9%B6%E5%8F%91%E6%94%AF%E6%8C%81%E5%BA%93%E7%94%A8%E6%B3%95%E9%80%9F%E6%9F%A5/'>
+<meta property='og:site_name' content='KegalaS的个人博客'>
+<meta property='og:type' content='article'><meta property='article:section' content='Inferior' /><meta property='article:tag' content='C&#43;&#43;' /><meta property='article:tag' content='水文' /><meta property='article:tag' content='并发' /><meta property='article:published_time' content='2024-05-21T23:42:42&#43;08:00'/><meta property='article:modified_time' content='2024-05-21T23:42:42&#43;08:00'/>
+<meta name="twitter:title" content="C&#43;&#43;并发支持库用法速查">
+<meta name="twitter:description" content="thread C&#43;&#43;启动一个新线程，只要构造一个std::thread对象就可以了。使用join()方法可以等待线程汇入，使用detach()可以不等待">
+    <link rel="shortcut icon" href="/images/favicon.ico" />
+
+    </head>
+    <body class="
+    article-page has-toc
+">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex 
+    
+        extended
+    
+">
+    
+        <div id="article-toolbar">
+            <a href="/" class="back-home">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="15 6 9 12 15 18" />
+</svg>
+
+
+
+                <span>返回</span>
+            </a>
+        </div>
+    
+<main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/%E5%85%B6%E4%BB%96%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/" >
+                其他计算机科学
+            </a>
+        
+    </header>
+    
+
+    <h2 class="article-title">
+        <a href="/inferior/c&#43;&#43;%E5%B9%B6%E5%8F%91%E6%94%AF%E6%8C%81%E5%BA%93%E7%94%A8%E6%B3%95%E9%80%9F%E6%9F%A5/">C&#43;&#43;并发支持库用法速查</a>
+    </h2>
+
+    
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">May 21, 2024</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 5 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+</div>
+</header>
+
+    <section class="article-content">
+    <h1 id="thread">thread</h1>
+<p>C++启动一个新线程，只要构造一个<code>std::thread</code>对象就可以了。使用<code>join()</code>方法可以等待线程汇入，使用<code>detach()</code>可以不等待。这里<code>join()</code>只能使用一次，可以用<code>joinable()</code>查询是否可以<code>join</code></p>
+<p>使用方法如下</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>std<span style="color:#f92672">::</span><span style="color:#66d9ef">thread</span> t(f, <span style="color:#ae81ff">1</span>, <span style="color:#e6db74">&#34;123&#34;</span>, <span style="color:#ae81ff">0.0</span>);
+</span></span></code></pre></div><p>其中第一个参数是一个函数对象，其后面的都是函数参数（应当使得<code>f(args)</code>的调用合法）。</p>
+<p>注意这里的参数，会被<code>decay-copy</code>，也就是说，如果<code>f</code>的形参是<code>f(A const &amp; a)</code>之类的，用thread的构造函数传入参数的话，仍然会产生拷贝，并且不会引用原来的变量。此时需要使用<code>std::ref</code>来提供包装。</p>
+<p>注意<code>thread</code>的函数是不能有返回值的，只能是<code>void</code>。返回值可以写在参数中，通过引用或者指针来进行传递。一般会调用<code>t.join()</code>汇入之后再去读取这个返回值。</p>
+<p>可以有返回值的线程使用<code>std::async</code>，见后。</p>
+<h1 id="mutex">mutex</h1>
+<p>C++提供的互斥锁。使用方法：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>std<span style="color:#f92672">::</span>mutex m;
+</span></span><span style="display:flex;"><span>m.lock();
+</span></span><span style="display:flex;"><span><span style="color:#75715e">//...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>m.unlock();
+</span></span></code></pre></div><p>但是我们一般不会直接使用<code>std::mutex</code>提供的方法，而是会使用<code>lock_guard</code>，其提供了RAII的包装，在析构时自动解锁。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>std<span style="color:#f92672">::</span>mutex m;
+</span></span><span style="display:flex;"><span>std<span style="color:#f92672">::</span>lock_guard<span style="color:#f92672">&lt;</span>std<span style="color:#f92672">::</span>mutex<span style="color:#f92672">&gt;</span> lock(m); <span style="color:#75715e">// C++17之后也可以省略模板参数
+</span></span></span></code></pre></div><p>可以使用<code>std::lock</code>同时锁住两个（多个）锁，避免条件竞争。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>std<span style="color:#f92672">::</span>mutex m1, m2;
+</span></span><span style="display:flex;"><span>std<span style="color:#f92672">::</span>lock(m1, m2);
+</span></span><span style="display:flex;"><span>std<span style="color:#f92672">::</span>lock_guard<span style="color:#f92672">&lt;</span>std<span style="color:#f92672">::</span>mutex<span style="color:#f92672">&gt;</span> lock_a(m1,std<span style="color:#f92672">::</span>adopt_lock);
+</span></span><span style="display:flex;"><span>std<span style="color:#f92672">::</span>lock_guard<span style="color:#f92672">&lt;</span>std<span style="color:#f92672">::</span>mutex<span style="color:#f92672">&gt;</span> lock_b(m2,std<span style="color:#f92672">::</span>adopt_lock);
+</span></span></code></pre></div><p>如果是<code>C++17</code>则可以使用<code>std::scoped_lock</code>，就不需要再来两个<code>lock_guard</code>了</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>std<span style="color:#f92672">::</span>scoped_lock lock(e1.m, e2.m);
+</span></span></code></pre></div><p><code>unique_lock</code>则会更灵活一点，<code>lock_guard</code>只能在析构时解锁，而<code>unique_lock</code>不仅可以在构造的时候上锁、析构的时候解锁，还可以提前解锁和重新上锁，甚至还可以推迟上锁。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>std<span style="color:#f92672">::</span>mutex m1;
+</span></span><span style="display:flex;"><span>std<span style="color:#f92672">::</span>unique_lock<span style="color:#f92672">&lt;</span>std<span style="color:#f92672">::</span>mutex<span style="color:#f92672">&gt;</span> lk(m1); <span style="color:#75715e">// 构造时上锁，析构时解锁
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>std<span style="color:#f92672">::</span>mutex m2;
+</span></span><span style="display:flex;"><span>std<span style="color:#f92672">::</span>unique_lock<span style="color:#f92672">&lt;</span>std<span style="color:#f92672">::</span>mutex<span style="color:#f92672">&gt;</span> lk(m2);
+</span></span><span style="display:flex;"><span>lk.unlock();
+</span></span><span style="display:flex;"><span>lk.lock(); <span style="color:#75715e">// 可以其他解锁和重新上锁
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>std<span style="color:#f92672">::</span>unique_lock<span style="color:#f92672">&lt;</span>std<span style="color:#f92672">::</span>mutex<span style="color:#f92672">&gt;</span> lk_a(m3, std<span style="color:#f92672">::</span>defer_lock);
+</span></span><span style="display:flex;"><span>std<span style="color:#f92672">::</span>unique_lock<span style="color:#f92672">&lt;</span>std<span style="color:#f92672">::</span>mutex<span style="color:#f92672">&gt;</span> lk_b(m4, std<span style="color:#f92672">::</span>defer_lock);
+</span></span><span style="display:flex;"><span>std<span style="color:#f92672">::</span>lock(lk_a, lk_b); <span style="color:#75715e">// 和之前的std::lock作用相同
+</span></span></span></code></pre></div><h1 id="避免死锁的指导">避免死锁的指导</h1>
+<ol>
+<li>避免嵌套锁。持有一个锁，就不要再去尝试持有第二个。当需要持有多个锁时，使用<code>std::lock</code></li>
+<li>避免在持有锁时调用其他函数。因为你不知道这个其他函数会不会也尝试获取锁。</li>
+<li>使用固定顺序获取锁。例如规定所有函数都要先获取A锁，再获取B锁。当<code>std::lock</code>不适用时应该考虑这种方法。</li>
+<li>使用层次锁结构。</li>
+</ol>
+<h1 id="condition_variable">condition_variable</h1>
+<p>条件变量，用于线程同步。典型的使用例为生产者消费者模型</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>std<span style="color:#f92672">::</span>mutex mut;
+</span></span><span style="display:flex;"><span>std<span style="color:#f92672">::</span>queue<span style="color:#f92672">&lt;</span>data_chunk<span style="color:#f92672">&gt;</span> data_queue; <span style="color:#75715e">// 1
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>std<span style="color:#f92672">::</span>condition_variable data_cond;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">data_preparation_thread</span>()
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">while</span>(more_data_to_prepare())
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        data_chunk <span style="color:#66d9ef">const</span> data<span style="color:#f92672">=</span>prepare_data();
+</span></span><span style="display:flex;"><span>        std<span style="color:#f92672">::</span>lock_guard<span style="color:#f92672">&lt;</span>std<span style="color:#f92672">::</span>mutex<span style="color:#f92672">&gt;</span> lk(mut);
+</span></span><span style="display:flex;"><span>        data_queue.push(data); <span style="color:#75715e">// 2
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        data_cond.notify_one(); <span style="color:#75715e">// 3
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">data_processing_thread</span>()
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">while</span>(true)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        std<span style="color:#f92672">::</span>unique_lock<span style="color:#f92672">&lt;</span>std<span style="color:#f92672">::</span>mutex<span style="color:#f92672">&gt;</span> lk(mut); <span style="color:#75715e">// 4
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        data_cond.wait(
+</span></span><span style="display:flex;"><span>            lk,[]{<span style="color:#66d9ef">return</span> <span style="color:#f92672">!</span>data_queue.empty();}); <span style="color:#75715e">// 5
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        data_chunk data<span style="color:#f92672">=</span>data_queue.front();
+</span></span><span style="display:flex;"><span>        data_queue.pop();
+</span></span><span style="display:flex;"><span>        lk.unlock(); <span style="color:#75715e">// 6
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        process(data);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span>(is_last_chunk(data))
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">break</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>其中生产者可以用<code>notify_one</code>和<code>notify_all</code>来实现通知等待的线程。消费者调用<code>wait</code>来等待通知，其中传入的参数首先是一个锁，然后是一个函数，作为等待的条件。<code>wait</code>会检查等待条件是否为真，当条件满足时，进行下一行代码。如果条件不满足，就会释放锁，等待下一次被唤醒。被唤醒时又重新获取锁，再次判断条件，以此类推。</p>
+<p>可以用<code>wait_for</code>和<code>wait_until</code>设置等待时间。</p>
+<h1 id="future">future</h1>
+<p>前面提到，<code>std::thread</code>的函数对象是不能带有返回值的，如果需要有返回值，应该使用<code>std::async</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">foo</span>(<span style="color:#66d9ef">int</span>);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">bar</span>();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>std<span style="color:#f92672">::</span>future<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span> ans <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>async(foo, <span style="color:#ae81ff">1</span>);
+</span></span><span style="display:flex;"><span>bar();
+</span></span><span style="display:flex;"><span>std<span style="color:#f92672">::</span>cout<span style="color:#f92672">&lt;&lt;</span>ans.get()<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
+</span></span></code></pre></div><p>这里的<code>ans.get()</code>的调用，会一直阻塞，执行<code>foo</code>执行完毕。我们也可以使用<code>ans.wait()</code>，阻塞，直到值变为可用，稍后再<code>get</code>值。</p>
+<p><code>async</code>还可以进行惰性求值</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>std<span style="color:#f92672">::</span>future<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span> ans <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>async(std<span style="color:#f92672">::</span>launch<span style="color:#f92672">::</span>deferred, foo, <span style="color:#ae81ff">1</span>);
+</span></span></code></pre></div><p>具体这个<code>foo</code>的函数的执行时间，会推迟到<code>wait</code>或者<code>get</code>出现的时候，再去执行。</p>
+<p><code>std::packaged_task</code>可以将<code>future</code>与函数对象进行绑定。当调用<code>packaged_task</code>时，就会调用这个函数对象，当<code>future</code>状态就绪时，会存储返回值。典型的应用有线程池，见后。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">task_bind</span>()
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>packaged_task<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span>()<span style="color:#f92672">&gt;</span> task(std<span style="color:#f92672">::</span>bind(f, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">11</span>));
+</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>future<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span> result <span style="color:#f92672">=</span> task.get_future();
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>    task();
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;task_bind:</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">&lt;&lt;</span> result.get() <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#39;\n&#39;</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">task_thread</span>()
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>packaged_task<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span>(<span style="color:#66d9ef">int</span>, <span style="color:#66d9ef">int</span>)<span style="color:#f92672">&gt;</span> task(f);
+</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>future<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span> result <span style="color:#f92672">=</span> task.get_future();
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span><span style="color:#66d9ef">thread</span> task_td(std<span style="color:#f92672">::</span>move(task), <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">10</span>);
+</span></span><span style="display:flex;"><span>    task_td.join();
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;task_thread:</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">&lt;&lt;</span> result.get() <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#39;\n&#39;</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>如上，第一个函数是在当前线程执行任务，第二个函数则是将任务传递给别的线程。</p>
+<p><code>std::promise</code>提供了一种手动给<code>future</code>设定值的方式，例如</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">do_work</span>(std<span style="color:#f92672">::</span>promise<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">void</span><span style="color:#f92672">&gt;</span> barrier)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>this_thread<span style="color:#f92672">::</span>sleep_for(std<span style="color:#f92672">::</span>chrono<span style="color:#f92672">::</span>seconds(<span style="color:#ae81ff">1</span>));
+</span></span><span style="display:flex;"><span>    barrier.set_value();
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>std<span style="color:#f92672">::</span>promise<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">void</span><span style="color:#f92672">&gt;</span> barrier;
+</span></span><span style="display:flex;"><span>std<span style="color:#f92672">::</span>future<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">void</span><span style="color:#f92672">&gt;</span> barrier_future <span style="color:#f92672">=</span> barrier.get_future();
+</span></span><span style="display:flex;"><span>std<span style="color:#f92672">::</span><span style="color:#66d9ef">thread</span> new_work_thread(do_work, std<span style="color:#f92672">::</span>move(barrier));
+</span></span><span style="display:flex;"><span>barrier_future.wait();
+</span></span><span style="display:flex;"><span>new_work_thread.join();
+</span></span></code></pre></div><p>当<code>do_work</code>执行完后，<code>barrier</code>会设置值，从而提醒<code>barrier_futuer</code>值可用，从而结束等待。也是一种线程同步的工具。</p>
+<h1 id="atomic">atomic</h1>
+<p>C++标准库提供的原子类型，对其进行的操作是原子的。C++提供了内存序，来规定编译器进行命令重排的程度。例如</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>std<span style="color:#f92672">::</span>atomic_int acnt;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> cnt;
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">f</span>()
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> n <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; n <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">10000</span>; <span style="color:#f92672">++</span>n)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">++</span>acnt;
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">++</span>cnt;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>()
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>std<span style="color:#f92672">::</span>jthread<span style="color:#f92672">&gt;</span> pool;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> n <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; n <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">10</span>; <span style="color:#f92672">++</span>n)
+</span></span><span style="display:flex;"><span>            pool.emplace_back(f);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;原子计数器为 &#34;</span> <span style="color:#f92672">&lt;&lt;</span> acnt <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#39;\n&#39;</span>
+</span></span><span style="display:flex;"><span>              <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;非原子计数器为 &#34;</span> <span style="color:#f92672">&lt;&lt;</span> cnt <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#39;\n&#39;</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>C++标准库中规定了许多类型别名，例如这里的<code>std::atomic_int</code>就是<code>std::atomic&lt;int&gt;</code>的别名。</p>
+<p>C++的原子类型的内部实现有两种方法，一种是用锁实现的，另一种是无锁的原子指令。可以通过对原子类型的变量使用<code>.is_lock_free()</code>来查询。一个类型是否无锁取决于平台，但是<code>atomic_flag</code>总是无锁的。</p>
+<p>这里<code>atomic_flag</code>不是<code>std::atomic</code>的特化的别名，他和<code>atomic&lt;bool&gt;</code>是不一样的。它不支持赋值、运算等操作。只支持<code>test_and_set(), test(), clear()</code>等更基础的操作。</p>
+<p>虽然对<code>atomic_int</code>等类型直接使用<code>+,-,++,--,+=,-=</code>很方便，但是使用<code>fetch_add,fetch_sub,store,load,exchange</code>等函数可以更精细地控制内存序。</p>
+<p><code>C++</code>有六种内存序</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">typedef</span> <span style="color:#66d9ef">enum</span> <span style="color:#a6e22e">memory_order</span> {
+</span></span><span style="display:flex;"><span>    memory_order_relaxed,
+</span></span><span style="display:flex;"><span>    memory_order_consume,
+</span></span><span style="display:flex;"><span>    memory_order_acquire,
+</span></span><span style="display:flex;"><span>    memory_order_release,
+</span></span><span style="display:flex;"><span>    memory_order_acq_rel,
+</span></span><span style="display:flex;"><span>    memory_order_seq_cst
+</span></span><span style="display:flex;"><span>} memory_order;
+</span></span></code></pre></div><ul>
+<li><code>relaxed</code>，其是最宽松的，只保证对该原子类型的操作是原始的，不限制重排。</li>
+<li><code>acquire</code>，其不允许将在<code>load</code>该原子类型之后的命令重排到该命令之前。</li>
+<li><code>release</code>，其不允许将在<code>store</code>该原子类型之前的命令重排到该命令之后。</li>
+<li><code>consume</code>，类似于<code>acquire</code>，但是区别在于，只会限制和该原子类型相关的操作的重排。</li>
+<li><code>acq_rel</code>，即结合二者，前后的命令都不能重排。</li>
+<li><code>seq_cst</code>，最严格的，也是前后命令都不难重排，并且所有线程的语句都以全局的内存修改顺序为参照。</li>
+</ul>
+<h1 id="线程池">线程池</h1>
+<p>这里给出一个典中典极简实现：<a class="link" href="https://github.com/progschj/ThreadPool/blob/master/ThreadPool.h"  target="_blank" rel="noopener"
+    >https://github.com/progschj/ThreadPool/blob/master/ThreadPool.h</a></p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/c&#43;&#43;/">C&#43;&#43;</a>
+        
+            <a href="/tags/%E6%B0%B4%E6%96%87/">水文</a>
+        
+            <a href="/tags/%E5%B9%B6%E5%8F%91/">并发</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css"integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js"integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8"crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js"integrity="sha384-vZTG03m&#43;2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl"crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.querySelector(`.article-content`), {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ]
+        });})
+</script>
+    
+</article>
+
+    <aside class="related-contents--wrapper">
+    
+    
+        <h2 class="section-title">相关文章</h2>
+        <div class="related-contents">
+            <div class="flex article-list--tile">
+                
+                    
+<article class="has-image">
+    <a href="/inferior/cmu154452023fall%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BB%84%E4%BB%B6%E5%8A%9F%E8%83%BD%E9%80%9F%E6%9F%A5/">
+        
+        
+            <div class="article-image">
+                <img src="/inferior/cmu154452023fall%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BB%84%E4%BB%B6%E5%8A%9F%E8%83%BD%E9%80%9F%E6%9F%A5/cover.4a3e3d21403f8cdcc27c3a88db92c416_hub2bee36093f48e478e5566d6bf8cc572_110686_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-Sj49IUA/jNzCfDqI25LEFg==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">CMU15445(2023 Fall)数据库组件功能速查</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="">
+    <a href="/inferior/%E6%B7%BB%E5%8A%A0msys2%E5%88%B0%E5%8F%B3%E9%94%AE%E8%8F%9C%E5%8D%95/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">添加msys2到右键菜单</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/inferior/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/">
+        
+        
+            <div class="article-image">
+                <img src="/inferior/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/cover.d98d9343d552f7609cb2faab261c59fd_hucd8e14c4efc19cc77fb7e62d6a8c22d5_18667_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-2Y2TQ9VS92CcsvqrJhxZ/Q==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">操作系统课程笔记</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/inferior/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+        
+        
+            <div class="article-image">
+                <img src="/inferior/%E5%BE%AE%E6%9C%BA%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/cover.e854b56daa550dc940cfe938a5e554af_hu9ed3e3d7509314fb7a01cf1769564f25_44442_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-6FS1bapVDclAz&#43;k4peVUrw==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">微机原理学习笔记</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="">
+    <a href="/inferior/virtualbox%E6%89%93%E5%BC%80%E8%99%9A%E6%8B%9F%E6%9C%BAverr_invalid_name-104%E9%94%99%E8%AF%AF%E7%9A%84%E8%A7%A3%E5%86%B3/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">VirtualBox打开虚拟机VERR_INVALID_NAME(-104)错误的解决</h2>
+        </div>
+    </a>
+</article>
+                
+            </div>
+        </div>
+    
+</aside>
+
+     
+    
+        
+    <script src="https://utteranc.es/client.js" 
+        repo="kegalas/blogComments"
+        issue-term="pathname"
+        
+        crossorigin="anonymous"
+        async
+        >
+</script>
+
+<style>
+    .utterances {
+        max-width: unset;
+    }
+</style>
+
+<script>
+    function setUtterancesTheme(theme) {
+        let utterances = document.querySelector('.utterances iframe');
+        if (utterances) {
+            utterances.contentWindow.postMessage(
+                {
+                    type: 'set-theme',
+                    theme: `github-${theme}`
+                },
+                'https://utteranc.es'
+            );
+        }
+    }
+
+    addEventListener('message', event => {
+        if (event.origin !== 'https://utteranc.es') return;
+        setUtterancesTheme(document.documentElement.dataset.scheme)
+    });
+
+    window.addEventListener('onColorSchemeChange', (e) => {
+        setUtterancesTheme(e.detail)
+    })
+</script>
+
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2024 KegalaS的个人博客
+    </section>
+    
+    <section class="powerby">
+         <br />
+        
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    
+        <aside class="sidebar right-sidebar sticky">
+            <section class="widget archives">
+                <div class="widget-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+                </div>
+                <h2 class="widget-title section-title">目录</h2>
+                
+                <div class="widget--toc">
+                    <nav id="TableOfContents">
+  <ol>
+    <li><a href="#thread">thread</a></li>
+    <li><a href="#mutex">mutex</a></li>
+    <li><a href="#避免死锁的指导">避免死锁的指导</a></li>
+    <li><a href="#condition_variable">condition_variable</a></li>
+    <li><a href="#future">future</a></li>
+    <li><a href="#atomic">atomic</a></li>
+    <li><a href="#线程池">线程池</a></li>
+  </ol>
+</nav>
+                </div>
+            </section>
+        </aside>
+    
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                defer="false"
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
