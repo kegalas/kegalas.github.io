@@ -4555,6 +4555,12 @@ db cos_v(Vec a, Vec b){return a*b/len(a)/len(b);}//向量夹角余弦
 Vec norm(Vec v){return {v.x/len(v), v.y/len(v)};}//求其单位向量
 Vec pnorm(Vec v){return (v.x<0?-1:1)/len(v)*v;}//与原向量平行且横坐标大于零的单位向量
 Vec dvec(Seg l){return l.b-l.a;}//线段转化为向量（没有归一化）
+Vec trunc(Vec v, db r){ // v转化为长度为l的向量
+    db l = len(v);
+    if(!sgn(l)) return v;
+    r /= l;
+    return v*r;
+}
 
 /////////////////////////////////////////////////
 //直线操作
@@ -4585,6 +4591,12 @@ bool paral_y(Vec v){return eq(v.x,0.0);}//是否平行y轴
 bool on(Point p, Line l){return eq((p.x-l.p.x)*l.v.y, (p.y-l.p.y)*l.v.x);}//点是否在直线上
 bool on(Point p, Seg l){return eq(len(p-l.a)+len(p-l.b),len(l.a-l.b));}//点是否在线段上
 //bool on(Point p, Seg l){return sgn((p-l.a)^(l.b-l.a))==0 && sgn((p-l.a)*(p-l.b))<=0 ;}//点是否在线段上，无须len的判断法
+bool on(Point p, Circle c){//0圆外，1圆上，2圆内
+    db dst = len(p-c.o);
+    if(sgn(dst-c.r)<0) return 2;
+    if(sgn(dst-c.r)==0) return 1;
+    return 0;
+}
 bool operator==(Point a, Point b){return eq(a.x,b.x)&&eq(a.y,b.y);}//点重合
 bool operator==(Line a, Line b){return on(a.p,b)&&on(a.p+a.v,b);}//直线重合
 bool operator==(Seg a, Seg b){return ((a.a==b.a&&a.b==b.b)||(a.a==b.b&&a.b==b.a));}//线段（完全）重合
@@ -4685,7 +4697,7 @@ std::vector<Point> inter(Line l, Circle c){
     if(eq(h,c.r)) {ret.push_back(p);return ret;};
     db d = std::sqrt(c.r*c.r - h*h);
     Vec v = d/len(l.v)*l.v;
-    ret.push_back(p+v);ret.push_back(p+v);
+    ret.push_back(p-v);ret.push_back(p+v);
     return ret;
 }
 
@@ -4749,8 +4761,24 @@ int inpoly(std::vector<Point> const & poly, Point p){
     return cnt != 0;
 }
 
+std::vector<Point> convexCut(std::vector<Point> const & ps, Point p1, Point p2){
+    // p1p2连成的直线，切开凸多边形，获得左半边的凸多边形
+    // 多边形逆时针，左半边指(p2-p1)向量的左半边
+    std::vector<Point> ret;
+    int n = ps.size();
+    for(int i=0;i<n;i++){
+        Point q1 = ps[i], q2 = ps[(i+1)%n];
+        int d1 = sgn((p2-p1)^(q1-p1)), d2 = sgn((p2-p1)^(q2-p1));
+        if(d1>=0) ret.push_back(q1);
+        if(d1*d2<0) ret.push_back(inter(line(q1,q2), line(p1,p2))[0]);
+    }
+    
+    return ret;
+}
+
 /////////////////////////////////////////////////
 //三角形四心
+//可能都需要判断三点共线的情况
 
 Point barycenter(Point a, Point b, Point c){
     //重心
@@ -4760,7 +4788,7 @@ Point barycenter(Point a, Point b, Point c){
 Point circumcenter(Point a, Point b, Point c){
     //外心
     db a2 = a*a, b2 = b*b, c2 = c*c;
-    db d = 2.0*(a.x*(b.y-c.y))+b.x*(c.y-a.y)+c.x*(a.y-b.y);
+    db d = 2.0*(a.x*(b.y-c.y)+b.x*(c.y-a.y)+c.x*(a.y-b.y));
     return 1/d * r90c(a2*(b-c)+b2*(c-a)+c2*(a-b));
 }
 
@@ -4776,6 +4804,66 @@ Point orthocenter(Point a, Point b, Point c){
     db n = b*(a-c), m = a*(b-c);
     db d = (b-c)^(a-c);
     return 1/d * r90c(n*(c-b)-m*(c-a));
+}
+
+/////////////////////////////////////////////////
+// 圆切线
+
+std::vector<Line> tangentLine(Point p, Circle c){
+    // 过一点做圆的切线
+    std::vector<Line> ret;
+    int x = on(p, c);
+    if(x==2) return ret;
+    if(x==1){
+        ret.push_back(line(p, p+r90a(p-c.o)));
+    }
+    db d = dis(p, c.o);
+    db l = c.r*c.r/d;
+    db h = std::sqrt(c.r*c.r-l*l);
+    ret.push_back(line(p, c.o+(trunc(p-c.o,l)+trunc(r90a(p-c.o),h))));
+    ret.push_back(line(p, c.o+(trunc(p-c.o,l)+trunc(r90c(p-c.o),h))));
+    return ret;
+}
+
+std::vector<Seg> getTangent(Circle a, Circle b){
+    // 求两圆的公共切线，这里用切点的线段表示了
+    // 其中线段的a点代表圆a的切点
+    std::vector<Seg> ret;
+    db dist=len(a.o-b.o);
+    
+    auto mul = [](Point a, Point b)->Point{
+        return {a.x*b.x-a.y*b.y, a.x*b.y+a.y*b.x};
+    };
+    
+    auto getInTangent = [&mul](Circle a,Circle b,db flg=1.0)->Seg{
+        Point base=b.o-a.o;
+        db w=a.r+b.r;
+        db h=std::sqrt(len2(base)-w*w);
+        Point k = mul(base, Point{w, h*flg})*(1.0/len2(base));
+        return Seg{a.o+k*a.r,b.o-k*b.r};
+    };
+     
+    auto getOutTangent = [&mul](Circle a,Circle b,db flg=1.0)->Seg{
+        Point base=b.o-a.o;
+        db h=b.r-a.r;
+        db w=std::sqrt(len2(base)-h*h);
+        Point k = mul(mul(base, Point{w, h*flg})*(1.0/len2(base)), Point{0,flg});
+        return Seg{a.o+k*a.r,b.o-k*b.r};
+    };
+    
+    if(dist>a.r+b.r+EPS)
+        ret.push_back(getInTangent(a,b,1));
+    
+    if(dist>a.r+b.r-EPS)
+        ret.push_back(getInTangent(a,b,-1));
+    
+    if(dist>std::abs(a.r-b.r)+EPS)
+        ret.push_back(getOutTangent(a,b,1));
+    
+    if(dist>std::abs(a.r-b.r)-EPS)
+        ret.push_back(getOutTangent(a,b,-1));
+    
+    return ret;
 }
 ```
 
@@ -4842,6 +4930,7 @@ $$
 ```cpp
 //复杂度 nlogn
 //luogu P2742，求凸包周长
+//凸包即能包围住所有给定顶点的最小凸多边形
 //注意题给条件，如果是整数坐标，务必切换到long long来避免误差
 
 std::vector<Point> convexHull(std::vector<Point> const & poly){
@@ -4961,31 +5050,23 @@ int main(){
 ```cpp
 //复杂度nlogn
 //Luogu P1257
-#include <iostream>
-#include <algorithm>
-#include <cmath>
 
-const int MAXN = 200005;
+int const MAXN = 100005;
+struct Point{db x,y;int id;}; // id为了记录最近点对是哪两个点
 
-struct Node{
-    int x,y;
-    int id;
-
-    bool operator<(const Node& a) const {
-        if(x!=a.x) return x<a.x;
-        return y<a.y;
-    }
-}nodes[MAXN];
-
-bool cmp(const Node& a, const Node& b){
-    return a.y<b.y;
+bool cmp(Point const & a, Point const & b){
+    return le(a.y, b.y);
 }
 
-double minDist;
+// 除了这两个部分其他同基础板子
+
+db minDist;
 int ansA, ansB;
 
-inline void updAns(const Node& a, const Node& b){
-    double dist = sqrt((a.x-b.x)*(a.x-b.x)+(a.y-b.y)*(a.y-b.y)+0.0);
+Point po[MAXN];
+
+inline void updAns(Point const & a, Point const & b){
+    db dist = len(b-a);
     if(dist<minDist){
         minDist = dist;
         //如果要记录节点
@@ -4998,29 +5079,29 @@ void calcMin(int l, int r){
     if(r-l<=3){
         for(int i=l;i<=r;i++){
             for(int j=i+1;j<=r;j++){
-                updAns(nodes[i],nodes[j]);
+                updAns(po[i],po[j]);
             }
         }
-        std::sort(nodes+l, nodes+r+1, cmp);
+        std::sort(po+l, po+r+1, cmp); // 只排序y
         return;
     }
 
     int m = (l+r)>>1;
-    int midx = nodes[m].x;
+    db midx = po[m].x;
     calcMin(l,m);
     calcMin(m+1,r);
     
     //归并排序的合并，两个有序数组合并，合并之后仍然有序
-    std::inplace_merge(nodes+l, nodes+m+1, nodes+r+1, cmp);
+    std::inplace_merge(po+l, po+m+1, po+r+1, cmp); // 只排序y
 
-    static Node t[MAXN];
+    static Point t[MAXN];
     int tsz = 0;
 
     for (int i = l; i <= r; ++i){
-        if (abs(nodes[i].x - midx) < minDist) {
-            for (int j = tsz - 1; j >= 0 && nodes[i].y - t[j].y < minDist; --j)
-                updAns(nodes[i], t[j]);
-            t[tsz++] = nodes[i];
+        if (le(std::abs(po[i].x - midx),minDist)) {
+            for (int j = tsz - 1; j >= 0 && le(po[i].y - t[j].y,minDist); --j)
+                updAns(po[i], t[j]);
+            t[tsz++] = po[i];
         }
     }
 
@@ -5030,15 +5111,17 @@ int main(){
     int n;
     std::cin>>n;
     for(int i=1;i<=n;i++){
-        std::cin>>nodes[i].x>>nodes[i].y;
-        nodes[i].id = i;
+        std::cin>>po[i].x>>po[i].y;
+        po[i].id = i;
     }
 
-    std::sort(nodes+1,nodes+1+n);
+    std::sort(po+1,po+1+n); // 按照x第一，y第二排序
     minDist = 1e20;
     calcMin(1,n);
 
-    printf("%.4f\n",minDist);
+    std::cout<<std::fixed;
+    std::cout.precision(4);
+    std::cout<<minDist<<"\n";
 
     return 0;
 }
@@ -5049,6 +5132,7 @@ int main(){
 ```cpp
 //Luogu P5490
 //复杂度 nlogn
+//求平面所有平行于坐标轴的矩形的面积重叠和
 #include <iostream>
 #include <algorithm>
 
@@ -5135,6 +5219,8 @@ int main(){
 ```cpp
 //Luogu P2163
 //时间复杂度 nlogn
+//给定平面上n个点，m次查询，查询一个矩阵内有多少点
+//由于坐标范围很大，不能直接用前缀和
 #include <iostream>
 #include <algorithm>
 
