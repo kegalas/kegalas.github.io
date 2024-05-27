@@ -4243,7 +4243,11 @@ x_{c_m}-x_{c_m'}\leq y_m
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>db <span style="color:#a6e22e">len2</span>(Vec v){<span style="color:#66d9ef">return</span> v.x<span style="color:#f92672">*</span>v.x<span style="color:#f92672">+</span>v.y<span style="color:#f92672">*</span>v.y;}<span style="color:#75715e">//长度平方
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>db <span style="color:#a6e22e">len</span>(Vec v){<span style="color:#66d9ef">return</span> std<span style="color:#f92672">::</span>sqrt(len2(v));}<span style="color:#75715e">//向量长度
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>db <span style="color:#a6e22e">slope</span>(Vec v){<span style="color:#66d9ef">return</span> v.y<span style="color:#f92672">/</span>v.x;}<span style="color:#75715e">//斜率，不存在时，用后面的paral_y函数，不要判断是否是无穷
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>db <span style="color:#a6e22e">radp</span>(Point x, Point a, Point b){
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 返回xa, xb的夹角弧度
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">return</span> fabs(atan2(fabs((a<span style="color:#f92672">-</span>x)<span style="color:#f92672">^</span>(b<span style="color:#f92672">-</span>x)), (a<span style="color:#f92672">-</span>x)<span style="color:#f92672">*</span>(b<span style="color:#f92672">-</span>x)));
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#75715e">/////////////////////////////////////////////////
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">//向量操作
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
@@ -4288,11 +4292,21 @@ x_{c_m}-x_{c_m'}\leq y_m
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">bool</span> <span style="color:#a6e22e">on</span>(Point p, Line l){<span style="color:#66d9ef">return</span> eq((p.x<span style="color:#f92672">-</span>l.p.x)<span style="color:#f92672">*</span>l.v.y, (p.y<span style="color:#f92672">-</span>l.p.y)<span style="color:#f92672">*</span>l.v.x);}<span style="color:#75715e">//点是否在直线上
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">bool</span> <span style="color:#a6e22e">on</span>(Point p, Seg l){<span style="color:#66d9ef">return</span> eq(len(p<span style="color:#f92672">-</span>l.a)<span style="color:#f92672">+</span>len(p<span style="color:#f92672">-</span>l.b),len(l.a<span style="color:#f92672">-</span>l.b));}<span style="color:#75715e">//点是否在线段上
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">//bool on(Point p, Seg l){return sgn((p-l.a)^(l.b-l.a))==0 &amp;&amp; sgn((p-l.a)*(p-l.b))&lt;=0 ;}//点是否在线段上，无须len的判断法
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">bool</span> <span style="color:#a6e22e">on</span>(Point p, Circle c){<span style="color:#75715e">//0圆外，1圆上，2圆内
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">on</span>(Point p, Circle c){<span style="color:#75715e">//0圆外，1圆上，2圆内
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    db dst <span style="color:#f92672">=</span> len(p<span style="color:#f92672">-</span>c.o);
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span>(sgn(dst<span style="color:#f92672">-</span>c.r)<span style="color:#f92672">&lt;</span><span style="color:#ae81ff">0</span>) <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">2</span>;
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span>(sgn(dst<span style="color:#f92672">-</span>c.r)<span style="color:#f92672">==</span><span style="color:#ae81ff">0</span>) <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span>;
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">on</span>(Circle c1, Circle c2){
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 两圆关系，5相离、4外切、3相交、2内切、1内含
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    db d <span style="color:#f92672">=</span> len(c1.o<span style="color:#f92672">-</span>c2.o);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span>(sgn(d<span style="color:#f92672">-</span>c1.r<span style="color:#f92672">-</span>c2.r)<span style="color:#f92672">&gt;</span><span style="color:#ae81ff">0</span>) <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">5</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span>(sgn(d<span style="color:#f92672">-</span>c1.r<span style="color:#f92672">-</span>c2.r)<span style="color:#f92672">==</span><span style="color:#ae81ff">0</span>) <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">4</span>;
+</span></span><span style="display:flex;"><span>    db l <span style="color:#f92672">=</span> fabs(c1.r<span style="color:#f92672">-</span>c2.r);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span>(sgn(d<span style="color:#f92672">-</span>l)<span style="color:#f92672">&gt;</span><span style="color:#ae81ff">0</span>) <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">3</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span>(sgn(d<span style="color:#f92672">-</span>l)<span style="color:#f92672">==</span><span style="color:#ae81ff">0</span>) <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">2</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span>;
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">bool</span> <span style="color:#66d9ef">operator</span><span style="color:#f92672">==</span>(Point a, Point b){<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">eq</span>(a.x,b.x)<span style="color:#f92672">&amp;&amp;</span>eq(a.y,b.y);}<span style="color:#75715e">//点重合
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">bool</span> <span style="color:#66d9ef">operator</span><span style="color:#f92672">==</span>(Line a, Line b){<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">on</span>(a.p,b)<span style="color:#f92672">&amp;&amp;</span>on(a.p<span style="color:#f92672">+</span>a.v,b);}<span style="color:#75715e">//直线重合
@@ -4528,24 +4542,24 @@ x_{c_m}-x_{c_m'}\leq y_m
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>Seg<span style="color:#f92672">&gt;</span> ret;
 </span></span><span style="display:flex;"><span>    db dist<span style="color:#f92672">=</span>len(a.o<span style="color:#f92672">-</span>b.o);
 </span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">auto</span> mul <span style="color:#f92672">=</span> [](Point a, Point b)<span style="color:#f92672">-&gt;</span>Point{
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> {a.x<span style="color:#f92672">*</span>b.x<span style="color:#f92672">-</span>a.y<span style="color:#f92672">*</span>b.y, a.x<span style="color:#f92672">*</span>b.y<span style="color:#f92672">+</span>a.y<span style="color:#f92672">*</span>b.x};
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">auto</span> mul <span style="color:#f92672">=</span> [](Point a_, Point b_)<span style="color:#f92672">-&gt;</span>Point{
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> {a_.x<span style="color:#f92672">*</span>b_.x<span style="color:#f92672">-</span>a_.y<span style="color:#f92672">*</span>b_.y, a_.x<span style="color:#f92672">*</span>b_.y<span style="color:#f92672">+</span>a_.y<span style="color:#f92672">*</span>b_.x};
 </span></span><span style="display:flex;"><span>    };
 </span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">auto</span> getInTangent <span style="color:#f92672">=</span> [<span style="color:#f92672">&amp;</span>mul](Circle a,Circle b,db flg<span style="color:#f92672">=</span><span style="color:#ae81ff">1.0</span>)<span style="color:#f92672">-&gt;</span>Seg{
-</span></span><span style="display:flex;"><span>        Point base<span style="color:#f92672">=</span>b.o<span style="color:#f92672">-</span>a.o;
-</span></span><span style="display:flex;"><span>        db w<span style="color:#f92672">=</span>a.r<span style="color:#f92672">+</span>b.r;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">auto</span> getInTangent <span style="color:#f92672">=</span> [<span style="color:#f92672">&amp;</span>mul](Circle a_,Circle b_,db flg<span style="color:#f92672">=</span><span style="color:#ae81ff">1.0</span>)<span style="color:#f92672">-&gt;</span>Seg{
+</span></span><span style="display:flex;"><span>        Point base<span style="color:#f92672">=</span>b_.o<span style="color:#f92672">-</span>a_.o;
+</span></span><span style="display:flex;"><span>        db w<span style="color:#f92672">=</span>a_.r<span style="color:#f92672">+</span>b_.r;
 </span></span><span style="display:flex;"><span>        db h<span style="color:#f92672">=</span>std<span style="color:#f92672">::</span>sqrt(len2(base)<span style="color:#f92672">-</span>w<span style="color:#f92672">*</span>w);
 </span></span><span style="display:flex;"><span>        Point k <span style="color:#f92672">=</span> mul(base, Point{w, h<span style="color:#f92672">*</span>flg})<span style="color:#f92672">*</span>(<span style="color:#ae81ff">1.0</span><span style="color:#f92672">/</span>len2(base));
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> Seg{a.o<span style="color:#f92672">+</span>k<span style="color:#f92672">*</span>a.r,b.o<span style="color:#f92672">-</span>k<span style="color:#f92672">*</span>b.r};
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> Seg{a_.o<span style="color:#f92672">+</span>k<span style="color:#f92672">*</span>a_.r,b_.o<span style="color:#f92672">-</span>k<span style="color:#f92672">*</span>b_.r};
 </span></span><span style="display:flex;"><span>    };
 </span></span><span style="display:flex;"><span>     
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">auto</span> getOutTangent <span style="color:#f92672">=</span> [<span style="color:#f92672">&amp;</span>mul](Circle a,Circle b,db flg<span style="color:#f92672">=</span><span style="color:#ae81ff">1.0</span>)<span style="color:#f92672">-&gt;</span>Seg{
-</span></span><span style="display:flex;"><span>        Point base<span style="color:#f92672">=</span>b.o<span style="color:#f92672">-</span>a.o;
-</span></span><span style="display:flex;"><span>        db h<span style="color:#f92672">=</span>b.r<span style="color:#f92672">-</span>a.r;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">auto</span> getOutTangent <span style="color:#f92672">=</span> [<span style="color:#f92672">&amp;</span>mul](Circle a_,Circle b_,db flg<span style="color:#f92672">=</span><span style="color:#ae81ff">1.0</span>)<span style="color:#f92672">-&gt;</span>Seg{
+</span></span><span style="display:flex;"><span>        Point base<span style="color:#f92672">=</span>b_.o<span style="color:#f92672">-</span>a_.o;
+</span></span><span style="display:flex;"><span>        db h<span style="color:#f92672">=</span>b_.r<span style="color:#f92672">-</span>a_.r;
 </span></span><span style="display:flex;"><span>        db w<span style="color:#f92672">=</span>std<span style="color:#f92672">::</span>sqrt(len2(base)<span style="color:#f92672">-</span>h<span style="color:#f92672">*</span>h);
 </span></span><span style="display:flex;"><span>        Point k <span style="color:#f92672">=</span> mul(mul(base, Point{w, h<span style="color:#f92672">*</span>flg})<span style="color:#f92672">*</span>(<span style="color:#ae81ff">1.0</span><span style="color:#f92672">/</span>len2(base)), Point{<span style="color:#ae81ff">0</span>,flg});
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> Seg{a.o<span style="color:#f92672">+</span>k<span style="color:#f92672">*</span>a.r,b.o<span style="color:#f92672">-</span>k<span style="color:#f92672">*</span>b.r};
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> Seg{a_.o<span style="color:#f92672">+</span>k<span style="color:#f92672">*</span>a_.r,b_.o<span style="color:#f92672">-</span>k<span style="color:#f92672">*</span>b_.r};
 </span></span><span style="display:flex;"><span>    };
 </span></span><span style="display:flex;"><span>    
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span>(dist<span style="color:#f92672">&gt;</span>a.r<span style="color:#f92672">+</span>b.r<span style="color:#f92672">+</span>EPS)
@@ -4561,6 +4575,63 @@ x_{c_m}-x_{c_m'}\leq y_m
 </span></span><span style="display:flex;"><span>        ret.push_back(getOutTangent(a,b,<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>));
 </span></span><span style="display:flex;"><span>    
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> ret;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/////////////////////////////////////////////////
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 相交面积
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>db <span style="color:#a6e22e">interArea</span>(Circle c, Point a, Point b){
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 圆c和三角形c.o a b的相交面积
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span>(sgn((c.o<span style="color:#f92672">-</span>a)<span style="color:#f92672">^</span>(c.o<span style="color:#f92672">-</span>b))<span style="color:#f92672">==</span><span style="color:#ae81ff">0</span>) <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0.0</span>;
+</span></span><span style="display:flex;"><span>    Point q[<span style="color:#ae81ff">5</span>];
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> len <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>    q[len<span style="color:#f92672">++</span>] <span style="color:#f92672">=</span> a;
+</span></span><span style="display:flex;"><span>    Line l <span style="color:#f92672">=</span> line(a, b);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">auto</span> vec <span style="color:#f92672">=</span> inter(l, c);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span>(vec.size()<span style="color:#f92672">==</span><span style="color:#ae81ff">2</span>){
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span>(sgn((a<span style="color:#f92672">-</span>vec[<span style="color:#ae81ff">0</span>])<span style="color:#f92672">*</span>(b<span style="color:#f92672">-</span>vec[<span style="color:#ae81ff">0</span>]))<span style="color:#f92672">&lt;</span><span style="color:#ae81ff">0</span>) q[len<span style="color:#f92672">++</span>] <span style="color:#f92672">=</span> vec[<span style="color:#ae81ff">0</span>];
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span>(sgn((a<span style="color:#f92672">-</span>vec[<span style="color:#ae81ff">1</span>])<span style="color:#f92672">*</span>(b<span style="color:#f92672">-</span>vec[<span style="color:#ae81ff">1</span>]))<span style="color:#f92672">&lt;</span><span style="color:#ae81ff">0</span>) q[len<span style="color:#f92672">++</span>] <span style="color:#f92672">=</span> vec[<span style="color:#ae81ff">1</span>];
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    q[len<span style="color:#f92672">++</span>] <span style="color:#f92672">=</span> b;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span>(len<span style="color:#f92672">==</span><span style="color:#ae81ff">4</span> <span style="color:#f92672">&amp;&amp;</span> sgn((q[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">-</span>q[<span style="color:#ae81ff">1</span>])<span style="color:#f92672">*</span>(q[<span style="color:#ae81ff">2</span>]<span style="color:#f92672">-</span>q[<span style="color:#ae81ff">1</span>]))<span style="color:#f92672">&gt;</span><span style="color:#ae81ff">0</span>) std<span style="color:#f92672">::</span>swap(q[<span style="color:#ae81ff">1</span>], q[<span style="color:#ae81ff">2</span>]);
+</span></span><span style="display:flex;"><span>    db res <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.0</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>;i<span style="color:#f92672">&lt;</span>len<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>;i<span style="color:#f92672">++</span>){
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span>(on(q[i],c)<span style="color:#f92672">==</span><span style="color:#ae81ff">0</span><span style="color:#f92672">||</span>on(q[i<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>],c)<span style="color:#f92672">==</span><span style="color:#ae81ff">0</span>){
+</span></span><span style="display:flex;"><span>            db arg <span style="color:#f92672">=</span> radp(c.o, q[i], q[i<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>]);
+</span></span><span style="display:flex;"><span>            res <span style="color:#f92672">+=</span> c.r<span style="color:#f92672">*</span>c.r<span style="color:#f92672">*</span>arg<span style="color:#f92672">/</span><span style="color:#ae81ff">2.0</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">else</span>{
+</span></span><span style="display:flex;"><span>            res <span style="color:#f92672">+=</span> fabs((q[i]<span style="color:#f92672">-</span>c.o)<span style="color:#f92672">^</span>(q[i<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>]<span style="color:#f92672">-</span>c.o))<span style="color:#f92672">/</span><span style="color:#ae81ff">2.0</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> res;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>db <span style="color:#a6e22e">interArea</span>(Circle c, std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>Point<span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">const</span><span style="color:#f92672">&amp;</span> poly){
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 多边形和圆相交面积
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    db ans <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.0</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>, sz<span style="color:#f92672">=</span>poly.size();i<span style="color:#f92672">&lt;</span>sz;i<span style="color:#f92672">++</span>){
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">int</span> j <span style="color:#f92672">=</span> (i<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">%</span>sz;
+</span></span><span style="display:flex;"><span>        db ar <span style="color:#f92672">=</span> interArea(c, poly[i], poly[j]);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span>(sgn((poly[j]<span style="color:#f92672">-</span>c.o)<span style="color:#f92672">^</span>(poly[i]<span style="color:#f92672">-</span>c.o))<span style="color:#f92672">&gt;=</span><span style="color:#ae81ff">0</span>) ans <span style="color:#f92672">+=</span> ar;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">else</span> ans <span style="color:#f92672">-=</span> ar;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> fabs(ans);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>db <span style="color:#a6e22e">interArea</span>(Circle c1, Circle c2){
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 两圆相交面积
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">int</span> rel <span style="color:#f92672">=</span> on(c1, c2);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span>(rel<span style="color:#f92672">&gt;=</span><span style="color:#ae81ff">4</span>) <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0.0</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span>(rel<span style="color:#f92672">&lt;=</span><span style="color:#ae81ff">2</span>) <span style="color:#66d9ef">return</span> std<span style="color:#f92672">::</span>min(PI<span style="color:#f92672">*</span>c1.r<span style="color:#f92672">*</span>c1.r, PI<span style="color:#f92672">*</span>c2.r<span style="color:#f92672">*</span>c2.r);
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    db d <span style="color:#f92672">=</span> len(c1.o<span style="color:#f92672">-</span>c2.o);
+</span></span><span style="display:flex;"><span>	db alpha <span style="color:#f92672">=</span> acos((c1.r<span style="color:#f92672">*</span>c1.r<span style="color:#f92672">+</span>d<span style="color:#f92672">*</span>d<span style="color:#f92672">-</span>c2.r<span style="color:#f92672">*</span>c2.r)<span style="color:#f92672">/</span>(<span style="color:#ae81ff">2</span><span style="color:#f92672">*</span>c1.r<span style="color:#f92672">*</span>d));
+</span></span><span style="display:flex;"><span>	db beta <span style="color:#f92672">=</span> acos((c2.r<span style="color:#f92672">*</span>c2.r<span style="color:#f92672">+</span>d<span style="color:#f92672">*</span>d<span style="color:#f92672">-</span>c1.r<span style="color:#f92672">*</span>c1.r)<span style="color:#f92672">/</span>(<span style="color:#ae81ff">2</span><span style="color:#f92672">*</span>c2.r<span style="color:#f92672">*</span>d));
+</span></span><span style="display:flex;"><span>	db h <span style="color:#f92672">=</span> c1.r<span style="color:#f92672">*</span>sin(alpha);
+</span></span><span style="display:flex;"><span>	db s1 <span style="color:#f92672">=</span> c1.r<span style="color:#f92672">*</span>c1.r<span style="color:#f92672">*</span>alpha, s2 <span style="color:#f92672">=</span> c2.r<span style="color:#f92672">*</span>c2.r<span style="color:#f92672">*</span>beta;
+</span></span><span style="display:flex;"><span>	db s3 <span style="color:#f92672">=</span> d<span style="color:#f92672">*</span>h;
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> s1<span style="color:#f92672">+</span>s2<span style="color:#f92672">-</span>s3; 
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><h2 id="基本公式">基本公式</h2>
 <h3 id="正弦定理">正弦定理</h3>

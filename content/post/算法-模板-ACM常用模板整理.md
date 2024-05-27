@@ -4546,6 +4546,10 @@ db operator^(Vec a, Vec b){return a.x*b.y-a.y*b.x;}//叉积
 db len2(Vec v){return v.x*v.x+v.y*v.y;}//长度平方
 db len(Vec v){return std::sqrt(len2(v));}//向量长度
 db slope(Vec v){return v.y/v.x;}//斜率，不存在时，用后面的paral_y函数，不要判断是否是无穷
+db radp(Point x, Point a, Point b){
+    // 返回xa, xb的夹角弧度
+    return fabs(atan2(fabs((a-x)^(b-x)), (a-x)*(b-x)));
+}
 
 /////////////////////////////////////////////////
 //向量操作
@@ -4591,11 +4595,21 @@ bool paral_y(Vec v){return eq(v.x,0.0);}//是否平行y轴
 bool on(Point p, Line l){return eq((p.x-l.p.x)*l.v.y, (p.y-l.p.y)*l.v.x);}//点是否在直线上
 bool on(Point p, Seg l){return eq(len(p-l.a)+len(p-l.b),len(l.a-l.b));}//点是否在线段上
 //bool on(Point p, Seg l){return sgn((p-l.a)^(l.b-l.a))==0 && sgn((p-l.a)*(p-l.b))<=0 ;}//点是否在线段上，无须len的判断法
-bool on(Point p, Circle c){//0圆外，1圆上，2圆内
+int on(Point p, Circle c){//0圆外，1圆上，2圆内
     db dst = len(p-c.o);
     if(sgn(dst-c.r)<0) return 2;
     if(sgn(dst-c.r)==0) return 1;
     return 0;
+}
+int on(Circle c1, Circle c2){
+    // 两圆关系，5相离、4外切、3相交、2内切、1内含
+    db d = len(c1.o-c2.o);
+    if(sgn(d-c1.r-c2.r)>0) return 5;
+    if(sgn(d-c1.r-c2.r)==0) return 4;
+    db l = fabs(c1.r-c2.r);
+    if(sgn(d-l)>0) return 3;
+    if(sgn(d-l)==0) return 2;
+    return 1;
 }
 bool operator==(Point a, Point b){return eq(a.x,b.x)&&eq(a.y,b.y);}//点重合
 bool operator==(Line a, Line b){return on(a.p,b)&&on(a.p+a.v,b);}//直线重合
@@ -4831,24 +4845,24 @@ std::vector<Seg> getTangent(Circle a, Circle b){
     std::vector<Seg> ret;
     db dist=len(a.o-b.o);
     
-    auto mul = [](Point a, Point b)->Point{
-        return {a.x*b.x-a.y*b.y, a.x*b.y+a.y*b.x};
+    auto mul = [](Point a_, Point b_)->Point{
+        return {a_.x*b_.x-a_.y*b_.y, a_.x*b_.y+a_.y*b_.x};
     };
     
-    auto getInTangent = [&mul](Circle a,Circle b,db flg=1.0)->Seg{
-        Point base=b.o-a.o;
-        db w=a.r+b.r;
+    auto getInTangent = [&mul](Circle a_,Circle b_,db flg=1.0)->Seg{
+        Point base=b_.o-a_.o;
+        db w=a_.r+b_.r;
         db h=std::sqrt(len2(base)-w*w);
         Point k = mul(base, Point{w, h*flg})*(1.0/len2(base));
-        return Seg{a.o+k*a.r,b.o-k*b.r};
+        return Seg{a_.o+k*a_.r,b_.o-k*b_.r};
     };
      
-    auto getOutTangent = [&mul](Circle a,Circle b,db flg=1.0)->Seg{
-        Point base=b.o-a.o;
-        db h=b.r-a.r;
+    auto getOutTangent = [&mul](Circle a_,Circle b_,db flg=1.0)->Seg{
+        Point base=b_.o-a_.o;
+        db h=b_.r-a_.r;
         db w=std::sqrt(len2(base)-h*h);
         Point k = mul(mul(base, Point{w, h*flg})*(1.0/len2(base)), Point{0,flg});
-        return Seg{a.o+k*a.r,b.o-k*b.r};
+        return Seg{a_.o+k*a_.r,b_.o-k*b_.r};
     };
     
     if(dist>a.r+b.r+EPS)
@@ -4864,6 +4878,63 @@ std::vector<Seg> getTangent(Circle a, Circle b){
         ret.push_back(getOutTangent(a,b,-1));
     
     return ret;
+}
+
+/////////////////////////////////////////////////
+// 相交面积
+
+db interArea(Circle c, Point a, Point b){
+    // 圆c和三角形c.o a b的相交面积
+    if(sgn((c.o-a)^(c.o-b))==0) return 0.0;
+    Point q[5];
+    int len = 0;
+    q[len++] = a;
+    Line l = line(a, b);
+    auto vec = inter(l, c);
+    if(vec.size()==2){
+        if(sgn((a-vec[0])*(b-vec[0]))<0) q[len++] = vec[0];
+        if(sgn((a-vec[1])*(b-vec[1]))<0) q[len++] = vec[1];
+    }
+    q[len++] = b;
+    if(len==4 && sgn((q[0]-q[1])*(q[2]-q[1]))>0) std::swap(q[1], q[2]);
+    db res = 0.0;
+    for(int i=0;i<len-1;i++){
+        if(on(q[i],c)==0||on(q[i+1],c)==0){
+            db arg = radp(c.o, q[i], q[i+1]);
+            res += c.r*c.r*arg/2.0;
+        }
+        else{
+            res += fabs((q[i]-c.o)^(q[i+1]-c.o))/2.0;
+        }
+    }
+    return res;
+}
+
+db interArea(Circle c, std::vector<Point> const& poly){
+    // 多边形和圆相交面积
+    db ans = 0.0;
+    for(int i=0, sz=poly.size();i<sz;i++){
+        int j = (i+1)%sz;
+        db ar = interArea(c, poly[i], poly[j]);
+        if(sgn((poly[j]-c.o)^(poly[i]-c.o))>=0) ans += ar;
+        else ans -= ar;
+    }
+    return fabs(ans);
+}
+
+db interArea(Circle c1, Circle c2){
+    // 两圆相交面积
+    int rel = on(c1, c2);
+    if(rel>=4) return 0.0;
+    if(rel<=2) return std::min(PI*c1.r*c1.r, PI*c2.r*c2.r);
+    
+    db d = len(c1.o-c2.o);
+	db alpha = acos((c1.r*c1.r+d*d-c2.r*c2.r)/(2*c1.r*d));
+	db beta = acos((c2.r*c2.r+d*d-c1.r*c1.r)/(2*c2.r*d));
+	db h = c1.r*sin(alpha);
+	db s1 = c1.r*c1.r*alpha, s2 = c2.r*c2.r*beta;
+	db s3 = d*h;
+	return s1+s2-s3; 
 }
 ```
 
