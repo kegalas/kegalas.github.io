@@ -4494,7 +4494,7 @@ int query(int u, int k){
 
 ```
 
-# 计算几何 TODO
+# 计算几何
 
 ## 基础板子
 
@@ -5386,6 +5386,114 @@ int main(){
 $$
 A = i+\dfrac{b}{2}-1
 $$
+
+## 半平面交
+
+```cpp
+// 半平面交 luogu P4196
+// 半平面即直线Ax+By+C=0分割平面坐标系的其中一半，这是一个点集
+// 这里的板子是直线a->b的左半边
+// 半平面交即为众多半平面划分出的点集的交集
+// 本题是计算半平面划分出的多边形的面积
+
+struct halfplane {
+    Point s, e;
+    db angle;
+    // 表示向量s->e的左半平面
+    halfplane() {}
+    halfplane(Point s_, Point e_) : s(s_), e(e_) {}
+    halfplane(Line l) : s(l.p), e(l.p + l.v) {}
+    void calcAngle() { angle = atan2(e.y - s.y, e.x - s.x); }
+    bool operator<(halfplane const& b) const { return angle < b.angle; }
+};
+
+struct halfplanes {
+    int n;
+    static int const MAXP = 1010;
+    halfplane hp[MAXP];
+    Point p[MAXP];
+    int que[MAXP];
+    int st, ed;
+
+    void push(halfplane tmp) { hp[n++] = tmp; }
+
+    void unique() {  // 去重
+        int m = 1;
+        for (int i = 1; i < n; i++) {
+            if (sgn(hp[i].angle - hp[i - 1].angle) != 0)
+                hp[m++] = hp[i];
+            else if (sgn((hp[m - 1].e - hp[m - 1].s) ^
+                         (hp[i].s - hp[m - 1].s)) > 0)
+                hp[m - 1] = hp[i];
+        }
+        n = m;
+    }
+
+    bool halfplaneInsert() {
+        // 这里指的是处理hp数组中的元素
+        // 放入hp中需要使用push
+        for (int i = 0; i < n; i++) hp[i].calcAngle();
+        std::sort(hp, hp + n);
+        unique();
+        que[st = 0] = 0;
+        que[ed = 1] = 1;
+        p[1] = inter(line(hp[0].s, hp[0].e), line(hp[1].s, hp[1].e))[0];
+        for (int i = 2; i < n; i++) {
+            while (st < ed && sgn((hp[i].e - hp[i].s) ^ (p[ed] - hp[i].s)) < 0)
+                ed--;
+            while (st < ed &&
+                   sgn((hp[i].e - hp[i].s) ^ (p[st + 1] - hp[i].s)) < 0)
+                st++;
+            que[++ed] = i;
+            if (line(hp[i].s, hp[i].e) ==
+                line(hp[que[ed - 1]].s, hp[que[ed - 1]].e))
+                return false;
+            p[ed] = inter(line(hp[i].s, hp[i].e),
+                          line(hp[que[ed - 1]].s, hp[que[ed - 1]].e))[0];
+        }
+        while (st < ed && sgn((hp[que[st]].e - hp[que[st]].s) ^
+                              (p[ed] - hp[que[st]].s)) < 0)
+            ed--;
+        while (st < ed && sgn((hp[que[ed]].e - hp[que[ed]].s) ^
+                              (p[st + 1] - hp[que[ed]].s)) < 0)
+            st++;
+        if (st + 1 >= ed) return false;
+        return true;
+    }
+
+    std::vector<Point> getConvex() {
+        // 返回半平面交出来的凸多边形
+        // 需要先调用halfplaneinsert()且返回true
+        p[st] = inter(line(hp[que[st]].s, hp[que[st]].e),
+                      line(hp[que[ed]].s, hp[que[ed]].e))[0];
+        std::vector<Point> ret(ed - st + 1);
+        for (int j = st, i = 0; j <= ed; i++, j++) ret[i] = p[j];
+
+        return ret;
+    }
+} hps;
+
+void solve() {
+    int n;
+    std::cin >> n;  // 多边形个数
+    while (n--) {
+        int m;  // 多边形点数，逆时针输入
+        std::cin >> m;
+        std::vector<Point> ps(m);
+        for (int i = 0; i < m; i++) std::cin >> ps[i].x >> ps[i].y;
+        for (int i = 0; i < m; i++) hps.push(halfplane(ps[i], ps[(i + 1) % m]));
+    }
+
+    if (!hps.halfplaneInsert()) {
+        std::cout << "0.000\n";
+        return;
+    }
+    auto vec = hps.getConvex();
+    std::cout << std::fixed;
+    std::cout.precision(3);
+    std::cout << area(vec) << "\n";
+}
+```
 
 # 组合数学
 
