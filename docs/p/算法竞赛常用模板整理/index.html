@@ -112,7 +112,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 117 分钟
+                    阅读时长: 118 分钟
                 </time>
             </div>
         
@@ -4194,7 +4194,7 @@ x_{c_m}-x_{c_m'}\leq y_m
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">else</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> des[tp][<span style="color:#f92672">-</span>d];
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><h1 id="计算几何-todo">计算几何 TODO</h1>
+</span></span></code></pre></div><h1 id="计算几何">计算几何</h1>
 <h2 id="基础板子">基础板子</h2>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#75715e">/////////////////////////////////////////////////
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">//数据类型定义
@@ -5026,7 +5026,111 @@ x_{c_m}-x_{c_m'}\leq y_m
 <p>给定顶点均为整点的简单多边形，其面积<span class="math inline">\(A\)</span>和内部格点数目<span class="math inline">\(i\)</span>，边上格点数目<span class="math inline">\(b\)</span>的关系为</p>
 <p><span class="math display">\[A = i+\dfrac{b}{2}-1
 \]</span></p>
-<h1 id="组合数学">组合数学</h1>
+<h2 id="半平面交">半平面交</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#75715e">// 半平面交 luogu P4196
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 半平面即直线Ax+By+C=0分割平面坐标系的其中一半，这是一个点集
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 这里的板子是直线a-&gt;b的左半边
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 半平面交即为众多半平面划分出的点集的交集
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 本题是计算半平面划分出的多边形的面积
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">halfplane</span> {
+</span></span><span style="display:flex;"><span>    Point s, e;
+</span></span><span style="display:flex;"><span>    db angle;
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 表示向量s-&gt;e的左半平面
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    halfplane() {}
+</span></span><span style="display:flex;"><span>    halfplane(Point s_, Point e_) <span style="color:#f92672">:</span> s(s_), e(e_) {}
+</span></span><span style="display:flex;"><span>    halfplane(Line l) <span style="color:#f92672">:</span> s(l.p), e(l.p <span style="color:#f92672">+</span> l.v) {}
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">calcAngle</span>() { angle <span style="color:#f92672">=</span> atan2(e.y <span style="color:#f92672">-</span> s.y, e.x <span style="color:#f92672">-</span> s.x); }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">bool</span> <span style="color:#66d9ef">operator</span><span style="color:#f92672">&lt;</span>(halfplane <span style="color:#66d9ef">const</span><span style="color:#f92672">&amp;</span> b) <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> angle <span style="color:#f92672">&lt;</span> b.angle; }
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">halfplanes</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> n;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">int</span> <span style="color:#66d9ef">const</span> MAXP <span style="color:#f92672">=</span> <span style="color:#ae81ff">1010</span>;
+</span></span><span style="display:flex;"><span>    halfplane hp[MAXP];
+</span></span><span style="display:flex;"><span>    Point p[MAXP];
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> que[MAXP];
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> st, ed;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">push</span>(halfplane tmp) { hp[n<span style="color:#f92672">++</span>] <span style="color:#f92672">=</span> tmp; }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">unique</span>() {  <span style="color:#75715e">// 去重
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#66d9ef">int</span> m <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>; i <span style="color:#f92672">&lt;</span> n; i<span style="color:#f92672">++</span>) {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (sgn(hp[i].angle <span style="color:#f92672">-</span> hp[i <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>].angle) <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>                hp[m<span style="color:#f92672">++</span>] <span style="color:#f92672">=</span> hp[i];
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (sgn((hp[m <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>].e <span style="color:#f92672">-</span> hp[m <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>].s) <span style="color:#f92672">^</span>
+</span></span><span style="display:flex;"><span>                         (hp[i].s <span style="color:#f92672">-</span> hp[m <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>].s)) <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>                hp[m <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> hp[i];
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        n <span style="color:#f92672">=</span> m;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">bool</span> <span style="color:#a6e22e">halfplaneInsert</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 这里指的是处理hp数组中的元素
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#75715e">// 放入hp中需要使用push
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> n; i<span style="color:#f92672">++</span>) hp[i].calcAngle();
+</span></span><span style="display:flex;"><span>        std<span style="color:#f92672">::</span>sort(hp, hp <span style="color:#f92672">+</span> n);
+</span></span><span style="display:flex;"><span>        unique();
+</span></span><span style="display:flex;"><span>        que[st <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>        que[ed <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;
+</span></span><span style="display:flex;"><span>        p[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> inter(line(hp[<span style="color:#ae81ff">0</span>].s, hp[<span style="color:#ae81ff">0</span>].e), line(hp[<span style="color:#ae81ff">1</span>].s, hp[<span style="color:#ae81ff">1</span>].e))[<span style="color:#ae81ff">0</span>];
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>; i <span style="color:#f92672">&lt;</span> n; i<span style="color:#f92672">++</span>) {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">while</span> (st <span style="color:#f92672">&lt;</span> ed <span style="color:#f92672">&amp;&amp;</span> sgn((hp[i].e <span style="color:#f92672">-</span> hp[i].s) <span style="color:#f92672">^</span> (p[ed] <span style="color:#f92672">-</span> hp[i].s)) <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>                ed<span style="color:#f92672">--</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">while</span> (st <span style="color:#f92672">&lt;</span> ed <span style="color:#f92672">&amp;&amp;</span>
+</span></span><span style="display:flex;"><span>                   sgn((hp[i].e <span style="color:#f92672">-</span> hp[i].s) <span style="color:#f92672">^</span> (p[st <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>] <span style="color:#f92672">-</span> hp[i].s)) <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>                st<span style="color:#f92672">++</span>;
+</span></span><span style="display:flex;"><span>            que[<span style="color:#f92672">++</span>ed] <span style="color:#f92672">=</span> i;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (line(hp[i].s, hp[i].e) <span style="color:#f92672">==</span>
+</span></span><span style="display:flex;"><span>                line(hp[que[ed <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>]].s, hp[que[ed <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>]].e))
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span> false;
+</span></span><span style="display:flex;"><span>            p[ed] <span style="color:#f92672">=</span> inter(line(hp[i].s, hp[i].e),
+</span></span><span style="display:flex;"><span>                          line(hp[que[ed <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>]].s, hp[que[ed <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>]].e))[<span style="color:#ae81ff">0</span>];
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">while</span> (st <span style="color:#f92672">&lt;</span> ed <span style="color:#f92672">&amp;&amp;</span> sgn((hp[que[st]].e <span style="color:#f92672">-</span> hp[que[st]].s) <span style="color:#f92672">^</span>
+</span></span><span style="display:flex;"><span>                              (p[ed] <span style="color:#f92672">-</span> hp[que[st]].s)) <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>            ed<span style="color:#f92672">--</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">while</span> (st <span style="color:#f92672">&lt;</span> ed <span style="color:#f92672">&amp;&amp;</span> sgn((hp[que[ed]].e <span style="color:#f92672">-</span> hp[que[ed]].s) <span style="color:#f92672">^</span>
+</span></span><span style="display:flex;"><span>                              (p[st <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>] <span style="color:#f92672">-</span> hp[que[ed]].s)) <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>            st<span style="color:#f92672">++</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (st <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">&gt;=</span> ed) <span style="color:#66d9ef">return</span> false;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> true;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>Point<span style="color:#f92672">&gt;</span> getConvex() {
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 返回半平面交出来的凸多边形
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#75715e">// 需要先调用halfplaneinsert()且返回true
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        p[st] <span style="color:#f92672">=</span> inter(line(hp[que[st]].s, hp[que[st]].e),
+</span></span><span style="display:flex;"><span>                      line(hp[que[ed]].s, hp[que[ed]].e))[<span style="color:#ae81ff">0</span>];
+</span></span><span style="display:flex;"><span>        std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>Point<span style="color:#f92672">&gt;</span> ret(ed <span style="color:#f92672">-</span> st <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> j <span style="color:#f92672">=</span> st, i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; j <span style="color:#f92672">&lt;=</span> ed; i<span style="color:#f92672">++</span>, j<span style="color:#f92672">++</span>) ret[i] <span style="color:#f92672">=</span> p[j];
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> ret;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>} hps;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">solve</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> n;
+</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>cin <span style="color:#f92672">&gt;&gt;</span> n;  <span style="color:#75715e">// 多边形个数
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">while</span> (n<span style="color:#f92672">--</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">int</span> m;  <span style="color:#75715e">// 多边形点数，逆时针输入
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        std<span style="color:#f92672">::</span>cin <span style="color:#f92672">&gt;&gt;</span> m;
+</span></span><span style="display:flex;"><span>        std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>Point<span style="color:#f92672">&gt;</span> ps(m);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> m; i<span style="color:#f92672">++</span>) std<span style="color:#f92672">::</span>cin <span style="color:#f92672">&gt;&gt;</span> ps[i].x <span style="color:#f92672">&gt;&gt;</span> ps[i].y;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> m; i<span style="color:#f92672">++</span>) hps.push(halfplane(ps[i], ps[(i <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">%</span> m]));
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>hps.halfplaneInsert()) {
+</span></span><span style="display:flex;"><span>        std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;0.000</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">auto</span> vec <span style="color:#f92672">=</span> hps.getConvex();
+</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>fixed;
+</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>cout.precision(<span style="color:#ae81ff">3</span>);
+</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> area(vec) <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h1 id="组合数学">组合数学</h1>
 <h2 id="用乘法逆元计算组合数">用乘法逆元计算组合数</h2>
 <p>TODO: 用模板元编程实现编译期算阶乘</p>
 <p>根据</p>
@@ -8758,7 +8862,7 @@ std::cout&lt;&lt;(int)x&lt;&lt;&#34;\n&#34;;
         </li>
       </ol>
     </li>
-    <li><a href="#计算几何-todo">计算几何 TODO</a>
+    <li><a href="#计算几何">计算几何</a>
       <ol>
         <li><a href="#基础板子">基础板子</a></li>
         <li><a href="#基本公式">基本公式</a>
@@ -8780,6 +8884,7 @@ std::cout&lt;&lt;(int)x&lt;&lt;&#34;\n&#34;;
         <li><a href="#扫描线算法">扫描线算法</a></li>
         <li><a href="#二维数点">二维数点</a></li>
         <li><a href="#pick定理">Pick定理</a></li>
+        <li><a href="#半平面交">半平面交</a></li>
       </ol>
     </li>
     <li><a href="#组合数学">组合数学</a>
