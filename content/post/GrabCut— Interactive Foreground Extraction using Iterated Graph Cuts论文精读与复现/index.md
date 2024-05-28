@@ -1,7 +1,7 @@
 ---
 title: GrabCut— Interactive Foreground Extraction Using Iterated Graph Cuts论文精读与复现
 date: 2024-05-20T11:21:12+08:00
-draft: true
+draft: false
 tags:
   - 大学
   - 人工智能
@@ -12,6 +12,8 @@ mathjax: true
 markup: goldmark
 image: cover.jpg
 ---
+
+原论文：[https://www.microsoft.com/en-us/research/publication/grabcut-interactive-foreground-extraction-using-iterated-graph-cuts/](https://www.microsoft.com/en-us/research/publication/grabcut-interactive-foreground-extraction-using-iterated-graph-cuts/)
 
 # 摘要
 
@@ -125,6 +127,8 @@ $$
 
 这里是GrabCut在介绍GraphCut时没有介绍到的，所以只读这篇论文我们根本不知道如何建图。
 
+GraphCut论文：[https://ieeexplore.ieee.org/document/937505](https://ieeexplore.ieee.org/document/937505)
+
 GraphCut的作者其实给出了更为泛用的理论，而不仅仅是黑白图像的处理。在这篇论文里，能量定义为
 
 $$
@@ -159,11 +163,11 @@ $$
 
 在跑完最小割后，原本属于$T_U$的节点就可以根据自己属于源点部分还是汇点部分，分类到前景背景中了。
 
-下面我们来讨论为什么最小割可以最小化能量。
+下面我们来讨论为什么最小割可以最小化能量。割即对于图$G=(V,E)$，将点划分为$S$和$T=V-S$两个集合，其中源点$s\in S$，汇点$t\in T$。割的容量即为所有$S$到$T$的边的容量之和，记为$c(S,T)$。最小割即为，使得$c(S,T)$最小的割。
 
 首先是关于$N-Links$，显然，两个像素颜色差异越大，这里越有可能是前背景的边界，而差异大的时候边权接近$0$，所以这样的$N-Links$必然会出现在最小割中。
 
-然后是关于$T-Links$，一个像素如果被误判的惩罚项很大，比如前景误判为背景，那么它更有可能是前景。我们只能牺牲局部，保全大局，将误判惩罚最小的项让出去，来实现局部最优。所以这样的$T-Links$也会出现在最小割中。
+然后是关于$T-Links$，一个像素如果被误判的惩罚项很大，比如前景误判为背景，那么它更有可能是前景。我们只能牺牲局部，保全大局，将误判惩罚最小的项让出去，来实现局部最优。所以这样的$T-Links$也会出现在最小割中。这里的$K$这是一样的，例如$\{p,S\}$中的$K$，如果一个像素已经定义为属于前景了，那么其被误判为背景的惩罚应该很大，如果一个像素已经是背景了，那么其被“误判”为背景的惩罚应该为$0$。
 
 # GrabCut图像分割算法
 
@@ -171,9 +175,9 @@ $$
 
 ## 对彩色图像数据建模
 
-现在图像是RGB三通道的了，再像以前一样去构建灰度直方图是不切实际的（从256变成了17M）。
+现在图像是RGB三通道的了，再像以前一样去构建灰度直方图是不切实际的（从256变成了$256^3=$ 17M）。
 
-作者这里参考前人的工作，对前景和背景各使用一个GMM，其$K$值都等于$0$。简便起见，在优化框架框架中，添加了一个向量$k=\{k_1,\cdots,k_n,\cdots,k_N\}$，其中$k_n\in\{1,\cdots,K\}$。为每个像素分配一个不同的GMM分量，根据$\alpha_n=0$还是$1$来确定分配前景还是背景GMM分量。
+作者这里参考前人的工作，对前景和背景各使用一个GMM，其$K$值都等于$5$。简便起见，在优化框架框架中，添加了一个向量$k=\{k_1,\cdots,k_n,\cdots,k_N\}$，其中$k_n\in\{1,\cdots,K\}$。为每个像素分配一个不同的GMM分量，根据$\alpha_n=0$还是$1$来确定分配前景还是背景GMM分量。
 
 此时，吉布斯能公式变为
 
@@ -312,6 +316,10 @@ Bayes matting从$n\in T_U$中预测得到一个前景色$\hat f_{n}$。根据之
 
 [https://mmcheng.net/zh/salobj/](https://mmcheng.net/zh/salobj/)
 
-这篇文章中，作者指出，一张照片的绝大多数颜色（90%）都是相近的，可以将颜色空间简化到$12^3$，即$RGB$每个通道都简化为$12$个值。
+这篇文章中，作者指出，一张照片的绝大多数颜色（95%）都是相近的，可以将颜色空间简化到$12^3$，即$RGB$每个通道都简化为$12$个值。然后通过进一步的统计，选择其中出现次数最多的$85$个颜色，来覆盖$95\%$的图片色彩。
+
+当然，为了应对剩下的那$5\%$，作者也提出了一个色彩空间平滑的操作。有机会再来精读这篇文章。
 
 # 我的实现
+
+[https://github.com/kegalas/GrabCut](https://github.com/kegalas/GrabCut)
