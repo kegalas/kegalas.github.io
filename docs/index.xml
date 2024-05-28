@@ -7,6 +7,273 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
         <lastBuildDate>Tue, 21 May 2024 23:42:42 +0800</lastBuildDate><atom:link href="https://kegalas.top/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>GrabCut— Interactive Foreground Extraction Using Iterated Graph Cuts论文精读与复现</title>
+        <link>https://kegalas.top/p/grabcut-interactive-foreground-extraction-using-iterated-graph-cuts%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/</link>
+        <pubDate>Mon, 20 May 2024 11:21:12 +0800</pubDate>
+        
+        <guid>https://kegalas.top/p/grabcut-interactive-foreground-extraction-using-iterated-graph-cuts%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/</guid>
+        <description>&lt;img src="https://kegalas.top/p/grabcut-interactive-foreground-extraction-using-iterated-graph-cuts%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/cover.jpg" alt="Featured image of post GrabCut— Interactive Foreground Extraction Using Iterated Graph Cuts论文精读与复现" /&gt;&lt;p&gt;原论文：&lt;a class=&#34;link&#34; href=&#34;https://www.microsoft.com/en-us/research/publication/grabcut-interactive-foreground-extraction-using-iterated-graph-cuts/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://www.microsoft.com/en-us/research/publication/grabcut-interactive-foreground-extraction-using-iterated-graph-cuts/&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&#34;摘要&#34;&gt;摘要&lt;/h1&gt;
+&lt;p&gt;分离出图像的前景和背景，对于图像编辑是很重要的。经典的image segmentation实现方式有两个，一是使用纹理（颜色）信息，例如魔棒工具。另一种是使用边缘信息，例如磁力套索（Intelligent Scissors）。本文介绍使用graph-cut来进行图像分割。本文提出了三方面的改进：优化迭代、优化用户交互、border matting的处理优化&lt;/p&gt;
+&lt;h1 id=&#34;简介&#34;&gt;简介&lt;/h1&gt;
+&lt;p&gt;这里提到，所谓的“前景对象”的结果是一个alpha-matte，反应了前景和背景的比例。个人理解应该是，某个像素属于前景的可能性的大小和背景的可能性的比。本文想要实现保证高性能的前提下，不需要用户的过多交互，就能得到很好的效果。&lt;/p&gt;
+&lt;p&gt;高性能指：精准分割前背景，主观上可信的alpha值，可以处理模糊、混合像素（mixed pixels）、和透明度（透明的物体），前景图片不带有背景透过来的颜色。&lt;/p&gt;
+&lt;p&gt;用户交互的简易程度：作者举例了两个极端，一个是需要用户逐像素地点击前景，一个是只需要用户点击前景和背景的几个位置。&lt;/p&gt;
+&lt;h2 id=&#34;之前的交互式获取matte的工作&#34;&gt;之前的交互式获取matte的工作&lt;/h2&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 235; 
+			flex-basis: 565px&#34;
+	&gt;
+	&lt;a href=&#34;https://kegalas.top/p/grabcut-interactive-foreground-extraction-using-iterated-graph-cuts%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/1.jpg&#34; data-size=&#34;1738x738&#34;&gt;
+		&lt;img src=&#34;https://kegalas.top/p/grabcut-interactive-foreground-extraction-using-iterated-graph-cuts%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/1.jpg&#34;
+			width=&#34;1738&#34;
+			height=&#34;738&#34;
+			srcset=&#34;https://kegalas.top/p/grabcut-interactive-foreground-extraction-using-iterated-graph-cuts%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/1_hu98ac03af52814908ff0c41eef0489c4b_201681_480x0_resize_q75_box.jpg 480w, https://kegalas.top/p/grabcut-interactive-foreground-extraction-using-iterated-graph-cuts%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/1_hu98ac03af52814908ff0c41eef0489c4b_201681_1024x0_resize_q75_box.jpg 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;1.jpg&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;1.jpg&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;魔棒（Magic Band）&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;和PS里用到的魔棒差不多，就是选择容差，选择图片中点击区域附近在容差之类的像素。但是这个容差有时不容易选择。导致结果不好。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;磁力套索（Intelligent Scissors）&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;和PS里的磁力套索差不多，用户需要在前景的边缘大概地移动鼠标，选取整个前景。缺点是如果背景太复杂，用户需要的操作会很多。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Bayes matting&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;对颜色概率分布进行建模，来实现一个full alpha mattes。用户要选取一个trimap。记作&lt;span class=&#34;math inline&#34;&gt;\(T=\{T_B,T_U,T_F\}\)&lt;/span&gt;，其中&lt;span class=&#34;math inline&#34;&gt;\(T_B\)&lt;/span&gt;标记了背景，&lt;span class=&#34;math inline&#34;&gt;\(T_F\)&lt;/span&gt;标记了前景。之后alpha值是在剩下的那个区域&lt;span class=&#34;math inline&#34;&gt;\(T_U\)&lt;/span&gt;上计算的。有时效果还是不错的，但是只有当&lt;span class=&#34;math inline&#34;&gt;\(T_U\)&lt;/span&gt;区域不太大，并且前背景的颜色概率分布可以很好地分开时，效果才不错。另外，需要的用户操作也不少。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Knockout 2&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;是一个PS的插件，里面用的是用户定义的trimap，总体和Bayes matting差不多。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Graph Cut&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;优化了bayes matting，同样利用了trimaps和对颜色的概率分布建模，鲁棒性很好，它甚至可以区分出环境里的迷彩服。具体在第二节才会介绍。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Level sets&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;通过解偏微分方程来做。缺点是可能会陷入局部最优。&lt;/p&gt;
+&lt;h2 id=&#34;作者提出的系统grabcut&#34;&gt;作者提出的系统：grabcut&lt;/h2&gt;
+&lt;p&gt;理想状态中，一个matting工具应该能够在&lt;span class=&#34;math inline&#34;&gt;\(T_U\)&lt;/span&gt;上计算连续的alpha值，没有强制约束的话，alpha的值可能就只会是0、1两个值。如果有连续的alpha值，那么对于烟雾、头发、树（叶）等问题应该可以自动地、近似地解决。但是作者发现，对于前景背景颜色分布容易分开的图像效果还可以，遇到迷彩这样的东西就不行。&lt;/p&gt;
+&lt;p&gt;首先作者会在第二节和第三节介绍一个使用迭代图割（iterative graph cut）的方法来获取图像硬分割（hard segmentation）。然后在第四节border matting部分会用上通过硬分区之间的区域来计算alpha value。作者说，grabcut不处理完全透明的情况，除非是在border部分。作者建议使用matting brush来处理这种完全透明，只要没有迷彩，结果就可以很好。&lt;/p&gt;
+&lt;p&gt;作者认为，本文的首要创新在于处理图像的分割。他们为graph cut提供了两个优化：迭代估计、不完全标记。这两个东西可观的减少了用户交互的复杂度。只需要拖拽一个矩形框柱前景。另外，也开发出了一种新的计算alpha值的机制，来用于border matting的部分。&lt;/p&gt;
+&lt;h1 id=&#34;使用graph-cut进行图像分割&#34;&gt;使用Graph Cut进行图像分割&lt;/h1&gt;
+&lt;p&gt;grabcut是建立在graph cut的研究基础上的，所以有必要对此进行详细描述。&lt;/p&gt;
+&lt;h2 id=&#34;图像分割&#34;&gt;图像分割&lt;/h2&gt;
+&lt;p&gt;graph cut是用于黑白图像分割的。给定一个初始的trimap，&lt;span class=&#34;math inline&#34;&gt;\(T\)&lt;/span&gt;，图像是一个数组&lt;span class=&#34;math inline&#34;&gt;\(z=(z_1,\cdots,z_N)\)&lt;/span&gt;，每个值都是灰度值，下标是一维的。图像的分割用一个“不透明度”的数组来表示，&lt;span class=&#34;math inline&#34;&gt;\(\underline{\alpha}=(\alpha_1,\cdots,\alpha_N)\)&lt;/span&gt;表示。每个像素都有一个这种数组。一般来说&lt;span class=&#34;math inline&#34;&gt;\(\alpha_n\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\([0,1]\)&lt;/span&gt;上的实数，但对于硬分割来说，其取值为集合&lt;span class=&#34;math inline&#34;&gt;\(\{0,1\}\)&lt;/span&gt;。&lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt;代表背景，&lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt;代表前景。&lt;/p&gt;
+&lt;p&gt;参数&lt;span class=&#34;math inline&#34;&gt;\(\underline{\theta}\)&lt;/span&gt;描述图像前景和背景的grey-level概率分布，也包含了灰度值的直方图。即&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\underline{\theta} = \{h(z;\alpha), \alpha=0,1\}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中直方图是直接用&lt;span class=&#34;math inline&#34;&gt;\(T_B, T_F\)&lt;/span&gt;标记的像素得来的。这里直方图进行了归一化，&lt;span class=&#34;math inline&#34;&gt;\(\int_zh(z;\alpha)=1\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;图像分割的任务就是使用给定的&lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;和&lt;span class=&#34;math inline&#34;&gt;\(\underline{\theta}\)&lt;/span&gt;，来推断出未知部分的不透明度数组&lt;span class=&#34;math inline&#34;&gt;\(\underline{\alpha}\)&lt;/span&gt;&lt;/p&gt;
+&lt;h2 id=&#34;最小化能量法来进行分割&#34;&gt;最小化能量法来进行分割&lt;/h2&gt;
+&lt;p&gt;定义能量函数&lt;span class=&#34;math inline&#34;&gt;\(E\)&lt;/span&gt;，其值最小化的时候，得到最好的分割结果。某种意义上，这个&lt;span class=&#34;math inline&#34;&gt;\(E\)&lt;/span&gt;应该和前景、背景的直方图都有关，并且也和不透明度有关。反应了物体的一种稳定趋势。作者从吉布斯自由能中获得了灵感，写出了一个类似的形式：&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[E(\underline{\alpha},\underline{\theta},z) = U(\underline{\alpha},\underline{\theta},z)+V(\underline{\alpha},z)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中，数据项&lt;span class=&#34;math inline&#34;&gt;\(U\)&lt;/span&gt;在给定直方图模型&lt;span class=&#34;math inline&#34;&gt;\(\underline{\theta}\)&lt;/span&gt;的情况下，评估不透明度分布&lt;span class=&#34;math inline&#34;&gt;\(\underline{\alpha}\)&lt;/span&gt;对图像&lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;的拟合。定义为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[U(\underline{\alpha},\underline{\theta},z) = \sum_n-\log h(z_n;\alpha_n)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中，平滑项为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[V(\underline{\alpha},z) = \gamma\sum_{(m,n)\in C}dis(m,n)^{-1}[\alpha_n\neq\alpha_m]\exp-\beta(z_m-z_n)^2
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;里面的&lt;span class=&#34;math inline&#34;&gt;\([...]\)&lt;/span&gt;是一个艾弗森括号。&lt;span class=&#34;math inline&#34;&gt;\(C\)&lt;/span&gt;是一个集合，里面的元素是邻居像素点对。&lt;span class=&#34;math inline&#34;&gt;\(dis(\cdot)\)&lt;/span&gt;是邻居像素点对的欧拉距离。这种能量（指平滑项）让灰度相似的区域更加具有一致性。实践中，像素的邻居有8个。&lt;/p&gt;
+&lt;p&gt;当常数&lt;span class=&#34;math inline&#34;&gt;\(\beta=0\)&lt;/span&gt;时，平滑项就简化为著名的Ising prior（但我不知道是什么）。此时平滑项就对全图进行平滑，其程度由&lt;span class=&#34;math inline&#34;&gt;\(\gamma\)&lt;/span&gt;决定。在Graph Cut的论文中指出，设置&lt;span class=&#34;math inline&#34;&gt;\(\beta&gt;0\)&lt;/span&gt;更好，这可以放松对于高对比度区域的平滑，同时这里的&lt;span class=&#34;math inline&#34;&gt;\(\beta\)&lt;/span&gt;可以选为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\beta = \bigg(2\bigg&lt;(z_m-z_n)^2\bigg&gt;\bigg)^{-1}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;这里&lt;span class=&#34;math inline&#34;&gt;\(&lt;\cdot&gt;\)&lt;/span&gt;代表图像上样本的期望。选这个&lt;span class=&#34;math inline&#34;&gt;\(\beta\)&lt;/span&gt;能够保证，平滑项可以适当的从高对比度和低对比度场景中切换。&lt;/p&gt;
+&lt;p&gt;常数&lt;span class=&#34;math inline&#34;&gt;\(\gamma\)&lt;/span&gt;取&lt;span class=&#34;math inline&#34;&gt;\(50\)&lt;/span&gt;，这是后面的文章通过实验得到的经验值。&lt;/p&gt;
+&lt;p&gt;在定义完能量模型后，图像分割就可以被估计为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\underline{\hat{\alpha}} = \arg\min_{\underline{\alpha}} E(\underline{\alpha}, \underline{\theta})
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;这里的最小化使用最小割算法。这也是硬分割的基础。&lt;/p&gt;
+&lt;p&gt;下一部分会介绍作者三方面的改进。首先是把黑白图像的模型，用高斯混合模型替换，从而可以用到彩色图像上。第二，执行一次最小割的算法被替换为一个迭代过程。第三，简化用户操作，只需要使用一个矩形或者一个套索来标注&lt;span class=&#34;math inline&#34;&gt;\(T_B\)&lt;/span&gt;&lt;/p&gt;
+&lt;h2 id=&#34;如何用网络流为该问题建模&#34;&gt;如何用网络流为该问题建模？&lt;/h2&gt;
+&lt;p&gt;这里是GrabCut在介绍GraphCut时没有介绍到的，所以只读这篇论文我们根本不知道如何建图。&lt;/p&gt;
+&lt;p&gt;GraphCut论文：&lt;a class=&#34;link&#34; href=&#34;https://ieeexplore.ieee.org/document/937505&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://ieeexplore.ieee.org/document/937505&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;GraphCut的作者其实给出了更为泛用的理论，而不仅仅是黑白图像的处理。在这篇论文里，能量定义为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[E(A) = \lambda R(A)+B(A)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;这里的&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;即为之前提到的&lt;span class=&#34;math inline&#34;&gt;\(\alpha\)&lt;/span&gt;，是硬分割。&lt;span class=&#34;math inline&#34;&gt;\(R(A)\)&lt;/span&gt;是区域项，&lt;span class=&#34;math inline&#34;&gt;\(B(A)\)&lt;/span&gt;是边缘项。&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[R(A) = \sum_{p\in P} R_p(A_p)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[B(A) = \sum_{\{p,q\}\in N} B_{\{p,q\}}[A_p, A_q]
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;这里的&lt;span class=&#34;math inline&#34;&gt;\(P\)&lt;/span&gt;是所有像素的集和。&lt;span class=&#34;math inline&#34;&gt;\(N\)&lt;/span&gt;是相邻像素对的集合，其中&lt;span class=&#34;math inline&#34;&gt;\(\{p,q\}\)&lt;/span&gt;是无序的。&lt;/p&gt;
+&lt;p&gt;一般的&lt;span class=&#34;math inline&#34;&gt;\(\lambda\geq 0\)&lt;/span&gt;。&lt;span class=&#34;math inline&#34;&gt;\(R(A)\)&lt;/span&gt;代表着，给某个像素预测为前景和背景的惩罚。而&lt;span class=&#34;math inline&#34;&gt;\(B_{\{p, q\}}\geq 0\)&lt;/span&gt;则是边缘差异的乘法，两个相邻像素&lt;span class=&#34;math inline&#34;&gt;\(p,q\)&lt;/span&gt;，如果它们的颜色非常相近，那么&lt;span class=&#34;math inline&#34;&gt;\(B_{\{p,q\}}\)&lt;/span&gt;应该非常大；而颜色差异很大时，边缘项会非常接近&lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;这里只是给出了泛用的理论，具体怎么去定义这些东西，看大家的具体问题。比如GrabCut就定义了自己的两个惩罚项，本文后面也针对黑白图像定义了惩罚项。&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 72; 
+			flex-basis: 174px&#34;
+	&gt;
+	&lt;a href=&#34;https://kegalas.top/p/grabcut-interactive-foreground-extraction-using-iterated-graph-cuts%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/4.jpg&#34; data-size=&#34;566x777&#34;&gt;
+		&lt;img src=&#34;https://kegalas.top/p/grabcut-interactive-foreground-extraction-using-iterated-graph-cuts%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/4.jpg&#34;
+			width=&#34;566&#34;
+			height=&#34;777&#34;
+			srcset=&#34;https://kegalas.top/p/grabcut-interactive-foreground-extraction-using-iterated-graph-cuts%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/4_hu024aa2306002ee4b2224544c78108e30_118804_480x0_resize_q75_box.jpg 480w, https://kegalas.top/p/grabcut-interactive-foreground-extraction-using-iterated-graph-cuts%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/4_hu024aa2306002ee4b2224544c78108e30_118804_1024x0_resize_q75_box.jpg 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;4.jpg&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;4.jpg&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;建图是像上面一样的，其中邻居像素之间有&lt;span class=&#34;math inline&#34;&gt;\(N-Links\)&lt;/span&gt;，虽然它只画出来4个邻居，但是一般我们也会连上对角的邻居，作为8邻居。每个像素都和源点、汇点有一条边，称作&lt;span class=&#34;math inline&#34;&gt;\(T-Links\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 108; 
+			flex-basis: 261px&#34;
+	&gt;
+	&lt;a href=&#34;https://kegalas.top/p/grabcut-interactive-foreground-extraction-using-iterated-graph-cuts%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/5.jpg&#34; data-size=&#34;566x520&#34;&gt;
+		&lt;img src=&#34;https://kegalas.top/p/grabcut-interactive-foreground-extraction-using-iterated-graph-cuts%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/5.jpg&#34;
+			width=&#34;566&#34;
+			height=&#34;520&#34;
+			srcset=&#34;https://kegalas.top/p/grabcut-interactive-foreground-extraction-using-iterated-graph-cuts%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/5_hu137248bb784274aaf398971d948b9d44_55337_480x0_resize_q75_box.jpg 480w, https://kegalas.top/p/grabcut-interactive-foreground-extraction-using-iterated-graph-cuts%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/5_hu137248bb784274aaf398971d948b9d44_55337_1024x0_resize_q75_box.jpg 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;5.jpg&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;5.jpg&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;建图如上，邻居间的&lt;span class=&#34;math inline&#34;&gt;\(N-Links\)&lt;/span&gt;倒是非常简单，直接就是&lt;span class=&#34;math inline&#34;&gt;\(B_{\{p, q\}}\)&lt;/span&gt;。对于&lt;span class=&#34;math inline&#34;&gt;\(T-Links\)&lt;/span&gt;则更难一些。&lt;/p&gt;
+&lt;p&gt;首先要说明，求出最小割后，在源点一侧的节点是前景，在汇点一侧的节点是背景。所以，要给&lt;span class=&#34;math inline&#34;&gt;\(\{p, S\}\)&lt;/span&gt;这样的边一个误判为背景的惩罚项。图中&lt;span class=&#34;math inline&#34;&gt;\(O\)&lt;/span&gt;即为&lt;span class=&#34;math inline&#34;&gt;\(T_F\)&lt;/span&gt;，&lt;span class=&#34;math inline&#34;&gt;\(B\)&lt;/span&gt;即为&lt;span class=&#34;math inline&#34;&gt;\(T_B\)&lt;/span&gt;。如果已经由用户定义了前景和背景，那么其权值就是固定的&lt;span class=&#34;math inline&#34;&gt;\(K\)&lt;/span&gt;或&lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;在跑完最小割后，原本属于&lt;span class=&#34;math inline&#34;&gt;\(T_U\)&lt;/span&gt;的节点就可以根据自己属于源点部分还是汇点部分，分类到前景背景中了。&lt;/p&gt;
+&lt;p&gt;下面我们来讨论为什么最小割可以最小化能量。割即对于图&lt;span class=&#34;math inline&#34;&gt;\(G=(V,E)\)&lt;/span&gt;，将点划分为&lt;span class=&#34;math inline&#34;&gt;\(S\)&lt;/span&gt;和&lt;span class=&#34;math inline&#34;&gt;\(T=V-S\)&lt;/span&gt;两个集合，其中源点&lt;span class=&#34;math inline&#34;&gt;\(s\in S\)&lt;/span&gt;，汇点&lt;span class=&#34;math inline&#34;&gt;\(t\in T\)&lt;/span&gt;。割的容量即为所有&lt;span class=&#34;math inline&#34;&gt;\(S\)&lt;/span&gt;到&lt;span class=&#34;math inline&#34;&gt;\(T\)&lt;/span&gt;的边的容量之和，记为&lt;span class=&#34;math inline&#34;&gt;\(c(S,T)\)&lt;/span&gt;。最小割即为，使得&lt;span class=&#34;math inline&#34;&gt;\(c(S,T)\)&lt;/span&gt;最小的割。&lt;/p&gt;
+&lt;p&gt;首先是关于&lt;span class=&#34;math inline&#34;&gt;\(N-Links\)&lt;/span&gt;，显然，两个像素颜色差异越大，这里越有可能是前背景的边界，而差异大的时候边权接近&lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt;，所以这样的&lt;span class=&#34;math inline&#34;&gt;\(N-Links\)&lt;/span&gt;必然会出现在最小割中。&lt;/p&gt;
+&lt;p&gt;然后是关于&lt;span class=&#34;math inline&#34;&gt;\(T-Links\)&lt;/span&gt;，一个像素如果被误判的惩罚项很大，比如前景误判为背景，那么它更有可能是前景。我们只能牺牲局部，保全大局，将误判惩罚最小的项让出去，来实现局部最优。所以这样的&lt;span class=&#34;math inline&#34;&gt;\(T-Links\)&lt;/span&gt;也会出现在最小割中。这里的&lt;span class=&#34;math inline&#34;&gt;\(K\)&lt;/span&gt;这是一样的，例如&lt;span class=&#34;math inline&#34;&gt;\(\{p,S\}\)&lt;/span&gt;中的&lt;span class=&#34;math inline&#34;&gt;\(K\)&lt;/span&gt;，如果一个像素已经定义为属于前景了，那么其被误判为背景的惩罚应该很大，如果一个像素已经是背景了，那么其被“误判”为背景的惩罚应该为&lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt;。&lt;/p&gt;
+&lt;h1 id=&#34;grabcut图像分割算法&#34;&gt;GrabCut图像分割算法&lt;/h1&gt;
+&lt;p&gt;这一部分也是硬分割的。&lt;/p&gt;
+&lt;h2 id=&#34;对彩色图像数据建模&#34;&gt;对彩色图像数据建模&lt;/h2&gt;
+&lt;p&gt;现在图像是RGB三通道的了，再像以前一样去构建灰度直方图是不切实际的（从256变成了&lt;span class=&#34;math inline&#34;&gt;\(256^3=\)&lt;/span&gt; 17M）。&lt;/p&gt;
+&lt;p&gt;作者这里参考前人的工作，对前景和背景各使用一个GMM，其&lt;span class=&#34;math inline&#34;&gt;\(K\)&lt;/span&gt;值都等于&lt;span class=&#34;math inline&#34;&gt;\(5\)&lt;/span&gt;。简便起见，在优化框架框架中，添加了一个向量&lt;span class=&#34;math inline&#34;&gt;\(k=\{k_1,\cdots,k_n,\cdots,k_N\}\)&lt;/span&gt;，其中&lt;span class=&#34;math inline&#34;&gt;\(k_n\in\{1,\cdots,K\}\)&lt;/span&gt;。为每个像素分配一个不同的GMM分量，根据&lt;span class=&#34;math inline&#34;&gt;\(\alpha_n=0\)&lt;/span&gt;还是&lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt;来确定分配前景还是背景GMM分量。&lt;/p&gt;
+&lt;p&gt;此时，吉布斯能公式变为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[E(\underline{\alpha},k,\underline{\theta},z) = U(\underline{\alpha},k,\underline{\theta},z)+V(\underline{\alpha},z)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;现在数据项&lt;span class=&#34;math inline&#34;&gt;\(U\)&lt;/span&gt;变为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[U(\underline{\alpha},k,\underline{\theta},z) = \sum_nD(\alpha_n,k_n,\underline{\theta},z_n)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[D(\alpha_n,k_n,\underline{\theta},z_n) = -\log p(z_n|\alpha_n,k_n,\underline{\theta})-\log\pi(\alpha_a,k_n)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(p\)&lt;/span&gt;是正态分布，&lt;span class=&#34;math inline&#34;&gt;\(\pi\)&lt;/span&gt;是高斯混合模型中的那个混合系数。展开有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[D(\alpha_n,k_n,\underline{\theta},z_n) = -\log\pi(\alpha_n,k_n)+\dfrac{1}{2}\log\det\Sigma(\alpha_n, k_n)+\dfrac{1}{2}[z_n-\mu(\alpha_n, k_n)]^T\Sigma(\alpha_n, k_n)^{-1}[z_n-\mu(\alpha_n, k_n)]
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;此时模型的参数为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\underline{\theta} = \{\pi(\alpha, k), \mu(\alpha, k), \Sigma(\alpha, k), \alpha=0,1,k=1,\cdots,K\}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;平滑项几乎没变&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[V(\underline{\alpha},z) = \gamma\sum_{(m,n)\in C}[\alpha_n\neq\alpha_m]\exp-\beta||z_m-z_n||^2
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;这里的距离变成了颜色空间中的欧拉距离。&lt;/p&gt;
+&lt;h2 id=&#34;能量最小化迭代法来进行图像分割&#34;&gt;能量最小化迭代法来进行图像分割&lt;/h2&gt;
+&lt;p&gt;GrabCut使用了迭代的算法来替代Graph Cut的一次性算法。好处在于我们可以通过迭代来不断地精炼不透明度&lt;span class=&#34;math inline&#34;&gt;\(\underline{\alpha}\)&lt;/span&gt;。然后对于初始的trimap中的&lt;span class=&#34;math inline&#34;&gt;\(T_U\)&lt;/span&gt;部分的新标记，被用于精炼GMM的参数&lt;span class=&#34;math inline&#34;&gt;\(\underline{\theta}\)&lt;/span&gt;。算法见下图&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 74; 
+			flex-basis: 178px&#34;
+	&gt;
+	&lt;a href=&#34;https://kegalas.top/p/grabcut-interactive-foreground-extraction-using-iterated-graph-cuts%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/2.jpg&#34; data-size=&#34;670x900&#34;&gt;
+		&lt;img src=&#34;https://kegalas.top/p/grabcut-interactive-foreground-extraction-using-iterated-graph-cuts%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/2.jpg&#34;
+			width=&#34;670&#34;
+			height=&#34;900&#34;
+			srcset=&#34;https://kegalas.top/p/grabcut-interactive-foreground-extraction-using-iterated-graph-cuts%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/2_hu10e739a4478df46556a52aa68190046a_84383_480x0_resize_q75_box.jpg 480w, https://kegalas.top/p/grabcut-interactive-foreground-extraction-using-iterated-graph-cuts%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/2_hu10e739a4478df46556a52aa68190046a_84383_1024x0_resize_q75_box.jpg 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;2.jpg&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;2.jpg&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;首先是初始化部分&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;用户用矩形框框选前景，那么方框外的东西就是&lt;span class=&#34;math inline&#34;&gt;\(T_B\)&lt;/span&gt;了，而方框内的东西都是&lt;span class=&#34;math inline&#34;&gt;\(T_U\)&lt;/span&gt;，即还未确定是否是&lt;span class=&#34;math inline&#34;&gt;\(T_F\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;对&lt;span class=&#34;math inline&#34;&gt;\(T_B\)&lt;/span&gt;内的每个像素初始化&lt;span class=&#34;math inline&#34;&gt;\(\alpha_n=0\)&lt;/span&gt;，对&lt;span class=&#34;math inline&#34;&gt;\(T_U\)&lt;/span&gt;内的每个像素初始化&lt;span class=&#34;math inline&#34;&gt;\(\alpha_n=1\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;然后我们就得到了属于背景的像素和属于前景的像素，这时候就可以初始化GMM的参数了。首先分别对前景和背景的像素，分别用k-means聚类为&lt;span class=&#34;math inline&#34;&gt;\(K\)&lt;/span&gt;类，即得到GMM中的&lt;span class=&#34;math inline&#34;&gt;\(K\)&lt;/span&gt;个高斯模型的元素。然后对每个高斯模型的元素计算均值、协方差，然后混合系数也可以通过计算属于第&lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt;个高斯模型的元素占全体元素的比例来得到。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;迭代过程：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;对每个像素分配GMM中的高斯分量。&lt;span class=&#34;math inline&#34;&gt;\(k_n\)&lt;/span&gt;即为使得&lt;span class=&#34;math inline&#34;&gt;\(D_n\)&lt;/span&gt;最小的那个&lt;span class=&#34;math inline&#34;&gt;\(k_n\)&lt;/span&gt;，公式见上图&lt;/li&gt;
+&lt;li&gt;对于给定的图像&lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;，学习优化GMM的参数。&lt;/li&gt;
+&lt;li&gt;使用最小割来进行图像分割。&lt;/li&gt;
+&lt;li&gt;重复步骤1-3直到收敛。作者指出，由于能量是一直递减的，所以一定会收敛。至少会收敛到局部最优。&lt;/li&gt;
+&lt;li&gt;应用第四节提到的border matting&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;用户编辑过程：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;编辑：人为地固定一些像素为背景或前景，来更新trimap，然后执行一次第3步。&lt;/li&gt;
+&lt;li&gt;重操作：（可选）重复整个迭代过程。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;用户人工编辑&#34;&gt;用户人工编辑&lt;/h2&gt;
+&lt;p&gt;GrabCut是根据颜色分布和边缘来进行图像分割的，但是也有一些“不合常理”的图片。此时还是需要进行人工的编辑。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Incomplete trimaps&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;这里指的应该就是，框选前景，反过来标记背景的操作。整个迭代算法也是不对&lt;span class=&#34;math inline&#34;&gt;\(T_B\)&lt;/span&gt;进行retract，但是&lt;span class=&#34;math inline&#34;&gt;\(T_U\)&lt;/span&gt;中的像素就可以被改变为背景或前景。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Further user editing&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;即前面描述的用户编辑过程。如果分割的图像错误地把一些东西分到了背景，则我们可以用前景刷把他们标记回来。反之亦然。&lt;/p&gt;
+&lt;h1 id=&#34;透明度处理&#34;&gt;透明度处理&lt;/h1&gt;
+&lt;p&gt;一个matting的工具应该可以处理连续的&lt;span class=&#34;math inline&#34;&gt;\(\alpha\)&lt;/span&gt;值。作者提出了一种机制，来使得之前的硬分隔增强为软分割，从而更好地处理物体边缘。&lt;/p&gt;
+&lt;h2 id=&#34;border-matting&#34;&gt;Border Matting&lt;/h2&gt;
+&lt;p&gt;这个Border Matting一般是在一个闭合的曲线&lt;span class=&#34;math inline&#34;&gt;\(C\)&lt;/span&gt;上进行的，这条曲线一般是根据之前的硬分割的两部分的边缘组成的多边形。此时我们定义一个新的trimap&lt;span class=&#34;math inline&#34;&gt;\(\{T_B, T_U, T_F\}\)&lt;/span&gt;，这里的&lt;span class=&#34;math inline&#34;&gt;\(T_U\)&lt;/span&gt;定义为&lt;span class=&#34;math inline&#34;&gt;\(C\)&lt;/span&gt;往外扩展&lt;span class=&#34;math inline&#34;&gt;\(w\)&lt;/span&gt;个像素（作者使用&lt;span class=&#34;math inline&#34;&gt;\(w=6\)&lt;/span&gt;）。之后会使用动态规划来在&lt;span class=&#34;math inline&#34;&gt;\(T_U\)&lt;/span&gt;上来进行&lt;span class=&#34;math inline&#34;&gt;\(\alpha\)&lt;/span&gt;值的预测。&lt;/p&gt;
+&lt;p&gt;将曲线&lt;span class=&#34;math inline&#34;&gt;\(C\)&lt;/span&gt;参数化为&lt;span class=&#34;math inline&#34;&gt;\(t=1,\cdots ,T\)&lt;/span&gt;，其中&lt;span class=&#34;math inline&#34;&gt;\(T\)&lt;/span&gt;是周期，因为&lt;span class=&#34;math inline&#34;&gt;\(C\)&lt;/span&gt;是闭合曲线。定义&lt;span class=&#34;math inline&#34;&gt;\(t(n)\)&lt;/span&gt;为&lt;span class=&#34;math inline&#34;&gt;\(T_U\)&lt;/span&gt;上的第&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;个像素组，这个组如下图(b)中的黑框灰色像素。&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 150; 
+			flex-basis: 361px&#34;
+	&gt;
+	&lt;a href=&#34;https://kegalas.top/p/grabcut-interactive-foreground-extraction-using-iterated-graph-cuts%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/3.jpg&#34; data-size=&#34;628x417&#34;&gt;
+		&lt;img src=&#34;https://kegalas.top/p/grabcut-interactive-foreground-extraction-using-iterated-graph-cuts%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/3.jpg&#34;
+			width=&#34;628&#34;
+			height=&#34;417&#34;
+			srcset=&#34;https://kegalas.top/p/grabcut-interactive-foreground-extraction-using-iterated-graph-cuts%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/3_hu298444c6a040e864ef37845ebd8b1d3f_78294_480x0_resize_q75_box.jpg 480w, https://kegalas.top/p/grabcut-interactive-foreground-extraction-using-iterated-graph-cuts%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/3_hu298444c6a040e864ef37845ebd8b1d3f_78294_1024x0_resize_q75_box.jpg 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;3.jpg&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;3.jpg&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(\alpha_n\)&lt;/span&gt;定义为&lt;span class=&#34;math inline&#34;&gt;\(\alpha_n=g(r_n;\Delta_{t(n)},\sigma_{t(n)})\)&lt;/span&gt;，其中&lt;span class=&#34;math inline&#34;&gt;\(g\)&lt;/span&gt;是一个“软”阶跃函数，见上图(c)。&lt;span class=&#34;math inline&#34;&gt;\(r_n\)&lt;/span&gt;是像素&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;到曲线&lt;span class=&#34;math inline&#34;&gt;\(c\)&lt;/span&gt;的有正负的距离，见上图(b)。&lt;span class=&#34;math inline&#34;&gt;\(\Delta,\sigma\)&lt;/span&gt;的意义见上图(c)，这里假设所有像素，如果它们的&lt;span class=&#34;math inline&#34;&gt;\(t\)&lt;/span&gt;相同，那么就拥有同样的&lt;span class=&#34;math inline&#34;&gt;\(\Delta, \sigma\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(\Delta, \sigma\)&lt;/span&gt;是使用动态规划来求解的。最小化如下的能量&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[E=\sum_{n\in T_U} \widetilde{D}_n(\alpha_n)+\sum^T_{t=1}\widetilde{V}(\Delta_t,\sigma_t,\Delta_{t+1},\sigma_{t+1})
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(\widetilde{V}\)&lt;/span&gt;是光滑正则项&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\widetilde{V}(\Delta,\sigma,\Delta&#39;,\sigma&#39;)=\lambda_1(\Delta-\Delta&#39;)^2+\lambda_2(\sigma-\sigma&#39;)^2
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;它的作用是，使&lt;span class=&#34;math inline&#34;&gt;\(t\)&lt;/span&gt;在增加时，&lt;span class=&#34;math inline&#34;&gt;\(\alpha\)&lt;/span&gt;的变化更为平滑。作者使用&lt;span class=&#34;math inline&#34;&gt;\(\lambda_1=50, \lambda_2=10^3\)&lt;/span&gt;。在DP过程中，&lt;span class=&#34;math inline&#34;&gt;\(\Delta_t\)&lt;/span&gt;的值有30个levels，而&lt;span class=&#34;math inline&#34;&gt;\(\sigma_t\)&lt;/span&gt;有10个levels。作者说它们的DP是线性时间的（我没看具体实现），需要两次遍历整个曲线&lt;span class=&#34;math inline&#34;&gt;\(C\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;数据项&lt;span class=&#34;math inline&#34;&gt;\(\widetilde{D}\)&lt;/span&gt;定义为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\widetilde{D}_n(\alpha_n)=-\log N(z_n;\mu_{t(n)}(\alpha_n), \Sigma_{t(n)}(\alpha_n))
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(N\)&lt;/span&gt;即为多元高斯正态分布，其中均值和方差为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\mu_t(\alpha) = (1-\alpha)\mu_t(0)+\alpha\mu_t(1)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\Sigma_t(\alpha) = (1-\alpha)^2\Sigma_t(0)+\alpha^2\Sigma_t(1)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;这里的&lt;span class=&#34;math inline&#34;&gt;\(\mu_t(x),\Sigma_t(x),x=0,1\)&lt;/span&gt;是从前景和背景中的像素样本估算来的。前景&lt;span class=&#34;math inline&#34;&gt;\(F_t=S_t\cap T_F\)&lt;/span&gt;，背景&lt;span class=&#34;math inline&#34;&gt;\(B_t=S_t\cap T_B\)&lt;/span&gt;，这里&lt;span class=&#34;math inline&#34;&gt;\(S_t\)&lt;/span&gt;是一个矩形区域，即曲线&lt;span class=&#34;math inline&#34;&gt;\(C\)&lt;/span&gt;上的某个点&lt;span class=&#34;math inline&#34;&gt;\(t\)&lt;/span&gt;扩张&lt;span class=&#34;math inline&#34;&gt;\(L\)&lt;/span&gt;个像素得到的&lt;span class=&#34;math inline&#34;&gt;\(L\times L\)&lt;/span&gt;区域，作者取&lt;span class=&#34;math inline&#34;&gt;\(L=41\)&lt;/span&gt;&lt;/p&gt;
+&lt;h2 id=&#34;前景估计&#34;&gt;前景估计&lt;/h2&gt;
+&lt;p&gt;作者指出，之前的Bayes matting方法，会有背景的颜色渗出到前景中的问题。作者这里通过从&lt;span class=&#34;math inline&#34;&gt;\(T_F\)&lt;/span&gt;中借用像素，来避免这个问题。&lt;/p&gt;
+&lt;p&gt;Bayes matting从&lt;span class=&#34;math inline&#34;&gt;\(n\in T_U\)&lt;/span&gt;中预测得到一个前景色&lt;span class=&#34;math inline&#34;&gt;\(\hat f_{n}\)&lt;/span&gt;。根据之前定义的&lt;span class=&#34;math inline&#34;&gt;\(F_{t(n)}\)&lt;/span&gt;，可知&lt;span class=&#34;math inline&#34;&gt;\(\hat f_n\)&lt;/span&gt;会和借用的&lt;span class=&#34;math inline&#34;&gt;\(f_n\)&lt;/span&gt;很相似。&lt;/p&gt;
+&lt;h1 id=&#34;其他思考内容&#34;&gt;其他思考内容&lt;/h1&gt;
+&lt;h2 id=&#34;gmm换成彩色直方图会怎么样&#34;&gt;GMM换成彩色直方图会怎么样？&lt;/h2&gt;
+&lt;p&gt;以我自己的实验经验来说，&lt;span class=&#34;math inline&#34;&gt;\(256^3\)&lt;/span&gt;的内存空间还是放得下的，但显然不是内存的原因，才导致作者不去使用颜色直方图。我实际测试过，其效果比较差。如果你定义某个像素属于前景和背景的概率，仅仅考虑该像素颜色在直方图中的概率的话，只会有很少的像素被去除。如果你定义该概率为该像素RGB都&lt;span class=&#34;math inline&#34;&gt;\(\pm 5\)&lt;/span&gt;的这个范围内的概率和，则计算量就爆炸了，而且效果也不好。&lt;/p&gt;
+&lt;p&gt;其主要的问题在于，颜色在色彩空间中分布过于分散，计算概率的效果不好。&lt;/p&gt;
+&lt;h2 id=&#34;彩色直方图的其他优化方法&#34;&gt;彩色直方图的其他优化方法&lt;/h2&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://mmcheng.net/zh/salobj/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://mmcheng.net/zh/salobj/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;这篇文章中，作者指出，一张照片的绝大多数颜色（95%）都是相近的，可以将颜色空间简化到&lt;span class=&#34;math inline&#34;&gt;\(12^3\)&lt;/span&gt;，即&lt;span class=&#34;math inline&#34;&gt;\(RGB\)&lt;/span&gt;每个通道都简化为&lt;span class=&#34;math inline&#34;&gt;\(12\)&lt;/span&gt;个值。然后通过进一步的统计，选择其中出现次数最多的&lt;span class=&#34;math inline&#34;&gt;\(85\)&lt;/span&gt;个颜色，来覆盖&lt;span class=&#34;math inline&#34;&gt;\(95\%\)&lt;/span&gt;的图片色彩。&lt;/p&gt;
+&lt;p&gt;当然，为了应对剩下的那&lt;span class=&#34;math inline&#34;&gt;\(5\%\)&lt;/span&gt;，作者也提出了一个色彩空间平滑的操作。有机会再来精读这篇文章。&lt;/p&gt;
+&lt;h1 id=&#34;我的实现&#34;&gt;我的实现&lt;/h1&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://github.com/kegalas/GrabCut&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://github.com/kegalas/GrabCut&lt;/a&gt;&lt;/p&gt;
+</description>
+        </item>
+        <item>
         <title>在校园网中用ssh连接宿舍电脑</title>
         <link>https://kegalas.top/p/%E5%9C%A8%E6%A0%A1%E5%9B%AD%E7%BD%91%E4%B8%AD%E7%94%A8ssh%E8%BF%9E%E6%8E%A5%E5%AE%BF%E8%88%8D%E7%94%B5%E8%84%91/</link>
         <pubDate>Fri, 20 Oct 2023 15:33:36 +0800</pubDate>

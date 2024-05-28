@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='原论文：https://www.microsoft.com/en-us/research/publication/grabcut-inter'><title>GrabCut— Interactive Foreground Extraction Using Iterated Graph Cuts论文精读与复现</title>
+
+<link rel='canonical' href='https://kegalas.top/p/grabcut-interactive-foreground-extraction-using-iterated-graph-cuts%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/'>
+
+<link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='GrabCut— Interactive Foreground Extraction Using Iterated Graph Cuts论文精读与复现'>
+<meta property='og:description' content='原论文：https://www.microsoft.com/en-us/research/publication/grabcut-inter'>
+<meta property='og:url' content='https://kegalas.top/p/grabcut-interactive-foreground-extraction-using-iterated-graph-cuts%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/'>
+<meta property='og:site_name' content='KegalaS的个人博客'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='大学' /><meta property='article:tag' content='人工智能' /><meta property='article:tag' content='图形学' /><meta property='article:tag' content='计算机视觉' /><meta property='article:published_time' content='2024-05-20T11:21:12&#43;08:00'/><meta property='article:modified_time' content='2024-05-20T11:21:12&#43;08:00'/><meta property='og:image' content='https://kegalas.top/p/grabcut-interactive-foreground-extraction-using-iterated-graph-cuts%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/cover.jpg' />
+<meta name="twitter:title" content="GrabCut— Interactive Foreground Extraction Using Iterated Graph Cuts论文精读与复现">
+<meta name="twitter:description" content="原论文：https://www.microsoft.com/en-us/research/publication/grabcut-inter"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://kegalas.top/p/grabcut-interactive-foreground-extraction-using-iterated-graph-cuts%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/cover.jpg' />
+    <link rel="shortcut icon" href="/images/favicon.ico" />
+
+    </head>
+    <body class="
+    article-page has-toc
+">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex 
+    
+        extended
+    
+">
+    
+        <div id="article-toolbar">
+            <a href="/" class="back-home">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="15 6 9 12 15 18" />
+</svg>
+
+
+
+                <span>返回</span>
+            </a>
+        </div>
+    
+<main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/p/grabcut-interactive-foreground-extraction-using-iterated-graph-cuts%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/">
+                <img src="/p/grabcut-interactive-foreground-extraction-using-iterated-graph-cuts%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/cover_huf62d2c95a51769be2a7aa0d894297a77_82581_800x0_resize_q75_box.jpg"
+                        srcset="/p/grabcut-interactive-foreground-extraction-using-iterated-graph-cuts%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/cover_huf62d2c95a51769be2a7aa0d894297a77_82581_800x0_resize_q75_box.jpg 800w, /p/grabcut-interactive-foreground-extraction-using-iterated-graph-cuts%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/cover_huf62d2c95a51769be2a7aa0d894297a77_82581_1600x0_resize_q75_box.jpg 1600w"
+                        width="800" 
+                        height="255" 
+                        loading="lazy"
+                        alt="Featured image of post GrabCut— Interactive Foreground Extraction Using Iterated Graph Cuts论文精读与复现" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" >
+                图形学
+            </a>
+        
+    </header>
+    
+
+    <h2 class="article-title">
+        <a href="/p/grabcut-interactive-foreground-extraction-using-iterated-graph-cuts%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/">GrabCut— Interactive Foreground Extraction Using Iterated Graph Cuts论文精读与复现</a>
+    </h2>
+
+    
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">May 20, 2024</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 15 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+</div>
+</header>
+
+    <section class="article-content">
+    <p>原论文：<a class="link" href="https://www.microsoft.com/en-us/research/publication/grabcut-interactive-foreground-extraction-using-iterated-graph-cuts/"  target="_blank" rel="noopener"
+    >https://www.microsoft.com/en-us/research/publication/grabcut-interactive-foreground-extraction-using-iterated-graph-cuts/</a></p>
+<h1 id="摘要">摘要</h1>
+<p>分离出图像的前景和背景，对于图像编辑是很重要的。经典的image segmentation实现方式有两个，一是使用纹理（颜色）信息，例如魔棒工具。另一种是使用边缘信息，例如磁力套索（Intelligent Scissors）。本文介绍使用graph-cut来进行图像分割。本文提出了三方面的改进：优化迭代、优化用户交互、border matting的处理优化</p>
+<h1 id="简介">简介</h1>
+<p>这里提到，所谓的“前景对象”的结果是一个alpha-matte，反应了前景和背景的比例。个人理解应该是，某个像素属于前景的可能性的大小和背景的可能性的比。本文想要实现保证高性能的前提下，不需要用户的过多交互，就能得到很好的效果。</p>
+<p>高性能指：精准分割前背景，主观上可信的alpha值，可以处理模糊、混合像素（mixed pixels）、和透明度（透明的物体），前景图片不带有背景透过来的颜色。</p>
+<p>用户交互的简易程度：作者举例了两个极端，一个是需要用户逐像素地点击前景，一个是只需要用户点击前景和背景的几个位置。</p>
+<h2 id="之前的交互式获取matte的工作">之前的交互式获取matte的工作</h2>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 235; 
+			flex-basis: 565px"
+	>
+	<a href="/p/grabcut-interactive-foreground-extraction-using-iterated-graph-cuts%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/1.jpg" data-size="1738x738">
+		<img src="/p/grabcut-interactive-foreground-extraction-using-iterated-graph-cuts%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/1.jpg"
+			width="1738"
+			height="738"
+			srcset="/p/grabcut-interactive-foreground-extraction-using-iterated-graph-cuts%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/1_hu98ac03af52814908ff0c41eef0489c4b_201681_480x0_resize_q75_box.jpg 480w, /p/grabcut-interactive-foreground-extraction-using-iterated-graph-cuts%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/1_hu98ac03af52814908ff0c41eef0489c4b_201681_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="1.jpg">
+	</a>
+	
+	<figcaption>1.jpg</figcaption>
+	
+</figure></p>
+<p><strong>魔棒（Magic Band）</strong></p>
+<p>和PS里用到的魔棒差不多，就是选择容差，选择图片中点击区域附近在容差之类的像素。但是这个容差有时不容易选择。导致结果不好。</p>
+<p><strong>磁力套索（Intelligent Scissors）</strong></p>
+<p>和PS里的磁力套索差不多，用户需要在前景的边缘大概地移动鼠标，选取整个前景。缺点是如果背景太复杂，用户需要的操作会很多。</p>
+<p><strong>Bayes matting</strong></p>
+<p>对颜色概率分布进行建模，来实现一个full alpha mattes。用户要选取一个trimap。记作<span class="math inline">\(T=\{T_B,T_U,T_F\}\)</span>，其中<span class="math inline">\(T_B\)</span>标记了背景，<span class="math inline">\(T_F\)</span>标记了前景。之后alpha值是在剩下的那个区域<span class="math inline">\(T_U\)</span>上计算的。有时效果还是不错的，但是只有当<span class="math inline">\(T_U\)</span>区域不太大，并且前背景的颜色概率分布可以很好地分开时，效果才不错。另外，需要的用户操作也不少。</p>
+<p><strong>Knockout 2</strong></p>
+<p>是一个PS的插件，里面用的是用户定义的trimap，总体和Bayes matting差不多。</p>
+<p><strong>Graph Cut</strong></p>
+<p>优化了bayes matting，同样利用了trimaps和对颜色的概率分布建模，鲁棒性很好，它甚至可以区分出环境里的迷彩服。具体在第二节才会介绍。</p>
+<p><strong>Level sets</strong></p>
+<p>通过解偏微分方程来做。缺点是可能会陷入局部最优。</p>
+<h2 id="作者提出的系统grabcut">作者提出的系统：grabcut</h2>
+<p>理想状态中，一个matting工具应该能够在<span class="math inline">\(T_U\)</span>上计算连续的alpha值，没有强制约束的话，alpha的值可能就只会是0、1两个值。如果有连续的alpha值，那么对于烟雾、头发、树（叶）等问题应该可以自动地、近似地解决。但是作者发现，对于前景背景颜色分布容易分开的图像效果还可以，遇到迷彩这样的东西就不行。</p>
+<p>首先作者会在第二节和第三节介绍一个使用迭代图割（iterative graph cut）的方法来获取图像硬分割（hard segmentation）。然后在第四节border matting部分会用上通过硬分区之间的区域来计算alpha value。作者说，grabcut不处理完全透明的情况，除非是在border部分。作者建议使用matting brush来处理这种完全透明，只要没有迷彩，结果就可以很好。</p>
+<p>作者认为，本文的首要创新在于处理图像的分割。他们为graph cut提供了两个优化：迭代估计、不完全标记。这两个东西可观的减少了用户交互的复杂度。只需要拖拽一个矩形框柱前景。另外，也开发出了一种新的计算alpha值的机制，来用于border matting的部分。</p>
+<h1 id="使用graph-cut进行图像分割">使用Graph Cut进行图像分割</h1>
+<p>grabcut是建立在graph cut的研究基础上的，所以有必要对此进行详细描述。</p>
+<h2 id="图像分割">图像分割</h2>
+<p>graph cut是用于黑白图像分割的。给定一个初始的trimap，<span class="math inline">\(T\)</span>，图像是一个数组<span class="math inline">\(z=(z_1,\cdots,z_N)\)</span>，每个值都是灰度值，下标是一维的。图像的分割用一个“不透明度”的数组来表示，<span class="math inline">\(\underline{\alpha}=(\alpha_1,\cdots,\alpha_N)\)</span>表示。每个像素都有一个这种数组。一般来说<span class="math inline">\(\alpha_n\)</span>是<span class="math inline">\([0,1]\)</span>上的实数，但对于硬分割来说，其取值为集合<span class="math inline">\(\{0,1\}\)</span>。<span class="math inline">\(0\)</span>代表背景，<span class="math inline">\(1\)</span>代表前景。</p>
+<p>参数<span class="math inline">\(\underline{\theta}\)</span>描述图像前景和背景的grey-level概率分布，也包含了灰度值的直方图。即</p>
+<p><span class="math display">\[\underline{\theta} = \{h(z;\alpha), \alpha=0,1\}
+\]</span></p>
+<p>其中直方图是直接用<span class="math inline">\(T_B, T_F\)</span>标记的像素得来的。这里直方图进行了归一化，<span class="math inline">\(\int_zh(z;\alpha)=1\)</span></p>
+<p>图像分割的任务就是使用给定的<span class="math inline">\(z\)</span>和<span class="math inline">\(\underline{\theta}\)</span>，来推断出未知部分的不透明度数组<span class="math inline">\(\underline{\alpha}\)</span></p>
+<h2 id="最小化能量法来进行分割">最小化能量法来进行分割</h2>
+<p>定义能量函数<span class="math inline">\(E\)</span>，其值最小化的时候，得到最好的分割结果。某种意义上，这个<span class="math inline">\(E\)</span>应该和前景、背景的直方图都有关，并且也和不透明度有关。反应了物体的一种稳定趋势。作者从吉布斯自由能中获得了灵感，写出了一个类似的形式：</p>
+<p><span class="math display">\[E(\underline{\alpha},\underline{\theta},z) = U(\underline{\alpha},\underline{\theta},z)+V(\underline{\alpha},z)
+\]</span></p>
+<p>其中，数据项<span class="math inline">\(U\)</span>在给定直方图模型<span class="math inline">\(\underline{\theta}\)</span>的情况下，评估不透明度分布<span class="math inline">\(\underline{\alpha}\)</span>对图像<span class="math inline">\(z\)</span>的拟合。定义为</p>
+<p><span class="math display">\[U(\underline{\alpha},\underline{\theta},z) = \sum_n-\log h(z_n;\alpha_n)
+\]</span></p>
+<p>其中，平滑项为</p>
+<p><span class="math display">\[V(\underline{\alpha},z) = \gamma\sum_{(m,n)\in C}dis(m,n)^{-1}[\alpha_n\neq\alpha_m]\exp-\beta(z_m-z_n)^2
+\]</span></p>
+<p>里面的<span class="math inline">\([...]\)</span>是一个艾弗森括号。<span class="math inline">\(C\)</span>是一个集合，里面的元素是邻居像素点对。<span class="math inline">\(dis(\cdot)\)</span>是邻居像素点对的欧拉距离。这种能量（指平滑项）让灰度相似的区域更加具有一致性。实践中，像素的邻居有8个。</p>
+<p>当常数<span class="math inline">\(\beta=0\)</span>时，平滑项就简化为著名的Ising prior（但我不知道是什么）。此时平滑项就对全图进行平滑，其程度由<span class="math inline">\(\gamma\)</span>决定。在Graph Cut的论文中指出，设置<span class="math inline">\(\beta>0\)</span>更好，这可以放松对于高对比度区域的平滑，同时这里的<span class="math inline">\(\beta\)</span>可以选为</p>
+<p><span class="math display">\[\beta = \bigg(2\bigg<(z_m-z_n)^2\bigg>\bigg)^{-1}
+\]</span></p>
+<p>这里<span class="math inline">\(<\cdot>\)</span>代表图像上样本的期望。选这个<span class="math inline">\(\beta\)</span>能够保证，平滑项可以适当的从高对比度和低对比度场景中切换。</p>
+<p>常数<span class="math inline">\(\gamma\)</span>取<span class="math inline">\(50\)</span>，这是后面的文章通过实验得到的经验值。</p>
+<p>在定义完能量模型后，图像分割就可以被估计为</p>
+<p><span class="math display">\[\underline{\hat{\alpha}} = \arg\min_{\underline{\alpha}} E(\underline{\alpha}, \underline{\theta})
+\]</span></p>
+<p>这里的最小化使用最小割算法。这也是硬分割的基础。</p>
+<p>下一部分会介绍作者三方面的改进。首先是把黑白图像的模型，用高斯混合模型替换，从而可以用到彩色图像上。第二，执行一次最小割的算法被替换为一个迭代过程。第三，简化用户操作，只需要使用一个矩形或者一个套索来标注<span class="math inline">\(T_B\)</span></p>
+<h2 id="如何用网络流为该问题建模">如何用网络流为该问题建模？</h2>
+<p>这里是GrabCut在介绍GraphCut时没有介绍到的，所以只读这篇论文我们根本不知道如何建图。</p>
+<p>GraphCut论文：<a class="link" href="https://ieeexplore.ieee.org/document/937505"  target="_blank" rel="noopener"
+    >https://ieeexplore.ieee.org/document/937505</a></p>
+<p>GraphCut的作者其实给出了更为泛用的理论，而不仅仅是黑白图像的处理。在这篇论文里，能量定义为</p>
+<p><span class="math display">\[E(A) = \lambda R(A)+B(A)
+\]</span></p>
+<p>这里的<span class="math inline">\(A\)</span>即为之前提到的<span class="math inline">\(\alpha\)</span>，是硬分割。<span class="math inline">\(R(A)\)</span>是区域项，<span class="math inline">\(B(A)\)</span>是边缘项。</p>
+<p><span class="math display">\[R(A) = \sum_{p\in P} R_p(A_p)
+\]</span></p>
+<p><span class="math display">\[B(A) = \sum_{\{p,q\}\in N} B_{\{p,q\}}[A_p, A_q]
+\]</span></p>
+<p>这里的<span class="math inline">\(P\)</span>是所有像素的集和。<span class="math inline">\(N\)</span>是相邻像素对的集合，其中<span class="math inline">\(\{p,q\}\)</span>是无序的。</p>
+<p>一般的<span class="math inline">\(\lambda\geq 0\)</span>。<span class="math inline">\(R(A)\)</span>代表着，给某个像素预测为前景和背景的惩罚。而<span class="math inline">\(B_{\{p, q\}}\geq 0\)</span>则是边缘差异的乘法，两个相邻像素<span class="math inline">\(p,q\)</span>，如果它们的颜色非常相近，那么<span class="math inline">\(B_{\{p,q\}}\)</span>应该非常大；而颜色差异很大时，边缘项会非常接近<span class="math inline">\(0\)</span>。</p>
+<p>这里只是给出了泛用的理论，具体怎么去定义这些东西，看大家的具体问题。比如GrabCut就定义了自己的两个惩罚项，本文后面也针对黑白图像定义了惩罚项。</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 72; 
+			flex-basis: 174px"
+	>
+	<a href="/p/grabcut-interactive-foreground-extraction-using-iterated-graph-cuts%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/4.jpg" data-size="566x777">
+		<img src="/p/grabcut-interactive-foreground-extraction-using-iterated-graph-cuts%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/4.jpg"
+			width="566"
+			height="777"
+			srcset="/p/grabcut-interactive-foreground-extraction-using-iterated-graph-cuts%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/4_hu024aa2306002ee4b2224544c78108e30_118804_480x0_resize_q75_box.jpg 480w, /p/grabcut-interactive-foreground-extraction-using-iterated-graph-cuts%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/4_hu024aa2306002ee4b2224544c78108e30_118804_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="4.jpg">
+	</a>
+	
+	<figcaption>4.jpg</figcaption>
+	
+</figure></p>
+<p>建图是像上面一样的，其中邻居像素之间有<span class="math inline">\(N-Links\)</span>，虽然它只画出来4个邻居，但是一般我们也会连上对角的邻居，作为8邻居。每个像素都和源点、汇点有一条边，称作<span class="math inline">\(T-Links\)</span>。</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 108; 
+			flex-basis: 261px"
+	>
+	<a href="/p/grabcut-interactive-foreground-extraction-using-iterated-graph-cuts%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/5.jpg" data-size="566x520">
+		<img src="/p/grabcut-interactive-foreground-extraction-using-iterated-graph-cuts%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/5.jpg"
+			width="566"
+			height="520"
+			srcset="/p/grabcut-interactive-foreground-extraction-using-iterated-graph-cuts%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/5_hu137248bb784274aaf398971d948b9d44_55337_480x0_resize_q75_box.jpg 480w, /p/grabcut-interactive-foreground-extraction-using-iterated-graph-cuts%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/5_hu137248bb784274aaf398971d948b9d44_55337_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="5.jpg">
+	</a>
+	
+	<figcaption>5.jpg</figcaption>
+	
+</figure></p>
+<p>建图如上，邻居间的<span class="math inline">\(N-Links\)</span>倒是非常简单，直接就是<span class="math inline">\(B_{\{p, q\}}\)</span>。对于<span class="math inline">\(T-Links\)</span>则更难一些。</p>
+<p>首先要说明，求出最小割后，在源点一侧的节点是前景，在汇点一侧的节点是背景。所以，要给<span class="math inline">\(\{p, S\}\)</span>这样的边一个误判为背景的惩罚项。图中<span class="math inline">\(O\)</span>即为<span class="math inline">\(T_F\)</span>，<span class="math inline">\(B\)</span>即为<span class="math inline">\(T_B\)</span>。如果已经由用户定义了前景和背景，那么其权值就是固定的<span class="math inline">\(K\)</span>或<span class="math inline">\(0\)</span>。</p>
+<p>在跑完最小割后，原本属于<span class="math inline">\(T_U\)</span>的节点就可以根据自己属于源点部分还是汇点部分，分类到前景背景中了。</p>
+<p>下面我们来讨论为什么最小割可以最小化能量。割即对于图<span class="math inline">\(G=(V,E)\)</span>，将点划分为<span class="math inline">\(S\)</span>和<span class="math inline">\(T=V-S\)</span>两个集合，其中源点<span class="math inline">\(s\in S\)</span>，汇点<span class="math inline">\(t\in T\)</span>。割的容量即为所有<span class="math inline">\(S\)</span>到<span class="math inline">\(T\)</span>的边的容量之和，记为<span class="math inline">\(c(S,T)\)</span>。最小割即为，使得<span class="math inline">\(c(S,T)\)</span>最小的割。</p>
+<p>首先是关于<span class="math inline">\(N-Links\)</span>，显然，两个像素颜色差异越大，这里越有可能是前背景的边界，而差异大的时候边权接近<span class="math inline">\(0\)</span>，所以这样的<span class="math inline">\(N-Links\)</span>必然会出现在最小割中。</p>
+<p>然后是关于<span class="math inline">\(T-Links\)</span>，一个像素如果被误判的惩罚项很大，比如前景误判为背景，那么它更有可能是前景。我们只能牺牲局部，保全大局，将误判惩罚最小的项让出去，来实现局部最优。所以这样的<span class="math inline">\(T-Links\)</span>也会出现在最小割中。这里的<span class="math inline">\(K\)</span>这是一样的，例如<span class="math inline">\(\{p,S\}\)</span>中的<span class="math inline">\(K\)</span>，如果一个像素已经定义为属于前景了，那么其被误判为背景的惩罚应该很大，如果一个像素已经是背景了，那么其被“误判”为背景的惩罚应该为<span class="math inline">\(0\)</span>。</p>
+<h1 id="grabcut图像分割算法">GrabCut图像分割算法</h1>
+<p>这一部分也是硬分割的。</p>
+<h2 id="对彩色图像数据建模">对彩色图像数据建模</h2>
+<p>现在图像是RGB三通道的了，再像以前一样去构建灰度直方图是不切实际的（从256变成了<span class="math inline">\(256^3=\)</span> 17M）。</p>
+<p>作者这里参考前人的工作，对前景和背景各使用一个GMM，其<span class="math inline">\(K\)</span>值都等于<span class="math inline">\(5\)</span>。简便起见，在优化框架框架中，添加了一个向量<span class="math inline">\(k=\{k_1,\cdots,k_n,\cdots,k_N\}\)</span>，其中<span class="math inline">\(k_n\in\{1,\cdots,K\}\)</span>。为每个像素分配一个不同的GMM分量，根据<span class="math inline">\(\alpha_n=0\)</span>还是<span class="math inline">\(1\)</span>来确定分配前景还是背景GMM分量。</p>
+<p>此时，吉布斯能公式变为</p>
+<p><span class="math display">\[E(\underline{\alpha},k,\underline{\theta},z) = U(\underline{\alpha},k,\underline{\theta},z)+V(\underline{\alpha},z)
+\]</span></p>
+<p>现在数据项<span class="math inline">\(U\)</span>变为</p>
+<p><span class="math display">\[U(\underline{\alpha},k,\underline{\theta},z) = \sum_nD(\alpha_n,k_n,\underline{\theta},z_n)
+\]</span></p>
+<p><span class="math display">\[D(\alpha_n,k_n,\underline{\theta},z_n) = -\log p(z_n|\alpha_n,k_n,\underline{\theta})-\log\pi(\alpha_a,k_n)
+\]</span></p>
+<p>其中<span class="math inline">\(p\)</span>是正态分布，<span class="math inline">\(\pi\)</span>是高斯混合模型中的那个混合系数。展开有</p>
+<p><span class="math display">\[D(\alpha_n,k_n,\underline{\theta},z_n) = -\log\pi(\alpha_n,k_n)+\dfrac{1}{2}\log\det\Sigma(\alpha_n, k_n)+\dfrac{1}{2}[z_n-\mu(\alpha_n, k_n)]^T\Sigma(\alpha_n, k_n)^{-1}[z_n-\mu(\alpha_n, k_n)]
+\]</span></p>
+<p>此时模型的参数为</p>
+<p><span class="math display">\[\underline{\theta} = \{\pi(\alpha, k), \mu(\alpha, k), \Sigma(\alpha, k), \alpha=0,1,k=1,\cdots,K\}
+\]</span></p>
+<p>平滑项几乎没变</p>
+<p><span class="math display">\[V(\underline{\alpha},z) = \gamma\sum_{(m,n)\in C}[\alpha_n\neq\alpha_m]\exp-\beta||z_m-z_n||^2
+\]</span></p>
+<p>这里的距离变成了颜色空间中的欧拉距离。</p>
+<h2 id="能量最小化迭代法来进行图像分割">能量最小化迭代法来进行图像分割</h2>
+<p>GrabCut使用了迭代的算法来替代Graph Cut的一次性算法。好处在于我们可以通过迭代来不断地精炼不透明度<span class="math inline">\(\underline{\alpha}\)</span>。然后对于初始的trimap中的<span class="math inline">\(T_U\)</span>部分的新标记，被用于精炼GMM的参数<span class="math inline">\(\underline{\theta}\)</span>。算法见下图</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 74; 
+			flex-basis: 178px"
+	>
+	<a href="/p/grabcut-interactive-foreground-extraction-using-iterated-graph-cuts%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/2.jpg" data-size="670x900">
+		<img src="/p/grabcut-interactive-foreground-extraction-using-iterated-graph-cuts%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/2.jpg"
+			width="670"
+			height="900"
+			srcset="/p/grabcut-interactive-foreground-extraction-using-iterated-graph-cuts%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/2_hu10e739a4478df46556a52aa68190046a_84383_480x0_resize_q75_box.jpg 480w, /p/grabcut-interactive-foreground-extraction-using-iterated-graph-cuts%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/2_hu10e739a4478df46556a52aa68190046a_84383_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="2.jpg">
+	</a>
+	
+	<figcaption>2.jpg</figcaption>
+	
+</figure></p>
+<p>首先是初始化部分</p>
+<ul>
+<li>用户用矩形框框选前景，那么方框外的东西就是<span class="math inline">\(T_B\)</span>了，而方框内的东西都是<span class="math inline">\(T_U\)</span>，即还未确定是否是<span class="math inline">\(T_F\)</span></li>
+<li>对<span class="math inline">\(T_B\)</span>内的每个像素初始化<span class="math inline">\(\alpha_n=0\)</span>，对<span class="math inline">\(T_U\)</span>内的每个像素初始化<span class="math inline">\(\alpha_n=1\)</span></li>
+<li>然后我们就得到了属于背景的像素和属于前景的像素，这时候就可以初始化GMM的参数了。首先分别对前景和背景的像素，分别用k-means聚类为<span class="math inline">\(K\)</span>类，即得到GMM中的<span class="math inline">\(K\)</span>个高斯模型的元素。然后对每个高斯模型的元素计算均值、协方差，然后混合系数也可以通过计算属于第<span class="math inline">\(k\)</span>个高斯模型的元素占全体元素的比例来得到。</li>
+</ul>
+<p>迭代过程：</p>
+<ol>
+<li>对每个像素分配GMM中的高斯分量。<span class="math inline">\(k_n\)</span>即为使得<span class="math inline">\(D_n\)</span>最小的那个<span class="math inline">\(k_n\)</span>，公式见上图</li>
+<li>对于给定的图像<span class="math inline">\(z\)</span>，学习优化GMM的参数。</li>
+<li>使用最小割来进行图像分割。</li>
+<li>重复步骤1-3直到收敛。作者指出，由于能量是一直递减的，所以一定会收敛。至少会收敛到局部最优。</li>
+<li>应用第四节提到的border matting</li>
+</ol>
+<p>用户编辑过程：</p>
+<ul>
+<li>编辑：人为地固定一些像素为背景或前景，来更新trimap，然后执行一次第3步。</li>
+<li>重操作：（可选）重复整个迭代过程。</li>
+</ul>
+<h2 id="用户人工编辑">用户人工编辑</h2>
+<p>GrabCut是根据颜色分布和边缘来进行图像分割的，但是也有一些“不合常理”的图片。此时还是需要进行人工的编辑。</p>
+<p><strong>Incomplete trimaps</strong></p>
+<p>这里指的应该就是，框选前景，反过来标记背景的操作。整个迭代算法也是不对<span class="math inline">\(T_B\)</span>进行retract，但是<span class="math inline">\(T_U\)</span>中的像素就可以被改变为背景或前景。</p>
+<p><strong>Further user editing</strong></p>
+<p>即前面描述的用户编辑过程。如果分割的图像错误地把一些东西分到了背景，则我们可以用前景刷把他们标记回来。反之亦然。</p>
+<h1 id="透明度处理">透明度处理</h1>
+<p>一个matting的工具应该可以处理连续的<span class="math inline">\(\alpha\)</span>值。作者提出了一种机制，来使得之前的硬分隔增强为软分割，从而更好地处理物体边缘。</p>
+<h2 id="border-matting">Border Matting</h2>
+<p>这个Border Matting一般是在一个闭合的曲线<span class="math inline">\(C\)</span>上进行的，这条曲线一般是根据之前的硬分割的两部分的边缘组成的多边形。此时我们定义一个新的trimap<span class="math inline">\(\{T_B, T_U, T_F\}\)</span>，这里的<span class="math inline">\(T_U\)</span>定义为<span class="math inline">\(C\)</span>往外扩展<span class="math inline">\(w\)</span>个像素（作者使用<span class="math inline">\(w=6\)</span>）。之后会使用动态规划来在<span class="math inline">\(T_U\)</span>上来进行<span class="math inline">\(\alpha\)</span>值的预测。</p>
+<p>将曲线<span class="math inline">\(C\)</span>参数化为<span class="math inline">\(t=1,\cdots ,T\)</span>，其中<span class="math inline">\(T\)</span>是周期，因为<span class="math inline">\(C\)</span>是闭合曲线。定义<span class="math inline">\(t(n)\)</span>为<span class="math inline">\(T_U\)</span>上的第<span class="math inline">\(n\)</span>个像素组，这个组如下图(b)中的黑框灰色像素。</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 150; 
+			flex-basis: 361px"
+	>
+	<a href="/p/grabcut-interactive-foreground-extraction-using-iterated-graph-cuts%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/3.jpg" data-size="628x417">
+		<img src="/p/grabcut-interactive-foreground-extraction-using-iterated-graph-cuts%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/3.jpg"
+			width="628"
+			height="417"
+			srcset="/p/grabcut-interactive-foreground-extraction-using-iterated-graph-cuts%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/3_hu298444c6a040e864ef37845ebd8b1d3f_78294_480x0_resize_q75_box.jpg 480w, /p/grabcut-interactive-foreground-extraction-using-iterated-graph-cuts%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/3_hu298444c6a040e864ef37845ebd8b1d3f_78294_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="3.jpg">
+	</a>
+	
+	<figcaption>3.jpg</figcaption>
+	
+</figure></p>
+<p><span class="math inline">\(\alpha_n\)</span>定义为<span class="math inline">\(\alpha_n=g(r_n;\Delta_{t(n)},\sigma_{t(n)})\)</span>，其中<span class="math inline">\(g\)</span>是一个“软”阶跃函数，见上图(c)。<span class="math inline">\(r_n\)</span>是像素<span class="math inline">\(n\)</span>到曲线<span class="math inline">\(c\)</span>的有正负的距离，见上图(b)。<span class="math inline">\(\Delta,\sigma\)</span>的意义见上图(c)，这里假设所有像素，如果它们的<span class="math inline">\(t\)</span>相同，那么就拥有同样的<span class="math inline">\(\Delta, \sigma\)</span>。</p>
+<p><span class="math inline">\(\Delta, \sigma\)</span>是使用动态规划来求解的。最小化如下的能量</p>
+<p><span class="math display">\[E=\sum_{n\in T_U} \widetilde{D}_n(\alpha_n)+\sum^T_{t=1}\widetilde{V}(\Delta_t,\sigma_t,\Delta_{t+1},\sigma_{t+1})
+\]</span></p>
+<p>其中<span class="math inline">\(\widetilde{V}\)</span>是光滑正则项</p>
+<p><span class="math display">\[\widetilde{V}(\Delta,\sigma,\Delta',\sigma')=\lambda_1(\Delta-\Delta')^2+\lambda_2(\sigma-\sigma')^2
+\]</span></p>
+<p>它的作用是，使<span class="math inline">\(t\)</span>在增加时，<span class="math inline">\(\alpha\)</span>的变化更为平滑。作者使用<span class="math inline">\(\lambda_1=50, \lambda_2=10^3\)</span>。在DP过程中，<span class="math inline">\(\Delta_t\)</span>的值有30个levels，而<span class="math inline">\(\sigma_t\)</span>有10个levels。作者说它们的DP是线性时间的（我没看具体实现），需要两次遍历整个曲线<span class="math inline">\(C\)</span>。</p>
+<p>数据项<span class="math inline">\(\widetilde{D}\)</span>定义为</p>
+<p><span class="math display">\[\widetilde{D}_n(\alpha_n)=-\log N(z_n;\mu_{t(n)}(\alpha_n), \Sigma_{t(n)}(\alpha_n))
+\]</span></p>
+<p><span class="math inline">\(N\)</span>即为多元高斯正态分布，其中均值和方差为</p>
+<p><span class="math display">\[\mu_t(\alpha) = (1-\alpha)\mu_t(0)+\alpha\mu_t(1)
+\]</span></p>
+<p><span class="math display">\[\Sigma_t(\alpha) = (1-\alpha)^2\Sigma_t(0)+\alpha^2\Sigma_t(1)
+\]</span></p>
+<p>这里的<span class="math inline">\(\mu_t(x),\Sigma_t(x),x=0,1\)</span>是从前景和背景中的像素样本估算来的。前景<span class="math inline">\(F_t=S_t\cap T_F\)</span>，背景<span class="math inline">\(B_t=S_t\cap T_B\)</span>，这里<span class="math inline">\(S_t\)</span>是一个矩形区域，即曲线<span class="math inline">\(C\)</span>上的某个点<span class="math inline">\(t\)</span>扩张<span class="math inline">\(L\)</span>个像素得到的<span class="math inline">\(L\times L\)</span>区域，作者取<span class="math inline">\(L=41\)</span></p>
+<h2 id="前景估计">前景估计</h2>
+<p>作者指出，之前的Bayes matting方法，会有背景的颜色渗出到前景中的问题。作者这里通过从<span class="math inline">\(T_F\)</span>中借用像素，来避免这个问题。</p>
+<p>Bayes matting从<span class="math inline">\(n\in T_U\)</span>中预测得到一个前景色<span class="math inline">\(\hat f_{n}\)</span>。根据之前定义的<span class="math inline">\(F_{t(n)}\)</span>，可知<span class="math inline">\(\hat f_n\)</span>会和借用的<span class="math inline">\(f_n\)</span>很相似。</p>
+<h1 id="其他思考内容">其他思考内容</h1>
+<h2 id="gmm换成彩色直方图会怎么样">GMM换成彩色直方图会怎么样？</h2>
+<p>以我自己的实验经验来说，<span class="math inline">\(256^3\)</span>的内存空间还是放得下的，但显然不是内存的原因，才导致作者不去使用颜色直方图。我实际测试过，其效果比较差。如果你定义某个像素属于前景和背景的概率，仅仅考虑该像素颜色在直方图中的概率的话，只会有很少的像素被去除。如果你定义该概率为该像素RGB都<span class="math inline">\(\pm 5\)</span>的这个范围内的概率和，则计算量就爆炸了，而且效果也不好。</p>
+<p>其主要的问题在于，颜色在色彩空间中分布过于分散，计算概率的效果不好。</p>
+<h2 id="彩色直方图的其他优化方法">彩色直方图的其他优化方法</h2>
+<p><a class="link" href="https://mmcheng.net/zh/salobj/"  target="_blank" rel="noopener"
+    >https://mmcheng.net/zh/salobj/</a></p>
+<p>这篇文章中，作者指出，一张照片的绝大多数颜色（95%）都是相近的，可以将颜色空间简化到<span class="math inline">\(12^3\)</span>，即<span class="math inline">\(RGB\)</span>每个通道都简化为<span class="math inline">\(12\)</span>个值。然后通过进一步的统计，选择其中出现次数最多的<span class="math inline">\(85\)</span>个颜色，来覆盖<span class="math inline">\(95\%\)</span>的图片色彩。</p>
+<p>当然，为了应对剩下的那<span class="math inline">\(5\%\)</span>，作者也提出了一个色彩空间平滑的操作。有机会再来精读这篇文章。</p>
+<h1 id="我的实现">我的实现</h1>
+<p><a class="link" href="https://github.com/kegalas/GrabCut"  target="_blank" rel="noopener"
+    >https://github.com/kegalas/GrabCut</a></p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/%E5%A4%A7%E5%AD%A6/">大学</a>
+        
+            <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">人工智能</a>
+        
+            <a href="/tags/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a>
+        
+            <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/">计算机视觉</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css"integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js"integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8"crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js"integrity="sha384-vZTG03m&#43;2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl"crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.querySelector(`.article-content`), {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ]
+        });})
+</script>
+    
+</article>
+
+    <aside class="related-contents--wrapper">
+    
+    
+        <h2 class="section-title">相关文章</h2>
+        <div class="related-contents">
+            <div class="flex article-list--tile">
+                
+                    
+<article class="has-image">
+    <a href="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%85%89%E7%85%A7%E5%88%9D%E6%AD%A5/">
+        
+        
+            <div class="article-image">
+                <img src="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%85%89%E7%85%A7%E5%88%9D%E6%AD%A5/cover.a31dfa1d472e7236ca0da074207d7576_hu04f6e4c5c5d9e8c832c6dfeafddfe37e_257114_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-ox36HUcucjbKDaB0IH11dg==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">从零开始的软渲染器 光照初步</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E6%A8%A1%E5%9E%8B%E5%BA%93/">
+        
+        
+            <div class="article-image">
+                <img src="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E6%A8%A1%E5%9E%8B%E5%BA%93/cover.30e111997b0a8b14a681475f99347374_hu1d5ada73bf6b5a759e3568aecd125470_50161_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-MOERmXsKixSmgUdfmTRzdA==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">从零开始的软渲染器 模型库</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E7%BA%BF%E6%AE%B5%E5%92%8C%E4%B8%89%E8%A7%92%E5%BD%A2%E7%9A%84%E5%85%89%E6%A0%85%E5%8C%96/">
+        
+        
+            <div class="article-image">
+                <img src="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E7%BA%BF%E6%AE%B5%E5%92%8C%E4%B8%89%E8%A7%92%E5%BD%A2%E7%9A%84%E5%85%89%E6%A0%85%E5%8C%96/cover.3eba88ce14bf80744d7e83238ed0ec4e_hu72dadf0d98aceb343e3fe7cb76faf398_301126_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-PrqIzhS/gHRNfoMjjtDsTg==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">从零开始的软渲染器 线段和三角形的光栅化</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%9B%BE%E7%89%87%E5%A4%84%E7%90%86%E5%BA%93/">
+        
+        
+            <div class="article-image">
+                <img src="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%9B%BE%E7%89%87%E5%A4%84%E7%90%86%E5%BA%93/cover.941490c741ffb85644dfdbec13c85e5f_hu2fa2362891bfb402ec26ffe12b2b88a0_64078_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-lBSQx0H/uFZE39vsE8heXw==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">从零开始的软渲染器 图片处理库</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E6%95%B0%E5%AD%A6%E5%B7%A5%E5%85%B7%E5%BA%93/">
+        
+        
+            <div class="article-image">
+                <img src="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E6%95%B0%E5%AD%A6%E5%B7%A5%E5%85%B7%E5%BA%93/cover.05688f45246317d00a00a986d6147cbd_huc0107afa81d973e7d87fe5de99d27181_24753_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-BWiPRSRjF9AKAKmG1hR8vQ==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">从零开始的软渲染器 数学工具库</h2>
+        </div>
+    </a>
+</article>
+                
+            </div>
+        </div>
+    
+</aside>
+
+     
+    
+        
+    <script src="https://utteranc.es/client.js" 
+        repo="kegalas/blogComments"
+        issue-term="pathname"
+        
+        crossorigin="anonymous"
+        async
+        >
+</script>
+
+<style>
+    .utterances {
+        max-width: unset;
+    }
+</style>
+
+<script>
+    function setUtterancesTheme(theme) {
+        let utterances = document.querySelector('.utterances iframe');
+        if (utterances) {
+            utterances.contentWindow.postMessage(
+                {
+                    type: 'set-theme',
+                    theme: `github-${theme}`
+                },
+                'https://utteranc.es'
+            );
+        }
+    }
+
+    addEventListener('message', event => {
+        if (event.origin !== 'https://utteranc.es') return;
+        setUtterancesTheme(document.documentElement.dataset.scheme)
+    });
+
+    window.addEventListener('onColorSchemeChange', (e) => {
+        setUtterancesTheme(e.detail)
+    })
+</script>
+
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2024 KegalaS的个人博客
+    </section>
+    
+    <section class="powerby">
+         <br />
+        
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    
+        <aside class="sidebar right-sidebar sticky">
+            <section class="widget archives">
+                <div class="widget-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+                </div>
+                <h2 class="widget-title section-title">目录</h2>
+                
+                <div class="widget--toc">
+                    <nav id="TableOfContents">
+  <ol>
+    <li><a href="#摘要">摘要</a></li>
+    <li><a href="#简介">简介</a>
+      <ol>
+        <li><a href="#之前的交互式获取matte的工作">之前的交互式获取matte的工作</a></li>
+        <li><a href="#作者提出的系统grabcut">作者提出的系统：grabcut</a></li>
+      </ol>
+    </li>
+    <li><a href="#使用graph-cut进行图像分割">使用Graph Cut进行图像分割</a>
+      <ol>
+        <li><a href="#图像分割">图像分割</a></li>
+        <li><a href="#最小化能量法来进行分割">最小化能量法来进行分割</a></li>
+        <li><a href="#如何用网络流为该问题建模">如何用网络流为该问题建模？</a></li>
+      </ol>
+    </li>
+    <li><a href="#grabcut图像分割算法">GrabCut图像分割算法</a>
+      <ol>
+        <li><a href="#对彩色图像数据建模">对彩色图像数据建模</a></li>
+        <li><a href="#能量最小化迭代法来进行图像分割">能量最小化迭代法来进行图像分割</a></li>
+        <li><a href="#用户人工编辑">用户人工编辑</a></li>
+      </ol>
+    </li>
+    <li><a href="#透明度处理">透明度处理</a>
+      <ol>
+        <li><a href="#border-matting">Border Matting</a></li>
+        <li><a href="#前景估计">前景估计</a></li>
+      </ol>
+    </li>
+    <li><a href="#其他思考内容">其他思考内容</a>
+      <ol>
+        <li><a href="#gmm换成彩色直方图会怎么样">GMM换成彩色直方图会怎么样？</a></li>
+        <li><a href="#彩色直方图的其他优化方法">彩色直方图的其他优化方法</a></li>
+      </ol>
+    </li>
+    <li><a href="#我的实现">我的实现</a></li>
+  </ol>
+</nav>
+                </div>
+            </section>
+        </aside>
+    
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                defer="false"
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
