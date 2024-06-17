@@ -2466,7 +2466,7 @@ H(s) = \dfrac{B(s)}{A(s)}
 $$
 
 $$
-A(s) = a_ns^n+A_{n-1}s^{n-1} + \cdots + a_1s + a_0
+A(s) = a_ns^n+a_{n-1}s^{n-1} + \cdots + a_1s + a_0
 $$
 
 若系统稳定，则
