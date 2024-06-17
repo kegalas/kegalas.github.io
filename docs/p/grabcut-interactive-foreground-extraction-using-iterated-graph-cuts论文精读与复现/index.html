@@ -9,7 +9,7 @@
 <meta property='og:description' content='原论文：https://www.microsoft.com/en-us/research/publication/grabcut-inter'>
 <meta property='og:url' content='https://kegalas.top/p/grabcut-interactive-foreground-extraction-using-iterated-graph-cuts%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/'>
 <meta property='og:site_name' content='KegalaS的个人博客'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='大学' /><meta property='article:tag' content='人工智能' /><meta property='article:tag' content='图形学' /><meta property='article:tag' content='计算机视觉' /><meta property='article:published_time' content='2024-05-20T11:21:12&#43;08:00'/><meta property='article:modified_time' content='2024-05-20T11:21:12&#43;08:00'/><meta property='og:image' content='https://kegalas.top/p/grabcut-interactive-foreground-extraction-using-iterated-graph-cuts%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/cover.jpg' />
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='大学' /><meta property='article:tag' content='图形学' /><meta property='article:tag' content='计算机视觉' /><meta property='article:published_time' content='2024-05-20T11:21:12&#43;08:00'/><meta property='article:modified_time' content='2024-05-20T11:21:12&#43;08:00'/><meta property='og:image' content='https://kegalas.top/p/grabcut-interactive-foreground-extraction-using-iterated-graph-cuts%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/cover.jpg' />
 <meta name="twitter:title" content="GrabCut— Interactive Foreground Extraction Using Iterated Graph Cuts论文精读与复现">
 <meta name="twitter:description" content="原论文：https://www.microsoft.com/en-us/research/publication/grabcut-inter"><meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content='https://kegalas.top/p/grabcut-interactive-foreground-extraction-using-iterated-graph-cuts%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/cover.jpg' />
@@ -215,10 +215,10 @@
 <p>这里的<span class="math inline">\(A\)</span>即为之前提到的<span class="math inline">\(\alpha\)</span>，是硬分割。<span class="math inline">\(R(A)\)</span>是区域项，<span class="math inline">\(B(A)\)</span>是边缘项。</p>
 <p><span class="math display">\[R(A) = \sum_{p\in P} R_p(A_p)
 \]</span></p>
-<p><span class="math display">\[B(A) = \sum_{\{p,q\}\in N} B_{\{p,q\}}[A_p, A_q]
+<p><span class="math display">\[B(A) = \sum_{\{p,q\}\in N} B_{\{p,q\}}[A_p\neq A_q]
 \]</span></p>
 <p>这里的<span class="math inline">\(P\)</span>是所有像素的集和。<span class="math inline">\(N\)</span>是相邻像素对的集合，其中<span class="math inline">\(\{p,q\}\)</span>是无序的。</p>
-<p>一般的<span class="math inline">\(\lambda\geq 0\)</span>。<span class="math inline">\(R(A)\)</span>代表着，给某个像素预测为前景和背景的惩罚。而<span class="math inline">\(B_{\{p, q\}}\geq 0\)</span>则是边缘差异的乘法，两个相邻像素<span class="math inline">\(p,q\)</span>，如果它们的颜色非常相近，那么<span class="math inline">\(B_{\{p,q\}}\)</span>应该非常大；而颜色差异很大时，边缘项会非常接近<span class="math inline">\(0\)</span>。</p>
+<p>一般的<span class="math inline">\(\lambda\geq 0\)</span>。<span class="math inline">\(R(A)\)</span>代表着，给某个像素预测为前景和背景的惩罚。而<span class="math inline">\(B_{\{p, q\}}\geq 0\)</span>则是边缘差异的惩罚，两个相邻像素<span class="math inline">\(p,q\)</span>，如果它们的颜色非常相近，那么<span class="math inline">\(B_{\{p,q\}}\)</span>应该非常大；而颜色差异很大时，边缘项会非常接近<span class="math inline">\(0\)</span>。</p>
 <p>这里只是给出了泛用的理论，具体怎么去定义这些东西，看大家的具体问题。比如GrabCut就定义了自己的两个惩罚项，本文后面也针对黑白图像定义了惩罚项。</p>
 <p><figure 
 	
@@ -385,8 +385,8 @@
 <h2 id="彩色直方图的其他优化方法">彩色直方图的其他优化方法</h2>
 <p><a class="link" href="https://mmcheng.net/zh/salobj/"  target="_blank" rel="noopener"
     >https://mmcheng.net/zh/salobj/</a></p>
-<p>这篇文章中，作者指出，一张照片的绝大多数颜色（95%）都是相近的，可以将颜色空间简化到<span class="math inline">\(12^3\)</span>，即<span class="math inline">\(RGB\)</span>每个通道都简化为<span class="math inline">\(12\)</span>个值。然后通过进一步的统计，选择其中出现次数最多的<span class="math inline">\(85\)</span>个颜色，来覆盖<span class="math inline">\(95\%\)</span>的图片色彩。</p>
-<p>当然，为了应对剩下的那<span class="math inline">\(5\%\)</span>，作者也提出了一个色彩空间平滑的操作。有机会再来精读这篇文章。</p>
+<p>这篇文章中，作者指出，一张照片的绝大多数颜色（95%）都是相近的，可以将颜色空间简化到<span class="math inline">\(12^3\)</span>，即<span class="math inline">\(L*a*b*\)</span>每个通道都简化为<span class="math inline">\(12\)</span>个值。然后通过进一步的统计，选择其中出现次数最多的<span class="math inline">\(85\)</span>个颜色，来覆盖<span class="math inline">\(95\%\)</span>的图片色彩。</p>
+<p>当然，为了应对剩下的那<span class="math inline">\(5\%\)</span>，使用与其最近的颜色替代。作者也提出了一个色彩空间平滑的操作，来解决噪声问题。有机会再来精读这篇文章。</p>
 <h1 id="我的实现">我的实现</h1>
 <p><a class="link" href="https://github.com/kegalas/GrabCut"  target="_blank" rel="noopener"
     >https://github.com/kegalas/GrabCut</a></p>
@@ -399,8 +399,6 @@
     <section class="article-tags">
         
             <a href="/tags/%E5%A4%A7%E5%AD%A6/">大学</a>
-        
-            <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">人工智能</a>
         
             <a href="/tags/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a>
         
@@ -456,6 +454,28 @@
         <h2 class="section-title">相关文章</h2>
         <div class="related-contents">
             <div class="flex article-list--tile">
+                
+                    
+<article class="has-image">
+    <a href="/p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/">
+        
+        
+            <div class="article-image">
+                <img src="/p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/cover.383f9c251b2b8f8107d60d2e28590acd_hu803811e1d9d935a6e60dd50dca480090_178188_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-OD&#43;cJRsrj4EH1g0uKFkKzQ==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Rectangling Panoramic Images via Warping论文精读与复现</h2>
+        </div>
+    </a>
+</article>
                 
                     
 <article class="has-image">
@@ -541,28 +561,6 @@
 
         <div class="article-details">
             <h2 class="article-title">从零开始的软渲染器 图片处理库</h2>
-        </div>
-    </a>
-</article>
-                
-                    
-<article class="has-image">
-    <a href="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E6%95%B0%E5%AD%A6%E5%B7%A5%E5%85%B7%E5%BA%93/">
-        
-        
-            <div class="article-image">
-                <img src="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E6%95%B0%E5%AD%A6%E5%B7%A5%E5%85%B7%E5%BA%93/cover.05688f45246317d00a00a986d6147cbd_huc0107afa81d973e7d87fe5de99d27181_24753_250x150_fill_q75_box_smart1.jpg" 
-                        width="250" 
-                        height="150" 
-                        loading="lazy" 
-                        data-key="" 
-                        data-hash="md5-BWiPRSRjF9AKAKmG1hR8vQ==">
-                
-            </div>
-        
-
-        <div class="article-details">
-            <h2 class="article-title">从零开始的软渲染器 数学工具库</h2>
         </div>
     </a>
 </article>

@@ -6,7 +6,529 @@
         <description>Recent content on KegalaS的个人博客</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Tue, 21 May 2024 23:42:42 +0800</lastBuildDate><atom:link href="https://kegalas.top/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Mon, 03 Jun 2024 23:16:15 +0800</lastBuildDate><atom:link href="https://kegalas.top/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Rectangling Panoramic Images via Warping论文精读与复现</title>
+        <link>https://kegalas.top/p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/</link>
+        <pubDate>Mon, 03 Jun 2024 23:16:15 +0800</pubDate>
+        
+        <guid>https://kegalas.top/p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/</guid>
+        <description>&lt;img src="https://kegalas.top/p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/cover.jpg" alt="Featured image of post Rectangling Panoramic Images via Warping论文精读与复现" /&gt;&lt;p&gt;原论文：&lt;a class=&#34;link&#34; href=&#34;https://people.csail.mit.edu/kaiming/sig13/index.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://people.csail.mit.edu/kaiming/sig13/index.html&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&#34;摘要&#34;&gt;摘要&lt;/h1&gt;
+&lt;p&gt;拍摄全景照片的时候，因为人手在抖，所以可能拍出来的图片边界就不是一个矩形框。在本文中，作者提出了一种可以感知图片内容的弯曲（warp）算法，来将这种形状非矩形的图片转化为矩形图片。分为两步，第一步是没有mesh的，初步把一张图片弯曲成矩形。第二步就是在矩形中建立mesh，然后在其中优化图片，使得图片中的各种形状保持原样（例如直线保持直线的样子）。&lt;/p&gt;
+&lt;h1 id=&#34;简介&#34;&gt;简介&lt;/h1&gt;
+&lt;p&gt;同上介绍的，关于拍摄全景照片，因为手抖，无法拉出一个矩形图片。&lt;/p&gt;
+&lt;p&gt;一个简单的解决办法是：剪裁。从这个图片中剪裁出一个矩形区域。缺点是会损失很多信息。还有一种方法就是在原来的图片边缘的外面进行图片合成，缺陷是，对于复杂的语义信息无法处理。&lt;/p&gt;
+&lt;p&gt;作者这里提出了一种只会引入“可接受”的、“不容易注意到”的扭曲，并且保护图片原本内容的方法。&lt;/p&gt;
+&lt;h1 id=&#34;前人工作&#34;&gt;前人工作&lt;/h1&gt;
+&lt;p&gt;&lt;strong&gt;Image alignment and stitching&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;全景照片实际上是将多张照片缝合（stitching）在一起的。通常用某种图片上的特征，来将原照片全部投影到一个相同的坐标系下。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Projections&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;众所周知，3D场景投影到2D会不可避免地导致一些折叠的扭曲。例如透视投影，虽然可以保持直线的形状，但是其他物体的形状则会被拉伸。圆柱投影和球面投影可以保持物体的形状，但会弯曲直线。&lt;/p&gt;
+&lt;p&gt;也有研究者提出了一种在自适应流形（adaptive manifold）上进行投影和缝合的方法。不过它是适应相机的移动，而不是适应图片的内容。&lt;/p&gt;
+&lt;p&gt;之前也有大量的工作，考虑将这些折叠后的扭曲，通过某种方式，让它们出现在不容易注意到的位置。虽然视觉上可以接受，但是无法移除固有的扭曲。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Image retargeting and warping&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Image retargeting是一种基于图片内容的缩放图片的方式。但是它们都假设输入的图片具有矩形形状，而且其中一部分必须还要定义一个grid mesh。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Image completion&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;即前面提到的，在图片的边缘增加内容，使其变成一个矩形图片。一般的方法是把图片里面的内容，复制到需要合成的地方。但是对于需要生成语义内容来说，表现不好。&lt;/p&gt;
+&lt;h1 id=&#34;算法&#34;&gt;算法&lt;/h1&gt;
+&lt;p&gt;算法分为两部分，一部分是改进的Seam Carving，是一个local warp的步骤，其将图片初步弯曲成矩形。然后另一部分（global warp）在前一步的基础上，建立一个grid mesh，在mesh上进行优化，来保证原图的物体形状和直线形状不变。&lt;/p&gt;
+&lt;h2 id=&#34;local-warp&#34;&gt;Local Warp&lt;/h2&gt;
+&lt;p&gt;原版的Seam Carving算法是在图片中插入水平或者垂直的接缝（seam），来穿过整张图片，然后再从接缝中水平或者垂直地扩展一个像素。作者这里想到，接缝不穿过整张图片，这样就可以改变图片边缘的形状，从而变成矩形。&lt;/p&gt;
+&lt;p&gt;原版的算法可见&lt;a class=&#34;link&#34; href=&#34;https://faculty.runi.ac.il/arik/scweb/imret/index.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://faculty.runi.ac.il/arik/scweb/imret/index.html&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 95; 
+			flex-basis: 230px&#34;
+	&gt;
+	&lt;a href=&#34;https://kegalas.top/p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/1.jpg&#34; data-size=&#34;695x724&#34;&gt;
+		&lt;img src=&#34;https://kegalas.top/p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/1.jpg&#34;
+			width=&#34;695&#34;
+			height=&#34;724&#34;
+			srcset=&#34;https://kegalas.top/p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/1_hu5600ffb6ac470185951f0c06ac585973_69833_480x0_resize_q75_box.jpg 480w, https://kegalas.top/p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/1_hu5600ffb6ac470185951f0c06ac585973_69833_1024x0_resize_q75_box.jpg 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;1.jpg&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;1.jpg&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;如上图，其中蓝色的部分是有效的图片像素，白色的部分是需要我们填充的像素。&lt;/p&gt;
+&lt;p&gt;首先定义boundary segment是待填充像素中的，在图片顶部/底部/左侧/右侧的一行/一列像素。例如上图。我们找到目前最长的一个boundary segment，然后从它扩展得到一个sub-image。&lt;/p&gt;
+&lt;p&gt;这里左侧右侧的boundary segment，扩展出来的sub-image的高度保持，而宽度则等于整张图。同理，顶部和底部的boundary segment，扩展出来的sub-image的宽度保持，高度等于整张图。&lt;/p&gt;
+&lt;p&gt;然后我们在这个sub-image上利用seam carving的方法，去进行图像扩展。方法很简单，首先根据图片颜色梯度信息，计算每一个像素的能量。然后使用动态规划，求解最短路径。&lt;/p&gt;
+&lt;p&gt;以Figure 3(ii)为例，计算得到每个像素的能量。因为我们需要向右边填入像素，所以我们需要一个竖直方向的seam。于是我们用动态规划的方式，求底部像素到顶部像素的最短路（8邻居路径），然后所有底部像素中距离顶部像素最近的像素，及其到顶部的路径，成为我们的seam。&lt;/p&gt;
+&lt;p&gt;注意这里使用8邻居是源于原算法的研究，另外，我们需要给待填入的像素的能量赋值为&lt;span class=&#34;math inline&#34;&gt;\(10^8\)&lt;/span&gt;或者更大的数，来防止seam穿过这些像素。&lt;/p&gt;
+&lt;p&gt;填充像素的时候，我们把seam及其右边的像素都往右移动一位。原本seam的位置则求取左右两个像素的平均。&lt;/p&gt;
+&lt;p&gt;原版算法中提到，为了防止反复在相同的位置插入seam、导致如下的情况&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 244; 
+			flex-basis: 586px&#34;
+	&gt;
+	&lt;a href=&#34;https://kegalas.top/p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/2.jpg&#34; data-size=&#34;1234x505&#34;&gt;
+		&lt;img src=&#34;https://kegalas.top/p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/2.jpg&#34;
+			width=&#34;1234&#34;
+			height=&#34;505&#34;
+			srcset=&#34;https://kegalas.top/p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/2_hu106bb857eec1cad9c9ddb0e0c67ca7a3_66748_480x0_resize_q75_box.jpg 480w, https://kegalas.top/p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/2_hu106bb857eec1cad9c9ddb0e0c67ca7a3_66748_1024x0_resize_q75_box.jpg 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;2.jpg&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;2.jpg&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;之前的作者建议同时采集多根seam，然后依次填入像素。&lt;/p&gt;
+&lt;p&gt;但是这在我们这篇文章中是行不通的。我们的Local Warp要求我们每次填充完一根seam之后，都要重新计算最长的bound segment，我们不能反复对同一个sub-image填入像素。&lt;/p&gt;
+&lt;p&gt;我这里的实现采用了一个比较trick的方法，算出seam后，对原本的seam的位置的能量设置为&lt;span class=&#34;math inline&#34;&gt;\(10^5\)&lt;/span&gt;这样的数，比一般的大，比非法像素的小。之后让像素和能量都右移。现在原本的seam位置的能量和其右边一个像素的能量都为&lt;span class=&#34;math inline&#34;&gt;\(10^5\)&lt;/span&gt;了，这样就有更少的可能会在这里再次插入seam。&lt;/p&gt;
+&lt;p&gt;总而言之，重复以上过程，直到填充完所有像素。例如我实现的下例&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 244; 
+			flex-basis: 586px&#34;
+	&gt;
+	&lt;a href=&#34;https://kegalas.top/p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/3.jpg&#34; data-size=&#34;1000x409&#34;&gt;
+		&lt;img src=&#34;https://kegalas.top/p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/3.jpg&#34;
+			width=&#34;1000&#34;
+			height=&#34;409&#34;
+			srcset=&#34;https://kegalas.top/p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/3_hue93110ce5292de0c5372ce086e080520_214584_480x0_resize_q75_box.jpg 480w, https://kegalas.top/p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/3_hue93110ce5292de0c5372ce086e080520_214584_1024x0_resize_q75_box.jpg 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;3.jpg&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;3.jpg&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;其原图为&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 244; 
+			flex-basis: 586px&#34;
+	&gt;
+	&lt;a href=&#34;https://kegalas.top/p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/4.jpg&#34; data-size=&#34;1000x409&#34;&gt;
+		&lt;img src=&#34;https://kegalas.top/p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/4.jpg&#34;
+			width=&#34;1000&#34;
+			height=&#34;409&#34;
+			srcset=&#34;https://kegalas.top/p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/4_hue1cf86eb6edbd8aadcc8fd3cfe31710a_405205_480x0_resize_q75_box.jpg 480w, https://kegalas.top/p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/4_hue1cf86eb6edbd8aadcc8fd3cfe31710a_405205_1024x0_resize_q75_box.jpg 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;4.jpg&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;4.jpg&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;可以看到，虽然填充是填充了，但是歪歪扭扭。于是还需要下面的步骤。&lt;/p&gt;
+&lt;h2 id=&#34;global-warp&#34;&gt;Global Warp&lt;/h2&gt;
+&lt;h3 id=&#34;mesh-placement&#34;&gt;Mesh Placement&lt;/h3&gt;
+&lt;p&gt;首先，我们在Local Warp之后的图片的长宽上，将其分成&lt;span class=&#34;math inline&#34;&gt;\((40-1)*(10-9)\)&lt;/span&gt;个网格，其中&lt;span class=&#34;math inline&#34;&gt;\(40*10\)&lt;/span&gt;是网格的顶点数量。网格是正交的。&lt;/p&gt;
+&lt;p&gt;在Local Warp中，我们对像素进行了移动，我们需要记录下每个像素移动的偏移量。然后，我们使用网格顶点所在像素的偏移量，将各个网格顶点移动回去，就完成了mesh placement这一步。之后local warp的图像就可以抛弃了。移动后的结果例如：&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 244; 
+			flex-basis: 586px&#34;
+	&gt;
+	&lt;a href=&#34;https://kegalas.top/p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/5.jpg&#34; data-size=&#34;1000x409&#34;&gt;
+		&lt;img src=&#34;https://kegalas.top/p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/5.jpg&#34;
+			width=&#34;1000&#34;
+			height=&#34;409&#34;
+			srcset=&#34;https://kegalas.top/p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/5_huf9a84282b10ed9e3eaa83f8a966a5cd8_255702_480x0_resize_q75_box.jpg 480w, https://kegalas.top/p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/5_huf9a84282b10ed9e3eaa83f8a966a5cd8_255702_1024x0_resize_q75_box.jpg 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;5.jpg&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;5.jpg&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;h3 id=&#34;energy-function&#34;&gt;Energy Function&lt;/h3&gt;
+&lt;p&gt;这里设计能量的目的有三个，对于目前的网格与最终的网格结果之间：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;保持网格的形状尽量不变，亦即Shape Preservation&lt;/li&gt;
+&lt;li&gt;保持网格内的线段的笔直，并且与其平行的其他线段，在处理后依然平行，亦即Line Preservation&lt;/li&gt;
+&lt;li&gt;网格上下左右贴合目标矩形图像框，亦即Boundary Constraints&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;Shape Preservation&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;最终输出的mesh的顶点（vertex）集记作&lt;span class=&#34;math inline&#34;&gt;\(V\)&lt;/span&gt;，其中的每一个元素&lt;span class=&#34;math inline&#34;&gt;\(v_i=(x_i, y_i)\)&lt;/span&gt;，可以用坐标表示出来。我们进行完Mesh Placement后得到的初始mesh记作&lt;span class=&#34;math inline&#34;&gt;\(\hat V\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;保型的能量定义为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[E_S(V) = \dfrac{1}{N}\sum_q||(A_q(A_q^TA_q)^{-1}A_q^T-I)V_q||^2
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;这里&lt;span class=&#34;math inline&#34;&gt;\(N\)&lt;/span&gt;是quad的个数。其中&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[A_q = \begin{bmatrix}
+ \hat x_0 &amp; -\hat y_0 &amp; 1 &amp; 0\\
+ \hat y_0 &amp; \hat x_0 &amp; 0 &amp; 1\\
+  \vdots &amp; \vdots &amp; \vdots &amp; \vdots\\
+ \hat x_3 &amp; -\hat y_3 &amp; 1 &amp; 0\\
+ \hat y_3 &amp; \hat x_3 &amp; 0 &amp; 1
+\end{bmatrix}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[V_q = \begin{bmatrix}
+ x_0 \\
+ y_0 \\
+ \vdots \\
+ x_3 \\
+ y_3
+\end{bmatrix}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;这里也就是说第&lt;span class=&#34;math inline&#34;&gt;\(q\)&lt;/span&gt;个quad的四个顶点的坐标。其中&lt;span class=&#34;math inline&#34;&gt;\(A_q\)&lt;/span&gt;中的是初始mesh的坐标，&lt;span class=&#34;math inline&#34;&gt;\(V_q\)&lt;/span&gt;是目标mesh的坐标。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Line Preservation&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;我们目前计算过的东西是不包含“线段”这样的信息的。我们首先要做的事是，使用任何一种线段检测算法，来算出图片中的线段。&lt;/p&gt;
+&lt;p&gt;根据作者的说法，我们需要将这些线段切分开来，放到mesh的各个quad里。然后将所有线段的方向角（范围&lt;span class=&#34;math inline&#34;&gt;\([-\dfrac{\pi}{2},\dfrac{\pi}{2})\)&lt;/span&gt;），离散化为&lt;span class=&#34;math inline&#34;&gt;\(M=50\)&lt;/span&gt;个角度，每个离散化角度称为一个bin。为了保持直线性和平行性，设计的能量需要让每个bin里的线段拥有同样的角度。&lt;/p&gt;
+&lt;p&gt;给定一个线段，其方向向量&lt;span class=&#34;math inline&#34;&gt;\(e\)&lt;/span&gt;可以由线段的两个端点相减得到。如果我们将线段的两个端点用其所在的quad的&lt;span class=&#34;math inline&#34;&gt;\(V_q\)&lt;/span&gt;进行双线性插值表示，那么&lt;span class=&#34;math inline&#34;&gt;\(e\)&lt;/span&gt;就可以表示为&lt;span class=&#34;math inline&#34;&gt;\(V_q\)&lt;/span&gt;的线性函数。&lt;/p&gt;
+&lt;p&gt;同样的&lt;span class=&#34;math inline&#34;&gt;\(e\)&lt;/span&gt;是我们的目标，而&lt;span class=&#34;math inline&#34;&gt;\(\hat e\)&lt;/span&gt;则是最初的对应线段的方向向量。对于某一条线段，给定旋转操作的目标角度&lt;span class=&#34;math inline&#34;&gt;\(\theta_m\)&lt;/span&gt;，它的能量为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[||sR\hat e-e||^2
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[R = \begin{bmatrix}
+ \cos\theta_m &amp;  -\sin\theta_m\\
+ \sin\theta_m &amp;  \cos\theta_m
+\end{bmatrix}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;是旋转矩阵，而&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[s=(\hat e^T\hat e)^{-1}\hat e^TR^Te
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;是放缩因子。能量可以重新写为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[||Ce||^2
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[C = R\hat e(\hat e^T\hat e)^{-1}\hat e^TR^T-I
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;因为&lt;span class=&#34;math inline&#34;&gt;\(\hat e\)&lt;/span&gt;和&lt;span class=&#34;math inline&#34;&gt;\(e\)&lt;/span&gt;都可以写作&lt;span class=&#34;math inline&#34;&gt;\(\hat V_q\)&lt;/span&gt;和&lt;span class=&#34;math inline&#34;&gt;\(V_q\)&lt;/span&gt;的线性函数，所以能量就可以写成二次函数。&lt;/p&gt;
+&lt;p&gt;总的能量为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[E_L(V, \{\theta_m\}) = \dfrac{1}{N_L}\sum_j||C_j(\theta_{m(j)})e_{q(j)}||^2
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;这里&lt;span class=&#34;math inline&#34;&gt;\(N_L\)&lt;/span&gt;为线段总数。对于第&lt;span class=&#34;math inline&#34;&gt;\(j\)&lt;/span&gt;条线段，&lt;span class=&#34;math inline&#34;&gt;\(\theta_{m(j)}\)&lt;/span&gt;代表其所属的bin中的目标旋转角度，&lt;span class=&#34;math inline&#34;&gt;\(q(j)\)&lt;/span&gt;代表其所属的quad。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Boundary Constraints&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;直白点说，就是把mesh的上下左右拉到图片框边缘上。&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[E_B(V) = \sum_{v_i\in L} x_i^2 + \sum_{v_i\in R} (x_i-w)^2 + \sum_{v_i\in T} y_i^2 + \sum_{v_i\in B} (y_i-h)^2
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(L/R/T/B\)&lt;/span&gt;分别是左右上下边界的mesh顶点，&lt;span class=&#34;math inline&#34;&gt;\(w, h\)&lt;/span&gt;则是图片框的宽高。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;最终能量&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;将前面的几个加和，添加权重&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[E(V, \{\theta_m\}) = E_S(V)+\lambda_LE_L(V, \{\theta_m\}) + \lambda_B E_B(V)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;显然，我们需要图片至少能够贴合图片框，我们设置&lt;span class=&#34;math inline&#34;&gt;\(\lambda_B=10^8\)&lt;/span&gt;来确保这一点。然后，关于&lt;span class=&#34;math inline&#34;&gt;\(\lambda_L\)&lt;/span&gt;的选择，作者说选取&lt;span class=&#34;math inline&#34;&gt;\(&gt;10\)&lt;/span&gt;比较好，原文采取了&lt;span class=&#34;math inline&#34;&gt;\(\lambda_L=100\)&lt;/span&gt;。&lt;/p&gt;
+&lt;h3 id=&#34;优化算法&#34;&gt;优化算法&lt;/h3&gt;
+&lt;p&gt;作者指出，可以分别优化&lt;span class=&#34;math inline&#34;&gt;\(V\)&lt;/span&gt;和&lt;span class=&#34;math inline&#34;&gt;\(\{\theta_m\}\)&lt;/span&gt;。每各优化一次算迭代一次，总共迭代10次。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;固定&lt;span class=&#34;math inline&#34;&gt;\(\{\theta_m\}\)&lt;/span&gt;优化&lt;span class=&#34;math inline&#34;&gt;\(V\)&lt;/span&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;此时能量函数是&lt;span class=&#34;math inline&#34;&gt;\(V\)&lt;/span&gt;的二次函数，可以求解线性方程来计算。总共就几百个顶点，所以总体上来说，这部分的开销很小。&lt;/p&gt;
+&lt;p&gt;这里的求解是通过最小二乘法来算的，具体见我自己的实现部分。&lt;/p&gt;
+&lt;p&gt;**固定&lt;span class=&#34;math inline&#34;&gt;\(V\)&lt;/span&gt;优化&lt;span class=&#34;math inline&#34;&gt;\(\{\theta_m\}\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;因为另外两项和&lt;span class=&#34;math inline&#34;&gt;\(\theta\)&lt;/span&gt;无关，所以我们只用优化&lt;span class=&#34;math inline&#34;&gt;\(E_L\)&lt;/span&gt;这一部分。&lt;/p&gt;
+&lt;p&gt;作者指出，可以通过牛顿迭代等方法去优化。但是，几何意义上，&lt;span class=&#34;math inline&#34;&gt;\(E_L\)&lt;/span&gt;的目标是找到一个&lt;span class=&#34;math inline&#34;&gt;\(\theta_m\)&lt;/span&gt;，使得所有在第&lt;span class=&#34;math inline&#34;&gt;\(m\)&lt;/span&gt;个bin中的线段&lt;span class=&#34;math inline&#34;&gt;\(e\)&lt;/span&gt;和其初始线段&lt;span class=&#34;math inline&#34;&gt;\(\hat e\)&lt;/span&gt;的夹角，都近似等于&lt;span class=&#34;math inline&#34;&gt;\(\theta_m\)&lt;/span&gt;。所以，我们可以简单的计算所有这个夹角，然后加和，求平均，作为新的&lt;span class=&#34;math inline&#34;&gt;\(\theta_m\)&lt;/span&gt;。&lt;/p&gt;
+&lt;h3 id=&#34;防止拉伸和后处理&#34;&gt;防止拉伸和后处理&lt;/h3&gt;
+&lt;p&gt;如果我们的目标图相框的长宽比设置的不是很好，那么我们的结果图就会被拉伸。为了减少这种拉伸问题，我们在global warping之后更新目标框。&lt;/p&gt;
+&lt;p&gt;对于每个quad，我们计算它的&lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;方向的伸缩因子为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[s_x=(x_{max}-x_{min})/(\hat x_{max}-\hat x_{min})
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;所有quad的平均伸缩因子就为&lt;span class=&#34;math inline&#34;&gt;\(\bar s_x\)&lt;/span&gt;。同理可以计算出&lt;span class=&#34;math inline&#34;&gt;\(\bar s_y\)&lt;/span&gt;。之后我们的目标框就设置为&lt;span class=&#34;math inline&#34;&gt;\((w/\bar s_x, h/\bar s_y)\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;之后我们再在这个新的目标框上跑一次global warping&lt;/p&gt;
+&lt;p&gt;获得最终的mesh之后，我们就可以通过一些方法来获得最终的图像了。以图形学的思想为例，最终的mesh构成了我们要绘制的三角面。三角面空间坐标为最终mesh的坐标，uv坐标则是初始mesh的坐标。texture则是原图。&lt;/p&gt;
+&lt;p&gt;作者指出，这样的实现有一个小问题，因为mesh不会只包住有效像素，例如&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 161; 
+			flex-basis: 388px&#34;
+	&gt;
+	&lt;a href=&#34;https://kegalas.top/p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/6.jpg&#34; data-size=&#34;97x60&#34;&gt;
+		&lt;img src=&#34;https://kegalas.top/p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/6.jpg&#34;
+			width=&#34;97&#34;
+			height=&#34;60&#34;
+			srcset=&#34;https://kegalas.top/p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/6_hu14a973e49748d2d42de24feacc2c3705_1938_480x0_resize_q75_box.jpg 480w, https://kegalas.top/p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/6_hu14a973e49748d2d42de24feacc2c3705_1938_1024x0_resize_q75_box.jpg 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;6.jpg&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;6.jpg&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;这里的quad有一部分就包含了外部的无效像素。进行纹理采样时，作者简单地将无效像素替换为最近的有效像素。&lt;/p&gt;
+&lt;h2 id=&#34;实现细节&#34;&gt;实现细节&lt;/h2&gt;
+&lt;p&gt;由于mesh是很“光滑”的，作者指出我们可以在缩小的图片上进行mesh的计算。首先将图片缩小到一个固定的大小，然后再在上面进行local/global warping。然后我们将mesh的尺度放大到原来的图片大小，再用这个mesh去进行纹理采样。&lt;/p&gt;
+&lt;h1 id=&#34;本文局限&#34;&gt;本文局限&lt;/h1&gt;
+&lt;p&gt;如果图片缺失的部分太多，那么处理结果不好&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 149; 
+			flex-basis: 359px&#34;
+	&gt;
+	&lt;a href=&#34;https://kegalas.top/p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/7.jpg&#34; data-size=&#34;826x551&#34;&gt;
+		&lt;img src=&#34;https://kegalas.top/p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/7.jpg&#34;
+			width=&#34;826&#34;
+			height=&#34;551&#34;
+			srcset=&#34;https://kegalas.top/p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/7_hua3d01ec06ecffffbb6b4356056ad810d_66871_480x0_resize_q75_box.jpg 480w, https://kegalas.top/p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/7_hua3d01ec06ecffffbb6b4356056ad810d_66871_1024x0_resize_q75_box.jpg 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;7.jpg&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;7.jpg&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;本文的算法可能会导致边缘凹进去&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 97; 
+			flex-basis: 234px&#34;
+	&gt;
+	&lt;a href=&#34;https://kegalas.top/p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/8.jpg&#34; data-size=&#34;794x813&#34;&gt;
+		&lt;img src=&#34;https://kegalas.top/p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/8.jpg&#34;
+			width=&#34;794&#34;
+			height=&#34;813&#34;
+			srcset=&#34;https://kegalas.top/p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/8_hu13b1f239c3c3ad28922ce84302bd6d02_119524_480x0_resize_q75_box.jpg 480w, https://kegalas.top/p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/8_hu13b1f239c3c3ad28922ce84302bd6d02_119524_1024x0_resize_q75_box.jpg 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;8.jpg&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;8.jpg&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;作者指出，可以手动添加一个透明区域，当作已知像素。&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 100; 
+			flex-basis: 240px&#34;
+	&gt;
+	&lt;a href=&#34;https://kegalas.top/p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/9.jpg&#34; data-size=&#34;541x541&#34;&gt;
+		&lt;img src=&#34;https://kegalas.top/p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/9.jpg&#34;
+			width=&#34;541&#34;
+			height=&#34;541&#34;
+			srcset=&#34;https://kegalas.top/p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/9_hu046491476282bf31472110ca0ea3b19e_55351_480x0_resize_q75_box.jpg 480w, https://kegalas.top/p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/9_hu046491476282bf31472110ca0ea3b19e_55351_1024x0_resize_q75_box.jpg 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;9.jpg&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;9.jpg&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;将其当作已知像素来warp，之后在本文的算法处理完之后，再在这个透明区域中使用image completion等方法。&lt;/p&gt;
+&lt;p&gt;另外，本文无法处理未识别到的线段。这可以通过用户交互来缓解。&lt;/p&gt;
+&lt;p&gt;最后，本文无法应对线段数量过多的情况，这是warping方式的共同挑战。&lt;/p&gt;
+&lt;h1 id=&#34;我的实现&#34;&gt;我的实现&lt;/h1&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://github.com/kegalas/Rectangling_Panoramic_Images&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://github.com/kegalas/Rectangling_Panoramic_Images&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;一些细节&#34;&gt;一些细节&lt;/h2&gt;
+&lt;p&gt;首先是我之前也提到过的，为了防止反复在同一个地方插入seam，我们添加了额外的一个像素类别SEAM_PIXEL，让他的能量为&lt;span class=&#34;math inline&#34;&gt;\(10^5\)&lt;/span&gt;。比一般的像素大，比无效像素小。&lt;/p&gt;
+&lt;p&gt;在Global Warping主要要说明的部分则是关于如何优化能量。从&lt;span class=&#34;math inline&#34;&gt;\(E_S\)&lt;/span&gt;开始&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[E_S(V) = \dfrac{1}{N}\sum_q||(A_q(A_q^TA_q)^{-1}A_q^T-I)V_q||^2
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;我们需要使其最小。众所周知，使向量的范数平方最小，只用使其每一维都最小即可。或者说，使向量尽可能成为零向量。&lt;/p&gt;
+&lt;p&gt;这里的&lt;span class=&#34;math inline&#34;&gt;\((A_q(A_q^TA_q)^{-1}A_q^T-I)\)&lt;/span&gt;是一个&lt;span class=&#34;math inline&#34;&gt;\(8\times 8\)&lt;/span&gt;矩阵（记作&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;好了），而&lt;span class=&#34;math inline&#34;&gt;\(V_q\)&lt;/span&gt;是一个8维向量。我们可以将所有的&lt;span class=&#34;math inline&#34;&gt;\(V_q\)&lt;/span&gt;收尾接在一起。如果我们的mesh是&lt;span class=&#34;math inline&#34;&gt;\(40\times 10\)&lt;/span&gt;的，那么新的拼接向量&lt;span class=&#34;math inline&#34;&gt;\(V_Q\)&lt;/span&gt;的维度就是&lt;span class=&#34;math inline&#34;&gt;\((40-1)\times(10-1)\times 8\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[V_Q = \begin{bmatrix}
+ V_1 \\
+ V_2 \\
+ \vdots \\
+ V_{N-1} \\
+ V_{N}
+\end{bmatrix}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;同理，我们也可以把&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;拼接。如下&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[A_Q = \begin{bmatrix}
+ A_1 &amp;  &amp;  &amp; \\
+  &amp; A_2 &amp;  &amp; \\
+   &amp;  &amp; \ddots &amp; \\
+  &amp;  &amp;  &amp; A_N
+\end{bmatrix}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;我们的目标是使得&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[E_S(V) = \dfrac{1}{N}A_QV_Q = \overrightarrow{0}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;这里&lt;span class=&#34;math inline&#34;&gt;\(A_Q\)&lt;/span&gt;是用&lt;span class=&#34;math inline&#34;&gt;\(\hat V\)&lt;/span&gt;算的，而&lt;span class=&#34;math inline&#34;&gt;\(V_Q\)&lt;/span&gt;是我们最终mesh的坐标。也就是说我们需要解方程算出来&lt;span class=&#34;math inline&#34;&gt;\(V_Q\)&lt;/span&gt;。这其实就是最小二乘法。我们使用Eigen的QR分解对&lt;span class=&#34;math inline&#34;&gt;\(A_Q\)&lt;/span&gt;分解，然后再求解&lt;span class=&#34;math inline&#34;&gt;\(V_Q\)&lt;/span&gt;。这里建议使用稀疏矩阵。&lt;/p&gt;
+&lt;p&gt;另外，存在一个比较明显的优化方式，可以缩小矩阵和向量的维度。我们直接存储&lt;span class=&#34;math inline&#34;&gt;\(V_Q\)&lt;/span&gt;为&lt;span class=&#34;math inline&#34;&gt;\(40\times 10\times 2\)&lt;/span&gt;维向量。即每个顶点都只存一份（包含&lt;span class=&#34;math inline&#34;&gt;\(x,y\)&lt;/span&gt;坐标）。然后我们去修改&lt;span class=&#34;math inline&#34;&gt;\(A_Q\)&lt;/span&gt;的顺序就可以在向量乘法的时候一一对应。具体见我写的代码。调整后写为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[E_S(V) = \dfrac{1}{N}AV = \overrightarrow{0}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;接下来比较简单的是&lt;span class=&#34;math inline&#34;&gt;\(E_B\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[E_B(V) = \sum_{v_i\in L} x_i^2 + \sum_{v_i\in R} (x_i-w)^2 + \sum_{v_i\in T} y_i^2 + \sum_{v_i\in B} (y_i-h)^2
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;对于mesh上的一个顶点&lt;span class=&#34;math inline&#34;&gt;\(v_i\)&lt;/span&gt;，其有四种情况，在左侧、右侧、上部，下部。当然有四个顶点同时属于两种情况。也就是说，有一些顶点需要限制&lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;坐标，有一些需要限制&lt;span class=&#34;math inline&#34;&gt;\(y\)&lt;/span&gt;坐标，有一些两个都需要限制，而有一些则两个都不需要限制。&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(B_i\)&lt;/span&gt;如下&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[B_i = \begin{bmatrix}
+ a &amp;  0 \\
+ 0 &amp; b 
+\end{bmatrix}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;一个点如果需要限制&lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;坐标，则&lt;span class=&#34;math inline&#34;&gt;\(a=1\)&lt;/span&gt;，如果需要限制&lt;span class=&#34;math inline&#34;&gt;\(y\)&lt;/span&gt;坐标，则&lt;span class=&#34;math inline&#34;&gt;\(b=1\)&lt;/span&gt;。否则都等于&lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;例如左上角的顶点&lt;span class=&#34;math inline&#34;&gt;\((x, y)\)&lt;/span&gt;，我们的目标是&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\begin{bmatrix}
+ 1 &amp;  0 \\
+ 0 &amp; 1 
+\end{bmatrix}
+\begin{bmatrix}
+ x\\
+ y
+\end{bmatrix} = 
+\begin{bmatrix}
+ 0\\
+ 0
+\end{bmatrix}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;对于右下角的顶点，目标是&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\begin{bmatrix}
+ 1 &amp;  0 \\
+ 0 &amp; 1 
+\end{bmatrix}
+\begin{bmatrix}
+ x\\
+ y
+\end{bmatrix} = 
+\begin{bmatrix}
+ w\\
+ h
+\end{bmatrix}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;对于右侧的顶点，目标是&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\begin{bmatrix}
+ 1 &amp;  0 \\
+ 0 &amp; 0 
+\end{bmatrix}
+\begin{bmatrix}
+ x\\
+ y
+\end{bmatrix} = 
+\begin{bmatrix}
+ w\\
+ 0
+\end{bmatrix}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;对于中间的无限制顶点，目标是&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\begin{bmatrix}
+ 0 &amp;  0 \\
+ 0 &amp; 0 
+\end{bmatrix}
+\begin{bmatrix}
+ x\\
+ y
+\end{bmatrix} = 
+\begin{bmatrix}
+ 0\\
+ 0
+\end{bmatrix}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;以此类推。&lt;/p&gt;
+&lt;p&gt;同样的，我们把&lt;span class=&#34;math inline&#34;&gt;\(v_i\)&lt;/span&gt;合并成一个&lt;span class=&#34;math inline&#34;&gt;\(40\times 10\times 2\)&lt;/span&gt;向量（同前）。将&lt;span class=&#34;math inline&#34;&gt;\(B_i\)&lt;/span&gt;也合并。&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[B = \begin{bmatrix}
+ B_1 &amp;  &amp;  &amp; \\
+  &amp; B_2 &amp;  &amp; \\
+   &amp;  &amp; \ddots &amp; \\
+  &amp;  &amp;  &amp; B_N
+\end{bmatrix}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;这里就不用重新调整&lt;span class=&#34;math inline&#34;&gt;\(B\)&lt;/span&gt;内容的顺序了。接下来合并目标&lt;span class=&#34;math inline&#34;&gt;\(v_{ti}\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[V_T = \begin{bmatrix}
+ v_{t1} \\
+ v_{t2} \\
+ \vdots \\
+ v_{tn}
+\end{bmatrix}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;最终的目标是&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[E_B(V) = BV = V_T
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;同样，Eigen解方程可得&lt;span class=&#34;math inline&#34;&gt;\(V_Q\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;接下来是很复杂的&lt;span class=&#34;math inline&#34;&gt;\(E_L\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;设原始的一条线段为&lt;span class=&#34;math inline&#34;&gt;\(\hat L=[\hat x_{l0}, \hat y_{l0}, \hat x_{l1}, \hat y_{l1}]^T\)&lt;/span&gt;。根据我们前面的说法，一条线段会被mesh切割，然后放进各个quad中。我们用quad的四个顶点来进行双线性插值，来表示目标的&lt;span class=&#34;math inline&#34;&gt;\(L\)&lt;/span&gt;。方式如下，首先用双线性插值从&lt;span class=&#34;math inline&#34;&gt;\(\hat V_q\)&lt;/span&gt;计算出&lt;span class=&#34;math inline&#34;&gt;\(V_q\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\begin{bmatrix}
+ \hat x_0 &amp; \hat y_0 &amp; \hat x_0\hat y_0 &amp; 1 &amp; &amp; &amp; &amp;\\
+ &amp; &amp; &amp; &amp; \hat x_0 &amp; \hat y_0 &amp; \hat x_0\hat y_0 &amp; 1\\
+ \vdots &amp; \vdots &amp; \vdots &amp; \vdots &amp; \vdots &amp; \vdots &amp; \vdots &amp; \vdots\\
+  \hat x_3 &amp; \hat y_3 &amp; \hat x_3\hat y_3 &amp; 1 &amp; &amp; &amp; &amp;\\
+ &amp; &amp; &amp; &amp; \hat x_3 &amp; \hat y_3 &amp; \hat x_3\hat y_3 &amp; 1
+\end{bmatrix}F_L = 
+\begin{bmatrix}
+ x_0\\
+ y_0\\
+ \vdots\\
+ x_3\\
+ y_3
+\end{bmatrix}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;我们把上式左边的&lt;span class=&#34;math inline&#34;&gt;\(8\times 8\)&lt;/span&gt;矩阵记作&lt;span class=&#34;math inline&#34;&gt;\(W\)&lt;/span&gt;，上式就为&lt;span class=&#34;math inline&#34;&gt;\(WF_L=V_q\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;然后用&lt;span class=&#34;math inline&#34;&gt;\(\hat L\)&lt;/span&gt;表示&lt;span class=&#34;math inline&#34;&gt;\(L\)&lt;/span&gt;，有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\begin{bmatrix}
+ \hat x_{l0} &amp; \hat y_{l0} &amp; \hat x_{l0}\hat y_{l0} &amp; 1 &amp; &amp; &amp; &amp;\\
+ &amp; &amp; &amp; &amp;  \hat x_{l0} &amp; \hat y_{l0} &amp; \hat x_{l0}\hat y_{l0} &amp; 1\\
+\hat x_{l1} &amp; \hat y_{l1} &amp; \hat x_{l1}\hat y_{l1} &amp; 1 &amp; &amp; &amp; &amp;\\
+ &amp; &amp; &amp; &amp;  \hat x_{l1} &amp; \hat y_{l1} &amp; \hat x_{l1}\hat y_{l1} &amp; 1
+\end{bmatrix}F_L = 
+\begin{bmatrix}
+ x_{l0}\\
+ y_{l0}\\
+ x_{l1}\\
+ y_{l1}
+\end{bmatrix}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;上式左侧&lt;span class=&#34;math inline&#34;&gt;\(4\times 8\)&lt;/span&gt;矩阵记作&lt;span class=&#34;math inline&#34;&gt;\(H\)&lt;/span&gt;，上式就为&lt;span class=&#34;math inline&#34;&gt;\(HF_L=L\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;于是&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[L = HF_L = HW^{-1}V_q
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(H\)&lt;/span&gt;和&lt;span class=&#34;math inline&#34;&gt;\(W\)&lt;/span&gt;都为已知，所以&lt;span class=&#34;math inline&#34;&gt;\(L\)&lt;/span&gt;表示为&lt;span class=&#34;math inline&#34;&gt;\(V_q\)&lt;/span&gt;的线性函数。计算&lt;span class=&#34;math inline&#34;&gt;\(L\)&lt;/span&gt;的向量&lt;span class=&#34;math inline&#34;&gt;\(e\)&lt;/span&gt;使用两个端点相减，矩阵为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[D = \begin{bmatrix}
+ -1 &amp; 0 &amp; 1 &amp; 0\\
+ 0 &amp; -1 &amp; 0 &amp; 1
+\end{bmatrix}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[e = DL = \begin{bmatrix}
+ -1 &amp; 0 &amp; 1 &amp; 0\\
+ 0 &amp; -1 &amp; 0 &amp; 1
+\end{bmatrix}
+\begin{bmatrix}
+ x_{l0}\\
+ y_{l0}\\
+ x_{l1}\\
+ y_{l1}
+\end{bmatrix}=
+\begin{bmatrix}
+ x_{l1}-x_{l0}\\
+ y_{l1}-y_{l0}
+\end{bmatrix}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(E_L\)&lt;/span&gt;中的&lt;span class=&#34;math inline&#34;&gt;\(||Ce||^2\)&lt;/span&gt;中的&lt;span class=&#34;math inline&#34;&gt;\(e\)&lt;/span&gt;最终就表示为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\sideset{}{}{e}_{(2, 1)} = \sideset{}{}{D}_{(2, 4)}\sideset{}{}{H}_{(4, 8)}\sideset{}{^{-1}}{W}_{(8, 8)}\sideset{}{_q}{V}_{(8, 1)}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;而&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[C = R\hat e(\hat e^T\hat e)^{-1}\hat e^TR^T-I
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(\hat e\)&lt;/span&gt;已知，&lt;span class=&#34;math inline&#34;&gt;\(R\)&lt;/span&gt;只和&lt;span class=&#34;math inline&#34;&gt;\(\theta_m\)&lt;/span&gt;有关。可以直接算，与&lt;span class=&#34;math inline&#34;&gt;\(V_q\)&lt;/span&gt;无关。&lt;/p&gt;
+&lt;p&gt;同样的，我们把所有线段的&lt;span class=&#34;math inline&#34;&gt;\(e\)&lt;/span&gt;和其&lt;span class=&#34;math inline&#34;&gt;\(C\)&lt;/span&gt;拼接（具体见代码），有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[E_L(V,\{\theta_m\}) = \dfrac{1}{N_L}Ce = \overrightarrow{0}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;同样的，在优化&lt;span class=&#34;math inline&#34;&gt;\(V_q\)&lt;/span&gt;时，上式是&lt;span class=&#34;math inline&#34;&gt;\(V_q\)&lt;/span&gt;的线性函数，只需要用Eigen解方程即可。&lt;/p&gt;
+&lt;p&gt;最终，我们的目标是使得&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[E = E_S+\lambda_LE_L+\lambda_BE_B
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;最小，即&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\begin{bmatrix}
+\dfrac{1}{N}A\\
+\dfrac{\lambda_L}{N_L}CDHW^{-1}\\
+\lambda_BB
+\end{bmatrix}V = 
+\begin{bmatrix}
+\overrightarrow{0}\\
+\overrightarrow{0}\\
+V_T
+\end{bmatrix}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;用Eigen求解出V即可。注意其中的&lt;span class=&#34;math inline&#34;&gt;\(CDHW^{-1}\)&lt;/span&gt;指的是每一个线段的矩阵拼接后的结果，具体拼接见代码。&lt;/p&gt;
+</description>
+        </item>
+        <item>
         <title>GrabCut— Interactive Foreground Extraction Using Iterated Graph Cuts论文精读与复现</title>
         <link>https://kegalas.top/p/grabcut-interactive-foreground-extraction-using-iterated-graph-cuts%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/</link>
         <pubDate>Mon, 20 May 2024 11:21:12 +0800</pubDate>
@@ -96,10 +618,10 @@
 &lt;p&gt;这里的&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;即为之前提到的&lt;span class=&#34;math inline&#34;&gt;\(\alpha\)&lt;/span&gt;，是硬分割。&lt;span class=&#34;math inline&#34;&gt;\(R(A)\)&lt;/span&gt;是区域项，&lt;span class=&#34;math inline&#34;&gt;\(B(A)\)&lt;/span&gt;是边缘项。&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[R(A) = \sum_{p\in P} R_p(A_p)
 \]&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[B(A) = \sum_{\{p,q\}\in N} B_{\{p,q\}}[A_p, A_q]
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[B(A) = \sum_{\{p,q\}\in N} B_{\{p,q\}}[A_p\neq A_q]
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;这里的&lt;span class=&#34;math inline&#34;&gt;\(P\)&lt;/span&gt;是所有像素的集和。&lt;span class=&#34;math inline&#34;&gt;\(N\)&lt;/span&gt;是相邻像素对的集合，其中&lt;span class=&#34;math inline&#34;&gt;\(\{p,q\}\)&lt;/span&gt;是无序的。&lt;/p&gt;
-&lt;p&gt;一般的&lt;span class=&#34;math inline&#34;&gt;\(\lambda\geq 0\)&lt;/span&gt;。&lt;span class=&#34;math inline&#34;&gt;\(R(A)\)&lt;/span&gt;代表着，给某个像素预测为前景和背景的惩罚。而&lt;span class=&#34;math inline&#34;&gt;\(B_{\{p, q\}}\geq 0\)&lt;/span&gt;则是边缘差异的乘法，两个相邻像素&lt;span class=&#34;math inline&#34;&gt;\(p,q\)&lt;/span&gt;，如果它们的颜色非常相近，那么&lt;span class=&#34;math inline&#34;&gt;\(B_{\{p,q\}}\)&lt;/span&gt;应该非常大；而颜色差异很大时，边缘项会非常接近&lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;一般的&lt;span class=&#34;math inline&#34;&gt;\(\lambda\geq 0\)&lt;/span&gt;。&lt;span class=&#34;math inline&#34;&gt;\(R(A)\)&lt;/span&gt;代表着，给某个像素预测为前景和背景的惩罚。而&lt;span class=&#34;math inline&#34;&gt;\(B_{\{p, q\}}\geq 0\)&lt;/span&gt;则是边缘差异的惩罚，两个相邻像素&lt;span class=&#34;math inline&#34;&gt;\(p,q\)&lt;/span&gt;，如果它们的颜色非常相近，那么&lt;span class=&#34;math inline&#34;&gt;\(B_{\{p,q\}}\)&lt;/span&gt;应该非常大；而颜色差异很大时，边缘项会非常接近&lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt;。&lt;/p&gt;
 &lt;p&gt;这里只是给出了泛用的理论，具体怎么去定义这些东西，看大家的具体问题。比如GrabCut就定义了自己的两个惩罚项，本文后面也针对黑白图像定义了惩罚项。&lt;/p&gt;
 &lt;p&gt;&lt;figure 
 	
@@ -266,8 +788,8 @@
 &lt;h2 id=&#34;彩色直方图的其他优化方法&#34;&gt;彩色直方图的其他优化方法&lt;/h2&gt;
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://mmcheng.net/zh/salobj/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;https://mmcheng.net/zh/salobj/&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;这篇文章中，作者指出，一张照片的绝大多数颜色（95%）都是相近的，可以将颜色空间简化到&lt;span class=&#34;math inline&#34;&gt;\(12^3\)&lt;/span&gt;，即&lt;span class=&#34;math inline&#34;&gt;\(RGB\)&lt;/span&gt;每个通道都简化为&lt;span class=&#34;math inline&#34;&gt;\(12\)&lt;/span&gt;个值。然后通过进一步的统计，选择其中出现次数最多的&lt;span class=&#34;math inline&#34;&gt;\(85\)&lt;/span&gt;个颜色，来覆盖&lt;span class=&#34;math inline&#34;&gt;\(95\%\)&lt;/span&gt;的图片色彩。&lt;/p&gt;
-&lt;p&gt;当然，为了应对剩下的那&lt;span class=&#34;math inline&#34;&gt;\(5\%\)&lt;/span&gt;，作者也提出了一个色彩空间平滑的操作。有机会再来精读这篇文章。&lt;/p&gt;
+&lt;p&gt;这篇文章中，作者指出，一张照片的绝大多数颜色（95%）都是相近的，可以将颜色空间简化到&lt;span class=&#34;math inline&#34;&gt;\(12^3\)&lt;/span&gt;，即&lt;span class=&#34;math inline&#34;&gt;\(L*a*b*\)&lt;/span&gt;每个通道都简化为&lt;span class=&#34;math inline&#34;&gt;\(12\)&lt;/span&gt;个值。然后通过进一步的统计，选择其中出现次数最多的&lt;span class=&#34;math inline&#34;&gt;\(85\)&lt;/span&gt;个颜色，来覆盖&lt;span class=&#34;math inline&#34;&gt;\(95\%\)&lt;/span&gt;的图片色彩。&lt;/p&gt;
+&lt;p&gt;当然，为了应对剩下的那&lt;span class=&#34;math inline&#34;&gt;\(5\%\)&lt;/span&gt;，使用与其最近的颜色替代。作者也提出了一个色彩空间平滑的操作，来解决噪声问题。有机会再来精读这篇文章。&lt;/p&gt;
 &lt;h1 id=&#34;我的实现&#34;&gt;我的实现&lt;/h1&gt;
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://github.com/kegalas/GrabCut&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;https://github.com/kegalas/GrabCut&lt;/a&gt;&lt;/p&gt;
@@ -2675,7 +3197,7 @@ for x = x0 to x1 do
     &gt;这里&lt;/a&gt;**&lt;/p&gt;
 &lt;p&gt;另外，求重心坐标的代码我写到了geometry.cpp里，方便别处调用。链接在**&lt;a class=&#34;link&#34; href=&#34;https://github.com/kegalas/oar/blob/main/tutorial/chapter3/src/geometry.cpp&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;这里&lt;/a&gt;**（在文件末尾）&lt;/p&gt;
-&lt;p&gt;另外，求重心坐标还有一种不那么复杂的公式，见**&lt;a class=&#34;link&#34; href=&#34;../%e6%b0%b4%e6%96%87-%e8%ae%a1%e7%ae%97%e6%9c%ba%e5%9b%be%e5%bd%a2%e5%ad%a6%e5%9f%ba%e7%a1%80%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0-%e6%95%b0%e5%ad%a6%e5%9f%ba%e7%a1%80/#%e9%87%8d%e5%bf%83%e5%9d%90%e6%a0%87%e7%b3%bb&#34; &gt;计算机图形学基础学习笔记-数学基础&lt;/a&gt;**&lt;/p&gt;
+&lt;p&gt;另外，求重心坐标还有一种不那么复杂的公式，见**&lt;a class=&#34;link&#34; href=&#34;../%e8%ae%a1%e7%ae%97%e6%9c%ba%e5%9b%be%e5%bd%a2%e5%ad%a6%e5%9f%ba%e7%a1%80%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0-%e6%95%b0%e5%ad%a6%e5%9f%ba%e7%a1%80/#%e9%87%8d%e5%bf%83%e5%9d%90%e6%a0%87%e7%b3%bb&#34; &gt;计算机图形学基础学习笔记-数学基础&lt;/a&gt;**&lt;/p&gt;
 &lt;p&gt;注意，&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt;(&lt;span style=&#34;color:#ae81ff&#34;&gt;0.f&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;=&lt;/span&gt;alpha &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; alpha&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1.f&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;               &lt;span style=&#34;color:#ae81ff&#34;&gt;0.f&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;=&lt;/span&gt;beta  &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; beta &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1.f&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt;

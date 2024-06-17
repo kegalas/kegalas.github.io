@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='原论文：https://people.csail.mit.edu/kaiming/sig13/index.html 摘要 拍摄全景照片的时候，因'><title>Rectangling Panoramic Images via Warping论文精读与复现</title>
+
+<link rel='canonical' href='https://kegalas.top/p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/'>
+
+<link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='Rectangling Panoramic Images via Warping论文精读与复现'>
+<meta property='og:description' content='原论文：https://people.csail.mit.edu/kaiming/sig13/index.html 摘要 拍摄全景照片的时候，因'>
+<meta property='og:url' content='https://kegalas.top/p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/'>
+<meta property='og:site_name' content='KegalaS的个人博客'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='大学' /><meta property='article:tag' content='图形学' /><meta property='article:published_time' content='2024-06-03T23:16:15&#43;08:00'/><meta property='article:modified_time' content='2024-06-03T23:16:15&#43;08:00'/><meta property='og:image' content='https://kegalas.top/p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/cover.jpg' />
+<meta name="twitter:title" content="Rectangling Panoramic Images via Warping论文精读与复现">
+<meta name="twitter:description" content="原论文：https://people.csail.mit.edu/kaiming/sig13/index.html 摘要 拍摄全景照片的时候，因"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://kegalas.top/p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/cover.jpg' />
+    <link rel="shortcut icon" href="/images/favicon.ico" />
+
+    </head>
+    <body class="
+    article-page has-toc
+">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex 
+    
+        extended
+    
+">
+    
+        <div id="article-toolbar">
+            <a href="/" class="back-home">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="15 6 9 12 15 18" />
+</svg>
+
+
+
+                <span>返回</span>
+            </a>
+        </div>
+    
+<main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/">
+                <img src="/p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/cover_hu803811e1d9d935a6e60dd50dca480090_178188_800x0_resize_q75_box.jpg"
+                        srcset="/p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/cover_hu803811e1d9d935a6e60dd50dca480090_178188_800x0_resize_q75_box.jpg 800w, /p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/cover_hu803811e1d9d935a6e60dd50dca480090_178188_1600x0_resize_q75_box.jpg 1600w"
+                        width="800" 
+                        height="429" 
+                        loading="lazy"
+                        alt="Featured image of post Rectangling Panoramic Images via Warping论文精读与复现" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" >
+                图形学
+            </a>
+        
+    </header>
+    
+
+    <h2 class="article-title">
+        <a href="/p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/">Rectangling Panoramic Images via Warping论文精读与复现</a>
+    </h2>
+
+    
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Jun 03, 2024</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 14 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+</div>
+</header>
+
+    <section class="article-content">
+    <p>原论文：<a class="link" href="https://people.csail.mit.edu/kaiming/sig13/index.html"  target="_blank" rel="noopener"
+    >https://people.csail.mit.edu/kaiming/sig13/index.html</a></p>
+<h1 id="摘要">摘要</h1>
+<p>拍摄全景照片的时候，因为人手在抖，所以可能拍出来的图片边界就不是一个矩形框。在本文中，作者提出了一种可以感知图片内容的弯曲（warp）算法，来将这种形状非矩形的图片转化为矩形图片。分为两步，第一步是没有mesh的，初步把一张图片弯曲成矩形。第二步就是在矩形中建立mesh，然后在其中优化图片，使得图片中的各种形状保持原样（例如直线保持直线的样子）。</p>
+<h1 id="简介">简介</h1>
+<p>同上介绍的，关于拍摄全景照片，因为手抖，无法拉出一个矩形图片。</p>
+<p>一个简单的解决办法是：剪裁。从这个图片中剪裁出一个矩形区域。缺点是会损失很多信息。还有一种方法就是在原来的图片边缘的外面进行图片合成，缺陷是，对于复杂的语义信息无法处理。</p>
+<p>作者这里提出了一种只会引入“可接受”的、“不容易注意到”的扭曲，并且保护图片原本内容的方法。</p>
+<h1 id="前人工作">前人工作</h1>
+<p><strong>Image alignment and stitching</strong></p>
+<p>全景照片实际上是将多张照片缝合（stitching）在一起的。通常用某种图片上的特征，来将原照片全部投影到一个相同的坐标系下。</p>
+<p><strong>Projections</strong></p>
+<p>众所周知，3D场景投影到2D会不可避免地导致一些折叠的扭曲。例如透视投影，虽然可以保持直线的形状，但是其他物体的形状则会被拉伸。圆柱投影和球面投影可以保持物体的形状，但会弯曲直线。</p>
+<p>也有研究者提出了一种在自适应流形（adaptive manifold）上进行投影和缝合的方法。不过它是适应相机的移动，而不是适应图片的内容。</p>
+<p>之前也有大量的工作，考虑将这些折叠后的扭曲，通过某种方式，让它们出现在不容易注意到的位置。虽然视觉上可以接受，但是无法移除固有的扭曲。</p>
+<p><strong>Image retargeting and warping</strong></p>
+<p>Image retargeting是一种基于图片内容的缩放图片的方式。但是它们都假设输入的图片具有矩形形状，而且其中一部分必须还要定义一个grid mesh。</p>
+<p><strong>Image completion</strong></p>
+<p>即前面提到的，在图片的边缘增加内容，使其变成一个矩形图片。一般的方法是把图片里面的内容，复制到需要合成的地方。但是对于需要生成语义内容来说，表现不好。</p>
+<h1 id="算法">算法</h1>
+<p>算法分为两部分，一部分是改进的Seam Carving，是一个local warp的步骤，其将图片初步弯曲成矩形。然后另一部分（global warp）在前一步的基础上，建立一个grid mesh，在mesh上进行优化，来保证原图的物体形状和直线形状不变。</p>
+<h2 id="local-warp">Local Warp</h2>
+<p>原版的Seam Carving算法是在图片中插入水平或者垂直的接缝（seam），来穿过整张图片，然后再从接缝中水平或者垂直地扩展一个像素。作者这里想到，接缝不穿过整张图片，这样就可以改变图片边缘的形状，从而变成矩形。</p>
+<p>原版的算法可见<a class="link" href="https://faculty.runi.ac.il/arik/scweb/imret/index.html"  target="_blank" rel="noopener"
+    >https://faculty.runi.ac.il/arik/scweb/imret/index.html</a></p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 95; 
+			flex-basis: 230px"
+	>
+	<a href="/p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/1.jpg" data-size="695x724">
+		<img src="/p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/1.jpg"
+			width="695"
+			height="724"
+			srcset="/p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/1_hu5600ffb6ac470185951f0c06ac585973_69833_480x0_resize_q75_box.jpg 480w, /p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/1_hu5600ffb6ac470185951f0c06ac585973_69833_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="1.jpg">
+	</a>
+	
+	<figcaption>1.jpg</figcaption>
+	
+</figure></p>
+<p>如上图，其中蓝色的部分是有效的图片像素，白色的部分是需要我们填充的像素。</p>
+<p>首先定义boundary segment是待填充像素中的，在图片顶部/底部/左侧/右侧的一行/一列像素。例如上图。我们找到目前最长的一个boundary segment，然后从它扩展得到一个sub-image。</p>
+<p>这里左侧右侧的boundary segment，扩展出来的sub-image的高度保持，而宽度则等于整张图。同理，顶部和底部的boundary segment，扩展出来的sub-image的宽度保持，高度等于整张图。</p>
+<p>然后我们在这个sub-image上利用seam carving的方法，去进行图像扩展。方法很简单，首先根据图片颜色梯度信息，计算每一个像素的能量。然后使用动态规划，求解最短路径。</p>
+<p>以Figure 3(ii)为例，计算得到每个像素的能量。因为我们需要向右边填入像素，所以我们需要一个竖直方向的seam。于是我们用动态规划的方式，求底部像素到顶部像素的最短路（8邻居路径），然后所有底部像素中距离顶部像素最近的像素，及其到顶部的路径，成为我们的seam。</p>
+<p>注意这里使用8邻居是源于原算法的研究，另外，我们需要给待填入的像素的能量赋值为<span class="math inline">\(10^8\)</span>或者更大的数，来防止seam穿过这些像素。</p>
+<p>填充像素的时候，我们把seam及其右边的像素都往右移动一位。原本seam的位置则求取左右两个像素的平均。</p>
+<p>原版算法中提到，为了防止反复在相同的位置插入seam、导致如下的情况</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 244; 
+			flex-basis: 586px"
+	>
+	<a href="/p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/2.jpg" data-size="1234x505">
+		<img src="/p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/2.jpg"
+			width="1234"
+			height="505"
+			srcset="/p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/2_hu106bb857eec1cad9c9ddb0e0c67ca7a3_66748_480x0_resize_q75_box.jpg 480w, /p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/2_hu106bb857eec1cad9c9ddb0e0c67ca7a3_66748_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="2.jpg">
+	</a>
+	
+	<figcaption>2.jpg</figcaption>
+	
+</figure></p>
+<p>之前的作者建议同时采集多根seam，然后依次填入像素。</p>
+<p>但是这在我们这篇文章中是行不通的。我们的Local Warp要求我们每次填充完一根seam之后，都要重新计算最长的bound segment，我们不能反复对同一个sub-image填入像素。</p>
+<p>我这里的实现采用了一个比较trick的方法，算出seam后，对原本的seam的位置的能量设置为<span class="math inline">\(10^5\)</span>这样的数，比一般的大，比非法像素的小。之后让像素和能量都右移。现在原本的seam位置的能量和其右边一个像素的能量都为<span class="math inline">\(10^5\)</span>了，这样就有更少的可能会在这里再次插入seam。</p>
+<p>总而言之，重复以上过程，直到填充完所有像素。例如我实现的下例</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 244; 
+			flex-basis: 586px"
+	>
+	<a href="/p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/3.jpg" data-size="1000x409">
+		<img src="/p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/3.jpg"
+			width="1000"
+			height="409"
+			srcset="/p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/3_hue93110ce5292de0c5372ce086e080520_214584_480x0_resize_q75_box.jpg 480w, /p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/3_hue93110ce5292de0c5372ce086e080520_214584_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="3.jpg">
+	</a>
+	
+	<figcaption>3.jpg</figcaption>
+	
+</figure></p>
+<p>其原图为</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 244; 
+			flex-basis: 586px"
+	>
+	<a href="/p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/4.jpg" data-size="1000x409">
+		<img src="/p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/4.jpg"
+			width="1000"
+			height="409"
+			srcset="/p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/4_hue1cf86eb6edbd8aadcc8fd3cfe31710a_405205_480x0_resize_q75_box.jpg 480w, /p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/4_hue1cf86eb6edbd8aadcc8fd3cfe31710a_405205_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="4.jpg">
+	</a>
+	
+	<figcaption>4.jpg</figcaption>
+	
+</figure></p>
+<p>可以看到，虽然填充是填充了，但是歪歪扭扭。于是还需要下面的步骤。</p>
+<h2 id="global-warp">Global Warp</h2>
+<h3 id="mesh-placement">Mesh Placement</h3>
+<p>首先，我们在Local Warp之后的图片的长宽上，将其分成<span class="math inline">\((40-1)*(10-9)\)</span>个网格，其中<span class="math inline">\(40*10\)</span>是网格的顶点数量。网格是正交的。</p>
+<p>在Local Warp中，我们对像素进行了移动，我们需要记录下每个像素移动的偏移量。然后，我们使用网格顶点所在像素的偏移量，将各个网格顶点移动回去，就完成了mesh placement这一步。之后local warp的图像就可以抛弃了。移动后的结果例如：</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 244; 
+			flex-basis: 586px"
+	>
+	<a href="/p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/5.jpg" data-size="1000x409">
+		<img src="/p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/5.jpg"
+			width="1000"
+			height="409"
+			srcset="/p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/5_huf9a84282b10ed9e3eaa83f8a966a5cd8_255702_480x0_resize_q75_box.jpg 480w, /p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/5_huf9a84282b10ed9e3eaa83f8a966a5cd8_255702_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="5.jpg">
+	</a>
+	
+	<figcaption>5.jpg</figcaption>
+	
+</figure></p>
+<h3 id="energy-function">Energy Function</h3>
+<p>这里设计能量的目的有三个，对于目前的网格与最终的网格结果之间：</p>
+<ol>
+<li>保持网格的形状尽量不变，亦即Shape Preservation</li>
+<li>保持网格内的线段的笔直，并且与其平行的其他线段，在处理后依然平行，亦即Line Preservation</li>
+<li>网格上下左右贴合目标矩形图像框，亦即Boundary Constraints</li>
+</ol>
+<p><strong>Shape Preservation</strong></p>
+<p>最终输出的mesh的顶点（vertex）集记作<span class="math inline">\(V\)</span>，其中的每一个元素<span class="math inline">\(v_i=(x_i, y_i)\)</span>，可以用坐标表示出来。我们进行完Mesh Placement后得到的初始mesh记作<span class="math inline">\(\hat V\)</span></p>
+<p>保型的能量定义为</p>
+<p><span class="math display">\[E_S(V) = \dfrac{1}{N}\sum_q||(A_q(A_q^TA_q)^{-1}A_q^T-I)V_q||^2
+\]</span></p>
+<p>这里<span class="math inline">\(N\)</span>是quad的个数。其中</p>
+<p><span class="math display">\[A_q = \begin{bmatrix}
+ \hat x_0 & -\hat y_0 & 1 & 0\\
+ \hat y_0 & \hat x_0 & 0 & 1\\
+  \vdots & \vdots & \vdots & \vdots\\
+ \hat x_3 & -\hat y_3 & 1 & 0\\
+ \hat y_3 & \hat x_3 & 0 & 1
+\end{bmatrix}
+\]</span></p>
+<p><span class="math display">\[V_q = \begin{bmatrix}
+ x_0 \\
+ y_0 \\
+ \vdots \\
+ x_3 \\
+ y_3
+\end{bmatrix}
+\]</span></p>
+<p>这里也就是说第<span class="math inline">\(q\)</span>个quad的四个顶点的坐标。其中<span class="math inline">\(A_q\)</span>中的是初始mesh的坐标，<span class="math inline">\(V_q\)</span>是目标mesh的坐标。</p>
+<p><strong>Line Preservation</strong></p>
+<p>我们目前计算过的东西是不包含“线段”这样的信息的。我们首先要做的事是，使用任何一种线段检测算法，来算出图片中的线段。</p>
+<p>根据作者的说法，我们需要将这些线段切分开来，放到mesh的各个quad里。然后将所有线段的方向角（范围<span class="math inline">\([-\dfrac{\pi}{2},\dfrac{\pi}{2})\)</span>），离散化为<span class="math inline">\(M=50\)</span>个角度，每个离散化角度称为一个bin。为了保持直线性和平行性，设计的能量需要让每个bin里的线段拥有同样的角度。</p>
+<p>给定一个线段，其方向向量<span class="math inline">\(e\)</span>可以由线段的两个端点相减得到。如果我们将线段的两个端点用其所在的quad的<span class="math inline">\(V_q\)</span>进行双线性插值表示，那么<span class="math inline">\(e\)</span>就可以表示为<span class="math inline">\(V_q\)</span>的线性函数。</p>
+<p>同样的<span class="math inline">\(e\)</span>是我们的目标，而<span class="math inline">\(\hat e\)</span>则是最初的对应线段的方向向量。对于某一条线段，给定旋转操作的目标角度<span class="math inline">\(\theta_m\)</span>，它的能量为</p>
+<p><span class="math display">\[||sR\hat e-e||^2
+\]</span></p>
+<p>其中</p>
+<p><span class="math display">\[R = \begin{bmatrix}
+ \cos\theta_m &  -\sin\theta_m\\
+ \sin\theta_m &  \cos\theta_m
+\end{bmatrix}
+\]</span></p>
+<p>是旋转矩阵，而</p>
+<p><span class="math display">\[s=(\hat e^T\hat e)^{-1}\hat e^TR^Te
+\]</span></p>
+<p>是放缩因子。能量可以重新写为</p>
+<p><span class="math display">\[||Ce||^2
+\]</span></p>
+<p>其中</p>
+<p><span class="math display">\[C = R\hat e(\hat e^T\hat e)^{-1}\hat e^TR^T-I
+\]</span></p>
+<p>因为<span class="math inline">\(\hat e\)</span>和<span class="math inline">\(e\)</span>都可以写作<span class="math inline">\(\hat V_q\)</span>和<span class="math inline">\(V_q\)</span>的线性函数，所以能量就可以写成二次函数。</p>
+<p>总的能量为</p>
+<p><span class="math display">\[E_L(V, \{\theta_m\}) = \dfrac{1}{N_L}\sum_j||C_j(\theta_{m(j)})e_{q(j)}||^2
+\]</span></p>
+<p>这里<span class="math inline">\(N_L\)</span>为线段总数。对于第<span class="math inline">\(j\)</span>条线段，<span class="math inline">\(\theta_{m(j)}\)</span>代表其所属的bin中的目标旋转角度，<span class="math inline">\(q(j)\)</span>代表其所属的quad。</p>
+<p><strong>Boundary Constraints</strong></p>
+<p>直白点说，就是把mesh的上下左右拉到图片框边缘上。</p>
+<p><span class="math display">\[E_B(V) = \sum_{v_i\in L} x_i^2 + \sum_{v_i\in R} (x_i-w)^2 + \sum_{v_i\in T} y_i^2 + \sum_{v_i\in B} (y_i-h)^2
+\]</span></p>
+<p><span class="math inline">\(L/R/T/B\)</span>分别是左右上下边界的mesh顶点，<span class="math inline">\(w, h\)</span>则是图片框的宽高。</p>
+<p><strong>最终能量</strong></p>
+<p>将前面的几个加和，添加权重</p>
+<p><span class="math display">\[E(V, \{\theta_m\}) = E_S(V)+\lambda_LE_L(V, \{\theta_m\}) + \lambda_B E_B(V)
+\]</span></p>
+<p>显然，我们需要图片至少能够贴合图片框，我们设置<span class="math inline">\(\lambda_B=10^8\)</span>来确保这一点。然后，关于<span class="math inline">\(\lambda_L\)</span>的选择，作者说选取<span class="math inline">\(>10\)</span>比较好，原文采取了<span class="math inline">\(\lambda_L=100\)</span>。</p>
+<h3 id="优化算法">优化算法</h3>
+<p>作者指出，可以分别优化<span class="math inline">\(V\)</span>和<span class="math inline">\(\{\theta_m\}\)</span>。每各优化一次算迭代一次，总共迭代10次。</p>
+<p><strong>固定<span class="math inline">\(\{\theta_m\}\)</span>优化<span class="math inline">\(V\)</span></strong></p>
+<p>此时能量函数是<span class="math inline">\(V\)</span>的二次函数，可以求解线性方程来计算。总共就几百个顶点，所以总体上来说，这部分的开销很小。</p>
+<p>这里的求解是通过最小二乘法来算的，具体见我自己的实现部分。</p>
+<p>**固定<span class="math inline">\(V\)</span>优化<span class="math inline">\(\{\theta_m\}\)</span></p>
+<p>因为另外两项和<span class="math inline">\(\theta\)</span>无关，所以我们只用优化<span class="math inline">\(E_L\)</span>这一部分。</p>
+<p>作者指出，可以通过牛顿迭代等方法去优化。但是，几何意义上，<span class="math inline">\(E_L\)</span>的目标是找到一个<span class="math inline">\(\theta_m\)</span>，使得所有在第<span class="math inline">\(m\)</span>个bin中的线段<span class="math inline">\(e\)</span>和其初始线段<span class="math inline">\(\hat e\)</span>的夹角，都近似等于<span class="math inline">\(\theta_m\)</span>。所以，我们可以简单的计算所有这个夹角，然后加和，求平均，作为新的<span class="math inline">\(\theta_m\)</span>。</p>
+<h3 id="防止拉伸和后处理">防止拉伸和后处理</h3>
+<p>如果我们的目标图相框的长宽比设置的不是很好，那么我们的结果图就会被拉伸。为了减少这种拉伸问题，我们在global warping之后更新目标框。</p>
+<p>对于每个quad，我们计算它的<span class="math inline">\(x\)</span>方向的伸缩因子为</p>
+<p><span class="math display">\[s_x=(x_{max}-x_{min})/(\hat x_{max}-\hat x_{min})
+\]</span></p>
+<p>所有quad的平均伸缩因子就为<span class="math inline">\(\bar s_x\)</span>。同理可以计算出<span class="math inline">\(\bar s_y\)</span>。之后我们的目标框就设置为<span class="math inline">\((w/\bar s_x, h/\bar s_y)\)</span>。</p>
+<p>之后我们再在这个新的目标框上跑一次global warping</p>
+<p>获得最终的mesh之后，我们就可以通过一些方法来获得最终的图像了。以图形学的思想为例，最终的mesh构成了我们要绘制的三角面。三角面空间坐标为最终mesh的坐标，uv坐标则是初始mesh的坐标。texture则是原图。</p>
+<p>作者指出，这样的实现有一个小问题，因为mesh不会只包住有效像素，例如</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 161; 
+			flex-basis: 388px"
+	>
+	<a href="/p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/6.jpg" data-size="97x60">
+		<img src="/p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/6.jpg"
+			width="97"
+			height="60"
+			srcset="/p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/6_hu14a973e49748d2d42de24feacc2c3705_1938_480x0_resize_q75_box.jpg 480w, /p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/6_hu14a973e49748d2d42de24feacc2c3705_1938_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="6.jpg">
+	</a>
+	
+	<figcaption>6.jpg</figcaption>
+	
+</figure></p>
+<p>这里的quad有一部分就包含了外部的无效像素。进行纹理采样时，作者简单地将无效像素替换为最近的有效像素。</p>
+<h2 id="实现细节">实现细节</h2>
+<p>由于mesh是很“光滑”的，作者指出我们可以在缩小的图片上进行mesh的计算。首先将图片缩小到一个固定的大小，然后再在上面进行local/global warping。然后我们将mesh的尺度放大到原来的图片大小，再用这个mesh去进行纹理采样。</p>
+<h1 id="本文局限">本文局限</h1>
+<p>如果图片缺失的部分太多，那么处理结果不好</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 149; 
+			flex-basis: 359px"
+	>
+	<a href="/p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/7.jpg" data-size="826x551">
+		<img src="/p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/7.jpg"
+			width="826"
+			height="551"
+			srcset="/p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/7_hua3d01ec06ecffffbb6b4356056ad810d_66871_480x0_resize_q75_box.jpg 480w, /p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/7_hua3d01ec06ecffffbb6b4356056ad810d_66871_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="7.jpg">
+	</a>
+	
+	<figcaption>7.jpg</figcaption>
+	
+</figure></p>
+<p>本文的算法可能会导致边缘凹进去</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 97; 
+			flex-basis: 234px"
+	>
+	<a href="/p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/8.jpg" data-size="794x813">
+		<img src="/p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/8.jpg"
+			width="794"
+			height="813"
+			srcset="/p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/8_hu13b1f239c3c3ad28922ce84302bd6d02_119524_480x0_resize_q75_box.jpg 480w, /p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/8_hu13b1f239c3c3ad28922ce84302bd6d02_119524_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="8.jpg">
+	</a>
+	
+	<figcaption>8.jpg</figcaption>
+	
+</figure></p>
+<p>作者指出，可以手动添加一个透明区域，当作已知像素。</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 100; 
+			flex-basis: 240px"
+	>
+	<a href="/p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/9.jpg" data-size="541x541">
+		<img src="/p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/9.jpg"
+			width="541"
+			height="541"
+			srcset="/p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/9_hu046491476282bf31472110ca0ea3b19e_55351_480x0_resize_q75_box.jpg 480w, /p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/9_hu046491476282bf31472110ca0ea3b19e_55351_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="9.jpg">
+	</a>
+	
+	<figcaption>9.jpg</figcaption>
+	
+</figure></p>
+<p>将其当作已知像素来warp，之后在本文的算法处理完之后，再在这个透明区域中使用image completion等方法。</p>
+<p>另外，本文无法处理未识别到的线段。这可以通过用户交互来缓解。</p>
+<p>最后，本文无法应对线段数量过多的情况，这是warping方式的共同挑战。</p>
+<h1 id="我的实现">我的实现</h1>
+<p><a class="link" href="https://github.com/kegalas/Rectangling_Panoramic_Images"  target="_blank" rel="noopener"
+    >https://github.com/kegalas/Rectangling_Panoramic_Images</a></p>
+<h2 id="一些细节">一些细节</h2>
+<p>首先是我之前也提到过的，为了防止反复在同一个地方插入seam，我们添加了额外的一个像素类别SEAM_PIXEL，让他的能量为<span class="math inline">\(10^5\)</span>。比一般的像素大，比无效像素小。</p>
+<p>在Global Warping主要要说明的部分则是关于如何优化能量。从<span class="math inline">\(E_S\)</span>开始</p>
+<p><span class="math display">\[E_S(V) = \dfrac{1}{N}\sum_q||(A_q(A_q^TA_q)^{-1}A_q^T-I)V_q||^2
+\]</span></p>
+<p>我们需要使其最小。众所周知，使向量的范数平方最小，只用使其每一维都最小即可。或者说，使向量尽可能成为零向量。</p>
+<p>这里的<span class="math inline">\((A_q(A_q^TA_q)^{-1}A_q^T-I)\)</span>是一个<span class="math inline">\(8\times 8\)</span>矩阵（记作<span class="math inline">\(A\)</span>好了），而<span class="math inline">\(V_q\)</span>是一个8维向量。我们可以将所有的<span class="math inline">\(V_q\)</span>收尾接在一起。如果我们的mesh是<span class="math inline">\(40\times 10\)</span>的，那么新的拼接向量<span class="math inline">\(V_Q\)</span>的维度就是<span class="math inline">\((40-1)\times(10-1)\times 8\)</span></p>
+<p><span class="math display">\[V_Q = \begin{bmatrix}
+ V_1 \\
+ V_2 \\
+ \vdots \\
+ V_{N-1} \\
+ V_{N}
+\end{bmatrix}
+\]</span></p>
+<p>同理，我们也可以把<span class="math inline">\(A\)</span>拼接。如下</p>
+<p><span class="math display">\[A_Q = \begin{bmatrix}
+ A_1 &  &  & \\
+  & A_2 &  & \\
+   &  & \ddots & \\
+  &  &  & A_N
+\end{bmatrix}
+\]</span></p>
+<p>我们的目标是使得</p>
+<p><span class="math display">\[E_S(V) = \dfrac{1}{N}A_QV_Q = \overrightarrow{0}
+\]</span></p>
+<p>这里<span class="math inline">\(A_Q\)</span>是用<span class="math inline">\(\hat V\)</span>算的，而<span class="math inline">\(V_Q\)</span>是我们最终mesh的坐标。也就是说我们需要解方程算出来<span class="math inline">\(V_Q\)</span>。这其实就是最小二乘法。我们使用Eigen的QR分解对<span class="math inline">\(A_Q\)</span>分解，然后再求解<span class="math inline">\(V_Q\)</span>。这里建议使用稀疏矩阵。</p>
+<p>另外，存在一个比较明显的优化方式，可以缩小矩阵和向量的维度。我们直接存储<span class="math inline">\(V_Q\)</span>为<span class="math inline">\(40\times 10\times 2\)</span>维向量。即每个顶点都只存一份（包含<span class="math inline">\(x,y\)</span>坐标）。然后我们去修改<span class="math inline">\(A_Q\)</span>的顺序就可以在向量乘法的时候一一对应。具体见我写的代码。调整后写为</p>
+<p><span class="math display">\[E_S(V) = \dfrac{1}{N}AV = \overrightarrow{0}
+\]</span></p>
+<p>接下来比较简单的是<span class="math inline">\(E_B\)</span></p>
+<p><span class="math display">\[E_B(V) = \sum_{v_i\in L} x_i^2 + \sum_{v_i\in R} (x_i-w)^2 + \sum_{v_i\in T} y_i^2 + \sum_{v_i\in B} (y_i-h)^2
+\]</span></p>
+<p>对于mesh上的一个顶点<span class="math inline">\(v_i\)</span>，其有四种情况，在左侧、右侧、上部，下部。当然有四个顶点同时属于两种情况。也就是说，有一些顶点需要限制<span class="math inline">\(x\)</span>坐标，有一些需要限制<span class="math inline">\(y\)</span>坐标，有一些两个都需要限制，而有一些则两个都不需要限制。</p>
+<p>设<span class="math inline">\(B_i\)</span>如下</p>
+<p><span class="math display">\[B_i = \begin{bmatrix}
+ a &  0 \\
+ 0 & b 
+\end{bmatrix}
+\]</span></p>
+<p>一个点如果需要限制<span class="math inline">\(x\)</span>坐标，则<span class="math inline">\(a=1\)</span>，如果需要限制<span class="math inline">\(y\)</span>坐标，则<span class="math inline">\(b=1\)</span>。否则都等于<span class="math inline">\(0\)</span>。</p>
+<p>例如左上角的顶点<span class="math inline">\((x, y)\)</span>，我们的目标是</p>
+<p><span class="math display">\[\begin{bmatrix}
+ 1 &  0 \\
+ 0 & 1 
+\end{bmatrix}
+\begin{bmatrix}
+ x\\
+ y
+\end{bmatrix} = 
+\begin{bmatrix}
+ 0\\
+ 0
+\end{bmatrix}
+\]</span></p>
+<p>对于右下角的顶点，目标是</p>
+<p><span class="math display">\[\begin{bmatrix}
+ 1 &  0 \\
+ 0 & 1 
+\end{bmatrix}
+\begin{bmatrix}
+ x\\
+ y
+\end{bmatrix} = 
+\begin{bmatrix}
+ w\\
+ h
+\end{bmatrix}
+\]</span></p>
+<p>对于右侧的顶点，目标是</p>
+<p><span class="math display">\[\begin{bmatrix}
+ 1 &  0 \\
+ 0 & 0 
+\end{bmatrix}
+\begin{bmatrix}
+ x\\
+ y
+\end{bmatrix} = 
+\begin{bmatrix}
+ w\\
+ 0
+\end{bmatrix}
+\]</span></p>
+<p>对于中间的无限制顶点，目标是</p>
+<p><span class="math display">\[\begin{bmatrix}
+ 0 &  0 \\
+ 0 & 0 
+\end{bmatrix}
+\begin{bmatrix}
+ x\\
+ y
+\end{bmatrix} = 
+\begin{bmatrix}
+ 0\\
+ 0
+\end{bmatrix}
+\]</span></p>
+<p>以此类推。</p>
+<p>同样的，我们把<span class="math inline">\(v_i\)</span>合并成一个<span class="math inline">\(40\times 10\times 2\)</span>向量（同前）。将<span class="math inline">\(B_i\)</span>也合并。</p>
+<p><span class="math display">\[B = \begin{bmatrix}
+ B_1 &  &  & \\
+  & B_2 &  & \\
+   &  & \ddots & \\
+  &  &  & B_N
+\end{bmatrix}
+\]</span></p>
+<p>这里就不用重新调整<span class="math inline">\(B\)</span>内容的顺序了。接下来合并目标<span class="math inline">\(v_{ti}\)</span></p>
+<p><span class="math display">\[V_T = \begin{bmatrix}
+ v_{t1} \\
+ v_{t2} \\
+ \vdots \\
+ v_{tn}
+\end{bmatrix}
+\]</span></p>
+<p>最终的目标是</p>
+<p><span class="math display">\[E_B(V) = BV = V_T
+\]</span></p>
+<p>同样，Eigen解方程可得<span class="math inline">\(V_Q\)</span>。</p>
+<p>接下来是很复杂的<span class="math inline">\(E_L\)</span></p>
+<p>设原始的一条线段为<span class="math inline">\(\hat L=[\hat x_{l0}, \hat y_{l0}, \hat x_{l1}, \hat y_{l1}]^T\)</span>。根据我们前面的说法，一条线段会被mesh切割，然后放进各个quad中。我们用quad的四个顶点来进行双线性插值，来表示目标的<span class="math inline">\(L\)</span>。方式如下，首先用双线性插值从<span class="math inline">\(\hat V_q\)</span>计算出<span class="math inline">\(V_q\)</span></p>
+<p><span class="math display">\[\begin{bmatrix}
+ \hat x_0 & \hat y_0 & \hat x_0\hat y_0 & 1 & & & &\\
+ & & & & \hat x_0 & \hat y_0 & \hat x_0\hat y_0 & 1\\
+ \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots\\
+  \hat x_3 & \hat y_3 & \hat x_3\hat y_3 & 1 & & & &\\
+ & & & & \hat x_3 & \hat y_3 & \hat x_3\hat y_3 & 1
+\end{bmatrix}F_L = 
+\begin{bmatrix}
+ x_0\\
+ y_0\\
+ \vdots\\
+ x_3\\
+ y_3
+\end{bmatrix}
+\]</span></p>
+<p>我们把上式左边的<span class="math inline">\(8\times 8\)</span>矩阵记作<span class="math inline">\(W\)</span>，上式就为<span class="math inline">\(WF_L=V_q\)</span></p>
+<p>然后用<span class="math inline">\(\hat L\)</span>表示<span class="math inline">\(L\)</span>，有</p>
+<p><span class="math display">\[\begin{bmatrix}
+ \hat x_{l0} & \hat y_{l0} & \hat x_{l0}\hat y_{l0} & 1 & & & &\\
+ & & & &  \hat x_{l0} & \hat y_{l0} & \hat x_{l0}\hat y_{l0} & 1\\
+\hat x_{l1} & \hat y_{l1} & \hat x_{l1}\hat y_{l1} & 1 & & & &\\
+ & & & &  \hat x_{l1} & \hat y_{l1} & \hat x_{l1}\hat y_{l1} & 1
+\end{bmatrix}F_L = 
+\begin{bmatrix}
+ x_{l0}\\
+ y_{l0}\\
+ x_{l1}\\
+ y_{l1}
+\end{bmatrix}
+\]</span></p>
+<p>上式左侧<span class="math inline">\(4\times 8\)</span>矩阵记作<span class="math inline">\(H\)</span>，上式就为<span class="math inline">\(HF_L=L\)</span></p>
+<p>于是</p>
+<p><span class="math display">\[L = HF_L = HW^{-1}V_q
+\]</span></p>
+<p><span class="math inline">\(H\)</span>和<span class="math inline">\(W\)</span>都为已知，所以<span class="math inline">\(L\)</span>表示为<span class="math inline">\(V_q\)</span>的线性函数。计算<span class="math inline">\(L\)</span>的向量<span class="math inline">\(e\)</span>使用两个端点相减，矩阵为</p>
+<p><span class="math display">\[D = \begin{bmatrix}
+ -1 & 0 & 1 & 0\\
+ 0 & -1 & 0 & 1
+\end{bmatrix}
+\]</span></p>
+<p>有</p>
+<p><span class="math display">\[e = DL = \begin{bmatrix}
+ -1 & 0 & 1 & 0\\
+ 0 & -1 & 0 & 1
+\end{bmatrix}
+\begin{bmatrix}
+ x_{l0}\\
+ y_{l0}\\
+ x_{l1}\\
+ y_{l1}
+\end{bmatrix}=
+\begin{bmatrix}
+ x_{l1}-x_{l0}\\
+ y_{l1}-y_{l0}
+\end{bmatrix}
+\]</span></p>
+<p><span class="math inline">\(E_L\)</span>中的<span class="math inline">\(||Ce||^2\)</span>中的<span class="math inline">\(e\)</span>最终就表示为</p>
+<p><span class="math display">\[\sideset{}{}{e}_{(2, 1)} = \sideset{}{}{D}_{(2, 4)}\sideset{}{}{H}_{(4, 8)}\sideset{}{^{-1}}{W}_{(8, 8)}\sideset{}{_q}{V}_{(8, 1)}
+\]</span></p>
+<p>而</p>
+<p><span class="math display">\[C = R\hat e(\hat e^T\hat e)^{-1}\hat e^TR^T-I
+\]</span></p>
+<p>其中<span class="math inline">\(\hat e\)</span>已知，<span class="math inline">\(R\)</span>只和<span class="math inline">\(\theta_m\)</span>有关。可以直接算，与<span class="math inline">\(V_q\)</span>无关。</p>
+<p>同样的，我们把所有线段的<span class="math inline">\(e\)</span>和其<span class="math inline">\(C\)</span>拼接（具体见代码），有</p>
+<p><span class="math display">\[E_L(V,\{\theta_m\}) = \dfrac{1}{N_L}Ce = \overrightarrow{0}
+\]</span></p>
+<p>同样的，在优化<span class="math inline">\(V_q\)</span>时，上式是<span class="math inline">\(V_q\)</span>的线性函数，只需要用Eigen解方程即可。</p>
+<p>最终，我们的目标是使得</p>
+<p><span class="math display">\[E = E_S+\lambda_LE_L+\lambda_BE_B
+\]</span></p>
+<p>最小，即</p>
+<p><span class="math display">\[\begin{bmatrix}
+\dfrac{1}{N}A\\
+\dfrac{\lambda_L}{N_L}CDHW^{-1}\\
+\lambda_BB
+\end{bmatrix}V = 
+\begin{bmatrix}
+\overrightarrow{0}\\
+\overrightarrow{0}\\
+V_T
+\end{bmatrix}
+\]</span></p>
+<p>用Eigen求解出V即可。注意其中的<span class="math inline">\(CDHW^{-1}\)</span>指的是每一个线段的矩阵拼接后的结果，具体拼接见代码。</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/%E5%A4%A7%E5%AD%A6/">大学</a>
+        
+            <a href="/tags/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css"integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js"integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8"crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js"integrity="sha384-vZTG03m&#43;2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl"crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.querySelector(`.article-content`), {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ]
+        });})
+</script>
+    
+</article>
+
+    <aside class="related-contents--wrapper">
+    
+    
+        <h2 class="section-title">相关文章</h2>
+        <div class="related-contents">
+            <div class="flex article-list--tile">
+                
+                    
+<article class="has-image">
+    <a href="/p/grabcut-interactive-foreground-extraction-using-iterated-graph-cuts%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/">
+        
+        
+            <div class="article-image">
+                <img src="/p/grabcut-interactive-foreground-extraction-using-iterated-graph-cuts%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/cover.719f06f8145a0ec2fc378d5f11233592_huf62d2c95a51769be2a7aa0d894297a77_82581_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-cZ8G&#43;BRaDsL8N41fESM1kg==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">GrabCut— Interactive Foreground Extraction Using Iterated Graph Cuts论文精读与复现</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%85%89%E7%85%A7%E5%88%9D%E6%AD%A5/">
+        
+        
+            <div class="article-image">
+                <img src="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%85%89%E7%85%A7%E5%88%9D%E6%AD%A5/cover.a31dfa1d472e7236ca0da074207d7576_hu04f6e4c5c5d9e8c832c6dfeafddfe37e_257114_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-ox36HUcucjbKDaB0IH11dg==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">从零开始的软渲染器 光照初步</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E6%A8%A1%E5%9E%8B%E5%BA%93/">
+        
+        
+            <div class="article-image">
+                <img src="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E6%A8%A1%E5%9E%8B%E5%BA%93/cover.30e111997b0a8b14a681475f99347374_hu1d5ada73bf6b5a759e3568aecd125470_50161_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-MOERmXsKixSmgUdfmTRzdA==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">从零开始的软渲染器 模型库</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E7%BA%BF%E6%AE%B5%E5%92%8C%E4%B8%89%E8%A7%92%E5%BD%A2%E7%9A%84%E5%85%89%E6%A0%85%E5%8C%96/">
+        
+        
+            <div class="article-image">
+                <img src="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E7%BA%BF%E6%AE%B5%E5%92%8C%E4%B8%89%E8%A7%92%E5%BD%A2%E7%9A%84%E5%85%89%E6%A0%85%E5%8C%96/cover.3eba88ce14bf80744d7e83238ed0ec4e_hu72dadf0d98aceb343e3fe7cb76faf398_301126_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-PrqIzhS/gHRNfoMjjtDsTg==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">从零开始的软渲染器 线段和三角形的光栅化</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%9B%BE%E7%89%87%E5%A4%84%E7%90%86%E5%BA%93/">
+        
+        
+            <div class="article-image">
+                <img src="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%9B%BE%E7%89%87%E5%A4%84%E7%90%86%E5%BA%93/cover.941490c741ffb85644dfdbec13c85e5f_hu2fa2362891bfb402ec26ffe12b2b88a0_64078_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-lBSQx0H/uFZE39vsE8heXw==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">从零开始的软渲染器 图片处理库</h2>
+        </div>
+    </a>
+</article>
+                
+            </div>
+        </div>
+    
+</aside>
+
+     
+    
+        
+    <script src="https://utteranc.es/client.js" 
+        repo="kegalas/blogComments"
+        issue-term="pathname"
+        
+        crossorigin="anonymous"
+        async
+        >
+</script>
+
+<style>
+    .utterances {
+        max-width: unset;
+    }
+</style>
+
+<script>
+    function setUtterancesTheme(theme) {
+        let utterances = document.querySelector('.utterances iframe');
+        if (utterances) {
+            utterances.contentWindow.postMessage(
+                {
+                    type: 'set-theme',
+                    theme: `github-${theme}`
+                },
+                'https://utteranc.es'
+            );
+        }
+    }
+
+    addEventListener('message', event => {
+        if (event.origin !== 'https://utteranc.es') return;
+        setUtterancesTheme(document.documentElement.dataset.scheme)
+    });
+
+    window.addEventListener('onColorSchemeChange', (e) => {
+        setUtterancesTheme(e.detail)
+    })
+</script>
+
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2024 KegalaS的个人博客
+    </section>
+    
+    <section class="powerby">
+         <br />
+        
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    
+        <aside class="sidebar right-sidebar sticky">
+            <section class="widget archives">
+                <div class="widget-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+                </div>
+                <h2 class="widget-title section-title">目录</h2>
+                
+                <div class="widget--toc">
+                    <nav id="TableOfContents">
+  <ol>
+    <li><a href="#摘要">摘要</a></li>
+    <li><a href="#简介">简介</a></li>
+    <li><a href="#前人工作">前人工作</a></li>
+    <li><a href="#算法">算法</a>
+      <ol>
+        <li><a href="#local-warp">Local Warp</a></li>
+        <li><a href="#global-warp">Global Warp</a>
+          <ol>
+            <li><a href="#mesh-placement">Mesh Placement</a></li>
+            <li><a href="#energy-function">Energy Function</a></li>
+            <li><a href="#优化算法">优化算法</a></li>
+            <li><a href="#防止拉伸和后处理">防止拉伸和后处理</a></li>
+          </ol>
+        </li>
+        <li><a href="#实现细节">实现细节</a></li>
+      </ol>
+    </li>
+    <li><a href="#本文局限">本文局限</a></li>
+    <li><a href="#我的实现">我的实现</a>
+      <ol>
+        <li><a href="#一些细节">一些细节</a></li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+                </div>
+            </section>
+        </aside>
+    
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                defer="false"
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
