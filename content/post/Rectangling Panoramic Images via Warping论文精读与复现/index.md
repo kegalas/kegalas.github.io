@@ -1,7 +1,7 @@
 ---
-title: "Rectangling Panoramic Images via Warping论文精读与复现"
+title: Rectangling Panoramic Images via Warping论文精读与复现
 date: 2024-06-03T23:16:15+08:00
-draft: true
+draft: false
 tags:
   - 大学
   - 图形学
@@ -232,6 +232,341 @@ $$
 
 作者指出，可以通过牛顿迭代等方法去优化。但是，几何意义上，$E_L$的目标是找到一个$\theta_m$，使得所有在第$m$个bin中的线段$e$和其初始线段$\hat e$的夹角，都近似等于$\theta_m$。所以，我们可以简单的计算所有这个夹角，然后加和，求平均，作为新的$\theta_m$。
 
+### 防止拉伸和后处理
+
+如果我们的目标图相框的长宽比设置的不是很好，那么我们的结果图就会被拉伸。为了减少这种拉伸问题，我们在global warping之后更新目标框。
+
+对于每个quad，我们计算它的$x$方向的伸缩因子为
+
+$$
+s_x=(x_{max}-x_{min})/(\hat x_{max}-\hat x_{min})
+$$
+
+所有quad的平均伸缩因子就为$\bar s_x$。同理可以计算出$\bar s_y$。之后我们的目标框就设置为$(w/\bar s_x, h/\bar s_y)$。
+
+之后我们再在这个新的目标框上跑一次global warping
+
+获得最终的mesh之后，我们就可以通过一些方法来获得最终的图像了。以图形学的思想为例，最终的mesh构成了我们要绘制的三角面。三角面空间坐标为最终mesh的坐标，uv坐标则是初始mesh的坐标。texture则是原图。
+
+作者指出，这样的实现有一个小问题，因为mesh不会只包住有效像素，例如
+
+![6.jpg](6.jpg)
+
+这里的quad有一部分就包含了外部的无效像素。进行纹理采样时，作者简单地将无效像素替换为最近的有效像素。
+
+## 实现细节
+
+由于mesh是很“光滑”的，作者指出我们可以在缩小的图片上进行mesh的计算。首先将图片缩小到一个固定的大小，然后再在上面进行local/global warping。然后我们将mesh的尺度放大到原来的图片大小，再用这个mesh去进行纹理采样。
+
+# 本文局限
+
+如果图片缺失的部分太多，那么处理结果不好
+
+![7.jpg](7.jpg)
+
+本文的算法可能会导致边缘凹进去
+
+![8.jpg](8.jpg)
+
+作者指出，可以手动添加一个透明区域，当作已知像素。
+
+![9.jpg](9.jpg)
+
+将其当作已知像素来warp，之后在本文的算法处理完之后，再在这个透明区域中使用image completion等方法。
+
+另外，本文无法处理未识别到的线段。这可以通过用户交互来缓解。
+
+最后，本文无法应对线段数量过多的情况，这是warping方式的共同挑战。
+
 # 我的实现
 
+[https://github.com/kegalas/Rectangling_Panoramic_Images](https://github.com/kegalas/Rectangling_Panoramic_Images)
+
 ## 一些细节
+
+首先是我之前也提到过的，为了防止反复在同一个地方插入seam，我们添加了额外的一个像素类别SEAM_PIXEL，让他的能量为$10^5$。比一般的像素大，比无效像素小。
+
+在Global Warping主要要说明的部分则是关于如何优化能量。从$E_S$开始
+
+$$
+E_S(V) = \dfrac{1}{N}\sum_q||(A_q(A_q^TA_q)^{-1}A_q^T-I)V_q||^2
+$$
+
+我们需要使其最小。众所周知，使向量的范数平方最小，只用使其每一维都最小即可。或者说，使向量尽可能成为零向量。
+
+这里的$(A_q(A_q^TA_q)^{-1}A_q^T-I)$是一个$8\times 8$矩阵（记作$A$好了），而$V_q$是一个8维向量。我们可以将所有的$V_q$收尾接在一起。如果我们的mesh是$40\times 10$的，那么新的拼接向量$V_Q$的维度就是$(40-1)\times(10-1)\times 8$
+
+$$
+V_Q = \begin{bmatrix}
+ V_1 \\
+ V_2 \\
+ \vdots \\
+ V_{N-1} \\
+ V_{N}
+\end{bmatrix}
+$$
+
+同理，我们也可以把$A$拼接。如下
+
+$$
+A_Q = \begin{bmatrix}
+ A_1 &  &  & \\
+  & A_2 &  & \\
+   &  & \ddots & \\
+  &  &  & A_N
+\end{bmatrix}
+$$
+
+我们的目标是使得
+
+$$
+E_S(V) = \dfrac{1}{N}A_QV_Q = \overrightarrow{0}
+$$
+
+这里$A_Q$是用$\hat V$算的，而$V_Q$是我们最终mesh的坐标。也就是说我们需要解方程算出来$V_Q$。这其实就是最小二乘法。我们使用Eigen的QR分解对$A_Q$分解，然后再求解$V_Q$。这里建议使用稀疏矩阵。
+
+另外，存在一个比较明显的优化方式，可以缩小矩阵和向量的维度。我们直接存储$V_Q$为$40\times 10\times 2$维向量。即每个顶点都只存一份（包含$x,y$坐标）。然后我们去修改$A_Q$的顺序就可以在向量乘法的时候一一对应。具体见我写的代码。调整后写为
+
+$$
+E_S(V) = \dfrac{1}{N}AV = \overrightarrow{0}
+$$
+
+接下来比较简单的是$E_B$
+
+$$
+E_B(V) = \sum_{v_i\in L} x_i^2 + \sum_{v_i\in R} (x_i-w)^2 + \sum_{v_i\in T} y_i^2 + \sum_{v_i\in B} (y_i-h)^2
+$$
+
+对于mesh上的一个顶点$v_i$，其有四种情况，在左侧、右侧、上部，下部。当然有四个顶点同时属于两种情况。也就是说，有一些顶点需要限制$x$坐标，有一些需要限制$y$坐标，有一些两个都需要限制，而有一些则两个都不需要限制。
+
+设$B_i$如下
+
+$$
+B_i = \begin{bmatrix}
+ a &  0 \\
+ 0 & b 
+\end{bmatrix}
+$$
+
+一个点如果需要限制$x$坐标，则$a=1$，如果需要限制$y$坐标，则$b=1$。否则都等于$0$。
+
+例如左上角的顶点$(x, y)$，我们的目标是
+
+$$
+\begin{bmatrix}
+ 1 &  0 \\
+ 0 & 1 
+\end{bmatrix}
+\begin{bmatrix}
+ x\\
+ y
+\end{bmatrix} = 
+\begin{bmatrix}
+ 0\\
+ 0
+\end{bmatrix}
+$$
+
+对于右下角的顶点，目标是
+
+$$
+\begin{bmatrix}
+ 1 &  0 \\
+ 0 & 1 
+\end{bmatrix}
+\begin{bmatrix}
+ x\\
+ y
+\end{bmatrix} = 
+\begin{bmatrix}
+ w\\
+ h
+\end{bmatrix}
+$$
+
+对于右侧的顶点，目标是
+
+$$
+\begin{bmatrix}
+ 1 &  0 \\
+ 0 & 0 
+\end{bmatrix}
+\begin{bmatrix}
+ x\\
+ y
+\end{bmatrix} = 
+\begin{bmatrix}
+ w\\
+ 0
+\end{bmatrix}
+$$
+
+对于中间的无限制顶点，目标是
+
+$$
+\begin{bmatrix}
+ 0 &  0 \\
+ 0 & 0 
+\end{bmatrix}
+\begin{bmatrix}
+ x\\
+ y
+\end{bmatrix} = 
+\begin{bmatrix}
+ 0\\
+ 0
+\end{bmatrix}
+$$
+
+以此类推。
+
+同样的，我们把$v_i$合并成一个$40\times 10\times 2$向量（同前）。将$B_i$也合并。
+
+$$
+B = \begin{bmatrix}
+ B_1 &  &  & \\
+  & B_2 &  & \\
+   &  & \ddots & \\
+  &  &  & B_N
+\end{bmatrix}
+$$
+
+这里就不用重新调整$B$内容的顺序了。接下来合并目标$v_{ti}$
+
+$$
+V_T = \begin{bmatrix}
+ v_{t1} \\
+ v_{t2} \\
+ \vdots \\
+ v_{tn}
+\end{bmatrix}
+$$
+
+最终的目标是
+
+$$
+E_B(V) = BV = V_T
+$$
+
+同样，Eigen解方程可得$V_Q$。
+
+接下来是很复杂的$E_L$
+
+设原始的一条线段为$\hat L=[\hat x_{l0}, \hat y_{l0}, \hat x_{l1}, \hat y_{l1}]^T$。根据我们前面的说法，一条线段会被mesh切割，然后放进各个quad中。我们用quad的四个顶点来进行双线性插值，来表示目标的$L$。方式如下，首先用双线性插值从$\hat V_q$计算出$V_q$
+
+$$
+\begin{bmatrix}
+ \hat x_0 & \hat y_0 & \hat x_0\hat y_0 & 1 & & & &\\
+ & & & & \hat x_0 & \hat y_0 & \hat x_0\hat y_0 & 1\\
+ \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots\\
+  \hat x_3 & \hat y_3 & \hat x_3\hat y_3 & 1 & & & &\\
+ & & & & \hat x_3 & \hat y_3 & \hat x_3\hat y_3 & 1
+\end{bmatrix}F_L = 
+\begin{bmatrix}
+ x_0\\
+ y_0\\
+ \vdots\\
+ x_3\\
+ y_3
+\end{bmatrix}
+$$
+
+我们把上式左边的$8\times 8$矩阵记作$W$，上式就为$WF_L=V_q$
+
+然后用$\hat L$表示$L$，有
+
+$$
+\begin{bmatrix}
+ \hat x_{l0} & \hat y_{l0} & \hat x_{l0}\hat y_{l0} & 1 & & & &\\
+ & & & &  \hat x_{l0} & \hat y_{l0} & \hat x_{l0}\hat y_{l0} & 1\\
+\hat x_{l1} & \hat y_{l1} & \hat x_{l1}\hat y_{l1} & 1 & & & &\\
+ & & & &  \hat x_{l1} & \hat y_{l1} & \hat x_{l1}\hat y_{l1} & 1
+\end{bmatrix}F_L = 
+\begin{bmatrix}
+ x_{l0}\\
+ y_{l0}\\
+ x_{l1}\\
+ y_{l1}
+\end{bmatrix}
+$$
+
+上式左侧$4\times 8$矩阵记作$H$，上式就为$HF_L=L$
+
+于是
+
+$$
+L = HF_L = HW^{-1}V_q
+$$
+
+$H$和$W$都为已知，所以$L$表示为$V_q$的线性函数。计算$L$的向量$e$使用两个端点相减，矩阵为
+
+$$
+D = \begin{bmatrix}
+ -1 & 0 & 1 & 0\\
+ 0 & -1 & 0 & 1
+\end{bmatrix}
+$$
+
+有
+
+$$
+e = DL = \begin{bmatrix}
+ -1 & 0 & 1 & 0\\
+ 0 & -1 & 0 & 1
+\end{bmatrix}
+\begin{bmatrix}
+ x_{l0}\\
+ y_{l0}\\
+ x_{l1}\\
+ y_{l1}
+\end{bmatrix}=
+\begin{bmatrix}
+ x_{l1}-x_{l0}\\
+ y_{l1}-y_{l0}
+\end{bmatrix}
+$$
+
+$E_L$中的$||Ce||^2$中的$e$最终就表示为
+
+$$
+\sideset{}{}{e}_{(2, 1)} = \sideset{}{}{D}_{(2, 4)}\sideset{}{}{H}_{(4, 8)}\sideset{}{^{-1}}{W}_{(8, 8)}\sideset{}{_q}{V}_{(8, 1)}
+$$
+
+而
+
+$$
+C = R\hat e(\hat e^T\hat e)^{-1}\hat e^TR^T-I
+$$
+
+其中$\hat e$已知，$R$只和$\theta_m$有关。可以直接算，与$V_q$无关。
+
+同样的，我们把所有线段的$e$和其$C$拼接（具体见代码），有
+
+$$
+E_L(V,\{\theta_m\}) = \dfrac{1}{N_L}Ce = \overrightarrow{0}
+$$
+
+同样的，在优化$V_q$时，上式是$V_q$的线性函数，只需要用Eigen解方程即可。
+
+最终，我们的目标是使得
+
+$$
+E = E_S+\lambda_LE_L+\lambda_BE_B
+$$
+
+最小，即
+
+$$
+\begin{bmatrix}
+\dfrac{1}{N}A\\
+\dfrac{\lambda_L}{N_L}CDHW^{-1}\\
+\lambda_BB
+\end{bmatrix}V = 
+\begin{bmatrix}
+\overrightarrow{0}\\
+\overrightarrow{0}\\
+V_T
+\end{bmatrix}
+$$
+
+用Eigen求解出V即可。注意其中的$CDHW^{-1}$指的是每一个线段的矩阵拼接后的结果，具体拼接见代码。
