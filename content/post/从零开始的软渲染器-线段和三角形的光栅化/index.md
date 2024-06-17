@@ -173,7 +173,7 @@ int maxx = 0, minx = image.getWidth()-1, maxy = 0, miny = image.getHeight()-1;
 
 另外，求重心坐标的代码我写到了geometry.cpp里，方便别处调用。链接在**[这里](https://github.com/kegalas/oar/blob/main/tutorial/chapter3/src/geometry.cpp)**（在文件末尾）
 
-另外，求重心坐标还有一种不那么复杂的公式，见**[计算机图形学基础学习笔记-数学基础](../水文-计算机图形学基础学习笔记-数学基础/#重心坐标系)**
+另外，求重心坐标还有一种不那么复杂的公式，见**[计算机图形学基础学习笔记-数学基础](../计算机图形学基础学习笔记-数学基础/#重心坐标系)**
 
 注意，
 
