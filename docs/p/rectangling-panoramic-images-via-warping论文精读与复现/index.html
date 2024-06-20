@@ -151,7 +151,7 @@
 <p><strong>Image completion</strong></p>
 <p>即前面提到的，在图片的边缘增加内容，使其变成一个矩形图片。一般的方法是把图片里面的内容，复制到需要合成的地方。但是对于需要生成语义内容来说，表现不好。</p>
 <h1 id="算法">算法</h1>
-<p>算法分为两部分，一部分是改进的Seam Carving，是一个local warp的步骤，其将图片初步弯曲成矩形。然后另一部分（global warp）在前一步的基础上，建立一个grid mesh，在mesh上进行优化，来保证原图的物体形状和直线形状不变。</p>
+<p>算法分为两部分，一部分是改进的Seam Carving，是一个Local Warp的步骤，其将图片初步弯曲成矩形。然后另一部分（global warp）在前一步的基础上，建立一个grid mesh，在mesh上进行优化，来保证原图的物体形状和直线形状不变。</p>
 <h2 id="local-warp">Local Warp</h2>
 <p>原版的Seam Carving算法是在图片中插入水平或者垂直的接缝（seam），来穿过整张图片，然后再从接缝中水平或者垂直地扩展一个像素。作者这里想到，接缝不穿过整张图片，这样就可以改变图片边缘的形状，从而变成矩形。</p>
 <p>原版的算法可见<a class="link" href="https://faculty.runi.ac.il/arik/scweb/imret/index.html"  target="_blank" rel="noopener"
@@ -341,7 +341,7 @@
 <p><strong>固定<span class="math inline">\(\{\theta_m\}\)</span>优化<span class="math inline">\(V\)</span></strong></p>
 <p>此时能量函数是<span class="math inline">\(V\)</span>的二次函数，可以求解线性方程来计算。总共就几百个顶点，所以总体上来说，这部分的开销很小。</p>
 <p>这里的求解是通过最小二乘法来算的，具体见我自己的实现部分。</p>
-<p>**固定<span class="math inline">\(V\)</span>优化<span class="math inline">\(\{\theta_m\}\)</span></p>
+<p><strong>固定<span class="math inline">\(V\)</span>优化<span class="math inline">\(\{\theta_m\}\)</span></strong></p>
 <p>因为另外两项和<span class="math inline">\(\theta\)</span>无关，所以我们只用优化<span class="math inline">\(E_L\)</span>这一部分。</p>
 <p>作者指出，可以通过牛顿迭代等方法去优化。但是，几何意义上，<span class="math inline">\(E_L\)</span>的目标是找到一个<span class="math inline">\(\theta_m\)</span>，使得所有在第<span class="math inline">\(m\)</span>个bin中的线段<span class="math inline">\(e\)</span>和其初始线段<span class="math inline">\(\hat e\)</span>的夹角，都近似等于<span class="math inline">\(\theta_m\)</span>。所以，我们可以简单的计算所有这个夹角，然后加和，求平均，作为新的<span class="math inline">\(\theta_m\)</span>。</p>
 <h3 id="防止拉伸和后处理">防止拉伸和后处理</h3>
@@ -469,7 +469,7 @@
 <p><span class="math display">\[E_S(V) = \dfrac{1}{N}A_QV_Q = \overrightarrow{0}
 \]</span></p>
 <p>这里<span class="math inline">\(A_Q\)</span>是用<span class="math inline">\(\hat V\)</span>算的，而<span class="math inline">\(V_Q\)</span>是我们最终mesh的坐标。也就是说我们需要解方程算出来<span class="math inline">\(V_Q\)</span>。这其实就是最小二乘法。我们使用Eigen的QR分解对<span class="math inline">\(A_Q\)</span>分解，然后再求解<span class="math inline">\(V_Q\)</span>。这里建议使用稀疏矩阵。</p>
-<p>另外，存在一个比较明显的优化方式，可以缩小矩阵和向量的维度。我们直接存储<span class="math inline">\(V_Q\)</span>为<span class="math inline">\(40\times 10\times 2\)</span>维向量。即每个顶点都只存一份（包含<span class="math inline">\(x,y\)</span>坐标）。然后我们去修改<span class="math inline">\(A_Q\)</span>的顺序就可以在向量乘法的时候一一对应。具体见我写的代码。调整后写为</p>
+<p>另外，每一个mesh的顶点只能有一个实例，不能单纯地把所有quad的四个顶点放进去同一列。每个顶点只能出现在<span class="math inline">\(V_Q\)</span>里一次。我们直接存储<span class="math inline">\(V_Q\)</span>为<span class="math inline">\(40\times 10\times 2\)</span>维向量。即每个顶点都只存一份（包含<span class="math inline">\(x,y\)</span>坐标）。然后我们去修改<span class="math inline">\(A_Q\)</span>的顺序就可以在向量乘法的时候一一对应。具体见我写的代码。调整后写为</p>
 <p><span class="math display">\[E_S(V) = \dfrac{1}{N}AV = \overrightarrow{0}
 \]</span></p>
 <p>接下来比较简单的是<span class="math inline">\(E_B\)</span></p>
@@ -619,7 +619,7 @@
 \end{bmatrix}
 \]</span></p>
 <p><span class="math inline">\(E_L\)</span>中的<span class="math inline">\(||Ce||^2\)</span>中的<span class="math inline">\(e\)</span>最终就表示为</p>
-<p><span class="math display">\[\sideset{}{}{e}_{(2, 1)} = \sideset{}{}{D}_{(2, 4)}\sideset{}{}{H}_{(4, 8)}\sideset{}{^{-1}}{W}_{(8, 8)}\sideset{}{_q}{V}_{(8, 1)}
+<p><span class="math display">\[\underset{(2, 1)}{e} = \underset{(2, 4)}{D}\underset{(4, 8)}{H}\underset{(8,8)}{W^{-1}}\underset{(8, 1)}{V_q}
 \]</span></p>
 <p>而</p>
 <p><span class="math display">\[C = R\hat e(\hat e^T\hat e)^{-1}\hat e^TR^T-I
