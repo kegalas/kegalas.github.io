@@ -649,13 +649,13 @@ $$
 设$(X_1,X_2)$有密度函数$f(x_1,x_2)$，$Y=X_2/X_1$，要求$Y$的密度函数
 
 $$
-f_Y(y) = \int^\infty_0 |x_1|f(x_1,x_1y)dx_1
+f_Y(y) = \int^\infty_{-\infty} |x_1|f(x_1,x_1y)dx_1
 $$
 
 若$X_1,X_2$独立，则
 
 $$
-f_Y(y) = \int^\infty_0 |x_1|f_1(x_1)f_2(x_1y)dx_1
+f_Y(y) = \int^\infty_{-\infty} |x_1|f_1(x_1)f_2(x_1y)dx_1
 $$
 
 ### 随机变量积的密度函数
@@ -663,13 +663,13 @@ $$
 设$(X_1,X_2)$有密度函数$f(x_1,x_2)$，$Y=X_1X_2$，要求$Y$的密度函数
 
 $$
-f_Y(y) = \int^\infty_0 \frac{1}{|x_1|}f(x_1,\frac{y}{x_1})dx_1
+f_Y(y) = \int^\infty_{-\infty} \frac{1}{|x_1|}f(x_1,\frac{y}{x_1})dx_1
 $$
 
 若$X_1,X_2$独立，则
 
 $$
-f_Y(y) = \int^\infty_0 \frac{1}{|x_1|}f_1(x_1)f_2(\frac{y}{x_1})dx_1
+f_Y(y) = \int^\infty_{-\infty} \frac{1}{|x_1|}f_1(x_1)f_2(\frac{y}{x_1})dx_1
 $$
 
 ## 常见的分布
@@ -1702,7 +1702,7 @@ $$
 可以推知
 
 $$
-P(|Y-EY|<\varepsilon)\leq 1-Var(Y)/\varepsilon^2
+P(|Y-EY|<\varepsilon)\geq 1-Var(Y)/\varepsilon^2
 $$
 
 **切比雪夫大数定理**
