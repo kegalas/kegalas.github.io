@@ -4,4 +4,5 @@ description: 这里会放一些比较水的文章，例如课程笔记、自学�
 date: '2024-3-3'
 slug: "inferior"
 layout: "interior"
+hidden: true
 ---
