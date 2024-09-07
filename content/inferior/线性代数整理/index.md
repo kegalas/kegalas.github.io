@@ -234,7 +234,7 @@ $$
 4. $\bold{A}_{m\times n}\bold{E}_n=\bold{E}_m\bold{A}_{m\times n}=\bold{A}_{m\times n}$
 5. $\bold{A}^k\bold{A}^l=\bold{A}^{k+l},(\bold{A}^k)^l=\bold{A}^{kl}$
 
-注意，由于矩阵乘法不满足交换律，故一般情况下，$(\bold{AB}^k)\ne\bold{A}^k\bold{B}^k$
+注意，由于矩阵乘法不满足交换律，故一般情况下，$(\bold{AB})^k\ne\bold{A}^k\bold{B}^k$
 
 #### 转置
 
@@ -351,7 +351,7 @@ $$
 3. 可逆
 4. $\bold{Ax=0}$只有零解
 5. $|\bold{A}|\ne0$
-6. $\bold{A}$可以经过有限次初等行变换华为单位矩阵$\bold{E}_n$
+6. $\bold{A}$可以经过有限次初等行变换化为单位矩阵$\bold{E}_n$
 7. $\bold{A}$可以表示为有限个初等矩阵的乘积。
 8. 特征值均非零
 
@@ -363,7 +363,7 @@ $$
 3. 不可逆
 4. $\bold{Ax=0}$不只有零解
 5. $|\bold{A}|=0$
-6. $\bold{A}$不可以经过有限次初等行变换华为单位矩阵$\bold{E}_n$
+6. $\bold{A}$不可以经过有限次初等行变换化为单位矩阵$\bold{E}_n$
 7. $\bold{A}$不可以表示为有限个初等矩阵的乘积。
 8. 特征值至少有一个为零
 
@@ -610,7 +610,7 @@ $$
 6. 向量组$\bm{\alpha}_1,\bm{\alpha}_2,\cdots,\bm{\alpha}_m$线性无关，而向量组$\bm{\alpha}_1,\bm{\alpha}_2,\cdots,\bm{\alpha}_m,\bm{b}$线性相关，则$\bm{b}$可由$\bm{\alpha}_1,\bm{\alpha}_2,\cdots,\bm{\alpha}_m$唯一线性表示
 7. $\bm{\alpha}_1,\bm{\alpha}_2,\cdots,\bm{\alpha}_m$线性无关，则任一部分组$\bm{\alpha}_1,\bm{\alpha}_2,\cdots,\bm{\alpha}_r(r< m)$必线性无关
 8. $\bm{\alpha}_1,\bm{\alpha}_2,\cdots,\bm{\alpha}_m$线性相关，则增加向量后的向量组$\bm{\alpha}_1,\bm{\alpha}_2,\cdots,\bm{\alpha}_s(s>m)$必线性相关。
-9. 设$\bm{\alpha}_1,\bm{\alpha}_2,\cdots,\bm{\alpha}_m$为$m$个$m$维列向量。则$\bm{\alpha}_1,\bm{\alpha}_2,\cdots,\bm{\alpha}_m$线性无关$\Leftrightarrow$行列式$|[\bm{\alpha}_1,\bm{\alpha}_2,\cdots,\bm{\alpha}_m]|\ne0$;$\bm{\alpha}_1,\bm{\alpha}_2,\cdots,\bm{\alpha}_m$线性相关$\Leftrightarrow$行列式$|[\bm{\alpha}_1,\bm{\alpha}_2,\cdots,\bm{\alpha}_m]|=0$
+9. 设$\bm{\alpha}_1,\bm{\alpha}_2,\cdots,\bm{\alpha}_m$为$m$个$m$维列向量。则$\bm{\alpha}_1,\bm{\alpha}_2,\cdots,\bm{\alpha}_m$线性无关$\Leftrightarrow$行列式$|[\bm{\alpha}_1,\bm{\alpha}_2,\cdots,\bm{\alpha}_m]|\ne0$ ； $\bm{\alpha}_1,\bm{\alpha}_2,\cdots,\bm{\alpha}_m$线性相关$\Leftrightarrow$行列式$|[\bm{\alpha}_1,\bm{\alpha}_2,\cdots,\bm{\alpha}_m]|=0$
 10. 从几何角度理解：设$\bm{\alpha,\beta,\gamma}$为三维向量，向量组$\bm{\alpha,\beta}$线性相关$\Leftrightarrow\bm{\alpha,\beta}$共线;向量组$\bm{\alpha,\beta,\gamma}$线性相关$\Leftrightarrow\bm{\alpha,\beta,\gamma}$共面
 
 ### 向量组的秩和极大无关组
