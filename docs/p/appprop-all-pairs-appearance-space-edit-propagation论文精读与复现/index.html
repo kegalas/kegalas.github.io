@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='原论文：https://dl.acm.org/doi/10.1145/1360612.1360639 摘要 本文提供了一种方法来简单有效地编辑复'><title>AppProp: All-Pairs Appearance-Space Edit Propagation论文精读与复现</title>
+
+<link rel='canonical' href='https://kegalas.top/p/appprop-all-pairs-appearance-space-edit-propagation%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/'>
+
+<link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='AppProp: All-Pairs Appearance-Space Edit Propagation论文精读与复现'>
+<meta property='og:description' content='原论文：https://dl.acm.org/doi/10.1145/1360612.1360639 摘要 本文提供了一种方法来简单有效地编辑复'>
+<meta property='og:url' content='https://kegalas.top/p/appprop-all-pairs-appearance-space-edit-propagation%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/'>
+<meta property='og:site_name' content='KegalaS的个人博客'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='大学' /><meta property='article:tag' content='图形学' /><meta property='article:published_time' content='2024-09-07T15:19:52&#43;08:00'/><meta property='article:modified_time' content='2024-09-07T15:19:52&#43;08:00'/><meta property='og:image' content='https://kegalas.top/p/appprop-all-pairs-appearance-space-edit-propagation%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/cover.jpg' />
+<meta name="twitter:title" content="AppProp: All-Pairs Appearance-Space Edit Propagation论文精读与复现">
+<meta name="twitter:description" content="原论文：https://dl.acm.org/doi/10.1145/1360612.1360639 摘要 本文提供了一种方法来简单有效地编辑复"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://kegalas.top/p/appprop-all-pairs-appearance-space-edit-propagation%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/cover.jpg' />
+    <link rel="shortcut icon" href="/images/favicon.ico" />
+
+    </head>
+    <body class="
+    article-page has-toc
+">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex 
+    
+        extended
+    
+">
+    
+        <div id="article-toolbar">
+            <a href="/" class="back-home">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="15 6 9 12 15 18" />
+</svg>
+
+
+
+                <span>返回</span>
+            </a>
+        </div>
+    
+<main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/p/appprop-all-pairs-appearance-space-edit-propagation%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/">
+                <img src="/p/appprop-all-pairs-appearance-space-edit-propagation%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/cover_hueda4c761f5117f950ea670cd72a10b0b_71812_800x0_resize_q75_box.jpg"
+                        srcset="/p/appprop-all-pairs-appearance-space-edit-propagation%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/cover_hueda4c761f5117f950ea670cd72a10b0b_71812_800x0_resize_q75_box.jpg 800w, /p/appprop-all-pairs-appearance-space-edit-propagation%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/cover_hueda4c761f5117f950ea670cd72a10b0b_71812_1600x0_resize_q75_box.jpg 1600w"
+                        width="800" 
+                        height="335" 
+                        loading="lazy"
+                        alt="Featured image of post AppProp: All-Pairs Appearance-Space Edit Propagation论文精读与复现" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" >
+                图形学
+            </a>
+        
+    </header>
+    
+
+    <h2 class="article-title">
+        <a href="/p/appprop-all-pairs-appearance-space-edit-propagation%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/">AppProp: All-Pairs Appearance-Space Edit Propagation论文精读与复现</a>
+    </h2>
+
+    
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Sep 07, 2024</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 4 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+</div>
+</header>
+
+    <section class="article-content">
+    <p>原论文：<a class="link" href="https://dl.acm.org/doi/10.1145/1360612.1360639"  target="_blank" rel="noopener"
+    >https://dl.acm.org/doi/10.1145/1360612.1360639</a></p>
+<h1 id="摘要">摘要</h1>
+<p>本文提供了一种方法来简单有效地编辑复杂的图片，用户只需要粗略选定需要调整的物体（的一部分），编辑操作就会自动扩展到整个物体和其他相似物体上。</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 160; 
+			flex-basis: 384px"
+	>
+	<a href="/p/appprop-all-pairs-appearance-space-edit-propagation%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/1.jpg" data-size="676x422">
+		<img src="/p/appprop-all-pairs-appearance-space-edit-propagation%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/1.jpg"
+			width="676"
+			height="422"
+			srcset="/p/appprop-all-pairs-appearance-space-edit-propagation%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/1_hua0829b672235b3664f93e2ed6d9c2d0f_35116_480x0_resize_q75_box.jpg 480w, /p/appprop-all-pairs-appearance-space-edit-propagation%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/1_hua0829b672235b3664f93e2ed6d9c2d0f_35116_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="1.jpg">
+	</a>
+	
+	<figcaption>1.jpg</figcaption>
+	
+</figure></p>
+<h1 id="算法">算法</h1>
+<p>算法的任务是，将用户输入的（粗略的）编辑<span class="math inline">\(g_i\)</span>和其对应的权重<span class="math inline">\(w_i\)</span>，扩展到整个相似的物体上的编辑<span class="math inline">\(e_i\)</span>。这些操作是对于每个像素的。最终，我们使用编辑<span class="math inline">\(e_i\)</span>，将原图像<span class="math inline">\(a_i\)</span>修改为新图像<span class="math inline">\(a_i'\)</span>，即<span class="math inline">\(a_i'=f(a_i;e_i)\)</span>。</p>
+<p><span class="math inline">\(e\)</span>是通过最小化如下的能量来取得的</p>
+<p><span class="math display">\[\sum_i\sum_jw_jz_{ij}(e_i-g_j)^2 + \lambda\sum_i\sum_jz_{ij}(e_i-e_j)^2
+\]</span></p>
+<p><span class="math display">\[\text{with}\quad z_{ij} = \exp(-||f_i-f_j||^2/\sigma_a)\exp(-||x_i-x_j||^2/\sigma_s)
+\]</span></p>
+<p>其中<span class="math inline">\(\sum_i,\sum_j\)</span>等指的是对图片上的每一个像素遍历。这里的<span class="math inline">\(g_j\)</span>即代表着我们输入的编辑操作，例如我们在LAB空间中进行提高亮度的操作，<span class="math inline">\(g_j\)</span>就可以是对像素<span class="math inline">\(j\)</span>增大<span class="math inline">\(L\)</span>分量的值。而<span class="math inline">\(w_j\)</span>是一个<span class="math inline">\([0, 1]\)</span>上的权重，也是用户输入的。如果我们非常希望对于该像素，最终的修改和用户的输入保持一致，权重就取<span class="math inline">\(1\)</span>。如果我们希望最终的结果可以是任意合适的编辑，那么权重就取<span class="math inline">\(0\)</span>。</p>
+<p>这里的<span class="math inline">\(z_{ij}\)</span>是一种相似性度量，用于度量图片上两个像素的相似性，从而决定要不要扩展编辑选区，扩展到同一个物体的整体，以及相似的物体上。</p>
+<p><span class="math inline">\(f\)</span>为该像素的特征向量，其具体含义取决于编辑的图片。例如对于LAB空间的图像，其为<span class="math inline">\(9\)</span>维向量，前<span class="math inline">\(3\)</span>维为该像素的LAB分量，中间<span class="math inline">\(3\)</span>维为其<span class="math inline">\(3\times 3\)</span>范围的LAB分量均值，最后三维则为范围内的LAB分量标准差。对于BRDF之类的材质，该算法也可以运行，只需要设置合适的特征即可。</p>
+<p><span class="math inline">\(x\)</span>代表像素的空间坐标，一般图片上为二维坐标。</p>
+<p>上式中存在三个超参数。<span class="math inline">\(\lambda\)</span>是调整比例的参数。显然上式由两部分组成，直观上第一项是让最终的编辑尽可能和用户输入相似，而第二项则是一个平滑项：让相近的、特征相似的元素拥有相似的编辑。在文章中，作者使用<span class="math inline">\(\lambda=\sum_i w_i/n\)</span></p>
+<p><span class="math inline">\(\sigma_a\)</span>决定了“特征相似”的重要性，与输入图像的格式有关。作者指出低动态范围的图片使用<span class="math inline">\(500\)</span>，对于HDR图片和材质，使用<span class="math inline">\(0.2\)</span>。而<span class="math inline">\(\sigma_s\)</span>决定了“空间距离”的重要性，和图像内容有关。如果图片中相似的物体只有一个、距离很近，则可以使用小的值如<span class="math inline">\(0.05\)</span>。对于相似物体很多，距离又比较远的图片，可以使用大的值如<span class="math inline">\(10\)</span>。</p>
+<p>最小化上述的能量等价于求解如下的线性方程</p>
+<p><span class="math display">\[\bigg(\sum_j z_{ij}w_j+2\lambda\sum_jz_{ij}\bigg)e_i-2\lambda\sum_jz_{ij}e_j = \sum_jz_{ij}w_jg_j
+\]</span></p>
+<p>写成矩阵的形式为</p>
+<p><span class="math display">\[e = \dfrac{1}{2\lambda}(D-Z)^{-1}ZWg
+\]</span></p>
+<p>其中<span class="math inline">\(D,Z,W\)</span>都是<span class="math inline">\(n\times n\)</span>矩阵，<span class="math inline">\(n\)</span>为像素数量。<span class="math inline">\(g\)</span>为<span class="math inline">\(n\)</span>维向量。<span class="math inline">\(Z\)</span>的每一个元素<span class="math inline">\(z_{ij}\)</span>的含义同前，<span class="math inline">\(W,D\)</span>为对角矩阵，<span class="math inline">\(W_{ii}=w_i, D_{ii}=d_i=\sum_j(z_{ij}+z_{ij}w_j/(2\lambda))\)</span>。</p>
+<p>上式的问题在于<span class="math inline">\(D, Z, W\)</span>三个矩阵都是<span class="math inline">\(n\times n\)</span>大小的，这样的算法时间和空间开销过大。作者研究发现<span class="math inline">\(Z\)</span>矩阵是低秩的，于是可以有一些近似算法。从<span class="math inline">\(Z\)</span>中随机采样出<span class="math inline">\(m\)</span>列当作列线性无关的矩阵<span class="math inline">\(U(m\times n)\)</span>，其中<span class="math inline">\(U\)</span>的前<span class="math inline">\(m\)</span>行记作矩阵<span class="math inline">\(A(m\times m)\)</span>。再加上逆矩阵的近似算法，最终有</p>
+<p><span class="math display">\[e\approx\dfrac{1}{2\lambda}(D^{-1}-D^{-1}U(-A+U^TD^{-1}U)^{-1}U^TD^{-1})\cdot(UA^{-1}U^T)Wg
+\]</span></p>
+<p>其中<span class="math inline">\(D\)</span>和<span class="math inline">\(W\)</span>都是对角矩阵容易求逆与求乘法。这样就转换成了多个小矩阵的计算，解决了复杂度的问题。</p>
+<h1 id="我的实现">我的实现</h1>
+<p><a class="link" href="https://github.com/kegalas/AppProp"  target="_blank" rel="noopener"
+    >https://github.com/kegalas/AppProp</a></p>
+<h1 id="优化">优化</h1>
+<p>本文的数据规模是像素个数，可以通过一些数据结构缩小数据规模来加速。具体例如<a class="link" href="https://dl.acm.org/doi/10.1145/1618452.1618464"  target="_blank" rel="noopener"
+    >https://dl.acm.org/doi/10.1145/1618452.1618464</a></p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/%E5%A4%A7%E5%AD%A6/">大学</a>
+        
+            <a href="/tags/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css"integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js"integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8"crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js"integrity="sha384-vZTG03m&#43;2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl"crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.querySelector(`.article-content`), {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ]
+        });})
+</script>
+    
+</article>
+
+    <aside class="related-contents--wrapper">
+    
+    
+        <h2 class="section-title">相关文章</h2>
+        <div class="related-contents">
+            <div class="flex article-list--tile">
+                
+                    
+<article class="has-image">
+    <a href="/p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/">
+        
+        
+            <div class="article-image">
+                <img src="/p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/cover.383f9c251b2b8f8107d60d2e28590acd_hu803811e1d9d935a6e60dd50dca480090_178188_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-OD&#43;cJRsrj4EH1g0uKFkKzQ==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Rectangling Panoramic Images via Warping论文精读与复现</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/p/grabcut-interactive-foreground-extraction-using-iterated-graph-cuts%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/">
+        
+        
+            <div class="article-image">
+                <img src="/p/grabcut-interactive-foreground-extraction-using-iterated-graph-cuts%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/cover.719f06f8145a0ec2fc378d5f11233592_huf62d2c95a51769be2a7aa0d894297a77_82581_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-cZ8G&#43;BRaDsL8N41fESM1kg==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">GrabCut— Interactive Foreground Extraction Using Iterated Graph Cuts论文精读与复现</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%85%89%E7%85%A7%E5%88%9D%E6%AD%A5/">
+        
+        
+            <div class="article-image">
+                <img src="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%85%89%E7%85%A7%E5%88%9D%E6%AD%A5/cover.a31dfa1d472e7236ca0da074207d7576_hu04f6e4c5c5d9e8c832c6dfeafddfe37e_257114_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-ox36HUcucjbKDaB0IH11dg==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">从零开始的软渲染器 光照初步</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E6%A8%A1%E5%9E%8B%E5%BA%93/">
+        
+        
+            <div class="article-image">
+                <img src="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E6%A8%A1%E5%9E%8B%E5%BA%93/cover.30e111997b0a8b14a681475f99347374_hu1d5ada73bf6b5a759e3568aecd125470_50161_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-MOERmXsKixSmgUdfmTRzdA==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">从零开始的软渲染器 模型库</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E7%BA%BF%E6%AE%B5%E5%92%8C%E4%B8%89%E8%A7%92%E5%BD%A2%E7%9A%84%E5%85%89%E6%A0%85%E5%8C%96/">
+        
+        
+            <div class="article-image">
+                <img src="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E7%BA%BF%E6%AE%B5%E5%92%8C%E4%B8%89%E8%A7%92%E5%BD%A2%E7%9A%84%E5%85%89%E6%A0%85%E5%8C%96/cover.3eba88ce14bf80744d7e83238ed0ec4e_hu72dadf0d98aceb343e3fe7cb76faf398_301126_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-PrqIzhS/gHRNfoMjjtDsTg==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">从零开始的软渲染器 线段和三角形的光栅化</h2>
+        </div>
+    </a>
+</article>
+                
+            </div>
+        </div>
+    
+</aside>
+
+     
+    
+        
+    <script src="https://utteranc.es/client.js" 
+        repo="kegalas/blogComments"
+        issue-term="pathname"
+        
+        crossorigin="anonymous"
+        async
+        >
+</script>
+
+<style>
+    .utterances {
+        max-width: unset;
+    }
+</style>
+
+<script>
+    function setUtterancesTheme(theme) {
+        let utterances = document.querySelector('.utterances iframe');
+        if (utterances) {
+            utterances.contentWindow.postMessage(
+                {
+                    type: 'set-theme',
+                    theme: `github-${theme}`
+                },
+                'https://utteranc.es'
+            );
+        }
+    }
+
+    addEventListener('message', event => {
+        if (event.origin !== 'https://utteranc.es') return;
+        setUtterancesTheme(document.documentElement.dataset.scheme)
+    });
+
+    window.addEventListener('onColorSchemeChange', (e) => {
+        setUtterancesTheme(e.detail)
+    })
+</script>
+
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2024 KegalaS的个人博客
+    </section>
+    
+    <section class="powerby">
+         <br />
+        
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    
+        <aside class="sidebar right-sidebar sticky">
+            <section class="widget archives">
+                <div class="widget-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+                </div>
+                <h2 class="widget-title section-title">目录</h2>
+                
+                <div class="widget--toc">
+                    <nav id="TableOfContents">
+  <ol>
+    <li><a href="#摘要">摘要</a></li>
+    <li><a href="#算法">算法</a></li>
+    <li><a href="#我的实现">我的实现</a></li>
+    <li><a href="#优化">优化</a></li>
+  </ol>
+</nav>
+                </div>
+            </section>
+        </aside>
+    
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                defer="false"
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

@@ -6,7 +6,68 @@
         <description>Recent content on KegalaS的个人博客</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Mon, 03 Jun 2024 23:16:15 +0800</lastBuildDate><atom:link href="https://kegalas.top/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sat, 07 Sep 2024 15:19:52 +0800</lastBuildDate><atom:link href="https://kegalas.top/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>AppProp: All-Pairs Appearance-Space Edit Propagation论文精读与复现</title>
+        <link>https://kegalas.top/p/appprop-all-pairs-appearance-space-edit-propagation%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/</link>
+        <pubDate>Sat, 07 Sep 2024 15:19:52 +0800</pubDate>
+        
+        <guid>https://kegalas.top/p/appprop-all-pairs-appearance-space-edit-propagation%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/</guid>
+        <description>&lt;img src="https://kegalas.top/p/appprop-all-pairs-appearance-space-edit-propagation%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/cover.jpg" alt="Featured image of post AppProp: All-Pairs Appearance-Space Edit Propagation论文精读与复现" /&gt;&lt;p&gt;原论文：&lt;a class=&#34;link&#34; href=&#34;https://dl.acm.org/doi/10.1145/1360612.1360639&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://dl.acm.org/doi/10.1145/1360612.1360639&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&#34;摘要&#34;&gt;摘要&lt;/h1&gt;
+&lt;p&gt;本文提供了一种方法来简单有效地编辑复杂的图片，用户只需要粗略选定需要调整的物体（的一部分），编辑操作就会自动扩展到整个物体和其他相似物体上。&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 160; 
+			flex-basis: 384px&#34;
+	&gt;
+	&lt;a href=&#34;https://kegalas.top/p/appprop-all-pairs-appearance-space-edit-propagation%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/1.jpg&#34; data-size=&#34;676x422&#34;&gt;
+		&lt;img src=&#34;https://kegalas.top/p/appprop-all-pairs-appearance-space-edit-propagation%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/1.jpg&#34;
+			width=&#34;676&#34;
+			height=&#34;422&#34;
+			srcset=&#34;https://kegalas.top/p/appprop-all-pairs-appearance-space-edit-propagation%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/1_hua0829b672235b3664f93e2ed6d9c2d0f_35116_480x0_resize_q75_box.jpg 480w, https://kegalas.top/p/appprop-all-pairs-appearance-space-edit-propagation%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/1_hua0829b672235b3664f93e2ed6d9c2d0f_35116_1024x0_resize_q75_box.jpg 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;1.jpg&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;1.jpg&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;h1 id=&#34;算法&#34;&gt;算法&lt;/h1&gt;
+&lt;p&gt;算法的任务是，将用户输入的（粗略的）编辑&lt;span class=&#34;math inline&#34;&gt;\(g_i\)&lt;/span&gt;和其对应的权重&lt;span class=&#34;math inline&#34;&gt;\(w_i\)&lt;/span&gt;，扩展到整个相似的物体上的编辑&lt;span class=&#34;math inline&#34;&gt;\(e_i\)&lt;/span&gt;。这些操作是对于每个像素的。最终，我们使用编辑&lt;span class=&#34;math inline&#34;&gt;\(e_i\)&lt;/span&gt;，将原图像&lt;span class=&#34;math inline&#34;&gt;\(a_i\)&lt;/span&gt;修改为新图像&lt;span class=&#34;math inline&#34;&gt;\(a_i&#39;\)&lt;/span&gt;，即&lt;span class=&#34;math inline&#34;&gt;\(a_i&#39;=f(a_i;e_i)\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(e\)&lt;/span&gt;是通过最小化如下的能量来取得的&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\sum_i\sum_jw_jz_{ij}(e_i-g_j)^2 + \lambda\sum_i\sum_jz_{ij}(e_i-e_j)^2
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\text{with}\quad z_{ij} = \exp(-||f_i-f_j||^2/\sigma_a)\exp(-||x_i-x_j||^2/\sigma_s)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(\sum_i,\sum_j\)&lt;/span&gt;等指的是对图片上的每一个像素遍历。这里的&lt;span class=&#34;math inline&#34;&gt;\(g_j\)&lt;/span&gt;即代表着我们输入的编辑操作，例如我们在LAB空间中进行提高亮度的操作，&lt;span class=&#34;math inline&#34;&gt;\(g_j\)&lt;/span&gt;就可以是对像素&lt;span class=&#34;math inline&#34;&gt;\(j\)&lt;/span&gt;增大&lt;span class=&#34;math inline&#34;&gt;\(L\)&lt;/span&gt;分量的值。而&lt;span class=&#34;math inline&#34;&gt;\(w_j\)&lt;/span&gt;是一个&lt;span class=&#34;math inline&#34;&gt;\([0, 1]\)&lt;/span&gt;上的权重，也是用户输入的。如果我们非常希望对于该像素，最终的修改和用户的输入保持一致，权重就取&lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt;。如果我们希望最终的结果可以是任意合适的编辑，那么权重就取&lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;这里的&lt;span class=&#34;math inline&#34;&gt;\(z_{ij}\)&lt;/span&gt;是一种相似性度量，用于度量图片上两个像素的相似性，从而决定要不要扩展编辑选区，扩展到同一个物体的整体，以及相似的物体上。&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;为该像素的特征向量，其具体含义取决于编辑的图片。例如对于LAB空间的图像，其为&lt;span class=&#34;math inline&#34;&gt;\(9\)&lt;/span&gt;维向量，前&lt;span class=&#34;math inline&#34;&gt;\(3\)&lt;/span&gt;维为该像素的LAB分量，中间&lt;span class=&#34;math inline&#34;&gt;\(3\)&lt;/span&gt;维为其&lt;span class=&#34;math inline&#34;&gt;\(3\times 3\)&lt;/span&gt;范围的LAB分量均值，最后三维则为范围内的LAB分量标准差。对于BRDF之类的材质，该算法也可以运行，只需要设置合适的特征即可。&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;代表像素的空间坐标，一般图片上为二维坐标。&lt;/p&gt;
+&lt;p&gt;上式中存在三个超参数。&lt;span class=&#34;math inline&#34;&gt;\(\lambda\)&lt;/span&gt;是调整比例的参数。显然上式由两部分组成，直观上第一项是让最终的编辑尽可能和用户输入相似，而第二项则是一个平滑项：让相近的、特征相似的元素拥有相似的编辑。在文章中，作者使用&lt;span class=&#34;math inline&#34;&gt;\(\lambda=\sum_i w_i/n\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(\sigma_a\)&lt;/span&gt;决定了“特征相似”的重要性，与输入图像的格式有关。作者指出低动态范围的图片使用&lt;span class=&#34;math inline&#34;&gt;\(500\)&lt;/span&gt;，对于HDR图片和材质，使用&lt;span class=&#34;math inline&#34;&gt;\(0.2\)&lt;/span&gt;。而&lt;span class=&#34;math inline&#34;&gt;\(\sigma_s\)&lt;/span&gt;决定了“空间距离”的重要性，和图像内容有关。如果图片中相似的物体只有一个、距离很近，则可以使用小的值如&lt;span class=&#34;math inline&#34;&gt;\(0.05\)&lt;/span&gt;。对于相似物体很多，距离又比较远的图片，可以使用大的值如&lt;span class=&#34;math inline&#34;&gt;\(10\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;最小化上述的能量等价于求解如下的线性方程&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\bigg(\sum_j z_{ij}w_j+2\lambda\sum_jz_{ij}\bigg)e_i-2\lambda\sum_jz_{ij}e_j = \sum_jz_{ij}w_jg_j
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;写成矩阵的形式为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[e = \dfrac{1}{2\lambda}(D-Z)^{-1}ZWg
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(D,Z,W\)&lt;/span&gt;都是&lt;span class=&#34;math inline&#34;&gt;\(n\times n\)&lt;/span&gt;矩阵，&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;为像素数量。&lt;span class=&#34;math inline&#34;&gt;\(g\)&lt;/span&gt;为&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;维向量。&lt;span class=&#34;math inline&#34;&gt;\(Z\)&lt;/span&gt;的每一个元素&lt;span class=&#34;math inline&#34;&gt;\(z_{ij}\)&lt;/span&gt;的含义同前，&lt;span class=&#34;math inline&#34;&gt;\(W,D\)&lt;/span&gt;为对角矩阵，&lt;span class=&#34;math inline&#34;&gt;\(W_{ii}=w_i, D_{ii}=d_i=\sum_j(z_{ij}+z_{ij}w_j/(2\lambda))\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;上式的问题在于&lt;span class=&#34;math inline&#34;&gt;\(D, Z, W\)&lt;/span&gt;三个矩阵都是&lt;span class=&#34;math inline&#34;&gt;\(n\times n\)&lt;/span&gt;大小的，这样的算法时间和空间开销过大。作者研究发现&lt;span class=&#34;math inline&#34;&gt;\(Z\)&lt;/span&gt;矩阵是低秩的，于是可以有一些近似算法。从&lt;span class=&#34;math inline&#34;&gt;\(Z\)&lt;/span&gt;中随机采样出&lt;span class=&#34;math inline&#34;&gt;\(m\)&lt;/span&gt;列当作列线性无关的矩阵&lt;span class=&#34;math inline&#34;&gt;\(U(m\times n)\)&lt;/span&gt;，其中&lt;span class=&#34;math inline&#34;&gt;\(U\)&lt;/span&gt;的前&lt;span class=&#34;math inline&#34;&gt;\(m\)&lt;/span&gt;行记作矩阵&lt;span class=&#34;math inline&#34;&gt;\(A(m\times m)\)&lt;/span&gt;。再加上逆矩阵的近似算法，最终有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[e\approx\dfrac{1}{2\lambda}(D^{-1}-D^{-1}U(-A+U^TD^{-1}U)^{-1}U^TD^{-1})\cdot(UA^{-1}U^T)Wg
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;和&lt;span class=&#34;math inline&#34;&gt;\(W\)&lt;/span&gt;都是对角矩阵容易求逆与求乘法。这样就转换成了多个小矩阵的计算，解决了复杂度的问题。&lt;/p&gt;
+&lt;h1 id=&#34;我的实现&#34;&gt;我的实现&lt;/h1&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://github.com/kegalas/AppProp&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://github.com/kegalas/AppProp&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&#34;优化&#34;&gt;优化&lt;/h1&gt;
+&lt;p&gt;本文的数据规模是像素个数，可以通过一些数据结构缩小数据规模来加速。具体例如&lt;a class=&#34;link&#34; href=&#34;https://dl.acm.org/doi/10.1145/1618452.1618464&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://dl.acm.org/doi/10.1145/1618452.1618464&lt;/a&gt;&lt;/p&gt;
+</description>
+        </item>
+        <item>
         <title>Rectangling Panoramic Images via Warping论文精读与复现</title>
         <link>https://kegalas.top/p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/</link>
         <pubDate>Mon, 03 Jun 2024 23:16:15 +0800</pubDate>
@@ -1170,7 +1231,7 @@ PasswordAuthentication yes
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Point p2 &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; p1;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;用到了&lt;code&gt;p2 = p1&lt;/code&gt;这一语句。在Java和Python中，&lt;code&gt;p1&lt;/code&gt;、&lt;code&gt;p2&lt;/code&gt;现在都指向同一个对象&lt;code&gt;Point(1.0, 2.0)&lt;/code&gt;，而其本身并不是对象。在C++中，&lt;code&gt;p2&lt;/code&gt;把&lt;code&gt;p1&lt;/code&gt;的所有内容拷贝赋值给自己，它们两个是两个不同的对象（即使内容相等）。&lt;/p&gt;
 &lt;p&gt;在C++中，拷贝默认是深拷贝，而Java和Python中是浅拷贝。如果要在C++里面使用浅拷贝，则使用&lt;code&gt;Point &amp;amp; p3 = p1&lt;/code&gt;即可（也可以用指针）。&lt;/p&gt;
-&lt;p&gt;除了是否新建一个对象以为，这两者的生命周期也不同。C++的对象在&lt;code&gt;p1&lt;/code&gt;销毁时就销毁了，而在Java中&lt;code&gt;p1&lt;/code&gt;销毁之后，由于还有&lt;code&gt;p2&lt;/code&gt;指向这个对象，所以对象本身不会销毁。如果所有指向全都销毁，那么垃圾回收机制才会销毁这个对象。&lt;/p&gt;
+&lt;p&gt;除了是否新建一个对象以外，这两者的生命周期也不同。C++的对象在&lt;code&gt;p1&lt;/code&gt;销毁时就销毁了，而在Java中&lt;code&gt;p1&lt;/code&gt;销毁之后，由于还有&lt;code&gt;p2&lt;/code&gt;指向这个对象，所以对象本身不会销毁。如果所有指向全都销毁，那么垃圾回收机制才会销毁这个对象。&lt;/p&gt;
 &lt;p&gt;另外，通常“相等”的概念也不同。在Java中，对两个对象变量使用&lt;code&gt;==&lt;/code&gt;运算符，如果它们指向不同的对象，则不相等，否则相等。在C++中，我们一般会重载&lt;code&gt;==&lt;/code&gt;运算符，判断两者的内容是否相等。&lt;/p&gt;
 &lt;h2 id=&#34;拷贝构造函数&#34;&gt;拷贝构造函数&lt;/h2&gt;
 &lt;p&gt;todo&lt;/p&gt;
@@ -2326,7 +2387,7 @@ collect2.exe: error: ld returned 1 exit status
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;auto&lt;/span&gt; z{&lt;span style=&#34;color:#ae81ff&#34;&gt;3&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;4&lt;/span&gt;}; &lt;span style=&#34;color:#75715e&#34;&gt;// 推断为std::initializer_list&amp;lt;int&amp;gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这其实是不符合我们的直觉的，在C++17后，第二行被推断为&lt;code&gt;int&lt;/code&gt;，而第三行报错。&lt;/p&gt;
 &lt;h1 id=&#34;decltype&#34;&gt;decltype&lt;/h1&gt;
-&lt;p&gt;和&lt;code&gt;auto&lt;/code&gt;不同，不会抛弃&lt;code&gt;cv&lt;/code&gt;和引用。如果如果实参是没有括号的标识表达式或没有括号的类成员访问表达式：&lt;/p&gt;
+&lt;p&gt;和&lt;code&gt;auto&lt;/code&gt;不同，不会抛弃&lt;code&gt;cv&lt;/code&gt;和引用。如果实参是没有括号的标识表达式或没有括号的类成员访问表达式：&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; i &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt;j &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; i;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt; k &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; i;

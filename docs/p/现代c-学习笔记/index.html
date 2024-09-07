@@ -279,7 +279,7 @@
 </span></span><span style="display:flex;"><span>Point p2 <span style="color:#f92672">=</span> p1;
 </span></span></code></pre></div><p>用到了<code>p2 = p1</code>这一语句。在Java和Python中，<code>p1</code>、<code>p2</code>现在都指向同一个对象<code>Point(1.0, 2.0)</code>，而其本身并不是对象。在C++中，<code>p2</code>把<code>p1</code>的所有内容拷贝赋值给自己，它们两个是两个不同的对象（即使内容相等）。</p>
 <p>在C++中，拷贝默认是深拷贝，而Java和Python中是浅拷贝。如果要在C++里面使用浅拷贝，则使用<code>Point &amp; p3 = p1</code>即可（也可以用指针）。</p>
-<p>除了是否新建一个对象以为，这两者的生命周期也不同。C++的对象在<code>p1</code>销毁时就销毁了，而在Java中<code>p1</code>销毁之后，由于还有<code>p2</code>指向这个对象，所以对象本身不会销毁。如果所有指向全都销毁，那么垃圾回收机制才会销毁这个对象。</p>
+<p>除了是否新建一个对象以外，这两者的生命周期也不同。C++的对象在<code>p1</code>销毁时就销毁了，而在Java中<code>p1</code>销毁之后，由于还有<code>p2</code>指向这个对象，所以对象本身不会销毁。如果所有指向全都销毁，那么垃圾回收机制才会销毁这个对象。</p>
 <p>另外，通常“相等”的概念也不同。在Java中，对两个对象变量使用<code>==</code>运算符，如果它们指向不同的对象，则不相等，否则相等。在C++中，我们一般会重载<code>==</code>运算符，判断两者的内容是否相等。</p>
 <h2 id="拷贝构造函数">拷贝构造函数</h2>
 <p>todo</p>
@@ -1435,7 +1435,7 @@ collect2.exe: error: ld returned 1 exit status
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">auto</span> z{<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>}; <span style="color:#75715e">// 推断为std::initializer_list&lt;int&gt;
 </span></span></span></code></pre></div><p>这其实是不符合我们的直觉的，在C++17后，第二行被推断为<code>int</code>，而第三行报错。</p>
 <h1 id="decltype">decltype</h1>
-<p>和<code>auto</code>不同，不会抛弃<code>cv</code>和引用。如果如果实参是没有括号的标识表达式或没有括号的类成员访问表达式：</p>
+<p>和<code>auto</code>不同，不会抛弃<code>cv</code>和引用。如果实参是没有括号的标识表达式或没有括号的类成员访问表达式：</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#f92672">&amp;</span>j <span style="color:#f92672">=</span> i;
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#66d9ef">const</span> <span style="color:#f92672">&amp;</span> k <span style="color:#f92672">=</span> i;
