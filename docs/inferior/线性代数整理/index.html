@@ -282,7 +282,7 @@ a_{m1}\pm b_{m1}  & a_{m2}\pm b_{m2} & \cdots & a_{mn}\pm b_{mn}
 <li><span class="math inline">\(\bold{A}_{m\times n}\bold{E}_n=\bold{E}_m\bold{A}_{m\times n}=\bold{A}_{m\times n}\)</span></li>
 <li><span class="math inline">\(\bold{A}^k\bold{A}^l=\bold{A}^{k+l},(\bold{A}^k)^l=\bold{A}^{kl}\)</span></li>
 </ol>
-<p>注意，由于矩阵乘法不满足交换律，故一般情况下，<span class="math inline">\((\bold{AB}^k)\ne\bold{A}^k\bold{B}^k\)</span></p>
+<p>注意，由于矩阵乘法不满足交换律，故一般情况下，<span class="math inline">\((\bold{AB})^k\ne\bold{A}^k\bold{B}^k\)</span></p>
 <h4 id="转置">转置</h4>
 <p>将矩阵<span class="math inline">\(\bold{A}\)</span>中的行换成同序数的列而得到的矩阵，称之为<span class="math inline">\(\bold{A}\)</span>的转置矩阵，记作<span class="math inline">\(\bold{A}^T\)</span>或<span class="math inline">\(\bold{A}'\)</span>，即若</p>
 <p><span class="math display">\[\bold{A}=\begin{bmatrix}
@@ -377,7 +377,7 @@ a_{12}  & a_{22} & \cdots & a_{m2}\\
 <li>可逆</li>
 <li><span class="math inline">\(\bold{Ax=0}\)</span>只有零解</li>
 <li><span class="math inline">\(|\bold{A}|\ne0\)</span></li>
-<li><span class="math inline">\(\bold{A}\)</span>可以经过有限次初等行变换华为单位矩阵<span class="math inline">\(\bold{E}_n\)</span></li>
+<li><span class="math inline">\(\bold{A}\)</span>可以经过有限次初等行变换化为单位矩阵<span class="math inline">\(\bold{E}_n\)</span></li>
 <li><span class="math inline">\(\bold{A}\)</span>可以表示为有限个初等矩阵的乘积。</li>
 <li>特征值均非零</li>
 </ol>
@@ -389,7 +389,7 @@ a_{12}  & a_{22} & \cdots & a_{m2}\\
 <li>不可逆</li>
 <li><span class="math inline">\(\bold{Ax=0}\)</span>不只有零解</li>
 <li><span class="math inline">\(|\bold{A}|=0\)</span></li>
-<li><span class="math inline">\(\bold{A}\)</span>不可以经过有限次初等行变换华为单位矩阵<span class="math inline">\(\bold{E}_n\)</span></li>
+<li><span class="math inline">\(\bold{A}\)</span>不可以经过有限次初等行变换化为单位矩阵<span class="math inline">\(\bold{E}_n\)</span></li>
 <li><span class="math inline">\(\bold{A}\)</span>不可以表示为有限个初等矩阵的乘积。</li>
 <li>特征值至少有一个为零</li>
 </ol>
@@ -584,7 +584,7 @@ a_nb_1 & a_nb_2 & \cdots & a_nb_n
 <li>向量组<span class="math inline">\(\bm{\alpha}_1,\bm{\alpha}_2,\cdots,\bm{\alpha}_m\)</span>线性无关，而向量组<span class="math inline">\(\bm{\alpha}_1,\bm{\alpha}_2,\cdots,\bm{\alpha}_m,\bm{b}\)</span>线性相关，则<span class="math inline">\(\bm{b}\)</span>可由<span class="math inline">\(\bm{\alpha}_1,\bm{\alpha}_2,\cdots,\bm{\alpha}_m\)</span>唯一线性表示</li>
 <li><span class="math inline">\(\bm{\alpha}_1,\bm{\alpha}_2,\cdots,\bm{\alpha}_m\)</span>线性无关，则任一部分组<span class="math inline">\(\bm{\alpha}_1,\bm{\alpha}_2,\cdots,\bm{\alpha}_r(r< m)\)</span>必线性无关</li>
 <li><span class="math inline">\(\bm{\alpha}_1,\bm{\alpha}_2,\cdots,\bm{\alpha}_m\)</span>线性相关，则增加向量后的向量组<span class="math inline">\(\bm{\alpha}_1,\bm{\alpha}_2,\cdots,\bm{\alpha}_s(s>m)\)</span>必线性相关。</li>
-<li>设<span class="math inline">\(\bm{\alpha}_1,\bm{\alpha}_2,\cdots,\bm{\alpha}_m\)</span>为<span class="math inline">\(m\)</span>个<span class="math inline">\(m\)</span>维列向量。则<span class="math inline">\(\bm{\alpha}_1,\bm{\alpha}_2,\cdots,\bm{\alpha}_m\)</span>线性无关<span class="math inline">\(\Leftrightarrow\)</span>行列式<span class="math inline">\(|[\bm{\alpha}_1,\bm{\alpha}_2,\cdots,\bm{\alpha}_m]|\ne0$;\)</span>\bm{\alpha}_1,\bm{\alpha}_2,\cdots,\bm{\alpha}_m<span class="math inline">\(线性相关\)</span>\Leftrightarrow<span class="math inline">\(行列式\)</span>|[\bm{\alpha}_1,\bm{\alpha}_2,\cdots,\bm{\alpha}_m]|=0$</li>
+<li>设<span class="math inline">\(\bm{\alpha}_1,\bm{\alpha}_2,\cdots,\bm{\alpha}_m\)</span>为<span class="math inline">\(m\)</span>个<span class="math inline">\(m\)</span>维列向量。则<span class="math inline">\(\bm{\alpha}_1,\bm{\alpha}_2,\cdots,\bm{\alpha}_m\)</span>线性无关<span class="math inline">\(\Leftrightarrow\)</span>行列式<span class="math inline">\(|[\bm{\alpha}_1,\bm{\alpha}_2,\cdots,\bm{\alpha}_m]|\ne0\)</span> ； <span class="math inline">\(\bm{\alpha}_1,\bm{\alpha}_2,\cdots,\bm{\alpha}_m\)</span>线性相关<span class="math inline">\(\Leftrightarrow\)</span>行列式<span class="math inline">\(|[\bm{\alpha}_1,\bm{\alpha}_2,\cdots,\bm{\alpha}_m]|=0\)</span></li>
 <li>从几何角度理解：设<span class="math inline">\(\bm{\alpha,\beta,\gamma}\)</span>为三维向量，向量组<span class="math inline">\(\bm{\alpha,\beta}\)</span>线性相关<span class="math inline">\(\Leftrightarrow\bm{\alpha,\beta}\)</span>共线;向量组<span class="math inline">\(\bm{\alpha,\beta,\gamma}\)</span>线性相关<span class="math inline">\(\Leftrightarrow\bm{\alpha,\beta,\gamma}\)</span>共面</li>
 </ol>
 <h3 id="向量组的秩和极大无关组">向量组的秩和极大无关组</h3>

@@ -493,17 +493,17 @@
 \]</span></p>
 <h3 id="随机变量商的密度函数">随机变量商的密度函数</h3>
 <p>设<span class="math inline">\((X_1,X_2)\)</span>有密度函数<span class="math inline">\(f(x_1,x_2)\)</span>，<span class="math inline">\(Y=X_2/X_1\)</span>，要求<span class="math inline">\(Y\)</span>的密度函数</p>
-<p><span class="math display">\[f_Y(y) = \int^\infty_0 |x_1|f(x_1,x_1y)dx_1
+<p><span class="math display">\[f_Y(y) = \int^\infty_{-\infty} |x_1|f(x_1,x_1y)dx_1
 \]</span></p>
 <p>若<span class="math inline">\(X_1,X_2\)</span>独立，则</p>
-<p><span class="math display">\[f_Y(y) = \int^\infty_0 |x_1|f_1(x_1)f_2(x_1y)dx_1
+<p><span class="math display">\[f_Y(y) = \int^\infty_{-\infty} |x_1|f_1(x_1)f_2(x_1y)dx_1
 \]</span></p>
 <h3 id="随机变量积的密度函数">随机变量积的密度函数</h3>
 <p>设<span class="math inline">\((X_1,X_2)\)</span>有密度函数<span class="math inline">\(f(x_1,x_2)\)</span>，<span class="math inline">\(Y=X_1X_2\)</span>，要求<span class="math inline">\(Y\)</span>的密度函数</p>
-<p><span class="math display">\[f_Y(y) = \int^\infty_0 \frac{1}{|x_1|}f(x_1,\frac{y}{x_1})dx_1
+<p><span class="math display">\[f_Y(y) = \int^\infty_{-\infty} \frac{1}{|x_1|}f(x_1,\frac{y}{x_1})dx_1
 \]</span></p>
 <p>若<span class="math inline">\(X_1,X_2\)</span>独立，则</p>
-<p><span class="math display">\[f_Y(y) = \int^\infty_0 \frac{1}{|x_1|}f_1(x_1)f_2(\frac{y}{x_1})dx_1
+<p><span class="math display">\[f_Y(y) = \int^\infty_{-\infty} \frac{1}{|x_1|}f_1(x_1)f_2(\frac{y}{x_1})dx_1
 \]</span></p>
 <h2 id="常见的分布">常见的分布</h2>
 <h3 id="0-1分布">0-1分布</h3>
@@ -1096,7 +1096,7 @@
 <p><span class="math display">\[P(|Y-EY|\geq\varepsilon)\leq Var(Y)/\varepsilon^2
 \]</span></p>
 <p>可以推知</p>
-<p><span class="math display">\[P(|Y-EY|<\varepsilon)\leq 1-Var(Y)/\varepsilon^2
+<p><span class="math display">\[P(|Y-EY|<\varepsilon)\geq 1-Var(Y)/\varepsilon^2
 \]</span></p>
 <p><strong>切比雪夫大数定理</strong></p>
 <p>设<span class="math inline">\(X_1,X_2,\cdots,X_n,\cdots\)</span>是相互独立的随机变量，具有相同的期望和方差，记它们的均值都为<span class="math inline">\(a\)</span>。又设它们的方差存在并记为<span class="math inline">\(\sigma^2\)</span>。则对任意给定的<span class="math inline">\(\varepsilon>0\)</span>，有</p>
