@@ -150,8 +150,9 @@ v 0.424663 -0.649937 -0.567418
 vt  0.623 0.573 0.000
 vt  0.627 0.576 0.000
 ...
-</code></pre><p>以vt开头，后面还是带三个数。通常我们的纹理是二维的，所以第三个会是零。这里的纹理坐标指的是在纹理图片文件上的坐标。显然你会怀疑，纹理图片的大小不是800x800这种形式的吗？为什么这里是小数？</p>
+</code></pre><p>以vt开头，后面还是带三个数。通常我们的纹理是二维的，所以第三个会是零（有些模型文件只有两个维度，忽略了第三维）。这里的纹理坐标指的是在纹理图片文件上的坐标。显然你会怀疑，纹理图片的大小不是800x800这种形式的吗？为什么这里是小数？</p>
 <p>我认为是为了统一，我们只要用坐标乘以宽度、长度，再四舍五入即可得到图片上的像素坐标。</p>
+<p>当然，也有的纹理坐标不在<span class="math inline">\([0,1]\)</span>范围内，会大于<span class="math inline">\(1\)</span>。此时我们有多种处理办法，比较常见的一种是取其小数部分，作为坐标。也就等价于重复纹理图片。</p>
 <p><strong>法向量方向</strong></p>
 <p>例如</p>
 <pre tabindex="0"><code>vn  -0.250 0.462 -0.851
@@ -257,7 +258,7 @@ f 1206/1252/1206 1086/1257/1086 1087/1253/1087
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#66d9ef">const</span> height <span style="color:#f92672">=</span> <span style="color:#ae81ff">1500</span>;<span style="color:#75715e">//设置输出图片的长宽
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(){
-</span></span><span style="display:flex;"><span>    Model model(<span style="color:#e6db74">&#34;../obj/african_head.obj&#34;</span>);<span style="color:#75715e">//读取我们的模型
+</span></span><span style="display:flex;"><span>    Model model(<span style="color:#e6db74">&#34;../obj/teapot.obj&#34;</span>);<span style="color:#75715e">//读取我们的模型
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    TGAImage image(width,height,TGAType<span style="color:#f92672">::</span>rgb);<span style="color:#75715e">//新建一个图对象
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">int</span> nface <span style="color:#f92672">=</span> model.getFaceSize();<span style="color:#75715e">//获取三角面的总数
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    std<span style="color:#f92672">::</span>array<span style="color:#f92672">&lt;</span>geo<span style="color:#f92672">::</span>vec4f,<span style="color:#ae81ff">3</span><span style="color:#f92672">&gt;</span> vert;<span style="color:#75715e">//读取顶点坐标
@@ -272,7 +273,7 @@ f 1206/1252/1206 1086/1257/1086 1087/1253/1087
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        }
 </span></span><span style="display:flex;"><span>        ras<span style="color:#f92672">::</span>triangle(image,screen,color);<span style="color:#75715e">//绘制三角形i号
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    }
-</span></span><span style="display:flex;"><span>    image.writeToFile(<span style="color:#e6db74">&#34;./af.tga&#34;</span>);<span style="color:#75715e">//写入图像文件
+</span></span><span style="display:flex;"><span>    image.writeToFile(<span style="color:#e6db74">&#34;./tp.tga&#34;</span>);<span style="color:#75715e">//写入图像文件
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
 </span></span><span style="display:flex;"><span>}
@@ -290,14 +291,14 @@ f 1206/1252/1206 1086/1257/1086 1087/1253/1087
 	
 		class="gallery-image" 
 		style="
-			flex-grow: 99; 
-			flex-basis: 239px"
+			flex-grow: 100; 
+			flex-basis: 242px"
 	>
-	<a href="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E6%A8%A1%E5%9E%8B%E5%BA%93/1.png" data-size="943x946">
+	<a href="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E6%A8%A1%E5%9E%8B%E5%BA%93/1.png" data-size="955x946">
 		<img src="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E6%A8%A1%E5%9E%8B%E5%BA%93/1.png"
-			width="943"
+			width="955"
 			height="946"
-			srcset="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E6%A8%A1%E5%9E%8B%E5%BA%93/1_hu0f8a8ae2906e2fa932d21294bc30fca4_26137_480x0_resize_box_3.png 480w, /p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E6%A8%A1%E5%9E%8B%E5%BA%93/1_hu0f8a8ae2906e2fa932d21294bc30fca4_26137_1024x0_resize_box_3.png 1024w"
+			srcset="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E6%A8%A1%E5%9E%8B%E5%BA%93/1_hu714c0af6a9111409e5fb0b932060e24f_19025_480x0_resize_box_3.png 480w, /p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E6%A8%A1%E5%9E%8B%E5%BA%93/1_hu714c0af6a9111409e5fb0b932060e24f_19025_1024x0_resize_box_3.png 1024w"
 			loading="lazy"
 			alt="1.png">
 	</a>
@@ -305,7 +306,7 @@ f 1206/1252/1206 1086/1257/1086 1087/1253/1087
 	<figcaption>1.png</figcaption>
 	
 </figure></p>
-<p>虽然我们没有看清他的面容（因为我们把每个三角形都设置成全白了），但是至少整个形状正确了。稍后我们将介绍光照，来让他的面容展现出来。</p>
+<p>虽然我们没有看清具体的细节（因为我们把每个三角形都设置成全白了），但是至少整个形状正确了。稍后我们将介绍光照，来让他的细节展现出来。</p>
 
 </section>
 
