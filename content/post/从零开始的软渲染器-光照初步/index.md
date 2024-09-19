@@ -92,10 +92,10 @@ $$
 
 # 使用例子
 
-我们把上一节所讲的人物模型拿出来使用一下。
+我们把上一节所讲的teapot模型拿出来使用一下。
 
 用**[这个链接](https://github.com/kegalas/oar/blob/main/tutorial/chapter5/src/main.cpp)** 中的代码（需要去下载模型文件放到代码中的指定文件夹，见**[链接](https://github.com/kegalas/oar/blob/main/tutorial/chapter5/obj/african_head.obj)** ），我们可以得到如下的效果图
 
 ![1.jpg](1.jpg)
 
-看上去还好，细看的话发现眼睛、嘴巴、耳朵一塌糊涂，这实际上是因为三角形的前后关系导致覆盖而出现的结果，在下一部分我们将介绍Z-buffer算法来解决这个问题。
+看上去还好，细看的话发现盖子、壶嘴连接处一塌糊涂，这实际上是因为三角形的前后关系导致覆盖而出现的结果，在下一部分我们将介绍Z-buffer算法来解决这个问题。
