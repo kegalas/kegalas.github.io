@@ -131,7 +131,51 @@ $$
 
 ## 旋转
 
-旋转需要用到四元数的知识，我们将会在未来探讨（TODO）。
+旋转操作有很多办法，例如欧拉角，四元数等等。这次我们先讨论欧拉角，未来可能会添加上四位数（TODO）
+
+在二维空间中，一个点绕原点逆时针旋转$\phi$得到的新点为
+
+$$
+\begin{bmatrix}
+ \cos\phi & -\sin\phi\\
+ \sin\phi & \cos\phi
+\end{bmatrix}
+\begin{bmatrix}
+ x\\
+ y\\
+\end{bmatrix}
+$$
+
+在三维空间中，这个旋转就相当于点绕$z$轴旋转，容易推出绕三个轴的旋转矩阵。
+
+$$
+rotate-z(\phi)=
+\begin{bmatrix}
+cos\phi  & -sin\phi & 0\\
+sin\phi  & cos\phi & 0\\
+0  & 0 & 1
+\end{bmatrix}
+$$
+
+$$
+rotate-x(\phi)=
+\begin{bmatrix}
+1  & 0 & 0\\
+0  & cos\phi & -sin\phi\\
+0  & sin\phi & cos\phi
+\end{bmatrix}
+$$
+
+$$
+rotate-y(\phi)=
+\begin{bmatrix}
+cos\phi  & 0 & sin\phi\\
+0  & 1 & 0\\
+-sin\phi  & 0 & cos\phi
+\end{bmatrix}
+$$
+
+同样的，我们也可以很方便地将其扩展为4维矩阵。
 
 ## 复合变换
 
