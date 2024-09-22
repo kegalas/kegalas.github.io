@@ -6,7 +6,608 @@
         <description>Recent content on KegalaS的个人博客</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Sat, 07 Sep 2024 15:19:52 +0800</lastBuildDate><atom:link href="https://kegalas.top/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sun, 22 Sep 2024 22:53:54 +0800</lastBuildDate><atom:link href="https://kegalas.top/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>从零开始的软渲染器 坐标变换与视角</title>
+        <link>https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2%E4%B8%8E%E8%A7%86%E8%A7%92/</link>
+        <pubDate>Sun, 22 Sep 2024 22:53:54 +0800</pubDate>
+        
+        <guid>https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2%E4%B8%8E%E8%A7%86%E8%A7%92/</guid>
+        <description>&lt;img src="https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2%E4%B8%8E%E8%A7%86%E8%A7%92/cover.jpg" alt="Featured image of post 从零开始的软渲染器 坐标变换与视角" /&gt;&lt;p&gt;我们的模型并不会停留在原地不动，比如当我们在游戏中前后左右移动时，其他物体相对于我们是在平移的。又比如在游戏中移动鼠标看向不同的地方，其他物体和我们距离保持不变，但方向却改编了。&lt;/p&gt;
+&lt;p&gt;为此，研究物体的坐标变换是十分有必要的。&lt;/p&gt;
+&lt;p&gt;我们之前都只是简单的把物体的&lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;轴坐标去掉，只用&lt;span class=&#34;math inline&#34;&gt;\(x,y\)&lt;/span&gt;轴坐标来画图。这导致的问题是，我们无法实现近大远小的效果，美术上也把这个称为透视原理。为此，我们还必须研究一种方法，让渲染考虑&lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;轴坐标，实现对于透视的模拟。&lt;/p&gt;
+&lt;h1 id=&#34;坐标变换&#34;&gt;坐标变换&lt;/h1&gt;
+&lt;p&gt;一般来说，我们主要用到平移、旋转、缩放，其他的如切变、镜像等并不是很常用到，暂时不做介绍。另外，我们最开始打算的就是在三维空间中运行，所以就不介绍更简单的二维情况了&lt;/p&gt;
+&lt;h2 id=&#34;缩放&#34;&gt;缩放&lt;/h2&gt;
+&lt;p&gt;从最简单的缩放讲起，如果一个点是&lt;span class=&#34;math inline&#34;&gt;\((x,y,z)\)&lt;/span&gt;，那么把他缩放&lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt;倍，就是简单的&lt;span class=&#34;math inline&#34;&gt;\((kx,ky,kz)\)&lt;/span&gt;。这实在是过于显然的结论。用矩阵实现的话，这个变换的矩阵是&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\begin{bmatrix}
+ k &amp; 0 &amp; 0\\
+ 0 &amp; k &amp; 0\\
+ 0 &amp; 0 &amp; k
+\end{bmatrix}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;当然，如果你想让各个轴上缩放比例不一样，例如&lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;轴缩放&lt;span class=&#34;math inline&#34;&gt;\(k_x\)&lt;/span&gt;倍，&lt;span class=&#34;math inline&#34;&gt;\(y\)&lt;/span&gt;轴缩放&lt;span class=&#34;math inline&#34;&gt;\(k_y\)&lt;/span&gt;倍，&lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;轴缩放&lt;span class=&#34;math inline&#34;&gt;\(k_z\)&lt;/span&gt;倍，那么&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\begin{bmatrix}
+ k_x &amp; 0 &amp; 0\\
+ 0 &amp; k_y &amp; 0\\
+ 0 &amp; 0 &amp; k_z
+\end{bmatrix}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其作用在某一点&lt;span class=&#34;math inline&#34;&gt;\((x,y,z)^T\)&lt;/span&gt;上，结果为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\begin{bmatrix}
+ k_x &amp; 0 &amp; 0\\
+ 0 &amp; k_y &amp; 0\\
+ 0 &amp; 0 &amp; k_z
+\end{bmatrix}
+\begin{bmatrix}
+ x\\
+ y\\
+ z
+\end{bmatrix}=
+\begin{bmatrix}
+ k_xx\\
+ k_yy\\
+ k_zz
+\end{bmatrix}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;写成四维（后面介绍为什么）的形式就是&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\begin{bmatrix}
+ k_x &amp; 0 &amp; 0 &amp; 0\\
+ 0 &amp; k_y &amp; 0 &amp; 0\\
+ 0 &amp; 0 &amp; k_z &amp; 0\\
+ 0 &amp; 0 &amp; 0 &amp; 1
+\end{bmatrix}
+\begin{bmatrix}
+ x\\
+ y\\
+ z\\
+ 1
+\end{bmatrix}=
+\begin{bmatrix}
+ k_xx\\
+ k_yy\\
+ k_zz\\
+ 1
+\end{bmatrix}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h2 id=&#34;平移&#34;&gt;平移&lt;/h2&gt;
+&lt;p&gt;事实上，三维矩阵是无法进行平移的，我们必须加入一维。&lt;/p&gt;
+&lt;p&gt;前面提到，我们在图形学中一般最多也就用到四维坐标，我把为什么用以及如何使用四维坐标放到本章附录里。我们先讨论如何平移。&lt;/p&gt;
+&lt;p&gt;具体而言，我们引入下面这个矩阵&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\begin{bmatrix}
+ 1 &amp; 0 &amp; 0 &amp; t_x\\
+ 0 &amp; 1 &amp; 0 &amp; t_y\\
+ 0 &amp; 0 &amp; 1 &amp; t_z\\
+ 0 &amp; 0 &amp; 0 &amp; 1
+\end{bmatrix}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;对于任意一点&lt;span class=&#34;math inline&#34;&gt;\((x,y,z,1)^T\)&lt;/span&gt;应用这个变换，得到&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\begin{bmatrix}
+ 1 &amp; 0 &amp; 0 &amp; t_x\\
+ 0 &amp; 1 &amp; 0 &amp; t_y\\
+ 0 &amp; 0 &amp; 1 &amp; t_z\\
+ 0 &amp; 0 &amp; 0 &amp; 1
+\end{bmatrix}
+\begin{bmatrix}
+ x\\
+ y\\
+ z\\
+ 1
+\end{bmatrix}=
+\begin{bmatrix}
+ x+t_x\\
+ y+t_y\\
+ z+t_z\\
+ 1
+\end{bmatrix}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;我们很自然地发现，这就是真正的平移，每个坐标都位移了&lt;span class=&#34;math inline&#34;&gt;\(t\)&lt;/span&gt;的距离。&lt;/p&gt;
+&lt;h2 id=&#34;旋转&#34;&gt;旋转&lt;/h2&gt;
+&lt;p&gt;旋转操作有很多办法，例如欧拉角，四元数等等。这次我们先讨论欧拉角，未来可能会添加上四位数（TODO）&lt;/p&gt;
+&lt;p&gt;在二维空间中，一个点绕原点逆时针旋转&lt;span class=&#34;math inline&#34;&gt;\(\phi\)&lt;/span&gt;得到的新点为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\begin{bmatrix}
+ \cos\phi &amp; -\sin\phi\\
+ \sin\phi &amp; \cos\phi
+\end{bmatrix}
+\begin{bmatrix}
+ x\\
+ y\\
+\end{bmatrix}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;在三维空间中，这个旋转就相当于点绕&lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;轴旋转，容易推出绕三个轴的旋转矩阵。&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[rotate-z(\phi)=
+\begin{bmatrix}
+cos\phi  &amp; -sin\phi &amp; 0\\
+sin\phi  &amp; cos\phi &amp; 0\\
+0  &amp; 0 &amp; 1
+\end{bmatrix}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[rotate-x(\phi)=
+\begin{bmatrix}
+1  &amp; 0 &amp; 0\\
+0  &amp; cos\phi &amp; -sin\phi\\
+0  &amp; sin\phi &amp; cos\phi
+\end{bmatrix}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[rotate-y(\phi)=
+\begin{bmatrix}
+cos\phi  &amp; 0 &amp; sin\phi\\
+0  &amp; 1 &amp; 0\\
+-sin\phi  &amp; 0 &amp; cos\phi
+\end{bmatrix}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;同样的，我们也可以很方便地将其扩展为4维矩阵。&lt;/p&gt;
+&lt;h2 id=&#34;复合变换&#34;&gt;复合变换&lt;/h2&gt;
+&lt;p&gt;我们有时会对一个点进行连续的变换，例如先把他缩放50%，再把它旋转某个角度，再把它平移。设缩放矩阵为&lt;span class=&#34;math inline&#34;&gt;\(M_1\)&lt;/span&gt;，旋转矩阵为&lt;span class=&#34;math inline&#34;&gt;\(M_2\)&lt;/span&gt;，平移矩阵为&lt;span class=&#34;math inline&#34;&gt;\(M_3\)&lt;/span&gt;，我们的点初始为&lt;span class=&#34;math inline&#34;&gt;\(P^{(0)}\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;首先进行的是缩放，那么&lt;span class=&#34;math inline&#34;&gt;\(P^{(1)}=M_1P^{(0)}\)&lt;/span&gt;，然后再进行旋转，那么&lt;span class=&#34;math inline&#34;&gt;\(P^{(2)}=M_2P^{(1)}\)&lt;/span&gt;，然后再平移，那么&lt;span class=&#34;math inline&#34;&gt;\(P^{(3)}=M_3P^{(2)}\)&lt;/span&gt;。代入展开得&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[P^{(3)} = M_3M_2M_1P^{(0)}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;这里我想指出非常明显的一点，就是变换的顺序不可以任意交换。例如，对&lt;span class=&#34;math inline&#34;&gt;\((1,0)\)&lt;/span&gt;这个点，先逆时针旋转180度，再向右平移一个单位，得到&lt;span class=&#34;math inline&#34;&gt;\((0,0)\)&lt;/span&gt;。而先平移再旋转就得到&lt;span class=&#34;math inline&#34;&gt;\((-2,0)\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;体现在矩阵上也是一样的，根据线性代数知识，我们知道，矩阵乘法有结合律，但是没有交换律。也就是例如，&lt;span class=&#34;math inline&#34;&gt;\(M_3M_2M_1P^{(0)}\)&lt;/span&gt;和&lt;span class=&#34;math inline&#34;&gt;\(M_2M_3M_1P^{(0)}\)&lt;/span&gt;，在绝大部分情况下都是不相等的。&lt;/p&gt;
+&lt;p&gt;我们计算确实是从左到右计算，但是我们观察这个式子，判断其是以什么顺序变换的，却是反过来从右到左看，先进行&lt;span class=&#34;math inline&#34;&gt;\(M_1\)&lt;/span&gt;变换，再进行&lt;span class=&#34;math inline&#34;&gt;\(M_2\)&lt;/span&gt;变换，最后再&lt;span class=&#34;math inline&#34;&gt;\(M_3\)&lt;/span&gt;变换&lt;/p&gt;
+&lt;h1 id=&#34;视角变换&#34;&gt;视角变换&lt;/h1&gt;
+&lt;p&gt;我们为什么需要变换视角？我们需要先介绍一下空间坐标系统&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 203; 
+			flex-basis: 487px&#34;
+	&gt;
+	&lt;a href=&#34;https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2%E4%B8%8E%E8%A7%86%E8%A7%92/1.png&#34; data-size=&#34;800x394&#34;&gt;
+		&lt;img src=&#34;https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2%E4%B8%8E%E8%A7%86%E8%A7%92/1.png&#34;
+			width=&#34;800&#34;
+			height=&#34;394&#34;
+			srcset=&#34;https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2%E4%B8%8E%E8%A7%86%E8%A7%92/1_hu7d6879e9124c76d2e5f3edcb61749bf4_41397_480x0_resize_box_3.png 480w, https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2%E4%B8%8E%E8%A7%86%E8%A7%92/1_hu7d6879e9124c76d2e5f3edcb61749bf4_41397_1024x0_resize_box_3.png 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;1.png&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;1.png&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;看这个图，我们一般会用到&lt;span class=&#34;math inline&#34;&gt;\(5\)&lt;/span&gt;个坐标系。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;局部空间。其指的是物体模型自己的坐标，也就是我们之前在OBJ文件里见到的那个坐标。它有自己的原点，每个不同的模型、或者相同模型的不同实例都可以有自己的原点，也就有了自己的坐标。其不需要加载到你的程序中，这个坐标就存在了。以真实世界作为类比的话，局部空间相当于你这个人的肚脐眼为原点的空间，只保存我这个人的信息。&lt;/li&gt;
+&lt;li&gt;世界空间。当你把模型加载到你的“游戏世界”，这个世界本身是有一个坐标的，以真实世界为类比，相当于宇宙的坐标系。你在这个宇宙有一个确切的坐标（如果原点确定）。这个空间存储了许多模型的信息。通过之前提到的平移、缩放、旋转矩阵，我们把物体放到世界各处。刚导入的时候，模型原点和世界原点是重叠的，所以我们只需要对局部空间的坐标应用上变换矩阵，就得到世界空间的坐标了。&lt;/li&gt;
+&lt;li&gt;观察空间。也可以叫他摄像机空间。比起局部空间，观察空间更像是把世界空间的原点和坐标轴进行位移、旋转后得到的空间，其包含了众多模型的信息。而原来世界的原点会被变换到相机的位置，坐标轴会根据相机的朝向而设定。&lt;/li&gt;
+&lt;li&gt;裁剪空间。你的摄像机并不能看到所有的东西，例如他有长宽高的限制，又例如你看不到背后的东西，再例如远处的东西太小了对你来说看不见。所以你的摄像机实际上能看到的东西只是整个观察空间中的一个很小的子集。通过投影矩阵（正交或透视投影，之后会介绍），你把能看到的东西映射到一个&lt;span class=&#34;math inline&#34;&gt;\([-1,1]^3\)&lt;/span&gt;的正方形盒子里。看不到的东西则在这个盒子外，也就是被剪裁了。&lt;/li&gt;
+&lt;li&gt;屏幕空间。这里是离散的，并且是&lt;span class=&#34;math inline&#34;&gt;\(2\)&lt;/span&gt;维的，你的屏幕（或者窗口）的分辨率是多少，屏幕空间大小就是多少。把剪裁空间里的东西真正放到屏幕上显示出来，就从剪裁空间转换到了屏幕空间。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;模型变换&#34;&gt;模型变换&lt;/h2&gt;
+&lt;p&gt;也就是图上的Model Matrix，其实就是之前将的缩放、平移、旋转矩阵，不需要再讲。这个矩阵记作&lt;span class=&#34;math inline&#34;&gt;\(M_m\)&lt;/span&gt;&lt;/p&gt;
+&lt;h2 id=&#34;视口变换&#34;&gt;视口变换&lt;/h2&gt;
+&lt;p&gt;我们先来讲最简单的视口变换，也就是图上的Viewport Transform，最后一步的矩阵。&lt;/p&gt;
+&lt;p&gt;为了统一与便利，我们在最后一步之前，所有可见物体的&lt;span class=&#34;math inline&#34;&gt;\(x,y\)&lt;/span&gt;坐标都被限制在&lt;span class=&#34;math inline&#34;&gt;\([-1, 1]\)&lt;/span&gt;这个连续范围内。但显然，我们的图片、显示屏等都是一个像素一个像素地去描述，其坐标是在&lt;span class=&#34;math inline&#34;&gt;\([0, witdh],[0,height]\)&lt;/span&gt;这个离散区间内，所以我们就需要一个变换来进行转换。&lt;/p&gt;
+&lt;p&gt;非常容易想到，先将&lt;span class=&#34;math inline&#34;&gt;\([-1, 1]\)&lt;/span&gt;平移变成&lt;span class=&#34;math inline&#34;&gt;\([0, 2]\)&lt;/span&gt;，除以&lt;span class=&#34;math inline&#34;&gt;\(2\)&lt;/span&gt;变成&lt;span class=&#34;math inline&#34;&gt;\([0,1]\)&lt;/span&gt;，再乘以宽度或高度，就有&lt;span class=&#34;math inline&#34;&gt;\([0, width]\)&lt;/span&gt;。写成矩阵形式如下&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\begin{bmatrix}
+ w &amp; 0 &amp; 0 &amp; 0\\
+ 0 &amp; h &amp; 0 &amp; 0\\
+ 0 &amp; 0 &amp; 1 &amp; 0\\
+ 0 &amp; 0 &amp; 0 &amp; 1
+\end{bmatrix}
+\begin{bmatrix}
+ 1/2 &amp; 0 &amp; 0 &amp; 0\\
+ 0 &amp; 1/2 &amp; 0 &amp; 0\\
+ 0 &amp; 0 &amp; 1 &amp; 0\\
+ 0 &amp; 0 &amp; 0 &amp; 1
+\end{bmatrix}
+\begin{bmatrix}
+ 1 &amp; 0 &amp; 0 &amp; 1\\
+ 0 &amp; 1 &amp; 0 &amp; 1\\
+ 0 &amp; 0 &amp; 1 &amp; 0\\
+ 0 &amp; 0 &amp; 0 &amp; 1
+\end{bmatrix} = 
+\begin{bmatrix}
+ w/2 &amp; 0 &amp; 0 &amp; w/2\\
+ 0 &amp; h/2 &amp; 0 &amp; h/2\\
+ 0 &amp; 0 &amp; 1 &amp; 0\\
+ 0 &amp; 0 &amp; 0 &amp; 1
+\end{bmatrix}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(w, h\)&lt;/span&gt;为图片的宽和高。我们称最后这个矩阵&lt;span class=&#34;math inline&#34;&gt;\(M_{vp}\)&lt;/span&gt;&lt;/p&gt;
+&lt;h2 id=&#34;相机变换&#34;&gt;相机变换&lt;/h2&gt;
+&lt;p&gt;即图上的View Matrix变换。相机变换的目的是，将世界坐标的原点变换到相机这里，从而方便计算物体对于相机的远近关系、遮挡关系等等。&lt;/p&gt;
+&lt;p&gt;和OpenGL保持一致，我们使用右手系，并且摄像机看向的方向是&lt;span class=&#34;math inline&#34;&gt;\(-z\)&lt;/span&gt;方向，摄像机的头顶是&lt;span class=&#34;math inline&#34;&gt;\(y\)&lt;/span&gt;方向，右边是&lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;方向，如下图。&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 130; 
+			flex-basis: 312px&#34;
+	&gt;
+	&lt;a href=&#34;https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2%E4%B8%8E%E8%A7%86%E8%A7%92/2.jpg&#34; data-size=&#34;965x742&#34;&gt;
+		&lt;img src=&#34;https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2%E4%B8%8E%E8%A7%86%E8%A7%92/2.jpg&#34;
+			width=&#34;965&#34;
+			height=&#34;742&#34;
+			srcset=&#34;https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2%E4%B8%8E%E8%A7%86%E8%A7%92/2_hu44b4b6efa158a8705db365669c8b5001_87361_480x0_resize_q75_box.jpg 480w, https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2%E4%B8%8E%E8%A7%86%E8%A7%92/2_hu44b4b6efa158a8705db365669c8b5001_87361_1024x0_resize_q75_box.jpg 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;2.jpg&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;2.jpg&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;我们可以把相机变换分为两步来看，首先是将原点平移到相机位置，或者更准确的说，是将相机的位置放置在&lt;span class=&#34;math inline&#34;&gt;\([0,0,0]^T\)&lt;/span&gt;，世界上的其他物体都平移相同的距离和方向。矩阵如下&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\begin{bmatrix}
+ 1 &amp; 0 &amp; 0 &amp; -c_x\\
+ 0 &amp; 1 &amp; 0 &amp; -c_y\\
+ 0 &amp; 0 &amp; 1 &amp; -c_z\\
+ 0 &amp; 0 &amp; 0 &amp; 1
+\end{bmatrix}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(\bm c\)&lt;/span&gt;是相机的世界坐标。&lt;/p&gt;
+&lt;p&gt;第二步是将世界坐标方向旋转到和相机的坐标方向相同。其实就是线性代数里的坐标变换。&lt;/p&gt;
+&lt;p&gt;刚才我们也说过，我们的相机看向（gaze，&lt;span class=&#34;math inline&#34;&gt;\(g\)&lt;/span&gt;）&lt;span class=&#34;math inline&#34;&gt;\(-z\)&lt;/span&gt;轴，其头上（up，&lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt;）的方向为&lt;span class=&#34;math inline&#34;&gt;\(y\)&lt;/span&gt;轴，右边（right，&lt;span class=&#34;math inline&#34;&gt;\(r\)&lt;/span&gt;）为&lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;轴。由线性代数知识，任意基向量矩阵&lt;span class=&#34;math inline&#34;&gt;\(\times\)&lt;/span&gt;某点在该基下的坐标&lt;span class=&#34;math inline&#34;&gt;\(=\)&lt;/span&gt;该点在自然基下的坐标。。那么，对于自然基的点&lt;span class=&#34;math inline&#34;&gt;\([1, 1, 1]\)&lt;/span&gt;，其相机基向量矩阵和在相机坐标系下的坐标满足&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\begin{bmatrix}
+ r_x &amp; u_x &amp; -g_x \\
+ r_y &amp; u_y &amp; -g_y \\
+ r_z &amp; u_z &amp; -g_z 
+\end{bmatrix}
+\overrightarrow{x} = 
+[1,1,1]^T
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;一般情况下，我们的&lt;span class=&#34;math inline&#34;&gt;\(\bm r, \bm u, \bm g\)&lt;/span&gt;都是单位向量。只要上式两边同乘基向量矩阵的逆矩阵，就可以计算出&lt;span class=&#34;math inline&#34;&gt;\(\bm x\)&lt;/span&gt;了。而显然，这个矩阵是正交矩阵，只需要转置即可。&lt;/p&gt;
+&lt;p&gt;综上所述，世界坐标系上的任意一点在相机坐标系下的坐标为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\begin{bmatrix}
+ r_x &amp; r_y &amp; r_z &amp; 0\\
+ u_x &amp; u_y &amp; u_z &amp; 0\\
+ -g_x &amp; -g_y &amp; -g_z &amp; 0\\
+ 0 &amp; 0 &amp; 0 &amp; 1
+\end{bmatrix}
+\begin{bmatrix}
+ 1 &amp; 0 &amp; 0 &amp; -c_x\\
+ 0 &amp; 1 &amp; 0 &amp; -c_y\\
+ 0 &amp; 0 &amp; 1 &amp; -c_z\\
+ 0 &amp; 0 &amp; 0 &amp; 1
+\end{bmatrix}
+\begin{bmatrix}
+ x\\
+ y\\
+ z\\
+ 1
+\end{bmatrix}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;合并矩阵得&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\begin{bmatrix}
+ r_x &amp; r_y &amp; r_z &amp; -c_x\\
+ u_x &amp; u_y &amp; u_z &amp; -c_y\\
+ -g_x &amp; -g_y &amp; -g_z &amp; -c_z\\
+ 0 &amp; 0 &amp; 0 &amp; 1
+\end{bmatrix}
+\begin{bmatrix}
+ x\\
+ y\\
+ z\\
+ 1
+\end{bmatrix}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;左边这个矩阵一般称为view矩阵，记作&lt;span class=&#34;math inline&#34;&gt;\(M_v\)&lt;/span&gt;&lt;/p&gt;
+&lt;h2 id=&#34;投影变换&#34;&gt;投影变换&lt;/h2&gt;
+&lt;p&gt;在倒数第二步，即Projection Matrix变换，将所有想要的点变换到标准的&lt;span class=&#34;math inline&#34;&gt;\([-1, 1]^3\)&lt;/span&gt;立方体内，而在这之外的点被裁剪掉，不再渲染和计算。&lt;/p&gt;
+&lt;p&gt;投影变换分为正交投影和透视投影两个，以blender为例&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 221; 
+			flex-basis: 531px&#34;
+	&gt;
+	&lt;a href=&#34;https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2%E4%B8%8E%E8%A7%86%E8%A7%92/4.jpg&#34; data-size=&#34;1237x559&#34;&gt;
+		&lt;img src=&#34;https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2%E4%B8%8E%E8%A7%86%E8%A7%92/4.jpg&#34;
+			width=&#34;1237&#34;
+			height=&#34;559&#34;
+			srcset=&#34;https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2%E4%B8%8E%E8%A7%86%E8%A7%92/4_hu1cf76131111eaebcc965c12bd589b1dd_133619_480x0_resize_q75_box.jpg 480w, https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2%E4%B8%8E%E8%A7%86%E8%A7%92/4_hu1cf76131111eaebcc965c12bd589b1dd_133619_1024x0_resize_q75_box.jpg 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;4.jpg&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;4.jpg&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 177; 
+			flex-basis: 425px&#34;
+	&gt;
+	&lt;a href=&#34;https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2%E4%B8%8E%E8%A7%86%E8%A7%92/3.jpg&#34; data-size=&#34;1061x598&#34;&gt;
+		&lt;img src=&#34;https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2%E4%B8%8E%E8%A7%86%E8%A7%92/3.jpg&#34;
+			width=&#34;1061&#34;
+			height=&#34;598&#34;
+			srcset=&#34;https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2%E4%B8%8E%E8%A7%86%E8%A7%92/3_hu2adb0c10195dca832dd074ea1a47d5c8_135697_480x0_resize_q75_box.jpg 480w, https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2%E4%B8%8E%E8%A7%86%E8%A7%92/3_hu2adb0c10195dca832dd074ea1a47d5c8_135697_1024x0_resize_q75_box.jpg 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;3.jpg&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;3.jpg&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;显然，上面的图片中，物体之间没有近大远小，而且地板的纹理都是平行的，此为正交投影。而下图中物体近大远小明显，地板纹理相较于延长线的远端，此为透视投影。&lt;/p&gt;
+&lt;h3 id=&#34;正交投影&#34;&gt;正交投影&lt;/h3&gt;
+&lt;p&gt;正交投影就很简单，将我们想要的一个长方体变换到标准立方体。和之前的视口变换有些相似。先将长方体中心移动到原点，再将其伸缩到标准立方体。假设长方体的前后是near和far（z轴），near&amp;gt;far（记住相机指向&lt;span class=&#34;math inline&#34;&gt;\(-z\)&lt;/span&gt;轴）。左右是left和right（x轴），right&amp;gt;left，上下是top和bottom，top&amp;gt;bottom（y轴）。则变换矩阵如下&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\begin{bmatrix}
+ \dfrac{2}{r-l} &amp; 0 &amp; 0 &amp; 0\\
+ 0 &amp; \dfrac{2}{t-b} &amp; 0 &amp; 0\\
+ 0 &amp; 0 &amp; \dfrac{2}{n-f} &amp; 0\\
+ 0 &amp; 0 &amp; 0 &amp; 1
+\end{bmatrix}
+\begin{bmatrix}
+ 1 &amp; 0 &amp; 0 &amp; -\dfrac{r+l}{2}\\
+ 0 &amp; 1 &amp; 0 &amp; -\dfrac{t+b}{2}\\
+ 0 &amp; 0 &amp; 1 &amp; -\dfrac{n+f}{2}\\
+ 0 &amp; 0 &amp; 0 &amp; 1
+\end{bmatrix}=
+\begin{bmatrix}
+ \dfrac{2}{r-l} &amp; 0 &amp; 0 &amp; -\dfrac{r+l}{r-l}\\
+ 0 &amp; \dfrac{2}{t-b} &amp; 0 &amp; -\dfrac{t+b}{t-b}\\
+ 0 &amp; 0 &amp; \dfrac{2}{n-f} &amp; -\dfrac{n+f}{n-f}\\
+ 0 &amp; 0 &amp; 0 &amp; 1
+\end{bmatrix}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;记作&lt;span class=&#34;math inline&#34;&gt;\(M_o\)&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;透视投影&#34;&gt;透视投影&lt;/h3&gt;
+&lt;p&gt;透视投影的作用用一张图来表示&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 216; 
+			flex-basis: 518px&#34;
+	&gt;
+	&lt;a href=&#34;https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2%E4%B8%8E%E8%A7%86%E8%A7%92/5.jpg&#34; data-size=&#34;670x310&#34;&gt;
+		&lt;img src=&#34;https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2%E4%B8%8E%E8%A7%86%E8%A7%92/5.jpg&#34;
+			width=&#34;670&#34;
+			height=&#34;310&#34;
+			srcset=&#34;https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2%E4%B8%8E%E8%A7%86%E8%A7%92/5_hu56610a13d74e28ab1bde8d12bee143fe_25569_480x0_resize_q75_box.jpg 480w, https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2%E4%B8%8E%E8%A7%86%E8%A7%92/5_hu56610a13d74e28ab1bde8d12bee143fe_25569_1024x0_resize_q75_box.jpg 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;5.jpg&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;5.jpg&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;左图中的线可以看作是相机镜头（理想状态下为一个点）接收的光线。可以看到，穿过前面的小矩形（near平面）的光线，随着距离的增长覆盖到了更大的一个矩形（far平面）。而我们的任务，就是把这一个“平截头体”“拍扁”为右侧的长方体。&lt;/p&gt;
+&lt;p&gt;这个长方体有如下性质：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;near平面上的点坐标在投影前后不变&lt;/li&gt;
+&lt;li&gt;far平面上的点的&lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;坐标在投影前后不变&lt;/li&gt;
+&lt;li&gt;far平面的中心在投影后仍然是中心&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;以二维为例，作图如下&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 218; 
+			flex-basis: 523px&#34;
+	&gt;
+	&lt;a href=&#34;https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2%E4%B8%8E%E8%A7%86%E8%A7%92/6.jpg&#34; data-size=&#34;1115x511&#34;&gt;
+		&lt;img src=&#34;https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2%E4%B8%8E%E8%A7%86%E8%A7%92/6.jpg&#34;
+			width=&#34;1115&#34;
+			height=&#34;511&#34;
+			srcset=&#34;https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2%E4%B8%8E%E8%A7%86%E8%A7%92/6_hufc31e8b5a193f1da8b07dee7a63a265f_35791_480x0_resize_q75_box.jpg 480w, https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2%E4%B8%8E%E8%A7%86%E8%A7%92/6_hufc31e8b5a193f1da8b07dee7a63a265f_35791_1024x0_resize_q75_box.jpg 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;6.jpg&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;6.jpg&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;如图，假设我们要对点&lt;span class=&#34;math inline&#34;&gt;\((y_1, z_1)\)&lt;/span&gt;进行投影，最终其&lt;span class=&#34;math inline&#34;&gt;\(y\)&lt;/span&gt;轴坐标会变为&lt;span class=&#34;math inline&#34;&gt;\(y_2\)&lt;/span&gt;，由相似三角形知识可知&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[y_2 = n\dfrac{y_1}{z_1}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;同理可得，三维中，除了&lt;span class=&#34;math inline&#34;&gt;\(y\)&lt;/span&gt;的变换，也有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[x_2 = n\dfrac{x_1}{z_1}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;注意，我们的性质中没有提到截头体内部&lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;的映射性质，目前还无法直接得到。&lt;/p&gt;
+&lt;p&gt;根据齐次坐标的性质，我们可以将我们的新点定义为（老点为&lt;span class=&#34;math inline&#34;&gt;\([x,y,z,1]^T\)&lt;/span&gt;）&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[[nx, ny, ??, z]^T = [nx/z,ny/z,??,1]^T
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;将投影变换矩阵写出来如下&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\begin{bmatrix}
+ n &amp; 0 &amp; 0 &amp; 0\\
+ 0 &amp; n &amp; 0 &amp; 0\\
+ ? &amp; ? &amp; ? &amp; ?\\
+ 0 &amp; 0 &amp; 1 &amp; 0
+\end{bmatrix}
+\begin{bmatrix}
+x\\
+y\\
+z\\
+1
+\end{bmatrix}=
+\begin{bmatrix}
+nx\\
+ny\\
+?\\
+z
+\end{bmatrix}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;因为近平面上的点&lt;span class=&#34;math inline&#34;&gt;\([x,y,n,1]^T\)&lt;/span&gt;在投影前后坐标不变，又因为齐次坐标的性质&lt;span class=&#34;math inline&#34;&gt;\([x,y,n,1]^T=[nx,ny,n^2,n]^T\)&lt;/span&gt;，所以有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\begin{bmatrix}
+ n &amp; 0 &amp; 0 &amp; 0\\
+ 0 &amp; n &amp; 0 &amp; 0\\
+ A &amp; B &amp; C &amp; D\\
+ 0 &amp; 0 &amp; 1 &amp; 0
+\end{bmatrix}
+\begin{bmatrix}
+x\\
+y\\
+n\\
+1
+\end{bmatrix}=
+\begin{bmatrix}
+nx\\
+ny\\
+Ax+By+Cn+D\\
+n
+\end{bmatrix}=
+\begin{bmatrix}
+nx\\
+ny\\
+n^2\\
+n
+\end{bmatrix}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;所以有&lt;span class=&#34;math inline&#34;&gt;\(Ax+By+Cn+D=n^2\)&lt;/span&gt;，即&lt;span class=&#34;math inline&#34;&gt;\(A=0, B=0, Cn+D=n^2\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;又因为远平面中心点的坐标变换前后不变，所以有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\begin{bmatrix}
+ n &amp; 0 &amp; 0 &amp; 0\\
+ 0 &amp; n &amp; 0 &amp; 0\\
+ 0 &amp; 0 &amp; C &amp; D\\
+ 0 &amp; 0 &amp; 1 &amp; 0
+\end{bmatrix}
+\begin{bmatrix}
+0\\
+0\\
+f\\
+1
+\end{bmatrix}=
+\begin{bmatrix}
+0\\
+0\\
+Cf+D\\
+f
+\end{bmatrix}=
+\begin{bmatrix}
+0\\
+0\\
+f^2\\
+f
+\end{bmatrix}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;所以有&lt;span class=&#34;math inline&#34;&gt;\(Cf+D=f^2\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;解得&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[C=n+f, D=-nf
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;综上所述，透视投影&lt;span class=&#34;math inline&#34;&gt;\(M_p\)&lt;/span&gt;矩阵为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\begin{bmatrix}
+ n &amp; 0 &amp; 0 &amp; 0\\
+ 0 &amp; n &amp; 0 &amp; 0\\
+ 0 &amp; 0 &amp; n+f &amp; -nf\\
+ 0 &amp; 0 &amp; 1 &amp; 0
+\end{bmatrix}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;注意，我们用点&lt;span class=&#34;math inline&#34;&gt;\([x,y,z,1]^T\)&lt;/span&gt;去算之后，得到的是&lt;span class=&#34;math inline&#34;&gt;\([nx,ny,(n+f)z-nf,z]^T\)&lt;/span&gt;，这并不是我们想要的数值上的结果，我们还要进行一次除以&lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;（也被称作透视除法），得到&lt;span class=&#34;math inline&#34;&gt;\([nx/z,ny/z,n+f-nf/z,1]^T\)&lt;/span&gt;，才是我们想要的数值结果。&lt;/p&gt;
+&lt;h3 id=&#34;综合&#34;&gt;综合&lt;/h3&gt;
+&lt;p&gt;我们可以用透视投影将截头体变成长方体，而用正交投影则可以将长方体变为标准立方体。显而易见的，要完成整个过程，我们只需要先透视再正交即可：&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[M_oM_p
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;有些教材里会直接将其乘在一起作为&lt;span class=&#34;math inline&#34;&gt;\(M_p\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\begin{bmatrix}
+ \dfrac{2n}{r-l} &amp; 0 &amp;  \dfrac{l+r}{l-r} &amp; 0\\
+ 0 &amp; \dfrac{2n}{t-b} &amp; \dfrac{b+t}{b-t} &amp; 0\\
+ 0 &amp; 0 &amp;  \dfrac{f+n}{n-f} &amp;  \dfrac{2fn}{f-n}\\
+ 0 &amp; 0 &amp; 1 &amp; 0
+\end{bmatrix}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;有些地方会比较喜欢使用无穷远的far平面，此时矩阵变为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\begin{bmatrix}
+ \dfrac{2n}{r-l} &amp; 0 &amp;  \dfrac{l+r}{l-r} &amp; 0\\
+ 0 &amp; \dfrac{2n}{t-b} &amp; \dfrac{b+t}{b-t} &amp; 0\\
+ 0 &amp; 0 &amp;  -1 &amp;  2\\
+ 0 &amp; 0 &amp; 1 &amp; 0
+\end{bmatrix}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;fov与宽高比&#34;&gt;FOV与宽高比&lt;/h3&gt;
+&lt;p&gt;我们确实是可以直接控制&lt;span class=&#34;math inline&#34;&gt;\(r,l,t,b\)&lt;/span&gt;四个值来控制near平面的大小，但是游戏中我们一般是通过控制fov和宽高比来控制视角范围的。现在我们来介绍一下二者如何转化。&lt;/p&gt;
+&lt;p&gt;首先，我们需要将near平面的中心对准相机的镜头方向，这意味着&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[l=-r
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[b=-t
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;同时，这也就意味着其和宽高比的关系为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\dfrac{w}{h} = \dfrac{r}{t}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 189; 
+			flex-basis: 455px&#34;
+	&gt;
+	&lt;a href=&#34;https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2%E4%B8%8E%E8%A7%86%E8%A7%92/7.jpg&#34; data-size=&#34;625x329&#34;&gt;
+		&lt;img src=&#34;https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2%E4%B8%8E%E8%A7%86%E8%A7%92/7.jpg&#34;
+			width=&#34;625&#34;
+			height=&#34;329&#34;
+			srcset=&#34;https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2%E4%B8%8E%E8%A7%86%E8%A7%92/7_huaa4c89d9ea7d3dc0e33e455842cb7f32_17179_480x0_resize_q75_box.jpg 480w, https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2%E4%B8%8E%E8%A7%86%E8%A7%92/7_huaa4c89d9ea7d3dc0e33e455842cb7f32_17179_1024x0_resize_q75_box.jpg 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;7.jpg&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;7.jpg&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;如上图，当&lt;span class=&#34;math inline&#34;&gt;\(n, w, h\)&lt;/span&gt;确定之后，我们就可以通过控制&lt;span class=&#34;math inline&#34;&gt;\(\theta\)&lt;/span&gt;来控制&lt;span class=&#34;math inline&#34;&gt;\(r\)&lt;/span&gt;和&lt;span class=&#34;math inline&#34;&gt;\(t\)&lt;/span&gt;。这里的&lt;span class=&#34;math inline&#34;&gt;\(\theta\)&lt;/span&gt;就是FOV。我们这里讨论的是纵向FOV，也有些地方会用横向的。显然，这几个量的关系为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\tan\dfrac{\theta}{2} = \dfrac{t}{|n|}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;只要我们知道&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;和&lt;span class=&#34;math inline&#34;&gt;\(\theta\)&lt;/span&gt;，那么&lt;span class=&#34;math inline&#34;&gt;\(t\)&lt;/span&gt;就可以推知，从而&lt;span class=&#34;math inline&#34;&gt;\(r\)&lt;/span&gt;也可以根据宽高比推知。&lt;/p&gt;
+&lt;h2 id=&#34;视角变换流水线&#34;&gt;视角变换流水线&lt;/h2&gt;
+&lt;p&gt;从最开始的图可以看出来，我们需要依次经历模型变换、相机变换、投影变换、视口变换，才能得到最终的屏幕坐标，写成如下形式，对于世界坐标的点&lt;span class=&#34;math inline&#34;&gt;\(p\)&lt;/span&gt;，其屏幕坐标&lt;span class=&#34;math inline&#34;&gt;\(p&#39;\)&lt;/span&gt;有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[p&#39; = M_{vp}M_oM_pM_vM_mp
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h1 id=&#34;代码&#34;&gt;代码&lt;/h1&gt;
+&lt;p&gt;TODO&lt;/p&gt;
+&lt;h1 id=&#34;附录&#34;&gt;附录&lt;/h1&gt;
+&lt;p&gt;为什么要用四维坐标？其实就是因为平移他不是线性变换，三维的矩阵无法处理三维的平移。但是我们可以通过多加一维的方式来引入平移运算。&lt;/p&gt;
+&lt;p&gt;具体而言，我们定义三维点&lt;span class=&#34;math inline&#34;&gt;\((x,y,z)^T\)&lt;/span&gt;扩充为四维点&lt;span class=&#34;math inline&#34;&gt;\((x,y,z,1)^T\)&lt;/span&gt;，定义三维向量&lt;span class=&#34;math inline&#34;&gt;\((x,y,z)^T\)&lt;/span&gt;扩充为四维向量&lt;span class=&#34;math inline&#34;&gt;\((x,y,z,0)^T\)&lt;/span&gt;。特别的，对于任意一个四维坐标&lt;span class=&#34;math inline&#34;&gt;\((x,y,z,w)^T\)&lt;/span&gt;，如果&lt;span class=&#34;math inline&#34;&gt;\(w=0\)&lt;/span&gt;，则其代表&lt;span class=&#34;math inline&#34;&gt;\((x,y,z,0)^T\)&lt;/span&gt;这个向量，如果&lt;span class=&#34;math inline&#34;&gt;\(w\neq 0\)&lt;/span&gt;，则其代表&lt;span class=&#34;math inline&#34;&gt;\((x/w,y/w,z/w,1)^T\)&lt;/span&gt;这个点。&lt;/p&gt;
+&lt;p&gt;这样做的好处是，如果两个点相减，得到的第四维为&lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt;，也就得到了一个向量。同理可得两个向量相减还是向量，点减去向量相当于对点进行平移，向量减去点没有意义（除非你理解为点减去向量的相反数）。&lt;/p&gt;
+&lt;p&gt;还有一个好处，对于任意的平移变换&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\begin{bmatrix}
+ 1 &amp; 0 &amp; 0 &amp; t_x\\
+ 0 &amp; 1 &amp; 0 &amp; t_y\\
+ 0 &amp; 0 &amp; 1 &amp; t_z\\
+ 0 &amp; 0 &amp; 0 &amp; 1
+\end{bmatrix}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其作用在点上时，点正确的进行了平移&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\begin{bmatrix}
+ 1 &amp; 0 &amp; 0 &amp; t_x\\
+ 0 &amp; 1 &amp; 0 &amp; t_y\\
+ 0 &amp; 0 &amp; 1 &amp; t_z\\
+ 0 &amp; 0 &amp; 0 &amp; 1
+\end{bmatrix}
+\begin{bmatrix}
+ x\\
+ y\\
+ z\\
+ 1
+\end{bmatrix}=
+\begin{bmatrix}
+ x+t_x\\
+ y+t_y\\
+ z+t_z\\
+ 1
+\end{bmatrix}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;而其作用在向量上时，并不会平移向量。即&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\begin{bmatrix}
+ 1 &amp; 0 &amp; 0 &amp; t_x\\
+ 0 &amp; 1 &amp; 0 &amp; t_y\\
+ 0 &amp; 0 &amp; 1 &amp; t_z\\
+ 0 &amp; 0 &amp; 0 &amp; 1
+\end{bmatrix}
+\begin{bmatrix}
+ x\\
+ y\\
+ z\\
+ 0
+\end{bmatrix}=
+\begin{bmatrix}
+ x\\
+ y\\
+ z\\
+ 0
+\end{bmatrix}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;这就是数学意义上的向量，永远从原点开始。而与物理中有时讨论的矢量不同，物理中矢量有时可以让起始点在任意地方。&lt;/p&gt;
+&lt;p&gt;另外，你可能需要经常检查你的点的第四维坐标是否为1，如果不为1，可能会产生各种奇怪的问题。在某些变换矩阵作用后，第四维可能就不为1了，并且你可能不容易发现这个问题。&lt;/p&gt;
+&lt;h1 id=&#34;使用例&#34;&gt;使用例&lt;/h1&gt;
+&lt;p&gt;TODO&lt;/p&gt;
+</description>
+        </item>
+        <item>
         <title>AppProp: All-Pairs Appearance-Space Edit Propagation论文精读与复现</title>
         <link>https://kegalas.top/p/appprop-all-pairs-appearance-space-edit-propagation%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/</link>
         <pubDate>Sat, 07 Sep 2024 15:19:52 +0800</pubDate>
