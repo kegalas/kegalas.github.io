@@ -12,7 +12,8 @@
         <pubDate>Sun, 22 Sep 2024 22:53:54 +0800</pubDate>
         
         <guid>https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2%E4%B8%8E%E8%A7%86%E8%A7%92/</guid>
-        <description>&lt;img src="https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2%E4%B8%8E%E8%A7%86%E8%A7%92/cover.jpg" alt="Featured image of post 从零开始的软渲染器 坐标变换与视角" /&gt;&lt;p&gt;我们的模型并不会停留在原地不动，比如当我们在游戏中前后左右移动时，其他物体相对于我们是在平移的。又比如在游戏中移动鼠标看向不同的地方，其他物体和我们距离保持不变，但方向却改编了。&lt;/p&gt;
+        <description>&lt;img src="https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2%E4%B8%8E%E8%A7%86%E8%A7%92/cover.jpg" alt="Featured image of post 从零开始的软渲染器 坐标变换与视角" /&gt;&lt;p&gt;&lt;u&gt;&lt;strong&gt;&lt;a class=&#34;link&#34; href=&#34;../%e4%bb%8e%e9%9b%b6%e5%bc%80%e5%a7%8b%e7%9a%84%e8%bd%af%e6%b8%b2%e6%9f%93%e5%99%a8-%e5%af%bc%e8%88%aa/&#34; &gt;导航页面&lt;/a&gt;&lt;/strong&gt;&lt;/u&gt;&lt;/p&gt;
+&lt;p&gt;我们的模型并不会停留在原地不动，比如当我们在游戏中前后左右移动时，其他物体相对于我们是在平移的。又比如在游戏中移动鼠标看向不同的地方，其他物体和我们距离保持不变，但方向却改编了。&lt;/p&gt;
 &lt;p&gt;为此，研究物体的坐标变换是十分有必要的。&lt;/p&gt;
 &lt;p&gt;我们之前都只是简单的把物体的&lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;轴坐标去掉，只用&lt;span class=&#34;math inline&#34;&gt;\(x,y\)&lt;/span&gt;轴坐标来画图。这导致的问题是，我们无法实现近大远小的效果，美术上也把这个称为透视原理。为此，我们还必须研究一种方法，让渲染考虑&lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;轴坐标，实现对于透视的模拟。&lt;/p&gt;
 &lt;h1 id=&#34;坐标变换&#34;&gt;坐标变换&lt;/h1&gt;
@@ -506,7 +507,7 @@ f
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\begin{bmatrix}
  \dfrac{2n}{r-l} &amp; 0 &amp;  \dfrac{l+r}{l-r} &amp; 0\\
  0 &amp; \dfrac{2n}{t-b} &amp; \dfrac{b+t}{b-t} &amp; 0\\
- 0 &amp; 0 &amp;  -1 &amp;  2\\
+ 0 &amp; 0 &amp;  -1 &amp;  2n\\
  0 &amp; 0 &amp; 1 &amp; 0
 \end{bmatrix}
 \]&lt;/span&gt;&lt;/p&gt;
@@ -543,12 +544,69 @@ f
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\tan\dfrac{\theta}{2} = \dfrac{t}{|n|}
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;只要我们知道&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;和&lt;span class=&#34;math inline&#34;&gt;\(\theta\)&lt;/span&gt;，那么&lt;span class=&#34;math inline&#34;&gt;\(t\)&lt;/span&gt;就可以推知，从而&lt;span class=&#34;math inline&#34;&gt;\(r\)&lt;/span&gt;也可以根据宽高比推知。&lt;/p&gt;
+&lt;h3 id=&#34;注意事项&#34;&gt;注意事项&lt;/h3&gt;
+&lt;p&gt;为了省事，直接使用fov和宽高比的那一套来算&lt;span class=&#34;math inline&#34;&gt;\(M_oM_p\)&lt;/span&gt;可能是更好的选择，否则我们得要根据near平面和宽高比手动设置r,l,t,b，设置的不对会导致问题。比如，我们设置&lt;span class=&#34;math inline&#34;&gt;\(r=-l=1, t=-b=1, n=-0.01, f=-1000\)&lt;/span&gt;这样的数值，看上去可能还挺正常的，但是问题是，其蕴含着纵向fov接近&lt;span class=&#34;math inline&#34;&gt;\(180\degree\)&lt;/span&gt;的事实。&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 69; 
+			flex-basis: 166px&#34;
+	&gt;
+	&lt;a href=&#34;https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2%E4%B8%8E%E8%A7%86%E8%A7%92/8.jpg&#34; data-size=&#34;423x611&#34;&gt;
+		&lt;img src=&#34;https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2%E4%B8%8E%E8%A7%86%E8%A7%92/8.jpg&#34;
+			width=&#34;423&#34;
+			height=&#34;611&#34;
+			srcset=&#34;https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2%E4%B8%8E%E8%A7%86%E8%A7%92/8_hucb8ab1db49b863064f33e608f61990f6_11210_480x0_resize_q75_box.jpg 480w, https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2%E4%B8%8E%E8%A7%86%E8%A7%92/8_hucb8ab1db49b863064f33e608f61990f6_11210_1024x0_resize_q75_box.jpg 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;8.jpg&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;8.jpg&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;假设相机面前3m有个东西（尺寸在1m左右），那么在这种fov的投影下，其会被投影到999米处的距离（取决于far平面有多远，可以手算一下验证），而大小只有几个像素，在图片上甚至看不出来。&lt;/p&gt;
+&lt;p&gt;实际上我们这里设置&lt;span class=&#34;math inline&#34;&gt;\(r=-l=0.01, t=-b=0.01\)&lt;/span&gt;是合理的，此时横向纵向fov都是90度。物体也会正确地出现在图片中。&lt;/p&gt;
+&lt;h3 id=&#34;opengl中的透视投影&#34;&gt;OpenGL中的透视投影&lt;/h3&gt;
+&lt;p&gt;OpenGL中，会使用&lt;span class=&#34;math inline&#34;&gt;\(&gt;0\)&lt;/span&gt;的near和far作为透视矩阵函数的参数，此时，矩阵稍微变化，有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\begin{bmatrix}
+ \dfrac{2|n|}{r-l} &amp; 0 &amp;  \dfrac{r+l}{r-l} &amp; 0\\
+ 0 &amp; \dfrac{2|n|}{t-b} &amp; \dfrac{t+b}{t-b} &amp; 0\\
+ 0 &amp; 0 &amp;  \dfrac{|n|+|f|}{|n|-|f|} &amp;  \dfrac{2|f||n|}{|f|-|n|}\\
+ 0 &amp; 0 &amp; -1 &amp; 0
+\end{bmatrix}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;通过计算可以发现这与我们的矩阵刚好是&lt;span class=&#34;math inline&#34;&gt;\(-1\)&lt;/span&gt;倍关系。&lt;/p&gt;
 &lt;h2 id=&#34;视角变换流水线&#34;&gt;视角变换流水线&lt;/h2&gt;
 &lt;p&gt;从最开始的图可以看出来，我们需要依次经历模型变换、相机变换、投影变换、视口变换，才能得到最终的屏幕坐标，写成如下形式，对于世界坐标的点&lt;span class=&#34;math inline&#34;&gt;\(p\)&lt;/span&gt;，其屏幕坐标&lt;span class=&#34;math inline&#34;&gt;\(p&#39;\)&lt;/span&gt;有&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[p&#39; = M_{vp}M_oM_pM_vM_mp
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;h1 id=&#34;代码&#34;&gt;代码&lt;/h1&gt;
-&lt;p&gt;TODO&lt;/p&gt;
+&lt;p&gt;所有的矩阵计算代码都可以在 &lt;strong&gt;&lt;a class=&#34;link&#34; href=&#34;https://github.com/kegalas/oar/blob/main/tutorial/chapter6/src/geometry.cpp&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;这里&lt;/a&gt;&lt;/strong&gt; 找到没有什么需要强调的地方，都是填数据而已。&lt;/p&gt;
+&lt;h1 id=&#34;使用例&#34;&gt;使用例&lt;/h1&gt;
+&lt;p&gt;我们继续使用teapot模型，代码见 &lt;strong&gt;&lt;a class=&#34;link&#34; href=&#34;https://github.com/kegalas/oar/blob/main/tutorial/chapter6/src/main.cpp&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;这里&lt;/a&gt;&lt;/strong&gt;  。&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 100; 
+			flex-basis: 240px&#34;
+	&gt;
+	&lt;a href=&#34;https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2%E4%B8%8E%E8%A7%86%E8%A7%92/9.jpg&#34; data-size=&#34;965x965&#34;&gt;
+		&lt;img src=&#34;https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2%E4%B8%8E%E8%A7%86%E8%A7%92/9.jpg&#34;
+			width=&#34;965&#34;
+			height=&#34;965&#34;
+			srcset=&#34;https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2%E4%B8%8E%E8%A7%86%E8%A7%92/9_hu54bfecedb7595eb7e441a463a4147c33_17725_480x0_resize_q75_box.jpg 480w, https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2%E4%B8%8E%E8%A7%86%E8%A7%92/9_hu54bfecedb7595eb7e441a463a4147c33_17725_1024x0_resize_q75_box.jpg 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;9.jpg&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;9.jpg&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;在这里，我们从远到近地（我们还没有zbuffer）画了8个teapot。当然，效果不够好，这也是因为我们没用使用zbuffer，导致部分结构错位，从而图片很奇怪。在下一部分我们将会介绍用于判断物体遮挡关系的zbuffer。&lt;/p&gt;
 &lt;h1 id=&#34;附录&#34;&gt;附录&lt;/h1&gt;
 &lt;p&gt;为什么要用四维坐标？其实就是因为平移他不是线性变换，三维的矩阵无法处理三维的平移。但是我们可以通过多加一维的方式来引入平移运算。&lt;/p&gt;
 &lt;p&gt;具体而言，我们定义三维点&lt;span class=&#34;math inline&#34;&gt;\((x,y,z)^T\)&lt;/span&gt;扩充为四维点&lt;span class=&#34;math inline&#34;&gt;\((x,y,z,1)^T\)&lt;/span&gt;，定义三维向量&lt;span class=&#34;math inline&#34;&gt;\((x,y,z)^T\)&lt;/span&gt;扩充为四维向量&lt;span class=&#34;math inline&#34;&gt;\((x,y,z,0)^T\)&lt;/span&gt;。特别的，对于任意一个四维坐标&lt;span class=&#34;math inline&#34;&gt;\((x,y,z,w)^T\)&lt;/span&gt;，如果&lt;span class=&#34;math inline&#34;&gt;\(w=0\)&lt;/span&gt;，则其代表&lt;span class=&#34;math inline&#34;&gt;\((x,y,z,0)^T\)&lt;/span&gt;这个向量，如果&lt;span class=&#34;math inline&#34;&gt;\(w\neq 0\)&lt;/span&gt;，则其代表&lt;span class=&#34;math inline&#34;&gt;\((x/w,y/w,z/w,1)^T\)&lt;/span&gt;这个点。&lt;/p&gt;
@@ -603,8 +661,6 @@ f
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;这就是数学意义上的向量，永远从原点开始。而与物理中有时讨论的矢量不同，物理中矢量有时可以让起始点在任意地方。&lt;/p&gt;
 &lt;p&gt;另外，你可能需要经常检查你的点的第四维坐标是否为1，如果不为1，可能会产生各种奇怪的问题。在某些变换矩阵作用后，第四维可能就不为1了，并且你可能不容易发现这个问题。&lt;/p&gt;
-&lt;h1 id=&#34;使用例&#34;&gt;使用例&lt;/h1&gt;
-&lt;p&gt;TODO&lt;/p&gt;
 </description>
         </item>
         <item>
@@ -4840,8 +4896,8 @@ for x = x0 to x1 do
 &lt;p&gt;&lt;u&gt;&lt;strong&gt;&lt;a class=&#34;link&#34; href=&#34;../%e4%bb%8e%e9%9b%b6%e5%bc%80%e5%a7%8b%e7%9a%84%e8%bd%af%e6%b8%b2%e6%9f%93%e5%99%a8-%e7%ba%bf%e6%ae%b5%e5%92%8c%e4%b8%89%e8%a7%92%e5%bd%a2%e7%9a%84%e5%85%89%e6%a0%85%e5%8c%96&#34; &gt;3. 从零开始的软渲染器-线段和三角形的光栅化&lt;/a&gt;&lt;/strong&gt;&lt;/u&gt;&lt;/p&gt;
 &lt;p&gt;&lt;u&gt;&lt;strong&gt;&lt;a class=&#34;link&#34; href=&#34;../%e4%bb%8e%e9%9b%b6%e5%bc%80%e5%a7%8b%e7%9a%84%e8%bd%af%e6%b8%b2%e6%9f%93%e5%99%a8-%e6%a8%a1%e5%9e%8b%e5%ba%93&#34; &gt;4. 从零开始的软渲染器-模型库&lt;/a&gt;&lt;/strong&gt;&lt;/u&gt;&lt;/p&gt;
 &lt;p&gt;&lt;u&gt;&lt;strong&gt;&lt;a class=&#34;link&#34; href=&#34;../%e4%bb%8e%e9%9b%b6%e5%bc%80%e5%a7%8b%e7%9a%84%e8%bd%af%e6%b8%b2%e6%9f%93%e5%99%a8-%e5%85%89%e7%85%a7%e5%88%9d%e6%ad%a5&#34; &gt;5. 从零开始的软渲染器-光照初步&lt;/a&gt;&lt;/strong&gt;&lt;/u&gt;&lt;/p&gt;
-&lt;p&gt;TODO:&lt;/p&gt;
 &lt;p&gt;&lt;u&gt;&lt;strong&gt;&lt;a class=&#34;link&#34; href=&#34;../%e4%bb%8e%e9%9b%b6%e5%bc%80%e5%a7%8b%e7%9a%84%e8%bd%af%e6%b8%b2%e6%9f%93%e5%99%a8-%e5%9d%90%e6%a0%87%e5%8f%98%e6%8d%a2%e4%b8%8e%e8%a7%86%e8%a7%92&#34; &gt;6. 从零开始的软渲染器-坐标变换与视角&lt;/a&gt;&lt;/strong&gt;&lt;/u&gt;&lt;/p&gt;
+&lt;p&gt;TODO:&lt;/p&gt;
 &lt;p&gt;&lt;u&gt;&lt;strong&gt;&lt;a class=&#34;link&#34; href=&#34;../%e4%bb%8e%e9%9b%b6%e5%bc%80%e5%a7%8b%e7%9a%84%e8%bd%af%e6%b8%b2%e6%9f%93%e5%99%a8-YAML%e8%ae%b0%e5%bd%95%e5%8f%82%e6%95%b0&#34; &gt;番外1. 从零开始的软渲染器-YAML记录参数&lt;/a&gt;&lt;/strong&gt;&lt;/u&gt;&lt;/p&gt;
 &lt;p&gt;&lt;u&gt;&lt;strong&gt;&lt;a class=&#34;link&#34; href=&#34;../%e4%bb%8e%e9%9b%b6%e5%bc%80%e5%a7%8b%e7%9a%84%e8%bd%af%e6%b8%b2%e6%9f%93%e5%99%a8-z-buffer&#34; &gt;7. 从零开始的软渲染器-Z-Buffer&lt;/a&gt;&lt;/strong&gt;&lt;/u&gt;&lt;/p&gt;
 &lt;p&gt;&lt;u&gt;&lt;strong&gt;&lt;a class=&#34;link&#34; href=&#34;../%e4%bb%8e%e9%9b%b6%e5%bc%80%e5%a7%8b%e7%9a%84%e8%bd%af%e6%b8%b2%e6%9f%93%e5%99%a8-%e5%9b%be%e5%bd%a2%e6%b8%b2%e6%9f%93%e7%ae%a1%e7%ba%bf&#34; &gt;8. 从零开始的软渲染器-图形渲染管线&lt;/a&gt;&lt;/strong&gt;&lt;/u&gt;&lt;/p&gt;
