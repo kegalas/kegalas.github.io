@@ -227,6 +227,71 @@
 <p>直接加一起即可</p>
 <p><span class="math display">\[L = L_a+L_d+L_s
 \]</span></p>
+<h1 id="flat着色gouraud着色和phong着色">Flat着色、Gouraud着色和Phong着色</h1>
+<p>我们有三种着色方法，这三种方法对应了不同的使用“法向量”的粒度。</p>
+<h2 id="flat着色">Flat着色</h2>
+<p>对于任意三角面，我们将整个三角面的光照亮度设定为同样的值，而其在计算时使用的法向量为三角形的法向量（可以使用叉积得到）。如下图</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 87; 
+			flex-basis: 210px"
+	>
+	<a href="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%85%89%E7%85%A7%E5%88%9D%E6%AD%A5/5.jpg" data-size="400x455">
+		<img src="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%85%89%E7%85%A7%E5%88%9D%E6%AD%A5/5.jpg"
+			width="400"
+			height="455"
+			srcset="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%85%89%E7%85%A7%E5%88%9D%E6%AD%A5/5_hu2251a1ecb1614beb90571cef23e1cac2_11183_480x0_resize_q75_box.jpg 480w, /p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%85%89%E7%85%A7%E5%88%9D%E6%AD%A5/5_hu2251a1ecb1614beb90571cef23e1cac2_11183_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="5.jpg">
+	</a>
+	
+	<figcaption>5.jpg</figcaption>
+	
+</figure></p>
+<h2 id="gouraud着色">Gouraud着色</h2>
+<p>对于任意三角形面，我们分别使用三个顶点的法向量来计算三个顶点的光照亮度，而三角形内部的亮度则用（重心）插值得到。这里的法向量一般会从模型文件中给出。</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 70; 
+			flex-basis: 169px"
+	>
+	<a href="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%85%89%E7%85%A7%E5%88%9D%E6%AD%A5/6.jpg" data-size="378x535">
+		<img src="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%85%89%E7%85%A7%E5%88%9D%E6%AD%A5/6.jpg"
+			width="378"
+			height="535"
+			srcset="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%85%89%E7%85%A7%E5%88%9D%E6%AD%A5/6_hu59065a847d179937222045e7f1f018f0_14415_480x0_resize_q75_box.jpg 480w, /p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%85%89%E7%85%A7%E5%88%9D%E6%AD%A5/6_hu59065a847d179937222045e7f1f018f0_14415_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="6.jpg">
+	</a>
+	
+	<figcaption>6.jpg</figcaption>
+	
+</figure></p>
+<h2 id="phong着色">Phong着色</h2>
+<p>对于任意三角形面，我们从模型文件中已知三个顶点的法向量，之后（重心）插值计算出内部点的法向量。再用这些法向量去计算出所有的光照亮度值。</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 81; 
+			flex-basis: 195px"
+	>
+	<a href="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%85%89%E7%85%A7%E5%88%9D%E6%AD%A5/7.jpg" data-size="432x530">
+		<img src="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%85%89%E7%85%A7%E5%88%9D%E6%AD%A5/7.jpg"
+			width="432"
+			height="530"
+			srcset="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%85%89%E7%85%A7%E5%88%9D%E6%AD%A5/7_hua15b25979cd23de8daca98270e40a524_22817_480x0_resize_q75_box.jpg 480w, /p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%85%89%E7%85%A7%E5%88%9D%E6%AD%A5/7_hua15b25979cd23de8daca98270e40a524_22817_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="7.jpg">
+	</a>
+	
+	<figcaption>7.jpg</figcaption>
+	
+</figure></p>
 <h1 id="使用例子">使用例子</h1>
 <p>我们把上一节所讲的teapot模型拿出来使用一下。</p>
 <p>用**<a class="link" href="https://github.com/kegalas/oar/blob/main/tutorial/chapter5/src/main.cpp"  target="_blank" rel="noopener"
@@ -237,13 +302,34 @@
 		class="gallery-image" 
 		style="
 			flex-grow: 100; 
-			flex-basis: 240px"
+			flex-basis: 241px"
 	>
-	<a href="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%85%89%E7%85%A7%E5%88%9D%E6%AD%A5/1.jpg" data-size="888x888">
+	<a href="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%85%89%E7%85%A7%E5%88%9D%E6%AD%A5/0.jpg" data-size="973x966">
+		<img src="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%85%89%E7%85%A7%E5%88%9D%E6%AD%A5/0.jpg"
+			width="973"
+			height="966"
+			srcset="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%85%89%E7%85%A7%E5%88%9D%E6%AD%A5/0_hub0dc5de02b67b4945e49bf20f42f29b6_36554_480x0_resize_q75_box.jpg 480w, /p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%85%89%E7%85%A7%E5%88%9D%E6%AD%A5/0_hub0dc5de02b67b4945e49bf20f42f29b6_36554_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="0.jpg">
+	</a>
+	
+	<figcaption>0.jpg</figcaption>
+	
+</figure></p>
+<p>看上去还好，细看的话发现盖子、壶嘴连接处一塌糊涂，这实际上是因为三角形的前后关系导致覆盖而出现的结果，在下一部分我们将介绍Z-buffer算法来解决这个问题。</p>
+<p>另外，上图是Gouraud着色下的结果。对比一下下图的Phong着色结果</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 99; 
+			flex-basis: 239px"
+	>
+	<a href="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%85%89%E7%85%A7%E5%88%9D%E6%AD%A5/1.jpg" data-size="961x963">
 		<img src="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%85%89%E7%85%A7%E5%88%9D%E6%AD%A5/1.jpg"
-			width="888"
-			height="888"
-			srcset="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%85%89%E7%85%A7%E5%88%9D%E6%AD%A5/1_hu54bfecedb7595eb7e441a463a4147c33_18090_480x0_resize_q75_box.jpg 480w, /p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%85%89%E7%85%A7%E5%88%9D%E6%AD%A5/1_hu54bfecedb7595eb7e441a463a4147c33_18090_1024x0_resize_q75_box.jpg 1024w"
+			width="961"
+			height="963"
+			srcset="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%85%89%E7%85%A7%E5%88%9D%E6%AD%A5/1_hub0dc5de02b67b4945e49bf20f42f29b6_36095_480x0_resize_q75_box.jpg 480w, /p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%85%89%E7%85%A7%E5%88%9D%E6%AD%A5/1_hub0dc5de02b67b4945e49bf20f42f29b6_36095_1024x0_resize_q75_box.jpg 1024w"
 			loading="lazy"
 			alt="1.jpg">
 	</a>
@@ -251,7 +337,7 @@
 	<figcaption>1.jpg</figcaption>
 	
 </figure></p>
-<p>看上去还好，细看的话发现盖子、壶嘴连接处一塌糊涂，这实际上是因为三角形的前后关系导致覆盖而出现的结果，在下一部分我们将介绍Z-buffer算法来解决这个问题。</p>
+<p>可以很明显的发现，Phong着色的光照效果要好一些，Gouraud的中心光斑有明显的矩形轮廓。</p>
 
 </section>
 
@@ -598,6 +684,13 @@
         <li><a href="#镜面反射">镜面反射</a></li>
         <li><a href="#环境光反射">环境光反射</a></li>
         <li><a href="#反射组合">反射组合</a></li>
+      </ol>
+    </li>
+    <li><a href="#flat着色gouraud着色和phong着色">Flat着色、Gouraud着色和Phong着色</a>
+      <ol>
+        <li><a href="#flat着色">Flat着色</a></li>
+        <li><a href="#gouraud着色">Gouraud着色</a></li>
+        <li><a href="#phong着色">Phong着色</a></li>
       </ol>
     </li>
     <li><a href="#使用例子">使用例子</a></li>

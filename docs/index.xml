@@ -581,6 +581,7 @@ f
 &lt;p&gt;从最开始的图可以看出来，我们需要依次经历模型变换、相机变换、投影变换、视口变换，才能得到最终的屏幕坐标，写成如下形式，对于世界坐标的点&lt;span class=&#34;math inline&#34;&gt;\(p\)&lt;/span&gt;，其屏幕坐标&lt;span class=&#34;math inline&#34;&gt;\(p&#39;\)&lt;/span&gt;有&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[p&#39; = M_{vp}M_oM_pM_vM_mp
 \]&lt;/span&gt;&lt;/p&gt;
+&lt;h1 id=&#34;法向量与变换&#34;&gt;法向量与变换&lt;/h1&gt;
 &lt;h1 id=&#34;代码&#34;&gt;代码&lt;/h1&gt;
 &lt;p&gt;所有的矩阵计算代码都可以在 &lt;strong&gt;&lt;a class=&#34;link&#34; href=&#34;https://github.com/kegalas/oar/blob/main/tutorial/chapter6/src/geometry.cpp&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;这里&lt;/a&gt;&lt;/strong&gt; 找到没有什么需要强调的地方，都是填数据而已。&lt;/p&gt;
@@ -3559,6 +3560,71 @@ collect2.exe: error: ld returned 1 exit status
 &lt;p&gt;直接加一起即可&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[L = L_a+L_d+L_s
 \]&lt;/span&gt;&lt;/p&gt;
+&lt;h1 id=&#34;flat着色gouraud着色和phong着色&#34;&gt;Flat着色、Gouraud着色和Phong着色&lt;/h1&gt;
+&lt;p&gt;我们有三种着色方法，这三种方法对应了不同的使用“法向量”的粒度。&lt;/p&gt;
+&lt;h2 id=&#34;flat着色&#34;&gt;Flat着色&lt;/h2&gt;
+&lt;p&gt;对于任意三角面，我们将整个三角面的光照亮度设定为同样的值，而其在计算时使用的法向量为三角形的法向量（可以使用叉积得到）。如下图&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 87; 
+			flex-basis: 210px&#34;
+	&gt;
+	&lt;a href=&#34;https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%85%89%E7%85%A7%E5%88%9D%E6%AD%A5/5.jpg&#34; data-size=&#34;400x455&#34;&gt;
+		&lt;img src=&#34;https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%85%89%E7%85%A7%E5%88%9D%E6%AD%A5/5.jpg&#34;
+			width=&#34;400&#34;
+			height=&#34;455&#34;
+			srcset=&#34;https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%85%89%E7%85%A7%E5%88%9D%E6%AD%A5/5_hu2251a1ecb1614beb90571cef23e1cac2_11183_480x0_resize_q75_box.jpg 480w, https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%85%89%E7%85%A7%E5%88%9D%E6%AD%A5/5_hu2251a1ecb1614beb90571cef23e1cac2_11183_1024x0_resize_q75_box.jpg 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;5.jpg&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;5.jpg&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;h2 id=&#34;gouraud着色&#34;&gt;Gouraud着色&lt;/h2&gt;
+&lt;p&gt;对于任意三角形面，我们分别使用三个顶点的法向量来计算三个顶点的光照亮度，而三角形内部的亮度则用（重心）插值得到。这里的法向量一般会从模型文件中给出。&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 70; 
+			flex-basis: 169px&#34;
+	&gt;
+	&lt;a href=&#34;https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%85%89%E7%85%A7%E5%88%9D%E6%AD%A5/6.jpg&#34; data-size=&#34;378x535&#34;&gt;
+		&lt;img src=&#34;https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%85%89%E7%85%A7%E5%88%9D%E6%AD%A5/6.jpg&#34;
+			width=&#34;378&#34;
+			height=&#34;535&#34;
+			srcset=&#34;https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%85%89%E7%85%A7%E5%88%9D%E6%AD%A5/6_hu59065a847d179937222045e7f1f018f0_14415_480x0_resize_q75_box.jpg 480w, https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%85%89%E7%85%A7%E5%88%9D%E6%AD%A5/6_hu59065a847d179937222045e7f1f018f0_14415_1024x0_resize_q75_box.jpg 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;6.jpg&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;6.jpg&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;h2 id=&#34;phong着色&#34;&gt;Phong着色&lt;/h2&gt;
+&lt;p&gt;对于任意三角形面，我们从模型文件中已知三个顶点的法向量，之后（重心）插值计算出内部点的法向量。再用这些法向量去计算出所有的光照亮度值。&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 81; 
+			flex-basis: 195px&#34;
+	&gt;
+	&lt;a href=&#34;https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%85%89%E7%85%A7%E5%88%9D%E6%AD%A5/7.jpg&#34; data-size=&#34;432x530&#34;&gt;
+		&lt;img src=&#34;https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%85%89%E7%85%A7%E5%88%9D%E6%AD%A5/7.jpg&#34;
+			width=&#34;432&#34;
+			height=&#34;530&#34;
+			srcset=&#34;https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%85%89%E7%85%A7%E5%88%9D%E6%AD%A5/7_hua15b25979cd23de8daca98270e40a524_22817_480x0_resize_q75_box.jpg 480w, https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%85%89%E7%85%A7%E5%88%9D%E6%AD%A5/7_hua15b25979cd23de8daca98270e40a524_22817_1024x0_resize_q75_box.jpg 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;7.jpg&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;7.jpg&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
 &lt;h1 id=&#34;使用例子&#34;&gt;使用例子&lt;/h1&gt;
 &lt;p&gt;我们把上一节所讲的teapot模型拿出来使用一下。&lt;/p&gt;
 &lt;p&gt;用**&lt;a class=&#34;link&#34; href=&#34;https://github.com/kegalas/oar/blob/main/tutorial/chapter5/src/main.cpp&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
@@ -3569,13 +3635,34 @@ collect2.exe: error: ld returned 1 exit status
 		class=&#34;gallery-image&#34; 
 		style=&#34;
 			flex-grow: 100; 
-			flex-basis: 240px&#34;
+			flex-basis: 241px&#34;
 	&gt;
-	&lt;a href=&#34;https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%85%89%E7%85%A7%E5%88%9D%E6%AD%A5/1.jpg&#34; data-size=&#34;888x888&#34;&gt;
+	&lt;a href=&#34;https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%85%89%E7%85%A7%E5%88%9D%E6%AD%A5/0.jpg&#34; data-size=&#34;973x966&#34;&gt;
+		&lt;img src=&#34;https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%85%89%E7%85%A7%E5%88%9D%E6%AD%A5/0.jpg&#34;
+			width=&#34;973&#34;
+			height=&#34;966&#34;
+			srcset=&#34;https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%85%89%E7%85%A7%E5%88%9D%E6%AD%A5/0_hub0dc5de02b67b4945e49bf20f42f29b6_36554_480x0_resize_q75_box.jpg 480w, https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%85%89%E7%85%A7%E5%88%9D%E6%AD%A5/0_hub0dc5de02b67b4945e49bf20f42f29b6_36554_1024x0_resize_q75_box.jpg 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;0.jpg&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;0.jpg&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;看上去还好，细看的话发现盖子、壶嘴连接处一塌糊涂，这实际上是因为三角形的前后关系导致覆盖而出现的结果，在下一部分我们将介绍Z-buffer算法来解决这个问题。&lt;/p&gt;
+&lt;p&gt;另外，上图是Gouraud着色下的结果。对比一下下图的Phong着色结果&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 99; 
+			flex-basis: 239px&#34;
+	&gt;
+	&lt;a href=&#34;https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%85%89%E7%85%A7%E5%88%9D%E6%AD%A5/1.jpg&#34; data-size=&#34;961x963&#34;&gt;
 		&lt;img src=&#34;https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%85%89%E7%85%A7%E5%88%9D%E6%AD%A5/1.jpg&#34;
-			width=&#34;888&#34;
-			height=&#34;888&#34;
-			srcset=&#34;https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%85%89%E7%85%A7%E5%88%9D%E6%AD%A5/1_hu54bfecedb7595eb7e441a463a4147c33_18090_480x0_resize_q75_box.jpg 480w, https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%85%89%E7%85%A7%E5%88%9D%E6%AD%A5/1_hu54bfecedb7595eb7e441a463a4147c33_18090_1024x0_resize_q75_box.jpg 1024w&#34;
+			width=&#34;961&#34;
+			height=&#34;963&#34;
+			srcset=&#34;https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%85%89%E7%85%A7%E5%88%9D%E6%AD%A5/1_hub0dc5de02b67b4945e49bf20f42f29b6_36095_480x0_resize_q75_box.jpg 480w, https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%85%89%E7%85%A7%E5%88%9D%E6%AD%A5/1_hub0dc5de02b67b4945e49bf20f42f29b6_36095_1024x0_resize_q75_box.jpg 1024w&#34;
 			loading=&#34;lazy&#34;
 			alt=&#34;1.jpg&#34;&gt;
 	&lt;/a&gt;
@@ -3583,7 +3670,7 @@ collect2.exe: error: ld returned 1 exit status
 	&lt;figcaption&gt;1.jpg&lt;/figcaption&gt;
 	
 &lt;/figure&gt;&lt;/p&gt;
-&lt;p&gt;看上去还好，细看的话发现盖子、壶嘴连接处一塌糊涂，这实际上是因为三角形的前后关系导致覆盖而出现的结果，在下一部分我们将介绍Z-buffer算法来解决这个问题。&lt;/p&gt;
+&lt;p&gt;可以很明显的发现，Phong着色的光照效果要好一些，Gouraud的中心光斑有明显的矩形轮廓。&lt;/p&gt;
 </description>
         </item>
         <item>
@@ -4898,7 +4985,6 @@ for x = x0 to x1 do
 &lt;p&gt;&lt;u&gt;&lt;strong&gt;&lt;a class=&#34;link&#34; href=&#34;../%e4%bb%8e%e9%9b%b6%e5%bc%80%e5%a7%8b%e7%9a%84%e8%bd%af%e6%b8%b2%e6%9f%93%e5%99%a8-%e5%85%89%e7%85%a7%e5%88%9d%e6%ad%a5&#34; &gt;5. 从零开始的软渲染器-光照初步&lt;/a&gt;&lt;/strong&gt;&lt;/u&gt;&lt;/p&gt;
 &lt;p&gt;&lt;u&gt;&lt;strong&gt;&lt;a class=&#34;link&#34; href=&#34;../%e4%bb%8e%e9%9b%b6%e5%bc%80%e5%a7%8b%e7%9a%84%e8%bd%af%e6%b8%b2%e6%9f%93%e5%99%a8-%e5%9d%90%e6%a0%87%e5%8f%98%e6%8d%a2%e4%b8%8e%e8%a7%86%e8%a7%92&#34; &gt;6. 从零开始的软渲染器-坐标变换与视角&lt;/a&gt;&lt;/strong&gt;&lt;/u&gt;&lt;/p&gt;
 &lt;p&gt;TODO:&lt;/p&gt;
-&lt;p&gt;&lt;u&gt;&lt;strong&gt;&lt;a class=&#34;link&#34; href=&#34;../%e4%bb%8e%e9%9b%b6%e5%bc%80%e5%a7%8b%e7%9a%84%e8%bd%af%e6%b8%b2%e6%9f%93%e5%99%a8-YAML%e8%ae%b0%e5%bd%95%e5%8f%82%e6%95%b0&#34; &gt;番外1. 从零开始的软渲染器-YAML记录参数&lt;/a&gt;&lt;/strong&gt;&lt;/u&gt;&lt;/p&gt;
 &lt;p&gt;&lt;u&gt;&lt;strong&gt;&lt;a class=&#34;link&#34; href=&#34;../%e4%bb%8e%e9%9b%b6%e5%bc%80%e5%a7%8b%e7%9a%84%e8%bd%af%e6%b8%b2%e6%9f%93%e5%99%a8-z-buffer&#34; &gt;7. 从零开始的软渲染器-Z-Buffer&lt;/a&gt;&lt;/strong&gt;&lt;/u&gt;&lt;/p&gt;
 &lt;p&gt;&lt;u&gt;&lt;strong&gt;&lt;a class=&#34;link&#34; href=&#34;../%e4%bb%8e%e9%9b%b6%e5%bc%80%e5%a7%8b%e7%9a%84%e8%bd%af%e6%b8%b2%e6%9f%93%e5%99%a8-%e5%9b%be%e5%bd%a2%e6%b8%b2%e6%9f%93%e7%ae%a1%e7%ba%bf&#34; &gt;8. 从零开始的软渲染器-图形渲染管线&lt;/a&gt;&lt;/strong&gt;&lt;/u&gt;&lt;/p&gt;
 &lt;p&gt;&lt;u&gt;&lt;strong&gt;&lt;a class=&#34;link&#34; href=&#34;../%e4%bb%8e%e9%9b%b6%e5%bc%80%e5%a7%8b%e7%9a%84%e8%bd%af%e6%b8%b2%e6%9f%93%e5%99%a8-%e7%ba%b9%e7%90%86%e8%b4%b4%e5%9b%be&#34; &gt;9. 从零开始的软渲染器-纹理贴图&lt;/a&gt;&lt;/strong&gt;&lt;/u&gt;&lt;/p&gt;

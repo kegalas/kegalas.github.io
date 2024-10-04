@@ -603,6 +603,8 @@ $$
 p' = M_{vp}M_oM_pM_vM_mp
 $$
 
+# 法向量与变换
+
 # 代码
 
 所有的矩阵计算代码都可以在 **[这里](https://github.com/kegalas/oar/blob/main/tutorial/chapter6/src/geometry.cpp)** 找到没有什么需要强调的地方，都是填数据而已。
