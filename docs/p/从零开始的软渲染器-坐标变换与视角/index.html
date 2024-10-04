@@ -121,7 +121,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 14 分钟
+                    阅读时长: 15 分钟
                 </time>
             </div>
         
@@ -701,6 +701,11 @@ f
 <p><span class="math display">\[p' = M_{vp}M_oM_pM_vM_mp
 \]</span></p>
 <h1 id="法向量与变换">法向量与变换</h1>
+<p>当我们使用不等比的缩放时，法向量就会被缩放到不垂直于原先的表面。于是我们要使用一种特殊的矩阵来将法向量变换到世界空间中，我们这里直接给出答案（或许以后会讲解，TODO），详细证明可以看<a class="link" href="http://www.lighthouse3d.com/tutorials/glsl-12-tutorial/the-normal-matrix/"  target="_blank" rel="noopener"
+    >http://www.lighthouse3d.com/tutorials/glsl-12-tutorial/the-normal-matrix/</a>。</p>
+<p>简单来说，这个特殊的矩阵是模型变换矩阵左上角<span class="math inline">\(3\times 3\)</span>部分的逆矩阵的转置矩阵。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>Normal <span style="color:#f92672">=</span> mat3(transpose(inverse(model))) <span style="color:#f92672">*</span> aNormal;
+</span></span></code></pre></div><p>注意，之前的有关光照的种种计算，需要在世界坐标系下完成。</p>
 <h1 id="代码">代码</h1>
 <p>所有的矩阵计算代码都可以在 <strong><a class="link" href="https://github.com/kegalas/oar/blob/main/tutorial/chapter6/src/geometry.cpp"  target="_blank" rel="noopener"
     >这里</a></strong> 找到没有什么需要强调的地方，都是填数据而已。</p>
@@ -712,13 +717,13 @@ f
 		class="gallery-image" 
 		style="
 			flex-grow: 100; 
-			flex-basis: 240px"
+			flex-basis: 241px"
 	>
-	<a href="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2%E4%B8%8E%E8%A7%86%E8%A7%92/9.jpg" data-size="965x965">
+	<a href="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2%E4%B8%8E%E8%A7%86%E8%A7%92/9.jpg" data-size="967x961">
 		<img src="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2%E4%B8%8E%E8%A7%86%E8%A7%92/9.jpg"
-			width="965"
-			height="965"
-			srcset="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2%E4%B8%8E%E8%A7%86%E8%A7%92/9_hu54bfecedb7595eb7e441a463a4147c33_17725_480x0_resize_q75_box.jpg 480w, /p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2%E4%B8%8E%E8%A7%86%E8%A7%92/9_hu54bfecedb7595eb7e441a463a4147c33_17725_1024x0_resize_q75_box.jpg 1024w"
+			width="967"
+			height="961"
+			srcset="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2%E4%B8%8E%E8%A7%86%E8%A7%92/9_hu54bfecedb7595eb7e441a463a4147c33_17592_480x0_resize_q75_box.jpg 480w, /p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2%E4%B8%8E%E8%A7%86%E8%A7%92/9_hu54bfecedb7595eb7e441a463a4147c33_17592_1024x0_resize_q75_box.jpg 1024w"
 			loading="lazy"
 			alt="9.jpg">
 	</a>
@@ -726,7 +731,8 @@ f
 	<figcaption>9.jpg</figcaption>
 	
 </figure></p>
-<p>在这里，我们从远到近地（我们还没有zbuffer）画了8个teapot。当然，效果不够好，这也是因为我们没用使用zbuffer，导致部分结构错位，从而图片很奇怪。在下一部分我们将会介绍用于判断物体遮挡关系的zbuffer。</p>
+<p>在这里，我们从远到近地（我们还没有zbuffer）画了8个teapot。当然，效果不够好，这还是因为我们没用使用zbuffer，导致部分结构错位，从而图片很奇怪。在下一部分我们将会介绍用于判断物体遮挡关系的zbuffer。</p>
+<p>另外，在进行了“透视投影”这一扭曲空间的变换之后，我们再在屏幕坐标上进行重心插值得到的就是错误的结果了，只不过目前还看不出来问题。在纹理一章我们会发现并解决它。</p>
 <h1 id="附录">附录</h1>
 <p>为什么要用四维坐标？其实就是因为平移他不是线性变换，三维的矩阵无法处理三维的平移。但是我们可以通过多加一维的方式来引入平移运算。</p>
 <p>具体而言，我们定义三维点<span class="math inline">\((x,y,z)^T\)</span>扩充为四维点<span class="math inline">\((x,y,z,1)^T\)</span>，定义三维向量<span class="math inline">\((x,y,z)^T\)</span>扩充为四维向量<span class="math inline">\((x,y,z,0)^T\)</span>。特别的，对于任意一个四维坐标<span class="math inline">\((x,y,z,w)^T\)</span>，如果<span class="math inline">\(w=0\)</span>，则其代表<span class="math inline">\((x,y,z,0)^T\)</span>这个向量，如果<span class="math inline">\(w\neq 0\)</span>，则其代表<span class="math inline">\((x/w,y/w,z/w,1)^T\)</span>这个点。</p>
@@ -848,6 +854,28 @@ f
                 
                     
 <article class="has-image">
+    <a href="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-z-buffer/">
+        
+        
+            <div class="article-image">
+                <img src="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-z-buffer/cover.4931495eb81ef9e9607a2265a3ab5944_huefaede8fa769a1822bd7ca8a439b248c_38510_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-STFJXrge&#43;elgeiJlo6tZRA==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">从零开始的软渲染器 Z-Buffer</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
     <a href="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%85%89%E7%85%A7%E5%88%9D%E6%AD%A5/">
         
         
@@ -930,28 +958,6 @@ f
 
         <div class="article-details">
             <h2 class="article-title">从零开始的软渲染器 图片处理库</h2>
-        </div>
-    </a>
-</article>
-                
-                    
-<article class="has-image">
-    <a href="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E6%95%B0%E5%AD%A6%E5%B7%A5%E5%85%B7%E5%BA%93/">
-        
-        
-            <div class="article-image">
-                <img src="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E6%95%B0%E5%AD%A6%E5%B7%A5%E5%85%B7%E5%BA%93/cover.05688f45246317d00a00a986d6147cbd_huc0107afa81d973e7d87fe5de99d27181_24753_250x150_fill_q75_box_smart1.jpg" 
-                        width="250" 
-                        height="150" 
-                        loading="lazy" 
-                        data-key="" 
-                        data-hash="md5-BWiPRSRjF9AKAKmG1hR8vQ==">
-                
-            </div>
-        
-
-        <div class="article-details">
-            <h2 class="article-title">从零开始的软渲染器 数学工具库</h2>
         </div>
     </a>
 </article>

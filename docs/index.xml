@@ -6,7 +6,147 @@
         <description>Recent content on KegalaS的个人博客</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Sun, 22 Sep 2024 22:53:54 +0800</lastBuildDate><atom:link href="https://kegalas.top/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Thu, 03 Oct 2024 14:42:25 +0800</lastBuildDate><atom:link href="https://kegalas.top/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>从零开始的软渲染器 Z-Buffer</title>
+        <link>https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-z-buffer/</link>
+        <pubDate>Thu, 03 Oct 2024 14:42:25 +0800</pubDate>
+        
+        <guid>https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-z-buffer/</guid>
+        <description>&lt;img src="https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-z-buffer/cover.jpg" alt="Featured image of post 从零开始的软渲染器 Z-Buffer" /&gt;&lt;p&gt;&lt;u&gt;&lt;strong&gt;&lt;a class=&#34;link&#34; href=&#34;../%e4%bb%8e%e9%9b%b6%e5%bc%80%e5%a7%8b%e7%9a%84%e8%bd%af%e6%b8%b2%e6%9f%93%e5%99%a8-%e5%af%bc%e8%88%aa/&#34; &gt;导航页面&lt;/a&gt;&lt;/strong&gt;&lt;/u&gt;&lt;/p&gt;
+&lt;h1 id=&#34;z-buffer介绍&#34;&gt;Z-Buffer介绍&lt;/h1&gt;
+&lt;p&gt;首先说说为什么要引入Z-Buffer，在我们之前的光栅化操作中，我们完全没有管三角形的前后关系&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 129; 
+			flex-basis: 311px&#34;
+	&gt;
+	&lt;a href=&#34;https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-z-buffer/2.jpg&#34; data-size=&#34;555x427&#34;&gt;
+		&lt;img src=&#34;https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-z-buffer/2.jpg&#34;
+			width=&#34;555&#34;
+			height=&#34;427&#34;
+			srcset=&#34;https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-z-buffer/2_hu166f413db2b5433b87b1a767ed7bb2f4_52135_480x0_resize_q75_box.jpg 480w, https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-z-buffer/2_hu166f413db2b5433b87b1a767ed7bb2f4_52135_1024x0_resize_q75_box.jpg 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;2.jpg&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;2.jpg&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;拿这张图来举例，假设我们的摄像机在&lt;span class=&#34;math inline&#34;&gt;\(S\)&lt;/span&gt;点，则我们看到的&lt;span class=&#34;math inline&#34;&gt;\(ABC\)&lt;/span&gt;则会完全遮盖住&lt;span class=&#34;math inline&#34;&gt;\(abc\)&lt;/span&gt;，但是，我们在光栅化的时候没有考虑到距离的因素。实际上我们绘制在屏幕上的三角形取决于绘制的顺序，如果我们先绘制&lt;span class=&#34;math inline&#34;&gt;\(ABC\)&lt;/span&gt;再绘制&lt;span class=&#34;math inline&#34;&gt;\(abc\)&lt;/span&gt;，则我们只会看到&lt;span class=&#34;math inline&#34;&gt;\(abc\)&lt;/span&gt;。这还是简单的情况，复杂的情况还有三角形相交等等。&lt;/p&gt;
+&lt;p&gt;为了引入距离以及遮挡关系，我们使用Z-Buffer算法。&lt;/p&gt;
+&lt;p&gt;把摄像机对准的方向当作&lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;轴负半轴，则所有点的&lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;轴坐标也就确定了，显然的，&lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;坐标大的点在前面，遮挡了&lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;坐标小的物体，我们绘制三角形的时候，检测这个像素点的&lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;坐标最大是多少，比它大，则绘制该像素，并且更新最大值，否则不绘制。&lt;/p&gt;
+&lt;p&gt;注意这里的&lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;轴坐标是透视投影之后的坐标。&lt;/p&gt;
+&lt;h1 id=&#34;具体实现&#34;&gt;具体实现&lt;/h1&gt;
+&lt;p&gt;话不多说我们直接上代码&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;bool&lt;/span&gt; ras&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;trianglePhong(
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    TGAImage &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt; image,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    geo&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;TriCoords &lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt; tcoords,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    std&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;array&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;geo&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;OARColorf, &lt;span style=&#34;color:#ae81ff&#34;&gt;3&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt; colors,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    geo&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;vec4f &lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt; lightPos, &lt;span style=&#34;color:#75715e&#34;&gt;// 光的位置
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;    geo&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;OARColorf &lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt; light, &lt;span style=&#34;color:#75715e&#34;&gt;// 光的颜色
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;    geo&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;vec4f &lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt; cameraPos, &lt;span style=&#34;color:#75715e&#34;&gt;//相机的位置
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;float&lt;/span&gt; zbuffer[]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;){
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;float&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; EPS &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1e-5&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; width &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; image.getWidth(), height &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; image.getHeight();
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    std&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;array&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;geo&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;vec2i,&lt;span style=&#34;color:#ae81ff&#34;&gt;3&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; screenPoints;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt;(&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; i&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;;i&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;3&lt;/span&gt;;i&lt;span style=&#34;color:#f92672&#34;&gt;++&lt;/span&gt;){
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        screenPoints[i][&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; (&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt;)(tcoords.screenCoords[i][&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt; tcoords.screenCoords[i].w&lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;.5f&lt;/span&gt;);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        screenPoints[i][&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; (&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt;)(tcoords.screenCoords[i][&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt; tcoords.screenCoords[i].w&lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;.5f&lt;/span&gt;);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; maxx &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;, minx &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; width&lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;, maxy &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;, miny &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; height&lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt;(&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; i&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;;i&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;3&lt;/span&gt;;i&lt;span style=&#34;color:#f92672&#34;&gt;++&lt;/span&gt;){
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        maxx &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; std&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;max(maxx, screenPoints[i].x);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        minx &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; std&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;min(minx, screenPoints[i].x);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        maxy &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; std&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;max(maxy, screenPoints[i].y);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        miny &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; std&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;min(miny, screenPoints[i].y);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    maxx &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; std&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;min(maxx, width&lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    minx &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; std&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;max(minx, &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    maxy &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; std&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;min(maxy, height&lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    miny &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; std&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;max(miny, &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    geo&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;vec4f kd &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; {&lt;span style=&#34;color:#ae81ff&#34;&gt;.75f&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;.75f&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;.75f&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;1.f&lt;/span&gt;};
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    geo&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;vec4f ks &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; {&lt;span style=&#34;color:#ae81ff&#34;&gt;1.f&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;1.f&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;1.f&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;1.f&lt;/span&gt;};
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    geo&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;vec4f ka &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; {&lt;span style=&#34;color:#ae81ff&#34;&gt;.2f&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;.2f&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;.2f&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;1.f&lt;/span&gt;}; &lt;span style=&#34;color:#75715e&#34;&gt;//设置三种反射的反射因子
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt;(&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; x&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;minx;x&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;=&lt;/span&gt;maxx;x&lt;span style=&#34;color:#f92672&#34;&gt;++&lt;/span&gt;){
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt;(&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; y&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;miny;y&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;=&lt;/span&gt;maxy;y&lt;span style=&#34;color:#f92672&#34;&gt;++&lt;/span&gt;){
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            std&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;tuple&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;float&lt;/span&gt;,&lt;span style=&#34;color:#66d9ef&#34;&gt;float&lt;/span&gt;,&lt;span style=&#34;color:#66d9ef&#34;&gt;float&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; ret &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; geo&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;getBarycentric(screenPoints, geo&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;vec2i(x,y));
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#66d9ef&#34;&gt;float&lt;/span&gt; alpha &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; std&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;get&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; (ret);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#66d9ef&#34;&gt;float&lt;/span&gt; beta  &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; std&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;get&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; (ret);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#66d9ef&#34;&gt;float&lt;/span&gt; gamma &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; std&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;get&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; (ret);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt;(alpha&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;-&lt;/span&gt;EPS &lt;span style=&#34;color:#f92672&#34;&gt;||&lt;/span&gt; beta&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;-&lt;/span&gt;EPS &lt;span style=&#34;color:#f92672&#34;&gt;||&lt;/span&gt; gamma&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;-&lt;/span&gt;EPS) &lt;span style=&#34;color:#66d9ef&#34;&gt;continue&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#66d9ef&#34;&gt;float&lt;/span&gt; z &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; alpha &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; tcoords.screenCoords[&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;].z &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                      beta  &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; tcoords.screenCoords[&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;].z &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                      gamma &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; tcoords.screenCoords[&lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;].z;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#75715e&#34;&gt;// z值在这里可以先这样用，下一节我们会发现这样插值是有误差的
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;            &lt;span style=&#34;color:#75715e&#34;&gt;// 虽然我们这里传进来的是屏幕空间而非剪裁空间，但这两个空间的z坐标是相同的
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt;(z&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;zbuffer[y&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;width&lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;x]){
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                &lt;span style=&#34;color:#66d9ef&#34;&gt;continue&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            zbuffer[y&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;width&lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;x] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; z;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            geo&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;vec4f norm &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; alpha&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;tcoords.norms[&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; beta&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;tcoords.norms[&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; gamma&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;tcoords.norms[&lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;];
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            geo&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;vec4f world &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;  alpha&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;tcoords.worldCoords[&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; beta&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;tcoords.worldCoords[&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; gamma&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;tcoords.worldCoords[&lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;];
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#75715e&#34;&gt;// 插值得出三角形内点的世界坐标与法向量
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            geo&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;vec4f l &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; geo&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;normalized(lightPos&lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;world); &lt;span style=&#34;color:#75715e&#34;&gt;//顶点到光源的单位向量
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;            geo&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;vec4f v &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; geo&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;normalized(cameraPos&lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;world); &lt;span style=&#34;color:#75715e&#34;&gt;//顶点到相机的单位向量
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;            geo&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;vec4f h &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; geo&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;normalized(v&lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;l); &lt;span style=&#34;color:#75715e&#34;&gt;//半程向量
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#66d9ef&#34;&gt;float&lt;/span&gt; value &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; geo&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;dot(l, norm); &lt;span style=&#34;color:#75715e&#34;&gt;//我们直接将dot(l,n)&amp;lt;0的点忽略
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;            &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt;(value&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0.f&lt;/span&gt;){
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                &lt;span style=&#34;color:#66d9ef&#34;&gt;continue&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            geo&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;OARColorf ld &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; kd &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; light &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; value; &lt;span style=&#34;color:#75715e&#34;&gt;//因为我们还没学zbuffer，如果用max的话会绘制全黑的三角形
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;            geo&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;OARColorf ls &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; ks &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; light &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; std&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;pow(std&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;max(&lt;span style=&#34;color:#ae81ff&#34;&gt;0.f&lt;/span&gt;,geo&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;dot(norm, h)), &lt;span style=&#34;color:#ae81ff&#34;&gt;100.f&lt;/span&gt;);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            geo&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;OARColorf la &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; ka &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; geo&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;vec4f(&lt;span style=&#34;color:#ae81ff&#34;&gt;.3f&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;.3f&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;.3f&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;1.f&lt;/span&gt;); &lt;span style=&#34;color:#75715e&#34;&gt;//三种光强
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;            geo&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;vec4f intensity &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; ld &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; ls &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; la;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            geo&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;OARColor color &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; geo&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;toOARColor(
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                (alpha &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; colors[&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; beta  &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; colors[&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; gamma &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; colors[&lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;]) &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; intensity
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            );
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#75715e&#34;&gt;// 最终物体的颜色是 自身颜色*光照颜色
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;            image.setFragment(x,y,color);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; true;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;需要注意的是，我们这里直接用线性的重心坐标插值去计算三角形内部像素的&lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;轴坐标了。虽然这里这样用确实效果还可以，但是下一节我们将会知道这样的差值是有误差的。&lt;/p&gt;
+&lt;h1 id=&#34;使用例&#34;&gt;使用例&lt;/h1&gt;
+&lt;p&gt;我们继续使用teapot模型，代码见 &lt;strong&gt;&lt;a class=&#34;link&#34; href=&#34;https://github.com/kegalas/oar/blob/main/tutorial/chapter7/src/main.cpp&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;这里&lt;/a&gt;&lt;/strong&gt;  。&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 100; 
+			flex-basis: 240px&#34;
+	&gt;
+	&lt;a href=&#34;https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-z-buffer/1.jpg&#34; data-size=&#34;961x958&#34;&gt;
+		&lt;img src=&#34;https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-z-buffer/1.jpg&#34;
+			width=&#34;961&#34;
+			height=&#34;958&#34;
+			srcset=&#34;https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-z-buffer/1_hu54bfecedb7595eb7e441a463a4147c33_18998_480x0_resize_q75_box.jpg 480w, https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-z-buffer/1_hu54bfecedb7595eb7e441a463a4147c33_18998_1024x0_resize_q75_box.jpg 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;1.jpg&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;1.jpg&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;现在观察壶嘴连接处，已经不会再有穿模的现象了。&lt;/p&gt;
+&lt;p&gt;&lt;del&gt;但是缺少了几个三角形，看起来像精度问题，我还在Debug，TODO&lt;/del&gt;&lt;/p&gt;
+</description>
+        </item>
+        <item>
         <title>从零开始的软渲染器 坐标变换与视角</title>
         <link>https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2%E4%B8%8E%E8%A7%86%E8%A7%92/</link>
         <pubDate>Sun, 22 Sep 2024 22:53:54 +0800</pubDate>
@@ -582,6 +722,11 @@ f
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[p&#39; = M_{vp}M_oM_pM_vM_mp
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;h1 id=&#34;法向量与变换&#34;&gt;法向量与变换&lt;/h1&gt;
+&lt;p&gt;当我们使用不等比的缩放时，法向量就会被缩放到不垂直于原先的表面。于是我们要使用一种特殊的矩阵来将法向量变换到世界空间中，我们这里直接给出答案（或许以后会讲解，TODO），详细证明可以看&lt;a class=&#34;link&#34; href=&#34;http://www.lighthouse3d.com/tutorials/glsl-12-tutorial/the-normal-matrix/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;http://www.lighthouse3d.com/tutorials/glsl-12-tutorial/the-normal-matrix/&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;简单来说，这个特殊的矩阵是模型变换矩阵左上角&lt;span class=&#34;math inline&#34;&gt;\(3\times 3\)&lt;/span&gt;部分的逆矩阵的转置矩阵。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Normal &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; mat3(transpose(inverse(model))) &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; aNormal;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;注意，之前的有关光照的种种计算，需要在世界坐标系下完成。&lt;/p&gt;
 &lt;h1 id=&#34;代码&#34;&gt;代码&lt;/h1&gt;
 &lt;p&gt;所有的矩阵计算代码都可以在 &lt;strong&gt;&lt;a class=&#34;link&#34; href=&#34;https://github.com/kegalas/oar/blob/main/tutorial/chapter6/src/geometry.cpp&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;这里&lt;/a&gt;&lt;/strong&gt; 找到没有什么需要强调的地方，都是填数据而已。&lt;/p&gt;
@@ -593,13 +738,13 @@ f
 		class=&#34;gallery-image&#34; 
 		style=&#34;
 			flex-grow: 100; 
-			flex-basis: 240px&#34;
+			flex-basis: 241px&#34;
 	&gt;
-	&lt;a href=&#34;https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2%E4%B8%8E%E8%A7%86%E8%A7%92/9.jpg&#34; data-size=&#34;965x965&#34;&gt;
+	&lt;a href=&#34;https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2%E4%B8%8E%E8%A7%86%E8%A7%92/9.jpg&#34; data-size=&#34;967x961&#34;&gt;
 		&lt;img src=&#34;https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2%E4%B8%8E%E8%A7%86%E8%A7%92/9.jpg&#34;
-			width=&#34;965&#34;
-			height=&#34;965&#34;
-			srcset=&#34;https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2%E4%B8%8E%E8%A7%86%E8%A7%92/9_hu54bfecedb7595eb7e441a463a4147c33_17725_480x0_resize_q75_box.jpg 480w, https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2%E4%B8%8E%E8%A7%86%E8%A7%92/9_hu54bfecedb7595eb7e441a463a4147c33_17725_1024x0_resize_q75_box.jpg 1024w&#34;
+			width=&#34;967&#34;
+			height=&#34;961&#34;
+			srcset=&#34;https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2%E4%B8%8E%E8%A7%86%E8%A7%92/9_hu54bfecedb7595eb7e441a463a4147c33_17592_480x0_resize_q75_box.jpg 480w, https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2%E4%B8%8E%E8%A7%86%E8%A7%92/9_hu54bfecedb7595eb7e441a463a4147c33_17592_1024x0_resize_q75_box.jpg 1024w&#34;
 			loading=&#34;lazy&#34;
 			alt=&#34;9.jpg&#34;&gt;
 	&lt;/a&gt;
@@ -607,7 +752,8 @@ f
 	&lt;figcaption&gt;9.jpg&lt;/figcaption&gt;
 	
 &lt;/figure&gt;&lt;/p&gt;
-&lt;p&gt;在这里，我们从远到近地（我们还没有zbuffer）画了8个teapot。当然，效果不够好，这也是因为我们没用使用zbuffer，导致部分结构错位，从而图片很奇怪。在下一部分我们将会介绍用于判断物体遮挡关系的zbuffer。&lt;/p&gt;
+&lt;p&gt;在这里，我们从远到近地（我们还没有zbuffer）画了8个teapot。当然，效果不够好，这还是因为我们没用使用zbuffer，导致部分结构错位，从而图片很奇怪。在下一部分我们将会介绍用于判断物体遮挡关系的zbuffer。&lt;/p&gt;
+&lt;p&gt;另外，在进行了“透视投影”这一扭曲空间的变换之后，我们再在屏幕坐标上进行重心插值得到的就是错误的结果了，只不过目前还看不出来问题。在纹理一章我们会发现并解决它。&lt;/p&gt;
 &lt;h1 id=&#34;附录&#34;&gt;附录&lt;/h1&gt;
 &lt;p&gt;为什么要用四维坐标？其实就是因为平移他不是线性变换，三维的矩阵无法处理三维的平移。但是我们可以通过多加一维的方式来引入平移运算。&lt;/p&gt;
 &lt;p&gt;具体而言，我们定义三维点&lt;span class=&#34;math inline&#34;&gt;\((x,y,z)^T\)&lt;/span&gt;扩充为四维点&lt;span class=&#34;math inline&#34;&gt;\((x,y,z,1)^T\)&lt;/span&gt;，定义三维向量&lt;span class=&#34;math inline&#34;&gt;\((x,y,z)^T\)&lt;/span&gt;扩充为四维向量&lt;span class=&#34;math inline&#34;&gt;\((x,y,z,0)^T\)&lt;/span&gt;。特别的，对于任意一个四维坐标&lt;span class=&#34;math inline&#34;&gt;\((x,y,z,w)^T\)&lt;/span&gt;，如果&lt;span class=&#34;math inline&#34;&gt;\(w=0\)&lt;/span&gt;，则其代表&lt;span class=&#34;math inline&#34;&gt;\((x,y,z,0)^T\)&lt;/span&gt;这个向量，如果&lt;span class=&#34;math inline&#34;&gt;\(w\neq 0\)&lt;/span&gt;，则其代表&lt;span class=&#34;math inline&#34;&gt;\((x/w,y/w,z/w,1)^T\)&lt;/span&gt;这个点。&lt;/p&gt;
