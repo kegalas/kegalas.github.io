@@ -605,6 +605,16 @@ $$
 
 # 法向量与变换
 
+当我们使用不等比的缩放时，法向量就会被缩放到不垂直于原先的表面。于是我们要使用一种特殊的矩阵来将法向量变换到世界空间中，我们这里直接给出答案（或许以后会讲解，TODO），详细证明可以看[http://www.lighthouse3d.com/tutorials/glsl-12-tutorial/the-normal-matrix/](http://www.lighthouse3d.com/tutorials/glsl-12-tutorial/the-normal-matrix/)。
+
+简单来说，这个特殊的矩阵是模型变换矩阵左上角$3\times 3$部分的逆矩阵的转置矩阵。
+
+```cpp
+Normal = mat3(transpose(inverse(model))) * aNormal;
+```
+
+注意，之前的有关光照的种种计算，需要在世界坐标系下完成。
+
 # 代码
 
 所有的矩阵计算代码都可以在 **[这里](https://github.com/kegalas/oar/blob/main/tutorial/chapter6/src/geometry.cpp)** 找到没有什么需要强调的地方，都是填数据而已。
@@ -615,7 +625,9 @@ $$
 
 ![9.jpg](9.jpg)
 
-在这里，我们从远到近地（我们还没有zbuffer）画了8个teapot。当然，效果不够好，这也是因为我们没用使用zbuffer，导致部分结构错位，从而图片很奇怪。在下一部分我们将会介绍用于判断物体遮挡关系的zbuffer。
+在这里，我们从远到近地（我们还没有zbuffer）画了8个teapot。当然，效果不够好，这还是因为我们没用使用zbuffer，导致部分结构错位，从而图片很奇怪。在下一部分我们将会介绍用于判断物体遮挡关系的zbuffer。
+
+另外，在进行了“透视投影”这一扭曲空间的变换之后，我们再在屏幕坐标上进行重心插值得到的就是错误的结果了，只不过目前还看不出来问题。在纹理一章我们会发现并解决它。
 
 # 附录
 
