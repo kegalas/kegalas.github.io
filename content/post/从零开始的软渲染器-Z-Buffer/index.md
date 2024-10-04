@@ -1,6 +1,6 @@
 ---
 title: 从零开始的软渲染器 Z-Buffer
-date: 2023-06-25T14:42:25+08:00
+date: 2024-10-03T14:42:25+08:00
 draft: true
 tags:
   - 图形学
@@ -26,7 +26,7 @@ image: cover.jpg
 
 把摄像机对准的方向当作$z$轴负半轴，则所有点的$z$轴坐标也就确定了，显然的，$z$坐标大的点在前面，遮挡了$z$坐标小的物体，我们绘制三角形的时候，检测这个像素点的$z$坐标最大是多少，比它大，则绘制该像素，并且更新最大值，否则不绘制。
 
-你可能会问，难道不是应该依照物体和摄像头的距离来判断遮挡吗？为什么判断的是$z$轴坐标？这其实是因为目前我们的物体是直接平行投影到显示屏上的，在之后我们会介绍透视投影，就像上面的点投影一样，到时候再说用什么来判断遮挡。
+注意这里的$z$轴坐标是透视投影之后的坐标。
 
 # 具体实现
 
@@ -45,7 +45,8 @@ bool ras::triangle(
     std::array<geo::vec2i,3> screenPoints;
 
     for(int i=0;i<3;i++){
-        screenPoints[i] = world2screen(points[i], width, height);
+        screenPoints[i][0] = (int)(points[i][0]+.5f);
+        screenPoints[i][1] = (int)(points[i][1]+.5f);
     }
 
     int maxx = 0, minx = image.getWidth()-1, maxy = 0, miny = image.getHeight()-1;
@@ -69,7 +70,7 @@ bool ras::triangle(
             if(alpha<-EPS || beta<-EPS || gamma<-EPS) continue;
             float z = alpha * points[0].z +
                       beta  * points[1].z +
-                      gamma * points[2].z;
+                      gamma * points[2].z; // z值在这里可以先这样用，下一节我们会发现这样插值是有误差的
             if(z<zbuffer[y*width+x]){
                 continue;
             }
@@ -86,3 +87,5 @@ bool ras::triangle(
     return true;
 }
 ```
+
+需要注意的是，我们这里直接用线性的重心坐标插值去计算三角形内部像素的$z$轴坐标了。虽然这里这样用确实效果还可以，但是下一节我们将会知道这样的差值是有误差的。
