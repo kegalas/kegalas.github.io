@@ -200,6 +200,7 @@
 </span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">float</span> beta  <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>get<span style="color:#f92672">&lt;</span><span style="color:#ae81ff">1</span><span style="color:#f92672">&gt;</span> (ret);
 </span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">float</span> gamma <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>get<span style="color:#f92672">&lt;</span><span style="color:#ae81ff">2</span><span style="color:#f92672">&gt;</span> (ret);
 </span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span>(alpha<span style="color:#f92672">&lt;-</span>EPS <span style="color:#f92672">||</span> beta<span style="color:#f92672">&lt;-</span>EPS <span style="color:#f92672">||</span> gamma<span style="color:#f92672">&lt;-</span>EPS) <span style="color:#66d9ef">continue</span>;
+</span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">float</span> z <span style="color:#f92672">=</span> alpha <span style="color:#f92672">*</span> tcoords.screenCoords[<span style="color:#ae81ff">0</span>].z <span style="color:#f92672">+</span>
 </span></span><span style="display:flex;"><span>                      beta  <span style="color:#f92672">*</span> tcoords.screenCoords[<span style="color:#ae81ff">1</span>].z <span style="color:#f92672">+</span>
 </span></span><span style="display:flex;"><span>                      gamma <span style="color:#f92672">*</span> tcoords.screenCoords[<span style="color:#ae81ff">2</span>].z;
@@ -218,13 +219,14 @@
 </span></span><span style="display:flex;"><span>            geo<span style="color:#f92672">::</span>vec4f l <span style="color:#f92672">=</span> geo<span style="color:#f92672">::</span>normalized(lightPos<span style="color:#f92672">-</span>world); <span style="color:#75715e">//顶点到光源的单位向量
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            geo<span style="color:#f92672">::</span>vec4f v <span style="color:#f92672">=</span> geo<span style="color:#f92672">::</span>normalized(cameraPos<span style="color:#f92672">-</span>world); <span style="color:#75715e">//顶点到相机的单位向量
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            geo<span style="color:#f92672">::</span>vec4f h <span style="color:#f92672">=</span> geo<span style="color:#f92672">::</span>normalized(v<span style="color:#f92672">+</span>l); <span style="color:#75715e">//半程向量
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            geo<span style="color:#f92672">::</span>normalize(norm); <span style="color:#75715e">// 不进行单位化，specular就会过强
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
 </span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">float</span> value <span style="color:#f92672">=</span> geo<span style="color:#f92672">::</span>dot(l, norm); <span style="color:#75715e">//我们直接将dot(l,n)&lt;0的点忽略
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            <span style="color:#66d9ef">if</span>(value<span style="color:#f92672">&lt;</span><span style="color:#ae81ff">0.f</span>){
 </span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">continue</span>;
 </span></span><span style="display:flex;"><span>            }
-</span></span><span style="display:flex;"><span>            geo<span style="color:#f92672">::</span>OARColorf ld <span style="color:#f92672">=</span> kd <span style="color:#f92672">*</span> light <span style="color:#f92672">*</span> value; <span style="color:#75715e">//因为我们还没学zbuffer，如果用max的话会绘制全黑的三角形
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            geo<span style="color:#f92672">::</span>OARColorf ls <span style="color:#f92672">=</span> ks <span style="color:#f92672">*</span> light <span style="color:#f92672">*</span> std<span style="color:#f92672">::</span>pow(std<span style="color:#f92672">::</span>max(<span style="color:#ae81ff">0.f</span>,geo<span style="color:#f92672">::</span>dot(norm, h)), <span style="color:#ae81ff">100.f</span>);
+</span></span><span style="display:flex;"><span>            geo<span style="color:#f92672">::</span>OARColorf ld <span style="color:#f92672">=</span> kd <span style="color:#f92672">*</span> light <span style="color:#f92672">*</span> value;
+</span></span><span style="display:flex;"><span>            geo<span style="color:#f92672">::</span>OARColorf ls <span style="color:#f92672">=</span> ks <span style="color:#f92672">*</span> light <span style="color:#f92672">*</span> std<span style="color:#f92672">::</span>pow(std<span style="color:#f92672">::</span>max(<span style="color:#ae81ff">0.f</span>,geo<span style="color:#f92672">::</span>dot(norm, h)), <span style="color:#ae81ff">100.f</span>);
 </span></span><span style="display:flex;"><span>            geo<span style="color:#f92672">::</span>OARColorf la <span style="color:#f92672">=</span> ka <span style="color:#f92672">*</span> geo<span style="color:#f92672">::</span>vec4f(<span style="color:#ae81ff">.3f</span>, <span style="color:#ae81ff">.3f</span>, <span style="color:#ae81ff">.3f</span>, <span style="color:#ae81ff">1.f</span>); <span style="color:#75715e">//三种光强
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            geo<span style="color:#f92672">::</span>vec4f intensity <span style="color:#f92672">=</span> ld <span style="color:#f92672">+</span> ls <span style="color:#f92672">+</span> la;
 </span></span><span style="display:flex;"><span>
@@ -249,11 +251,11 @@
 			flex-grow: 100; 
 			flex-basis: 240px"
 	>
-	<a href="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-z-buffer/1.jpg" data-size="961x958">
+	<a href="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-z-buffer/1.jpg" data-size="968x968">
 		<img src="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-z-buffer/1.jpg"
-			width="961"
-			height="958"
-			srcset="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-z-buffer/1_hu54bfecedb7595eb7e441a463a4147c33_18998_480x0_resize_q75_box.jpg 480w, /p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-z-buffer/1_hu54bfecedb7595eb7e441a463a4147c33_18998_1024x0_resize_q75_box.jpg 1024w"
+			width="968"
+			height="968"
+			srcset="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-z-buffer/1_hu54bfecedb7595eb7e441a463a4147c33_21145_480x0_resize_q75_box.jpg 480w, /p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-z-buffer/1_hu54bfecedb7595eb7e441a463a4147c33_21145_1024x0_resize_q75_box.jpg 1024w"
 			loading="lazy"
 			alt="1.jpg">
 	</a>
@@ -262,7 +264,6 @@
 	
 </figure></p>
 <p>现在观察壶嘴连接处，已经不会再有穿模的现象了。</p>
-<p><del>但是缺少了几个三角形，看起来像精度问题，我还在Debug，TODO</del></p>
 
 </section>
 

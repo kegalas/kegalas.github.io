@@ -74,6 +74,7 @@ bool ras::trianglePhong(
             float beta  = std::get<1> (ret);
             float gamma = std::get<2> (ret);
             if(alpha<-EPS || beta<-EPS || gamma<-EPS) continue;
+
             float z = alpha * tcoords.screenCoords[0].z +
                       beta  * tcoords.screenCoords[1].z +
                       gamma * tcoords.screenCoords[2].z;
@@ -92,12 +93,13 @@ bool ras::trianglePhong(
             geo::vec4f l = geo::normalized(lightPos-world); //顶点到光源的单位向量
             geo::vec4f v = geo::normalized(cameraPos-world); //顶点到相机的单位向量
             geo::vec4f h = geo::normalized(v+l); //半程向量
+            geo::normalize(norm); // 不进行单位化，specular就会过强
 
             float value = geo::dot(l, norm); //我们直接将dot(l,n)<0的点忽略
             if(value<0.f){
                 continue;
             }
-            geo::OARColorf ld = kd * light * value; //因为我们还没学zbuffer，如果用max的话会绘制全黑的三角形
+            geo::OARColorf ld = kd * light * value;
             geo::OARColorf ls = ks * light * std::pow(std::max(0.f,geo::dot(norm, h)), 100.f);
             geo::OARColorf la = ka * geo::vec4f(.3f, .3f, .3f, 1.f); //三种光强
             geo::vec4f intensity = ld + ls + la;
@@ -123,5 +125,3 @@ bool ras::trianglePhong(
 ![1.jpg](1.jpg)
 
 现在观察壶嘴连接处，已经不会再有穿模的现象了。
-
-~~但是缺少了几个三角形，看起来像精度问题，我还在Debug，TODO~~

@@ -81,6 +81,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#66d9ef&#34;&gt;float&lt;/span&gt; beta  &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; std&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;get&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; (ret);
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#66d9ef&#34;&gt;float&lt;/span&gt; gamma &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; std&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;get&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; (ret);
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt;(alpha&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;-&lt;/span&gt;EPS &lt;span style=&#34;color:#f92672&#34;&gt;||&lt;/span&gt; beta&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;-&lt;/span&gt;EPS &lt;span style=&#34;color:#f92672&#34;&gt;||&lt;/span&gt; gamma&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;-&lt;/span&gt;EPS) &lt;span style=&#34;color:#66d9ef&#34;&gt;continue&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#66d9ef&#34;&gt;float&lt;/span&gt; z &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; alpha &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; tcoords.screenCoords[&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;].z &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                      beta  &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; tcoords.screenCoords[&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;].z &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                      gamma &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; tcoords.screenCoords[&lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;].z;
@@ -99,13 +100,14 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            geo&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;vec4f l &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; geo&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;normalized(lightPos&lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;world); &lt;span style=&#34;color:#75715e&#34;&gt;//顶点到光源的单位向量
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;            geo&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;vec4f v &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; geo&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;normalized(cameraPos&lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;world); &lt;span style=&#34;color:#75715e&#34;&gt;//顶点到相机的单位向量
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;            geo&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;vec4f h &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; geo&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;normalized(v&lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;l); &lt;span style=&#34;color:#75715e&#34;&gt;//半程向量
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;            geo&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;normalize(norm); &lt;span style=&#34;color:#75715e&#34;&gt;// 不进行单位化，specular就会过强
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#66d9ef&#34;&gt;float&lt;/span&gt; value &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; geo&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;dot(l, norm); &lt;span style=&#34;color:#75715e&#34;&gt;//我们直接将dot(l,n)&amp;lt;0的点忽略
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;            &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt;(value&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0.f&lt;/span&gt;){
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                &lt;span style=&#34;color:#66d9ef&#34;&gt;continue&lt;/span&gt;;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            }
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            geo&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;OARColorf ld &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; kd &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; light &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; value; &lt;span style=&#34;color:#75715e&#34;&gt;//因为我们还没学zbuffer，如果用max的话会绘制全黑的三角形
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;            geo&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;OARColorf ls &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; ks &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; light &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; std&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;pow(std&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;max(&lt;span style=&#34;color:#ae81ff&#34;&gt;0.f&lt;/span&gt;,geo&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;dot(norm, h)), &lt;span style=&#34;color:#ae81ff&#34;&gt;100.f&lt;/span&gt;);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            geo&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;OARColorf ld &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; kd &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; light &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; value;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            geo&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;OARColorf ls &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; ks &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; light &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; std&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;pow(std&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;max(&lt;span style=&#34;color:#ae81ff&#34;&gt;0.f&lt;/span&gt;,geo&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;dot(norm, h)), &lt;span style=&#34;color:#ae81ff&#34;&gt;100.f&lt;/span&gt;);
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            geo&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;OARColorf la &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; ka &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; geo&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;vec4f(&lt;span style=&#34;color:#ae81ff&#34;&gt;.3f&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;.3f&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;.3f&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;1.f&lt;/span&gt;); &lt;span style=&#34;color:#75715e&#34;&gt;//三种光强
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;            geo&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;vec4f intensity &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; ld &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; ls &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; la;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
@@ -130,11 +132,11 @@
 			flex-grow: 100; 
 			flex-basis: 240px&#34;
 	&gt;
-	&lt;a href=&#34;https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-z-buffer/1.jpg&#34; data-size=&#34;961x958&#34;&gt;
+	&lt;a href=&#34;https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-z-buffer/1.jpg&#34; data-size=&#34;968x968&#34;&gt;
 		&lt;img src=&#34;https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-z-buffer/1.jpg&#34;
-			width=&#34;961&#34;
-			height=&#34;958&#34;
-			srcset=&#34;https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-z-buffer/1_hu54bfecedb7595eb7e441a463a4147c33_18998_480x0_resize_q75_box.jpg 480w, https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-z-buffer/1_hu54bfecedb7595eb7e441a463a4147c33_18998_1024x0_resize_q75_box.jpg 1024w&#34;
+			width=&#34;968&#34;
+			height=&#34;968&#34;
+			srcset=&#34;https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-z-buffer/1_hu54bfecedb7595eb7e441a463a4147c33_21145_480x0_resize_q75_box.jpg 480w, https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-z-buffer/1_hu54bfecedb7595eb7e441a463a4147c33_21145_1024x0_resize_q75_box.jpg 1024w&#34;
 			loading=&#34;lazy&#34;
 			alt=&#34;1.jpg&#34;&gt;
 	&lt;/a&gt;
@@ -143,7 +145,6 @@
 	
 &lt;/figure&gt;&lt;/p&gt;
 &lt;p&gt;现在观察壶嘴连接处，已经不会再有穿模的现象了。&lt;/p&gt;
-&lt;p&gt;&lt;del&gt;但是缺少了几个三角形，看起来像精度问题，我还在Debug，TODO&lt;/del&gt;&lt;/p&gt;
 </description>
         </item>
         <item>
@@ -740,11 +741,11 @@ f
 			flex-grow: 100; 
 			flex-basis: 241px&#34;
 	&gt;
-	&lt;a href=&#34;https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2%E4%B8%8E%E8%A7%86%E8%A7%92/9.jpg&#34; data-size=&#34;967x961&#34;&gt;
+	&lt;a href=&#34;https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2%E4%B8%8E%E8%A7%86%E8%A7%92/9.jpg&#34; data-size=&#34;968x961&#34;&gt;
 		&lt;img src=&#34;https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2%E4%B8%8E%E8%A7%86%E8%A7%92/9.jpg&#34;
-			width=&#34;967&#34;
+			width=&#34;968&#34;
 			height=&#34;961&#34;
-			srcset=&#34;https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2%E4%B8%8E%E8%A7%86%E8%A7%92/9_hu54bfecedb7595eb7e441a463a4147c33_17592_480x0_resize_q75_box.jpg 480w, https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2%E4%B8%8E%E8%A7%86%E8%A7%92/9_hu54bfecedb7595eb7e441a463a4147c33_17592_1024x0_resize_q75_box.jpg 1024w&#34;
+			srcset=&#34;https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2%E4%B8%8E%E8%A7%86%E8%A7%92/9_hu54bfecedb7595eb7e441a463a4147c33_19049_480x0_resize_q75_box.jpg 480w, https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2%E4%B8%8E%E8%A7%86%E8%A7%92/9_hu54bfecedb7595eb7e441a463a4147c33_19049_1024x0_resize_q75_box.jpg 1024w&#34;
 			loading=&#34;lazy&#34;
 			alt=&#34;9.jpg&#34;&gt;
 	&lt;/a&gt;
@@ -5130,10 +5131,10 @@ for x = x0 to x1 do
 &lt;p&gt;&lt;u&gt;&lt;strong&gt;&lt;a class=&#34;link&#34; href=&#34;../%e4%bb%8e%e9%9b%b6%e5%bc%80%e5%a7%8b%e7%9a%84%e8%bd%af%e6%b8%b2%e6%9f%93%e5%99%a8-%e6%a8%a1%e5%9e%8b%e5%ba%93&#34; &gt;4. 从零开始的软渲染器-模型库&lt;/a&gt;&lt;/strong&gt;&lt;/u&gt;&lt;/p&gt;
 &lt;p&gt;&lt;u&gt;&lt;strong&gt;&lt;a class=&#34;link&#34; href=&#34;../%e4%bb%8e%e9%9b%b6%e5%bc%80%e5%a7%8b%e7%9a%84%e8%bd%af%e6%b8%b2%e6%9f%93%e5%99%a8-%e5%85%89%e7%85%a7%e5%88%9d%e6%ad%a5&#34; &gt;5. 从零开始的软渲染器-光照初步&lt;/a&gt;&lt;/strong&gt;&lt;/u&gt;&lt;/p&gt;
 &lt;p&gt;&lt;u&gt;&lt;strong&gt;&lt;a class=&#34;link&#34; href=&#34;../%e4%bb%8e%e9%9b%b6%e5%bc%80%e5%a7%8b%e7%9a%84%e8%bd%af%e6%b8%b2%e6%9f%93%e5%99%a8-%e5%9d%90%e6%a0%87%e5%8f%98%e6%8d%a2%e4%b8%8e%e8%a7%86%e8%a7%92&#34; &gt;6. 从零开始的软渲染器-坐标变换与视角&lt;/a&gt;&lt;/strong&gt;&lt;/u&gt;&lt;/p&gt;
-&lt;p&gt;TODO:&lt;/p&gt;
 &lt;p&gt;&lt;u&gt;&lt;strong&gt;&lt;a class=&#34;link&#34; href=&#34;../%e4%bb%8e%e9%9b%b6%e5%bc%80%e5%a7%8b%e7%9a%84%e8%bd%af%e6%b8%b2%e6%9f%93%e5%99%a8-z-buffer&#34; &gt;7. 从零开始的软渲染器-Z-Buffer&lt;/a&gt;&lt;/strong&gt;&lt;/u&gt;&lt;/p&gt;
-&lt;p&gt;&lt;u&gt;&lt;strong&gt;&lt;a class=&#34;link&#34; href=&#34;../%e4%bb%8e%e9%9b%b6%e5%bc%80%e5%a7%8b%e7%9a%84%e8%bd%af%e6%b8%b2%e6%9f%93%e5%99%a8-%e5%9b%be%e5%bd%a2%e6%b8%b2%e6%9f%93%e7%ae%a1%e7%ba%bf&#34; &gt;8. 从零开始的软渲染器-图形渲染管线&lt;/a&gt;&lt;/strong&gt;&lt;/u&gt;&lt;/p&gt;
-&lt;p&gt;&lt;u&gt;&lt;strong&gt;&lt;a class=&#34;link&#34; href=&#34;../%e4%bb%8e%e9%9b%b6%e5%bc%80%e5%a7%8b%e7%9a%84%e8%bd%af%e6%b8%b2%e6%9f%93%e5%99%a8-%e7%ba%b9%e7%90%86%e8%b4%b4%e5%9b%be&#34; &gt;9. 从零开始的软渲染器-纹理贴图&lt;/a&gt;&lt;/strong&gt;&lt;/u&gt;&lt;/p&gt;
+&lt;p&gt;TODO:&lt;/p&gt;
+&lt;p&gt;&lt;u&gt;&lt;strong&gt;&lt;a class=&#34;link&#34; href=&#34;../%e4%bb%8e%e9%9b%b6%e5%bc%80%e5%a7%8b%e7%9a%84%e8%bd%af%e6%b8%b2%e6%9f%93%e5%99%a8-%e7%ba%b9%e7%90%86%e8%b4%b4%e5%9b%be&#34; &gt;8. 从零开始的软渲染器-纹理贴图&lt;/a&gt;&lt;/strong&gt;&lt;/u&gt;&lt;/p&gt;
+&lt;p&gt;&lt;u&gt;&lt;strong&gt;&lt;a class=&#34;link&#34; href=&#34;../%e4%bb%8e%e9%9b%b6%e5%bc%80%e5%a7%8b%e7%9a%84%e8%bd%af%e6%b8%b2%e6%9f%93%e5%99%a8-%e5%9b%be%e5%bd%a2%e6%b8%b2%e6%9f%93%e7%ae%a1%e7%ba%bf&#34; &gt;9. 从零开始的软渲染器-图形渲染管线&lt;/a&gt;&lt;/strong&gt;&lt;/u&gt;&lt;/p&gt;
 &lt;p&gt;&lt;u&gt;&lt;strong&gt;&lt;a class=&#34;link&#34; href=&#34;../%e4%bb%8e%e9%9b%b6%e5%bc%80%e5%a7%8b%e7%9a%84%e8%bd%af%e6%b8%b2%e6%9f%93%e5%99%a8-%e9%98%b4%e5%bd%b1%e8%b4%b4%e5%9b%be&#34; &gt;10. 从零开始的软渲染器-阴影贴图&lt;/a&gt;&lt;/strong&gt;&lt;/u&gt;&lt;/p&gt;
 &lt;p&gt;&lt;u&gt;&lt;strong&gt;&lt;a class=&#34;link&#34; href=&#34;../%e4%bb%8e%e9%9b%b6%e5%bc%80%e5%a7%8b%e7%9a%84%e8%bd%af%e6%b8%b2%e6%9f%93%e5%99%a8-%e6%9b%b4%e7%9c%9f%e5%ae%9e%e7%9a%84%e5%85%89%e7%85%a7&#34; &gt;11. 从零开始的软渲染器-更真实的光照&lt;/a&gt;&lt;/strong&gt;&lt;/u&gt;&lt;/p&gt;
 &lt;p&gt;&lt;u&gt;&lt;strong&gt;&lt;a class=&#34;link&#34; href=&#34;../%e4%bb%8e%e9%9b%b6%e5%bc%80%e5%a7%8b%e7%9a%84%e8%bd%af%e6%b8%b2%e6%9f%93%e5%99%a8-%e5%85%89%e7%ba%bf%e8%bf%bd%e8%b8%aa%e5%88%9d%e6%ad%a5&#34; &gt;12. 从零开始的软渲染器-光线追踪初步&lt;/a&gt;&lt;/strong&gt;&lt;/u&gt;&lt;/p&gt;
