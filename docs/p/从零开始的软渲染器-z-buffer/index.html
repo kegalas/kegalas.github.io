@@ -221,11 +221,7 @@
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            geo<span style="color:#f92672">::</span>vec4f h <span style="color:#f92672">=</span> geo<span style="color:#f92672">::</span>normalized(v<span style="color:#f92672">+</span>l); <span style="color:#75715e">//半程向量
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            geo<span style="color:#f92672">::</span>normalize(norm); <span style="color:#75715e">// 不进行单位化，specular就会过强
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">float</span> value <span style="color:#f92672">=</span> geo<span style="color:#f92672">::</span>dot(l, norm); <span style="color:#75715e">//我们直接将dot(l,n)&lt;0的点忽略
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            <span style="color:#66d9ef">if</span>(value<span style="color:#f92672">&lt;</span><span style="color:#ae81ff">0.f</span>){
-</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">continue</span>;
-</span></span><span style="display:flex;"><span>            }
-</span></span><span style="display:flex;"><span>            geo<span style="color:#f92672">::</span>OARColorf ld <span style="color:#f92672">=</span> kd <span style="color:#f92672">*</span> light <span style="color:#f92672">*</span> value;
+</span></span><span style="display:flex;"><span>            geo<span style="color:#f92672">::</span>OARColorf ld <span style="color:#f92672">=</span> kd <span style="color:#f92672">*</span> light <span style="color:#f92672">*</span> std<span style="color:#f92672">::</span>max(<span style="color:#ae81ff">0.f</span>, geo<span style="color:#f92672">::</span>dot(l, norm));
 </span></span><span style="display:flex;"><span>            geo<span style="color:#f92672">::</span>OARColorf ls <span style="color:#f92672">=</span> ks <span style="color:#f92672">*</span> light <span style="color:#f92672">*</span> std<span style="color:#f92672">::</span>pow(std<span style="color:#f92672">::</span>max(<span style="color:#ae81ff">0.f</span>,geo<span style="color:#f92672">::</span>dot(norm, h)), <span style="color:#ae81ff">100.f</span>);
 </span></span><span style="display:flex;"><span>            geo<span style="color:#f92672">::</span>OARColorf la <span style="color:#f92672">=</span> ka <span style="color:#f92672">*</span> geo<span style="color:#f92672">::</span>vec4f(<span style="color:#ae81ff">.3f</span>, <span style="color:#ae81ff">.3f</span>, <span style="color:#ae81ff">.3f</span>, <span style="color:#ae81ff">1.f</span>); <span style="color:#75715e">//三种光强
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            geo<span style="color:#f92672">::</span>vec4f intensity <span style="color:#f92672">=</span> ld <span style="color:#f92672">+</span> ls <span style="color:#f92672">+</span> la;
@@ -248,14 +244,14 @@
 	
 		class="gallery-image" 
 		style="
-			flex-grow: 100; 
-			flex-basis: 240px"
+			flex-grow: 99; 
+			flex-basis: 239px"
 	>
-	<a href="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-z-buffer/1.jpg" data-size="968x968">
+	<a href="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-z-buffer/1.jpg" data-size="968x971">
 		<img src="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-z-buffer/1.jpg"
 			width="968"
-			height="968"
-			srcset="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-z-buffer/1_hu54bfecedb7595eb7e441a463a4147c33_21145_480x0_resize_q75_box.jpg 480w, /p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-z-buffer/1_hu54bfecedb7595eb7e441a463a4147c33_21145_1024x0_resize_q75_box.jpg 1024w"
+			height="971"
+			srcset="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-z-buffer/1_hu54bfecedb7595eb7e441a463a4147c33_21056_480x0_resize_q75_box.jpg 480w, /p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-z-buffer/1_hu54bfecedb7595eb7e441a463a4147c33_21056_1024x0_resize_q75_box.jpg 1024w"
 			loading="lazy"
 			alt="1.jpg">
 	</a>

@@ -95,11 +95,7 @@ bool ras::trianglePhong(
             geo::vec4f h = geo::normalized(v+l); //半程向量
             geo::normalize(norm); // 不进行单位化，specular就会过强
 
-            float value = geo::dot(l, norm); //我们直接将dot(l,n)<0的点忽略
-            if(value<0.f){
-                continue;
-            }
-            geo::OARColorf ld = kd * light * value;
+            geo::OARColorf ld = kd * light * std::max(0.f, geo::dot(l, norm));
             geo::OARColorf ls = ks * light * std::pow(std::max(0.f,geo::dot(norm, h)), 100.f);
             geo::OARColorf la = ka * geo::vec4f(.3f, .3f, .3f, 1.f); //三种光强
             geo::vec4f intensity = ld + ls + la;

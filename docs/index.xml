@@ -102,11 +102,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;            geo&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;vec4f h &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; geo&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;normalized(v&lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;l); &lt;span style=&#34;color:#75715e&#34;&gt;//半程向量
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;            geo&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;normalize(norm); &lt;span style=&#34;color:#75715e&#34;&gt;// 不进行单位化，specular就会过强
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#66d9ef&#34;&gt;float&lt;/span&gt; value &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; geo&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;dot(l, norm); &lt;span style=&#34;color:#75715e&#34;&gt;//我们直接将dot(l,n)&amp;lt;0的点忽略
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;            &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt;(value&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0.f&lt;/span&gt;){
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                &lt;span style=&#34;color:#66d9ef&#34;&gt;continue&lt;/span&gt;;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            }
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            geo&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;OARColorf ld &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; kd &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; light &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; value;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            geo&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;OARColorf ld &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; kd &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; light &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; std&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;max(&lt;span style=&#34;color:#ae81ff&#34;&gt;0.f&lt;/span&gt;, geo&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;dot(l, norm));
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            geo&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;OARColorf ls &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; ks &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; light &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; std&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;pow(std&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;max(&lt;span style=&#34;color:#ae81ff&#34;&gt;0.f&lt;/span&gt;,geo&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;dot(norm, h)), &lt;span style=&#34;color:#ae81ff&#34;&gt;100.f&lt;/span&gt;);
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            geo&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;OARColorf la &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; ka &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; geo&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;vec4f(&lt;span style=&#34;color:#ae81ff&#34;&gt;.3f&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;.3f&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;.3f&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;1.f&lt;/span&gt;); &lt;span style=&#34;color:#75715e&#34;&gt;//三种光强
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;            geo&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;vec4f intensity &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; ld &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; ls &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; la;
@@ -129,14 +125,14 @@
 	
 		class=&#34;gallery-image&#34; 
 		style=&#34;
-			flex-grow: 100; 
-			flex-basis: 240px&#34;
+			flex-grow: 99; 
+			flex-basis: 239px&#34;
 	&gt;
-	&lt;a href=&#34;https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-z-buffer/1.jpg&#34; data-size=&#34;968x968&#34;&gt;
+	&lt;a href=&#34;https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-z-buffer/1.jpg&#34; data-size=&#34;968x971&#34;&gt;
 		&lt;img src=&#34;https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-z-buffer/1.jpg&#34;
 			width=&#34;968&#34;
-			height=&#34;968&#34;
-			srcset=&#34;https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-z-buffer/1_hu54bfecedb7595eb7e441a463a4147c33_21145_480x0_resize_q75_box.jpg 480w, https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-z-buffer/1_hu54bfecedb7595eb7e441a463a4147c33_21145_1024x0_resize_q75_box.jpg 1024w&#34;
+			height=&#34;971&#34;
+			srcset=&#34;https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-z-buffer/1_hu54bfecedb7595eb7e441a463a4147c33_21056_480x0_resize_q75_box.jpg 480w, https://kegalas.top/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-z-buffer/1_hu54bfecedb7595eb7e441a463a4147c33_21056_1024x0_resize_q75_box.jpg 1024w&#34;
 			loading=&#34;lazy&#34;
 			alt=&#34;1.jpg&#34;&gt;
 	&lt;/a&gt;
