@@ -625,7 +625,7 @@ f
 <p><span class="math display">\[\begin{bmatrix}
  \dfrac{2n}{r-l} & 0 &  \dfrac{l+r}{l-r} & 0\\
  0 & \dfrac{2n}{t-b} & \dfrac{b+t}{b-t} & 0\\
- 0 & 0 &  -1 &  2\\
+ 0 & 0 &  -1 &  2n\\
  0 & 0 & 1 & 0
 \end{bmatrix}
 \]</span></p>
@@ -667,6 +667,9 @@ f
 <p><span class="math display">\[p' = M_{vp}M_oM_pM_vM_mp
 \]</span></p>
 <h1 id="代码">代码</h1>
+<p>所有的矩阵计算代码都可以在 <strong><a class="link" href="https://github.com/kegalas/oar/blob/main/tutorial/chapter6/src/geometry.cpp"  target="_blank" rel="noopener"
+    >这里</a></strong> 找到没有什么需要强调的地方，都是填数据而已。</p>
+<h1 id="使用例">使用例</h1>
 <p>TODO</p>
 <h1 id="附录">附录</h1>
 <p>为什么要用四维坐标？其实就是因为平移他不是线性变换，三维的矩阵无法处理三维的平移。但是我们可以通过多加一维的方式来引入平移运算。</p>
@@ -722,8 +725,6 @@ f
 \]</span></p>
 <p>这就是数学意义上的向量，永远从原点开始。而与物理中有时讨论的矢量不同，物理中矢量有时可以让起始点在任意地方。</p>
 <p>另外，你可能需要经常检查你的点的第四维坐标是否为1，如果不为1，可能会产生各种奇怪的问题。在某些变换矩阵作用后，第四维可能就不为1了，并且你可能不容易发现这个问题。</p>
-<h1 id="使用例">使用例</h1>
-<p>TODO</p>
 
 </section>
 
@@ -1089,8 +1090,8 @@ f
       </ol>
     </li>
     <li><a href="#代码">代码</a></li>
-    <li><a href="#附录">附录</a></li>
     <li><a href="#使用例">使用例</a></li>
+    <li><a href="#附录">附录</a></li>
   </ol>
 </nav>
                 </div>

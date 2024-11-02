@@ -506,7 +506,7 @@ f
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\begin{bmatrix}
  \dfrac{2n}{r-l} &amp; 0 &amp;  \dfrac{l+r}{l-r} &amp; 0\\
  0 &amp; \dfrac{2n}{t-b} &amp; \dfrac{b+t}{b-t} &amp; 0\\
- 0 &amp; 0 &amp;  -1 &amp;  2\\
+ 0 &amp; 0 &amp;  -1 &amp;  2n\\
  0 &amp; 0 &amp; 1 &amp; 0
 \end{bmatrix}
 \]&lt;/span&gt;&lt;/p&gt;
@@ -548,6 +548,9 @@ f
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[p&#39; = M_{vp}M_oM_pM_vM_mp
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;h1 id=&#34;代码&#34;&gt;代码&lt;/h1&gt;
+&lt;p&gt;所有的矩阵计算代码都可以在 &lt;strong&gt;&lt;a class=&#34;link&#34; href=&#34;https://github.com/kegalas/oar/blob/main/tutorial/chapter6/src/geometry.cpp&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;这里&lt;/a&gt;&lt;/strong&gt; 找到没有什么需要强调的地方，都是填数据而已。&lt;/p&gt;
+&lt;h1 id=&#34;使用例&#34;&gt;使用例&lt;/h1&gt;
 &lt;p&gt;TODO&lt;/p&gt;
 &lt;h1 id=&#34;附录&#34;&gt;附录&lt;/h1&gt;
 &lt;p&gt;为什么要用四维坐标？其实就是因为平移他不是线性变换，三维的矩阵无法处理三维的平移。但是我们可以通过多加一维的方式来引入平移运算。&lt;/p&gt;
@@ -603,8 +606,6 @@ f
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;这就是数学意义上的向量，永远从原点开始。而与物理中有时讨论的矢量不同，物理中矢量有时可以让起始点在任意地方。&lt;/p&gt;
 &lt;p&gt;另外，你可能需要经常检查你的点的第四维坐标是否为1，如果不为1，可能会产生各种奇怪的问题。在某些变换矩阵作用后，第四维可能就不为1了，并且你可能不容易发现这个问题。&lt;/p&gt;
-&lt;h1 id=&#34;使用例&#34;&gt;使用例&lt;/h1&gt;
-&lt;p&gt;TODO&lt;/p&gt;
 </description>
         </item>
         <item>
