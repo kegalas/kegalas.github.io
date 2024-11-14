@@ -13479,9 +13479,9 @@ std::cout&amp;lt;&amp;lt;(int)x&amp;lt;&amp;lt;&amp;#34;\n&amp;#34;;
 &lt;td&gt;foo&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
-&lt;td&gt;\|转义符，将一些正则表达式需要的符号进行转义&lt;/td&gt;
+&lt;td&gt;\&lt;/td&gt;
+&lt;td&gt;转义符，将一些正则表达式需要的符号进行转义&lt;/td&gt;
 &lt;td&gt;\.&lt;/td&gt;
-&lt;td&gt;&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td&gt;()&lt;/td&gt;
@@ -13587,8 +13587,9 @@ std::cout&amp;lt;&amp;lt;(int)x&amp;lt;&amp;lt;&amp;#34;\n&amp;#34;;
 &lt;p&gt;只不过，这个东西不是完全匹配，只要有任意子串匹配，就会返回1。而且只要匹配到一个就会返回（当然这里要注意贪婪和非贪婪），不会再往后搜索，所以如果你使用res[1]是不会输出第二个结果的。res[0]返回的是匹配到的子串的结果，res[1]以后的东西也有含义，但是我暂时觉得没什么用。&lt;/p&gt;
 &lt;p&gt;res[0]的类型是sub_match，可以使用.second方法得到res[0]在s中的匹配结果位置的末尾的迭代器，所以要遍历所有匹配的子序列，可以这么写：&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-CPP&#34; data-lang=&#34;CPP&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;while&lt;/span&gt;(std&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;regex_search(it_begin,it_end,res,pattern)){
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;   std&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;cout&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt;res[&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;]&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34; &amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt;res.position()&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;   it_begin &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; res[&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;].second;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt;(it_begin&lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt;it_end) &lt;span style=&#34;color:#66d9ef&#34;&gt;break&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    std&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;cout&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt;res[&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;]&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34; &amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt;res.position()&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    it_begin &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; res[&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;].second;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;其中你还可以用.position返回子串开头的位置（相对于it_begin而言）。&lt;/p&gt;
 &lt;h4 id=&#34;stdregex_replace&#34;&gt;std::regex_replace&lt;/h4&gt;
