@@ -198,10 +198,10 @@
 \]</span></p>
 <p>其中<span class="math inline">\(\mathbf{v}\in \mathbb{R} ^d\)</span>。类似的，对于每一个文字输入<span class="math inline">\(x_u\)</span>，用一个采样变换<span class="math inline">\(t_u\)</span>得到该输入的一部分，<span class="math inline">\(\tilde{x}_u\)</span>，然后也适用类似的编码器和非线性变换得到<span class="math inline">\(\mathbf{u}=g_u(f_u(\tilde{\mathbf{x}}_u))\)</span>。这里也有<span class="math inline">\(\mathbf{u}\in \mathbb{R} ^d\)</span>.</p>
 <p>在训练时，从训练集中采样一个大小为<span class="math inline">\(N\)</span>的minibatch，每一个数据都是一对<span class="math inline">\((x_v,x_u)\)</span>，然后计算出它们的表示对<span class="math inline">\((v, u)\)</span>。记<span class="math inline">\((v_i, u_i)\)</span>为第<span class="math inline">\(i\)</span>对。ConVIRT的训练目标函数包括两个损失函数，第一个是第<span class="math inline">\(i\)</span>对数据的图像到文字的对比误差</p>
-<p><span class="math display">\[\ell_i^{(v\to u)} = -\log\dfrac{\exp(<v_i, u_i>/\tau)}{\sum^N_{k=1}\exp(<v_i,u_k>/\tau)}
+<p><span class="math display">\[\ell_i^{(v\to u)} = -\log\dfrac{\exp( < v_i, u_i > /\tau)}{\sum^N_{k=1}\exp( < v_i,u_k > /\tau)}
 \]</span></p>
-<p>其中<span class="math inline">\(<v_i, u_i>\)</span>是余弦相似度，即<span class="math inline">\(<v, u>=v^Tu/||v||||u||\)</span>。而<span class="math inline">\(\tau\in \mathbb{R^+}\)</span>是一个温度参数。最小化这个损失可以使得编码器最大化保留true pairs之间的相互信息。直觉上来说，这就是一种<span class="math inline">\(N\)</span>类分类器的损失函数，其将<span class="math inline">\((v_i, u_i)\)</span>分类为true pari（正类对）。与前人不同，前人的损失函数是对于同模态的数据，而本文的对比损失则对每一个输入模态都是非对称的。因此，定义文字到图像的对比误差为</p>
-<p><span class="math display">\[\ell_i^{(u\to v)} = -\log\dfrac{\exp(<u_i, v_i>/\tau)}{\sum^N_{k=1}\exp(<u_i,v_k>/\tau)}
+<p>其中<span class="math inline">\(< v_i, u_i>\)</span>是余弦相似度，即<span class="math inline">\(< v, u>=v^Tu/||v||||u||\)</span>。而<span class="math inline">\(\tau\in \mathbb{R^+}\)</span>是一个温度参数。最小化这个损失可以使得编码器最大化保留true pairs之间的相互信息。直觉上来说，这就是一种<span class="math inline">\(N\)</span>类分类器的损失函数，其将<span class="math inline">\((v_i, u_i)\)</span>分类为true pair（正类对）。与前人不同，前人的损失函数是对于同模态的数据，而本文的对比损失则对每一个输入模态都是非对称的。因此，定义文字到图像的对比误差为</p>
+<p><span class="math display">\[\ell_i^{(u\to v)} = -\log\dfrac{\exp( < u_i, v_i > / \tau)}{\sum^N_{k=1}\exp( < u_i,v_k > /\tau)}
 \]</span></p>
 <p>最终的训练损失函数即为两个损失的加权和</p>
 <p><span class="math display">\[\mathcal{L} = \dfrac{1}{N} \sum^N_{i=1}\bigg(\lambda\ell_i^{(v\to u)}  +(1-\lambda)\ell_i^{(u\to v)} \bigg)
