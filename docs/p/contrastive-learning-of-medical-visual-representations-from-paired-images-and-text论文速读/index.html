@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='原论文：https://arxiv.org/abs/2010.00747 摘要 医学图像的视觉表示是核心研究方向，但是由于标注的缺少，效果不够好'><title>Contrastive Learning of Medical Visual Representations From Paired Images and Text论文速读</title>
+
+<link rel='canonical' href='https://kegalas.top/p/contrastive-learning-of-medical-visual-representations-from-paired-images-and-text%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/'>
+
+<link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='Contrastive Learning of Medical Visual Representations From Paired Images and Text论文速读'>
+<meta property='og:description' content='原论文：https://arxiv.org/abs/2010.00747 摘要 医学图像的视觉表示是核心研究方向，但是由于标注的缺少，效果不够好'>
+<meta property='og:url' content='https://kegalas.top/p/contrastive-learning-of-medical-visual-representations-from-paired-images-and-text%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/'>
+<meta property='og:site_name' content='KegalaS的个人博客'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='大学' /><meta property='article:tag' content='人工智能' /><meta property='article:tag' content='计算机视觉' /><meta property='article:published_time' content='2024-12-01T21:06:43&#43;08:00'/><meta property='article:modified_time' content='2024-12-01T21:06:43&#43;08:00'/><meta property='og:image' content='https://kegalas.top/p/contrastive-learning-of-medical-visual-representations-from-paired-images-and-text%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/cover.jpg' />
+<meta name="twitter:title" content="Contrastive Learning of Medical Visual Representations From Paired Images and Text论文速读">
+<meta name="twitter:description" content="原论文：https://arxiv.org/abs/2010.00747 摘要 医学图像的视觉表示是核心研究方向，但是由于标注的缺少，效果不够好"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://kegalas.top/p/contrastive-learning-of-medical-visual-representations-from-paired-images-and-text%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/cover.jpg' />
+    <link rel="shortcut icon" href="/images/favicon.ico" />
+
+    </head>
+    <body class="
+    article-page has-toc
+">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex 
+    
+        extended
+    
+">
+    
+        <div id="article-toolbar">
+            <a href="/" class="back-home">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="15 6 9 12 15 18" />
+</svg>
+
+
+
+                <span>返回</span>
+            </a>
+        </div>
+    
+<main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/p/contrastive-learning-of-medical-visual-representations-from-paired-images-and-text%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/">
+                <img src="/p/contrastive-learning-of-medical-visual-representations-from-paired-images-and-text%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/cover_hub8c84ca5ad65dd454459c16e59485375_58694_800x0_resize_q75_box.jpg"
+                        srcset="/p/contrastive-learning-of-medical-visual-representations-from-paired-images-and-text%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/cover_hub8c84ca5ad65dd454459c16e59485375_58694_800x0_resize_q75_box.jpg 800w, /p/contrastive-learning-of-medical-visual-representations-from-paired-images-and-text%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/cover_hub8c84ca5ad65dd454459c16e59485375_58694_1600x0_resize_q75_box.jpg 1600w"
+                        width="800" 
+                        height="273" 
+                        loading="lazy"
+                        alt="Featured image of post Contrastive Learning of Medical Visual Representations From Paired Images and Text论文速读" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" >
+                人工智能
+            </a>
+        
+    </header>
+    
+
+    <h2 class="article-title">
+        <a href="/p/contrastive-learning-of-medical-visual-representations-from-paired-images-and-text%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/">Contrastive Learning of Medical Visual Representations From Paired Images and Text论文速读</a>
+    </h2>
+
+    
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Dec 01, 2024</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 6 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+</div>
+</header>
+
+    <section class="article-content">
+    <p>原论文：<a class="link" href="https://arxiv.org/abs/2010.00747"  target="_blank" rel="noopener"
+    >https://arxiv.org/abs/2010.00747</a></p>
+<h1 id="摘要">摘要</h1>
+<p>医学图像的视觉表示是核心研究方向，但是由于标注的缺少，效果不够好。现有的工作要么是在ImageNet上进行微调（次优，因为图像差距太大）；要么是从医学文本中，用基于规则（rule-based）的方式提取标签（不精确且不泛用）。同时，对比学习在自然图像上表现很好，而在类间相似度（inter-class similarity）很高的医学图像上表现不好。</p>
+<p>本文提出ConVIRT，一个无监督的模型，通过利用配对的医学文本来学习视觉表示。并且，它是领域无关的，也不需要额外的专家输入。</p>
+<h1 id="介绍">介绍</h1>
+<p>现有的获取医学图像标注的方法有两种：</p>
+<ol>
+<li>使用医学专家标注的高质量标注。缺点是数据量特别小，远小于ImageNet。所以业内经常用ImageNet来迁移权重。但是，ImageNet的图像区别会很明显，不像医学图像（如图1），其区别是非常细微的，具有非常细致的（fine-grained）视觉特征。</li>
+<li>使用专家定义的规则，来提取图片对应的文字报告中的标签。这样数据集是更大了（图像和医学报告本来就会在医生的诊断过程中记录），但是有两个缺点：一是规则不准确，且类型有限；二是领域特定（domain-specific），并且对文字的风格比较敏感，泛化能力差。</li>
+</ol>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 212; 
+			flex-basis: 509px"
+	>
+	<a href="/p/contrastive-learning-of-medical-visual-representations-from-paired-images-and-text%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/1.jpg" data-size="1419x668">
+		<img src="/p/contrastive-learning-of-medical-visual-representations-from-paired-images-and-text%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/1.jpg"
+			width="1419"
+			height="668"
+			srcset="/p/contrastive-learning-of-medical-visual-representations-from-paired-images-and-text%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/1_hud46c87841fb7967e77c71e1f6a1ef024_105005_480x0_resize_q75_box.jpg 480w, /p/contrastive-learning-of-medical-visual-representations-from-paired-images-and-text%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/1_hud46c87841fb7967e77c71e1f6a1ef024_105005_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="图1">
+	</a>
+	
+	<figcaption>图1</figcaption>
+	
+</figure></p>
+<p>近期的对比学习用在自然图片上和第一条遭遇了差不多的问题，也是由于类间相似度很高，所以效果不够好。</p>
+<p>本文提出的ConVIRT可以利用上图片-文字对，来进行无监督的学习。ConVIRT通过图像和文本模态之间的bidirectional contrastive objective，最大限度地提高真实图像-文本对与随机对之间的一致性，从而提高视觉表示的效果。</p>
+<h1 id="相关工作">相关工作</h1>
+<p>（略过ImageNet预训练和自然图像的对比学习，前面介绍过）</p>
+<p>另外一个相关的研究方向是视觉-语言表示学习（visual-linguistic representation learning）。本文的关键不同点在于：</p>
+<ol>
+<li>这些研究是通过binary contrastive prediction task来学习视觉表示的。而本文展示了cross-modality NCE objectives来提示视觉表示效果的优越性</li>
+<li>这些研究主要依赖于图像分割的预处理过程，但医学图像的图像分割是很难进行的</li>
+<li>这些研究的评估主要是在视觉问答任务上进行的，而本文则在分类任务和检索任务（retrieval tasks）上进行。</li>
+</ol>
+<h1 id="问题定义">问题定义</h1>
+<p>假设数据输入是形如<span class="math inline">\((x_v, x_u)\)</span>的成对数据，其中<span class="math inline">\(x_v\)</span>是一张或一组图像，而<span class="math inline">\(x_u\)</span>是一段对于<span class="math inline">\(x_v\)</span>的文字描述。目标是学习到一个参数化的图像编码器<span class="math inline">\(f_v\)</span>，可以将该图片的信息映射到一个固定维度的向量中。之后就可以利用这个<span class="math inline">\(f_v\)</span>去进行下游任务，例如分类和检索。本文中，<span class="math inline">\(f_v\)</span>是一个CNN。</p>
+<h1 id="从文本中学习的比较视觉表示">从文本中学习的比较视觉表示</h1>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 217; 
+			flex-basis: 522px"
+	>
+	<a href="/p/contrastive-learning-of-medical-visual-representations-from-paired-images-and-text%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/2.jpg" data-size="1455x668">
+		<img src="/p/contrastive-learning-of-medical-visual-representations-from-paired-images-and-text%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/2.jpg"
+			width="1455"
+			height="668"
+			srcset="/p/contrastive-learning-of-medical-visual-representations-from-paired-images-and-text%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/2_hub0dc5de02b67b4945e49bf20f42f29b6_122600_480x0_resize_q75_box.jpg 480w, /p/contrastive-learning-of-medical-visual-representations-from-paired-images-and-text%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/2_hub0dc5de02b67b4945e49bf20f42f29b6_122600_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="图2">
+	</a>
+	
+	<figcaption>图2</figcaption>
+	
+</figure></p>
+<p>本文的方法将图片<span class="math inline">\(x_v\)</span>和文字<span class="math inline">\(x_u\)</span>分别转化成同样是<span class="math inline">\(d\)</span>维的两个向量<span class="math inline">\(u,v\)</span>。对于每一张输入的图片<span class="math inline">\(x_v\)</span>，本方法首先使用一个采样变换<span class="math inline">\(t_v\sim T\)</span>来对图像进行一次变换，得到一个随机的view <span class="math inline">\(\tilde{x}_v\)</span>。其中<span class="math inline">\(T\)</span>是稍后定义的一套图像随机变换的函数。之后，编码器<span class="math inline">\(f_v\)</span>将<span class="math inline">\(\tilde{x}_v\)</span>变换成固定维度的向量<span class="math inline">\(h_v\)</span>。再之后，使用非线性变换<span class="math inline">\(g_v\)</span>将其进一步转化为<span class="math inline">\(v\)</span>，即最终有</p>
+<p><span class="math display">\[\mathbf{v} = g_v(f_v(\tilde{\mathbf{x}}_v ))
+\]</span></p>
+<p>其中<span class="math inline">\(\mathbf{v}\in \mathbb{R} ^d\)</span>。类似的，对于每一个文字输入<span class="math inline">\(x_u\)</span>，用一个采样变换<span class="math inline">\(t_u\)</span>得到该输入的一部分，<span class="math inline">\(\tilde{x}_u\)</span>，然后也适用类似的编码器和非线性变换得到<span class="math inline">\(\mathbf{u}=g_u(f_u(\tilde{\mathbf{x}}_u))\)</span>。这里也有<span class="math inline">\(\mathbf{u}\in \mathbb{R} ^d\)</span>.</p>
+<p>在训练时，从训练集中采样一个大小为<span class="math inline">\(N\)</span>的minibatch，每一个数据都是一对<span class="math inline">\((x_v,x_u)\)</span>，然后计算出它们的表示对<span class="math inline">\((v, u)\)</span>。记<span class="math inline">\((v_i, u_i)\)</span>为第<span class="math inline">\(i\)</span>对。ConVIRT的训练目标函数包括两个损失函数，第一个是第<span class="math inline">\(i\)</span>对数据的图像到文字的对比误差</p>
+<p><span class="math display">\[\ell_i^{(v\to u)} = -\log\dfrac{\exp(<v_i, u_i>/\tau)}{\sum^N_{k=1}\exp(<v_i,u_k>/\tau)}
+\]</span></p>
+<p>其中<span class="math inline">\(<v_i, u_i>\)</span>是余弦相似度，即<span class="math inline">\(<v, u>=v^Tu/||v||||u||\)</span>。而<span class="math inline">\(\tau\in \mathbb{R^+}\)</span>是一个温度参数。最小化这个损失可以使得编码器最大化保留true pairs之间的相互信息。直觉上来说，这就是一种<span class="math inline">\(N\)</span>类分类器的损失函数，其将<span class="math inline">\((v_i, u_i)\)</span>分类为true pari（正类对）。与前人不同，前人的损失函数是对于同模态的数据，而本文的对比损失则对每一个输入模态都是非对称的。因此，定义文字到图像的对比误差为</p>
+<p><span class="math display">\[\ell_i^{(u\to v)} = -\log\dfrac{\exp(<u_i, v_i>/\tau)}{\sum^N_{k=1}\exp(<u_i,v_k>/\tau)}
+\]</span></p>
+<p>最终的训练损失函数即为两个损失的加权和</p>
+<p><span class="math display">\[\mathcal{L} = \dfrac{1}{N} \sum^N_{i=1}\bigg(\lambda\ell_i^{(v\to u)}  +(1-\lambda)\ell_i^{(u\to v)} \bigg)
+\]</span></p>
+<p>其中<span class="math inline">\(\lambda\in [0,1]\)</span>是一个放缩参数。</p>
+<h1 id="实现">实现</h1>
+<p>注意到，ConVIRT的框架中所定义的东西，并不和特定的编码器、变换函数、投影函数相关。本文跟随前人的工作，将<span class="math inline">\(g_v, g_u\)</span>用分离的-可学习的-单隐藏层神经网络来实现。也就是说，有<span class="math inline">\(g_v(\cdot) = W^{(2)}\sigma(W^{(1)}(\cdot))\)</span>，其中<span class="math inline">\(\sigma\)</span>是ReLU。<span class="math inline">\(g_u\)</span>同样。</p>
+<p>对于图片的编码器<span class="math inline">\(f_v\)</span>，本文使用ResNet50的架构。对于文本的编码器<span class="math inline">\(f_u\)</span>，则使用BERT，最后的输出向量前加一个最大池化层。BERT在训练的时候使用ClinicalBERT作为初始权重，并且微调只调整BERT的后6层，而冻结前6层。</p>
+<p>对于前文提到的图像变换函数<span class="math inline">\(T\)</span>，本文使用一系列变换过程，顺序应用五个随机的变换：剪裁、水平翻转、仿射变换、颜色抖动、高斯模糊。其中颜色抖动环节只使用改变亮度和对比度的操作（因为医学图像基本都是单色的）。</p>
+<p>而对于文字的变换函数<span class="math inline">\(t_u\)</span>，本文使用很简单的均匀采样，从<span class="math inline">\(x_u\)</span>中采样一句话。不使用更复杂的方式的原因是为了保证语义不变。</p>
+<p>除了对图像进行变换，也可以直接使用<span class="math inline">\(x_v\)</span>，或者使用<span class="math inline">\(x_v\)</span>的不同版本，例如某些诊断中有针对同一部分的不同角度的版本。</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/%E5%A4%A7%E5%AD%A6/">大学</a>
+        
+            <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">人工智能</a>
+        
+            <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/">计算机视觉</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css"integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js"integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8"crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js"integrity="sha384-vZTG03m&#43;2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl"crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.querySelector(`.article-content`), {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ]
+        });})
+</script>
+    
+</article>
+
+    <aside class="related-contents--wrapper">
+    
+    
+        <h2 class="section-title">相关文章</h2>
+        <div class="related-contents">
+            <div class="flex article-list--tile">
+                
+                    
+<article class="has-image">
+    <a href="/inferior/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+        
+        
+            <div class="article-image">
+                <img src="/inferior/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/cover.2aeb7d3afbb199eb18340059cba0cad9_hudfaf5e1d7526a380ad7b29f8ee060abf_123913_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-Kut9OvuxmesYNABZy6DK2Q==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">机器学习&#43;模式识别&#43;认知计算综合学习笔记</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/inferior/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E6%A6%82%E8%AE%BA%E7%AC%94%E8%AE%B0/">
+        
+        
+            <div class="article-image">
+                <img src="/inferior/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E6%A6%82%E8%AE%BA%E7%AC%94%E8%AE%B0/cover.9efee14869436ec4c69d3de759fc6854_hu729735102c3c060f4a29b2f0df39e169_86954_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-nv7hSGlDbsTGnT3nWfxoVA==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">人工智能概论笔记</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="">
+    <a href="/inferior/%E8%84%91%E7%A7%91%E5%AD%A6%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">脑科学基础学习笔记</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/p/grabcut-interactive-foreground-extraction-using-iterated-graph-cuts%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/">
+        
+        
+            <div class="article-image">
+                <img src="/p/grabcut-interactive-foreground-extraction-using-iterated-graph-cuts%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/cover.719f06f8145a0ec2fc378d5f11233592_huf62d2c95a51769be2a7aa0d894297a77_82581_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-cZ8G&#43;BRaDsL8N41fESM1kg==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">GrabCut— Interactive Foreground Extraction Using Iterated Graph Cuts论文精读与复现</h2>
+        </div>
+    </a>
+</article>
+                
+            </div>
+        </div>
+    
+</aside>
+
+     
+    
+        
+    <script src="https://utteranc.es/client.js" 
+        repo="kegalas/blogComments"
+        issue-term="pathname"
+        
+        crossorigin="anonymous"
+        async
+        >
+</script>
+
+<style>
+    .utterances {
+        max-width: unset;
+    }
+</style>
+
+<script>
+    function setUtterancesTheme(theme) {
+        let utterances = document.querySelector('.utterances iframe');
+        if (utterances) {
+            utterances.contentWindow.postMessage(
+                {
+                    type: 'set-theme',
+                    theme: `github-${theme}`
+                },
+                'https://utteranc.es'
+            );
+        }
+    }
+
+    addEventListener('message', event => {
+        if (event.origin !== 'https://utteranc.es') return;
+        setUtterancesTheme(document.documentElement.dataset.scheme)
+    });
+
+    window.addEventListener('onColorSchemeChange', (e) => {
+        setUtterancesTheme(e.detail)
+    })
+</script>
+
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2024 KegalaS的个人博客
+    </section>
+    
+    <section class="powerby">
+         <br />
+        
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    
+        <aside class="sidebar right-sidebar sticky">
+            <section class="widget archives">
+                <div class="widget-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+                </div>
+                <h2 class="widget-title section-title">目录</h2>
+                
+                <div class="widget--toc">
+                    <nav id="TableOfContents">
+  <ol>
+    <li><a href="#摘要">摘要</a></li>
+    <li><a href="#介绍">介绍</a></li>
+    <li><a href="#相关工作">相关工作</a></li>
+    <li><a href="#问题定义">问题定义</a></li>
+    <li><a href="#从文本中学习的比较视觉表示">从文本中学习的比较视觉表示</a></li>
+    <li><a href="#实现">实现</a></li>
+  </ol>
+</nav>
+                </div>
+            </section>
+        </aside>
+    
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                defer="false"
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
