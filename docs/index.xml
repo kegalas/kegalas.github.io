@@ -6,7 +6,131 @@
         <description>Recent content on KegalaS的个人博客</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Sun, 01 Dec 2024 21:06:43 +0800</lastBuildDate><atom:link href="https://kegalas.top/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Thu, 05 Dec 2024 14:50:20 +0800</lastBuildDate><atom:link href="https://kegalas.top/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Unified Medical Image Pre Training in Language Guided Common Semantic Space论文速读</title>
+        <link>https://kegalas.top/p/unified-medical-image-pre-training-in-language-guided-common-semantic-space%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/</link>
+        <pubDate>Thu, 05 Dec 2024 14:50:20 +0800</pubDate>
+        
+        <guid>https://kegalas.top/p/unified-medical-image-pre-training-in-language-guided-common-semantic-space%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/</guid>
+        <description>&lt;img src="https://kegalas.top/p/unified-medical-image-pre-training-in-language-guided-common-semantic-space%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/cover.jpg" alt="Featured image of post Unified Medical Image Pre Training in Language Guided Common Semantic Space论文速读" /&gt;&lt;p&gt;原论文：&lt;a class=&#34;link&#34; href=&#34;https://eccv.ecva.net/virtual/2024/poster/1165&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://eccv.ecva.net/virtual/2024/poster/1165&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&#34;摘要&#34;&gt;摘要&lt;/h1&gt;
+&lt;p&gt;当今的语言视觉预训练（Vision-Language Pre-training (VLP)）在医学图像的分析方面展现出了不错的效果，但是它们大多只针对单一模态数据。而将真实场景中的多种模态的数据进行统一表示还是一个开放性问题。&lt;/p&gt;
+&lt;p&gt;医学场景中，有各种不同形式的数据，尤其还有3D的图像。另外，这些不同形式的数据并不一定配对（例如有些既做了X光（2D），又做了CT（3D），而有些病人只有CT或者只有X光）。&lt;/p&gt;
+&lt;p&gt;为此，本文提出UniMedI，使用医学诊断报告来当做公共的语义空间，来将各种模态的医学图像统一表示。&lt;/p&gt;
+&lt;h1 id=&#34;简介&#34;&gt;简介&lt;/h1&gt;
+&lt;p&gt;作者观察到，虽然不同模态图像的差距可能很大，但是医疗过程中，对于同一个患者的医疗报告应该是相似的。&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 201; 
+			flex-basis: 484px&#34;
+	&gt;
+	&lt;a href=&#34;https://kegalas.top/p/unified-medical-image-pre-training-in-language-guided-common-semantic-space%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/1.jpg&#34; data-size=&#34;1145x567&#34;&gt;
+		&lt;img src=&#34;https://kegalas.top/p/unified-medical-image-pre-training-in-language-guided-common-semantic-space%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/1.jpg&#34;
+			width=&#34;1145&#34;
+			height=&#34;567&#34;
+			srcset=&#34;https://kegalas.top/p/unified-medical-image-pre-training-in-language-guided-common-semantic-space%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/1_hubf0199074c6cfad9991e081ea27bc7de_134703_480x0_resize_q75_box.jpg 480w, https://kegalas.top/p/unified-medical-image-pre-training-in-language-guided-common-semantic-space%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/1_hubf0199074c6cfad9991e081ea27bc7de_134703_1024x0_resize_q75_box.jpg 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;1.jpg&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;1.jpg&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;上图中的(b)更是在实验结果上证明了这一点。于是就可以使用语言（医学报告）信息作为桥梁，将各种模态的图像联系到一起。&lt;/p&gt;
+&lt;p&gt;但是问题是，并不一定每一个病人进到医院里都会把CT、超声、X光、MRI顺着做一遍。也就是说，同一个病人的配对数据并不一定总是存在，这给训练就带来了一定挑战。&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 193; 
+			flex-basis: 464px&#34;
+	&gt;
+	&lt;a href=&#34;https://kegalas.top/p/unified-medical-image-pre-training-in-language-guided-common-semantic-space%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/2.jpg&#34; data-size=&#34;1124x581&#34;&gt;
+		&lt;img src=&#34;https://kegalas.top/p/unified-medical-image-pre-training-in-language-guided-common-semantic-space%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/2.jpg&#34;
+			width=&#34;1124&#34;
+			height=&#34;581&#34;
+			srcset=&#34;https://kegalas.top/p/unified-medical-image-pre-training-in-language-guided-common-semantic-space%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/2_huec038f9693d9d8ad150355c38403a2da_168821_480x0_resize_q75_box.jpg 480w, https://kegalas.top/p/unified-medical-image-pre-training-in-language-guided-common-semantic-space%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/2_huec038f9693d9d8ad150355c38403a2da_168821_1024x0_resize_q75_box.jpg 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;2.jpg&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;2.jpg&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;上图(a)是将两个模态的数据用两次VLP（分别）训练得出的结果。而(b)则是简单地将多模态数据统一，在一个VLP上训练的结果。本文的UniMedI模型引入了一个“伪配对”技术，让2D、3D图像能够一起输入。&lt;/p&gt;
+&lt;h1 id=&#34;整体流程&#34;&gt;整体流程&lt;/h1&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 251; 
+			flex-basis: 604px&#34;
+	&gt;
+	&lt;a href=&#34;https://kegalas.top/p/unified-medical-image-pre-training-in-language-guided-common-semantic-space%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/3.jpg&#34; data-size=&#34;1130x449&#34;&gt;
+		&lt;img src=&#34;https://kegalas.top/p/unified-medical-image-pre-training-in-language-guided-common-semantic-space%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/3.jpg&#34;
+			width=&#34;1130&#34;
+			height=&#34;449&#34;
+			srcset=&#34;https://kegalas.top/p/unified-medical-image-pre-training-in-language-guided-common-semantic-space%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/3_hue1c1eedea4d0cce52fd48a3ba63a8047_87858_480x0_resize_q75_box.jpg 480w, https://kegalas.top/p/unified-medical-image-pre-training-in-language-guided-common-semantic-space%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/3_hue1c1eedea4d0cce52fd48a3ba63a8047_87858_1024x0_resize_q75_box.jpg 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;3.jpg&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;3.jpg&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;跟ConVIRT有些像，也是对文本的图片分别使用两个编码器，然后进行对比学习。区别在于，UniMedI可以将3D、2D图像以统一的方式读取。&lt;/p&gt;
+&lt;p&gt;当输入是3D图像时，会使用一个叫attentive slice selection的策略来获取一些2D的切片，这些切片是和医学报告最相关的部分。然后这些切片和原来的3D图像一起送入编码器。当输入是2D图像时，切片这一步就会被忽略。&lt;/p&gt;
+&lt;p&gt;图像的编码器中，有&lt;span class=&#34;math inline&#34;&gt;\(T_{2D}\)&lt;/span&gt;和&lt;span class=&#34;math inline&#34;&gt;\(T_{3D}\)&lt;/span&gt;两个tokenizer，并且共用一个&lt;span class=&#34;math inline&#34;&gt;\(E_v\)&lt;/span&gt;来实现更好的结合。之后的过程和ConVIRT类似，&lt;span class=&#34;math inline&#34;&gt;\(E_l\)&lt;/span&gt;和&lt;span class=&#34;math inline&#34;&gt;\(E_v\)&lt;/span&gt;通过对比损失&lt;span class=&#34;math inline&#34;&gt;\(L_{vl}\)&lt;/span&gt;等进行训练。&lt;/p&gt;
+&lt;p&gt;另外，本文还介绍了auxiliary masking等技术来更好的结合2D、3D数据。&lt;/p&gt;
+&lt;h1 id=&#34;伪对创建过程&#34;&gt;伪对创建过程&lt;/h1&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 291; 
+			flex-basis: 700px&#34;
+	&gt;
+	&lt;a href=&#34;https://kegalas.top/p/unified-medical-image-pre-training-in-language-guided-common-semantic-space%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/4.jpg&#34; data-size=&#34;1179x404&#34;&gt;
+		&lt;img src=&#34;https://kegalas.top/p/unified-medical-image-pre-training-in-language-guided-common-semantic-space%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/4.jpg&#34;
+			width=&#34;1179&#34;
+			height=&#34;404&#34;
+			srcset=&#34;https://kegalas.top/p/unified-medical-image-pre-training-in-language-guided-common-semantic-space%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/4_hubd61c36f78cb07392c718a6efc3d1d45_70318_480x0_resize_q75_box.jpg 480w, https://kegalas.top/p/unified-medical-image-pre-training-in-language-guided-common-semantic-space%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/4_hubd61c36f78cb07392c718a6efc3d1d45_70318_1024x0_resize_q75_box.jpg 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;4.jpg&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;4.jpg&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;本文提出的attentive slice selection，模仿医生的行为，通过医学报告来选择最合适的3D图像的切片来看。注：本文这一段和ViT强相关，不了解ViT的建议阅读ViT的相关文章。&lt;/p&gt;
+&lt;p&gt;本文没有详细描写Tokenizer是什么结构，这里猜测是和ViT一样的结构，即将2D图片切分成多个16x16的patch，每一个patch就算是一个token了（所以上图中的图例有问题，绿色方块应该是embedding而非token）。然后这些patch送入后面的&lt;span class=&#34;math inline&#34;&gt;\(\bar E_v\)&lt;/span&gt;，将其embedding，这里的这一部分就相当于ViT论文中的“Linear Projection of Flattened Patches”。同样的，这里的[CLS]的就是ViT文章中的[class]或者是BERT论文中的[CLS] token。（另外本文居然没有Position Embedding。）&lt;/p&gt;
+&lt;p&gt;这里的[CLS]是跟随着&lt;span class=&#34;math inline&#34;&gt;\(E_v\)&lt;/span&gt;训练得到的，并且是受到文本监督的，因此它才能对相关得分的计算有效。计算attention value的公式如下&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[v = \dfrac{1}{HL}\sum^L_{l=1}\sum^H_{h=1}\text{Softmax}\bigg(\dfrac{q_{lh}([CLS])K_{lh}([Patch])}{\sqrt C}\bigg)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(L\)&lt;/span&gt;是Layer的数量，&lt;span class=&#34;math inline&#34;&gt;\(H\)&lt;/span&gt;是Heads的数量。&lt;span class=&#34;math inline&#34;&gt;\(q_{lh}\in \mathbb{R}^C\)&lt;/span&gt;代表[CLS]的embedding，而&lt;span class=&#34;math inline&#34;&gt;\(K_{lh}\in\mathbb R^{P\times C}\)&lt;/span&gt;代表全部P个Patch的embedding。最终&lt;span class=&#34;math inline&#34;&gt;\(v\in\mathbb R^P\)&lt;/span&gt;。这里的&lt;span class=&#34;math inline&#34;&gt;\(C\)&lt;/span&gt;应该是可以自定的embedding的维度。&lt;/p&gt;
+&lt;p&gt;对于一整个slice的相关得分，则通过其每个patch的得分的算数平均来得到。对于第&lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt;个slice，有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[s_i = \dfrac{1}{N}\sum^N_{j=1}v_{ij}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;（很奇怪为什么作者不用&lt;span class=&#34;math inline&#34;&gt;\(P\)&lt;/span&gt;而改用&lt;span class=&#34;math inline&#34;&gt;\(N\)&lt;/span&gt;了）&lt;/p&gt;
+&lt;p&gt;之后就是选择得分最高的&lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt;个切片，来当做伪配对。&lt;/p&gt;
+&lt;h1 id=&#34;使用文本监督对比学习&#34;&gt;使用文本监督对比学习&lt;/h1&gt;
+&lt;p&gt;大体上，UniMedI的对比学习是按照CLIP的结构来的（而CLIP则是ConVIRT后面的工作）。对于2D图像，直接使用&lt;span class=&#34;math inline&#34;&gt;\(T_{2D}\)&lt;/span&gt;和&lt;span class=&#34;math inline&#34;&gt;\(E_v\)&lt;/span&gt;来进行特征提取，并且获得[CLS] token来包含全局的图像信息。之后将这个[CLS]和文字编码器的[CLS]对齐。&lt;/p&gt;
+&lt;p&gt;对于3D图像，首先用之前的方法挑选出2D切片，然后将3D图像和2D图像分别使用&lt;span class=&#34;math inline&#34;&gt;\(T_{3D}, T_{2D}\)&lt;/span&gt;进行tokenize。所有这些token会直接前后拼接在一起传入&lt;span class=&#34;math inline&#34;&gt;\(E_v\)&lt;/span&gt;。之后的部分和2D图像一样。&lt;/p&gt;
+&lt;h1 id=&#34;通过自我蒸馏来增强不同维度数据的结合&#34;&gt;通过自我蒸馏来增强不同维度数据的结合&lt;/h1&gt;
+&lt;p&gt;为了更好地结合2D、3D数据，本文提出了一个简单的辅助工具。在训练过程中，使用一个在线的学生网络&lt;span class=&#34;math inline&#34;&gt;\(E_v\)&lt;/span&gt;和其教师网络&lt;span class=&#34;math inline&#34;&gt;\(\bar E_v\)&lt;/span&gt;。将输入的2D3D图像的一大部分进行mask，传递给学生网络，然后将所有2D3D图像传递给教师网络。学生网络被要求输出尽可能和教师网络一样的结果。&lt;/p&gt;
+&lt;p&gt;自蒸馏选用的架构是DINO，使用了DINO的loss和head部分。loss函数引用到[CLS]上（&lt;span class=&#34;math inline&#34;&gt;\(L_{icl}\)&lt;/span&gt;）和所有的patch上（&lt;span class=&#34;math inline&#34;&gt;\(L_{pcl}\)&lt;/span&gt;）&lt;/p&gt;
+&lt;h1 id=&#34;自我思考&#34;&gt;自我思考&lt;/h1&gt;
+&lt;p&gt;（本段可能会暴露个人水平，本人水平还很初级）&lt;/p&gt;
+&lt;p&gt;文章标题很唬人啊，什么统一医学图像表示，实际上大部分内容是在探讨如何让2D和3D图像更好结合的。但我本人更想知道如果用两种2D图像，比如X光和超声，如何去解决这个配对问题。&lt;/p&gt;
+&lt;p&gt;是否使用一个tokenizer和一个encoder就行了呢？我个人猜测可能会有一些问题，比如先用超声训练再用X光训练，可能会有遗忘现象。如果以其他技巧进行训练，我估计也避免不了domain gap的问题。&lt;/p&gt;
+&lt;p&gt;另外，本文似乎也没有介绍如果输入的图像有配对，如何同时利用两者的信息来提高判断准确度。（看起来只能同时输入一种模态，并且实验部分也都是2D3D分开的）（配对的数据集可能也欠缺）&lt;/p&gt;
+&lt;p&gt;另外，如何应对三种以上的数据？一个胡思乱想：用多个VL对比学习对多种图片进行学习，然后将所有可用的图片的encoder的结果concat起来传入另一个transformer。因为transfomer可以应对任意长度的序列数据，所以就数据上来说肯定是能跑通的。只不过效果可能会差，如本文作者介绍的Fig2那样。&lt;/p&gt;
+</description>
+        </item>
+        <item>
         <title>Contrastive Learning of Medical Visual Representations From Paired Images and Text论文速读</title>
         <link>https://kegalas.top/p/contrastive-learning-of-medical-visual-representations-from-paired-images-and-text%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/</link>
         <pubDate>Sun, 01 Dec 2024 21:06:43 +0800</pubDate>
