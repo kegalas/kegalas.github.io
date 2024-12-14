@@ -3,16 +3,16 @@
     <head><meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='原论文：https://arxiv.org/abs/2010.00747 摘要 医学图像的视觉表示是核心研究方向，但是由于标注的缺少，效果不够好'><title>Contrastive Learning of Medical Visual Representations From Paired Images and Text论文速读</title>
 
-<link rel='canonical' href='https://kegalas.top/p/contrastive-learning-of-medical-visual-representations-from-paired-images-and-text%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/'>
+<link rel='canonical' href='https://kegalas.uk/p/contrastive-learning-of-medical-visual-representations-from-paired-images-and-text%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/'>
 
 <link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='Contrastive Learning of Medical Visual Representations From Paired Images and Text论文速读'>
 <meta property='og:description' content='原论文：https://arxiv.org/abs/2010.00747 摘要 医学图像的视觉表示是核心研究方向，但是由于标注的缺少，效果不够好'>
-<meta property='og:url' content='https://kegalas.top/p/contrastive-learning-of-medical-visual-representations-from-paired-images-and-text%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/'>
+<meta property='og:url' content='https://kegalas.uk/p/contrastive-learning-of-medical-visual-representations-from-paired-images-and-text%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/'>
 <meta property='og:site_name' content='KegalaS的个人博客'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='大学' /><meta property='article:tag' content='人工智能' /><meta property='article:tag' content='计算机视觉' /><meta property='article:published_time' content='2024-12-01T21:06:43&#43;08:00'/><meta property='article:modified_time' content='2024-12-01T21:06:43&#43;08:00'/><meta property='og:image' content='https://kegalas.top/p/contrastive-learning-of-medical-visual-representations-from-paired-images-and-text%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/cover.jpg' />
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='大学' /><meta property='article:tag' content='人工智能' /><meta property='article:tag' content='计算机视觉' /><meta property='article:published_time' content='2024-12-01T21:06:43&#43;08:00'/><meta property='article:modified_time' content='2024-12-01T21:06:43&#43;08:00'/><meta property='og:image' content='https://kegalas.uk/p/contrastive-learning-of-medical-visual-representations-from-paired-images-and-text%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/cover.jpg' />
 <meta name="twitter:title" content="Contrastive Learning of Medical Visual Representations From Paired Images and Text论文速读">
 <meta name="twitter:description" content="原论文：https://arxiv.org/abs/2010.00747 摘要 医学图像的视觉表示是核心研究方向，但是由于标注的缺少，效果不够好"><meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:image" content='https://kegalas.top/p/contrastive-learning-of-medical-visual-representations-from-paired-images-and-text%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/cover.jpg' />
+    <meta name="twitter:image" content='https://kegalas.uk/p/contrastive-learning-of-medical-visual-representations-from-paired-images-and-text%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/cover.jpg' />
     <link rel="shortcut icon" href="/images/favicon.ico" />
 
     </head>
@@ -136,7 +136,7 @@
 <h1 id="摘要">摘要</h1>
 <p>医学图像的视觉表示是核心研究方向，但是由于标注的缺少，效果不够好。现有的工作要么是在ImageNet上进行微调（次优，因为图像差距太大）；要么是从医学文本中，用基于规则（rule-based）的方式提取标签（不精确且不泛用）。同时，对比学习在自然图像上表现很好，而在类间相似度（inter-class similarity）很高的医学图像上表现不好。</p>
 <p>本文提出ConVIRT，一个无监督的模型，通过利用配对的医学文本来学习视觉表示。并且，它是领域无关的，也不需要额外的专家输入。</p>
-<h1 id="介绍">介绍</h1>
+<h1 id="简介">简介</h1>
 <p>现有的获取医学图像标注的方法有两种：</p>
 <ol>
 <li>使用医学专家标注的高质量标注。缺点是数据量特别小，远小于ImageNet。所以业内经常用ImageNet来迁移权重。但是，ImageNet的图像区别会很明显，不像医学图像（如图1），其区别是非常细微的，具有非常细致的（fine-grained）视觉特征。</li>
@@ -210,6 +210,7 @@
 <h1 id="实现">实现</h1>
 <p>注意到，ConVIRT的框架中所定义的东西，并不和特定的编码器、变换函数、投影函数相关。本文跟随前人的工作，将<span class="math inline">\(g_v, g_u\)</span>用分离的-可学习的-单隐藏层神经网络来实现。也就是说，有<span class="math inline">\(g_v(\cdot) = W^{(2)}\sigma(W^{(1)}(\cdot))\)</span>，其中<span class="math inline">\(\sigma\)</span>是ReLU。<span class="math inline">\(g_u\)</span>同样。</p>
 <p>对于图片的编码器<span class="math inline">\(f_v\)</span>，本文使用ResNet50的架构。对于文本的编码器<span class="math inline">\(f_u\)</span>，则使用BERT，最后的输出向量前加一个最大池化层。BERT在训练的时候使用ClinicalBERT作为初始权重，并且微调只调整BERT的后6层，而冻结前6层。</p>
+<p>注，这里的max-pooling和CNN中的池化层不同。BERT接池化是想对整个句子求特征表示，即sentence embedding。通常，[CLS]代表的embedding就可以用作句子嵌入，但本文所说的池化操作也可以。BERT会输出所有token的embedding，对他们求平均值就是avg-pooling，对它们求最大值就是max-pooling。最终的输出和单个token的embedding维度相同。</p>
 <p>对于前文提到的图像变换函数<span class="math inline">\(T\)</span>，本文使用一系列变换过程，顺序应用五个随机的变换：剪裁、水平翻转、仿射变换、颜色抖动、高斯模糊。其中颜色抖动环节只使用改变亮度和对比度的操作（因为医学图像基本都是单色的）。</p>
 <p>而对于文字的变换函数<span class="math inline">\(t_u\)</span>，本文使用很简单的均匀采样，从<span class="math inline">\(x_u\)</span>中采样一句话。不使用更复杂的方式的原因是为了保证语义不变。</p>
 <p>除了对图像进行变换，也可以直接使用<span class="math inline">\(x_v\)</span>，或者使用<span class="math inline">\(x_v\)</span>的不同版本，例如某些诊断中有针对同一部分的不同角度的版本。</p>
@@ -544,7 +545,7 @@
                     <nav id="TableOfContents">
   <ol>
     <li><a href="#摘要">摘要</a></li>
-    <li><a href="#介绍">介绍</a></li>
+    <li><a href="#简介">简介</a></li>
     <li><a href="#相关工作">相关工作</a></li>
     <li><a href="#问题定义">问题定义</a></li>
     <li><a href="#从文本中学习的比较视觉表示">从文本中学习的比较视觉表示</a></li>
