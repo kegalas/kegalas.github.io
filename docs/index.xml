@@ -6,7 +6,130 @@
         <description>Recent content on KegalaS的个人博客</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Thu, 05 Dec 2024 14:50:20 +0800</lastBuildDate><atom:link href="https://kegalas.uk/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Thu, 12 Dec 2024 13:06:47 +0800</lastBuildDate><atom:link href="https://kegalas.uk/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Deep Bilateral Learning for Real Time Image Enhancement论文速读</title>
+        <link>https://kegalas.uk/p/deep-bilateral-learning-for-real-time-image-enhancement%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/</link>
+        <pubDate>Thu, 12 Dec 2024 13:06:47 +0800</pubDate>
+        
+        <guid>https://kegalas.uk/p/deep-bilateral-learning-for-real-time-image-enhancement%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/</guid>
+        <description>&lt;img src="https://kegalas.uk/p/deep-bilateral-learning-for-real-time-image-enhancement%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/cover.jpg" alt="Featured image of post Deep Bilateral Learning for Real Time Image Enhancement论文速读" /&gt;&lt;p&gt;原论文&lt;a class=&#34;link&#34; href=&#34;https://groups.csail.mit.edu/graphics/hdrnet/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://groups.csail.mit.edu/graphics/hdrnet/&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&#34;摘要&#34;&gt;摘要&lt;/h1&gt;
+&lt;p&gt;在移动设备中进行图像处理，优秀的性能是关键的挑战。给出一个作为参考的图像处理管线，或者甚至只给出原图和人工ps过的图，本文希望可以以实时的速度去对这些图像的修改进行再现。为此，本文提出了一种神经网络结构，其受到了bilateral grid处理和区域仿射颜色变换（local affine color transform）的启发。&lt;/p&gt;
+&lt;p&gt;使用一对输入输出图像（即原图和ps过后的图），本文的CNN可以在bilateral空间中预测出局部仿射模型的系数。本文的模型可以生成局部、全局、内容相关的决策，来近似得到期望的图像变换。在运行时，本模型输入一个图像的低分辨率版本，生成一组在bilateral空间中的仿射变换，再对变换进行上采样（同时使用一种新的slicing节点，保证edge-preserving），最后将上采样后的变换应用在原图分辨率上。&lt;/p&gt;
+&lt;p&gt;本文提出的模型速度很快，在智能手机上，对1080p也有实时性能，并且保持SOTA效果。与前人工作不同，本文的模型进行离线训练，所以在运行时不需要访问原始的operator（算子？）。这允许模型学习到复杂的、依赖场景的变换，通常这样的场景没有参考的实现（应该是前文提到的管线），例如人工ps。&lt;/p&gt;
+&lt;h1 id=&#34;简介&#34;&gt;简介&lt;/h1&gt;
+&lt;p&gt;本文提出的模型可以学习到多种多样的图像增强处理过程，并且可以高速地应用在高分辨率图上。为此，本文使用了3个关键策略：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;本文的预测环节都是在低分辨率的bilateral grid上进行的。grid中，每个像素的坐标&lt;span class=&#34;math inline&#34;&gt;\(x,y\)&lt;/span&gt;都增加了一个第三维，即该像素的颜色的函数。为了实现这点，本文引入了一个新的node，来执行数据依赖的查询。这也就是一种slicing（切片）操作，其可以使用像素的颜色信息和位置信息，从3D bilateral grid中将期望图像在高分辨率上重建出来。&lt;/li&gt;
+&lt;li&gt;本文参照前人工作，注意到预测输入-输出之间的变换，通常比起直接预测输出要更简单。所以，本文架构只是学习到了一个中间的转换关系的表示，使用这个转换关系就能将输入转化到期望的输出。&lt;/li&gt;
+&lt;li&gt;虽然学习和推理是在低分辨率上的，但是训练过程中的损失函数是在高分辨率上进行的。这使得模型学习到的低分辨率的变换函数是直接为高分辨率图像而优化的。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;综上，这三条允许本模型大量的计算在低分辨率，但输出仍然是高分辨率。&lt;/p&gt;
+&lt;h1 id=&#34;架构&#34;&gt;架构&lt;/h1&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 169; 
+			flex-basis: 406px&#34;
+	&gt;
+	&lt;a href=&#34;https://kegalas.uk/p/deep-bilateral-learning-for-real-time-image-enhancement%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/1.jpg&#34; data-size=&#34;1408x832&#34;&gt;
+		&lt;img src=&#34;https://kegalas.uk/p/deep-bilateral-learning-for-real-time-image-enhancement%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/1.jpg&#34;
+			width=&#34;1408&#34;
+			height=&#34;832&#34;
+			srcset=&#34;https://kegalas.uk/p/deep-bilateral-learning-for-real-time-image-enhancement%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/1_hu5c196399bccb8e7e42d435bbbda1db40_251661_480x0_resize_q75_box.jpg 480w, https://kegalas.uk/p/deep-bilateral-learning-for-real-time-image-enhancement%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/1_hu5c196399bccb8e7e42d435bbbda1db40_251661_1024x0_resize_q75_box.jpg 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;1.jpg&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;1.jpg&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;大部分推理都是在低分辨率的&lt;span class=&#34;math inline&#34;&gt;\(\tilde{I}\)&lt;/span&gt;上进行，即上图中的上半部分，最终预测出一个局部仿射变换。根据作者的经验，图像增强不仅取决于局部图像特征，还取决于全局的信息，例如直方图、平均亮度，甚至是场景的类型。所以，low-res的部分在后面进一步分成两条路，即local和global。最终又把这两种特征混合起来并生成最终的参数。&lt;/p&gt;
+&lt;p&gt;下面的high-res部分就在原图分辨率上进行，它会应用最少的计算，并且主要集中于应用影响最大的操作，并且还会保持边缘不变。为此，本文提出了一个切片节点，其受到了bilateral grid的启发。这种节点对低分辨率的grid执行依赖于数据的（data-dependent）查找，该节点基于一个可学习的guidance map。给出从guidance map得出的高分辨率的仿射变换因子，再对图片中的每个像素应用局部的颜色变换，就得到了最终的输出&lt;span class=&#34;math inline&#34;&gt;\(O\)&lt;/span&gt;。在训练时，损失函数是在原分辨率上最小化的。&lt;/p&gt;
+&lt;p&gt;本架构有三点超越了前人：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;下采样到bilateral grid的过程是可学习的&lt;/li&gt;
+&lt;li&gt;guidance image也是可学习的，并且不受亮度限制&lt;/li&gt;
+&lt;li&gt;损失函数不是在仿射因子上评估的，而是在原分辨率的最终图像上。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;bilateral因子在低分辨率下的预测&#34;&gt;bilateral因子在低分辨率下的预测&lt;/h2&gt;
+&lt;p&gt;（本段原文废话过多，建议直接看最后的表格和&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;、&lt;span class=&#34;math inline&#34;&gt;\(F\)&lt;/span&gt;的公式）&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(\tilde{I}\)&lt;/span&gt;被固定为&lt;span class=&#34;math inline&#34;&gt;\(256\times 256\)&lt;/span&gt;的大小。首先经过一连串卷积层（含stride）&lt;span class=&#34;math inline&#34;&gt;\((S^i)_{i=1,\cdots,n_S}\)&lt;/span&gt;，来提取底层特征并降低分辨率。然后，数据分为两条道路。第一条路是&lt;span class=&#34;math inline&#34;&gt;\((L^i)_{i=1,\cdots,n_L}\)&lt;/span&gt;，全都是卷积层，其主要学习局部特征并保留空间信息。第二条路是&lt;span class=&#34;math inline&#34;&gt;\((G^i)_{i=1,\cdots,n_G}\)&lt;/span&gt;，包含了卷积层和全连接层，来学习一个固定大小的向量，表示&lt;span class=&#34;math inline&#34;&gt;\(\tilde{I}\)&lt;/span&gt;全局特征（例如场景类型）。这两条路的最后输出&lt;span class=&#34;math inline&#34;&gt;\(G^{n^G}\)&lt;/span&gt;和&lt;span class=&#34;math inline&#34;&gt;\(L^{n_L}\)&lt;/span&gt;进行混合，得到一个特征集&lt;span class=&#34;math inline&#34;&gt;\(F\)&lt;/span&gt;，在模型最后使用一个pointwise的线性层输出一个最终的数组&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;。可以将这个&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;解释为仿射因子的bilateral grid。因为使用2D图像以内容依赖的方式造出了3D的bilateral grid，可以将low-res部分视为一种可学习的splatting的实现。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;低层特征&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;首先使用一连串卷积层来处理低分辨率图&lt;span class=&#34;math inline&#34;&gt;\(S^0 := \tilde{I}\)&lt;/span&gt;，其中所有卷积层的stride都是&lt;span class=&#34;math inline&#34;&gt;\(s=2\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[S^i_c[x,y]=\sigma\bigg(b^i_c+\sum_{x&#39;,y&#39;,c&#39;}w^i_{cc&#39;}[x&#39;,y&#39;]S^{i-1}_{c&#39;}[sx+x&#39;,sy+y&#39;]\bigg)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(i=1,\cdots,n_S\)&lt;/span&gt;是卷积层的序号，&lt;span class=&#34;math inline&#34;&gt;\(c\)&lt;/span&gt;和&lt;span class=&#34;math inline&#34;&gt;\(c&#39;\)&lt;/span&gt;是该层的通道的序号，&lt;span class=&#34;math inline&#34;&gt;\(w_i\)&lt;/span&gt;是卷积层的权重数组，&lt;span class=&#34;math inline&#34;&gt;\(b^i\)&lt;/span&gt;是偏置向量。而&lt;span class=&#34;math inline&#34;&gt;\(-1\leq x&#39;, y&#39; \leq 1\)&lt;/span&gt;，或者说卷积核的大小为&lt;span class=&#34;math inline&#34;&gt;\(3\)&lt;/span&gt;。使用ReLU作为激活函数。所有的padding都设置为&lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt;。本文使用4层卷积，即&lt;span class=&#34;math inline&#34;&gt;\(n_S=4\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;局部特征路径&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;在低层特征的最后一层&lt;span class=&#34;math inline&#34;&gt;\(S^{n_S}\)&lt;/span&gt;之后，数据送入另外一串卷积层&lt;span class=&#34;math inline&#34;&gt;\(L^i, n_L=2\)&lt;/span&gt;，也就是架构图中黄色的那一部分。这些卷积层的形式和低层特征中的卷积层的形式是一样的，区别在于stride为&lt;span class=&#34;math inline&#34;&gt;\(s=1\)&lt;/span&gt;。并且之前的卷积层会降低分辨率、增加通道数，本部分卷积层不改变分辨率也不改变通道数。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;全局特征路径&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;同样的，在&lt;span class=&#34;math inline&#34;&gt;\(S^{n_S}\)&lt;/span&gt;之后，数据送入卷积层&lt;span class=&#34;math inline&#34;&gt;\(G^i\)&lt;/span&gt;中，其为stride为&lt;span class=&#34;math inline&#34;&gt;\(s=2\)&lt;/span&gt;的同样形式的卷积层，总共5层即&lt;span class=&#34;math inline&#34;&gt;\(n_G=5\)&lt;/span&gt;。在卷积层之后再加上3个全连接层。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;特征混合&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;将两条路径的输出以如下的形式混合&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[F_c[x,y]=\sigma\bigg(b_c+\sum_{c&#39;}w&#39;_{cc&#39;}G^{n_G}_{c&#39;}+\sum_{c&#39;}w_{cc&#39;}L^{n_L}_{c&#39;}[x, y]\bigg)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中激活函数也是ReLU，输出了一个&lt;span class=&#34;math inline&#34;&gt;\(16\times 16\times 64\)&lt;/span&gt;的数组，之后我们将其输出为&lt;span class=&#34;math inline&#34;&gt;\(1\times 1\)&lt;/span&gt;的线性预测（我自己也看不懂什么意思，建议下面的表格就清晰了）&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[A_c[x, y] = b_c+\sum_{c&#39;}F_{c&#39;}[x,y]w_{cc&#39;}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 283; 
+			flex-basis: 680px&#34;
+	&gt;
+	&lt;a href=&#34;https://kegalas.uk/p/deep-bilateral-learning-for-real-time-image-enhancement%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/2.jpg&#34; data-size=&#34;717x253&#34;&gt;
+		&lt;img src=&#34;https://kegalas.uk/p/deep-bilateral-learning-for-real-time-image-enhancement%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/2.jpg&#34;
+			width=&#34;717&#34;
+			height=&#34;253&#34;
+			srcset=&#34;https://kegalas.uk/p/deep-bilateral-learning-for-real-time-image-enhancement%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/2_hu882d918d0a9b1ec09f4f118077de2d41_40251_480x0_resize_q75_box.jpg 480w, https://kegalas.uk/p/deep-bilateral-learning-for-real-time-image-enhancement%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/2_hu882d918d0a9b1ec09f4f118077de2d41_40251_1024x0_resize_q75_box.jpg 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;2.jpg&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;2.jpg&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;（PS：在别的文献里两句话说完的怎么本文里这么多细节）&lt;/p&gt;
+&lt;h2 id=&#34;将图像特征用作bilateral-grid&#34;&gt;将图像特征用作bilateral grid&lt;/h2&gt;
+&lt;p&gt;为了叙述方便，定义以下等价形式的&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[A_{dc+z}[x,y]\leftrightarrow A_c[x,y,z]
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(d=8\)&lt;/span&gt;是grid的深度。在这种意义下，&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;可以被视作&lt;span class=&#34;math inline&#34;&gt;\(16\times 16\times 8\)&lt;/span&gt;的bilateral grid，其中每个grid有12个数字（&lt;span class=&#34;math inline&#34;&gt;\(96/8=12\)&lt;/span&gt;），每一个数字都是&lt;span class=&#34;math inline&#34;&gt;\(3\times 4\)&lt;/span&gt;的仿射颜色变换矩阵的一个系数。&lt;/p&gt;
+&lt;h2 id=&#34;使用一个可训练的slicing层来上采样&#34;&gt;使用一个可训练的slicing层来上采样&lt;/h2&gt;
+&lt;p&gt;在使用神经网络预测bilateral grid之后，下一步就是用到原图上了。为了实现这个目的，引入一个slicing操作，输入一个单通道的guidance map &lt;span class=&#34;math inline&#34;&gt;\(g\)&lt;/span&gt;和我们之前算出来的&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;，该操作就可以在&lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;上进行数据依赖的查询。公式如下（&lt;span class=&#34;math inline&#34;&gt;\(g\)&lt;/span&gt;的大小和原图大小一样，最终结果的大小也是）&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\bar A_c[x,y]=\sum_{i,j,k}\tau(s_xx-i)\tau(s_yy-j)\tau(d\cdot g[x,y]-k)A_c[i,j,k]
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;这实际上就是一个三线性插值。其中&lt;span class=&#34;math inline&#34;&gt;\(\tau(\cdot)=\max(1-|\cdot|,0)\)&lt;/span&gt;，而&lt;span class=&#34;math inline&#34;&gt;\(s_x\)&lt;/span&gt;和&lt;span class=&#34;math inline&#34;&gt;\(s_y\)&lt;/span&gt;分别是是grid和原图宽高的比例。本质上来说，这是给每个像素进行赋值，赋的值近似可以理解为&lt;span class=&#34;math inline&#34;&gt;\(A_c[i,j,g[x,y]]\)&lt;/span&gt;。同前，&lt;span class=&#34;math inline&#34;&gt;\(d=8\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;slicing操作是无参数的，并且可以用OpenGL来高效实现。&lt;/p&gt;
+&lt;h2 id=&#34;最终的全尺寸输出&#34;&gt;最终的全尺寸输出&lt;/h2&gt;
+&lt;p&gt;对于全尺寸的原输入&lt;span class=&#34;math inline&#34;&gt;\(I\)&lt;/span&gt;，我们提取&lt;span class=&#34;math inline&#34;&gt;\(n_\phi\)&lt;/span&gt;个全尺寸特征&lt;span class=&#34;math inline&#34;&gt;\(\phi\)&lt;/span&gt;，来实现两个目的&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;预测guidance map &lt;span class=&#34;math inline&#34;&gt;\(g\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;用作局部仿射模型的回归变量（regression variables）&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;最高效的方式是将原图的通道直接用作特征，即&lt;span class=&#34;math inline&#34;&gt;\(\phi=I(\text{with}\ \ n_\phi=3)\)&lt;/span&gt;，然后局部仿射模型就是颜色变换。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Guidance map辅助网络&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;定义&lt;span class=&#34;math inline&#34;&gt;\(g\)&lt;/span&gt;为一个原图上的简单的pointwise的非线性变换&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[g[x,y]=b+\sum^2_{c=0}\rho_c(M_c^T\cdot\phi_c[x,y]+b_c&#39;)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(M^T_c\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(3\times 3\)&lt;/span&gt;的矩阵，&lt;span class=&#34;math inline&#34;&gt;\(b\)&lt;/span&gt;和&lt;span class=&#34;math inline&#34;&gt;\(b&#39;_c\)&lt;/span&gt;是偏置，&lt;span class=&#34;math inline&#34;&gt;\(\rho_c\)&lt;/span&gt;是一个16个ReLU的加权平均&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\rho_c(x)=\sum^{15}_{i=0}a_{c,i}\max(x-t_{c,i},0)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;这上面的&lt;span class=&#34;math inline&#34;&gt;\(M,a,t,b,b&#39;\)&lt;/span&gt;都是可学习的参数。&lt;span class=&#34;math inline&#34;&gt;\(M\)&lt;/span&gt;初始化为一个单位矩阵，而&lt;span class=&#34;math inline&#34;&gt;\(a,t,b,b&#39;\)&lt;/span&gt;的初始化能够使得&lt;span class=&#34;math inline&#34;&gt;\(\rho_c\)&lt;/span&gt;是一个在&lt;span class=&#34;math inline&#34;&gt;\([0,1]\)&lt;/span&gt;上的恒等映射。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;生成最终结果&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[O_c[x, y]=\bar A_{n_\phi+(n_\phi+1)c}+\sum^{n_\phi-1}_{c&#39;=0}\bar A_{c&#39;+(n_\phi+1)c}[x,y]\phi_{c&#39;}[x,y]
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h2 id=&#34;训练过程&#34;&gt;训练过程&lt;/h2&gt;
+&lt;p&gt;即数据集为&lt;span class=&#34;math inline&#34;&gt;\(\mathcal D=\{(I_i, O_i)\}_i\)&lt;/span&gt;，即全尺寸的输入输出图像对（应当应用同一种图片编辑操作），训练过程即为最小化下面的误差&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\mathcal L = \dfrac{1}{|\mathcal D|}\sum_i||I_i-O_i||^2
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;训练时，本文引入了权重衰减&lt;span class=&#34;math inline&#34;&gt;\(10^{-8}\)&lt;/span&gt;。卷积层和全连接层使用Kaiming初始化，其他部分初始化为0。在特征maps上使用batch normalization。使用Adam优化算法。batch size在4到16之间（取决于分辨率）。学习率为&lt;span class=&#34;math inline&#34;&gt;\(10^{-4}\)&lt;/span&gt;。&lt;/p&gt;
+</description>
+        </item>
+        <item>
         <title>Unified Medical Image Pre Training in Language Guided Common Semantic Space论文速读</title>
         <link>https://kegalas.uk/p/unified-medical-image-pre-training-in-language-guided-common-semantic-space%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/</link>
         <pubDate>Thu, 05 Dec 2024 14:50:20 +0800</pubDate>

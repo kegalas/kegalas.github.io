@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='原论文https://groups.csail.mit.edu/graphics/hdrnet/ 摘要 在移动设备中进行图像处理，优秀的性能是关'><title>Deep Bilateral Learning for Real Time Image Enhancement论文速读</title>
+
+<link rel='canonical' href='https://kegalas.uk/p/deep-bilateral-learning-for-real-time-image-enhancement%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/'>
+
+<link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='Deep Bilateral Learning for Real Time Image Enhancement论文速读'>
+<meta property='og:description' content='原论文https://groups.csail.mit.edu/graphics/hdrnet/ 摘要 在移动设备中进行图像处理，优秀的性能是关'>
+<meta property='og:url' content='https://kegalas.uk/p/deep-bilateral-learning-for-real-time-image-enhancement%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/'>
+<meta property='og:site_name' content='KegalaS的个人博客'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='大学' /><meta property='article:tag' content='人工智能' /><meta property='article:tag' content='计算机视觉' /><meta property='article:tag' content='图形学' /><meta property='article:published_time' content='2024-12-12T13:06:47&#43;08:00'/><meta property='article:modified_time' content='2024-12-12T13:06:47&#43;08:00'/><meta property='og:image' content='https://kegalas.uk/p/deep-bilateral-learning-for-real-time-image-enhancement%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/cover.jpg' />
+<meta name="twitter:title" content="Deep Bilateral Learning for Real Time Image Enhancement论文速读">
+<meta name="twitter:description" content="原论文https://groups.csail.mit.edu/graphics/hdrnet/ 摘要 在移动设备中进行图像处理，优秀的性能是关"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://kegalas.uk/p/deep-bilateral-learning-for-real-time-image-enhancement%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/cover.jpg' />
+    <link rel="shortcut icon" href="/images/favicon.ico" />
+
+    </head>
+    <body class="
+    article-page has-toc
+">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex 
+    
+        extended
+    
+">
+    
+        <div id="article-toolbar">
+            <a href="/" class="back-home">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="15 6 9 12 15 18" />
+</svg>
+
+
+
+                <span>返回</span>
+            </a>
+        </div>
+    
+<main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/p/deep-bilateral-learning-for-real-time-image-enhancement%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/">
+                <img src="/p/deep-bilateral-learning-for-real-time-image-enhancement%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/cover_hu21346ed4a71566f3cd713a52c023a686_153701_800x0_resize_q75_box.jpg"
+                        srcset="/p/deep-bilateral-learning-for-real-time-image-enhancement%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/cover_hu21346ed4a71566f3cd713a52c023a686_153701_800x0_resize_q75_box.jpg 800w, /p/deep-bilateral-learning-for-real-time-image-enhancement%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/cover_hu21346ed4a71566f3cd713a52c023a686_153701_1600x0_resize_q75_box.jpg 1600w"
+                        width="800" 
+                        height="236" 
+                        loading="lazy"
+                        alt="Featured image of post Deep Bilateral Learning for Real Time Image Enhancement论文速读" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" >
+                人工智能
+            </a>
+        
+    </header>
+    
+
+    <h2 class="article-title">
+        <a href="/p/deep-bilateral-learning-for-real-time-image-enhancement%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/">Deep Bilateral Learning for Real Time Image Enhancement论文速读</a>
+    </h2>
+
+    
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Dec 12, 2024</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 8 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+</div>
+</header>
+
+    <section class="article-content">
+    <p>原论文<a class="link" href="https://groups.csail.mit.edu/graphics/hdrnet/"  target="_blank" rel="noopener"
+    >https://groups.csail.mit.edu/graphics/hdrnet/</a></p>
+<h1 id="摘要">摘要</h1>
+<p>在移动设备中进行图像处理，优秀的性能是关键的挑战。给出一个作为参考的图像处理管线，或者甚至只给出原图和人工ps过的图，本文希望可以以实时的速度去对这些图像的修改进行再现。为此，本文提出了一种神经网络结构，其受到了bilateral grid处理和区域仿射颜色变换（local affine color transform）的启发。</p>
+<p>使用一对输入输出图像（即原图和ps过后的图），本文的CNN可以在bilateral空间中预测出局部仿射模型的系数。本文的模型可以生成局部、全局、内容相关的决策，来近似得到期望的图像变换。在运行时，本模型输入一个图像的低分辨率版本，生成一组在bilateral空间中的仿射变换，再对变换进行上采样（同时使用一种新的slicing节点，保证edge-preserving），最后将上采样后的变换应用在原图分辨率上。</p>
+<p>本文提出的模型速度很快，在智能手机上，对1080p也有实时性能，并且保持SOTA效果。与前人工作不同，本文的模型进行离线训练，所以在运行时不需要访问原始的operator（算子？）。这允许模型学习到复杂的、依赖场景的变换，通常这样的场景没有参考的实现（应该是前文提到的管线），例如人工ps。</p>
+<h1 id="简介">简介</h1>
+<p>本文提出的模型可以学习到多种多样的图像增强处理过程，并且可以高速地应用在高分辨率图上。为此，本文使用了3个关键策略：</p>
+<ol>
+<li>本文的预测环节都是在低分辨率的bilateral grid上进行的。grid中，每个像素的坐标<span class="math inline">\(x,y\)</span>都增加了一个第三维，即该像素的颜色的函数。为了实现这点，本文引入了一个新的node，来执行数据依赖的查询。这也就是一种slicing（切片）操作，其可以使用像素的颜色信息和位置信息，从3D bilateral grid中将期望图像在高分辨率上重建出来。</li>
+<li>本文参照前人工作，注意到预测输入-输出之间的变换，通常比起直接预测输出要更简单。所以，本文架构只是学习到了一个中间的转换关系的表示，使用这个转换关系就能将输入转化到期望的输出。</li>
+<li>虽然学习和推理是在低分辨率上的，但是训练过程中的损失函数是在高分辨率上进行的。这使得模型学习到的低分辨率的变换函数是直接为高分辨率图像而优化的。</li>
+</ol>
+<p>综上，这三条允许本模型大量的计算在低分辨率，但输出仍然是高分辨率。</p>
+<h1 id="架构">架构</h1>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 169; 
+			flex-basis: 406px"
+	>
+	<a href="/p/deep-bilateral-learning-for-real-time-image-enhancement%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/1.jpg" data-size="1408x832">
+		<img src="/p/deep-bilateral-learning-for-real-time-image-enhancement%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/1.jpg"
+			width="1408"
+			height="832"
+			srcset="/p/deep-bilateral-learning-for-real-time-image-enhancement%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/1_hu5c196399bccb8e7e42d435bbbda1db40_251661_480x0_resize_q75_box.jpg 480w, /p/deep-bilateral-learning-for-real-time-image-enhancement%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/1_hu5c196399bccb8e7e42d435bbbda1db40_251661_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="1.jpg">
+	</a>
+	
+	<figcaption>1.jpg</figcaption>
+	
+</figure></p>
+<p>大部分推理都是在低分辨率的<span class="math inline">\(\tilde{I}\)</span>上进行，即上图中的上半部分，最终预测出一个局部仿射变换。根据作者的经验，图像增强不仅取决于局部图像特征，还取决于全局的信息，例如直方图、平均亮度，甚至是场景的类型。所以，low-res的部分在后面进一步分成两条路，即local和global。最终又把这两种特征混合起来并生成最终的参数。</p>
+<p>下面的high-res部分就在原图分辨率上进行，它会应用最少的计算，并且主要集中于应用影响最大的操作，并且还会保持边缘不变。为此，本文提出了一个切片节点，其受到了bilateral grid的启发。这种节点对低分辨率的grid执行依赖于数据的（data-dependent）查找，该节点基于一个可学习的guidance map。给出从guidance map得出的高分辨率的仿射变换因子，再对图片中的每个像素应用局部的颜色变换，就得到了最终的输出<span class="math inline">\(O\)</span>。在训练时，损失函数是在原分辨率上最小化的。</p>
+<p>本架构有三点超越了前人：</p>
+<ol>
+<li>下采样到bilateral grid的过程是可学习的</li>
+<li>guidance image也是可学习的，并且不受亮度限制</li>
+<li>损失函数不是在仿射因子上评估的，而是在原分辨率的最终图像上。</li>
+</ol>
+<h2 id="bilateral因子在低分辨率下的预测">bilateral因子在低分辨率下的预测</h2>
+<p>（本段原文废话过多，建议直接看最后的表格和<span class="math inline">\(A\)</span>、<span class="math inline">\(F\)</span>的公式）</p>
+<p><span class="math inline">\(\tilde{I}\)</span>被固定为<span class="math inline">\(256\times 256\)</span>的大小。首先经过一连串卷积层（含stride）<span class="math inline">\((S^i)_{i=1,\cdots,n_S}\)</span>，来提取底层特征并降低分辨率。然后，数据分为两条道路。第一条路是<span class="math inline">\((L^i)_{i=1,\cdots,n_L}\)</span>，全都是卷积层，其主要学习局部特征并保留空间信息。第二条路是<span class="math inline">\((G^i)_{i=1,\cdots,n_G}\)</span>，包含了卷积层和全连接层，来学习一个固定大小的向量，表示<span class="math inline">\(\tilde{I}\)</span>全局特征（例如场景类型）。这两条路的最后输出<span class="math inline">\(G^{n^G}\)</span>和<span class="math inline">\(L^{n_L}\)</span>进行混合，得到一个特征集<span class="math inline">\(F\)</span>，在模型最后使用一个pointwise的线性层输出一个最终的数组<span class="math inline">\(A\)</span>。可以将这个<span class="math inline">\(A\)</span>解释为仿射因子的bilateral grid。因为使用2D图像以内容依赖的方式造出了3D的bilateral grid，可以将low-res部分视为一种可学习的splatting的实现。</p>
+<p><strong>低层特征</strong></p>
+<p>首先使用一连串卷积层来处理低分辨率图<span class="math inline">\(S^0 := \tilde{I}\)</span>，其中所有卷积层的stride都是<span class="math inline">\(s=2\)</span></p>
+<p><span class="math display">\[S^i_c[x,y]=\sigma\bigg(b^i_c+\sum_{x',y',c'}w^i_{cc'}[x',y']S^{i-1}_{c'}[sx+x',sy+y']\bigg)
+\]</span></p>
+<p>其中<span class="math inline">\(i=1,\cdots,n_S\)</span>是卷积层的序号，<span class="math inline">\(c\)</span>和<span class="math inline">\(c'\)</span>是该层的通道的序号，<span class="math inline">\(w_i\)</span>是卷积层的权重数组，<span class="math inline">\(b^i\)</span>是偏置向量。而<span class="math inline">\(-1\leq x', y' \leq 1\)</span>，或者说卷积核的大小为<span class="math inline">\(3\)</span>。使用ReLU作为激活函数。所有的padding都设置为<span class="math inline">\(0\)</span>。本文使用4层卷积，即<span class="math inline">\(n_S=4\)</span>。</p>
+<p><strong>局部特征路径</strong></p>
+<p>在低层特征的最后一层<span class="math inline">\(S^{n_S}\)</span>之后，数据送入另外一串卷积层<span class="math inline">\(L^i, n_L=2\)</span>，也就是架构图中黄色的那一部分。这些卷积层的形式和低层特征中的卷积层的形式是一样的，区别在于stride为<span class="math inline">\(s=1\)</span>。并且之前的卷积层会降低分辨率、增加通道数，本部分卷积层不改变分辨率也不改变通道数。</p>
+<p><strong>全局特征路径</strong></p>
+<p>同样的，在<span class="math inline">\(S^{n_S}\)</span>之后，数据送入卷积层<span class="math inline">\(G^i\)</span>中，其为stride为<span class="math inline">\(s=2\)</span>的同样形式的卷积层，总共5层即<span class="math inline">\(n_G=5\)</span>。在卷积层之后再加上3个全连接层。</p>
+<p><strong>特征混合</strong></p>
+<p>将两条路径的输出以如下的形式混合</p>
+<p><span class="math display">\[F_c[x,y]=\sigma\bigg(b_c+\sum_{c'}w'_{cc'}G^{n_G}_{c'}+\sum_{c'}w_{cc'}L^{n_L}_{c'}[x, y]\bigg)
+\]</span></p>
+<p>其中激活函数也是ReLU，输出了一个<span class="math inline">\(16\times 16\times 64\)</span>的数组，之后我们将其输出为<span class="math inline">\(1\times 1\)</span>的线性预测（我自己也看不懂什么意思，建议下面的表格就清晰了）</p>
+<p><span class="math display">\[A_c[x, y] = b_c+\sum_{c'}F_{c'}[x,y]w_{cc'}
+\]</span></p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 283; 
+			flex-basis: 680px"
+	>
+	<a href="/p/deep-bilateral-learning-for-real-time-image-enhancement%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/2.jpg" data-size="717x253">
+		<img src="/p/deep-bilateral-learning-for-real-time-image-enhancement%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/2.jpg"
+			width="717"
+			height="253"
+			srcset="/p/deep-bilateral-learning-for-real-time-image-enhancement%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/2_hu882d918d0a9b1ec09f4f118077de2d41_40251_480x0_resize_q75_box.jpg 480w, /p/deep-bilateral-learning-for-real-time-image-enhancement%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/2_hu882d918d0a9b1ec09f4f118077de2d41_40251_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="2.jpg">
+	</a>
+	
+	<figcaption>2.jpg</figcaption>
+	
+</figure></p>
+<p>（PS：在别的文献里两句话说完的怎么本文里这么多细节）</p>
+<h2 id="将图像特征用作bilateral-grid">将图像特征用作bilateral grid</h2>
+<p>为了叙述方便，定义以下等价形式的<span class="math inline">\(A\)</span></p>
+<p><span class="math display">\[A_{dc+z}[x,y]\leftrightarrow A_c[x,y,z]
+\]</span></p>
+<p>其中<span class="math inline">\(d=8\)</span>是grid的深度。在这种意义下，<span class="math inline">\(A\)</span>可以被视作<span class="math inline">\(16\times 16\times 8\)</span>的bilateral grid，其中每个grid有12个数字（<span class="math inline">\(96/8=12\)</span>），每一个数字都是<span class="math inline">\(3\times 4\)</span>的仿射颜色变换矩阵的一个系数。</p>
+<h2 id="使用一个可训练的slicing层来上采样">使用一个可训练的slicing层来上采样</h2>
+<p>在使用神经网络预测bilateral grid之后，下一步就是用到原图上了。为了实现这个目的，引入一个slicing操作，输入一个单通道的guidance map <span class="math inline">\(g\)</span>和我们之前算出来的<span class="math inline">\(A\)</span>，该操作就可以在<span class="math inline">\(A\)</span>上进行数据依赖的查询。公式如下（<span class="math inline">\(g\)</span>的大小和原图大小一样，最终结果的大小也是）</p>
+<p><span class="math display">\[\bar A_c[x,y]=\sum_{i,j,k}\tau(s_xx-i)\tau(s_yy-j)\tau(d\cdot g[x,y]-k)A_c[i,j,k]
+\]</span></p>
+<p>这实际上就是一个三线性插值。其中<span class="math inline">\(\tau(\cdot)=\max(1-|\cdot|,0)\)</span>，而<span class="math inline">\(s_x\)</span>和<span class="math inline">\(s_y\)</span>分别是是grid和原图宽高的比例。本质上来说，这是给每个像素进行赋值，赋的值近似可以理解为<span class="math inline">\(A_c[i,j,g[x,y]]\)</span>。同前，<span class="math inline">\(d=8\)</span></p>
+<p>slicing操作是无参数的，并且可以用OpenGL来高效实现。</p>
+<h2 id="最终的全尺寸输出">最终的全尺寸输出</h2>
+<p>对于全尺寸的原输入<span class="math inline">\(I\)</span>，我们提取<span class="math inline">\(n_\phi\)</span>个全尺寸特征<span class="math inline">\(\phi\)</span>，来实现两个目的</p>
+<ol>
+<li>预测guidance map <span class="math inline">\(g\)</span></li>
+<li>用作局部仿射模型的回归变量（regression variables）</li>
+</ol>
+<p>最高效的方式是将原图的通道直接用作特征，即<span class="math inline">\(\phi=I(\text{with}\ \ n_\phi=3)\)</span>，然后局部仿射模型就是颜色变换。</p>
+<p><strong>Guidance map辅助网络</strong></p>
+<p>定义<span class="math inline">\(g\)</span>为一个原图上的简单的pointwise的非线性变换</p>
+<p><span class="math display">\[g[x,y]=b+\sum^2_{c=0}\rho_c(M_c^T\cdot\phi_c[x,y]+b_c')
+\]</span></p>
+<p><span class="math inline">\(M^T_c\)</span>是<span class="math inline">\(3\times 3\)</span>的矩阵，<span class="math inline">\(b\)</span>和<span class="math inline">\(b'_c\)</span>是偏置，<span class="math inline">\(\rho_c\)</span>是一个16个ReLU的加权平均</p>
+<p><span class="math display">\[\rho_c(x)=\sum^{15}_{i=0}a_{c,i}\max(x-t_{c,i},0)
+\]</span></p>
+<p>这上面的<span class="math inline">\(M,a,t,b,b'\)</span>都是可学习的参数。<span class="math inline">\(M\)</span>初始化为一个单位矩阵，而<span class="math inline">\(a,t,b,b'\)</span>的初始化能够使得<span class="math inline">\(\rho_c\)</span>是一个在<span class="math inline">\([0,1]\)</span>上的恒等映射。</p>
+<p><strong>生成最终结果</strong></p>
+<p><span class="math display">\[O_c[x, y]=\bar A_{n_\phi+(n_\phi+1)c}+\sum^{n_\phi-1}_{c'=0}\bar A_{c'+(n_\phi+1)c}[x,y]\phi_{c'}[x,y]
+\]</span></p>
+<h2 id="训练过程">训练过程</h2>
+<p>即数据集为<span class="math inline">\(\mathcal D=\{(I_i, O_i)\}_i\)</span>，即全尺寸的输入输出图像对（应当应用同一种图片编辑操作），训练过程即为最小化下面的误差</p>
+<p><span class="math display">\[\mathcal L = \dfrac{1}{|\mathcal D|}\sum_i||I_i-O_i||^2
+\]</span></p>
+<p>训练时，本文引入了权重衰减<span class="math inline">\(10^{-8}\)</span>。卷积层和全连接层使用Kaiming初始化，其他部分初始化为0。在特征maps上使用batch normalization。使用Adam优化算法。batch size在4到16之间（取决于分辨率）。学习率为<span class="math inline">\(10^{-4}\)</span>。</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/%E5%A4%A7%E5%AD%A6/">大学</a>
+        
+            <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">人工智能</a>
+        
+            <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/">计算机视觉</a>
+        
+            <a href="/tags/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css"integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js"integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8"crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js"integrity="sha384-vZTG03m&#43;2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl"crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.querySelector(`.article-content`), {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ]
+        });})
+</script>
+    
+</article>
+
+    <aside class="related-contents--wrapper">
+    
+    
+        <h2 class="section-title">相关文章</h2>
+        <div class="related-contents">
+            <div class="flex article-list--tile">
+                
+                    
+<article class="has-image">
+    <a href="/p/unified-medical-image-pre-training-in-language-guided-common-semantic-space%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/">
+        
+        
+            <div class="article-image">
+                <img src="/p/unified-medical-image-pre-training-in-language-guided-common-semantic-space%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/cover.8ed5ad32c94fbb733ed30623d84a42b3_hu7db9f684ad4dbfbdeb174bd533317f2a_62839_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-jtWtMslPu3M&#43;0wYj2EpCsw==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Unified Medical Image Pre Training in Language Guided Common Semantic Space论文速读</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/p/contrastive-learning-of-medical-visual-representations-from-paired-images-and-text%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/">
+        
+        
+            <div class="article-image">
+                <img src="/p/contrastive-learning-of-medical-visual-representations-from-paired-images-and-text%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/cover.7d89df70ad8c617880343a023e0e8123_hub8c84ca5ad65dd454459c16e59485375_58694_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-fYnfcK2MYXiANDoCPg6BIw==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Contrastive Learning of Medical Visual Representations From Paired Images and Text论文速读</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/inferior/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+        
+        
+            <div class="article-image">
+                <img src="/inferior/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/cover.2aeb7d3afbb199eb18340059cba0cad9_hudfaf5e1d7526a380ad7b29f8ee060abf_123913_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-Kut9OvuxmesYNABZy6DK2Q==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">机器学习&#43;模式识别&#43;认知计算综合学习笔记</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/inferior/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E6%A6%82%E8%AE%BA%E7%AC%94%E8%AE%B0/">
+        
+        
+            <div class="article-image">
+                <img src="/inferior/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E6%A6%82%E8%AE%BA%E7%AC%94%E8%AE%B0/cover.9efee14869436ec4c69d3de759fc6854_hu729735102c3c060f4a29b2f0df39e169_86954_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-nv7hSGlDbsTGnT3nWfxoVA==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">人工智能概论笔记</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/p/grabcut-interactive-foreground-extraction-using-iterated-graph-cuts%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/">
+        
+        
+            <div class="article-image">
+                <img src="/p/grabcut-interactive-foreground-extraction-using-iterated-graph-cuts%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/cover.719f06f8145a0ec2fc378d5f11233592_huf62d2c95a51769be2a7aa0d894297a77_82581_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-cZ8G&#43;BRaDsL8N41fESM1kg==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">GrabCut— Interactive Foreground Extraction Using Iterated Graph Cuts论文精读与复现</h2>
+        </div>
+    </a>
+</article>
+                
+            </div>
+        </div>
+    
+</aside>
+
+     
+    
+        
+    <script src="https://utteranc.es/client.js" 
+        repo="kegalas/blogComments"
+        issue-term="pathname"
+        
+        crossorigin="anonymous"
+        async
+        >
+</script>
+
+<style>
+    .utterances {
+        max-width: unset;
+    }
+</style>
+
+<script>
+    function setUtterancesTheme(theme) {
+        let utterances = document.querySelector('.utterances iframe');
+        if (utterances) {
+            utterances.contentWindow.postMessage(
+                {
+                    type: 'set-theme',
+                    theme: `github-${theme}`
+                },
+                'https://utteranc.es'
+            );
+        }
+    }
+
+    addEventListener('message', event => {
+        if (event.origin !== 'https://utteranc.es') return;
+        setUtterancesTheme(document.documentElement.dataset.scheme)
+    });
+
+    window.addEventListener('onColorSchemeChange', (e) => {
+        setUtterancesTheme(e.detail)
+    })
+</script>
+
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2024 KegalaS的个人博客
+    </section>
+    
+    <section class="powerby">
+         <br />
+        
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    
+        <aside class="sidebar right-sidebar sticky">
+            <section class="widget archives">
+                <div class="widget-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+                </div>
+                <h2 class="widget-title section-title">目录</h2>
+                
+                <div class="widget--toc">
+                    <nav id="TableOfContents">
+  <ol>
+    <li><a href="#摘要">摘要</a></li>
+    <li><a href="#简介">简介</a></li>
+    <li><a href="#架构">架构</a>
+      <ol>
+        <li><a href="#bilateral因子在低分辨率下的预测">bilateral因子在低分辨率下的预测</a></li>
+        <li><a href="#将图像特征用作bilateral-grid">将图像特征用作bilateral grid</a></li>
+        <li><a href="#使用一个可训练的slicing层来上采样">使用一个可训练的slicing层来上采样</a></li>
+        <li><a href="#最终的全尺寸输出">最终的全尺寸输出</a></li>
+        <li><a href="#训练过程">训练过程</a></li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+                </div>
+            </section>
+        </aside>
+    
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                defer="false"
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
