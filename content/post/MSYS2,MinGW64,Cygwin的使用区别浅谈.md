@@ -28,7 +28,7 @@ mathjax: false
 
 现在MSYS2官网更推荐使用UCRT而不是MINGW。如果你要使用clang/llvm，那么用clang64是肯定的（我试了，在clang64里面装用pacman -S clang装进的是MSYS2里面。而且版本比较旧，也没有clangd等工具。我们要用的是 pacman -S mingw-w64-clang-x86_64-toolchain，当然也可以用[llvm-mingw](https://github.com/mstorsjo/llvm-mingw/releases)，不过好像有一些其他问题。而且这个clang64的前端好像是gcc，而不是在Windows下安装的llvm的默认前端msvc）。它们的具体区别可见[https://www.msys2.org/docs/environments/](https://www.msys2.org/docs/environments/)。
 
-另外，笔者曾经有使用MinGW的困难（[链接](https://kegalas.top/p/msys2%E4%B8%AD%E4%BD%BF%E7%94%A8mingw64%E7%9A%84g-%E7%BC%96%E8%AF%91%E8%BF%90%E8%A1%8C%E6%8A%A5%E9%94%99%E6%97%A0%E6%B3%95%E6%89%BE%E5%88%B0%E5%85%A5%E5%8F%A3/)），不过现在我觉得可能不是MinGW的问题，具体什么问题由于我现在没有再遇到，可能不能解决了。
+另外，笔者曾经有使用MinGW的困难（[链接](https://kegalas.uk/p/msys2%E4%B8%AD%E4%BD%BF%E7%94%A8mingw64%E7%9A%84g-%E7%BC%96%E8%AF%91%E8%BF%90%E8%A1%8C%E6%8A%A5%E9%94%99%E6%97%A0%E6%B3%95%E6%89%BE%E5%88%B0%E5%85%A5%E5%8F%A3/)），不过现在我觉得可能不是MinGW的问题，具体什么问题由于我现在没有再遇到，可能不能解决了。
 
 注意，你安装ucrt64中的gcc后，可能会遇到编译过后，exe文件运行不正常的情况，例如打开直接错误退出，例如emacs的native compile错误的问题。这很可能是因为，你的电脑里面有太多g++的库了，比如GPG4Win，git，cmake，emacs，qt都会自带libstdc++-6.dll，这是gnu实现的c++的STL，这可能没什么，但是如果它们都在环境变量里，即使不会干扰到各自的运行（因为在同一个目录下的dll优先级高于在环境变量里的），也会对你自己编译的程序造成影响。解决办法是，把ucrt64的环境变量优先级拉高；或者复制一份ucrt64的libstdc++-6.dll到你的build目录下；或者干脆静态链接libstdc++。
 

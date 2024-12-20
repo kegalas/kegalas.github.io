@@ -26,4 +26,4 @@ image: 1.jpg
 
 另外，如果遇到failed to synchronize all databases (unable to lock database)，而经过检查又没有发现/var/lib/pacman/db.lck这个文件的存在，可以考虑用管理员身份打开msys2.exe。如果能够打开就说明是权限问题，可以将整个msys2的权限进行修改，允许非管理员用户完全控制。
 
-2023.5.7 后记，msys2和mingw确实有区别，新博客文章见[链接](https://kegalas.top/p/msys2mingw64cygwin%E7%9A%84%E4%BD%BF%E7%94%A8%E5%8C%BA%E5%88%AB%E6%B5%85%E8%B0%88/)。另外本文上述办法没法完美解决，如果发给别人，他电脑上没有msys-2.0.dll，那么没法运行msys2编译的程序。
+2023.5.7 后记，msys2和mingw确实有区别，新博客文章见[链接](https://kegalas.uk/p/msys2mingw64cygwin%E7%9A%84%E4%BD%BF%E7%94%A8%E5%8C%BA%E5%88%AB%E6%B5%85%E8%B0%88/)。另外本文上述办法没法完美解决，如果发给别人，他电脑上没有msys-2.0.dll，那么没法运行msys2编译的程序。
