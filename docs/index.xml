@@ -4459,7 +4459,7 @@ for x = x0 to x1 do
 &lt;p&gt;现在MSYS2官网更推荐使用UCRT而不是MINGW。如果你要使用clang/llvm，那么用clang64是肯定的（我试了，在clang64里面装用pacman -S clang装进的是MSYS2里面。而且版本比较旧，也没有clangd等工具。我们要用的是 pacman -S mingw-w64-clang-x86_64-toolchain，当然也可以用&lt;a class=&#34;link&#34; href=&#34;https://github.com/mstorsjo/llvm-mingw/releases&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;llvm-mingw&lt;/a&gt;，不过好像有一些其他问题。而且这个clang64的前端好像是gcc，而不是在Windows下安装的llvm的默认前端msvc）。它们的具体区别可见&lt;a class=&#34;link&#34; href=&#34;https://www.msys2.org/docs/environments/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;https://www.msys2.org/docs/environments/&lt;/a&gt;。&lt;/p&gt;
-&lt;p&gt;另外，笔者曾经有使用MinGW的困难（&lt;a class=&#34;link&#34; href=&#34;https://kegalas.top/p/msys2%E4%B8%AD%E4%BD%BF%E7%94%A8mingw64%E7%9A%84g-%E7%BC%96%E8%AF%91%E8%BF%90%E8%A1%8C%E6%8A%A5%E9%94%99%E6%97%A0%E6%B3%95%E6%89%BE%E5%88%B0%E5%85%A5%E5%8F%A3/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+&lt;p&gt;另外，笔者曾经有使用MinGW的困难（&lt;a class=&#34;link&#34; href=&#34;https://kegalas.uk/p/msys2%E4%B8%AD%E4%BD%BF%E7%94%A8mingw64%E7%9A%84g-%E7%BC%96%E8%AF%91%E8%BF%90%E8%A1%8C%E6%8A%A5%E9%94%99%E6%97%A0%E6%B3%95%E6%89%BE%E5%88%B0%E5%85%A5%E5%8F%A3/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;链接&lt;/a&gt;），不过现在我觉得可能不是MinGW的问题，具体什么问题由于我现在没有再遇到，可能不能解决了。&lt;/p&gt;
 &lt;p&gt;注意，你安装ucrt64中的gcc后，可能会遇到编译过后，exe文件运行不正常的情况，例如打开直接错误退出，例如emacs的native compile错误的问题。这很可能是因为，你的电脑里面有太多g++的库了，比如GPG4Win，git，cmake，emacs，qt都会自带libstdc++-6.dll，这是gnu实现的c++的STL，这可能没什么，但是如果它们都在环境变量里，即使不会干扰到各自的运行（因为在同一个目录下的dll优先级高于在环境变量里的），也会对你自己编译的程序造成影响。解决办法是，把ucrt64的环境变量优先级拉高；或者复制一份ucrt64的libstdc++-6.dll到你的build目录下；或者干脆静态链接libstdc++。&lt;/p&gt;
 &lt;p&gt;如果你要打包发送给别人用，别人一般不会拥有libstdc++这个库，你要么选择静态链接，要么把dll一起打包发布。可能这里静态链接会有被GPL感染的风险（我查到的说法基本上各执一词），建议还是动态链接吧。&lt;/p&gt;
@@ -10546,7 +10546,7 @@ x_{c_m}-x_{c_m&#39;}\leq y_m
 &lt;p&gt;根据&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[(a/b)\%p=(a\times b^{-1})\%p=[(a\%p)\times(b^{-1}\%p)]\%p
 \]&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;（如果加载不全，见&lt;a class=&#34;link&#34; href=&#34;https://kegalas.top/p/%E5%8F%96%E4%BD%99%E8%BF%90%E7%AE%97%E7%9A%84%E5%88%86%E9%85%8D%E5%BE%8B/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+&lt;p&gt;（如果加载不全，见&lt;a class=&#34;link&#34; href=&#34;https://kegalas.uk/p/%E5%8F%96%E4%BD%99%E8%BF%90%E7%AE%97%E7%9A%84%E5%88%86%E9%85%8D%E5%BE%8B/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;取余运算的分配律&lt;/a&gt;）&lt;/p&gt;
 &lt;p&gt;可以不用除法求出组合数。其中&lt;span class=&#34;math inline&#34;&gt;\(b^{-1}\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(b\)&lt;/span&gt;在模&lt;span class=&#34;math inline&#34;&gt;\(p\)&lt;/span&gt;意义下的逆元。&lt;/p&gt;
 &lt;p&gt;注意阶乘和其逆元的预处理。&lt;/p&gt;
