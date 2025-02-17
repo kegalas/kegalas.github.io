@@ -1,7 +1,7 @@
 ---
 title: Linux开发环境配置合集（长期更新）
 date: 2023-10-13T19:06:00+08:00
-draft: true
+draft: false
 tags:
   - 计算机
   - Linux
