@@ -63,7 +63,7 @@ PQ曲线是同样的，那对于只有400nits亮度的显示屏如何显示1.0�
 
 # Tone Mapping的作用
 
-最初是没有HDR显示器的，Tone mapping的作用是将用各种技术捕捉到的具有高亮度的图像，恰当的显示在SDR显示器上。通常来说，一张照片中的很大部分内容都在$[0,100]$nits之间，可以被SDR显示器正常显示，而只有很少一部分（例如太阳直射），具有很高的亮度，比如1000nits。而Tone mapping要做的事是，保留大部分正常显示的内容亮度不降低太少，而大幅度降低过于亮的部分。例如，我们可以用$[0,80]$nits来显示原来$[0,100]$的内容，而使用$[80, 100]$nits显示所有大于100nits的内容。
+最初是没有HDR显示器的，Tone mapping的作用是将用各种技术捕捉到的具有高亮度的图像，恰当的显示在SDR显示器上。通常来说，一张照片中的很大部分内容都在$[0,100]$nits之间，可以被SDR显示器正常显示，而只有很少一部分（例如太阳直射），具有很高的亮度，比如1000nits。而Tone mapping要做的事是，保留大部分正常显示的内容亮度不降低太少，而大幅度降低过于亮的部分。例如，我们可以用$[0,80]$nits来显示原来$[0,100]$的内容，而使用$[80, 100]$nits显示所有大于100nits的内容。实际上，HDR显示器的最高亮度也各不相通，如何将适配于HDR1000的视频映射到HDR400也是Tone Mapping需要做的事。
 
 你可能会说这和刚刚提到的EOTF很像，都是在限定的范围内合理分配数值。那我们可不可以直接将PQ域的数据转换到线性域，再从线性域转换到Gamma域呢？答案是可以，但是不够好。借用论文[High Dynamic Range Image Tone Mapping: Literature review and performance benchmark](https://www.sciencedirect.com/science/article/pii/S1051200423001100)中的一张图（本文之后的内容也会极大程度参考该综述）
 
@@ -154,7 +154,7 @@ $$
 
 ![7.jpg](7.jpg)
 
-我认为作者的意思是想说，在减少对比度的同时，增加细节，就会让这根曲线从“大体上单增”，变成了一个“大体上先增后减再增“的曲线，正是这种奇怪的过渡使得光晕产生。
+我认为作者的意思是想说，在减少对比度的同时，增加细节，就会让这根曲线从“大体上单增”，变成了一个“大体上先增后减再增“的曲线，正是这种奇怪的过渡使得光晕产生。或者用“梯度反转”这个词来表示，也就是说，原来亮度高的地方变成了亮度低的，而亮度低的变得亮度高了，体现出来就是围绕着边缘处有一圈比边缘内更亮的区域，即“光晕”。
 
 而作者给出的解决办法就是混合使用高斯滤波和双边滤波。大概40%的双边，60%的高斯，而且高斯核必须足够大。
 
@@ -166,6 +166,138 @@ TODO
 
 # 深度学习的TMO
 
-## 基于GAN的方法
+## 基于GAN的监督学习方法
 
-TODO
+例如论文[Deep tone mapping operator for high dynamic range images](https://ieeexplore.ieee.org/abstract/document/8822603/)提出的DeepTMO，其使用cGAN的架构来对给出的HDR图片进行LDR图片的生成
+
+![8.jpg](8.jpg)
+
+如图，其从训练数据中拿出HDR和其对应的真实LDR图片的亮度图给判别器，让其判断LDR是否是从HDR中生成的。而生成器的任务就是从HDR亮度图中生成假的LDR亮度图，然后尽可能让判别器判断不出来。
+
+训练数据是作者实现了一系列经典的TMO，然后用他们将HDR图片数据集转化为LDR图片，使用客观评价标准Tone Mapped Image Quality Index (TMQI)来判断表现最好的LDR，然后将其作为真实LDR标注图片。
+
+本文的想法是之前的TMO对不同场景的表现不同，在高亮度表现好的TMO不一定在低亮度表现好，或者这些TMO需要调整参数才能适应不同的场景。本文提出的DeepTMO希望免去输入参数的步骤，直接进行场景的自适应，对不同条件的光照都生成最好的结果。
+
+其单尺度的网络结构如下
+
+![9.jpg](9.jpg)
+
+生成器是一个卷积、残差块、反卷积的编解码器结构，输入HDR亮度图输出同分辨率的LDR亮度图。而判别器的架构是PatchGAN，每次只对一个$70\times 70$的空间进行判断，最终再将所有Patch的判断综合起来进行全图的判断。用PatchGAN的好处，作者认为是参数少，并且可以应用到任意大小的图片上。
+
+然而单尺度的DeepTMO还是太弱了，有细节处的伪影，所以作者又提出了多尺度的加强版。
+
+![10.jpg](10.jpg)
+
+作者这里只给出了生成器的结构。上图所示的两个生成器$G_d,G_o$都和原来的架构是一样的，$G_d$接收下采样过两次的输入。$G_o$负责进行局部细节的Tone mapping，而$G_d$负责进行整体的、粗糙的。判别器没给图，结构和之前一样，只不过$D_d$负责判断全局的真假，而$D_o$负责局部细节的。同样的$D_d$的输入是经过两次下采样的图片。
+
+## 基于GAN的半监督学习方法
+
+实际上，先用一些传统TMO得到LDR，再选出指标最好的一个，也不能避免传统TMO的伪影问题。按理来说，使用摄影师手动调整过的图片是最好的，但是这样又太费时。
+
+[A Real-Time Semi-Supervised Deep Tone Mapping Network](https://ieeexplore.ieee.org/abstract/document/9454333)提出了一种半监督方法，文中指出了直接使用CycleGAN这样的无监督方法效果不好，需要加一点配对数据来提升能力。本文的网络结构如下
+
+![11.jpg](11.jpg)
+
+作者首先指出，RGB转化为HSV，并且分别处理亮度和饱和度是最好的。本文引入配对标注数据的方法是，在原有的CycleGAN的基础上加上一个配对数据的$L_1$损失，对于S通道
+
+$$
+L_1 = E_{(h,l_p)}||G_{H2L}(h)-l_p||_1
+$$
+
+其中$h$指HDR图，$l_p$指其对应的人类专家编辑的LDR图标注。而对于$V$通道
+
+$$
+L_1 = E_{(a,b_p)}||G_{A2B}(a)-b_p||_1
+$$
+
+形式一样。然后将这两个损失分别加到各自的CycleGAN之前有的那一堆损失里。遇到没有配对图片的情况，损失就取$0$。
+
+关于生成器和判别器的网络架构，比较公式就略过了，重要的思想是前面的添加配对数据的部分。
+
+## 基于DNN的无监督学习方法
+
+[Unpaired learning for high dynamic range image tone mapping](https://openaccess.thecvf.com/content/ICCV2021/html/Vinker_Unpaired_Learning_for_High_Dynamic_Range_Image_Tone_Mapping_ICCV_2021_paper.html)一文中介绍了一种无监督的方法，即不使用配对的HDR-LDR数据。网络结构如下
+
+![12.jpg](12.jpg)
+
+和大多数工作一样，本文仅在亮度上进行Tone mapping，之后再进行颜色恢复，特别的，使用RGB转YUV后的Y通道。本文并算不上GAN，虽然他确实有判别器，但是他并没有生成器。首先本文将$Y$通道应用一个log型的曲线进行动态范围压缩
+
+$$
+Y_c(x)=\log\left(\lambda\dfrac{Y(x)}{\max(Y)}+\varepsilon\right)/\log(\lambda+\varepsilon)
+$$
+
+其中$\lambda$是一个可调参数，而$\varepsilon=0.05$是一个常数。本文的网络$N$的作用是在$Y_c$上进行微调，以保证局部对比度，移除其他伪影。为了保证$N$输出的亮度特征和LDR的特征相似，本文引入了判别器，判断一个输入图片是否为LDR，另外，本文学习前人的工作使用了多尺度的判别器。即将真假的LDR的原图、下采样过1次、2次的图分别用三个判别器进行判别。判别器的误差如下
+
+$$
+L_D = \sum_{k=\{0,1,2\}}\left(E_{Y_L\sim LDR}[D_k(\downarrow^kY_L)-1]^2+E_{Y\sim HDR}[D_k(\downarrow^kN(Y_c))]^2\right)
+$$
+
+其中$\downarrow^k$指的是下采样过$k$次。这个判别器会给网络$N$传递一个误差，目的是让其亮度表现的像LDR
+
+$$
+L_{natural} = \sum_{k=\{0,1,2\}}E_{Y\sim HDR}[D_k(\downarrow^kN(Y_c))-1]^2
+$$
+
+以上的部分只是让生成的LDR亮度看起来就像人类专家精心编辑过的LDR图片一样，但是他并没有要求假LDR图片拥有和原图一样的“结构”，也无法解决局部对比度等问题，所以：
+
+$$
+L_{struct} = \sum_{k=\{0,1,2\}}\rho(\downarrow^kY_c,\downarrow^kN(Y_c))
+$$
+
+其中
+
+$$
+\rho(I,J) = \dfrac{1}{n_p}\sum_{p_I, p_J}\dfrac{cov(p_I, p_J)}{\sigma(p_I)\sigma(p_J)}
+$$
+
+是皮尔逊相关系数，其中$p_I, p_J$是两张图片上对应的$5\times 5$的小块。
+
+最后是关于前面说的log型曲线的参数选择，使用数值算法求解最优值
+
+$$
+\lambda = \text{argmin}-\sum_lH_l(Y_c)\log(H_l(LDR))
+$$
+
+其中$H(Y_c)$是$Y_c$的直方图，而$H(LDR)$则是数百张精挑细选过的LDR图片的直方图均值。直方图总共有$20$个bins。作者说只考虑HDR图片的亮度最大值最小值可能会受到噪声的干扰，效果不好。
+
+## 基于扩散模型的无监督学习方法
+
+如果说上面那个还要用HDR图片来训练的话，下面这个方法连HDR都不用了，干脆就是只用LDR训练，直接在HDR上推理。
+
+[Zero-Shot Structure-Preserving Diffusion Model for High Dynamic Range Tone Mapping](https://openaccess.thecvf.com/content/CVPR2024/html/Zhu_Zero-Shot_Structure-Preserving_Diffusion_Model_for_High_Dynamic_Range_Tone_Mapping_CVPR_2024_paper.html)发现HDR和其LDR的结构是“几乎相同”的，细微的差别实际上是不完美的TMO造成的。本文使用的结构指标如下
+
+$$
+\mu(i,j) = \sum^K_{x=-K}\sum^K_{y=-K} \omega(x,y)I(i+x, j+y)
+$$
+
+$$
+\sigma(i,j) = \sqrt{\sum^K_{x=-K}\sum^K_{y=-K} \omega(x,y)[I(i+x, j+y)-\mu(i,j)]^2}
+$$
+
+$$
+\hat I(i,j) = \dfrac{I(i,j)-\mu(i,j)}{\sigma(i,j)+\varepsilon}
+$$
+
+其中$\omega(x, y)$是高斯核。最后这个公式就是结构指标，作者称之为MSCN，作者通过实验验证，在JS散度的意义上，LDR和HDR图片的结构分布是极为相似的，或者直接假设为同分布。于是，本文就通过这个结构上同分布的假设，在LDR和HDR上建立了知识迁移的桥梁。
+
+![13.jpg](13.jpg)
+
+网络结构如下
+
+![14.jpg](14.jpg)
+
+大致的思想就是在ControlNet上进行，输入的控制条件是MSCN、以及经过高斯模糊后的亮度图。在训练过程中，使用LDR图片，提取到其MSCN，然后对其转为YUV通道后的Y进行高斯模糊，作为亮度图。输入到Control模块后，期望其能够复现出原始的LDR图片的亮度图。而在推理过程中，使用HDR图片，也是提取到其MSCN，然后像上一篇文章一样，用log型曲线先把YUV的Y压缩一下，再进行高斯模糊。然后也是把这两个图输入到Control模块，就得到了LDR图片的亮度图，后面再进行颜色恢复。
+
+文中还提出了一个SRO的操作，在每一步diffusion之后，将其中间结果也分成Y通道和MSCN，然后将MSCN偷换成原图中提取的MSCN，然后将其和Y通道合并后得到一个结果，将这个结果发送给下一步diffusion的输入。
+
+## 基于语义分割的方法
+
+有一些方法试图对不同的区域应用不同的Tone mapping，因为关注到显然现实生活中不同材质的物体平均亮度是不同的，可以通过这种方式来将各种物体映射到各自偏好的亮度。
+
+文章[Tone Mapping Operators: Progressing Towards Semantic-Awareness](https://ieeexplore.ieee.org/abstract/document/9106057/)的结构如下
+
+![15.jpg](15.jpg)
+
+本文并没有提出什么新的网络架构。Mask的提取部分，使用了预训练的FastFCN，将其中的150个类又归为9类，然后使用形态学方法生成trimap，然后使用Alpha matting获取到精细的mask。然后，作者使用这样的方法对几百张LDR图片生成了mask，统计个各类的亮度直方图，也即学习到了个各类的目标亮度。
+
+在Tone mapping的部分，作者在HDR上获取到mask后，就简单的将目前的亮度替换为目标亮度，然后再用颜色恢复方法恢复出来LDR图像。
