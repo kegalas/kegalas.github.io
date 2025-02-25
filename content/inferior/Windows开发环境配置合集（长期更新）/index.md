@@ -252,7 +252,7 @@ TODO
 pacman -S mingw-w64-ucrt-x86_64-cmake mingw-w64-ucrt-x86_64-cmake-gui mingw-w64-ucrt-x86_64-ninja mingw-w64-ucrt-x86_64-make
 ```
 
-安装cmake官网的windows版本会不会更优有待考察TODO。
+使用起来和在cmake官网上下载的安装包版本差不多，也可以用cmake-gui。
 
 另外，直接安装`make`后，并不能在powershell里直接使用，见[MSYS2中的make工具安装方法](../../p/msys2中的make工具安装方法)
 

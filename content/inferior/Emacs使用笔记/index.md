@@ -213,7 +213,7 @@ motion有些类似原版emacs指令中，C-x后面加的那个东西。
 
 很多关于buffer，file，window的操作是emacs特有的，不应该换掉。好在原版vim也没有C-x这个快捷键。不过是否可以把切换window的操作绑定成vim的，TODO。
 
-另外注意，不应当把undo-tree绑定到u和C-r上，具体怎么做，TODO。
+另外注意，不应当把undo-tree绑定到u和C-r上，或许就用默认提供的C-x u就好了。
 
 **\<f1\>~\<f12\>**
 
@@ -246,7 +246,7 @@ motion有些类似原版emacs指令中，C-x后面加的那个东西。
 |C-a|跳到文字的开头或这一行的开头|
 |C-e|跳到文字的结尾或一行的结尾|
 
-但是安装了evil后，我怀疑这个插件是否有必要，TODO。
+但是安装了evil后，你也可以用vim的$和^来跳到行尾行首。
 
 ## all-the-icons
 
