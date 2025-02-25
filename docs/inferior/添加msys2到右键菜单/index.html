@@ -396,7 +396,7 @@
     <p>参考自<a class="link" href="https://gist.github.com/elieux/ef044468d067d68040c7"  target="_blank" rel="noopener"
     >https://gist.github.com/elieux/ef044468d067d68040c7</a></p>
 <p>但是他那个时候还没有ucrt64，所以我略作修改如下。</p>
-<p>首先是添加注册表项：</p>
+<p>首先是添加注册表项（保存成.reg文件运行即可）：</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-reg" data-lang="reg"><span style="display:flex;"><span>Windows Registry Editor Version 5.00
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">[</span>HKEY_CURRENT_USER<span style="color:#66d9ef">\Software\Classes\Directory\Background\shell\MSYS here\command]</span>
@@ -418,8 +418,49 @@
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">[</span><span style="color:#f92672">-</span>HKEY_CURRENT_USER<span style="color:#66d9ef">\Software\Classes\Directory\Background\shell\UCRT64 here]</span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">[</span><span style="color:#f92672">-</span>HKEY_CURRENT_USER<span style="color:#66d9ef">\Software\Classes\Directory\Background\shell\MINGW64 here]</span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">[</span><span style="color:#f92672">-</span>HKEY_CURRENT_USER<span style="color:#66d9ef">\Software\Classes\Directory\Background\shell\CLANG64 here]</span>
-</span></span></code></pre></div><p>当然，我自己觉得这样比较丑。因为右键菜单是会按照字母顺序排序的，这样这四个就不在一起了。我个人是想加一个二级菜单把它们放一起的，这个TODO。</p>
-
+</span></span></code></pre></div><p>当然，我自己觉得这样比较丑。因为右键菜单是会按照字母顺序排序的，这样这四个就不在一起了。如果你想加二级菜单，那么可以如下进行</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-reg" data-lang="reg"><span style="display:flex;"><span>Windows Registry Editor Version 5.00
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">[</span>HKEY_CLASSES_ROOT<span style="color:#66d9ef">\Directory\background\shell\Msys2SubMenu]</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">&#34;MUIVerb&#34;</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Msys2&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">&#34;SubCommands&#34;</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Msys2Here; Ucrt64Here; Mingw64Here; Clang64Here&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">[</span>HKEY_LOCAL_MACHINE<span style="color:#66d9ef">\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\Msys2Here]</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Msys2 Here&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">&#34;Icon&#34;</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;G:\\Program_Files\\msys64\\msys2.ico&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">[</span>HKEY_LOCAL_MACHINE<span style="color:#66d9ef">\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\Msys2Here\command]</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;G:\\Program_Files\\msys64\\msys2.exe bash&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">[</span>HKEY_LOCAL_MACHINE<span style="color:#66d9ef">\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\Ucrt64Here]</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Ucrt64 Here&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">&#34;Icon&#34;</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;G:\\Program_Files\\msys64\\ucrt64.ico&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">[</span>HKEY_LOCAL_MACHINE<span style="color:#66d9ef">\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\Ucrt64Here\command]</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;G:\\Program_Files\\msys64\\ucrt64.exe bash&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">[</span>HKEY_LOCAL_MACHINE<span style="color:#66d9ef">\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\Mingw64Here]</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Mingw64 Here&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">&#34;Icon&#34;</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;G:\\Program_Files\\msys64\\mingw64.ico&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">[</span>HKEY_LOCAL_MACHINE<span style="color:#66d9ef">\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\Mingw64Here\command]</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;G:\\Program_Files\\msys64\\mingw64.exe bash&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">[</span>HKEY_LOCAL_MACHINE<span style="color:#66d9ef">\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\Clang64Here]</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Clang64 Here&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">&#34;Icon&#34;</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;G:\\Program_Files\\msys64\\clang64.ico&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">[</span>HKEY_LOCAL_MACHINE<span style="color:#66d9ef">\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\Clang64Here\command]</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;G:\\Program_Files\\msys64\\clang64.exe bash&#34;</span>
+</span></span></code></pre></div><p>然后删除的代码就是</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-reg" data-lang="reg"><span style="display:flex;"><span>Windows Registry Editor Version 5.00
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">[</span><span style="color:#f92672">-</span>HKEY_CLASSES_ROOT<span style="color:#66d9ef">\Directory\background\shell\Msys2SubMenu]</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">[</span><span style="color:#f92672">-</span>HKEY_LOCAL_MACHINE<span style="color:#66d9ef">\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\Msys2Here]</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">[</span><span style="color:#f92672">-</span>HKEY_LOCAL_MACHINE<span style="color:#66d9ef">\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\Ucrt64Here]</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">[</span><span style="color:#f92672">-</span>HKEY_LOCAL_MACHINE<span style="color:#66d9ef">\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\Mingw64Here]</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">[</span><span style="color:#f92672">-</span>HKEY_LOCAL_MACHINE<span style="color:#66d9ef">\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\Clang64Here]</span>
+</span></span></code></pre></div>
 </section>
 
 

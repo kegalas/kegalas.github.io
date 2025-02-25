@@ -187,7 +187,7 @@
 \]</span></p>
 <p>其中<span class="math inline">\(k_d\)</span>是该物体的材质的漫反射系数。这里<span class="math inline">\(k_d\)</span>一般是三维向量，而同时<span class="math inline">\(I\)</span>和<span class="math inline">\(L_d\)</span>也是三维向量。这么做的原因是，我们的光是有颜色的，并且反射的时候物体也会对某种颜色反射的多，某种颜色反射的少。这里<span class="math inline">\(k_d\)</span>和<span class="math inline">\(I\)</span>是分量之间各自相乘的乘法，在我们的库里就是operator*，而不是dot函数。</p>
 <p>并且由于我们在这里做乘法，试想一下我们用<span class="math inline">\(255\times255\)</span>，得到的数超过了<span class="math inline">\(255\)</span>，也就是颜色的上限值，是不对的。我们转化一下，把<span class="math inline">\(RGB\)</span>三个分量的值定为<span class="math inline">\([0,1]\)</span>，用这个数字去进行计算。在最后屏幕上着色的时候，再转换回整数<span class="math inline">\([0,255]\)</span>。</p>
-<p>你可能会问，我知道光有颜色，但是亮度怎么办？简单认为，一个颜色的0.9倍亮度，就是把每个分量都乘以0.9。更详细的我会在以后介绍（TODO）。</p>
+<p>你可能会问，我知道光有颜色，但是亮度怎么办？简单的想法是，一个颜色的0.9倍亮度，就是把每个分量都乘以0.9。更正确的想法可以参考<a class="link" href="../tone-mapping%e7%ae%80%e8%bf%b0/#tone-mapping%e7%9a%84%e4%bd%9c%e7%94%a8" >Tone-mapping简述</a>一文中提到的<span class="math inline">\(L = 0.2959R + 0.5870G + 0.1140B\)</span>，然后计算<span class="math inline">\(T=0.9L\)</span>，然后进行颜色恢复<span class="math inline">\(C' = \left(C/L\right)^s T\)</span>。</p>
 <h2 id="镜面反射">镜面反射</h2>
 <p>有时候，这个材质比较光滑，在反射角（指<span class="math inline">\(\bm v\)</span>和<span class="math inline">\(\bm n\)</span>的夹角）等于入射角（指<span class="math inline">\(\bm l\)</span>和<span class="math inline">\(\bm n\)</span>的夹角），或者反射角很接近入射角时，光强会明显强于其他角度。</p>
 <p><figure 
