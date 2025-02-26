@@ -268,7 +268,15 @@
 <h1 id="考虑周围像素亮度值的tmo">考虑周围像素亮度值的TMO</h1>
 <p>为了解决局部对比度的问题，Local TMO就被提出了。GTMO理论上同一张图片里相同的亮度会被映射成相同的结果，但LTMO就允许映射成不同的结果，来保护局部的对比度。</p>
 <p>考虑空间上的信息的研究中比较著名的是<strong>完全体</strong>版<a class="link" href="https://dl.acm.org/doi/abs/10.1145/3596711.3596781"  target="_blank" rel="noopener"
-    >Reinhard</a>，在传统的摄影技法中，摄影师能够通过调整曝光时间来将结果中的暗的地方增亮，亮的地方变暗，从而让结果包含更多有效信息。Reinhard方法通过自动的方法来进行这种操作。作者使用高斯滤波器来找到这种局部对比度差异大的像素，然后通过提亮被亮像素包围的暗像素，减暗被暗像素包围的亮像素，并且他们变化的幅度不会太大，来实现降低整体的亮度的同时保证局部对比度。</p>
+    >Reinhard</a>，在传统的摄影技法中，摄影师能够通过调整曝光时间来将结果中的暗的地方增亮，亮的地方变暗，从而让结果包含更多有效信息。Reinhard方法通过自动的方法来进行这种操作（实际上是反向操作）。作者使用高斯滤波器来找到这种局部亮度差不多的像素，然后通过减被亮像素包围的暗像素，提亮被暗像素包围的亮像素，于是就成功的将局部的对比度提高了。</p>
+<p><span class="math display">\[V(x,y,s) = \dfrac{V_1(x,y,s)-V_2(x,y,s)}{2^\phi a/s^2+V_1(x,y,s)}
+\]</span></p>
+<p>这里的公式里的<span class="math inline">\(V_i\)</span>就是高斯滤波后的结果，其中<span class="math inline">\(s\)</span>控制了方差大小，<span class="math inline">\(a,\phi\)</span>是可调参数。<span class="math inline">\(V_1, V_2\)</span>的区别在于其方差被乘以了一个不同的常数，<span class="math inline">\(V_1\)</span>乘以了比较小的数，而<span class="math inline">\(V_2\)</span>乘以了比较大的数。</p>
+<p>在图片中<span class="math inline">\(V_1\)</span>和<span class="math inline">\(V_2\)</span>在亮度梯度小的地方数值差距小，在亮度梯度大，也就是局部对比度大的地方数值差距大。作者通过搜索<span class="math inline">\(s\)</span>的方法，来让这整个式子的绝对值第一次小于一个限定值。通过这样的方式就可以寻找到一个local区域，其用<span class="math inline">\(s_m\)</span>来表示这个区域的大小。</p>
+<p>分母上的<span class="math inline">\(V_1\)</span>来让这个式子和亮度绝对值无关，而<span class="math inline">\(2^\phi a/s^2\)</span>则可以防止<span class="math inline">\(V\)</span>变成极端值。计算完最优的<span class="math inline">\(s_m\)</span>后，这里的<span class="math inline">\(V_1\)</span>就可以用来表示该像素的局部平均值，于是我们就可以修改之前的极简版Reinhard为：</p>
+<p><span class="math display">\[L_d(x,y) = \dfrac{L(x,y)}{1+V_1(x,y,s_m(x,y))}
+\]</span></p>
+<p>当遇到亮区域的暗像素时，就有<span class="math inline">\(L< V_1\)</span>，于是<span class="math inline">\(L_d\)</span>就会更小，即让差不多亮的地方的暗的地方更暗一点，反之则让亮的地方更亮一点，从而增加了局部的对比度。</p>
 <p>而在频域的信息上来做的最著名的是<a class="link" href="https://dl.acm.org/doi/abs/10.1145/566570.566574"  target="_blank" rel="noopener"
     >Durand &amp; Dorsey</a>方法，原文大篇幅在讲滤波，我看不懂，但是其LTMO的思路如下（参考自<a class="link" href="https://zhuanlan.zhihu.com/p/573894977"  target="_blank" rel="noopener"
     >https://zhuanlan.zhihu.com/p/573894977</a>）</p>
@@ -421,10 +429,10 @@
 	<figcaption>11.jpg</figcaption>
 	
 </figure></p>
-<p>作者首先指出，RGB转化为HSV，并且分别处理亮度和饱和度是最好的。本文引入配对标注数据的方法是，在原有的CycleGAN的基础上加上一个配对数据的<span class="math inline">\(L_1\)</span>损失，对于S通道</p>
+<p>作者首先指出，RGB转化为HSV，并且分别处理亮度和饱和度是最好的。本文引入配对标注数据的方法是，在原有的CycleGAN的基础上加上一个配对数据的<span class="math inline">\(L_1\)</span>损失，对于<span class="math inline">\(V\)</span>通道</p>
 <p><span class="math display">\[L_1 = E_{(h,l_p)}||G_{H2L}(h)-l_p||_1
 \]</span></p>
-<p>其中<span class="math inline">\(h\)</span>指HDR图，<span class="math inline">\(l_p\)</span>指其对应的人类专家编辑的LDR图标注。而对于<span class="math inline">\(V\)</span>通道</p>
+<p>其中<span class="math inline">\(h\)</span>指HDR图，<span class="math inline">\(l_p\)</span>指其对应的人类专家编辑的LDR图标注。而对于<span class="math inline">\(S\)</span>通道</p>
 <p><span class="math display">\[L_1 = E_{(a,b_p)}||G_{A2B}(a)-b_p||_1
 \]</span></p>
 <p>形式一样。然后将这两个损失分别加到各自的CycleGAN之前有的那一堆损失里。遇到没有配对图片的情况，损失就取<span class="math inline">\(0\)</span>。</p>
