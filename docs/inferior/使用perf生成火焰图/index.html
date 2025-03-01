@@ -1,18 +1,17 @@
 <!DOCTYPE html>
 <html lang="en-us">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='关于 libgirepository-1.0-1 破坏 python-gi (&lt; 3.34.0-4~) 但是 3.30.4-1 正要被安装 的报错'><title>ubuntu安装deepin-qq时遇到的问题与解决</title>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='对于性能优化的需求，我们经常会用到火焰图这个方法。Linux下确实有一种比较简单的生成方法，他需要用到perf来生成具体的运行统计信息，然后'><title>使用perf生成火焰图</title>
 
-<link rel='canonical' href='https://kegalas.uk/p/ubuntu%E5%AE%89%E8%A3%85deepin-qq%E6%97%B6%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E4%B8%8E%E8%A7%A3%E5%86%B3/'>
+<link rel='canonical' href='https://kegalas.uk/inferior/%E4%BD%BF%E7%94%A8perf%E7%94%9F%E6%88%90%E7%81%AB%E7%84%B0%E5%9B%BE/'>
 
-<link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='ubuntu安装deepin-qq时遇到的问题与解决'>
-<meta property='og:description' content='关于 libgirepository-1.0-1 破坏 python-gi (&lt; 3.34.0-4~) 但是 3.30.4-1 正要被安装 的报错'>
-<meta property='og:url' content='https://kegalas.uk/p/ubuntu%E5%AE%89%E8%A3%85deepin-qq%E6%97%B6%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E4%B8%8E%E8%A7%A3%E5%86%B3/'>
+<link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='使用perf生成火焰图'>
+<meta property='og:description' content='对于性能优化的需求，我们经常会用到火焰图这个方法。Linux下确实有一种比较简单的生成方法，他需要用到perf来生成具体的运行统计信息，然后'>
+<meta property='og:url' content='https://kegalas.uk/inferior/%E4%BD%BF%E7%94%A8perf%E7%94%9F%E6%88%90%E7%81%AB%E7%84%B0%E5%9B%BE/'>
 <meta property='og:site_name' content='KegalaS的个人博客'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Ubuntu' /><meta property='article:tag' content='Linux' /><meta property='article:tag' content='QQ' /><meta property='article:tag' content='干货' /><meta property='article:published_time' content='2021-01-03T12:16:26&#43;00:00'/><meta property='article:modified_time' content='2021-01-03T12:16:26&#43;00:00'/><meta property='og:image' content='https://kegalas.uk/p/ubuntu%E5%AE%89%E8%A3%85deepin-qq%E6%97%B6%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E4%B8%8E%E8%A7%A3%E5%86%B3/cover.jpg' />
-<meta name="twitter:title" content="ubuntu安装deepin-qq时遇到的问题与解决">
-<meta name="twitter:description" content="关于 libgirepository-1.0-1 破坏 python-gi (&lt; 3.34.0-4~) 但是 3.30.4-1 正要被安装 的报错"><meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:image" content='https://kegalas.uk/p/ubuntu%E5%AE%89%E8%A3%85deepin-qq%E6%97%B6%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E4%B8%8E%E8%A7%A3%E5%86%B3/cover.jpg' />
+<meta property='og:type' content='article'><meta property='article:section' content='Inferior' /><meta property='article:tag' content='Linux' /><meta property='article:tag' content='C&#43;&#43;' /><meta property='article:published_time' content='2025-03-01T19:07:37&#43;08:00'/><meta property='article:modified_time' content='2025-03-01T19:07:37&#43;08:00'/>
+<meta name="twitter:title" content="使用perf生成火焰图">
+<meta name="twitter:description" content="对于性能优化的需求，我们经常会用到火焰图这个方法。Linux下确实有一种比较简单的生成方法，他需要用到perf来生成具体的运行统计信息，然后">
     <link rel="shortcut icon" href="/images/favicon.ico" />
 
     </head>
@@ -336,20 +335,8 @@
 
     
 <main class="main full-width">
-    <article class="has-image main-article">
+    <article class="main-article">
     <header class="article-header">
-        <div class="article-image">
-            <a href="/p/ubuntu%E5%AE%89%E8%A3%85deepin-qq%E6%97%B6%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E4%B8%8E%E8%A7%A3%E5%86%B3/">
-                <img src="/p/ubuntu%E5%AE%89%E8%A3%85deepin-qq%E6%97%B6%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E4%B8%8E%E8%A7%A3%E5%86%B3/cover_huadd5fdafa4a185a8686ebe054dd413b9_24301_800x0_resize_q75_box.jpg"
-                        srcset="/p/ubuntu%E5%AE%89%E8%A3%85deepin-qq%E6%97%B6%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E4%B8%8E%E8%A7%A3%E5%86%B3/cover_huadd5fdafa4a185a8686ebe054dd413b9_24301_800x0_resize_q75_box.jpg 800w, /p/ubuntu%E5%AE%89%E8%A3%85deepin-qq%E6%97%B6%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E4%B8%8E%E8%A7%A3%E5%86%B3/cover_huadd5fdafa4a185a8686ebe054dd413b9_24301_1600x0_resize_q75_box.jpg 1600w"
-                        width="800" 
-                        height="617" 
-                        loading="lazy"
-                        alt="Featured image of post ubuntu安装deepin-qq时遇到的问题与解决" />
-                
-            </a>
-        </div>
-    
 
     <div class="article-details">
     
@@ -363,13 +350,9 @@
     
 
     <h2 class="article-title">
-        <a href="/p/ubuntu%E5%AE%89%E8%A3%85deepin-qq%E6%97%B6%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E4%B8%8E%E8%A7%A3%E5%86%B3/">ubuntu安装deepin-qq时遇到的问题与解决</a>
+        <a href="/inferior/%E4%BD%BF%E7%94%A8perf%E7%94%9F%E6%88%90%E7%81%AB%E7%84%B0%E5%9B%BE/">使用perf生成火焰图</a>
     </h2>
 
-    
-    <h3 class="article-subtitle">
-        关于 libgirepository-1.0-1 破坏 python-gi (&lt; 3.34.0-4~) 但是 3.30.4-1 正要被安装 的报错
-    </h3>
     
 
     
@@ -385,7 +368,7 @@
   <path d="M3 11h16" />
   <path d="M18 16.496v1.504l1 1" />
 </svg>
-                <time class="article-time--published">Jan 03, 2021</time>
+                <time class="article-time--published">Mar 01, 2025</time>
             </div>
         
 
@@ -410,41 +393,36 @@
 </header>
 
     <section class="article-content">
-    <p>系统：Ubuntu 20.10</p>
-<p>今天使用Ubuntu，想安装一下deepin的qq，在网上找到以下方法：</p>
-<pre tabindex="0"><code>wget -O- https://deepin-wine.i-m.dev/setup.sh | sh
-</code></pre><p>正常执行</p>
-<pre tabindex="0"><code>sudo apt-get install com.qq.im.deepin
-</code></pre><p>报错：</p>
-<pre tabindex="0"><code>下列软件包有未满足的依赖关系：
- libgirepository-1.0-1 : 破坏: python-gi (&lt; 3.34.0-4~) 但是 3.30.4-1 正要被安装
-E: 无法修正错误，因为您要求某些软件包保持现状，就是它们破坏了软件包间的依赖关系。
-</code></pre><p>我试着安装python-gi，同样报错，我又试着删了libgirepository-1.0-1，但是他是很多包的依赖，不敢删。</p>
-<p>百度搜索无果，bing搜索外国也没找到解决办法，倒是有人遇到了同样的问题。</p>
-<p>在ubuntu搜集信息后，发现libgirepository-1.0-1依赖于libffi7，但是apt下载不到他，只能去https://packages.ubuntu.com/zh-cn/focal/libffi7手动下载。安装完后又去https://packages.ubuntu.com/zh-cn/focal/python-gi手动下载python-gi，先后安装成功。</p>
-<p>再次安装qq，重启，安装成功。</p>
-<p>但是发现字体显示不全。找了个网站下载了simsun.ttc，放到~/.deepinwine/Deepin-QQ/drive_c/windows/Fonts/</p>
-<p>问题解决。</p>
-<p><figure 
-	
-		class="gallery-image" 
-		style="
-			flex-grow: 129; 
-			flex-basis: 310px"
-	>
-	<a href="/p/ubuntu%E5%AE%89%E8%A3%85deepin-qq%E6%97%B6%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E4%B8%8E%E8%A7%A3%E5%86%B3/1.jpg" data-size="425x328">
-		<img src="/p/ubuntu%E5%AE%89%E8%A3%85deepin-qq%E6%97%B6%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E4%B8%8E%E8%A7%A3%E5%86%B3/1.jpg"
-			width="425"
-			height="328"
-			srcset="/p/ubuntu%E5%AE%89%E8%A3%85deepin-qq%E6%97%B6%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E4%B8%8E%E8%A7%A3%E5%86%B3/1_huadd5fdafa4a185a8686ebe054dd413b9_24301_480x0_resize_q75_box.jpg 480w, /p/ubuntu%E5%AE%89%E8%A3%85deepin-qq%E6%97%B6%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E4%B8%8E%E8%A7%A3%E5%86%B3/1_huadd5fdafa4a185a8686ebe054dd413b9_24301_1024x0_resize_q75_box.jpg 1024w"
-			loading="lazy"
-			alt="图片 1">
-	</a>
-	
-	<figcaption>图片 1</figcaption>
-	
-</figure></p>
-<p>后记：现在linux下qq有官方支持的新版本了，应该没人再用这个了吧。</p>
+    <p>对于性能优化的需求，我们经常会用到火焰图这个方法。Linux下确实有一种比较简单的生成方法，他需要用到perf来生成具体的运行统计信息，然后用<a class="link" href="https://github.com/brendangregg/FlameGraph"  target="_blank" rel="noopener"
+    >FlameGraph</a>来将这个图画出来。</p>
+<p>根据你的发行版，perf工具可能有不同的安装方式。例如在Ubuntu中可以通过</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># WSL2 Ubuntu20.04</span>
+</span></span><span style="display:flex;"><span>sudo apt install linux-tools-common
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 也有可能是linux-tools-generic</span>
+</span></span></code></pre></div><p>来安装。但是在WSL2的Ubuntu 20.04上，其可能会报错如下</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>WARNING: perf not found <span style="color:#66d9ef">for</span> kernel 5.15.153.1-microsoft
+</span></span></code></pre></div><p>原因是perf这个工具和内核强相关，而WSL2的Ubuntu似乎魔改过内核，所以软件包中下载的perf用不了（相反，WSL2 Debian安装<code>linux-perf</code>就没这个问题，不知道为什么）。但我们还可以通过编译来安装。首先下载源码</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># WSL2 Ubuntu20.04</span>
+</span></span><span style="display:flex;"><span>sudo apt install linux-source
+</span></span></code></pre></div><p>具体版本可能因机器而异，我这里装好的是linux-source-5.4.0，接着我们给它解压，编译，安装</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># WSL2 Ubuntu20.04</span>
+</span></span><span style="display:flex;"><span>sudo cp /usr/src/linux-source-5.4.0/linux-source-5.4.0.tar.bz2 ~
+</span></span><span style="display:flex;"><span>cd ~
+</span></span><span style="display:flex;"><span>tar -xf linux-source-5.4.0.tar.bz2
+</span></span><span style="display:flex;"><span>cd linux-source-5.4.0/tools/perf
+</span></span><span style="display:flex;"><span>make
+</span></span><span style="display:flex;"><span>make install
+</span></span></code></pre></div><p><code>make</code>的过程中可能会提示你缺少了<code>flex,bison</code>等工具，按照报错安装一下就行了。安装好之后perf的路径一般会是<code>~/bin/perf</code>，如果没有添加到PATH自行添加。接着我们下载FlameGraph</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git clone https://github.com/brendangregg/FlameGraph.git
+</span></span></code></pre></div><p>对于某一个程序<code>program</code>，我们通过以下形式生成其运行报告</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>perf record -g -F <span style="color:#ae81ff">99</span> -- ./program -i xxx.txt
+</span></span></code></pre></div><p>这里前面的<code>-F</code>是采样频率99Hz的意思。后面的<code>-i xxx.txt</code>的意思是说明，你调用程序的命令行参数像原来一样直接加上就可以了，没参数就不加。</p>
+<p>之后你运行<code>perf</code>的目录就会生成一个<code>perf.data</code>文件，然后</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>perf script -f | /path/to/FlameGraph/stackcollapse-perf.pl | /path/to/FlameGraph/flamegraph.pl &gt; flame.svg
+</span></span></code></pre></div><p>即可生成这个火焰图。</p>
+<p>当然，以上内容仅linux可用，因为perf关系到linux内核，所以即使是msys2也没法做到。如果你在用windows，最好的方法可能就是使用visual studio提供的功能去分析。当然也有使用<a class="link" href="https://www.cnblogs.com/lidabo/p/15855580.html"  target="_blank" rel="noopener"
+    >gprof+graphivz</a>的方法，我以前就是用这个，但是这个调用图不怎么好用，gprof我经常遇到不能生成<code>gmon.out</code>的问题，而且gprof似乎并不支持多线程，于是我放弃了，转向perf。</p>
+
 </section>
 
 
@@ -452,13 +430,9 @@ E: 无法修正错误，因为您要求某些软件包保持现状，就是它�
     
     <section class="article-tags">
         
-            <a href="/tags/ubuntu/">Ubuntu</a>
-        
             <a href="/tags/linux/">Linux</a>
         
-            <a href="/tags/qq/">QQ</a>
-        
-            <a href="/tags/%E5%B9%B2%E8%B4%A7/">干货</a>
+            <a href="/tags/c&#43;&#43;/">C&#43;&#43;</a>
         
     </section>
 
@@ -513,18 +487,6 @@ E: 无法修正错误，因为您要求某些软件包保持现状，就是它�
                 
                     
 <article class="">
-    <a href="/inferior/%E4%BD%BF%E7%94%A8perf%E7%94%9F%E6%88%90%E7%81%AB%E7%84%B0%E5%9B%BE/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">使用perf生成火焰图</h2>
-        </div>
-    </a>
-</article>
-                
-                    
-<article class="">
     <a href="/inferior/linux%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E5%90%88%E9%9B%86%E9%95%BF%E6%9C%9F%E6%9B%B4%E6%96%B0/">
         
         
@@ -536,13 +498,23 @@ E: 无法修正错误，因为您要求某些软件包保持现状，就是它�
 </article>
                 
                     
-<article class="">
-    <a href="/p/%E5%9C%A8%E6%A0%A1%E5%9B%AD%E7%BD%91%E4%B8%AD%E7%94%A8ssh%E8%BF%9E%E6%8E%A5%E5%AE%BF%E8%88%8D%E7%94%B5%E8%84%91/">
+<article class="has-image">
+    <a href="/p/ubuntu%E5%AE%89%E8%A3%85deepin-qq%E6%97%B6%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E4%B8%8E%E8%A7%A3%E5%86%B3/">
         
+        
+            <div class="article-image">
+                <img src="/p/ubuntu%E5%AE%89%E8%A3%85deepin-qq%E6%97%B6%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E4%B8%8E%E8%A7%A3%E5%86%B3/cover.210813755d837867ed32cda793340724_huadd5fdafa4a185a8686ebe054dd413b9_24301_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-IQgTdV2DeGftMs2nkzQHJA==">
+                
+            </div>
         
 
         <div class="article-details">
-            <h2 class="article-title">在校园网中用ssh连接宿舍电脑</h2>
+            <h2 class="article-title">ubuntu安装deepin-qq时遇到的问题与解决</h2>
         </div>
     </a>
 </article>
