@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='使用 WDF 开发驱动程序 WDF 的几个重要且一般存在的操作 驱动程序的 DriverEntry 例程 必须调用 WdfDriverCreate 来创建表示驱动程序的框架驱动程序对象。WdfDriverCreate'><title>Windows驱动开发 随手记录</title>
+
+<link rel='canonical' href='https://kegalas.uk/inferior/windows%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91-%E9%9A%8F%E6%89%8B%E8%AE%B0%E5%BD%95/'>
+
+<link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='Windows驱动开发 随手记录'>
+<meta property='og:description' content='使用 WDF 开发驱动程序 WDF 的几个重要且一般存在的操作 驱动程序的 DriverEntry 例程 必须调用 WdfDriverCreate 来创建表示驱动程序的框架驱动程序对象。WdfDriverCreate'>
+<meta property='og:url' content='https://kegalas.uk/inferior/windows%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91-%E9%9A%8F%E6%89%8B%E8%AE%B0%E5%BD%95/'>
+<meta property='og:site_name' content='KegalaS的个人博客'>
+<meta property='og:type' content='article'><meta property='article:section' content='Inferior' /><meta property='article:tag' content='Windows' /><meta property='article:tag' content='驱动' /><meta property='article:published_time' content='2024-11-09T23:02:56&#43;08:00'/><meta property='article:modified_time' content='2024-11-09T23:02:56&#43;08:00'/>
+<meta name="twitter:title" content="Windows驱动开发 随手记录">
+<meta name="twitter:description" content="使用 WDF 开发驱动程序 WDF 的几个重要且一般存在的操作 驱动程序的 DriverEntry 例程 必须调用 WdfDriverCreate 来创建表示驱动程序的框架驱动程序对象。WdfDriverCreate">
+    <link rel="shortcut icon" href="/images/favicon.ico" />
+
+    </head>
+    <body class="
+    article-page has-toc
+">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex 
+    
+        extended
+    
+">
+    
+        <div id="article-toolbar">
+            <a href="/" class="back-home">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="15 6 9 12 15 18" />
+</svg>
+
+
+
+                <span>返回</span>
+            </a>
+        </div>
+    
+<main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/%E5%85%B6%E4%BB%96%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/" >
+                其他计算机科学
+            </a>
+        
+    </header>
+    
+
+    <h2 class="article-title">
+        <a href="/inferior/windows%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91-%E9%9A%8F%E6%89%8B%E8%AE%B0%E5%BD%95/">Windows驱动开发 随手记录</a>
+    </h2>
+
+    
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Nov 09, 2024</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 12 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+</div>
+</header>
+
+    <section class="article-content">
+    <p><a class="link" href="https://learn.microsoft.com/zh-cn/windows-hardware/drivers/wdf/using-the-framework-to-develop-a-driver"  target="_blank" rel="noopener"
+    >使用 WDF 开发驱动程序</a></p>
+<h1 id="wdf-的几个重要且一般存在的操作">WDF 的几个重要且一般存在的操作</h1>
+<ul>
+<li>驱动程序的 <a class="link" href="https://learn.microsoft.com/zh-cn/windows-hardware/drivers/wdf/driverentry-for-kmdf-drivers"  target="_blank" rel="noopener"
+    >DriverEntry 例程</a> 必须调用 <a class="link" href="https://learn.microsoft.com/zh-cn/windows-hardware/drivers/ddi/wdfdriver/nf-wdfdriver-wdfdrivercreate"  target="_blank" rel="noopener"
+    >WdfDriverCreate</a> 来创建表示驱动程序的框架驱动程序对象。WdfDriverCreate 方法还会注册驱动程序的 <a class="link" href="https://learn.microsoft.com/zh-cn/windows-hardware/drivers/ddi/wdfdriver/nc-wdfdriver-evt_wdf_driver_device_add"  target="_blank" rel="noopener"
+    >EvtDriverDeviceAdd</a> 回调函数，每次即插即用 (PnP) 管理器报告驱动程序支持的设备是否存在时，框架都会调用该函数。</li>
+<li>所有驱动程序都必须调用 <a class="link" href="https://learn.microsoft.com/zh-cn/windows-hardware/drivers/ddi/wdfdevice/nf-wdfdevice-wdfdevicecreate"  target="_blank" rel="noopener"
+    >WdfDeviceCreate</a>，来创建一个框架设备对象，从而支持PnP和电源管理。</li>
+<li>调用<a class="link" href="https://learn.microsoft.com/zh-cn/windows-hardware/drivers/ddi/wdfio/nf-wdfio-wdfioqueuecreate"  target="_blank" rel="noopener"
+    >WdfIoQueueCreate</a>来创建一个（IO队列的）框架队列对象。通常，驱动程序会为每个IO队列注册一个或多个请求处理程序。当IO管理器向驱动发送IO请求时，框架为该请求创建一个框架请求对象。之后放入IO队列，由驱动程序进行处理。</li>
+<li>调用<a class="link" href="https://learn.microsoft.com/zh-cn/windows-hardware/drivers/ddi/wdfinterrupt/nf-wdfinterrupt-wdfinterruptcreate"  target="_blank" rel="noopener"
+    >WdfInterruptCreate</a>来创建一个框架中断对象，从而注册回调函数。</li>
+<li>KMDF 驱动程序可以使用框架的 DMA 启用程序对象 和 DMA 事务对象。</li>
+</ul>
+<h1 id="wdf体系结构">WDF体系结构</h1>
+<p>WDF 为驱动程序提供基于对象的接口。 框架定义的对象接口包括：</p>
+<ul>
+<li>对象方法。其为驱动程序可以调用的函数，来对对象进行操作和读取。命名方式为WdfObjectAction，即对该object进行此action，例如WdfDeviceCreate</li>
+<li>对象事件回调函数。其为驱动程序提供的函数。当发生对应的事件时，框架会调用此回调函数。命名方式为EvtObjectEvent，例如EvtDeviceD0Entry。不过这是用户提供的函数，命名可以根据自己的规则来。</li>
+<li>对象属性。即存储在对象中的值，驱动程序可以对其进行读取和设置。</li>
+<li>对象句柄。WDF驱动程序不会直接访问框架对象。而是接收对象句柄，该句柄可以传递给对象方法。</li>
+</ul>
+<h1 id="wdf文件对象">WDF文件对象</h1>
+<p>使用CreateFile打开设备时，操作系统会向驱动程序堆栈发送文件创建请求。</p>
+<p>如果驱动程序必须处理文件操作，则必须从其 <a class="link" href="https://learn.microsoft.com/zh-cn/windows-hardware/drivers/ddi/wdfdriver/nc-wdfdriver-evt_wdf_driver_device_add"  target="_blank" rel="noopener"
+    >EvtDriverDeviceAdd</a> 回调函数中调用 <a class="link" href="https://learn.microsoft.com/zh-cn/windows-hardware/drivers/ddi/wdfdevice/nf-wdfdevice-wdfdeviceinitsetfileobjectconfig"  target="_blank" rel="noopener"
+    >WdfDeviceInitSetFileObjectConfig</a>。</p>
+<p>驱动程序使用此结构来注册其 <a class="link" href="https://learn.microsoft.com/zh-cn/windows-hardware/drivers/ddi/wdfdevice/nc-wdfdevice-evt_wdf_device_file_create"  target="_blank" rel="noopener"
+    >EvtDeviceFileCreate</a>、 <a class="link" href="https://learn.microsoft.com/zh-cn/windows-hardware/drivers/ddi/wdfdevice/nc-wdfdevice-evt_wdf_file_cleanup"  target="_blank" rel="noopener"
+    >EvtFileCleanup</a> 和 <a class="link" href="https://learn.microsoft.com/zh-cn/windows-hardware/drivers/ddi/wdfdevice/nc-wdfdevice-evt_wdf_file_close"  target="_blank" rel="noopener"
+    >EvtFileClose</a> 回调函数，并选择性地指示每次驱动程序收到文件创建请求时框架是否应创建框架文件对象。</p>
+<p>当框架收到函数驱动程序的文件创建请求时，它会：</p>
+<ol>
+<li>创建表示该文件的框架文件对象，除非驱动程序之前指示它不需要使用框架文件对象。</li>
+<li>如果驱动程序已注册回调函数，则调用驱动程序的 <a class="link" href="https://learn.microsoft.com/zh-cn/windows-hardware/drivers/ddi/wdfdevice/nc-wdfdevice-evt_wdf_device_file_create"  target="_blank" rel="noopener"
+    >EvtDeviceFileCreate</a> 回调函数。</li>
+</ol>
+<h1 id="io队列">IO队列</h1>
+<p>每个驱动程序可以创建一个或多个IO队列。</p>
+<h1 id="处理硬件中断">处理硬件中断</h1>
+<p>WDF必须为每个设备可以支持的每个中断创建框架中断对象。</p>
+<p>驱动程序通常在其 <a class="link" href="https://learn.microsoft.com/zh-cn/windows-hardware/drivers/ddi/wdfdriver/nc-wdfdriver-evt_wdf_driver_device_add"  target="_blank" rel="noopener"
+    >EvtDriverDeviceAdd</a> 回调函数中创建框架中断对象。 驱动程序还可以从其 <a class="link" href="https://learn.microsoft.com/zh-cn/windows-hardware/drivers/ddi/wdfdevice/nc-wdfdevice-evt_wdf_device_prepare_hardware"  target="_blank" rel="noopener"
+    >EvtDevicePrepareHardware</a> 回调函数创建中断对象。</p>
+<p>硬件触发中断时，会首先调用注册的<a class="link" href="https://learn.microsoft.com/zh-cn/windows-hardware/drivers/ddi/wdfinterrupt/nc-wdfinterrupt-evt_wdf_interrupt_isr"  target="_blank" rel="noopener"
+    >EvtInterruptIsr</a>，进行简单的处理后，后面的任务交给<a class="link" href="https://learn.microsoft.com/zh-cn/windows-hardware/drivers/ddi/wdfinterrupt/nc-wdfinterrupt-evt_wdf_interrupt_dpc"  target="_blank" rel="noopener"
+    >EvtInterruptDpc</a>。</p>
+<h1 id="处理dma操作">处理DMA操作</h1>
+<p><figure 
+	>
+	<a href="/1.png" >
+		<img src="/1.png"
+			
+			
+			
+			loading="lazy"
+			alt="1.png">
+	</a>
+	
+	<figcaption>1.png</figcaption>
+	
+</figure></p>
+<p>如上所示，与 DMA 相关的处理分四个阶段进行：</p>
+<ol>
+<li>驱动程序的 <a class="link" href="https://learn.microsoft.com/zh-cn/windows-hardware/drivers/ddi/wdfdriver/nc-wdfdriver-evt_wdf_driver_device_add"  target="_blank" rel="noopener"
+    >EvtDriverDeviceAdd</a> 或 <a class="link" href="https://learn.microsoft.com/zh-cn/windows-hardware/drivers/ddi/wdfdevice/nc-wdfdevice-evt_wdf_device_prepare_hardware"  target="_blank" rel="noopener"
+    >EvtDevicePrepareHardware</a> 回调函数必须为设备 <a class="link" href="https://learn.microsoft.com/zh-cn/windows-hardware/drivers/wdf/enabling-dma-transactions"  target="_blank" rel="noopener"
+    >启用 DMA 事务</a> ，以便驱动程序可以使用框架的 DMA 功能。 如果设备和驱动程序需要访问共享内存缓冲区，则相同的回调函数还必须 <a class="link" href="https://learn.microsoft.com/zh-cn/windows-hardware/drivers/wdf/using-common-buffers"  target="_blank" rel="noopener"
+    >创建一个公共</a> 缓冲区。</li>
+<li>当驱动程序收到需要设备执行 DMA 操作的 I/O 请求时，驱动程序 <a class="link" href="https://learn.microsoft.com/zh-cn/windows-hardware/drivers/wdf/request-handlers"  target="_blank" rel="noopener"
+    >的请求处理程序</a> 之一必须 <a class="link" href="https://learn.microsoft.com/zh-cn/windows-hardware/drivers/wdf/creating-and-initializing-a-dma-transaction"  target="_blank" rel="noopener"
+    >创建并初始化新的 DMA 事务</a>。 (请注意，如果驱动程序 <a class="link" href="https://learn.microsoft.com/zh-cn/windows-hardware/drivers/wdf/reusing-dma-transaction-objects"  target="_blank" rel="noopener"
+    >重用 DMA 事务对象</a>，驱动程序的 <a class="link" href="https://learn.microsoft.com/zh-cn/windows-hardware/drivers/ddi/wdfdriver/nc-wdfdriver-evt_wdf_driver_device_add"  target="_blank" rel="noopener"
+    >EvtDriverDeviceAdd</a> 回调函数可以创建事务对象。) 然后，请求处理程序必须 <a class="link" href="https://learn.microsoft.com/zh-cn/windows-hardware/drivers/wdf/starting-a-dma-transaction"  target="_blank" rel="noopener"
+    >启动 DMA 事务</a> ，以便框架可以根据需要开始将事务分解为较小的 DMA 传输，并调用驱动程序的 <a class="link" href="https://learn.microsoft.com/zh-cn/windows-hardware/drivers/ddi/wdfdmatransaction/nc-wdfdmatransaction-evt_wdf_program_dma"  target="_blank" rel="noopener"
+    >EvtProgramDma</a> 回调函数。</li>
+<li>驱动程序的 <a class="link" href="https://learn.microsoft.com/zh-cn/windows-hardware/drivers/ddi/wdfdmatransaction/nc-wdfdmatransaction-evt_wdf_program_dma"  target="_blank" rel="noopener"
+    >EvtProgramDma</a> 回调函数针对单个 <a class="link" href="https://learn.microsoft.com/zh-cn/windows-hardware/drivers/wdf/programming-dma-hardware"  target="_blank" rel="noopener"
+    >DMA 传输对 DMA 硬件进行编程</a> ，并启用设备中断。</li>
+<li>设备中断时，框架会调用驱动程序的 <a class="link" href="https://learn.microsoft.com/zh-cn/windows-hardware/drivers/ddi/wdfinterrupt/nc-wdfinterrupt-evt_wdf_interrupt_isr"  target="_blank" rel="noopener"
+    >EvtInterruptIsr</a> 回调函数，这将保存易失设备信息并计划驱动程序的 <a class="link" href="https://learn.microsoft.com/zh-cn/windows-hardware/drivers/ddi/wdfinterrupt/nc-wdfinterrupt-evt_wdf_interrupt_dpc"  target="_blank" rel="noopener"
+    >EvtInterruptDpc</a> 回调函数的执行。</li>
+</ol>
+<p>驱动程序的 <a class="link" href="https://learn.microsoft.com/zh-cn/windows-hardware/drivers/ddi/wdfinterrupt/nc-wdfinterrupt-evt_wdf_interrupt_dpc"  target="_blank" rel="noopener"
+    >EvtInterruptDpc</a> 回调函数在硬件 <a class="link" href="https://learn.microsoft.com/zh-cn/windows-hardware/drivers/wdf/completing-a-dma-transfer"  target="_blank" rel="noopener"
+    >完成处理后完成每个 DMA 传输</a> 。 DMA 事务的最终传输完成后， EvtInterruptDpc 回调函数 <a class="link" href="https://learn.microsoft.com/zh-cn/windows-hardware/drivers/wdf/completing-a-dma-transaction"  target="_blank" rel="noopener"
+    >完成 DMA 事务</a>。</p>
+<h1 id="readfile读取设备数据的流程">ReadFile读取设备数据的流程</h1>
+<p><figure 
+	>
+	<a href="/2.png" >
+		<img src="/2.png"
+			
+			
+			
+			loading="lazy"
+			alt="2.png">
+	</a>
+	
+	<figcaption>2.png</figcaption>
+	
+</figure></p>
+<ol>
+<li>在使用ReadFile之类的windows api后，操作系统会向IO管理器发出一个IO request。</li>
+<li>然后request会放入对应的块的读取或者写入queue中。</li>
+<li>当队列中有读取/写入请求时，WDF会调用这个queue注册的回调函数<a class="link" href="https://learn.microsoft.com/zh-cn/windows-hardware/drivers/ddi/wdfio/nc-wdfio-evt_wdf_io_queue_io_read"  target="_blank" rel="noopener"
+    >EvtIoRead</a>和<a class="link" href="https://learn.microsoft.com/zh-cn/windows-hardware/drivers/ddi/wdfio/nc-wdfio-evt_wdf_io_queue_io_write"  target="_blank" rel="noopener"
+    >EvtIoWrite</a>。</li>
+<li>之后EvtIoReadDma就开始进行dma操作。WdfDmaTransactionInitializeUsingRequest来从request中创建一个DMA事务，WdfDmaTransactionExecute来启动此事务。</li>
+<li>启动事务后，<a class="link" href="https://learn.microsoft.com/zh-cn/windows-hardware/drivers/ddi/wdfdmatransaction/nc-wdfdmatransaction-evt_wdf_program_dma"  target="_blank" rel="noopener"
+    >EvtProgramDma</a>会被调用。</li>
+<li>DMA操作结束后会发出中断。</li>
+<li>之后就完成了读取。</li>
+</ol>
+<h1 id="inf文件简介">INF文件简介</h1>
+<h2 id="语法规则">语法规则</h2>
+<p>INF文件是纯文本文件，包含“节”和“条目”两部分（其实类似于INI文件）。例如</p>
+<pre tabindex="0"><code>[XDMA_wdfsect]
+KmdfLibraryVersion = 1.15
+
+;======================= String Definitions ===================================
+[Strings]
+Companyname = &#34;Kegalas&#34;
+</code></pre><p>其中[XDMA_wdfsect]和[Strings]是节，而KmdfLibraryVersion = 1.15和Companyname = &ldquo;Kegalas&quot;是条目。INF文件的注释以; 开头。</p>
+<p>有些节是系统定义的名称，有些则是自定义的。有些条目以预定义的关键字开头，称为指令。</p>
+<p>命名对大小写不敏感。</p>
+<pre tabindex="0"><code>[Version]
+
+Signature=&#34;signature-name&#34;
+[Class=class-name]
+</code></pre><p>其中[Class=class-name]也是一个条目，方括号代表其是可选的。</p>
+<p>一行不够写的时候，可以末尾写 \ 后换行。表示本身时要转义为\</p>
+<h3 id="节名称">节名称</h3>
+<ol>
+<li>各节可以任意顺序放置，不影响windows的读取顺序。相同名称的节会被自动合并成一个</li>
+<li>节从一个方括号[]括起来的节名称开头，在下一个节开始时或者文件结束时，该节结束</li>
+<li>节名不能有前后空格、不可见字符、方括号、单个百分比符号、分号、内部双引号，末尾不能是\。如果节名用双引号括起来，那么可以解除很多限制</li>
+</ol>
+<p>字符串内的双引号要用双引号转义</p>
+<h3 id="字符串变量">字符串变量</h3>
+<p>一个INF文件必须有一个[Strings]节，在该节中定义其他位置使用的字符串变量</p>
+<pre tabindex="0"><code>[Strings]
+strkey1 = &#34;test&#34;
+</code></pre><p>在别的地方使用时，如下</p>
+<pre tabindex="0"><code>[abc]
+xxx = %strkey1%
+</code></pre><p>所以如果要在各种值中使用%符号，需要用% %来转义</p>
+<h3 id="逗号与省略">逗号与省略</h3>
+<p>例如SourceDisksFiles 节条目的语法：</p>
+<pre tabindex="0"><code>filename=diskid[，[subdir][，size]]
+</code></pre><p>如果我们三个值都提供，那么</p>
+<pre tabindex="0"><code>filename=diskid, subdir, size
+</code></pre><p>如果我们省略size，则</p>
+<pre tabindex="0"><code>filename=diskid, subdir
+</code></pre><p>如果我们省略subdir，则</p>
+<pre tabindex="0"><code>filename=diskid, , size
+</code></pre><p>如果我们省略subdir和size，则</p>
+<pre tabindex="0"><code>filename=diskid
+</code></pre><h2 id="必须要有的节">必须要有的节</h2>
+<h3 id="version节">Version节</h3>
+<ul>
+<li>Signature = “signature-name”。其中取值必为<span class="math inline">\(Windows NT\)</span>和<span class="math inline">\(Chicago\)</span>其中之一。NT是新版本的windows，我们一般用这个。</li>
+<li>Class = class-name。指定安装的设备的设备安装类<a class="link" href="https://learn.microsoft.com/zh-cn/windows-hardware/drivers/install/overview-of-device-setup-classes"  target="_blank" rel="noopener"
+    >的名称</a> 。</li>
+<li>ClassGuid = {nnnnnnnn-nnnn-nnnn-nnnn-nnnnnnnnnnnn}。指定<a class="link" href="https://learn.microsoft.com/zh-cn/windows-hardware/drivers/install/overview-of-device-setup-classes"  target="_blank" rel="noopener"
+    >设备安装类</a>GUID</li>
+<li>Provider=%INF-creator%。标识驱动提供商，会在Strings节中定义</li>
+<li>CatalogFile=filename.cat。指定目录文件。当驱动包给微软进行whql验证后，会提供一个目录文件。catalog文件不列在SourceDisksFiles和CopyFiles节中。系统假设文件和INF文件在一个目录。</li>
+<li>DriverVer= mm/dd/yyyy，w.x.y.z。指定版本信息</li>
+<li>PnpLockDown=0|1。如果为1，则PnP会阻止应用程序直接修改INF CopyFiles指令复制的文件</li>
+</ul>
+<h3 id="sourcedisksnames节">SourceDisksNames节</h3>
+<p>指向一个包含源文件的disks或者cd-rom，在安装时会复制这些源文件到目标计算机。</p>
+<pre tabindex="0"><code>[SourceDisksNames]
+diskid = disk-description[,tag-or-cab-file] | 
+diskid = disk-description[,[tag-or-cab-file][,[unused][,path]]]
+</code></pre><p>diskid是十进制非负整数。一般会用1、2、3</p>
+<p>disk-description是一个带引号的字符串，用于描述diskid标识的磁盘的内容。</p>
+<p>tag-or-cab-file指定一个cabinet (.cab) 文件。只需要提供filename.cab而不用提供目录，该文件位于 安装根 目录或 路径指定的子目录中</p>
+<p>unused不再使用</p>
+<p>path指定包含源文件的分发磁盘上的目录路径。 路径相对于安装根目录，表示为 \dirname1\dirname2&hellip;等。 如果某个条目中省略此值，则假定文件位于分发磁盘的安装根目录中。</p>
+<h3 id="sourcedisksfiles节">SourceDisksFiles节</h3>
+<p>命名安装期间使用的源文件，标识包含这些文件的安装磁盘，并提供包含单个文件的分发磁盘上的目录路径</p>
+<pre tabindex="0"><code>[SourceDisksFiles]
+filename=diskid[,[ subdir][,size]]
+</code></pre><p>filename指定一个源文件的名称</p>
+<p>diskid指定源磁盘的id，在之前的SourceDisksName中定义了。</p>
+<p>subdir指定子目录（相对于SourceDisksName中的path）</p>
+<p>size指定给定文件的未压缩大小（字节）</p>
+<p>指定了这些文件之后，安装的时候就会复制这些源文件。注意不可复制INF文件本身。</p>
+<p>示例：</p>
+<pre tabindex="0"><code>[SourceDisksNames]
+;
+; diskid = description[, [tagfile] [, &lt;unused&gt;, subdir]]
+;
+1 = %Floppy_Description%,,,\WinNT
+
+[SourceDisksFiles.x86]
+aha154x.sys = 1,\x86 ; on distribution disk 1, in subdir \WinNT\x86
+</code></pre><h3 id="destinationdirs节">DestinationDirs节</h3>
+<p>指定对 INF 文件中其他位置按名称引用的文件执行的所有复制、删除和/或重命名操作的目标目录。</p>
+<pre tabindex="0"><code>[DestinationDirs]
+
+[DefaultDestDir=dirid[,subdir]] ; 指定对文件执行的所有复制、删除和/或重命名操作的默认目标目录
+[file-list-section=dirid[,subdir]]... ; 指定 INF 文件中其他位置的 CopyFiles、 RenFiles 或 DelFiles 指令引用的节的 INF 编写器确定的名称
+</code></pre><p>dirid为按名称引用的文件（可能位于 INF 的命名 file-list-section 内）的操作指定目标目录的目录标识符。 </p>
+<p>subdir指定 由 dirid 标识的目录下的子目录</p>
+<p>这些dirid的内容见</p>
+<h3 id="controlflags节">ControlFlags节</h3>
+<p>标识 Windows 应在安装过程中对其执行某些唯一操作的设备。</p>
+<pre tabindex="0"><code>[ControlFlags]
+
+ExcludeFromSelect=* | 
+ExcludeFromSelect=device-identification-string[,device-identification-string] ...] 
+</code></pre><p>device-identification-string是标识INF model节指定的硬件ID或兼容ID。*则标识所有设备。</p>
+<p>ExcludeFromSelect标识了一些在INF model节中列出的ID，他们在手动安装时不会展示给用户看。</p>
+<p>其他见</p>
+<h3 id="manufacturer节">Manufacturer节</h3>
+<p>标识可以使用 INF 文件安装的一个或多个设备的制造商。</p>
+<pre tabindex="0"><code>[Manufacturer]
+
+manufacturer-identifier
+[manufacturer-identifier] 
+[manufacturer-identifier] 
+...
+</code></pre><p>manufacturer-identifier为以下格式</p>
+<pre tabindex="0"><code>manufacturer-name |
+%strkey%=models-section-name |
+%strkey%=models-section-name [,TargetOSVersion] [,TargetOSVersion] ... 
+</code></pre><p>manufacturer-name标识设备的制造商。INF文件中还必须包含同名的INF model节。</p>
+<p>models-section-name为该制造商指定一个model节。</p>
+<p>TargetOSVersion指定特定的windows版本，具体的版本格式可见</p>
+<p>如果一个models-section-name包含TargetOSVersion，那么其model节的名字也要有响应的部分</p>
+<p>例如</p>
+<pre tabindex="0"><code>[Manufacturer]
+%FooCorp%=FooMfg，NTx86....0x80，NTamd64
+
+[FooMfg.NTx86....0x80]
+;...
+
+[FooMfg.NTamd64]
+;...
+</code></pre><h3 id="model节">Model节</h3>
+<p>标识至少一个设备，引用该设备的 INF 文件的 DDInstall 部分，并为该设备指定唯一到模型部分的硬件标识符 (ID) 。</p>
+<pre tabindex="0"><code>[models-section-name] |
+[models-section-name.TargetOSVersion]  (Windows XP and later versions of Windows)
+
+device-description=install-section-name,[hw-id][,compatible-id...]
+[device-description=install-section-name,[hw-id][,compatible-id]...] ...
+</code></pre><p>device-description标识要安装的设备，用可见字符串标识，或者用%strkey%标识。</p>
+<p>install-section-name指定要用于设备的 INF 安装部分的未修饰名称，见后面的DDInstall</p>
+<p>hw-id指定硬件id，详情见</p>
+<p>compatible-id指定兼容id</p>
+<h3 id="ddinstall节总体结构">DDInstall节总体结构</h3>
+<pre tabindex="0"><code>[install-section-name] | 
+[install-section-name.nt] | 
+[install-section-name.xxx]
+
+[DriverVer=mm/dd/yyyy[,x.y.v.z]]
+[CopyFiles=@filename | file-list-section[,file-list-section] ...] ...
+</code></pre><p>还有很多可选的项，不列出</p>
+<p>DriverVer=mm/dd/yyyy[，x.y.v.z]标识驱动程序包的版本信息。</p>
+<p>CopyFiles=@filename | file-list-section[，file-list-section] &hellip; 。指定从源复制到目标的文件，或者指定一个INF节，节中包含了一个文件名列表。</p>
+<p>CopyINF=filename1.inf[，filename2.inf]&hellip; 。指定复制INF文件</p>
+<p>AddReg=add-registry-section[，add-registry-section]&hellip; 。指定更改注册表，见后命令解析部分。</p>
+<p>还有很多指令，见</p>
+<h3 id="ddinstallservices节">DDInstall.Services节</h3>
+<pre tabindex="0"><code>[install-section-name.Services] |
+[install-section-name.nt.Services] |
+[install-section-name.xxx.Services]
+
+AddService=ServiceName,[flags],service-install-section
+                     [,event-log-install-section[,[EventLogType][,EventName]]]...]
+</code></pre><p>AddService指令见后</p>
+<h3 id="ddinstallhw节">DDInstall.HW节</h3>
+<p>通常用于安装多功能设备、安装 PnP 筛选器驱动程序，以及设置注册表中任何用户可访问的设备特定但与驱动程序无关的信息</p>
+<pre tabindex="0"><code>[install-section-name.HW] |
+[install-section-name.xxx.HW]
+
+[AddReg=add-registry-section[,add-registry-section]...] ...
+</code></pre><h3 id="ddinstallevents节">DDInstall.Events节</h3>
+<h3 id="ddinstallcomponents节">DDInstall.Components节</h3>
+<h3 id="ddinstallsoftware节">DDInstall.Software节</h3>
+<h3 id="ddinstallinterfaces节">DDInstall.Interfaces节</h3>
+<h3 id="ddinstallcoinstallers节">DDInstall.CoInstallers节</h3>
+<h3 id="ddinstallwdf节">DDInstall.WDF节</h3>
+<h3 id="heading">&hellip;</h3>
+<h3 id="字符串节">字符串节</h3>
+<p>见前</p>
+<h2 id="inf指令">INF指令</h2>
+<h3 id="addreg">AddReg</h3>
+<p>用于向注册表添加信息</p>
+<pre tabindex="0"><code>AddReg=add-registry-section[,add-registry-section] ...
+</code></pre><p>add-registry-section的格式则为</p>
+<pre tabindex="0"><code>[add-registry-section]
+reg-root,[subkey],[value-entry-name],[flags],[value][,[value]]
+reg-root,[subkey],[value-entry-name],[flags],[value][,[value]]
+ ...
+
+[[add-registry-section.security]
+&#34;security-descriptor-string&#34;]
+</code></pre><h3 id="copyfiles">CopyFiles</h3>
+<pre tabindex="0"><code>CopyFiles=@filename | file-list-section[, file-list-section]... 
+</code></pre><p>可以复制单个文件，也可以复制一个列表里的所有文件，列表的格式如下</p>
+<pre tabindex="0"><code>[file-list-section]
+destination-file-name[,[source-file-name][,[unused][,flag]]]
+...
+</code></pre><h3 id="addservice">AddService</h3>
+<pre tabindex="0"><code>AddService=ServiceName,[flags],service-install-section
+                     [,event-log-install-section[,[EventLogType][,EventName]]]
+</code></pre><h1 id="驱动程序包的组件">驱动程序包的组件</h1>
+<h2 id="inf文件inf">INF文件(.inf)</h2>
+<p>定义了驱动程序的许多信息，见前</p>
+<h2 id="目录文件catalog-cat">目录文件(catalog, .cat)</h2>
+<p>包含驱动程序包中每个文件的加密哈希，Windows 使用这些哈希值来验证程序包在发布后是否未被更改。WHQL认证通过后会得到这样的一个目录文件。</p>
+<h2 id="驱动程序文件sys">驱动程序文件(.sys)</h2>
+<p>在大多数情况下，驱动程序包将包含一个或多个驱动程序服务，这些服务应是安装驱动程序包的设备的设备堆栈<a class="link" href="https://learn.microsoft.com/zh-cn/windows-hardware/drivers/gettingstarted/device-nodes-and-device-stacks"  target="_blank" rel="noopener"
+    >的</a>一部分。驱动程序服务是提供设备的 I/O 接口的包的一部分。 通常，驱动程序是带有 sys 文件扩展名的动态链接库 (DLL)。</p>
+<h2 id="其他文件">其他文件</h2>
+<h1 id="whql签名">WHQL签名</h1>
+<p><a class="link" href="https://learn.microsoft.com/zh-cn/windows-hardware/drivers/dashboard/"  target="_blank" rel="noopener"
+    >https://learn.microsoft.com/zh-cn/windows-hardware/drivers/dashboard/</a></p>
+<p>在win10之后，要在非测试模式的windows上安装驱动，都需要WHQL签名，上面为WHQL签名的流程，其中EV证书有金钱开销。</p>
+<h1 id="hlk测试">HLK测试</h1>
+<p><a class="link" href="https://learn.microsoft.com/zh-cn/windows-hardware/test/hlk/getstarted/step-1-install-controller-and-studio-on-the-test-server"  target="_blank" rel="noopener"
+    >https://learn.microsoft.com/zh-cn/windows-hardware/test/hlk/getstarted/step-1-install-controller-and-studio-on-the-test-server</a></p>
+<p>要通过WHQL签名需要通过HLK测试，大体流程如上。</p>
+<h2 id="静态工具徽标测试">静态工具徽标测试</h2>
+<p>大部分测试都是可以自动完成的，这一步需要手动进行。可能需要进行到步骤有：CodeQL、StaticDV、Code Analysis、创建DVL日志。大部分也是按照流程来即可。但是StaticDV和创建DVL日志这两步可能会遇到各种各样奇怪的问题，导致无法运行起来。这里建议直接在虚拟机新建一个环境，要求SDK、WDK的版本一致，Visual Studio的版本也要对应。如果VS的Driver插件无法正常使用，也可以换用EWDK从命令行进行。</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/windows/">Windows</a>
+        
+            <a href="/tags/%E9%A9%B1%E5%8A%A8/">驱动</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css"integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js"integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8"crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js"integrity="sha384-vZTG03m&#43;2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl"crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.querySelector(`.article-content`), {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ]
+        });})
+</script>
+    
+</article>
+
+    <aside class="related-contents--wrapper">
+    
+    
+        <h2 class="section-title">相关文章</h2>
+        <div class="related-contents">
+            <div class="flex article-list--tile">
+                
+                    
+<article class="">
+    <a href="/inferior/%E6%B7%BB%E5%8A%A0msys2%E5%88%B0%E5%8F%B3%E9%94%AE%E8%8F%9C%E5%8D%95/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">添加msys2到右键菜单</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="">
+    <a href="/inferior/virtualbox%E6%89%93%E5%BC%80%E8%99%9A%E6%8B%9F%E6%9C%BAverr_invalid_name-104%E9%94%99%E8%AF%AF%E7%9A%84%E8%A7%A3%E5%86%B3/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">VirtualBox打开虚拟机VERR_INVALID_NAME(-104)错误的解决</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="">
+    <a href="/p/%E5%9C%A8%E6%A0%A1%E5%9B%AD%E7%BD%91%E4%B8%AD%E7%94%A8ssh%E8%BF%9E%E6%8E%A5%E5%AE%BF%E8%88%8D%E7%94%B5%E8%84%91/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">在校园网中用ssh连接宿舍电脑</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="">
+    <a href="/inferior/%E4%B8%AA%E4%BA%BA%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6%E5%88%97%E8%A1%A8/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">个人常用软件列表</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="">
+    <a href="/inferior/windows%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E5%90%88%E9%9B%86%E9%95%BF%E6%9C%9F%E6%9B%B4%E6%96%B0/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Windows开发环境配置合集（长期更新）</h2>
+        </div>
+    </a>
+</article>
+                
+            </div>
+        </div>
+    
+</aside>
+
+     
+    
+        
+    <script src="https://utteranc.es/client.js" 
+        repo="kegalas/blogComments"
+        issue-term="pathname"
+        
+        crossorigin="anonymous"
+        async
+        >
+</script>
+
+<style>
+    .utterances {
+        max-width: unset;
+    }
+</style>
+
+<script>
+    function setUtterancesTheme(theme) {
+        let utterances = document.querySelector('.utterances iframe');
+        if (utterances) {
+            utterances.contentWindow.postMessage(
+                {
+                    type: 'set-theme',
+                    theme: `github-${theme}`
+                },
+                'https://utteranc.es'
+            );
+        }
+    }
+
+    addEventListener('message', event => {
+        if (event.origin !== 'https://utteranc.es') return;
+        setUtterancesTheme(document.documentElement.dataset.scheme)
+    });
+
+    window.addEventListener('onColorSchemeChange', (e) => {
+        setUtterancesTheme(e.detail)
+    })
+</script>
+
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2025 KegalaS的个人博客
+    </section>
+    
+    <section class="powerby">
+         <br />
+        
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    
+        <aside class="sidebar right-sidebar sticky">
+            <section class="widget archives">
+                <div class="widget-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+                </div>
+                <h2 class="widget-title section-title">目录</h2>
+                
+                <div class="widget--toc">
+                    <nav id="TableOfContents">
+  <ol>
+    <li><a href="#wdf-的几个重要且一般存在的操作">WDF 的几个重要且一般存在的操作</a></li>
+    <li><a href="#wdf体系结构">WDF体系结构</a></li>
+    <li><a href="#wdf文件对象">WDF文件对象</a></li>
+    <li><a href="#io队列">IO队列</a></li>
+    <li><a href="#处理硬件中断">处理硬件中断</a></li>
+    <li><a href="#处理dma操作">处理DMA操作</a></li>
+    <li><a href="#readfile读取设备数据的流程">ReadFile读取设备数据的流程</a></li>
+    <li><a href="#inf文件简介">INF文件简介</a>
+      <ol>
+        <li><a href="#语法规则">语法规则</a>
+          <ol>
+            <li><a href="#节名称">节名称</a></li>
+            <li><a href="#字符串变量">字符串变量</a></li>
+            <li><a href="#逗号与省略">逗号与省略</a></li>
+          </ol>
+        </li>
+        <li><a href="#必须要有的节">必须要有的节</a>
+          <ol>
+            <li><a href="#version节">Version节</a></li>
+            <li><a href="#sourcedisksnames节">SourceDisksNames节</a></li>
+            <li><a href="#sourcedisksfiles节">SourceDisksFiles节</a></li>
+            <li><a href="#destinationdirs节">DestinationDirs节</a></li>
+            <li><a href="#controlflags节">ControlFlags节</a></li>
+            <li><a href="#manufacturer节">Manufacturer节</a></li>
+            <li><a href="#model节">Model节</a></li>
+            <li><a href="#ddinstall节总体结构">DDInstall节总体结构</a></li>
+            <li><a href="#ddinstallservices节">DDInstall.Services节</a></li>
+            <li><a href="#ddinstallhw节">DDInstall.HW节</a></li>
+            <li><a href="#ddinstallevents节">DDInstall.Events节</a></li>
+            <li><a href="#ddinstallcomponents节">DDInstall.Components节</a></li>
+            <li><a href="#ddinstallsoftware节">DDInstall.Software节</a></li>
+            <li><a href="#ddinstallinterfaces节">DDInstall.Interfaces节</a></li>
+            <li><a href="#ddinstallcoinstallers节">DDInstall.CoInstallers节</a></li>
+            <li><a href="#ddinstallwdf节">DDInstall.WDF节</a></li>
+            <li><a href="#heading">&hellip;</a></li>
+            <li><a href="#字符串节">字符串节</a></li>
+          </ol>
+        </li>
+        <li><a href="#inf指令">INF指令</a>
+          <ol>
+            <li><a href="#addreg">AddReg</a></li>
+            <li><a href="#copyfiles">CopyFiles</a></li>
+            <li><a href="#addservice">AddService</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+    <li><a href="#驱动程序包的组件">驱动程序包的组件</a>
+      <ol>
+        <li><a href="#inf文件inf">INF文件(.inf)</a></li>
+        <li><a href="#目录文件catalog-cat">目录文件(catalog, .cat)</a></li>
+        <li><a href="#驱动程序文件sys">驱动程序文件(.sys)</a></li>
+        <li><a href="#其他文件">其他文件</a></li>
+      </ol>
+    </li>
+    <li><a href="#whql签名">WHQL签名</a></li>
+    <li><a href="#hlk测试">HLK测试</a>
+      <ol>
+        <li><a href="#静态工具徽标测试">静态工具徽标测试</a></li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+                </div>
+            </section>
+        </aside>
+    
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                defer="false"
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

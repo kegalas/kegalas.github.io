@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='原论文：https://eccv.ecva.net/virtual/2024/poster/1165 摘要 当今的语言视觉预训练（Vision-'><title>Unified Medical Image Pre Training in Language Guided Common Semantic Space论文速读</title>
+
+<link rel='canonical' href='https://kegalas.uk/p/unified-medical-image-pre-training-in-language-guided-common-semantic-space%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/'>
+
+<link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='Unified Medical Image Pre Training in Language Guided Common Semantic Space论文速读'>
+<meta property='og:description' content='原论文：https://eccv.ecva.net/virtual/2024/poster/1165 摘要 当今的语言视觉预训练（Vision-'>
+<meta property='og:url' content='https://kegalas.uk/p/unified-medical-image-pre-training-in-language-guided-common-semantic-space%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/'>
+<meta property='og:site_name' content='KegalaS的个人博客'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='大学' /><meta property='article:tag' content='人工智能' /><meta property='article:tag' content='计算机视觉' /><meta property='article:published_time' content='2024-12-05T14:50:20&#43;08:00'/><meta property='article:modified_time' content='2024-12-05T14:50:20&#43;08:00'/><meta property='og:image' content='https://kegalas.uk/p/unified-medical-image-pre-training-in-language-guided-common-semantic-space%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/cover.jpg' />
+<meta name="twitter:title" content="Unified Medical Image Pre Training in Language Guided Common Semantic Space论文速读">
+<meta name="twitter:description" content="原论文：https://eccv.ecva.net/virtual/2024/poster/1165 摘要 当今的语言视觉预训练（Vision-"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://kegalas.uk/p/unified-medical-image-pre-training-in-language-guided-common-semantic-space%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/cover.jpg' />
+    <link rel="shortcut icon" href="/images/favicon.ico" />
+
+    </head>
+    <body class="
+    article-page has-toc
+">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex 
+    
+        extended
+    
+">
+    
+        <div id="article-toolbar">
+            <a href="/" class="back-home">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="15 6 9 12 15 18" />
+</svg>
+
+
+
+                <span>返回</span>
+            </a>
+        </div>
+    
+<main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/p/unified-medical-image-pre-training-in-language-guided-common-semantic-space%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/">
+                <img src="/p/unified-medical-image-pre-training-in-language-guided-common-semantic-space%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/cover_hu7db9f684ad4dbfbdeb174bd533317f2a_62839_800x0_resize_q75_box.jpg"
+                        srcset="/p/unified-medical-image-pre-training-in-language-guided-common-semantic-space%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/cover_hu7db9f684ad4dbfbdeb174bd533317f2a_62839_800x0_resize_q75_box.jpg 800w, /p/unified-medical-image-pre-training-in-language-guided-common-semantic-space%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/cover_hu7db9f684ad4dbfbdeb174bd533317f2a_62839_1600x0_resize_q75_box.jpg 1600w"
+                        width="800" 
+                        height="269" 
+                        loading="lazy"
+                        alt="Featured image of post Unified Medical Image Pre Training in Language Guided Common Semantic Space论文速读" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" >
+                人工智能
+            </a>
+        
+    </header>
+    
+
+    <h2 class="article-title">
+        <a href="/p/unified-medical-image-pre-training-in-language-guided-common-semantic-space%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/">Unified Medical Image Pre Training in Language Guided Common Semantic Space论文速读</a>
+    </h2>
+
+    
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Dec 05, 2024</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 6 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+</div>
+</header>
+
+    <section class="article-content">
+    <p>原论文：<a class="link" href="https://eccv.ecva.net/virtual/2024/poster/1165"  target="_blank" rel="noopener"
+    >https://eccv.ecva.net/virtual/2024/poster/1165</a></p>
+<h1 id="摘要">摘要</h1>
+<p>当今的语言视觉预训练（Vision-Language Pre-training (VLP)）在医学图像的分析方面展现出了不错的效果，但是它们大多只针对单一模态数据。而将真实场景中的多种模态的数据进行统一表示还是一个开放性问题。</p>
+<p>医学场景中，有各种不同形式的数据，尤其还有3D的图像。另外，这些不同形式的数据并不一定配对（例如有些既做了X光（2D），又做了CT（3D），而有些病人只有CT或者只有X光）。</p>
+<p>为此，本文提出UniMedI，使用医学诊断报告来当做公共的语义空间，来将各种模态的医学图像统一表示。</p>
+<h1 id="简介">简介</h1>
+<p>作者观察到，虽然不同模态图像的差距可能很大，但是医疗过程中，对于同一个患者的医疗报告应该是相似的。</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 201; 
+			flex-basis: 484px"
+	>
+	<a href="/p/unified-medical-image-pre-training-in-language-guided-common-semantic-space%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/1.jpg" data-size="1145x567">
+		<img src="/p/unified-medical-image-pre-training-in-language-guided-common-semantic-space%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/1.jpg"
+			width="1145"
+			height="567"
+			srcset="/p/unified-medical-image-pre-training-in-language-guided-common-semantic-space%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/1_hubf0199074c6cfad9991e081ea27bc7de_134703_480x0_resize_q75_box.jpg 480w, /p/unified-medical-image-pre-training-in-language-guided-common-semantic-space%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/1_hubf0199074c6cfad9991e081ea27bc7de_134703_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="1.jpg">
+	</a>
+	
+	<figcaption>1.jpg</figcaption>
+	
+</figure></p>
+<p>上图中的(b)更是在实验结果上证明了这一点。于是就可以使用语言（医学报告）信息作为桥梁，将各种模态的图像联系到一起。</p>
+<p>但是问题是，并不一定每一个病人进到医院里都会把CT、超声、X光、MRI顺着做一遍。也就是说，同一个病人的配对数据并不一定总是存在，这给训练就带来了一定挑战。</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 193; 
+			flex-basis: 464px"
+	>
+	<a href="/p/unified-medical-image-pre-training-in-language-guided-common-semantic-space%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/2.jpg" data-size="1124x581">
+		<img src="/p/unified-medical-image-pre-training-in-language-guided-common-semantic-space%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/2.jpg"
+			width="1124"
+			height="581"
+			srcset="/p/unified-medical-image-pre-training-in-language-guided-common-semantic-space%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/2_huec038f9693d9d8ad150355c38403a2da_168821_480x0_resize_q75_box.jpg 480w, /p/unified-medical-image-pre-training-in-language-guided-common-semantic-space%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/2_huec038f9693d9d8ad150355c38403a2da_168821_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="2.jpg">
+	</a>
+	
+	<figcaption>2.jpg</figcaption>
+	
+</figure></p>
+<p>上图(a)是将两个模态的数据用两次VLP（分别）训练得出的结果。而(b)则是简单地将多模态数据统一，在一个VLP上训练的结果。本文的UniMedI模型引入了一个“伪配对”技术，让2D、3D图像能够一起输入。</p>
+<h1 id="整体流程">整体流程</h1>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 251; 
+			flex-basis: 604px"
+	>
+	<a href="/p/unified-medical-image-pre-training-in-language-guided-common-semantic-space%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/3.jpg" data-size="1130x449">
+		<img src="/p/unified-medical-image-pre-training-in-language-guided-common-semantic-space%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/3.jpg"
+			width="1130"
+			height="449"
+			srcset="/p/unified-medical-image-pre-training-in-language-guided-common-semantic-space%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/3_hue1c1eedea4d0cce52fd48a3ba63a8047_87858_480x0_resize_q75_box.jpg 480w, /p/unified-medical-image-pre-training-in-language-guided-common-semantic-space%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/3_hue1c1eedea4d0cce52fd48a3ba63a8047_87858_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="3.jpg">
+	</a>
+	
+	<figcaption>3.jpg</figcaption>
+	
+</figure></p>
+<p>跟ConVIRT有些像，也是对文本的图片分别使用两个编码器，然后进行对比学习。区别在于，UniMedI可以将3D、2D图像以统一的方式读取。</p>
+<p>当输入是3D图像时，会使用一个叫attentive slice selection的策略来获取一些2D的切片，这些切片是和医学报告最相关的部分。然后这些切片和原来的3D图像一起送入编码器。当输入是2D图像时，切片这一步就会被忽略。</p>
+<p>图像的编码器中，有<span class="math inline">\(T_{2D}\)</span>和<span class="math inline">\(T_{3D}\)</span>两个tokenizer，并且共用一个<span class="math inline">\(E_v\)</span>来实现更好的结合。之后的过程和ConVIRT类似，<span class="math inline">\(E_l\)</span>和<span class="math inline">\(E_v\)</span>通过对比损失<span class="math inline">\(L_{vl}\)</span>等进行训练。</p>
+<p>另外，本文还介绍了auxiliary masking等技术来更好的结合2D、3D数据。</p>
+<h1 id="伪对创建过程">伪对创建过程</h1>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 291; 
+			flex-basis: 700px"
+	>
+	<a href="/p/unified-medical-image-pre-training-in-language-guided-common-semantic-space%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/4.jpg" data-size="1179x404">
+		<img src="/p/unified-medical-image-pre-training-in-language-guided-common-semantic-space%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/4.jpg"
+			width="1179"
+			height="404"
+			srcset="/p/unified-medical-image-pre-training-in-language-guided-common-semantic-space%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/4_hubd61c36f78cb07392c718a6efc3d1d45_70318_480x0_resize_q75_box.jpg 480w, /p/unified-medical-image-pre-training-in-language-guided-common-semantic-space%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/4_hubd61c36f78cb07392c718a6efc3d1d45_70318_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="4.jpg">
+	</a>
+	
+	<figcaption>4.jpg</figcaption>
+	
+</figure></p>
+<p>本文提出的attentive slice selection，模仿医生的行为，通过医学报告来选择最合适的3D图像的切片来看。注：本文这一段和ViT强相关，不了解ViT的建议阅读ViT的相关文章。</p>
+<p>本文没有详细描写Tokenizer是什么结构，这里猜测是和ViT一样的结构，即将2D图片切分成多个16x16的patch，每一个patch就算是一个token了（所以上图中的图例有问题，绿色方块应该是embedding而非token）。然后这些patch送入后面的<span class="math inline">\(\bar E_v\)</span>，将其embedding，这里的这一部分就相当于ViT论文中的“Linear Projection of Flattened Patches”。同样的，这里的[CLS]的就是ViT文章中的[class]或者是BERT论文中的[CLS] token。（另外本文居然没有Position Embedding。）</p>
+<p>这里的[CLS]是跟随着<span class="math inline">\(E_v\)</span>训练得到的，并且是受到文本监督的，因此它才能对相关得分的计算有效。计算attention value的公式如下</p>
+<p><span class="math display">\[v = \dfrac{1}{HL}\sum^L_{l=1}\sum^H_{h=1}\text{Softmax}\bigg(\dfrac{q_{lh}([CLS])K_{lh}([Patch])}{\sqrt C}\bigg)
+\]</span></p>
+<p>其中<span class="math inline">\(L\)</span>是Layer的数量，<span class="math inline">\(H\)</span>是Heads的数量。<span class="math inline">\(q_{lh}\in \mathbb{R}^C\)</span>代表[CLS]的embedding，而<span class="math inline">\(K_{lh}\in\mathbb R^{P\times C}\)</span>代表全部P个Patch的embedding。最终<span class="math inline">\(v\in\mathbb R^P\)</span>。这里的<span class="math inline">\(C\)</span>应该是可以自定的embedding的维度。</p>
+<p>对于一整个slice的相关得分，则通过其每个patch的得分的算数平均来得到。对于第<span class="math inline">\(i\)</span>个slice，有</p>
+<p><span class="math display">\[s_i = \dfrac{1}{N}\sum^N_{j=1}v_{ij}
+\]</span></p>
+<p>（很奇怪为什么作者不用<span class="math inline">\(P\)</span>而改用<span class="math inline">\(N\)</span>了）</p>
+<p>之后就是选择得分最高的<span class="math inline">\(k\)</span>个切片，来当做伪配对。</p>
+<h1 id="使用文本监督对比学习">使用文本监督对比学习</h1>
+<p>大体上，UniMedI的对比学习是按照CLIP的结构来的（而CLIP则是ConVIRT后面的工作）。对于2D图像，直接使用<span class="math inline">\(T_{2D}\)</span>和<span class="math inline">\(E_v\)</span>来进行特征提取，并且获得[CLS] token来包含全局的图像信息。之后将这个[CLS]和文字编码器的[CLS]对齐。</p>
+<p>对于3D图像，首先用之前的方法挑选出2D切片，然后将3D图像和2D图像分别使用<span class="math inline">\(T_{3D}, T_{2D}\)</span>进行tokenize。所有这些token会直接前后拼接在一起传入<span class="math inline">\(E_v\)</span>。之后的部分和2D图像一样。</p>
+<h1 id="通过自我蒸馏来增强不同维度数据的结合">通过自我蒸馏来增强不同维度数据的结合</h1>
+<p>为了更好地结合2D、3D数据，本文提出了一个简单的辅助工具。在训练过程中，使用一个在线的学生网络<span class="math inline">\(E_v\)</span>和其教师网络<span class="math inline">\(\bar E_v\)</span>。将输入的2D3D图像的一大部分进行mask，传递给学生网络，然后将所有2D3D图像传递给教师网络。学生网络被要求输出尽可能和教师网络一样的结果。</p>
+<p>自蒸馏选用的架构是DINO，使用了DINO的loss和head部分。loss函数引用到[CLS]上（<span class="math inline">\(L_{icl}\)</span>）和所有的patch上（<span class="math inline">\(L_{pcl}\)</span>）</p>
+<h1 id="自我思考">自我思考</h1>
+<p>（本段可能会暴露个人水平，本人水平还很初级）</p>
+<p>文章标题很唬人啊，什么统一医学图像表示，实际上大部分内容是在探讨如何让2D和3D图像更好结合的。但我本人更想知道如果用两种2D图像，比如X光和超声，如何去解决这个配对问题。</p>
+<p>是否使用一个tokenizer和一个encoder就行了呢？我个人猜测可能会有一些问题，比如先用超声训练再用X光训练，可能会有遗忘现象。如果以其他技巧进行训练，我估计也避免不了domain gap的问题。</p>
+<p>另外，本文似乎也没有介绍如果输入的图像有配对，如何同时利用两者的信息来提高判断准确度。（看起来只能同时输入一种模态，并且实验部分也都是2D3D分开的）（配对的数据集可能也欠缺）</p>
+<p>另外，如何应对三种以上的数据？一个胡思乱想：用多个VL对比学习对多种图片进行学习，然后将所有可用的图片的encoder的结果concat起来传入另一个transformer。因为transfomer可以应对任意长度的序列数据，所以就数据上来说肯定是能跑通的。只不过效果可能会差，如本文作者介绍的Fig2那样。</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/%E5%A4%A7%E5%AD%A6/">大学</a>
+        
+            <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">人工智能</a>
+        
+            <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/">计算机视觉</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css"integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js"integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8"crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js"integrity="sha384-vZTG03m&#43;2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl"crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.querySelector(`.article-content`), {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ]
+        });})
+</script>
+    
+</article>
+
+    <aside class="related-contents--wrapper">
+    
+    
+        <h2 class="section-title">相关文章</h2>
+        <div class="related-contents">
+            <div class="flex article-list--tile">
+                
+                    
+<article class="has-image">
+    <a href="/p/deep-bilateral-learning-for-real-time-image-enhancement%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/">
+        
+        
+            <div class="article-image">
+                <img src="/p/deep-bilateral-learning-for-real-time-image-enhancement%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/cover.c544671fcae18b2974e28dcd19d110e3_hu21346ed4a71566f3cd713a52c023a686_153701_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-xURnH8rhiyl04o3NGdEQ4w==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Deep Bilateral Learning for Real Time Image Enhancement论文速读</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/p/contrastive-learning-of-medical-visual-representations-from-paired-images-and-text%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/">
+        
+        
+            <div class="article-image">
+                <img src="/p/contrastive-learning-of-medical-visual-representations-from-paired-images-and-text%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/cover.7d89df70ad8c617880343a023e0e8123_hub8c84ca5ad65dd454459c16e59485375_58694_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-fYnfcK2MYXiANDoCPg6BIw==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Contrastive Learning of Medical Visual Representations From Paired Images and Text论文速读</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/inferior/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+        
+        
+            <div class="article-image">
+                <img src="/inferior/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB%E8%AE%A4%E7%9F%A5%E8%AE%A1%E7%AE%97%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/cover.2aeb7d3afbb199eb18340059cba0cad9_hudfaf5e1d7526a380ad7b29f8ee060abf_123913_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-Kut9OvuxmesYNABZy6DK2Q==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">机器学习&#43;模式识别&#43;认知计算综合学习笔记</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/inferior/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E6%A6%82%E8%AE%BA%E7%AC%94%E8%AE%B0/">
+        
+        
+            <div class="article-image">
+                <img src="/inferior/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E6%A6%82%E8%AE%BA%E7%AC%94%E8%AE%B0/cover.9efee14869436ec4c69d3de759fc6854_hu729735102c3c060f4a29b2f0df39e169_86954_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-nv7hSGlDbsTGnT3nWfxoVA==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">人工智能概论笔记</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/p/tone-mapping%E7%AE%80%E8%BF%B0/">
+        
+        
+            <div class="article-image">
+                <img src="/p/tone-mapping%E7%AE%80%E8%BF%B0/cover.5aa682735da6aa1619a10f7cb3c36e37_hue2557a0ca715ca3bab4b5f5b903f073d_123247_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-WqaCc12mqhYZoQ98s8NuNw==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Tone Mapping简述</h2>
+        </div>
+    </a>
+</article>
+                
+            </div>
+        </div>
+    
+</aside>
+
+     
+    
+        
+    <script src="https://utteranc.es/client.js" 
+        repo="kegalas/blogComments"
+        issue-term="pathname"
+        
+        crossorigin="anonymous"
+        async
+        >
+</script>
+
+<style>
+    .utterances {
+        max-width: unset;
+    }
+</style>
+
+<script>
+    function setUtterancesTheme(theme) {
+        let utterances = document.querySelector('.utterances iframe');
+        if (utterances) {
+            utterances.contentWindow.postMessage(
+                {
+                    type: 'set-theme',
+                    theme: `github-${theme}`
+                },
+                'https://utteranc.es'
+            );
+        }
+    }
+
+    addEventListener('message', event => {
+        if (event.origin !== 'https://utteranc.es') return;
+        setUtterancesTheme(document.documentElement.dataset.scheme)
+    });
+
+    window.addEventListener('onColorSchemeChange', (e) => {
+        setUtterancesTheme(e.detail)
+    })
+</script>
+
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2025 KegalaS的个人博客
+    </section>
+    
+    <section class="powerby">
+         <br />
+        
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    
+        <aside class="sidebar right-sidebar sticky">
+            <section class="widget archives">
+                <div class="widget-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+                </div>
+                <h2 class="widget-title section-title">目录</h2>
+                
+                <div class="widget--toc">
+                    <nav id="TableOfContents">
+  <ol>
+    <li><a href="#摘要">摘要</a></li>
+    <li><a href="#简介">简介</a></li>
+    <li><a href="#整体流程">整体流程</a></li>
+    <li><a href="#伪对创建过程">伪对创建过程</a></li>
+    <li><a href="#使用文本监督对比学习">使用文本监督对比学习</a></li>
+    <li><a href="#通过自我蒸馏来增强不同维度数据的结合">通过自我蒸馏来增强不同维度数据的结合</a></li>
+    <li><a href="#自我思考">自我思考</a></li>
+  </ol>
+</nav>
+                </div>
+            </section>
+        </aside>
+    
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                defer="false"
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

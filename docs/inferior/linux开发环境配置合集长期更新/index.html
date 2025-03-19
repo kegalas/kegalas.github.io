@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='系统安装 我一般安装Debian，安装的时候选择Cinnamon桌面环境，语言选择英文（方便tty等地方显示英文而不是方块字乱码，之后可以调整'><title>Linux开发环境配置合集（长期更新）</title>
+
+<link rel='canonical' href='https://kegalas.uk/inferior/linux%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E5%90%88%E9%9B%86%E9%95%BF%E6%9C%9F%E6%9B%B4%E6%96%B0/'>
+
+<link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='Linux开发环境配置合集（长期更新）'>
+<meta property='og:description' content='系统安装 我一般安装Debian，安装的时候选择Cinnamon桌面环境，语言选择英文（方便tty等地方显示英文而不是方块字乱码，之后可以调整'>
+<meta property='og:url' content='https://kegalas.uk/inferior/linux%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E5%90%88%E9%9B%86%E9%95%BF%E6%9C%9F%E6%9B%B4%E6%96%B0/'>
+<meta property='og:site_name' content='KegalaS的个人博客'>
+<meta property='og:type' content='article'><meta property='article:section' content='Inferior' /><meta property='article:tag' content='计算机' /><meta property='article:tag' content='Linux' /><meta property='article:tag' content='开发环境' /><meta property='article:tag' content='水文' /><meta property='article:published_time' content='2023-10-13T19:06:00&#43;08:00'/><meta property='article:modified_time' content='2023-10-13T19:06:00&#43;08:00'/>
+<meta name="twitter:title" content="Linux开发环境配置合集（长期更新）">
+<meta name="twitter:description" content="系统安装 我一般安装Debian，安装的时候选择Cinnamon桌面环境，语言选择英文（方便tty等地方显示英文而不是方块字乱码，之后可以调整">
+    <link rel="shortcut icon" href="/images/favicon.ico" />
+
+    </head>
+    <body class="
+    article-page has-toc
+">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex 
+    
+        extended
+    
+">
+    
+        <div id="article-toolbar">
+            <a href="/" class="back-home">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="15 6 9 12 15 18" />
+</svg>
+
+
+
+                <span>返回</span>
+            </a>
+        </div>
+    
+<main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/linux/" >
+                Linux
+            </a>
+        
+    </header>
+    
+
+    <h2 class="article-title">
+        <a href="/inferior/linux%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E5%90%88%E9%9B%86%E9%95%BF%E6%9C%9F%E6%9B%B4%E6%96%B0/">Linux开发环境配置合集（长期更新）</a>
+    </h2>
+
+    
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Oct 13, 2023</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 3 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+</div>
+</header>
+
+    <section class="article-content">
+    <h1 id="系统安装">系统安装</h1>
+<p>我一般安装Debian，安装的时候选择Cinnamon桌面环境，语言选择英文（方便tty等地方显示英文而不是方块字乱码，之后可以调整部分界面变成中文）。但是地区记得选中国上海。并且不知道为什么，虽然我选的是美式键盘，他还是帮我装上了fcitx5.</p>
+<p>具体的安装，每次都有不同，就不介绍了。安装包一般可以在<a class="link" href="https://mirrors.tuna.tsinghua.edu.cn/"  target="_blank" rel="noopener"
+    >https://mirrors.tuna.tsinghua.edu.cn/</a>获取。</p>
+<p>另外，Debian一般只能下到stable版本的镜像文件，更新到testing或者sid只用更换软件源的版本即可。</p>
+<h1 id="系统配置">系统配置</h1>
+<h2 id="软件源">软件源</h2>
+<p><a class="link" href="https://mirrors.tuna.tsinghua.edu.cn/help/debian/"  target="_blank" rel="noopener"
+    >https://mirrors.tuna.tsinghua.edu.cn/help/debian/</a>里说的很清楚，只不过我这里偶尔会出现连不上的情况，字符搜索替换成阿里云的可以解决问题。</p>
+<h2 id="安装vim">安装VIM</h2>
+<p>这个很重要，因为我们修改很多文件都要用vim而不是系统自带的精简版vim。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ sudo apt install vim
+</span></span></code></pre></div><h2 id="设置中文locales">设置中文locales</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ sudo vim /etc/locale.gen
+</span></span></code></pre></div><p>在里面选择</p>
+<pre><code>en_US.UTF8 UTF8
+zh_CN GB2312
+zh_CN.GBK GBK
+zh_CN.UTF8 UTF8
+</code></pre>
+<p>即把它们前面的注释取消掉。记得灵活使用vim的搜索功能。之后</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ sudo locale-gen
+</span></span></code></pre></div><p>之后</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ sudo dpkg-reconfigure locales
+</span></span></code></pre></div><p>可以看到这是一个图形化的选择locale的工具，但是他没有GB2312和GBK，所以我们还是不能用它选择。注意空格是勾选选项，回车是OK。我们直接OK，然后选择default为<code>zh_CN.UTF8 UTF8</code>。然后注销再登陆。</p>
+<p>系统可能会提示你迁移<code>~</code>中的文件夹到新名称，不要迁移，因为我觉得英文目录会少很多麻烦。</p>
+<p>不过我们这样非常粗暴的把全部locale都设置成中文是有问题的，在tty中，任何中文相关的东西都会变成方块、菱形等。我并没有找到什么单独设置每个地方的locale的简单办法，但是我发现我们可以临时改变locale。于是我们只要使用shell判断我们是在tty还是图形界面，来设置即可。</p>
+<p>当我们用bash的时候，我们可以修改<code>~/.bashrc</code>，如果用zsh、fish等同理。我在bash后面添加了这一段代码</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> <span style="color:#f92672">[</span> <span style="color:#e6db74">&#34;</span>$XDG_SESSION_TYPE<span style="color:#e6db74">&#34;</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;tty&#34;</span><span style="color:#f92672">]</span>; <span style="color:#66d9ef">then</span>
+</span></span><span style="display:flex;"><span>    export LC_ALL<span style="color:#f92672">=</span>en_US.UTF-8
+</span></span><span style="display:flex;"><span>    export LANG<span style="color:#f92672">=</span>en_US.UTF-8
+</span></span><span style="display:flex;"><span>    export LANGUAGE<span style="color:#f92672">=</span>en_US.UTF-8
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">fi</span>
+</span></span></code></pre></div><p>其中<code>if</code>的条件是最关键的地方，我的系统可以用<code>$XDG_SESSION_TYPE</code>来简单判断，别的系统你需要自己找。注意shell里面的空格没打对可能会影响句意。</p>
+<p>另外，要在tty里root用户使用这个的话，还要加到<code>/root/.bashrc</code>里。</p>
+<h2 id="自动挂载">自动挂载</h2>
+<p>Windows会自动挂载硬盘，但是Linux不一定会。尤其是我们使用双系统时，如果部分盘没有挂在linux的目录，就不会自动挂载。我们要手动挂载，但是要输入密码，比较繁琐。如果我们想要避免输入密码，就可以去修改<code>/etc/fstab</code></p>
+<p>我们首先把所有盘都先挂在好，然后输入</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ sudo blkid
+</span></span></code></pre></div><p>得到一大串输出，例如</p>
+<pre tabindex="0"><code>/dev/sda2: LABEL=&#34;Games&#34; BLOCK_SIZE=xxx UUID=xxx TYPE=&#34;ntfs&#34;
+</code></pre><p>我确实有一个盘叫Games，并且是ntfs格式的，就把他的UUID记下来，在<code>/etc/fstab</code>里新开一行</p>
+<pre tabindex="0"><code class="language-fstab" data-lang="fstab">UUID=xxx    /media/kegalas/Games    ntfs    defaults     0 0
+</code></pre><p>UUID就是刚刚复制的那个，挂载路径看你Linux图形界面默认会挂在到哪里，就挂到相同的地方，我这里就是<code>/media/kegalas/Games</code>，<code>ntfs</code>看你的盘的格式，一般来说双系统Windows的盘都是ntfs的。后面不管直接输入default和0 0.</p>
+<p>具体fstab每一项参数的含义可以上网查阅，或者<code>man fstab</code></p>
+<p>重启检查是否有效。</p>
+<h2 id="自动同步时间">自动同步时间</h2>
+<p>很奇怪，我安装后Cinnamon的设置里并不能直接使用网络时间。我进行下面几个操作后才能正常使用</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ sudo apt install npd
+</span></span><span style="display:flex;"><span>$ sudo systemctl start ntpd
+</span></span><span style="display:flex;"><span>$ sudo systemctl enable ntpd
+</span></span></code></pre></div><h2 id="与windows的八小时时差问题">与Windows的八小时时差问题</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ sudo timedatectl set-local-rtc <span style="color:#ae81ff">1</span> --adjust-system-clock
+</span></span></code></pre></div><p>在linux设置即可，但是系统也会提示你，这种方法可能会有一些问题。</p>
+<h1 id="开发环境配置">开发环境配置</h1>
+<p>TODO</p>
+<h1 id="其他软件安装">其他软件安装</h1>
+<p>可见<a class="link" href="../%e4%b8%aa%e4%ba%ba%e5%b8%b8%e7%94%a8%e8%bd%af%e4%bb%b6%e5%88%97%e8%a1%a8" >个人常用软件列表</a>一文。</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/">计算机</a>
+        
+            <a href="/tags/linux/">Linux</a>
+        
+            <a href="/tags/%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/">开发环境</a>
+        
+            <a href="/tags/%E6%B0%B4%E6%96%87/">水文</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css"integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js"integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8"crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js"integrity="sha384-vZTG03m&#43;2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl"crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.querySelector(`.article-content`), {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ]
+        });})
+</script>
+    
+</article>
+
+    <aside class="related-contents--wrapper">
+    
+    
+        <h2 class="section-title">相关文章</h2>
+        <div class="related-contents">
+            <div class="flex article-list--tile">
+                
+                    
+<article class="">
+    <a href="/inferior/%E4%B8%AA%E4%BA%BA%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6%E5%88%97%E8%A1%A8/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">个人常用软件列表</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="">
+    <a href="/inferior/%E4%BD%BF%E7%94%A8perf%E7%94%9F%E6%88%90%E7%81%AB%E7%84%B0%E5%9B%BE/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">使用perf生成火焰图</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="">
+    <a href="/inferior/%E6%B7%BB%E5%8A%A0msys2%E5%88%B0%E5%8F%B3%E9%94%AE%E8%8F%9C%E5%8D%95/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">添加msys2到右键菜单</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="">
+    <a href="/inferior/windows%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E5%90%88%E9%9B%86%E9%95%BF%E6%9C%9F%E6%9B%B4%E6%96%B0/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Windows开发环境配置合集（长期更新）</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/p/ubuntu%E5%AE%89%E8%A3%85deepin-qq%E6%97%B6%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E4%B8%8E%E8%A7%A3%E5%86%B3/">
+        
+        
+            <div class="article-image">
+                <img src="/p/ubuntu%E5%AE%89%E8%A3%85deepin-qq%E6%97%B6%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E4%B8%8E%E8%A7%A3%E5%86%B3/cover.210813755d837867ed32cda793340724_huadd5fdafa4a185a8686ebe054dd413b9_24301_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-IQgTdV2DeGftMs2nkzQHJA==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">ubuntu安装deepin-qq时遇到的问题与解决</h2>
+        </div>
+    </a>
+</article>
+                
+            </div>
+        </div>
+    
+</aside>
+
+     
+    
+        
+    <script src="https://utteranc.es/client.js" 
+        repo="kegalas/blogComments"
+        issue-term="pathname"
+        
+        crossorigin="anonymous"
+        async
+        >
+</script>
+
+<style>
+    .utterances {
+        max-width: unset;
+    }
+</style>
+
+<script>
+    function setUtterancesTheme(theme) {
+        let utterances = document.querySelector('.utterances iframe');
+        if (utterances) {
+            utterances.contentWindow.postMessage(
+                {
+                    type: 'set-theme',
+                    theme: `github-${theme}`
+                },
+                'https://utteranc.es'
+            );
+        }
+    }
+
+    addEventListener('message', event => {
+        if (event.origin !== 'https://utteranc.es') return;
+        setUtterancesTheme(document.documentElement.dataset.scheme)
+    });
+
+    window.addEventListener('onColorSchemeChange', (e) => {
+        setUtterancesTheme(e.detail)
+    })
+</script>
+
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2025 KegalaS的个人博客
+    </section>
+    
+    <section class="powerby">
+         <br />
+        
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    
+        <aside class="sidebar right-sidebar sticky">
+            <section class="widget archives">
+                <div class="widget-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+                </div>
+                <h2 class="widget-title section-title">目录</h2>
+                
+                <div class="widget--toc">
+                    <nav id="TableOfContents">
+  <ol>
+    <li><a href="#系统安装">系统安装</a></li>
+    <li><a href="#系统配置">系统配置</a>
+      <ol>
+        <li><a href="#软件源">软件源</a></li>
+        <li><a href="#安装vim">安装VIM</a></li>
+        <li><a href="#设置中文locales">设置中文locales</a></li>
+        <li><a href="#自动挂载">自动挂载</a></li>
+        <li><a href="#自动同步时间">自动同步时间</a></li>
+        <li><a href="#与windows的八小时时差问题">与Windows的八小时时差问题</a></li>
+      </ol>
+    </li>
+    <li><a href="#开发环境配置">开发环境配置</a></li>
+    <li><a href="#其他软件安装">其他软件安装</a></li>
+  </ol>
+</nav>
+                </div>
+            </section>
+        </aside>
+    
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                defer="false"
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
