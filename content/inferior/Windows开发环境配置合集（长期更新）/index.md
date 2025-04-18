@@ -196,6 +196,10 @@ if not exist "%GIT_EXE_DIR%\git.exe" (
 
 ## alacritty
 
+## WindTerm
+
+## MobaXterm
+
 # C/C++相关
 
 ## GCC

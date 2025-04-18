@@ -121,7 +121,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 18 分钟
+                    阅读时长: 19 分钟
                 </time>
             </div>
         
@@ -185,6 +185,7 @@
     >https://en.wikipedia.org/wiki/Perceptual_quantizer</a>找到。由公式和图像可知，PQ曲线最高支持到10000nits亮度。</p>
 <p>PQ曲线是同样的，那对于只有400nits亮度的显示屏如何显示1.0大小的信号呢？答案是：不要使用1.0大小的信号。通过某一些方法（见后，即tonemapping）将1.0大小的信号缩放到0.7左右，并且视频、图像文件里都只存0.7以下的数字。</p>
 <p>实际上这并不是乱说的，HDR视频制作过程中metadata确实会有记录视频制作时的显示器亮度，以及视频播放时显示器的亮度（至少HDR Vivid确实有），这对于HDR的合理播放至关重要。</p>
+<p>当然，这是假设了一个显示器直接根据PQ值输出亮度，实际上有些显示器自带tone mapping将PQ曲线规定的0~10000nits映射到自己的亮度值如0~400nits。据说也有的显示器是直接将超出的亮度裁剪掉。</p>
 <p>接下来我们再来说说位深。从刚刚的描述中你也注意到，我们完全可以用<span class="math inline">\([0,255]\)</span>来表示HDR的所有亮度值<span class="math inline">\([0,1]\)</span>啊，为什么我们经常说HDR必须用上<span class="math inline">\(10\)</span>bit呢？</p>
 <p>我们先以简单的线性视角来看，如果要量化<span class="math inline">\([0,100]\)</span>nits这个区间，我们使用<span class="math inline">\(8\)</span>位深度，那么就是用<span class="math inline">\(256\)</span>个数去表示<span class="math inline">\([0,100]\)</span>，每两个连续的量化之间的差异是<span class="math inline">\(100/256\approx 0.4\)</span>。而如果我们要量化<span class="math inline">\([0,10000]\)</span>nits这个区间，那么差异就是<span class="math inline">\(10000/256\approx40\)</span>，大了一百倍，这造成的结果就是渐变变化跨度太大，有“条带”现象的出现。举个例子如下，从左到右量化精度越来越高，两个连续量化之间的差异越来越小。</p>
 <p><figure 
@@ -556,6 +557,10 @@
 </figure></p>
 <p>本文并没有提出什么新的网络架构。Mask的提取部分，使用了预训练的FastFCN，将其中的150个类又归为9类，然后使用形态学方法生成trimap，然后使用Alpha matting获取到精细的mask。然后，作者使用这样的方法对几百张LDR图片生成了mask，统计个各类的亮度直方图，也即学习到了个各类的目标亮度。</p>
 <p>在Tone mapping的部分，作者在HDR上获取到mask后，就简单的将目前的亮度替换为目标亮度，然后再用颜色恢复方法恢复出来LDR图像。</p>
+<h1 id="hdr10hdr10hlgvividaces资料解读">HDR10、HDR10+、HLG、Vivid、ACES资料解读</h1>
+<p>TODO
+<a class="link" href="https://en.wikipedia.org/wiki/Academy_Color_Encoding_System"  target="_blank" rel="noopener"
+    >https://en.wikipedia.org/wiki/Academy_Color_Encoding_System</a></p>
 
 </section>
 
@@ -625,6 +630,42 @@
                 
                     
 <article class="has-image">
+    <a href="/p/%E5%9F%BA%E4%BA%8E%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2%E7%9A%84tone-mapping%E7%AE%80%E8%BF%B0/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="/cover.jpg" loading="lazy" data-key="" data-hash="/cover.jpg"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">基于图像分割的Tone Mapping简述</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/p/hdr%E8%89%B2%E8%B0%83%E6%98%A0%E5%B0%84%E5%9B%BE%E5%83%8F%E8%B4%A8%E9%87%8F%E8%AF%84%E4%BB%B7%E7%AE%80%E8%BF%B0/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="/cover.jpg" loading="lazy" data-key="" data-hash="/cover.jpg"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">HDR色调映射图像质量评价简述</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
     <a href="/p/grabcut-interactive-foreground-extraction-using-iterated-graph-cuts%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/">
         
         
@@ -685,50 +726,6 @@
 
         <div class="article-details">
             <h2 class="article-title">AppProp: All-Pairs Appearance-Space Edit Propagation论文精读与复现</h2>
-        </div>
-    </a>
-</article>
-                
-                    
-<article class="has-image">
-    <a href="/p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/">
-        
-        
-            <div class="article-image">
-                <img src="/p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/cover.383f9c251b2b8f8107d60d2e28590acd_hu803811e1d9d935a6e60dd50dca480090_178188_250x150_fill_q75_box_smart1.jpg" 
-                        width="250" 
-                        height="150" 
-                        loading="lazy" 
-                        data-key="" 
-                        data-hash="md5-OD&#43;cJRsrj4EH1g0uKFkKzQ==">
-                
-            </div>
-        
-
-        <div class="article-details">
-            <h2 class="article-title">Rectangling Panoramic Images via Warping论文精读与复现</h2>
-        </div>
-    </a>
-</article>
-                
-                    
-<article class="has-image">
-    <a href="/p/unified-medical-image-pre-training-in-language-guided-common-semantic-space%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/">
-        
-        
-            <div class="article-image">
-                <img src="/p/unified-medical-image-pre-training-in-language-guided-common-semantic-space%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/cover.8ed5ad32c94fbb733ed30623d84a42b3_hu7db9f684ad4dbfbdeb174bd533317f2a_62839_250x150_fill_q75_box_smart1.jpg" 
-                        width="250" 
-                        height="150" 
-                        loading="lazy" 
-                        data-key="" 
-                        data-hash="md5-jtWtMslPu3M&#43;0wYj2EpCsw==">
-                
-            </div>
-        
-
-        <div class="article-details">
-            <h2 class="article-title">Unified Medical Image Pre Training in Language Guided Common Semantic Space论文速读</h2>
         </div>
     </a>
 </article>
@@ -912,6 +909,7 @@
         <li><a href="#基于语义分割的方法">基于语义分割的方法</a></li>
       </ol>
     </li>
+    <li><a href="#hdr10hdr10hlgvividaces资料解读">HDR10、HDR10+、HLG、Vivid、ACES资料解读</a></li>
   </ol>
 </nav>
                 </div>

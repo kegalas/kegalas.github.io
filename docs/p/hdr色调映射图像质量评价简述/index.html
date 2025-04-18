@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='TMQI Objective Quality Assessment of Tone-Mapped Images 本文之前的大多数IQA都只能应用在动态范围相同的图片上，本文的灵感来源于评估结构相似度的SSIM指标和评估整体自然度的NSS指'><title>HDR色调映射图像质量评价简述</title>
+
+<link rel='canonical' href='https://kegalas.uk/p/hdr%E8%89%B2%E8%B0%83%E6%98%A0%E5%B0%84%E5%9B%BE%E5%83%8F%E8%B4%A8%E9%87%8F%E8%AF%84%E4%BB%B7%E7%AE%80%E8%BF%B0/'>
+
+<link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='HDR色调映射图像质量评价简述'>
+<meta property='og:description' content='TMQI Objective Quality Assessment of Tone-Mapped Images 本文之前的大多数IQA都只能应用在动态范围相同的图片上，本文的灵感来源于评估结构相似度的SSIM指标和评估整体自然度的NSS指'>
+<meta property='og:url' content='https://kegalas.uk/p/hdr%E8%89%B2%E8%B0%83%E6%98%A0%E5%B0%84%E5%9B%BE%E5%83%8F%E8%B4%A8%E9%87%8F%E8%AF%84%E4%BB%B7%E7%AE%80%E8%BF%B0/'>
+<meta property='og:site_name' content='KegalaS的个人博客'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='大学' /><meta property='article:tag' content='计算机视觉' /><meta property='article:tag' content='图形学' /><meta property='article:published_time' content='2025-03-19T13:39:15&#43;08:00'/><meta property='article:modified_time' content='2025-03-19T13:39:15&#43;08:00'/><meta property='og:image' content='https://kegalas.uk/cover.jpg' />
+<meta name="twitter:title" content="HDR色调映射图像质量评价简述">
+<meta name="twitter:description" content="TMQI Objective Quality Assessment of Tone-Mapped Images 本文之前的大多数IQA都只能应用在动态范围相同的图片上，本文的灵感来源于评估结构相似度的SSIM指标和评估整体自然度的NSS指"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://kegalas.uk/cover.jpg' />
+    <link rel="shortcut icon" href="/images/favicon.ico" />
+
+    </head>
+    <body class="
+    article-page has-toc
+">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex 
+    
+        extended
+    
+">
+    
+        <div id="article-toolbar">
+            <a href="/" class="back-home">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="15 6 9 12 15 18" />
+</svg>
+
+
+
+                <span>返回</span>
+            </a>
+        </div>
+    
+<main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/p/hdr%E8%89%B2%E8%B0%83%E6%98%A0%E5%B0%84%E5%9B%BE%E5%83%8F%E8%B4%A8%E9%87%8F%E8%AF%84%E4%BB%B7%E7%AE%80%E8%BF%B0/">
+                
+                    <img src="/cover.jpg" loading="lazy" alt="Featured image of post HDR色调映射图像质量评价简述" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" >
+                图形学
+            </a>
+        
+    </header>
+    
+
+    <h2 class="article-title">
+        <a href="/p/hdr%E8%89%B2%E8%B0%83%E6%98%A0%E5%B0%84%E5%9B%BE%E5%83%8F%E8%B4%A8%E9%87%8F%E8%AF%84%E4%BB%B7%E7%AE%80%E8%BF%B0/">HDR色调映射图像质量评价简述</a>
+    </h2>
+
+    
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Mar 19, 2025</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 8 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+</div>
+</header>
+
+    <section class="article-content">
+    <h1 id="tmqi">TMQI</h1>
+<p><a class="link" href="https://ieeexplore.ieee.org/abstract/document/6319406"  target="_blank" rel="noopener"
+    >Objective Quality Assessment of Tone-Mapped Images</a></p>
+<p>本文之前的大多数IQA都只能应用在动态范围相同的图片上，本文的灵感来源于评估结构相似度的SSIM指标和评估整体自然度的NSS指标。本文希望权衡结构和自然度这两个指标来进行HDR-SDR图像评估。（同时这也说明了TMQI是全参评估指标）</p>
+<p><strong>结构相似度</strong></p>
+<p>局部评估定义如下</p>
+<p><span class="math display">\[S_{local}(x,y)=\dfrac{2\sigma'_x\sigma'_y+C_1}{\sigma_x^{'2}+\sigma^{'2}_y+C_1}\cdot\dfrac{\sigma_{xy}+C_2}{\sigma_x\sigma_y+C_2}
+\]</span></p>
+<p>其中<span class="math inline">\(x,y\)</span>分别是HDR图和SDR图中的位置相同的一块小区域。<span class="math inline">\(\sigma_x, \sigma_y, \sigma_{xy}\)</span>分别是小区域的标准差和相关系数。<span class="math inline">\(C_1, C_2\)</span>为常数（取<span class="math inline">\(C_1=0.01, C_2=10\)</span>）。</p>
+<p>上式的第一项评估的是信号强度，在HDR和SDR中，如果这一块地方都很重要（信号强度大），或者都不重要，则不给予惩罚。如果一方重要，一方不重要，那么就给予惩罚。为了评估强度，将原本的方差<span class="math inline">\(\sigma\)</span>经过一个非线性映射得到了这个<span class="math inline">\(\sigma'\)</span>，其被设计为将重要的地方映射成<span class="math inline">\(1\)</span>，不重要的地方就映射成<span class="math inline">\(0\)</span>，其形式为高斯分布的积分</p>
+<p><span class="math display">\[\sigma'=\dfrac{1}{\sqrt{2\pi}\theta_\sigma}\int^\sigma_{-\infty}\exp\left[-\dfrac{(x-\tau_\sigma)^2}{2\theta_\sigma^2}\right]dx
+\]</span></p>
+<p>其中<span class="math inline">\(\theta_\sigma\)</span>、<span class="math inline">\(\tau_\sigma\)</span>是一些根据人眼特征设计的参数：</p>
+<p><span class="math display">\[\theta_\sigma(f)=\dfrac{\tau_\sigma(f)}{k}
+\]</span></p>
+<p>其中<span class="math inline">\(k\)</span>作者这里取<span class="math inline">\(3\)</span>，通常可以取<span class="math inline">\([2.3,4]\)</span>中的数</p>
+<p><span class="math display">\[\tau_{\sigma}(f)=\dfrac{\bar\mu}{\sqrt2\lambda A(f)}
+\]</span></p>
+<p>其中<span class="math inline">\(\bar \mu\)</span>是亮度值的平均值，但作者实际上取的是SDR的中间值，即128。<span class="math inline">\(\lambda\)</span>也是一个常数，作者完全没说取多少，我看有些实现里面取了<span class="math inline">\(1\)</span>。</p>
+<p><span class="math display">\[A(f)=2.6[0.0192+0.114f]\exp[-(0.114f)^{1.1}]
+\]</span></p>
+<p>作者说这个<span class="math inline">\(f\)</span>是一个空间频率，但实际上根图片内容没有任何关系，用了一个常数<span class="math inline">\(16\ \text{cycles/degree}\)</span>，我并不是很懂作者在说什么。</p>
+<p>光这样还不够，为了更好的排除采样密度、观察者距离、设备分辨率等干扰因素，引入了多尺度的评价流程，如下</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 241; 
+			flex-basis: 578px"
+	>
+	<a href="/p/hdr%E8%89%B2%E8%B0%83%E6%98%A0%E5%B0%84%E5%9B%BE%E5%83%8F%E8%B4%A8%E9%87%8F%E8%AF%84%E4%BB%B7%E7%AE%80%E8%BF%B0/1.jpg" data-size="791x328">
+		<img src="/p/hdr%E8%89%B2%E8%B0%83%E6%98%A0%E5%B0%84%E5%9B%BE%E5%83%8F%E8%B4%A8%E9%87%8F%E8%AF%84%E4%BB%B7%E7%AE%80%E8%BF%B0/1.jpg"
+			width="791"
+			height="328"
+			srcset="/p/hdr%E8%89%B2%E8%B0%83%E6%98%A0%E5%B0%84%E5%9B%BE%E5%83%8F%E8%B4%A8%E9%87%8F%E8%AF%84%E4%BB%B7%E7%AE%80%E8%BF%B0/1_hu2712cc904ebe2762d7b965a2fd0ee5b0_36653_480x0_resize_q75_box.jpg 480w, /p/hdr%E8%89%B2%E8%B0%83%E6%98%A0%E5%B0%84%E5%9B%BE%E5%83%8F%E8%B4%A8%E9%87%8F%E8%AF%84%E4%BB%B7%E7%AE%80%E8%BF%B0/1_hu2712cc904ebe2762d7b965a2fd0ee5b0_36653_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="1.jpg">
+	</a>
+	
+	<figcaption>1.jpg</figcaption>
+	
+</figure></p>
+<p>每次获取到一个<span class="math inline">\(S_{local}\)</span>之后，先将图片进行低通滤波，然后进行一次下采样，再获取一个<span class="math inline">\(S_{local}\)</span>，反复重复直到<span class="math inline">\(L=5\)</span>，其中之前提到的<span class="math inline">\(f\)</span>也每次下采样（即除以<span class="math inline">\(2\)</span>）</p>
+<p>一整张图的局部相似度评估使用滑动窗口计算，最后取平均</p>
+<p><span class="math display">\[S_l=\dfrac{1}{N_l}\sum^{N_l}_{i=1}S_{local}(x_i, y_i)
+\]</span></p>
+<p>多尺度的评价指标则为加权乘积</p>
+<p><span class="math display">\[S=\prod^L_{l=1}S_l^{\beta_l}
+\]</span></p>
+<p>其中<span class="math inline">\(\beta_l=\{0.0448,0.2856,0.3001,0.2363,0.1333\}\)</span></p>
+<p><strong>自然度</strong></p>
+<p>评估自然度一般都是一个主观的任务，较难以量化，作者这里使用统计的方法来评估。首先选取了3000张灰度图像，包含了各种各样自然场景的图片，然后统计他们的平均值和方差，发现他们分别符合高斯分布和Beta分布：</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 60; 
+			flex-basis: 145px"
+	>
+	<a href="/p/hdr%E8%89%B2%E8%B0%83%E6%98%A0%E5%B0%84%E5%9B%BE%E5%83%8F%E8%B4%A8%E9%87%8F%E8%AF%84%E4%BB%B7%E7%AE%80%E8%BF%B0/2.jpg" data-size="515x850">
+		<img src="/p/hdr%E8%89%B2%E8%B0%83%E6%98%A0%E5%B0%84%E5%9B%BE%E5%83%8F%E8%B4%A8%E9%87%8F%E8%AF%84%E4%BB%B7%E7%AE%80%E8%BF%B0/2.jpg"
+			width="515"
+			height="850"
+			srcset="/p/hdr%E8%89%B2%E8%B0%83%E6%98%A0%E5%B0%84%E5%9B%BE%E5%83%8F%E8%B4%A8%E9%87%8F%E8%AF%84%E4%BB%B7%E7%AE%80%E8%BF%B0/2_huc9a8c3fb0b4231b28faabe64d5b199d4_51616_480x0_resize_q75_box.jpg 480w, /p/hdr%E8%89%B2%E8%B0%83%E6%98%A0%E5%B0%84%E5%9B%BE%E5%83%8F%E8%B4%A8%E9%87%8F%E8%AF%84%E4%BB%B7%E7%AE%80%E8%BF%B0/2_huc9a8c3fb0b4231b28faabe64d5b199d4_51616_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="2.jpg">
+	</a>
+	
+	<figcaption>2.jpg</figcaption>
+	
+</figure></p>
+<p>即</p>
+<p><span class="math display">\[P_m(m)=\dfrac{1}{\sqrt{2\pi}\sigma_m}\exp\left[-\dfrac{(m-\mu_m)^2}{2\sigma^2_m}\right]
+\]</span></p>
+<p><span class="math display">\[P_d(d)=\dfrac{(1-d)^{\beta_d-1}d^{\alpha_d-1}}{B(\alpha_d,\beta_d)}
+\]</span></p>
+<p>其中<span class="math inline">\(\mu_m=115.94,\sigma_m=27.99,\alpha_d=4.4,\beta_d=10.1\)</span>。最近的研究认为对于人眼来说亮度和对比度更像是独立的要素，所以作者就将自然度评估定义为二者的乘积</p>
+<p><span class="math display">\[N=\dfrac{1}{K}P_mP_d
+\]</span></p>
+<p>其中<span class="math inline">\(K=\max\{P_m,P_d\}\)</span>。从上面的介绍也可以看出来自然度这一部分不需要HDR原图的相关信息，所以这部分是无参评估指标。</p>
+<p><strong>综合评估</strong></p>
+<p><span class="math display">\[Q=aS^{\alpha}+(1-a)N^{\beta}
+\]</span></p>
+<p>其中<span class="math inline">\(a\in[0,1]\)</span>，而<span class="math inline">\(\alpha,\beta\)</span>则定义了二者的灵敏度。</p>
+<h1 id="fsitm">FSITM</h1>
+<p><a class="link" href="https://ieeexplore.ieee.org/abstract/document/6985727/"  target="_blank" rel="noopener"
+    >FSITM: A Feature Similarity Index For Tone-Mapped Images</a></p>
+<p>本文的作者使用log-Gabor滤波来提取图像特征。本文基于一个简单的事实：理想的HDR图片和其对应的SDR图片应该同一个像素的同一个通道，拥有相同的相位。</p>
+<p>作者使用了一种叫做二次对偶（quadratic pairs）的技术，来更好的描述图像的信息。偶对称和奇对称滤波器分别记为<span class="math inline">\(M^e_{\rho r},M^o_{\rho r}\)</span>，其中<span class="math inline">\(\rho,r\)</span>分别是该滤波器的缩放因子和方向。对图像<span class="math inline">\(f(x)\)</span>进行滤波得到其响应</p>
+<p><span class="math display">\[\bigg[e_{\rho r}(x),o_{\rho r}(x)\bigg]=\bigg[f(x)*M^e_{\rho r}, f(x)*M^o_{\rho r}\bigg]
+\]</span></p>
+<p>于是我们计算局部相位为（原文应该是打错了，这里修改了过来）</p>
+<p><span class="math display">\[\phi_{pr}(x)=\arctan2\bigg(e_{\rho r}(x), o_{\rho r}(x)\bigg)
+\]</span></p>
+<p><span class="math display">\[\arctan2(x,y)=2\arctan\dfrac{x}{\sqrt{x^2+y^2}+y}
+\]</span></p>
+<p>以上是对于特定的缩放和方向的，将所有缩放和方向综合起来考虑，得到我们所用的加权局部相位为</p>
+<p><span class="math display">\[\text{ph}(x)=\arctan2\bigg[\sum_{\rho, r}e_{\rho r}(x), \sum_{\rho, r}o_{\rho r}(x)\bigg]
+\]</span></p>
+<p>对于HDR图<span class="math inline">\(H\)</span>和LDR图<span class="math inline">\(L\)</span>，首先用简单的对数函数计算<span class="math inline">\(LogH=\log(H)\)</span>，然后对于所有通道<span class="math inline">\(C\)</span>都计算<span class="math inline">\(\text{ph}(x)\)</span>，定义特征相似指标如下</p>
+<p><span class="math display">\[F^C(I_1,I_2)=|P_1^C(x)\cap P_2^C(x)|/(row\times col)
+\]</span></p>
+<p><span class="math display">\[P(x)=U(\text{ph}(x))
+\]</span></p>
+<p>其中<span class="math inline">\(U\)</span>是单位阶跃函数（注：相位的取值范围为<span class="math inline">\([-\pi/2,+\pi/2]\)</span>）。然后定义FSITM如下</p>
+<p><span class="math display">\[\text{FSITM}^C=\alpha F^C(H,L)+(1-\alpha)F^C(LogH,L)
+\]</span></p>
+<p>算法流程如下图</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 233; 
+			flex-basis: 561px"
+	>
+	<a href="/p/hdr%E8%89%B2%E8%B0%83%E6%98%A0%E5%B0%84%E5%9B%BE%E5%83%8F%E8%B4%A8%E9%87%8F%E8%AF%84%E4%BB%B7%E7%AE%80%E8%BF%B0/4.jpg" data-size="716x306">
+		<img src="/p/hdr%E8%89%B2%E8%B0%83%E6%98%A0%E5%B0%84%E5%9B%BE%E5%83%8F%E8%B4%A8%E9%87%8F%E8%AF%84%E4%BB%B7%E7%AE%80%E8%BF%B0/4.jpg"
+			width="716"
+			height="306"
+			srcset="/p/hdr%E8%89%B2%E8%B0%83%E6%98%A0%E5%B0%84%E5%9B%BE%E5%83%8F%E8%B4%A8%E9%87%8F%E8%AF%84%E4%BB%B7%E7%AE%80%E8%BF%B0/4_hudde5dfb005f2421b52e3681b277f1a0b_50067_480x0_resize_q75_box.jpg 480w, /p/hdr%E8%89%B2%E8%B0%83%E6%98%A0%E5%B0%84%E5%9B%BE%E5%83%8F%E8%B4%A8%E9%87%8F%E8%AF%84%E4%BB%B7%E7%AE%80%E8%BF%B0/4_hudde5dfb005f2421b52e3681b277f1a0b_50067_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="4.jpg">
+	</a>
+	
+	<figcaption>4.jpg</figcaption>
+	
+</figure></p>
+<h1 id="fftmi">FFTMI</h1>
+<p><a class="link" href="https://ieeexplore.ieee.org/document/8894517"  target="_blank" rel="noopener"
+    >FFTMI: Features Fusion for Natural Tone-Mapped Images Quality Evaluation</a></p>
+<p>本文将TMQI-II和FSITM中的一部分因子组合起来形成更好的指标。感觉没什么可讲的，略过。</p>
+<h1 id="btmqi">BTMQI</h1>
+<p><a class="link" href="https://ieeexplore.ieee.org/abstract/document/7384762"  target="_blank" rel="noopener"
+    >Blind Quality Assessment of Tone-Mapped Images Via Analysis of Information, Naturalness, and Structure</a></p>
+<p>BTMQI是一种无参评估指标。本文认为因为动态范围的限制，tone mapping后的图像无法保存所有HDR原图的信息，所以有理由认为保留了更多信息的图像其质量越高。本文首先就要估计图片中的信息量，作者使用了一种增亮/减暗的方法来评估原图和中间过渡图片的信息量。中间过渡图片定义如下</p>
+<p><span class="math display">\[I_i=\min(\max(M_i\cdot I, 0), 255)
+\]</span></p>
+<p><span class="math inline">\(I\)</span>是tone mapping得到的SDR图片，而<span class="math inline">\(M_i\)</span>是一系列常数乘数。作者使用信息熵来评估信息量</p>
+<p><span class="math display">\[E(p)=-\int p(x)\log p(x)dx
+\]</span></p>
+<p>我认为这里的熵计算可能是先转成灰度图再来计算的，因为三通道不是那么好处理。再转成灰度图后统计直方图，将每一个亮度的频率除以总数当做概率，然后就可以计算熵了。</p>
+<p>取<span class="math inline">\(M_i\)</span>为<span class="math inline">\(M=\{1,n,\frac{1}{n}|n=1.5,2.0,\cdots,10\}\)</span>，计算不同过渡图片的熵为</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 54; 
+			flex-basis: 130px"
+	>
+	<a href="/p/hdr%E8%89%B2%E8%B0%83%E6%98%A0%E5%B0%84%E5%9B%BE%E5%83%8F%E8%B4%A8%E9%87%8F%E8%AF%84%E4%BB%B7%E7%AE%80%E8%BF%B0/3.jpg" data-size="437x804">
+		<img src="/p/hdr%E8%89%B2%E8%B0%83%E6%98%A0%E5%B0%84%E5%9B%BE%E5%83%8F%E8%B4%A8%E9%87%8F%E8%AF%84%E4%BB%B7%E7%AE%80%E8%BF%B0/3.jpg"
+			width="437"
+			height="804"
+			srcset="/p/hdr%E8%89%B2%E8%B0%83%E6%98%A0%E5%B0%84%E5%9B%BE%E5%83%8F%E8%B4%A8%E9%87%8F%E8%AF%84%E4%BB%B7%E7%AE%80%E8%BF%B0/3_hufdb36dec990c0044e87819f933f5ae05_53389_480x0_resize_q75_box.jpg 480w, /p/hdr%E8%89%B2%E8%B0%83%E6%98%A0%E5%B0%84%E5%9B%BE%E5%83%8F%E8%B4%A8%E9%87%8F%E8%AF%84%E4%BB%B7%E7%AE%80%E8%BF%B0/3_hufdb36dec990c0044e87819f933f5ae05_53389_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="3.jpg">
+	</a>
+	
+	<figcaption>3.jpg</figcaption>
+	
+</figure></p>
+<p>上图中红色曲线是左边的图，蓝色曲线是右边的图。显然(a)图比(b)图要好得多，其信息熵也更高。而(d)虽然在绝大部分情况下由于(e)，但还是在一些部分下略逊。</p>
+<p>为了平衡效果和效率作者最终采用了<span class="math inline">\(M=\{1,n,\frac{1}{n}|n=3.5,5,6.5,8\}\)</span>这<span class="math inline">\(9\)</span>个数。当然，这是对于全图的信息量，根据业界一般的思路，也要考虑局部的信息量，于是</p>
+<p><span class="math display">\[E_t(I_i)=wE_g(I_i)+(1-w)E_l(I_i)^v
+\]</span></p>
+<p>对于每一张过渡图片<span class="math inline">\(I_i\)</span>，分别计算全局的和局部的信息量<span class="math inline">\(E_g(I_i)\)</span>和<span class="math inline">\(E_l(I_i)\)</span>，然后再将它们结合起来考虑。其中<span class="math inline">\(w=0.59,v=1.5\)</span>是一个可调常数。局部信息量就是滑动窗口再求平均</p>
+<p><span class="math display">\[E_l(I_i)=\dfrac{1}{L}\sum^L_{j=1}E(B_{i,j})
+\]</span></p>
+<p>其中<span class="math inline">\(L\)</span>是滑动窗口的个数，而滑动窗口的大小为<span class="math inline">\(72\times 72\)</span>。</p>
+<p>当然，我们评测的信息量实际上只关注了有多少信息，而没有关注信息是什么样的。为了评估图片是否自然，作者直接照搬了TMQI中提出的方法，这里记作<span class="math inline">\(N\)</span>。</p>
+<p>实际上对于结构的关注并没有体现在信息量中，于是又引入第三项。由于是无参指标，没有办法跟HDR图片对比，所以这里采用了索贝尔算子来提取梯度大小图<span class="math inline">\(G\)</span>。因为只想要基础的结构，所以又使用一个阶跃函数来去除多余的部分，<span class="math inline">\(T=0.05\)</span></p>
+<p><span class="math display">\[X(n)=\begin{cases}
+1,&\text{if}\ G(n)\geq T \\
+0,&\text{otherwise}
+\end{cases}
+\]</span></p>
+<p>将<span class="math inline">\(G\)</span>用阶跃函数过滤之后得到的图记作<span class="math inline">\(S\)</span>。</p>
+<p>综上所述，我们将11个特征记作<span class="math inline">\(\{E_t(I_i),N,S|i=1,2,\cdots,9\}\)</span>。作者说可以用任意一种方法（如支持向量机）将这11个特征进行映射，得到一个标量评分，使其和人类主观评价相符（将人类评分数据集用于SVM训练）。</p>
+<h1 id="tmis-lpm">TMIs-lpm</h1>
+<p><a class="link" href="https://ieeexplore.ieee.org/document/9057578"  target="_blank" rel="noopener"
+    >Tone-Mapped Image Quality Assessment for Electronics Displays by Combining Luminance Partition and Colorfulness Index</a></p>
+<p>思路和上一篇差不多，也是找一大堆特征，然后用SVM和主观评价拟合。不过区别是它首先将图片转化为LAB颜色空间，然后在L分量上使用Kmeans将图片分类为HR、DR、MR三个区域（高光、暗光、中等光），然后分别提取特征。这里Kmeans之前在全图应用了一次<span class="math inline">\(7\times 7\)</span>的高斯滤波，来应对局部变化太快的情况。</p>
+<p><strong>局部熵和对比度</strong></p>
+<p>这里的熵和BTMQI里面的是一样的，只不过通过实验，作者认为只有HR和DR区域比较需要这个指标，因为中等光区域的信息保留比较好。记作<span class="math inline">\(E_1, E_2\)</span>。</p>
+<p>为了更好的评估HR和DR区域，又引入了两个对比度指标</p>
+<p><span class="math display">\[C_M=\dfrac{I_{max}-I_{min}}{I_{max}+I_{min}}
+\]</span></p>
+<p>其中<span class="math inline">\(I_{max},I_{min}\)</span>分别为HR或DR区域中的最大亮度、最小亮度。</p>
+<p><span class="math display">\[C_L=\sum_LL(i,j)^2P_L(i,j)
+\]</span></p>
+<p>其中<span class="math inline">\(L(i,j)\)</span>是两个像素的亮度差异值，<span class="math inline">\(P_L(i,j)\)</span>是亮度差异值的概率分布（本人估计可能是滑动窗口内的所有亮度差异值的直方图统计出来的概率，看不懂作者想表达什么，但大概是一个加权平均值）。</p>
+<p>总共四个指标分别记为<span class="math inline">\(C_{M1},C_{M2},C_{L1},C_{L2}\)</span>。虽然作者好像没有明说，但是这六个指标应该都是局部区域算完再取平均的。</p>
+<p><strong>颜色指标</strong></p>
+<p>颜色指标只在MR区域上进行，使用了LAB中的A和B分量</p>
+<p><span class="math display">\[C_{ab} = \log\left(\dfrac{\sigma_a}{|\mu_a|^{0.2}}\right)\cdot \log\left(\dfrac{\sigma_b}{|\mu_b|^{0.2}}\right)
+\]</span></p>
+<p>其中<span class="math inline">\(\sigma\)</span>和<span class="math inline">\(\mu\)</span>就是A和B通道的标准差和均值了。这个是全图的，局部的指标为</p>
+<p><span class="math display">\[C_{RMS}=\sqrt{\dfrac{1}{m*n}\sum^m_{i=1}\sum^n_{j=1}(I_{i,j}-I_{mean})^2}{}
+\]</span></p>
+<p><span class="math inline">\(m,n\)</span>分别为滑动窗口的大小，而<span class="math inline">\(I_{i,j},I_{mean}\)</span>即为特定像素的颜色值和该窗口的平均值。分别计算A和B通道的指标，得到两个指标<span class="math inline">\(C_{RMSa},C_{RMSb}\)</span></p>
+<p><strong>结构信息</strong></p>
+<p>作者使用GLCM算法提取图片的材质信息，其中使用能量信息<span class="math inline">\(G_E\)</span>，对比度信息<span class="math inline">\(G_C\)</span>，相关系数<span class="math inline">\(G_H\)</span>，均匀度<span class="math inline">\(G_V\)</span>。</p>
+<p>同时，使用Canny算子进行边缘检测，然后在所有边缘像素上，统计<span class="math inline">\(8\times 8\)</span>的邻居像素的均值<span class="math inline">\(H_1\)</span>，标准差<span class="math inline">\(H_2\)</span>，峰值<span class="math inline">\(H_3\)</span>，偏度（skewness）<span class="math inline">\(H_4\)</span></p>
+<h1 id="vqgc">VQGC</h1>
+<p><a class="link" href="https://ieeexplore.ieee.org/document/9082863/"  target="_blank" rel="noopener"
+    >Blind Quality Assessment for Tone-Mapped Images by Analysis of Gradient and Chromatic Statistics</a></p>
+<p>也是提取了一大堆特征然后用SVM拟合，特征有新意但是整个过程没什么新意，略过。</p>
+<h1 id="tres">TReS</h1>
+<p><a class="link" href="https://openaccess.thecvf.com/content/WACV2022/html/Golestaneh_No-Reference_Image_Quality_Assessment_via_Transformers_Relative_Ranking_and_Self-Consistency_WACV_2022_paper.html"  target="_blank" rel="noopener"
+    >No-Reference Image Quality Assessment via Transformers, Relative Ranking, and Self-Consistency</a>
+大体也是提取特征然后拟合的，只不过使用CNN提取局部特征，用Transformer计算非局部信息。然后将二者提取到的特征送到一个全连接层映射出一个得分，质量的损失函数即预测得分和人类主观评分的均方误差。后面还用了个Relative Ranking和Self-Consistency的损失函数加在里面。最后训练出来的模型就是端到端的评估模型。</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/%E5%A4%A7%E5%AD%A6/">大学</a>
+        
+            <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/">计算机视觉</a>
+        
+            <a href="/tags/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css"integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js"integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8"crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js"integrity="sha384-vZTG03m&#43;2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl"crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.querySelector(`.article-content`), {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ]
+        });})
+</script>
+    
+</article>
+
+    <aside class="related-contents--wrapper">
+    
+    
+        <h2 class="section-title">相关文章</h2>
+        <div class="related-contents">
+            <div class="flex article-list--tile">
+                
+                    
+<article class="has-image">
+    <a href="/p/%E5%9F%BA%E4%BA%8E%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2%E7%9A%84tone-mapping%E7%AE%80%E8%BF%B0/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="/cover.jpg" loading="lazy" data-key="" data-hash="/cover.jpg"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">基于图像分割的Tone Mapping简述</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/p/tone-mapping%E7%AE%80%E8%BF%B0/">
+        
+        
+            <div class="article-image">
+                <img src="/p/tone-mapping%E7%AE%80%E8%BF%B0/cover.5aa682735da6aa1619a10f7cb3c36e37_hue2557a0ca715ca3bab4b5f5b903f073d_123247_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-WqaCc12mqhYZoQ98s8NuNw==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Tone Mapping简述</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/p/grabcut-interactive-foreground-extraction-using-iterated-graph-cuts%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/">
+        
+        
+            <div class="article-image">
+                <img src="/p/grabcut-interactive-foreground-extraction-using-iterated-graph-cuts%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/cover.719f06f8145a0ec2fc378d5f11233592_huf62d2c95a51769be2a7aa0d894297a77_82581_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-cZ8G&#43;BRaDsL8N41fESM1kg==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">GrabCut— Interactive Foreground Extraction Using Iterated Graph Cuts论文精读与复现</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/p/appprop-all-pairs-appearance-space-edit-propagation%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/">
+        
+        
+            <div class="article-image">
+                <img src="/p/appprop-all-pairs-appearance-space-edit-propagation%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/cover.a6dc0aea3fa6a380f9f56b9bac533904_hueda4c761f5117f950ea670cd72a10b0b_71812_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-ptwK6j&#43;mo4D59WubrFM5BA==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">AppProp: All-Pairs Appearance-Space Edit Propagation论文精读与复现</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/">
+        
+        
+            <div class="article-image">
+                <img src="/p/rectangling-panoramic-images-via-warping%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/cover.383f9c251b2b8f8107d60d2e28590acd_hu803811e1d9d935a6e60dd50dca480090_178188_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-OD&#43;cJRsrj4EH1g0uKFkKzQ==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Rectangling Panoramic Images via Warping论文精读与复现</h2>
+        </div>
+    </a>
+</article>
+                
+            </div>
+        </div>
+    
+</aside>
+
+     
+    
+        
+    <script src="https://utteranc.es/client.js" 
+        repo="kegalas/blogComments"
+        issue-term="pathname"
+        
+        crossorigin="anonymous"
+        async
+        >
+</script>
+
+<style>
+    .utterances {
+        max-width: unset;
+    }
+</style>
+
+<script>
+    function setUtterancesTheme(theme) {
+        let utterances = document.querySelector('.utterances iframe');
+        if (utterances) {
+            utterances.contentWindow.postMessage(
+                {
+                    type: 'set-theme',
+                    theme: `github-${theme}`
+                },
+                'https://utteranc.es'
+            );
+        }
+    }
+
+    addEventListener('message', event => {
+        if (event.origin !== 'https://utteranc.es') return;
+        setUtterancesTheme(document.documentElement.dataset.scheme)
+    });
+
+    window.addEventListener('onColorSchemeChange', (e) => {
+        setUtterancesTheme(e.detail)
+    })
+</script>
+
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2025 KegalaS的个人博客
+    </section>
+    
+    <section class="powerby">
+         <br />
+        
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    
+        <aside class="sidebar right-sidebar sticky">
+            <section class="widget archives">
+                <div class="widget-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+                </div>
+                <h2 class="widget-title section-title">目录</h2>
+                
+                <div class="widget--toc">
+                    <nav id="TableOfContents">
+  <ol>
+    <li><a href="#tmqi">TMQI</a></li>
+    <li><a href="#fsitm">FSITM</a></li>
+    <li><a href="#fftmi">FFTMI</a></li>
+    <li><a href="#btmqi">BTMQI</a></li>
+    <li><a href="#tmis-lpm">TMIs-lpm</a></li>
+    <li><a href="#vqgc">VQGC</a></li>
+    <li><a href="#tres">TReS</a></li>
+  </ol>
+</nav>
+                </div>
+            </section>
+        </aside>
+    
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                defer="false"
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

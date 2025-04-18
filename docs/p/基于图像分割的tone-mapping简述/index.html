@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='前言 这种方法试图将一张HDR图片首先用图像分割的方法分割成多个不同的区域，每个区域使用不同的色调映射曲线（或者别的技术），来将整个图片映射到'><title>基于图像分割的Tone Mapping简述</title>
+
+<link rel='canonical' href='https://kegalas.uk/p/%E5%9F%BA%E4%BA%8E%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2%E7%9A%84tone-mapping%E7%AE%80%E8%BF%B0/'>
+
+<link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='基于图像分割的Tone Mapping简述'>
+<meta property='og:description' content='前言 这种方法试图将一张HDR图片首先用图像分割的方法分割成多个不同的区域，每个区域使用不同的色调映射曲线（或者别的技术），来将整个图片映射到'>
+<meta property='og:url' content='https://kegalas.uk/p/%E5%9F%BA%E4%BA%8E%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2%E7%9A%84tone-mapping%E7%AE%80%E8%BF%B0/'>
+<meta property='og:site_name' content='KegalaS的个人博客'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='大学' /><meta property='article:tag' content='人工智能' /><meta property='article:tag' content='计算机视觉' /><meta property='article:tag' content='图形学' /><meta property='article:published_time' content='2025-04-13T15:49:34&#43;08:00'/><meta property='article:modified_time' content='2025-04-13T15:49:34&#43;08:00'/><meta property='og:image' content='https://kegalas.uk/cover.jpg' />
+<meta name="twitter:title" content="基于图像分割的Tone Mapping简述">
+<meta name="twitter:description" content="前言 这种方法试图将一张HDR图片首先用图像分割的方法分割成多个不同的区域，每个区域使用不同的色调映射曲线（或者别的技术），来将整个图片映射到"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://kegalas.uk/cover.jpg' />
+    <link rel="shortcut icon" href="/images/favicon.ico" />
+
+    </head>
+    <body class="
+    article-page has-toc
+">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex 
+    
+        extended
+    
+">
+    
+        <div id="article-toolbar">
+            <a href="/" class="back-home">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="15 6 9 12 15 18" />
+</svg>
+
+
+
+                <span>返回</span>
+            </a>
+        </div>
+    
+<main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/p/%E5%9F%BA%E4%BA%8E%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2%E7%9A%84tone-mapping%E7%AE%80%E8%BF%B0/">
+                
+                    <img src="/cover.jpg" loading="lazy" alt="Featured image of post 基于图像分割的Tone Mapping简述" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" >
+                图形学
+            </a>
+        
+    </header>
+    
+
+    <h2 class="article-title">
+        <a href="/p/%E5%9F%BA%E4%BA%8E%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2%E7%9A%84tone-mapping%E7%AE%80%E8%BF%B0/">基于图像分割的Tone Mapping简述</a>
+    </h2>
+
+    
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Apr 13, 2025</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 16 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+</div>
+</header>
+
+    <section class="article-content">
+    <h1 id="前言">前言</h1>
+<p>这种方法试图将一张HDR图片首先用图像分割的方法分割成多个不同的区域，每个区域使用不同的色调映射曲线（或者别的技术），来将整个图片映射到SDR，以期获得比经典的全图使用一条曲线（或同一种方法）更好的效果。</p>
+<p>这种方法也算是一个小众宝藏方法了，没有多少人研究，也没诞生出优势巨大的方法，本文大致上介绍一下现有的文献</p>
+<h1 id="tone-mapping-operators-progressing-towards-semantic-awareness">Tone Mapping Operators: Progressing Towards Semantic-Awareness</h1>
+<p><a class="link" href="https://ieeexplore.ieee.org/abstract/document/9106057/"  target="_blank" rel="noopener"
+    >https://ieeexplore.ieee.org/abstract/document/9106057/</a></p>
+<p>这种方法在我之前的文章<a class="link" href="../tone-mapping%e7%ae%80%e8%bf%b0" >Tone Mapping简述</a>中也介绍过，这里再介绍一次。</p>
+<p>关注到显然现实生活中不同材质的物体平均亮度是不同的，可以通过这种方式来将各种物体映射到各自偏好的亮度。本文结构如下</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 61; 
+			flex-basis: 146px"
+	>
+	<a href="/p/%E5%9F%BA%E4%BA%8E%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2%E7%9A%84tone-mapping%E7%AE%80%E8%BF%B0/1.jpg" data-size="503x823">
+		<img src="/p/%E5%9F%BA%E4%BA%8E%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2%E7%9A%84tone-mapping%E7%AE%80%E8%BF%B0/1.jpg"
+			width="503"
+			height="823"
+			srcset="/p/%E5%9F%BA%E4%BA%8E%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2%E7%9A%84tone-mapping%E7%AE%80%E8%BF%B0/1_hua45c9aafae8837dad693037d13573ac2_53404_480x0_resize_q75_box.jpg 480w, /p/%E5%9F%BA%E4%BA%8E%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2%E7%9A%84tone-mapping%E7%AE%80%E8%BF%B0/1_hua45c9aafae8837dad693037d13573ac2_53404_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="1.jpg">
+	</a>
+	
+	<figcaption>1.jpg</figcaption>
+	
+</figure></p>
+<p>本文并没有提出什么新的网络架构。Mask的提取部分，使用了预训练的FastFCN，将其中的150个类又归为9类，然后使用形态学方法生成trimap，然后使用Alpha matting获取到精细的mask。然后，作者使用这样的方法对几百张LDR图片生成了mask，统计个各类的亮度直方图，也即学习到了个各类的目标亮度。</p>
+<p>在Tone mapping的部分，作者在HDR上获取到mask后，就简单的将目前的亮度替换为目标亮度，然后再用颜色恢复方法恢复出来LDR图像。</p>
+<h1 id="g-semtmo-tone-mapping-with-a-trainable-semantic-graph">G-SemTMO: Tone Mapping With a Trainable Semantic Graph</h1>
+<p><a class="link" href="https://ieeexplore.ieee.org/abstract/document/10742368/"  target="_blank" rel="noopener"
+    >https://ieeexplore.ieee.org/abstract/document/10742368/</a></p>
+<p>本文可以说得上是上一篇文章的升级版，上一篇文章的ToneMapping部分过于简单粗暴，本文使用图神经网络来增加ToneMapping的表达能力。</p>
+<p>作者首先观察了专业摄影师手工进行HDR图像编辑时的过程，分为两步：</p>
+<ol>
+<li>观察照片上有哪些对摄影来说更重要的物体（也即语义分割）</li>
+<li>对每个物体，综合考虑其类别、周围的物体的类别、其颜色特征来进行调整。</li>
+</ol>
+<p>本文的作者想将这种思路用在数据驱动的方法上，于是提出了一种图神经网络的方法，结构如下</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 193; 
+			flex-basis: 465px"
+	>
+	<a href="/p/%E5%9F%BA%E4%BA%8E%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2%E7%9A%84tone-mapping%E7%AE%80%E8%BF%B0/2.jpg" data-size="843x435">
+		<img src="/p/%E5%9F%BA%E4%BA%8E%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2%E7%9A%84tone-mapping%E7%AE%80%E8%BF%B0/2.jpg"
+			width="843"
+			height="435"
+			srcset="/p/%E5%9F%BA%E4%BA%8E%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2%E7%9A%84tone-mapping%E7%AE%80%E8%BF%B0/2_hue96a4db36c0af277e698b408f47ff80f_66585_480x0_resize_q75_box.jpg 480w, /p/%E5%9F%BA%E4%BA%8E%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2%E7%9A%84tone-mapping%E7%AE%80%E8%BF%B0/2_hue96a4db36c0af277e698b408f47ff80f_66585_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="2.jpg">
+	</a>
+	
+	<figcaption>2.jpg</figcaption>
+	
+</figure></p>
+<p>语义分割的部分和上一篇文章是一样的，都是用FastFCN将图像分为9个大类。</p>
+<p>在图神经网络的部分，每个节点对应一个语义分割区域，相邻的两个区域之间有一条边。作者以这种结构来模仿专业摄影师“考虑周围物体”的过程。</p>
+<p>以<span class="math inline">\(A\)</span>来表示邻接矩阵，<span class="math inline">\(X\)</span>表示输入的特征，<span class="math inline">\(H\)</span>表示输出的特征。这里的<span class="math inline">\(X\)</span>是<span class="math inline">\(n\times 16\)</span>的矩阵，<span class="math inline">\(n\)</span>为分割区域数，而<span class="math inline">\(16\)</span>则是每个区域包含的特征数，这些特征分别为：独热编码的9个类别、该区域的RGB三个分量的均值和标准差、该区域的亮度均值。而<span class="math inline">\(H\)</span>是一个<span class="math inline">\(n\times 18\)</span>矩阵。该网络的每一层表示如下</p>
+<p><span class="math display">\[Y^{(l+1)}=\sigma\bigg(AY^{(l)}W^{(l)}\bigg)
+\]</span></p>
+<p>其中<span class="math inline">\(Y^{0}=X, Y^{L}=H\)</span>，而<span class="math inline">\(W\)</span>是可训练权重，本文选用的激活函数<span class="math inline">\(\sigma\)</span>为Leaky-ReLU。</p>
+<p>在色调映射的网络上，使用全连接网络，期望输入一个线性RGB值，输出一个适配于SDR显示器的RGB值（大部分情况就是sRGB）。对于图中的任意一个像素，将其RGB值、对应分割区域的<span class="math inline">\(X\)</span>中的<span class="math inline">\(16\)</span>个特征、<span class="math inline">\(H\)</span>中的<span class="math inline">\(18\)</span>个特征加起来作为FCN的输入（即37个channel），FCN输出一个3个channel的值，即色调映射后的RGB值。</p>
+<p>本文使用的损失函数为<span class="math inline">\(L_1\)</span>损失，即对于输出<span class="math inline">\(O\)</span>和参考<span class="math inline">\(R\)</span>，</p>
+<p><span class="math display">\[\mathcal L = \sum_{i,j}\sum_{c\in\{R,G,B\}}|R_{c,i,j}-O_{c,i,j}|
+\]</span></p>
+<p>这里两个图片都是sRGB图片，也即伽马矫正过的图片。</p>
+<p>本文的分割也会造成图像分块的问题，解决方法同上一篇，使用alpha matting给分割一个权重，最后加权求和得到最终的图片。</p>
+<h1 id="tone-mapping-for-single-shot-hdr-imaging">Tone Mapping for Single-shot HDR Imaging</h1>
+<p><a class="link" href="https://ieeexplore.ieee.org/abstract/document/7294799/"  target="_blank" rel="noopener"
+    >https://ieeexplore.ieee.org/abstract/document/7294799/</a></p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 141; 
+			flex-basis: 338px"
+	>
+	<a href="/p/%E5%9F%BA%E4%BA%8E%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2%E7%9A%84tone-mapping%E7%AE%80%E8%BF%B0/3.jpg" data-size="569x403">
+		<img src="/p/%E5%9F%BA%E4%BA%8E%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2%E7%9A%84tone-mapping%E7%AE%80%E8%BF%B0/3.jpg"
+			width="569"
+			height="403"
+			srcset="/p/%E5%9F%BA%E4%BA%8E%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2%E7%9A%84tone-mapping%E7%AE%80%E8%BF%B0/3_hu12c2da1e6b62420a00a75536051d09bc_41443_480x0_resize_q75_box.jpg 480w, /p/%E5%9F%BA%E4%BA%8E%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2%E7%9A%84tone-mapping%E7%AE%80%E8%BF%B0/3_hu12c2da1e6b62420a00a75536051d09bc_41443_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="3.jpg">
+	</a>
+	
+	<figcaption>3.jpg</figcaption>
+	
+</figure></p>
+<p>本文的TMO是对Reinhard的优化，主要是可以对每个像素选择Key值，即Reinhard论文中的</p>
+<p><span class="math display">\[L(x,y)=\dfrac{a}{\overline{L_w}}L_w(x,y)
+\]</span></p>
+<p>中的<span class="math inline">\(a\)</span>，本文将其选择为（记作<span class="math inline">\(\alpha\)</span>防止和后面冲突）</p>
+<p><span class="math display">\[\alpha(x,y) = 1-\exp(-(I(x,y)\cdot(1+d\cdot I(x,y)))^{1-(I_{avg})^{1/c}})
+\]</span></p>
+<p>其中<span class="math inline">\(c\)</span>是一个正整数常数，决定了整体的对比度增强量，推荐设置为<span class="math inline">\(c=4\)</span>，而<span class="math inline">\(d\)</span>为</p>
+<p><span class="math display">\[d=\begin{cases}
+ -1 & \text{ if } I(x,y)< I_{avg} \\
+ 1 & \text{ if } I(x,y)\geq I_{avg}
+\end{cases}
+\]</span></p>
+<p>本文在色调映射之后不直接裁剪数值到<span class="math inline">\([0,1]\)</span>，而是进行了一次归一化</p>
+<p><span class="math display">\[I'_{normalized}(x,y) = \dfrac{I'(x,y)-I'_{min}}{I'_{max}-I'_{min}}
+\]</span></p>
+<p>本文用到了图像分割，主要是想提高低光区域的信噪比，然后将信噪比本就很高的区域进行细节加强。为此提出了两种操作，即光滑和锐利</p>
+<p><span class="math display">\[\text{SMOOTH}(I,a)=I\cdot(1+a)+I_G\cdot(-a),\quad a<0
+\]</span></p>
+<p><span class="math display">\[\text{SHARPEN}(I,a) = I\cdot(1+a)+I_G\cdot(-a),\quad a>0
+\]</span></p>
+<p>其中<span class="math inline">\(I_G\)</span>是对原图<span class="math inline">\(I\)</span>使用<span class="math inline">\(3\times 3\)</span>的高斯滤波得到的，高斯核<span class="math inline">\(\sigma = 0.8\)</span></p>
+<p>本文的图像分割是使用<a class="link" href="https://link.springer.com/article/10.1023/B:VISI.0000022288.19776.77"  target="_blank" rel="noopener"
+    >Efficient graph-based image segmentation</a>中提到的方法，对于不同的区域的特性：</p>
+<ol>
+<li>如果该区域的标准差较小，则使用均值代替原来的像素值</li>
+</ol>
+<p><span class="math display">\[0\leq I^s_\sigma\leq \sigma_{noise} \to I^s(x,y)=I^s_{avg}
+\]</span></p>
+<ol start="2">
+<li>如果该区域熵较小，同上</li>
+</ol>
+<p><span class="math display">\[0\leq I^s_H\leq \sigma_{noise} \to I^s(x,y)=I^s_{avg}
+\]</span></p>
+<ol start="3">
+<li>如果该区域信噪比较低，则进行光滑</li>
+</ol>
+<p><span class="math display">\[0\leq I^s_{SNR}\leq 30 \to \text{SMOOTH}(I^s, -1)
+\]</span></p>
+<ol start="4">
+<li>如果该区域信噪比中等，则进行中等程度锐利</li>
+</ol>
+<p><span class="math display">\[30\leq I^s_{SNR}\leq 39 \to \text{SHARPEN}(I^s, 1)
+\]</span></p>
+<ol start="5">
+<li>如果该区域信噪比较高，则强锐利</li>
+</ol>
+<p><span class="math display">\[I^s_{SNR}\geq 39 \to \text{SHARPEN}(I^s, 1.5)
+\]</span></p>
+<p>作者提到说分割过多的区域要比起分很少的区域效果好一些。</p>
+<p>作者提到也可以将“光滑和锐利”操作换成不同参数的Reinhard操作。</p>
+<p>本文的分割类似于实例分割，而本文没有考虑到区域边缘融合的问题。</p>
+<h1 id="基于直方图与图像分块融合的阶调映射算法">基于直方图与图像分块融合的阶调映射算法</h1>
+<p><a class="link" href="[https://doi.org/10.3785/j.issn.1008-973X.2022.11.013]%28https://doi.org/10.3785/j.issn.1008-973X.2022.11.013"  title="https://doi.org/10.3785/j.issn.1008-973X.2022.11.013"
+    >https://doi.org/10.3785/j.issn.1008-973X.2022.11.013</a>)</p>
+<p>这篇文章的分割只是简单的分成多个正方形，但是其曲线融合和区域融合方法还是可以看一下</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 246; 
+			flex-basis: 592px"
+	>
+	<a href="/p/%E5%9F%BA%E4%BA%8E%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2%E7%9A%84tone-mapping%E7%AE%80%E8%BF%B0/4.jpg" data-size="941x381">
+		<img src="/p/%E5%9F%BA%E4%BA%8E%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2%E7%9A%84tone-mapping%E7%AE%80%E8%BF%B0/4.jpg"
+			width="941"
+			height="381"
+			srcset="/p/%E5%9F%BA%E4%BA%8E%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2%E7%9A%84tone-mapping%E7%AE%80%E8%BF%B0/4_hu700eb0668a55045080e16b0928252643_58572_480x0_resize_q75_box.jpg 480w, /p/%E5%9F%BA%E4%BA%8E%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2%E7%9A%84tone-mapping%E7%AE%80%E8%BF%B0/4_hu700eb0668a55045080e16b0928252643_58572_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="4.jpg">
+	</a>
+	
+	<figcaption>4.jpg</figcaption>
+	
+</figure></p>
+<p>本文使用了K均值和对数曲线两种映射，对一幅HDR亮度图<span class="math inline">\(I\)</span>，将其等分为<span class="math inline">\(N\)</span>个亮度等级<span class="math inline">\((u_1,\cdots,u_N)\)</span>，而映射后的亮度图<span class="math inline">\(\hat I\)</span>有<span class="math inline">\(M\)</span>个亮度等级<span class="math inline">\((c_1,\cdots,c_M)\)</span>，于是就可以归结为一维K均值聚类问题</p>
+<p><span class="math display">\[\min_{c_1,\cdots,c_M}||I-\hat I||
+\]</span></p>
+<p>一维的K均值有动态规划法求得全局最优解，即映射函数</p>
+<p><span class="math display">\[F(u):\{u_1,\cdots,u_N\}\to\{c_1,\cdots,c_M\}
+\]</span></p>
+<p>由于LDR图像为8位，故<span class="math inline">\(M=256\)</span>，来保证每个类对应于一个LDR像素值，为了保证映射函数精度，选择<span class="math inline">\(N=1024\)</span>。</p>
+<p>对于亮度比较均匀的地方，直方图分布集中，使用K均值容易出现对比度过度增强，于是作者让其和一条对数映射曲线结合，该曲线为：</p>
+<p><span class="math display">\[G(u): \{u_1,\cdots,u_N\}\to\{l_1,\cdots,l_M\}
+\]</span></p>
+<p>其中<span class="math inline">\(G(u)\)</span>为HDR像素至其最接近的<span class="math inline">\(l_i\)</span>的映射关系</p>
+<p><span class="math display">\[l_i=\exp\bigg(\ln(u_1)+i\dfrac{\ln(u_N)-\ln(u_1)}{M+1}\bigg)
+\]</span></p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 200; 
+			flex-basis: 480px"
+	>
+	<a href="/p/%E5%9F%BA%E4%BA%8E%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2%E7%9A%84tone-mapping%E7%AE%80%E8%BF%B0/5.jpg" data-size="580x290">
+		<img src="/p/%E5%9F%BA%E4%BA%8E%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2%E7%9A%84tone-mapping%E7%AE%80%E8%BF%B0/5.jpg"
+			width="580"
+			height="290"
+			srcset="/p/%E5%9F%BA%E4%BA%8E%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2%E7%9A%84tone-mapping%E7%AE%80%E8%BF%B0/5_hu0ae4665826bf58151e3fc6c41f2379f5_34332_480x0_resize_q75_box.jpg 480w, /p/%E5%9F%BA%E4%BA%8E%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2%E7%9A%84tone-mapping%E7%AE%80%E8%BF%B0/5_hu0ae4665826bf58151e3fc6c41f2379f5_34332_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="5.jpg">
+	</a>
+	
+	<figcaption>5.jpg</figcaption>
+	
+</figure></p>
+<p>在亮度均匀的地方，需要更多保留<span class="math inline">\(G(u)\)</span>，而在亮度跨度大的地方，需要更多保留<span class="math inline">\(F(u)\)</span>，为此，使用一个均匀指标<span class="math inline">\(\beta\)</span>来调解两条曲线的比例，即</p>
+<p><span class="math display">\[H(u): \{u_1,\cdots,u_N\}\to\{v_1,\cdots,v_M\}
+\]</span></p>
+<p>其中</p>
+<p><span class="math display">\[v_i = (1-\beta)c_i+\beta l_i
+\]</span></p>
+<p>其中<span class="math inline">\(\beta\)</span>在HDR亮度图的组数为20的统计直方图上计算</p>
+<p><span class="math display">\[\beta=\begin{cases}
+ 0.5(1-\exp(a-\eta)), & a<\eta \\
+ 0, & a\geq\eta
+\end{cases}
+\]</span></p>
+<p>其中<span class="math inline">\(a\)</span>为大于频率均值的组数，<span class="math inline">\(\eta\)</span>为控制曲线形状的常数，建议取<span class="math inline">\(13\)</span>。</p>
+<p>上述计算都是发生在原图中的不相交的矩形小区域中，也即每个区域拥有不同的曲线。这也导致了各个区域之间出现明显的分界线，本文作者使用双边滤波来融合区域。即某个区域内的像素会应用邻居B个区域（5x5区域）的曲线，加权的得出最终的LDR值<span class="math inline">\(p(x,y)\)</span>。</p>
+<p><span class="math display">\[p(x,y)=\dfrac{\sum^B_{i=1}H_i(I(x,y))\cdot w_d(i)\cdot w_s(i)}{\sum^B_{i=1}w_d(i)\cdot w_s(i)}
+\]</span></p>
+<p>其中<span class="math inline">\(w_d\)</span>为距离权重，<span class="math inline">\(w_s\)</span>为亮度权重</p>
+<p><span class="math display">\[w_d(i)=\exp(-d_i/\sigma_d)
+\]</span></p>
+<p><span class="math display">\[w_s(i)=\exp\bigg(-\dfrac{|\ln(I(x,y)+1)-\ln(I_i+1)|}{\ln(I_{max}+1)\cdot\sigma_s}\bigg)
+\]</span></p>
+<p>其中<span class="math inline">\(d_i\)</span>为当前像素点和<span class="math inline">\(H_i\)</span>对应区域中心点的欧式距离，<span class="math inline">\(\sigma_d\)</span>为距离衰减因子，<span class="math inline">\(I_i\)</span>为对应区域平均亮度，<span class="math inline">\(I_{max}\)</span>为全图的最大亮度，<span class="math inline">\(\sigma_s\)</span>为亮度衰减因子。</p>
+<h1 id="adaptive-tone-mapping-operator-for-hdr-images-based-on-image-statistics">Adaptive tone-mapping operator for HDR images based on image statistics</h1>
+<p><a class="link" href="https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&amp;arnumber=6129047"  target="_blank" rel="noopener"
+    >https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&amp;arnumber=6129047</a></p>
+<p>本文也使用Kmeans来分区域。首先讨论了<span class="math inline">\(k\)</span>值的决定方式，作者首先将原图的亮度转为<span class="math inline">\(log\)</span>域，然后计算其方差和均值，然后统计直方图，直方图的bin个数为</p>
+<p><span class="math display">\[N=\left \lfloor \sigma\lambda \right \rfloor 
+\]</span></p>
+<p><span class="math inline">\(\sigma\)</span>为刚刚在<span class="math inline">\(log\)</span>域计算的方差，<span class="math inline">\(\lambda\)</span>为常数，取<span class="math inline">\(10\)</span>，意在对方差大（即动态范围大）的图片使用更多bin。</p>
+<p>然后，计算</p>
+<p><span class="math display">\[T=\dfrac{size\ of\ image}{\omega}
+\]</span></p>
+<p>其中<span class="math inline">\(\omega\)</span>为常数<span class="math inline">\(8\)</span>。设<span class="math inline">\(f(b_i)\)</span>为第<span class="math inline">\(i\)</span>个bin里的像素个数，然后有</p>
+<p><span class="math display">\[\Psi=\{i|f(b_i)>T\}
+\]</span></p>
+<p><span class="math display">\[k=|\Psi|
+\]</span></p>
+<p>本文使用的TMO为一个经典的对数型曲线</p>
+<p><span class="math display">\[D(I) = (D_{max}-D_{min})\times \dfrac{\log(I+\tau)-\log(I_{min}+\tau)}{\log(I_{max}+\tau)-\log(I_{min}+\tau)}+D_{min}
+\]</span></p>
+<p>本文自动决定这个<span class="math inline">\(\tau\)</span>的取值，记<span class="math inline">\(C_i\)</span>为第<span class="math inline">\(i\)</span>类的聚类中心，则对于每一个区域，有</p>
+<p><span class="math display">\[\tau_i=\left \lfloor \epsilon\cdot C_i \right \rfloor 
+\]</span></p>
+<p>其中<span class="math inline">\(\epsilon=0.3\)</span></p>
+<p>注：本文没有考虑分割边缘融合的问题，当然Kmeans分出来的区域边缘不是那么明显。</p>
+<h1 id="visual-salience-based-tone-mapping-for-high-dynamic-range-images">Visual Salience Based Tone Mapping for High Dynamic Range Images</h1>
+<p><a class="link" href="https://ieeexplore.ieee.org/abstract/document/6779648/"  target="_blank" rel="noopener"
+    >https://ieeexplore.ieee.org/abstract/document/6779648/</a></p>
+<p>本文利用了显著性检测来定义其色调映射曲线，曲线基本上就是双边滤波那套分解成基础层和细节层再来进行压缩的方法。</p>
+<p>显著性检测方面，本文并不关注，只需要知道输入一个图片，输出一个相同大小的矩阵，代表每一个像素的显著性，越与背景不同的区域显著性越大。本文修改前人的方法来计算这个显著性权重，记作<span class="math inline">\(\Gamma_b(p')\)</span>，与此同时，使用窗口内的均值和方差等信息来进行边缘检测，得到一个边缘权重<span class="math inline">\(\Gamma_e(p')\)</span>。两个东西组合起来成为一个权重</p>
+<p><span class="math display">\[W(p')=\dfrac{\Gamma_e(p')}{\Gamma_b(p')}
+\]</span></p>
+<p>这个权重会用在分离基础层中来减小光晕。细节层的加强就是一个常数参数，略过，基础层的压缩使用如下公式</p>
+<p><span class="math display">\[\hat L_b(p)=\log(a)+L_b(p)-\bar L_h-\log(1+a\exp(L_b(p)-\bar L_h))
+\]</span></p>
+<p>其中<span class="math inline">\(a\)</span>是Reinhard方法中的Key value，其计算参考<a class="link" href="https://www.tandfonline.com/doi/abs/10.1080/10867651.2002.10487554"  target="_blank" rel="noopener"
+    >Parameter Estimation for Photographic Tone Reproduction</a>，而<span class="math inline">\(L_b\)</span>是映射前的基础层log亮度，<span class="math inline">\(\hat L_b\)</span>则是映射后的。<span class="math inline">\(\bar L_h\)</span>计算如下</p>
+<p><span class="math display">\[\bar L_h=\dfrac{\sum^N_{p=1}\Gamma_b(p)L_h(p)}{\sum^N_{p=1}\Gamma_b(p)}
+\]</span></p>
+<p>指的是HDR原图中的log亮度的加权平均。</p>
+<p>注：本文虽然使用了分割，但是最终的曲线却不是作用于各个区域的，无需考虑分割边界问题。</p>
+<h1 id="content-aware-automatic-photo-enhancement">Content-Aware Automatic Photo Enhancement</h1>
+<p><a class="link" href="https://onlinelibrary.wiley.com/doi/abs/10.1111/j.1467-8659.2012.03225.x"  target="_blank" rel="noopener"
+    >https://onlinelibrary.wiley.com/doi/abs/10.1111/j.1467-8659.2012.03225.x</a></p>
+<p>本文虽然不是纯粹的Tone Mapping，但也值得看一下。</p>
+<p>本文首先进行区域检测，提取出人脸区域、天空区域、较暗的区域。然后进行全局的对比度和饱和度调整。之后横队人脸、天空、暗区进行单独调整。最终再进行细节和材质的增强。</p>
+<p>本文的检测部分并没有提出新方法，作者使用了当时最好的方法，也指出如果后续有任何更好的方法都可以直接套在第一阶段里使用。</p>
+<p>而在全局对比度提升到阶段，将对比度拉升到最大范围（full range），裁剪之前最暗的和最亮的0.5%的像素，然后增加每个像素的饱和度20%。这里的全局指的是除了脸部和天空的所有像素。</p>
+<p>在人脸部分，首先也是将其分为基础层和细节层，亮度调整仅在基础层进行。统计人脸区域的亮度直方图</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 79; 
+			flex-basis: 191px"
+	>
+	<a href="/p/%E5%9F%BA%E4%BA%8E%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2%E7%9A%84tone-mapping%E7%AE%80%E8%BF%B0/6.jpg" data-size="620x777">
+		<img src="/p/%E5%9F%BA%E4%BA%8E%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2%E7%9A%84tone-mapping%E7%AE%80%E8%BF%B0/6.jpg"
+			width="620"
+			height="777"
+			srcset="/p/%E5%9F%BA%E4%BA%8E%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2%E7%9A%84tone-mapping%E7%AE%80%E8%BF%B0/6_huea2546595f27bb550d2d41ec594df94d_84645_480x0_resize_q75_box.jpg 480w, /p/%E5%9F%BA%E4%BA%8E%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2%E7%9A%84tone-mapping%E7%AE%80%E8%BF%B0/6_huea2546595f27bb550d2d41ec594df94d_84645_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="6.jpg">
+	</a>
+	
+	<figcaption>6.jpg</figcaption>
+	
+</figure></p>
+<p>当人脸的是阴阳脸时，其直方图会出现两个峰，作者的想法是将低亮度峰往高亮度峰靠。即将低于<span class="math inline">\(m\)</span>的值乘以一个参数<span class="math inline">\(f(b-d)/(m-d)\)</span>。</p>
+<p>为了调整曝光，作者经过统计发现绝大多数图片中75%的图像亮度在120以下，所以在下一步就是将所有的亮度进行平移，直到第75%个亮度处于120的位置。具体细节上还有一些防止过度调整的措施，详见原文。</p>
+<p>对于天空，作者只针对蓝天和白云，不关注朝霞和晚霞，目的在让蓝天更蓝，而白云更白。作者构造了一个蓝天和白云的混色物理模型，通过估计参数然后调整参数来实现目的，跟tone mapping关系不大故略去。</p>
+<p>然后是暗部增强，作者首先用前人的显著性检测方法来检测这种暗区域。然后将图像的像素分为两组，一组暗像素为亮度值低于50的（最高255），一组亮像素为其他所有像素。然后计算因子</p>
+<p><span class="math display">\[f^{sal}=\min\bigg\{2, \dfrac{PT(BRIGHT,35\%)}{PT(DARK,95\%)}\bigg\}
+\]</span></p>
+<p>其中<span class="math inline">\(PT(A,b\%)\)</span>指的是<span class="math inline">\(A\)</span>中从低到高的前<span class="math inline">\(b\%\)</span>的元素，设<span class="math inline">\(M_i^{sal}\)</span>为像素<span class="math inline">\(i\)</span>的暗区显著性，<span class="math inline">\(B\)</span>为亮度的base层，则前后的base层映射公式为</p>
+<p><span class="math display">\[B^{new}_{i}=f^{sal}M^{sal}_{i}B_i+(1-M^{sal}_i)B_i
+\]</span></p>
+<p>然后是最后的细节增强部分，设<span class="math inline">\(P^{ns}\)</span>是一个像素点不属于人脸和天空的概率，<span class="math inline">\(L\)</span>是log亮度，<span class="math inline">\(D\)</span>是细节层，那么</p>
+<p><span class="math display">\[L^{new}=L+c P^{ns}D
+\]</span></p>
+<p>其中<span class="math inline">\(c\in[0,0.25]\)</span>是一个可调参数。</p>
+<p>注：本文的分割边缘融合问题，类似于最后的细节加强操作，是通过权重来处理的。</p>
+<h1 id="fast-segmentation-based-tone-mapping-operator">Fast Segmentation-based Tone Mapping Operator</h1>
+<p><a class="link" href="https://www.dbpia.co.kr/Journal/articleDetail?nodeId=NODE07996848"  target="_blank" rel="noopener"
+    >https://www.dbpia.co.kr/Journal/articleDetail?nodeId=NODE07996848</a></p>
+<p>本文是对Reinhard的简单修改，首先计算低通滤波后的亮度图<span class="math inline">\(\check L(x,y)\)</span>，然后计算其高通分量</p>
+<p><span class="math display">\[\hat L(x,y) = L(x,y)-\check L(x,y)
+\]</span></p>
+<p>然后，作者使用阈值来分割这个高通分量</p>
+<p><span class="math display">\[\hat L = \begin{cases}
+ \hat L(x,y), & \hat L\geq T \\
+ 0, & \hat L < T
+\end{cases}
+\]</span></p>
+<p>其目的是为了更好的控制边缘的强调程度。然后计算锐化图像</p>
+<p><span class="math display">\[L_{sharp}(x,y) = L(x,y)+\hat L(x,y)
+\]</span></p>
+<p>最终将其代回Reinhard算法</p>
+<p><span class="math display">\[\bar L_d(x,y) = \dfrac{L_{sharp}(x,y)\left(1+\dfrac{L_{sharp}(x,y)}{L^2_{white}}\right)}{1+L(x,y)}
+\]</span></p>
+<p>总结，本文按照一个亮度阈值分割，未考虑可能也不必考虑分割边界融合问题。</p>
+<h1 id="content-aware-reverse-tone-mapping">Content-aware reverse tone mapping</h1>
+<p><a class="link" href="https://www.atlantis-press.com/proceedings/icaita-16/25849509"  target="_blank" rel="noopener"
+    >https://www.atlantis-press.com/proceedings/icaita-16/25849509</a></p>
+<p>本文虽然是逆色调映射，但是也值得看一看。</p>
+<p>本文提出的方法主要分为两个版本，第一个版本是按照Zone System的思想，对图像的亮度进行分区，最多分成十个分区，</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 183; 
+			flex-basis: 440px"
+	>
+	<a href="/p/%E5%9F%BA%E4%BA%8E%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2%E7%9A%84tone-mapping%E7%AE%80%E8%BF%B0/7.jpg" data-size="600x327">
+		<img src="/p/%E5%9F%BA%E4%BA%8E%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2%E7%9A%84tone-mapping%E7%AE%80%E8%BF%B0/7.jpg"
+			width="600"
+			height="327"
+			srcset="/p/%E5%9F%BA%E4%BA%8E%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2%E7%9A%84tone-mapping%E7%AE%80%E8%BF%B0/7_hue2ba1a55f7be8cab0c1cba3a0ea1ad03_57507_480x0_resize_q75_box.jpg 480w, /p/%E5%9F%BA%E4%BA%8E%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2%E7%9A%84tone-mapping%E7%AE%80%E8%BF%B0/7_hue2ba1a55f7be8cab0c1cba3a0ea1ad03_57507_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="7.jpg">
+	</a>
+	
+	<figcaption>7.jpg</figcaption>
+	
+</figure></p>
+<p>然后本文的rTM曲线较为简单，只使用了一个多段线性函数。简单来说，就是给10个区域设置一个其在HDR上的亮度范围，例如0区设置为<span class="math inline">\([0,0.1]\)</span>，1区、2区设置为<span class="math inline">\([0.1,0.15],[0.15,0.25]\)</span>，以此类推，保证函数单增即可。</p>
+<p>第二个版本则是使用显著性检测的方法来分区，分完区后仍然使用上述的线性曲线来rTM，略过。</p>
+<p>本文的一个好处是，用户可以方便的手动调整曲线参数。</p>
+<p>总结：亮度分段来分割，或者显著性来分割，没有考虑区域边缘融合。</p>
+<h1 id="tone-reproduction-a-perspective-from-luminance-driven-perceptual-grouping">Tone Reproduction: A Perspective from Luminance-Driven Perceptual Grouping</h1>
+<p><a class="link" href="https://link.springer.com/article/10.1007/s11263-005-3846-z"  target="_blank" rel="noopener"
+    >https://link.springer.com/article/10.1007/s11263-005-3846-z</a></p>
+<p>本文的分割是按照亮度分的，首先将RGB加权计算得到亮度，然后转为log域亮度，使用canny算子进行边缘检测，然后将图片分为<span class="math inline">\(8\times 8\)</span>大小的网格，然后这些网格中，如果含有边缘的成分，就再将其分为<span class="math inline">\(2\times 2\)</span>大小的小格。</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 102; 
+			flex-basis: 245px"
+	>
+	<a href="/p/%E5%9F%BA%E4%BA%8E%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2%E7%9A%84tone-mapping%E7%AE%80%E8%BF%B0/8.jpg" data-size="877x857">
+		<img src="/p/%E5%9F%BA%E4%BA%8E%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2%E7%9A%84tone-mapping%E7%AE%80%E8%BF%B0/8.jpg"
+			width="877"
+			height="857"
+			srcset="/p/%E5%9F%BA%E4%BA%8E%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2%E7%9A%84tone-mapping%E7%AE%80%E8%BF%B0/8_hud8a101cdac58e2ed7c27fb9d8d0d165a_117496_480x0_resize_q75_box.jpg 480w, /p/%E5%9F%BA%E4%BA%8E%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2%E7%9A%84tone-mapping%E7%AE%80%E8%BF%B0/8_hud8a101cdac58e2ed7c27fb9d8d0d165a_117496_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="8.jpg">
+	</a>
+	
+	<figcaption>8.jpg</figcaption>
+	
+</figure></p>
+<p>接下来是考虑如何将这些网格分组。作者这里使用了前人提出的earth mover’s distance (EMD)方法，也称作Wasserstein，用于度量两个概率分布之间的差异性。作者对于任意一个区域，将其像素按照动态范围（其实就是亮度范围）分为三段，计算其均值<span class="math inline">\(s_i\)</span>和像素个数<span class="math inline">\(h_i\)</span>，定义该区域的加权特征<span class="math inline">\(p\)</span>为三元组<span class="math inline">\(\{(s_1,w_1),(s_2,w_2),(s_3,w_3)\}\)</span>，其中<span class="math inline">\(w_i=h_i/\sum^3_{j=1}h_j\)</span>，其顺序代表了该区域的亮部，中等部，暗部。两个区域的距离就定义为</p>
+<p><span class="math display">\[D(R_1,R_2)=EMD(p_1,p_2)
+\]</span></p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 185; 
+			flex-basis: 445px"
+	>
+	<a href="/p/%E5%9F%BA%E4%BA%8E%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2%E7%9A%84tone-mapping%E7%AE%80%E8%BF%B0/9.jpg" data-size="471x254">
+		<img src="/p/%E5%9F%BA%E4%BA%8E%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2%E7%9A%84tone-mapping%E7%AE%80%E8%BF%B0/9.jpg"
+			width="471"
+			height="254"
+			srcset="/p/%E5%9F%BA%E4%BA%8E%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2%E7%9A%84tone-mapping%E7%AE%80%E8%BF%B0/9_hu304dc1b0200e433994c7887198ccb538_8795_480x0_resize_q75_box.jpg 480w, /p/%E5%9F%BA%E4%BA%8E%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2%E7%9A%84tone-mapping%E7%AE%80%E8%BF%B0/9_hu304dc1b0200e433994c7887198ccb538_8795_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="9.jpg">
+	</a>
+	
+	<figcaption>9.jpg</figcaption>
+	
+</figure></p>
+<p>之后，作者使用这个距离来将之前分割的小块合并成更大的区域，算法如下</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 105; 
+			flex-basis: 253px"
+	>
+	<a href="/p/%E5%9F%BA%E4%BA%8E%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2%E7%9A%84tone-mapping%E7%AE%80%E8%BF%B0/10.jpg" data-size="731x693">
+		<img src="/p/%E5%9F%BA%E4%BA%8E%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2%E7%9A%84tone-mapping%E7%AE%80%E8%BF%B0/10.jpg"
+			width="731"
+			height="693"
+			srcset="/p/%E5%9F%BA%E4%BA%8E%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2%E7%9A%84tone-mapping%E7%AE%80%E8%BF%B0/10_hu4fa78016f4dad5b119fec3bc7d7e5299_51048_480x0_resize_q75_box.jpg 480w, /p/%E5%9F%BA%E4%BA%8E%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2%E7%9A%84tone-mapping%E7%AE%80%E8%BF%B0/10_hu4fa78016f4dad5b119fec3bc7d7e5299_51048_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="10.jpg">
+	</a>
+	
+	<figcaption>10.jpg</figcaption>
+	
+</figure></p>
+<p>在分割完小块（包括<span class="math inline">\(8\times8\)</span>和<span class="math inline">\(2\times 2\)</span>的）后，计算每一个小块的加权特征<span class="math inline">\(p_i\)</span>，将所有小块标记为未访问过。</p>
+<p>创建一个新的空区域<span class="math inline">\(R\)</span>，创建一个空（优先）队列，从所有未访问过的小块中取出一个最亮的，将其放入队列。之后，当队列不为空时，从队列中取出具有最小的<span class="math inline">\(D(B,R)\)</span>的小块<span class="math inline">\(B\)</span>，1. 如果<span class="math inline">\(D(B,R)< \theta\)</span>，则将<span class="math inline">\(B\)</span>标记为已访问，并将<span class="math inline">\(B\)</span>加入到区域<span class="math inline">\(R\)</span>中，更新<span class="math inline">\(R\)</span>的加权特征<span class="math inline">\(p\)</span>，并且重新计算队列中所有的<span class="math inline">\(D(B_i,R)\)</span>（维护最小值）。然后将<span class="math inline">\(B\)</span>的所有未访问过的邻居小块<span class="math inline">\(B_j\)</span>中，满足<span class="math inline">\(D(B_j,B)< \delta\)</span>的加入到<span class="math inline">\(Q\)</span>中。2. 如果不满足<span class="math inline">\(D(B,R)< \theta\)</span>，则终止该区域的扩张，从头开始新区域的扩张。</p>
+<p>分完区后就到了Tone Mapping的部分，不过作者在这之前先计算了局部适应的（Local Adaptation）亮度，实际上就是爆改双边滤波器，让其可以考虑到分区域的信息</p>
+<p><span class="math display">\[\tilde V(x,y) = \dfrac{1}{\tilde Z_{x,y}}\left\{\sum_{(i,j)\in R_K}\tilde{L}(i,j)G_{x,y}(i,j)K_{x,y}(i,j)+\sum_{(i,j)\notin R_K}\tilde{L}(i,j)G_{x,y}(i,j)K'_{x,y}(i,j)\right\}
+\]</span></p>
+<p>其中<span class="math inline">\(\tilde{L}\)</span>是log后的亮度，而</p>
+<p><span class="math display">\[G_{x,y}(i,j)=\exp\{-((i-x)^2+(j-y)^2)/2\sigma^2_s\}
+\]</span></p>
+<p><span class="math display">\[K_{x,y}(i,j)=\exp\{-(\tilde L(i,j)-\tilde L(x,y))^2/2\sigma^2_r\}
+\]</span></p>
+<p><span class="math display">\[K'_{x,y}(i,j)=\exp\{-(\tilde L(i,j)-\tilde L(x,y))^2/2\sigma^2_{r'}\}
+\]</span></p>
+<p><span class="math display">\[\tilde Z_{x,y} = \sum_{(i,j)\in R_K} G_{x,y}(i,j)K_{x,y}(i,j) + \sum_{(i,j)\notin R_K} G_{x,y}(i,j)K'_{x,y}(i,j)
+\]</span></p>
+<p>得出的<span class="math inline">\(\tilde V\)</span>也是log域的亮度，记<span class="math inline">\(V=\exp \tilde V\)</span>。</p>
+<p>随后来到了本文的ToneMapping环节，定义local mapping函数如下</p>
+<p><span class="math display">\[\varPsi(L, V;\rho, \gamma)=\left(\dfrac{L}{V}\right)^\rho\varphi^{\gamma}(V)=\left(\dfrac{L}{V}\right)^\rho\left(\dfrac{V}{1+V}\right)^\gamma
+\]</span></p>
+<p>（注：<span class="math inline">\(L/V\)</span>其实就是等价于log域的<span class="math inline">\(\tilde L-\tilde V\)</span>，也就是提取出细节层。而<span class="math inline">\(V/(1+V)\)</span>其实就是极简版Reinhard。该函数本质上就是对基础层<span class="math inline">\(V\)</span>使用Reinhard压缩，然后对再把细节层加回去。只不过这里有两个参数。并且，如果<span class="math inline">\(\rho=\gamma\)</span>时，该函数退化到Durand的双边滤波方法）</p>
+<p>其中<span class="math inline">\(0 < \rho < 2,0< \gamma \leq 1\)</span>，<span class="math inline">\(\rho\)</span>取值是取决于像素位置的。特别的<span class="math inline">\(\gamma < 1\)</span>时，HDR图中的暗部会被映射到更大的动态范围中。本文取<span class="math inline">\(\gamma=0.3\)</span></p>
+<p>对于其中的这个<span class="math inline">\(\varphi^\gamma(V)\)</span> global tone mapping，作者想要让其映射能够输出到整一个<span class="math inline">\([0,1]\)</span>的范围，而不是局限于其中的一部分，所以对其进行了重塑</p>
+<p><span class="math display">\[\hat \varphi^\gamma(L) = \alpha\varphi^\gamma(L)+\beta
+\]</span></p>
+<p>设<span class="math inline">\(L_{max},L_{min}\)</span>为给定的亮度图的最大值和最小值，则上式的参数由以下方程组确定</p>
+<p><span class="math display">\[\begin{bmatrix}
+ \left(\dfrac{L_{max}}{1+L_{max}}\right)^\gamma & 1\\
+ \left(\dfrac{L_{min}}{1+L_{min}}\right)^\gamma & 1
+\end{bmatrix}
+
+\begin{bmatrix}
+ \alpha \\
+ \beta
+\end{bmatrix} = 
+\begin{bmatrix}
+ 1 \\
+ 0
+\end{bmatrix}
+\]</span></p>
+<p>接下来，计算参数<span class="math inline">\(\rho\)</span>，首先对于每一个区域<span class="math inline">\(R\)</span>，构建一个网格<span class="math inline">\(D\)</span></p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 107; 
+			flex-basis: 257px"
+	>
+	<a href="/p/%E5%9F%BA%E4%BA%8E%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2%E7%9A%84tone-mapping%E7%AE%80%E8%BF%B0/11.jpg" data-size="496x463">
+		<img src="/p/%E5%9F%BA%E4%BA%8E%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2%E7%9A%84tone-mapping%E7%AE%80%E8%BF%B0/11.jpg"
+			width="496"
+			height="463"
+			srcset="/p/%E5%9F%BA%E4%BA%8E%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2%E7%9A%84tone-mapping%E7%AE%80%E8%BF%B0/11_hub52fa3d93fe5db169383b32e6abc55b7_49109_480x0_resize_q75_box.jpg 480w, /p/%E5%9F%BA%E4%BA%8E%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2%E7%9A%84tone-mapping%E7%AE%80%E8%BF%B0/11_hub52fa3d93fe5db169383b32e6abc55b7_49109_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="11.jpg">
+	</a>
+	
+	<figcaption>11.jpg</figcaption>
+	
+</figure></p>
+<p>网格D是由一组<span class="math inline">\(\epsilon\times\epsilon\)</span>的矩形组成的，其中每个矩形都在<span class="math inline">\(R\)</span>内，并且和<span class="math inline">\(R\)</span>的边缘都距离<span class="math inline">\(\varepsilon\)</span>个像素。首先给<span class="math inline">\(D\)</span>中的每一个像素<span class="math inline">\(n\)</span>一个初始的<span class="math inline">\(\rho_n\)</span>（本文使用<span class="math inline">\(\rho_{max}=1.8, \epsilon = 4\)</span>）</p>
+<p><span class="math display">\[\rho_n=\begin{cases}
+ \gamma, & \log(L_n/V_n)\leq -1 \\
+ 0.5\times(\gamma+\rho_{max}), & \log(L_n/V_n)\geq 1\\
+ \rho_{max}, & otherwise
+\end{cases}
+\]</span></p>
+<p>前两个值代表着该像素已经和其局部亮度差异很大了，用一个较大的<span class="math inline">\(\rho_n\)</span>会过度增强细节。</p>
+<p>另外，所有在<span class="math inline">\(R\)</span>边缘的像素，其<span class="math inline">\(\rho_n\)</span>都被设置为<span class="math inline">\(\gamma\)</span>，在边缘和<span class="math inline">\(D\)</span>之间的像素的取值则可以通过插值获得。</p>
+<p>在初步给像素赋初值之后，就采用滤波器来光滑。</p>
+<p>下一步是将映射曲线单调化，防止其出现光晕等问题。对于每一个区域<span class="math inline">\(R_k\)</span>，其重塑后的色调映射曲线是</p>
+<p><span class="math display">\[\hat \varPsi(L,V;\rho, \gamma) = \alpha_k\varPsi(L, V;\rho, \gamma)+\beta_k
+\]</span></p>
+<p>为了估计这个<span class="math inline">\(\alpha_k, \beta_k\)</span>，作者在每一个区域<span class="math inline">\(R_k\)</span>的边缘，计算所有像素的<span class="math inline">\(|\log(L_n/V_n)|\)</span>，然后升序排列，取前<span class="math inline">\(N\)</span>个像素（本文取前5%），然后对于每一个取出来的像素，读取其<span class="math inline">\(\varPsi_n\)</span>和<span class="math inline">\(\hat \varphi_n^\gamma\)</span>，于是参数由下面的方程确定</p>
+<p><span class="math display">\[\begin{bmatrix}
+ \varPsi_1 & \varPsi_2 & \cdots & \varPsi_N\\
+ 1 & 1 & \cdots & 1
+\end{bmatrix}^T
+
+\begin{bmatrix}
+ \alpha_k \\
+ \beta_k
+\end{bmatrix} = 
+\begin{bmatrix}
+ \hat \varphi_1^\gamma & \hat \varphi_2^\gamma & \cdots & \hat \varphi_N^\gamma
+\end{bmatrix}^T
+\]</span></p>
+<p>最终，映射公式是</p>
+<p><span class="math display">\[L'(x,y)=\hat \varPsi(L(x,y), V(x,y);\rho(x,y), \gamma) = \alpha_k\left(\dfrac{L(x,y)}{V(x,y)}\right)^{\rho(x,y)}\left(\dfrac{V(x,y)}{1+V(x,y)}\right)^\gamma + \beta_k
+\]</span></p>
+<p>（注：便于理解，<span class="math inline">\(\hat \varphi\)</span>并不直接代回到这个公式里，而是隐式的通过求解方程的方式影响了<span class="math inline">\(\hat \varPsi\)</span>）</p>
+<p>总结：用亮度值分割，用了一种非常特别的算法去解决区域边缘问题。</p>
+<h1 id="scene-segmentation-based-exposure-compensation-for-tone-mapping-of-high-dynamic-range-scenes">Scene-Segmentation-Based Exposure Compensation for Tone Mapping of High Dynamic Range Scenes</h1>
+<p><a class="link" href="https://ieeexplore.ieee.org/abstract/document/10849135/"  target="_blank" rel="noopener"
+    >https://ieeexplore.ieee.org/abstract/document/10849135/</a></p>
+<p>本文用上了亮度分割还有多重曝光tone mapping。</p>
+<p>第一步，我们要将HDR图片分解出多个不同曝光度的照片。</p>
+<p>首先，获得输入图像<span class="math inline">\(E\)</span>的世界亮度（我理解的就是物理上的线性亮度）<span class="math inline">\(\ell_w\)</span>。</p>
+<p>然后，使用下式将亮度归一化到0 EV（曝光值）</p>
+<p><span class="math display">\[\ell_s(p)=\dfrac{\ell_{gray}}{G(\ell_w|P)}\ell_w(p)
+\]</span></p>
+<p>其中<span class="math inline">\(\ell_{gray}\)</span>就是Reinhard中提到的key value，这里取<span class="math inline">\(0.18\)</span>，<span class="math inline">\(p\)</span>指的是该像素。<span class="math inline">\(G\)</span>是个几何平均值，计算方法同Reinhard，对图像<span class="math inline">\(P\)</span>，有</p>
+<p><span class="math display">\[G(\ell_w|P)=\exp\left(\dfrac{1}{|P|}\sum_{p\in P}\log\ell_w(p)\right)
+\]</span></p>
+<p>随后，使用高斯混合模型将这些像素分为<span class="math inline">\(M\)</span>个类<span class="math inline">\(\{P_m\}\)</span>，即</p>
+<p><span class="math display">\[p(\log\ell_s)=\sum^M_{m=1}\pi_mN(\log\ell_s|\mu_m, \sigma_m)
+\]</span></p>
+<p><span class="math display">\[m=\underset{k}{\arg\max}\dfrac{\pi_kN(\log\ell_s(p)|\mu_k, \sigma_k)}{\sum^M_{j=1}\pi_jN(\log\ell_s(p)|\mu_j, \sigma_j)}
+\]</span></p>
+<p>之后我们将所有类用<span class="math inline">\(\mu_m\)</span>排升序，即<span class="math inline">\(P_1\)</span>代表最暗的块，<span class="math inline">\(P_M\)</span>代表最亮的块。之后，我们找到一个参考区域<span class="math inline">\(P_{m_{ref}}\)</span>，其对<span class="math inline">\(\ell_{gray}\)</span>有最大贡献，即</p>
+<p><span class="math display">\[m_{ref} = \underset{k}{\arg\max}\ \pi_kN(\log\ell_{gray}|\mu_k,\sigma_k)
+\]</span></p>
+<p>接下来我们计算曝光时间<span class="math inline">\(\Delta t_m\)</span></p>
+<p><span class="math display">\[\Delta t_m=\dfrac{\exp(\mu'_m)}{\exp(\mu_m)}
+\]</span></p>
+<p>其中<span class="math inline">\(\mu'_m\)</span>是目标均值，考虑显示器的亮度，作者将其端点的两个目标亮度均值使用最低曝光度和最高曝光度定义，即</p>
+<p><span class="math display">\[\mu'_1=\log 2^{v_{min}}\ell_{gray},\quad \mu'_M=\log2^{v_{max}}\ell_{gray}
+\]</span></p>
+<p>为了最大化区域之间的对比度，作者将剩下的目标均值均匀分散在log域亮度里</p>
+<p><span class="math display">\[\mu'_m=\begin{cases}
+ \dfrac{\mu_{m_{ref}}-\mu'_1}{m_{ref}-1}(m-1)+\mu'_1, & 1<m<m_{ref} \\
+ \mu_{m_{ref}}, & m=m_{ref}\\
+ \dfrac{\mu'_M-\mu_{m_{ref}}}{M-m_{ref}}(m-m_{ref})+\mu_{m_{rref}}, & m_{ref}<m<M 
+\end{cases}
+\]</span></p>
+<p>然后，使用曝光时间就获得了一系列不同的曝光图像</p>
+<p><span class="math display">\[\ell_m(p)=f(\ell_s(p)\Delta t_m)
+\]</span></p>
+<p>其中<span class="math inline">\(f\)</span>是一个色调映射曲线，作者使用了Reinhard的全局版本，即</p>
+<p><span class="math display">\[f(\ell) = \dfrac{\ell}{1+\ell}\left(1+\dfrac{\ell}{\ell^2_{white}}\right)
+\]</span></p>
+<p>其中使用<span class="math inline">\(\ell_{white}=2^{v_{white}}\ell_{gray}\)</span></p>
+<p>然后，第二步，使用生成的曝光图像来进行多曝光融合。</p>
+<p>使用的是拉普拉斯金字塔的方法，记输入的多曝光图像为<span class="math inline">\({x_m}\)</span></p>
+<p><span class="math display">\[L_l[y](p)=\sum^M_{m=1}G_l[w_m](p)L_l[x_m]p
+\]</span></p>
+<p>其中<span class="math inline">\(L_l[x_m](p)\)</span>指的是，图像<span class="math inline">\(x_m\)</span>的第<span class="math inline">\(l\)</span>层拉普拉斯金字塔的像素<span class="math inline">\(p\)</span>的取值；而<span class="math inline">\(G_l[w_m](p)\)</span>则是，混合权重图<span class="math inline">\(w_m\)</span>（即第<span class="math inline">\(m\)</span>层的混合权重）的第<span class="math inline">\(l\)</span>层高斯金字塔在像素<span class="math inline">\(p\)</span>的取值。接下来我们就考虑这个权重怎么算出来。</p>
+<p>作者首先定义了亮度和目标均值的差异（很奇怪，没说是归一化前还是后的亮度）</p>
+<p><span class="math display">\[d_m(p)=g(\ell_m(p))-g(\exp(\mu'_m))
+\]</span></p>
+<p>其中<span class="math inline">\(g(\ell)=(\gamma\circ f)(\ell)\)</span>，<span class="math inline">\(\gamma\)</span>即为gamma校正，<span class="math inline">\(f\)</span>则为前述的tone mapping。从而，混合权重为</p>
+<p><span class="math display">\[w_m(p)=\dfrac{\exp(-(d_m(p))^2)}{\sum^M_{k=1}\exp(-(d_k(p))^2)}
+\]</span></p>
+<p>这个公式旨在，使得亮度本身就接近目标亮度的图像具有更大的权重。</p>
+<p>总结：亮度聚类分割，但不是直接分割了图片，而是决定了多重曝光的参数，多曝光融合避免区域边界融合问题。</p>
+<h1 id="segmentation-based-tone-mapping-for-high-dynamic-range-images">Segmentation Based Tone-Mapping for High Dynamic Range Images</h1>
+<p><a class="link" href="https://link.springer.com/chapter/10.1007/978-3-642-23687-7_33"  target="_blank" rel="noopener"
+    >https://link.springer.com/chapter/10.1007/978-3-642-23687-7_33</a></p>
+<p>作者用的前人的根据对象分割的方法， 作者注重讨论分割边缘处理和tone mapping。</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 256; 
+			flex-basis: 615px"
+	>
+	<a href="/p/%E5%9F%BA%E4%BA%8E%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2%E7%9A%84tone-mapping%E7%AE%80%E8%BF%B0/12.jpg" data-size="861x336">
+		<img src="/p/%E5%9F%BA%E4%BA%8E%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2%E7%9A%84tone-mapping%E7%AE%80%E8%BF%B0/12.jpg"
+			width="861"
+			height="336"
+			srcset="/p/%E5%9F%BA%E4%BA%8E%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2%E7%9A%84tone-mapping%E7%AE%80%E8%BF%B0/12_hub063a3cd61d16e7135be468f4bc0c477_76698_480x0_resize_q75_box.jpg 480w, /p/%E5%9F%BA%E4%BA%8E%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2%E7%9A%84tone-mapping%E7%AE%80%E8%BF%B0/12_hub063a3cd61d16e7135be468f4bc0c477_76698_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="12.jpg">
+	</a>
+	
+	<figcaption>12.jpg</figcaption>
+	
+</figure></p>
+<p>简单来说，作者使用的tone mapping是一个综合考虑直方图调整和线性映射的方法（HALEQ），</p>
+<p><span class="math display">\[d(x,y)=\beta\cdot EC[D(x,y)]+(1-\beta)\cdot LC[D(x,y)]
+\]</span></p>
+<p>其中<span class="math inline">\(D\)</span>是原图log亮度，<span class="math inline">\(d\)</span>是输出log亮度，<span class="math inline">\(EC\)</span>是直方图调整，<span class="math inline">\(LC\)</span>是线性映射。而<span class="math inline">\(\beta\)</span>是可调系数，作者首先采用固定值<span class="math inline">\(0.6\)</span>。作者在分割之后，对每一个小块内应用一次这个HALEQ，即</p>
+<p><span class="math display">\[d(x,y)=HALEQ_n[D(x,y)]\quad (x,y)\in n
+\]</span></p>
+<p>这个方法有两个问题：1. 边缘阶梯状改变。 2. 由于采用固定<span class="math inline">\(\beta\)</span>，在一些颜色比较均匀的地方，仍然使用了较大比重的直方图调整，错误的加强了对比度，出现了噪声。</p>
+<p>为了解决第一个问题，作者在考虑一个像素的时候，不只考虑其所在的区域，也考虑了<span class="math inline">\(N\)</span>个最近的区域，加权计算最终的映射结果</p>
+<p><span class="math display">\[d(x,y)=\dfrac{\sum^N_{n=1}HALEQ_n[D(x,y)]\cdot w_d(n)}{\sum^N_{n=1}w_d(n)}
+\]</span></p>
+<p>其中的距离权重参数为</p>
+<p><span class="math display">\[w_d(n) = e^{-(d_n/\sigma_d)}
+\]</span></p>
+<p><span class="math inline">\(d_n\)</span>为当前像素和第<span class="math inline">\(n\)</span>个区域的中心点的欧几里得距离，参数<span class="math inline">\(\sigma_d\)</span>控制了平滑度。<span class="math inline">\(\sigma_d\)</span>越大，<span class="math inline">\(d_n\)</span>对于权重的影响就越小，亦即，分割边缘的伪影问题就越小，与此同时则导致了局部对比度丢失的越多。同样的，<span class="math inline">\(N\)</span>的选择也有这种影响，<span class="math inline">\(N\)</span>越大，伪影问题越小，局部对比度越损失。</p>
+<p>为了解决第二个问题，作者引入了自适应调整<span class="math inline">\(\beta\)</span>的方法。首先是检测这种颜色均匀的区域，观察到此种区域的直方图表现为很集中的一组数据，计算</p>
+<p><span class="math display">\[SD_n=\dfrac{\sum^M_{i=1}|Hist(i)-mean_n|}{M}
+\]</span></p>
+<p><span class="math inline">\(M\)</span>是bin的个数，<span class="math inline">\(Hist(i)\)</span>是第i个bin的像素数量，<span class="math inline">\(mean_n\)</span>则是每个bin内的像素的数量的均值。更大的<span class="math inline">\(SD_n\)</span>表示每个bin内的像素的个数分布极不均匀，离均值很远，也就暗示着绝大部分像素分布在很集中的区域，也就是颜色均匀。当这个<span class="math inline">\(SD_n\)</span>大于阈值<span class="math inline">\(\eta\)</span>时，就视作一个均匀区域。作者选用了<span class="math inline">\(M=20\)</span>，然后指出<span class="math inline">\(\eta\)</span>对不同的图像有不同的最好选择。之后</p>
+<p><span class="math display">\[\beta = 0.6\cdot[1-e^{-(SD_{n_{max}}-SD_n)}]
+\]</span></p>
+<p>总结：针对对象进行分割，使用邻居加权的方式处理分割边缘问题。</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/%E5%A4%A7%E5%AD%A6/">大学</a>
+        
+            <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">人工智能</a>
+        
+            <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/">计算机视觉</a>
+        
+            <a href="/tags/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css"integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js"integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8"crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js"integrity="sha384-vZTG03m&#43;2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl"crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.querySelector(`.article-content`), {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ]
+        });})
+</script>
+    
+</article>
+
+    <aside class="related-contents--wrapper">
+    
+    
+        <h2 class="section-title">相关文章</h2>
+        <div class="related-contents">
+            <div class="flex article-list--tile">
+                
+                    
+<article class="has-image">
+    <a href="/p/tone-mapping%E7%AE%80%E8%BF%B0/">
+        
+        
+            <div class="article-image">
+                <img src="/p/tone-mapping%E7%AE%80%E8%BF%B0/cover.5aa682735da6aa1619a10f7cb3c36e37_hue2557a0ca715ca3bab4b5f5b903f073d_123247_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-WqaCc12mqhYZoQ98s8NuNw==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Tone Mapping简述</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/p/hdr%E8%89%B2%E8%B0%83%E6%98%A0%E5%B0%84%E5%9B%BE%E5%83%8F%E8%B4%A8%E9%87%8F%E8%AF%84%E4%BB%B7%E7%AE%80%E8%BF%B0/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="/cover.jpg" loading="lazy" data-key="" data-hash="/cover.jpg"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">HDR色调映射图像质量评价简述</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/p/grabcut-interactive-foreground-extraction-using-iterated-graph-cuts%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/">
+        
+        
+            <div class="article-image">
+                <img src="/p/grabcut-interactive-foreground-extraction-using-iterated-graph-cuts%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/cover.719f06f8145a0ec2fc378d5f11233592_huf62d2c95a51769be2a7aa0d894297a77_82581_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-cZ8G&#43;BRaDsL8N41fESM1kg==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">GrabCut— Interactive Foreground Extraction Using Iterated Graph Cuts论文精读与复现</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/p/deep-bilateral-learning-for-real-time-image-enhancement%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/">
+        
+        
+            <div class="article-image">
+                <img src="/p/deep-bilateral-learning-for-real-time-image-enhancement%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/cover.c544671fcae18b2974e28dcd19d110e3_hu21346ed4a71566f3cd713a52c023a686_153701_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-xURnH8rhiyl04o3NGdEQ4w==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Deep Bilateral Learning for Real Time Image Enhancement论文速读</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/p/appprop-all-pairs-appearance-space-edit-propagation%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/">
+        
+        
+            <div class="article-image">
+                <img src="/p/appprop-all-pairs-appearance-space-edit-propagation%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/cover.a6dc0aea3fa6a380f9f56b9bac533904_hueda4c761f5117f950ea670cd72a10b0b_71812_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-ptwK6j&#43;mo4D59WubrFM5BA==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">AppProp: All-Pairs Appearance-Space Edit Propagation论文精读与复现</h2>
+        </div>
+    </a>
+</article>
+                
+            </div>
+        </div>
+    
+</aside>
+
+     
+    
+        
+    <script src="https://utteranc.es/client.js" 
+        repo="kegalas/blogComments"
+        issue-term="pathname"
+        
+        crossorigin="anonymous"
+        async
+        >
+</script>
+
+<style>
+    .utterances {
+        max-width: unset;
+    }
+</style>
+
+<script>
+    function setUtterancesTheme(theme) {
+        let utterances = document.querySelector('.utterances iframe');
+        if (utterances) {
+            utterances.contentWindow.postMessage(
+                {
+                    type: 'set-theme',
+                    theme: `github-${theme}`
+                },
+                'https://utteranc.es'
+            );
+        }
+    }
+
+    addEventListener('message', event => {
+        if (event.origin !== 'https://utteranc.es') return;
+        setUtterancesTheme(document.documentElement.dataset.scheme)
+    });
+
+    window.addEventListener('onColorSchemeChange', (e) => {
+        setUtterancesTheme(e.detail)
+    })
+</script>
+
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2025 KegalaS的个人博客
+    </section>
+    
+    <section class="powerby">
+         <br />
+        
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    
+        <aside class="sidebar right-sidebar sticky">
+            <section class="widget archives">
+                <div class="widget-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+                </div>
+                <h2 class="widget-title section-title">目录</h2>
+                
+                <div class="widget--toc">
+                    <nav id="TableOfContents">
+  <ol>
+    <li><a href="#前言">前言</a></li>
+    <li><a href="#tone-mapping-operators-progressing-towards-semantic-awareness">Tone Mapping Operators: Progressing Towards Semantic-Awareness</a></li>
+    <li><a href="#g-semtmo-tone-mapping-with-a-trainable-semantic-graph">G-SemTMO: Tone Mapping With a Trainable Semantic Graph</a></li>
+    <li><a href="#tone-mapping-for-single-shot-hdr-imaging">Tone Mapping for Single-shot HDR Imaging</a></li>
+    <li><a href="#基于直方图与图像分块融合的阶调映射算法">基于直方图与图像分块融合的阶调映射算法</a></li>
+    <li><a href="#adaptive-tone-mapping-operator-for-hdr-images-based-on-image-statistics">Adaptive tone-mapping operator for HDR images based on image statistics</a></li>
+    <li><a href="#visual-salience-based-tone-mapping-for-high-dynamic-range-images">Visual Salience Based Tone Mapping for High Dynamic Range Images</a></li>
+    <li><a href="#content-aware-automatic-photo-enhancement">Content-Aware Automatic Photo Enhancement</a></li>
+    <li><a href="#fast-segmentation-based-tone-mapping-operator">Fast Segmentation-based Tone Mapping Operator</a></li>
+    <li><a href="#content-aware-reverse-tone-mapping">Content-aware reverse tone mapping</a></li>
+    <li><a href="#tone-reproduction-a-perspective-from-luminance-driven-perceptual-grouping">Tone Reproduction: A Perspective from Luminance-Driven Perceptual Grouping</a></li>
+    <li><a href="#scene-segmentation-based-exposure-compensation-for-tone-mapping-of-high-dynamic-range-scenes">Scene-Segmentation-Based Exposure Compensation for Tone Mapping of High Dynamic Range Scenes</a></li>
+    <li><a href="#segmentation-based-tone-mapping-for-high-dynamic-range-images">Segmentation Based Tone-Mapping for High Dynamic Range Images</a></li>
+  </ol>
+</nav>
+                </div>
+            </section>
+        </aside>
+    
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                defer="false"
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
