@@ -271,8 +271,3 @@ $m,n$分别为滑动窗口的大小，而$I_{i,j},I_{mean}$即为特定像素的
 
 [No-Reference Image Quality Assessment via Transformers, Relative Ranking, and Self-Consistency](https://openaccess.thecvf.com/content/WACV2022/html/Golestaneh_No-Reference_Image_Quality_Assessment_via_Transformers_Relative_Ranking_and_Self-Consistency_WACV_2022_paper.html)
 大体也是提取特征然后拟合的，只不过使用CNN提取局部特征，用Transformer计算非局部信息。然后将二者提取到的特征送到一个全连接层映射出一个得分，质量的损失函数即预测得分和人类主观评分的均方误差。后面还用了个Relative Ranking和Self-Consistency的损失函数加在里面。最后训练出来的模型就是端到端的评估模型。
-
-# HDR10、HDR10+、HLG、Vivid、ACES资料解读
-
-TODO
-https://en.wikipedia.org/wiki/Academy_Color_Encoding_System
