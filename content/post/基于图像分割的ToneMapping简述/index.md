@@ -685,3 +685,101 @@ $$
 $$
 
 总结：针对对象进行分割，使用邻居加权的方式处理分割边缘问题。
+
+# Clustering based content and color adaptive tone mapping
+
+[https://www.sciencedirect.com/science/article/pii/S1077314217301789](https://www.sciencedirect.com/science/article/pii/S1077314217301789)
+
+本文提出了一种非常不一样的策略，首先，它不使用那套提取出亮度，进行压缩，再进行颜色恢复的方式，而是把颜色和亮度一起考虑。首先，将图片分成重叠的方格，然后进行聚类，然后进行数据分析后的色调映射。
+
+![13.jpg](13.jpg)
+
+像前人的工作一样，一开始还是进行了一个log型曲线的初始化映射，本文使用的曲线为
+
+$$
+L(i,j,c)=\log(I(i,j,c)\cdot 10^6+1)
+$$
+
+其中$(i,j)$指的是像素坐标，而$c$是$RGB$通道中的一个。
+
+然后，将图像分为$7\times 7$大小的重叠小块，步幅为$2$。设$\mathbf{x}$为该小块的颜色矩阵，而$\mathbf{x}_c$是其中的一个通道的矩阵，每个颜色通道的平均值（标量）记作$m_c$，于是
+
+$$
+\bar{\mathbf{x}}_c = \mathbf{x}_c-\mathbf{1}\cdot m_c
+$$
+
+此时$\bar{\mathbf{x}}_c$就是一个去除了直流分量的细节结构。而三个通道的颜色差异记作
+
+$$
+\bar m_c = m_c-m,\quad m=(m_r+m_g+m_b)/3
+$$
+
+结合上述，一个小块的颜色就能分解成
+
+$$
+\mathbf{x} = 
+\begin{bmatrix}
+\bar{\mathbf{x}}_r \\
+\bar{\mathbf{x}}_g \\
+\bar{\mathbf{x}}_b
+\end{bmatrix}+
+\begin{bmatrix}
+\mathbf{1}\cdot m_r \\
+\mathbf{1}\cdot m_g \\
+\mathbf{1}\cdot m_b
+\end{bmatrix}+
+\begin{bmatrix}
+\mathbf{1} \\
+\mathbf{1} \\
+\mathbf{1}
+\end{bmatrix}
+\cdot m = \bar{\mathbf{x}} + \bar{\mathbf{m}}+[\mathbf{1};\mathbf{1};\mathbf{1}]\cdot m
+$$
+
+把其中的$\bar{\mathbf{x}}$称作颜色结构，而$\bar{\mathbf{m}}$称作颜色差异。
+
+接下来就是聚类环节，作者说用Kmeans还是GMM都可以，出于性能和效果的考虑，选择了Kmeans，其效果和GMM类似。在$\bar{\mathbf{x}}$上进行聚类，然后对每一类内部的$\bar{\mathbf{x}}$计算一个协方差矩阵$\Phi$，因为其半正定，于是进行特征值分解
+
+$$
+\Phi=Q\Lambda Q^{-1}
+$$
+
+因为$Q$包含了$\Phi$中的特征向量，所以主成分分析的变换矩阵为
+
+$$
+P=Q^T
+$$
+
+其中拥有较大特征值的特征向量代表了该聚类中最重要的结构特征，我们计算PCA域中的特征为
+
+$$
+\bar{\mathbf{y}} = P\bar{\mathbf{x}}
+$$
+
+注意$\bar{\mathbf{y}}$中的系数要比$\bar{\mathbf{x}}$中的更稀疏，小系数更多代表着噪音和不重要的结构特征。越大越重要。所以在$\bar{\mathbf{y}}$进行压缩要比在$\bar{\mathbf{x}}$上进行压缩要更具有鲁棒性。
+
+在压缩操作中，首先把代表着噪声和不重要特征的，$\bar{\mathbf{y}}$中小于$0.1$的系数直接置$0$。而其他系数中，较大的需要被压缩，而较小的需要被增强，所以选用一条$S$型曲线
+
+$$
+\bar{\mathbf{y}}_a=(1.6/\pi)\cdot \arctan(a\cdot \bar{\mathbf{y}})
+$$
+
+其中$a$是一个参数，用于控制曲线形状，其越小，压缩程度越大。
+
+而对于$\bar{\mathbf{m}}$，也使用同种曲线，但是参数不同
+
+$$
+\bar{\mathbf{m}}_b=(1.2/\pi)\cdot\arctan(b\cdot\bar{\mathbf{m}})
+$$
+
+而$m$的变化较为缓慢，用线性压缩即可，于是压缩后的图片小块为
+
+$$
+\mathbf{x}_t=P^T\bar{\mathbf{y}}_a+\bar{\mathbf{m}}_b+[\mathbf{1};\mathbf{1};\mathbf{1}]w\cdot m
+$$
+
+然后就是将小块混合在一起，以及后处理过程。混合非常简单，由于小块是重叠的，所以计算所有小块对该像素的贡献再求均值即可。而后处理方面，作者将最大和最小的$1\%$的像素值进行了裁剪，然后将所有小块中的像素值都拉伸到$[0,1]$的范围
+
+后面还有一些扩展手段，但是核心方法就是上面所述的，略过。
+
+总结：本文使用聚类进行分割，由于聚类所用的小块是重叠的，所以求平均即可避免分割边界问题。

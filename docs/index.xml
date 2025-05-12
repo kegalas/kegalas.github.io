@@ -6,13 +6,162 @@
         <description>Recent content on KegalaS的个人博客</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Sun, 13 Apr 2025 15:49:34 +0800</lastBuildDate><atom:link href="https://kegalas.uk/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sun, 11 May 2025 15:42:58 +0800</lastBuildDate><atom:link href="https://kegalas.uk/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>C&#43;&#43;结构体内存对齐和数组内存步幅</title>
+        <link>https://kegalas.uk/p/c-%E7%BB%93%E6%9E%84%E4%BD%93%E5%86%85%E5%AD%98%E5%AF%B9%E9%BD%90%E5%92%8C%E6%95%B0%E7%BB%84%E5%86%85%E5%AD%98%E6%AD%A5%E5%B9%85/</link>
+        <pubDate>Sun, 11 May 2025 15:42:58 +0800</pubDate>
+        
+        <guid>https://kegalas.uk/p/c-%E7%BB%93%E6%9E%84%E4%BD%93%E5%86%85%E5%AD%98%E5%AF%B9%E9%BD%90%E5%92%8C%E6%95%B0%E7%BB%84%E5%86%85%E5%AD%98%E6%AD%A5%E5%B9%85/</guid>
+        <description>&lt;h1 id=&#34;内存对齐&#34;&gt;内存对齐&lt;/h1&gt;
+&lt;p&gt;众所周知，计组这门课告诉我们，对齐与没对齐的数据在访问时有效率差别，而C/C++作为一个接近底层和关注速度的语言，可以操控内存对齐。&lt;/p&gt;
+&lt;p&gt;一个类型的对齐值为&lt;code&gt;x&lt;/code&gt;，则意味着这个类型的内存地址为&lt;code&gt;x&lt;/code&gt;的倍数。&lt;/p&gt;
+&lt;p&gt;C++的内存对齐规则如下：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;编译器可以选择一个&lt;code&gt;#pragma pack(n)&lt;/code&gt;来规定一个对齐值&lt;code&gt;n&lt;/code&gt;。（如果未设置则为无穷大，这点是我在&lt;code&gt;gcc&lt;/code&gt;上推测出来的）&lt;/li&gt;
+&lt;li&gt;首个元素的内存偏移量为&lt;code&gt;0&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;内建类型的对齐值为&lt;code&gt;min(其sizeof大小, n)&lt;/code&gt;。&lt;/li&gt;
+&lt;li&gt;结构体的对齐值为&lt;code&gt;min(成员中最大的对齐值, n)&lt;/code&gt;，并且&lt;code&gt;sizeof(该结构体)&lt;/code&gt;是其对齐值的整倍数&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;其中内建类型，例如假设&lt;code&gt;n=4&lt;/code&gt;，则&lt;code&gt;double&lt;/code&gt;对齐到&lt;code&gt;4&lt;/code&gt;，&lt;code&gt;int32_t&lt;/code&gt;对齐到&lt;code&gt;4&lt;/code&gt;，&lt;code&gt;int8_t&lt;/code&gt;对齐到&lt;code&gt;1&lt;/code&gt;。假设&lt;code&gt;n=8&lt;/code&gt;，则&lt;code&gt;double&lt;/code&gt;对齐到&lt;code&gt;8&lt;/code&gt;，&lt;code&gt;int32_t&lt;/code&gt;对齐到&lt;code&gt;4&lt;/code&gt;，&lt;code&gt;int8_t&lt;/code&gt;对齐到&lt;code&gt;1&lt;/code&gt;。（数组内元素的对齐值等价于将数组拆成多个元素，即&lt;code&gt;float x[3];&lt;/code&gt;等价于&lt;code&gt;float a; float b; float c;&lt;/code&gt;）&lt;/p&gt;
+&lt;p&gt;例子如下&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;// gcc默认值为无限大，不设置或者pack(0)都是无限大。而pack()不给参数似乎是由命令行决定，在我这里仍然是无限大。
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#pragma pack(4)
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;struct&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;A&lt;/span&gt;{
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;char&lt;/span&gt; a;    &lt;span style=&#34;color:#75715e&#34;&gt;//offset = 0
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;double&lt;/span&gt; b;  &lt;span style=&#34;color:#75715e&#34;&gt;//offset = 4, 虽然double是8字节，但是pack(4)
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;char&lt;/span&gt; c;    &lt;span style=&#34;color:#75715e&#34;&gt;//offset = 12
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;};&lt;span style=&#34;color:#75715e&#34;&gt;//总大小16，因为a和b一共占了12个字节，c本来再占1个字节就可以，但是13不是4的整倍数，向上到16
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#pragma pack(8)
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;struct&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;A&lt;/span&gt;{
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;char&lt;/span&gt; a;    &lt;span style=&#34;color:#75715e&#34;&gt;//offset = 0
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;double&lt;/span&gt; b;  &lt;span style=&#34;color:#75715e&#34;&gt;//offset = 8
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;char&lt;/span&gt; c;    &lt;span style=&#34;color:#75715e&#34;&gt;//offset = 16
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;};&lt;span style=&#34;color:#75715e&#34;&gt;//总大小24，同前，17不是8的整倍数，向上到24
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这其中&lt;code&gt;a&lt;/code&gt;和&lt;code&gt;b&lt;/code&gt;中的7字节空间被填充为空白，无法访问，因为暂时没有合适的符合对齐要求的元素可以插进去。然而，如果我们添加一个&lt;code&gt;int32_t&lt;/code&gt;，其只要满足四字节对齐，就可以插进去&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#pragma pack(8)
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;struct&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;A&lt;/span&gt;{
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;char&lt;/span&gt; a;    &lt;span style=&#34;color:#75715e&#34;&gt;//offset = 0
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; x;     &lt;span style=&#34;color:#75715e&#34;&gt;//offset = 4
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;double&lt;/span&gt; b;  &lt;span style=&#34;color:#75715e&#34;&gt;//offset = 8
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;char&lt;/span&gt; c;    &lt;span style=&#34;color:#75715e&#34;&gt;//offset = 16
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;};&lt;span style=&#34;color:#75715e&#34;&gt;//总大小24
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;除了插入一个&lt;code&gt;int32_t&lt;/code&gt;，你还可以插入三个&lt;code&gt;int16_t&lt;/code&gt;，七个&lt;code&gt;int8_t&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;然后我们来讨论一下为什么是结构体的对齐值为&lt;code&gt;min(成员中最大的对齐值, n)&lt;/code&gt;，而不是&lt;code&gt;min(sizeof(成员)的最大值, n)&lt;/code&gt;，如下例的嵌套结构&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#pragma pack(16)
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;struct&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;A&lt;/span&gt;{
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#66d9ef&#34;&gt;char&lt;/span&gt; a;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#66d9ef&#34;&gt;double&lt;/span&gt; b;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#66d9ef&#34;&gt;char&lt;/span&gt; c;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;};&lt;span style=&#34;color:#75715e&#34;&gt;//总大小24
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;struct&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;B&lt;/span&gt;{
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#66d9ef&#34;&gt;char&lt;/span&gt; x;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	A a;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#66d9ef&#34;&gt;char&lt;/span&gt; c;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;};&lt;span style=&#34;color:#75715e&#34;&gt;//总大小40
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;如果结构体&lt;code&gt;B&lt;/code&gt;的对齐值取决于成员对齐，那么&lt;code&gt;A&lt;/code&gt;的对齐值可知为&lt;code&gt;8&lt;/code&gt;，则&lt;code&gt;B&lt;/code&gt;的对齐值也为8。此时有&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;struct&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;B&lt;/span&gt;{
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#66d9ef&#34;&gt;char&lt;/span&gt; x;   &lt;span style=&#34;color:#75715e&#34;&gt;//offset=0
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;	A a;      &lt;span style=&#34;color:#75715e&#34;&gt;//offset=8
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#66d9ef&#34;&gt;char&lt;/span&gt; c;   &lt;span style=&#34;color:#75715e&#34;&gt;//offset=32
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;}; &lt;span style=&#34;color:#75715e&#34;&gt;//c此时占据了第33个字节，需要向上到40符合8的倍数
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;但如果&lt;code&gt;B&lt;/code&gt;的对齐值取决于成员大小，而显然&lt;code&gt;A&lt;/code&gt;的大小为24，&lt;code&gt;B&lt;/code&gt;的对齐值再怎么说也是&lt;code&gt;16&lt;/code&gt;，但40显然不是16的倍数，所以并不是取决于成员大小。&lt;/p&gt;
+&lt;p&gt;在c++中，你还可以通过&lt;code&gt;alignas()&lt;/code&gt;来设置某个成员的内存对齐，例如&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;struct&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;A&lt;/span&gt;{
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#66d9ef&#34;&gt;char&lt;/span&gt; a; &lt;span style=&#34;color:#75715e&#34;&gt;// 0
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#66d9ef&#34;&gt;alignas&lt;/span&gt;(&lt;span style=&#34;color:#ae81ff&#34;&gt;64&lt;/span&gt;) &lt;span style=&#34;color:#66d9ef&#34;&gt;double&lt;/span&gt; b; &lt;span style=&#34;color:#75715e&#34;&gt;// 64
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#66d9ef&#34;&gt;char&lt;/span&gt; c; &lt;span style=&#34;color:#75715e&#34;&gt;// 72
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;}; &lt;span style=&#34;color:#75715e&#34;&gt;//总大小128
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;其中&lt;code&gt;alignas(64)&lt;/code&gt;并不意味着完整占据&lt;code&gt;64&lt;/code&gt;字节，而只是把地址对齐到&lt;code&gt;64&lt;/code&gt;字节，所以只用了八个字节，后面的字节还可以被别的成员使用。&lt;/p&gt;
+&lt;p&gt;为什么说不打&lt;code&gt;#pragma pack&lt;/code&gt;这一行就意味着&lt;code&gt;n&lt;/code&gt;无限大呢，如果真的有gcc中&lt;code&gt;n&lt;/code&gt;默认取&lt;code&gt;4&lt;/code&gt;，那么应该是&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#pragma pack(4)
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;struct&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;A&lt;/span&gt;{
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#66d9ef&#34;&gt;char&lt;/span&gt; a; &lt;span style=&#34;color:#75715e&#34;&gt;// 0
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#66d9ef&#34;&gt;alignas&lt;/span&gt;(&lt;span style=&#34;color:#ae81ff&#34;&gt;64&lt;/span&gt;) &lt;span style=&#34;color:#66d9ef&#34;&gt;double&lt;/span&gt; b; &lt;span style=&#34;color:#75715e&#34;&gt;// 4
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#66d9ef&#34;&gt;char&lt;/span&gt; c; &lt;span style=&#34;color:#75715e&#34;&gt;// 12
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;}; &lt;span style=&#34;color:#75715e&#34;&gt;// 总大小为16
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;和上面什么都不设置的完全不同，故不设置必须是无限大才能解释这个现象。&lt;/p&gt;
+&lt;p&gt;当然，&lt;code&gt;alignas()&lt;/code&gt;也只能设置为2的幂次，并且如果设置的值小于该类型原有的对齐，那么还是取原有的对齐。&lt;/p&gt;
+&lt;p&gt;另外，你还可以给结构体设置对齐&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;struct&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;alignas&lt;/span&gt;(&lt;span style=&#34;color:#ae81ff&#34;&gt;32&lt;/span&gt;) A{
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#66d9ef&#34;&gt;char&lt;/span&gt; a;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#66d9ef&#34;&gt;double&lt;/span&gt; b;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#66d9ef&#34;&gt;char&lt;/span&gt; c;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;};&lt;span style=&#34;color:#75715e&#34;&gt;//总大小32
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;struct&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;B&lt;/span&gt;{
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#66d9ef&#34;&gt;char&lt;/span&gt; x;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	A a;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#66d9ef&#34;&gt;char&lt;/span&gt; c;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;};&lt;span style=&#34;color:#75715e&#34;&gt;//总大小96
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;但这里的&lt;code&gt;alignas&lt;/code&gt;和前面给成员设置的时候略有不同，前面的&lt;code&gt;double&lt;/code&gt;小于64，后面的空白位还是可以给接下来的成员用的。而这里的A虽然也小于32，但是结构体对齐在内部消化了这些空白位。与下面的例子对比起来更好理解&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;struct&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;A&lt;/span&gt;{
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#66d9ef&#34;&gt;char&lt;/span&gt; a;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#66d9ef&#34;&gt;double&lt;/span&gt; b;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#66d9ef&#34;&gt;char&lt;/span&gt; c;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;};&lt;span style=&#34;color:#75715e&#34;&gt;//总大小24
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;struct&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;B&lt;/span&gt;{
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#66d9ef&#34;&gt;char&lt;/span&gt; x;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#66d9ef&#34;&gt;alignas&lt;/span&gt;(&lt;span style=&#34;color:#ae81ff&#34;&gt;32&lt;/span&gt;) A a;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#66d9ef&#34;&gt;char&lt;/span&gt; c;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;};&lt;span style=&#34;color:#75715e&#34;&gt;//总大小64，暗示着a之后的空间还可以被c使用
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id=&#34;数组内存步幅&#34;&gt;数组内存步幅&lt;/h1&gt;
+&lt;p&gt;这是个小众变态需求，我遇到的情况是glsl的std140要求数组的步幅等于数组元素的对齐大小。数组的对齐要求是元素大小的对齐并向上取整到16的倍数，而相邻的两个数组元素之间的地址差距，或者说步幅要等于这个对齐。&lt;/p&gt;
+&lt;p&gt;举个例子，一般来说&lt;code&gt;float[3]&lt;/code&gt;的大小是12字节，而std140要求float首先对齐到16，然后每两个&lt;code&gt;float&lt;/code&gt;之间的间距也是16，也就是总共大小为48字节。一个非常不成功的写法是&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;struct&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;A&lt;/span&gt;{
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;alignas&lt;/span&gt;(&lt;span style=&#34;color:#ae81ff&#34;&gt;16&lt;/span&gt;) &lt;span style=&#34;color:#66d9ef&#34;&gt;float&lt;/span&gt; a[&lt;span style=&#34;color:#ae81ff&#34;&gt;3&lt;/span&gt;];
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;char&lt;/span&gt; b[&lt;span style=&#34;color:#ae81ff&#34;&gt;4&lt;/span&gt;];
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}; &lt;span style=&#34;color:#75715e&#34;&gt;//大小为16字节
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;struct&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;A&lt;/span&gt;{
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;char&lt;/span&gt; c;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;alignas&lt;/span&gt;(&lt;span style=&#34;color:#ae81ff&#34;&gt;16&lt;/span&gt;) &lt;span style=&#34;color:#66d9ef&#34;&gt;float&lt;/span&gt; a[&lt;span style=&#34;color:#ae81ff&#34;&gt;3&lt;/span&gt;];
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;char&lt;/span&gt; b[&lt;span style=&#34;color:#ae81ff&#34;&gt;4&lt;/span&gt;];
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}; &lt;span style=&#34;color:#75715e&#34;&gt;//大小为32字节
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;显然的，&lt;code&gt;alignas&lt;/code&gt;仅仅只将数组的开头对齐到了16字节，并没有将每一个元素都对齐到16。有一个比较不美丽的解决方式。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;struct&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;MyFloat&lt;/span&gt;{
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#66d9ef&#34;&gt;alignas&lt;/span&gt;(&lt;span style=&#34;color:#ae81ff&#34;&gt;16&lt;/span&gt;) &lt;span style=&#34;color:#66d9ef&#34;&gt;float&lt;/span&gt; v;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;};
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;struct&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;A&lt;/span&gt;{
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;char&lt;/span&gt; a;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	MyFloat b[&lt;span style=&#34;color:#ae81ff&#34;&gt;3&lt;/span&gt;];
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#66d9ef&#34;&gt;char&lt;/span&gt; c;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}; &lt;span style=&#34;color:#75715e&#34;&gt;//总大小80
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;不美丽就不美丽在每次访问值都必须&lt;code&gt;a.b[i].v&lt;/code&gt;，必须用成员运算符取值，我们可以用模板和重载运算符搞一个更好用、更泛用的&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;template&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;typename&lt;/span&gt; T, size_t Size&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Std140Array&lt;/span&gt;{
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;private&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;struct&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;alignas&lt;/span&gt;(&lt;span style=&#34;color:#ae81ff&#34;&gt;16&lt;/span&gt;) Element{
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        T value;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    };
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Element elements[Size];
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    T&lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;operator&lt;/span&gt;[](size_t idx){ &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; elements[idx].value; }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; T&lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;operator&lt;/span&gt;[](size_t idx) &lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; { &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; elements[idx].value; }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;};
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;struct&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;A&lt;/span&gt;{
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#66d9ef&#34;&gt;char&lt;/span&gt; a;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	Std140Array&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;float&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;3&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; b;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#66d9ef&#34;&gt;char&lt;/span&gt; c;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}; &lt;span style=&#34;color:#75715e&#34;&gt;//总大小80
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;A a;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;a.b[&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;; &lt;span style=&#34;color:#75715e&#34;&gt;// 好用
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;不知道还有没有什么其他更高雅的做法，总而言之目前这个我用的比较舒服。&lt;/p&gt;
+</description>
+        </item>
+        <item>
         <title>基于图像分割的Tone Mapping简述</title>
         <link>https://kegalas.uk/p/%E5%9F%BA%E4%BA%8E%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2%E7%9A%84tone-mapping%E7%AE%80%E8%BF%B0/</link>
         <pubDate>Sun, 13 Apr 2025 15:49:34 +0800</pubDate>
         
         <guid>https://kegalas.uk/p/%E5%9F%BA%E4%BA%8E%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2%E7%9A%84tone-mapping%E7%AE%80%E8%BF%B0/</guid>
-        <description>&lt;img src="https://kegalas.uk/cover.jpg" alt="Featured image of post 基于图像分割的Tone Mapping简述" /&gt;&lt;h1 id=&#34;前言&#34;&gt;前言&lt;/h1&gt;
+        <description>&lt;img src="https://kegalas.uk/p/%E5%9F%BA%E4%BA%8E%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2%E7%9A%84tone-mapping%E7%AE%80%E8%BF%B0/cover.jpg" alt="Featured image of post 基于图像分割的Tone Mapping简述" /&gt;&lt;h1 id=&#34;前言&#34;&gt;前言&lt;/h1&gt;
 &lt;p&gt;这种方法试图将一张HDR图片首先用图像分割的方法分割成多个不同的区域，每个区域使用不同的色调映射曲线（或者别的技术），来将整个图片映射到SDR，以期获得比经典的全图使用一条曲线（或同一种方法）更好的效果。&lt;/p&gt;
 &lt;p&gt;这种方法也算是一个小众宝藏方法了，没有多少人研究，也没诞生出优势巨大的方法，本文大致上介绍一下现有的文献&lt;/p&gt;
 &lt;h1 id=&#34;tone-mapping-operators-progressing-towards-semantic-awareness&#34;&gt;Tone Mapping Operators: Progressing Towards Semantic-Awareness&lt;/h1&gt;
@@ -611,6 +760,82 @@
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\beta = 0.6\cdot[1-e^{-(SD_{n_{max}}-SD_n)}]
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;总结：针对对象进行分割，使用邻居加权的方式处理分割边缘问题。&lt;/p&gt;
+&lt;h1 id=&#34;clustering-based-content-and-color-adaptive-tone-mapping&#34;&gt;Clustering based content and color adaptive tone mapping&lt;/h1&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.sciencedirect.com/science/article/pii/S1077314217301789&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://www.sciencedirect.com/science/article/pii/S1077314217301789&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;本文提出了一种非常不一样的策略，首先，它不使用那套提取出亮度，进行压缩，再进行颜色恢复的方式，而是把颜色和亮度一起考虑。首先，将图片分成重叠的方格，然后进行聚类，然后进行数据分析后的色调映射。&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 77; 
+			flex-basis: 184px&#34;
+	&gt;
+	&lt;a href=&#34;https://kegalas.uk/p/%E5%9F%BA%E4%BA%8E%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2%E7%9A%84tone-mapping%E7%AE%80%E8%BF%B0/13.jpg&#34; data-size=&#34;439x570&#34;&gt;
+		&lt;img src=&#34;https://kegalas.uk/p/%E5%9F%BA%E4%BA%8E%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2%E7%9A%84tone-mapping%E7%AE%80%E8%BF%B0/13.jpg&#34;
+			width=&#34;439&#34;
+			height=&#34;570&#34;
+			srcset=&#34;https://kegalas.uk/p/%E5%9F%BA%E4%BA%8E%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2%E7%9A%84tone-mapping%E7%AE%80%E8%BF%B0/13_hud3a0c8a8f1e08f3c4059afa0a3f23ef3_33053_480x0_resize_q75_box.jpg 480w, https://kegalas.uk/p/%E5%9F%BA%E4%BA%8E%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2%E7%9A%84tone-mapping%E7%AE%80%E8%BF%B0/13_hud3a0c8a8f1e08f3c4059afa0a3f23ef3_33053_1024x0_resize_q75_box.jpg 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;13.jpg&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;13.jpg&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;像前人的工作一样，一开始还是进行了一个log型曲线的初始化映射，本文使用的曲线为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[L(i,j,c)=\log(I(i,j,c)\cdot 10^6+1)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\((i,j)\)&lt;/span&gt;指的是像素坐标，而&lt;span class=&#34;math inline&#34;&gt;\(c\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(RGB\)&lt;/span&gt;通道中的一个。&lt;/p&gt;
+&lt;p&gt;然后，将图像分为&lt;span class=&#34;math inline&#34;&gt;\(7\times 7\)&lt;/span&gt;大小的重叠小块，步幅为&lt;span class=&#34;math inline&#34;&gt;\(2\)&lt;/span&gt;。设&lt;span class=&#34;math inline&#34;&gt;\(\mathbf{x}\)&lt;/span&gt;为该小块的颜色矩阵，而&lt;span class=&#34;math inline&#34;&gt;\(\mathbf{x}_c\)&lt;/span&gt;是其中的一个通道的矩阵，每个颜色通道的平均值（标量）记作&lt;span class=&#34;math inline&#34;&gt;\(m_c\)&lt;/span&gt;，于是&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\bar{\mathbf{x}}_c = \mathbf{x}_c-\mathbf{1}\cdot m_c
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;此时&lt;span class=&#34;math inline&#34;&gt;\(\bar{\mathbf{x}}_c\)&lt;/span&gt;就是一个去除了直流分量的细节结构。而三个通道的颜色差异记作&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\bar m_c = m_c-m,\quad m=(m_r+m_g+m_b)/3
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;结合上述，一个小块的颜色就能分解成&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\mathbf{x} = 
+\begin{bmatrix}
+\bar{\mathbf{x}}_r \\
+\bar{\mathbf{x}}_g \\
+\bar{\mathbf{x}}_b
+\end{bmatrix}+
+\begin{bmatrix}
+\mathbf{1}\cdot m_r \\
+\mathbf{1}\cdot m_g \\
+\mathbf{1}\cdot m_b
+\end{bmatrix}+
+\begin{bmatrix}
+\mathbf{1} \\
+\mathbf{1} \\
+\mathbf{1}
+\end{bmatrix}
+\cdot m = \bar{\mathbf{x}} + \bar{\mathbf{m}}+[\mathbf{1};\mathbf{1};\mathbf{1}]\cdot m
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;把其中的&lt;span class=&#34;math inline&#34;&gt;\(\bar{\mathbf{x}}\)&lt;/span&gt;称作颜色结构，而&lt;span class=&#34;math inline&#34;&gt;\(\bar{\mathbf{m}}\)&lt;/span&gt;称作颜色差异。&lt;/p&gt;
+&lt;p&gt;接下来就是聚类环节，作者说用Kmeans还是GMM都可以，出于性能和效果的考虑，选择了Kmeans，其效果和GMM类似。在&lt;span class=&#34;math inline&#34;&gt;\(\bar{\mathbf{x}}\)&lt;/span&gt;上进行聚类，然后对每一类内部的&lt;span class=&#34;math inline&#34;&gt;\(\bar{\mathbf{x}}\)&lt;/span&gt;计算一个协方差矩阵&lt;span class=&#34;math inline&#34;&gt;\(\Phi\)&lt;/span&gt;，因为其半正定，于是进行特征值分解&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\Phi=Q\Lambda Q^{-1}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;因为&lt;span class=&#34;math inline&#34;&gt;\(Q\)&lt;/span&gt;包含了&lt;span class=&#34;math inline&#34;&gt;\(\Phi\)&lt;/span&gt;中的特征向量，所以主成分分析的变换矩阵为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[P=Q^T
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中拥有较大特征值的特征向量代表了该聚类中最重要的结构特征，我们计算PCA域中的特征为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\bar{\mathbf{y}} = P\bar{\mathbf{x}}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;注意&lt;span class=&#34;math inline&#34;&gt;\(\bar{\mathbf{y}}\)&lt;/span&gt;中的系数要比&lt;span class=&#34;math inline&#34;&gt;\(\bar{\mathbf{x}}\)&lt;/span&gt;中的更稀疏，小系数更多代表着噪音和不重要的结构特征。越大越重要。所以在&lt;span class=&#34;math inline&#34;&gt;\(\bar{\mathbf{y}}\)&lt;/span&gt;进行压缩要比在&lt;span class=&#34;math inline&#34;&gt;\(\bar{\mathbf{x}}\)&lt;/span&gt;上进行压缩要更具有鲁棒性。&lt;/p&gt;
+&lt;p&gt;在压缩操作中，首先把代表着噪声和不重要特征的，&lt;span class=&#34;math inline&#34;&gt;\(\bar{\mathbf{y}}\)&lt;/span&gt;中小于&lt;span class=&#34;math inline&#34;&gt;\(0.1\)&lt;/span&gt;的系数直接置&lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt;。而其他系数中，较大的需要被压缩，而较小的需要被增强，所以选用一条&lt;span class=&#34;math inline&#34;&gt;\(S\)&lt;/span&gt;型曲线&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\bar{\mathbf{y}}_a=(1.6/\pi)\cdot \arctan(a\cdot \bar{\mathbf{y}})
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(a\)&lt;/span&gt;是一个参数，用于控制曲线形状，其越小，压缩程度越大。&lt;/p&gt;
+&lt;p&gt;而对于&lt;span class=&#34;math inline&#34;&gt;\(\bar{\mathbf{m}}\)&lt;/span&gt;，也使用同种曲线，但是参数不同&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\bar{\mathbf{m}}_b=(1.2/\pi)\cdot\arctan(b\cdot\bar{\mathbf{m}})
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;而&lt;span class=&#34;math inline&#34;&gt;\(m\)&lt;/span&gt;的变化较为缓慢，用线性压缩即可，于是压缩后的图片小块为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\mathbf{x}_t=P^T\bar{\mathbf{y}}_a+\bar{\mathbf{m}}_b+[\mathbf{1};\mathbf{1};\mathbf{1}]w\cdot m
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;然后就是将小块混合在一起，以及后处理过程。混合非常简单，由于小块是重叠的，所以计算所有小块对该像素的贡献再求均值即可。而后处理方面，作者将最大和最小的&lt;span class=&#34;math inline&#34;&gt;\(1\%\)&lt;/span&gt;的像素值进行了裁剪，然后将所有小块中的像素值都拉伸到&lt;span class=&#34;math inline&#34;&gt;\([0,1]\)&lt;/span&gt;的范围&lt;/p&gt;
+&lt;p&gt;后面还有一些扩展手段，但是核心方法就是上面所述的，略过。&lt;/p&gt;
+&lt;p&gt;总结：本文使用聚类进行分割，由于聚类所用的小块是重叠的，所以求平均即可避免分割边界问题。&lt;/p&gt;
 </description>
         </item>
         <item>
@@ -619,7 +844,7 @@
         <pubDate>Wed, 19 Mar 2025 13:39:15 +0800</pubDate>
         
         <guid>https://kegalas.uk/p/hdr%E8%89%B2%E8%B0%83%E6%98%A0%E5%B0%84%E5%9B%BE%E5%83%8F%E8%B4%A8%E9%87%8F%E8%AF%84%E4%BB%B7%E7%AE%80%E8%BF%B0/</guid>
-        <description>&lt;img src="https://kegalas.uk/cover.jpg" alt="Featured image of post HDR色调映射图像质量评价简述" /&gt;&lt;h1 id=&#34;tmqi&#34;&gt;TMQI&lt;/h1&gt;
+        <description>&lt;img src="https://kegalas.uk/p/hdr%E8%89%B2%E8%B0%83%E6%98%A0%E5%B0%84%E5%9B%BE%E5%83%8F%E8%B4%A8%E9%87%8F%E8%AF%84%E4%BB%B7%E7%AE%80%E8%BF%B0/cover.jpg" alt="Featured image of post HDR色调映射图像质量评价简述" /&gt;&lt;h1 id=&#34;tmqi&#34;&gt;TMQI&lt;/h1&gt;
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://ieeexplore.ieee.org/abstract/document/6319406&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;Objective Quality Assessment of Tone-Mapped Images&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;本文之前的大多数IQA都只能应用在动态范围相同的图片上，本文的灵感来源于评估结构相似度的SSIM指标和评估整体自然度的NSS指标。本文希望权衡结构和自然度这两个指标来进行HDR-SDR图像评估。（同时这也说明了TMQI是全参评估指标）&lt;/p&gt;

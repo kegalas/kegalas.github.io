@@ -9,10 +9,10 @@
 <meta property='og:description' content='前言 这种方法试图将一张HDR图片首先用图像分割的方法分割成多个不同的区域，每个区域使用不同的色调映射曲线（或者别的技术），来将整个图片映射到'>
 <meta property='og:url' content='https://kegalas.uk/p/%E5%9F%BA%E4%BA%8E%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2%E7%9A%84tone-mapping%E7%AE%80%E8%BF%B0/'>
 <meta property='og:site_name' content='KegalaS的个人博客'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='大学' /><meta property='article:tag' content='人工智能' /><meta property='article:tag' content='计算机视觉' /><meta property='article:tag' content='图形学' /><meta property='article:published_time' content='2025-04-13T15:49:34&#43;08:00'/><meta property='article:modified_time' content='2025-04-13T15:49:34&#43;08:00'/><meta property='og:image' content='https://kegalas.uk/cover.jpg' />
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='大学' /><meta property='article:tag' content='人工智能' /><meta property='article:tag' content='计算机视觉' /><meta property='article:tag' content='图形学' /><meta property='article:published_time' content='2025-04-13T15:49:34&#43;08:00'/><meta property='article:modified_time' content='2025-04-13T15:49:34&#43;08:00'/><meta property='og:image' content='https://kegalas.uk/p/%E5%9F%BA%E4%BA%8E%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2%E7%9A%84tone-mapping%E7%AE%80%E8%BF%B0/cover.jpg' />
 <meta name="twitter:title" content="基于图像分割的Tone Mapping简述">
 <meta name="twitter:description" content="前言 这种方法试图将一张HDR图片首先用图像分割的方法分割成多个不同的区域，每个区域使用不同的色调映射曲线（或者别的技术），来将整个图片映射到"><meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:image" content='https://kegalas.uk/cover.jpg' />
+    <meta name="twitter:image" content='https://kegalas.uk/p/%E5%9F%BA%E4%BA%8E%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2%E7%9A%84tone-mapping%E7%AE%80%E8%BF%B0/cover.jpg' />
     <link rel="shortcut icon" href="/images/favicon.ico" />
 
     </head>
@@ -65,8 +65,12 @@
     <header class="article-header">
         <div class="article-image">
             <a href="/p/%E5%9F%BA%E4%BA%8E%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2%E7%9A%84tone-mapping%E7%AE%80%E8%BF%B0/">
-                
-                    <img src="/cover.jpg" loading="lazy" alt="Featured image of post 基于图像分割的Tone Mapping简述" />
+                <img src="/p/%E5%9F%BA%E4%BA%8E%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2%E7%9A%84tone-mapping%E7%AE%80%E8%BF%B0/cover_hud564e3059b92e0982aa63ebb5c38fa59_49577_800x0_resize_q75_box.jpg"
+                        srcset="/p/%E5%9F%BA%E4%BA%8E%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2%E7%9A%84tone-mapping%E7%AE%80%E8%BF%B0/cover_hud564e3059b92e0982aa63ebb5c38fa59_49577_800x0_resize_q75_box.jpg 800w, /p/%E5%9F%BA%E4%BA%8E%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2%E7%9A%84tone-mapping%E7%AE%80%E8%BF%B0/cover_hud564e3059b92e0982aa63ebb5c38fa59_49577_1600x0_resize_q75_box.jpg 1600w"
+                        width="800" 
+                        height="390" 
+                        loading="lazy"
+                        alt="Featured image of post 基于图像分割的Tone Mapping简述" />
                 
             </a>
         </div>
@@ -726,6 +730,82 @@
 <p><span class="math display">\[\beta = 0.6\cdot[1-e^{-(SD_{n_{max}}-SD_n)}]
 \]</span></p>
 <p>总结：针对对象进行分割，使用邻居加权的方式处理分割边缘问题。</p>
+<h1 id="clustering-based-content-and-color-adaptive-tone-mapping">Clustering based content and color adaptive tone mapping</h1>
+<p><a class="link" href="https://www.sciencedirect.com/science/article/pii/S1077314217301789"  target="_blank" rel="noopener"
+    >https://www.sciencedirect.com/science/article/pii/S1077314217301789</a></p>
+<p>本文提出了一种非常不一样的策略，首先，它不使用那套提取出亮度，进行压缩，再进行颜色恢复的方式，而是把颜色和亮度一起考虑。首先，将图片分成重叠的方格，然后进行聚类，然后进行数据分析后的色调映射。</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 77; 
+			flex-basis: 184px"
+	>
+	<a href="/p/%E5%9F%BA%E4%BA%8E%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2%E7%9A%84tone-mapping%E7%AE%80%E8%BF%B0/13.jpg" data-size="439x570">
+		<img src="/p/%E5%9F%BA%E4%BA%8E%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2%E7%9A%84tone-mapping%E7%AE%80%E8%BF%B0/13.jpg"
+			width="439"
+			height="570"
+			srcset="/p/%E5%9F%BA%E4%BA%8E%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2%E7%9A%84tone-mapping%E7%AE%80%E8%BF%B0/13_hud3a0c8a8f1e08f3c4059afa0a3f23ef3_33053_480x0_resize_q75_box.jpg 480w, /p/%E5%9F%BA%E4%BA%8E%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2%E7%9A%84tone-mapping%E7%AE%80%E8%BF%B0/13_hud3a0c8a8f1e08f3c4059afa0a3f23ef3_33053_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="13.jpg">
+	</a>
+	
+	<figcaption>13.jpg</figcaption>
+	
+</figure></p>
+<p>像前人的工作一样，一开始还是进行了一个log型曲线的初始化映射，本文使用的曲线为</p>
+<p><span class="math display">\[L(i,j,c)=\log(I(i,j,c)\cdot 10^6+1)
+\]</span></p>
+<p>其中<span class="math inline">\((i,j)\)</span>指的是像素坐标，而<span class="math inline">\(c\)</span>是<span class="math inline">\(RGB\)</span>通道中的一个。</p>
+<p>然后，将图像分为<span class="math inline">\(7\times 7\)</span>大小的重叠小块，步幅为<span class="math inline">\(2\)</span>。设<span class="math inline">\(\mathbf{x}\)</span>为该小块的颜色矩阵，而<span class="math inline">\(\mathbf{x}_c\)</span>是其中的一个通道的矩阵，每个颜色通道的平均值（标量）记作<span class="math inline">\(m_c\)</span>，于是</p>
+<p><span class="math display">\[\bar{\mathbf{x}}_c = \mathbf{x}_c-\mathbf{1}\cdot m_c
+\]</span></p>
+<p>此时<span class="math inline">\(\bar{\mathbf{x}}_c\)</span>就是一个去除了直流分量的细节结构。而三个通道的颜色差异记作</p>
+<p><span class="math display">\[\bar m_c = m_c-m,\quad m=(m_r+m_g+m_b)/3
+\]</span></p>
+<p>结合上述，一个小块的颜色就能分解成</p>
+<p><span class="math display">\[\mathbf{x} = 
+\begin{bmatrix}
+\bar{\mathbf{x}}_r \\
+\bar{\mathbf{x}}_g \\
+\bar{\mathbf{x}}_b
+\end{bmatrix}+
+\begin{bmatrix}
+\mathbf{1}\cdot m_r \\
+\mathbf{1}\cdot m_g \\
+\mathbf{1}\cdot m_b
+\end{bmatrix}+
+\begin{bmatrix}
+\mathbf{1} \\
+\mathbf{1} \\
+\mathbf{1}
+\end{bmatrix}
+\cdot m = \bar{\mathbf{x}} + \bar{\mathbf{m}}+[\mathbf{1};\mathbf{1};\mathbf{1}]\cdot m
+\]</span></p>
+<p>把其中的<span class="math inline">\(\bar{\mathbf{x}}\)</span>称作颜色结构，而<span class="math inline">\(\bar{\mathbf{m}}\)</span>称作颜色差异。</p>
+<p>接下来就是聚类环节，作者说用Kmeans还是GMM都可以，出于性能和效果的考虑，选择了Kmeans，其效果和GMM类似。在<span class="math inline">\(\bar{\mathbf{x}}\)</span>上进行聚类，然后对每一类内部的<span class="math inline">\(\bar{\mathbf{x}}\)</span>计算一个协方差矩阵<span class="math inline">\(\Phi\)</span>，因为其半正定，于是进行特征值分解</p>
+<p><span class="math display">\[\Phi=Q\Lambda Q^{-1}
+\]</span></p>
+<p>因为<span class="math inline">\(Q\)</span>包含了<span class="math inline">\(\Phi\)</span>中的特征向量，所以主成分分析的变换矩阵为</p>
+<p><span class="math display">\[P=Q^T
+\]</span></p>
+<p>其中拥有较大特征值的特征向量代表了该聚类中最重要的结构特征，我们计算PCA域中的特征为</p>
+<p><span class="math display">\[\bar{\mathbf{y}} = P\bar{\mathbf{x}}
+\]</span></p>
+<p>注意<span class="math inline">\(\bar{\mathbf{y}}\)</span>中的系数要比<span class="math inline">\(\bar{\mathbf{x}}\)</span>中的更稀疏，小系数更多代表着噪音和不重要的结构特征。越大越重要。所以在<span class="math inline">\(\bar{\mathbf{y}}\)</span>进行压缩要比在<span class="math inline">\(\bar{\mathbf{x}}\)</span>上进行压缩要更具有鲁棒性。</p>
+<p>在压缩操作中，首先把代表着噪声和不重要特征的，<span class="math inline">\(\bar{\mathbf{y}}\)</span>中小于<span class="math inline">\(0.1\)</span>的系数直接置<span class="math inline">\(0\)</span>。而其他系数中，较大的需要被压缩，而较小的需要被增强，所以选用一条<span class="math inline">\(S\)</span>型曲线</p>
+<p><span class="math display">\[\bar{\mathbf{y}}_a=(1.6/\pi)\cdot \arctan(a\cdot \bar{\mathbf{y}})
+\]</span></p>
+<p>其中<span class="math inline">\(a\)</span>是一个参数，用于控制曲线形状，其越小，压缩程度越大。</p>
+<p>而对于<span class="math inline">\(\bar{\mathbf{m}}\)</span>，也使用同种曲线，但是参数不同</p>
+<p><span class="math display">\[\bar{\mathbf{m}}_b=(1.2/\pi)\cdot\arctan(b\cdot\bar{\mathbf{m}})
+\]</span></p>
+<p>而<span class="math inline">\(m\)</span>的变化较为缓慢，用线性压缩即可，于是压缩后的图片小块为</p>
+<p><span class="math display">\[\mathbf{x}_t=P^T\bar{\mathbf{y}}_a+\bar{\mathbf{m}}_b+[\mathbf{1};\mathbf{1};\mathbf{1}]w\cdot m
+\]</span></p>
+<p>然后就是将小块混合在一起，以及后处理过程。混合非常简单，由于小块是重叠的，所以计算所有小块对该像素的贡献再求均值即可。而后处理方面，作者将最大和最小的<span class="math inline">\(1\%\)</span>的像素值进行了裁剪，然后将所有小块中的像素值都拉伸到<span class="math inline">\([0,1]\)</span>的范围</p>
+<p>后面还有一些扩展手段，但是核心方法就是上面所述的，略过。</p>
+<p>总结：本文使用聚类进行分割，由于聚类所用的小块是重叠的，所以求平均即可避免分割边界问题。</p>
 
 </section>
 
@@ -821,8 +901,12 @@
         
         
             <div class="article-image">
-                
-                    <img src="/cover.jpg" loading="lazy" data-key="" data-hash="/cover.jpg"/>
+                <img src="/p/hdr%E8%89%B2%E8%B0%83%E6%98%A0%E5%B0%84%E5%9B%BE%E5%83%8F%E8%B4%A8%E9%87%8F%E8%AF%84%E4%BB%B7%E7%AE%80%E8%BF%B0/cover.180758a5ee73b6597684d5908958cd17_hubce6d89c2fc230acc2296e007ead6ecd_28081_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-GAdYpe5ztll2hNWQiVjNFw==">
                 
             </div>
         
@@ -1077,6 +1161,7 @@
     <li><a href="#tone-reproduction-a-perspective-from-luminance-driven-perceptual-grouping">Tone Reproduction: A Perspective from Luminance-Driven Perceptual Grouping</a></li>
     <li><a href="#scene-segmentation-based-exposure-compensation-for-tone-mapping-of-high-dynamic-range-scenes">Scene-Segmentation-Based Exposure Compensation for Tone Mapping of High Dynamic Range Scenes</a></li>
     <li><a href="#segmentation-based-tone-mapping-for-high-dynamic-range-images">Segmentation Based Tone-Mapping for High Dynamic Range Images</a></li>
+    <li><a href="#clustering-based-content-and-color-adaptive-tone-mapping">Clustering based content and color adaptive tone mapping</a></li>
   </ol>
 </nav>
                 </div>
