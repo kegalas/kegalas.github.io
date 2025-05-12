@@ -319,3 +319,8 @@ $$
 本文并没有提出什么新的网络架构。Mask的提取部分，使用了预训练的FastFCN，将其中的150个类又归为9类，然后使用形态学方法生成trimap，然后使用Alpha matting获取到精细的mask。然后，作者使用这样的方法对几百张LDR图片生成了mask，统计个各类的亮度直方图，也即学习到了个各类的目标亮度。
 
 在Tone mapping的部分，作者在HDR上获取到mask后，就简单的将目前的亮度替换为目标亮度，然后再用颜色恢复方法恢复出来LDR图像。
+
+# HDR10、HDR10+、HLG、Vivid、ACES资料解读
+
+TODO
+https://en.wikipedia.org/wiki/Academy_Color_Encoding_System
