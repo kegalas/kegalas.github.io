@@ -6,7 +6,230 @@
         <description>Recent content on KegalaS的个人博客</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Sat, 01 Mar 2025 19:07:37 +0800</lastBuildDate><atom:link href="https://kegalas.uk/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Wed, 19 Mar 2025 13:39:15 +0800</lastBuildDate><atom:link href="https://kegalas.uk/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>HDR色调映射图像质量评价简述</title>
+        <link>https://kegalas.uk/p/hdr%E8%89%B2%E8%B0%83%E6%98%A0%E5%B0%84%E5%9B%BE%E5%83%8F%E8%B4%A8%E9%87%8F%E8%AF%84%E4%BB%B7%E7%AE%80%E8%BF%B0/</link>
+        <pubDate>Wed, 19 Mar 2025 13:39:15 +0800</pubDate>
+        
+        <guid>https://kegalas.uk/p/hdr%E8%89%B2%E8%B0%83%E6%98%A0%E5%B0%84%E5%9B%BE%E5%83%8F%E8%B4%A8%E9%87%8F%E8%AF%84%E4%BB%B7%E7%AE%80%E8%BF%B0/</guid>
+        <description>&lt;img src="https://kegalas.uk/cover.jpg" alt="Featured image of post HDR色调映射图像质量评价简述" /&gt;&lt;h1 id=&#34;tmqi&#34;&gt;TMQI&lt;/h1&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://ieeexplore.ieee.org/abstract/document/6319406&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Objective Quality Assessment of Tone-Mapped Images&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;本文之前的大多数IQA都只能应用在动态范围相同的图片上，本文的灵感来源于评估结构相似度的SSIM指标和评估整体自然度的NSS指标。本文希望权衡结构和自然度这两个指标来进行HDR-SDR图像评估。（同时这也说明了TMQI是全参评估指标）&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;结构相似度&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;局部评估定义如下&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[S_{local}(x,y)=\dfrac{2\sigma&#39;_x\sigma&#39;_y+C_1}{\sigma_x^{&#39;2}+\sigma^{&#39;2}_y+C_1}\cdot\dfrac{\sigma_{xy}+C_2}{\sigma_x\sigma_y+C_2}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(x,y\)&lt;/span&gt;分别是HDR图和SDR图中的位置相同的一块小区域。&lt;span class=&#34;math inline&#34;&gt;\(\sigma_x, \sigma_y, \sigma_{xy}\)&lt;/span&gt;分别是小区域的标准差和相关系数。&lt;span class=&#34;math inline&#34;&gt;\(C_1, C_2\)&lt;/span&gt;为常数（取&lt;span class=&#34;math inline&#34;&gt;\(C_1=0.01, C_2=10\)&lt;/span&gt;）。&lt;/p&gt;
+&lt;p&gt;上式的第一项评估的是信号强度，在HDR和SDR中，如果这一块地方都很重要（信号强度大），或者都不重要，则不给予惩罚。如果一方重要，一方不重要，那么就给予惩罚。为了评估强度，将原本的方差&lt;span class=&#34;math inline&#34;&gt;\(\sigma\)&lt;/span&gt;经过一个非线性映射得到了这个&lt;span class=&#34;math inline&#34;&gt;\(\sigma&#39;\)&lt;/span&gt;，其被设计为将重要的地方映射成&lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt;，不重要的地方就映射成&lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt;，其形式为高斯分布的积分&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\sigma&#39;=\dfrac{1}{\sqrt{2\pi}\theta_\sigma}\int^\sigma_{-\infty}\exp\left[-\dfrac{(x-\tau_\sigma)^2}{2\theta_\sigma^2}\right]dx
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(\theta_\sigma\)&lt;/span&gt;、&lt;span class=&#34;math inline&#34;&gt;\(\tau_\sigma\)&lt;/span&gt;是一些根据人眼特征设计的参数：&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\theta_\sigma(f)=\dfrac{\tau_\sigma(f)}{k}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt;作者这里取&lt;span class=&#34;math inline&#34;&gt;\(3\)&lt;/span&gt;，通常可以取&lt;span class=&#34;math inline&#34;&gt;\([2.3,4]\)&lt;/span&gt;中的数&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\tau_{\sigma}(f)=\dfrac{\bar\mu}{\sqrt2\lambda A(f)}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(\bar \mu\)&lt;/span&gt;是亮度值的平均值，但作者实际上取的是SDR的中间值，即128。&lt;span class=&#34;math inline&#34;&gt;\(\lambda\)&lt;/span&gt;也是一个常数，作者完全没说取多少，我看有些实现里面取了&lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[A(f)=2.6[0.0192+0.114f]\exp[-(0.114f)^{1.1}]
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;作者说这个&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;是一个空间频率，但实际上根图片内容没有任何关系，用了一个常数&lt;span class=&#34;math inline&#34;&gt;\(16\ \text{cycles/degree}\)&lt;/span&gt;，我并不是很懂作者在说什么。&lt;/p&gt;
+&lt;p&gt;光这样还不够，为了更好的排除采样密度、观察者距离、设备分辨率等干扰因素，引入了多尺度的评价流程，如下&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 241; 
+			flex-basis: 578px&#34;
+	&gt;
+	&lt;a href=&#34;https://kegalas.uk/p/hdr%E8%89%B2%E8%B0%83%E6%98%A0%E5%B0%84%E5%9B%BE%E5%83%8F%E8%B4%A8%E9%87%8F%E8%AF%84%E4%BB%B7%E7%AE%80%E8%BF%B0/1.jpg&#34; data-size=&#34;791x328&#34;&gt;
+		&lt;img src=&#34;https://kegalas.uk/p/hdr%E8%89%B2%E8%B0%83%E6%98%A0%E5%B0%84%E5%9B%BE%E5%83%8F%E8%B4%A8%E9%87%8F%E8%AF%84%E4%BB%B7%E7%AE%80%E8%BF%B0/1.jpg&#34;
+			width=&#34;791&#34;
+			height=&#34;328&#34;
+			srcset=&#34;https://kegalas.uk/p/hdr%E8%89%B2%E8%B0%83%E6%98%A0%E5%B0%84%E5%9B%BE%E5%83%8F%E8%B4%A8%E9%87%8F%E8%AF%84%E4%BB%B7%E7%AE%80%E8%BF%B0/1_hu2712cc904ebe2762d7b965a2fd0ee5b0_36653_480x0_resize_q75_box.jpg 480w, https://kegalas.uk/p/hdr%E8%89%B2%E8%B0%83%E6%98%A0%E5%B0%84%E5%9B%BE%E5%83%8F%E8%B4%A8%E9%87%8F%E8%AF%84%E4%BB%B7%E7%AE%80%E8%BF%B0/1_hu2712cc904ebe2762d7b965a2fd0ee5b0_36653_1024x0_resize_q75_box.jpg 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;1.jpg&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;1.jpg&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;每次获取到一个&lt;span class=&#34;math inline&#34;&gt;\(S_{local}\)&lt;/span&gt;之后，先将图片进行低通滤波，然后进行一次下采样，再获取一个&lt;span class=&#34;math inline&#34;&gt;\(S_{local}\)&lt;/span&gt;，反复重复直到&lt;span class=&#34;math inline&#34;&gt;\(L=5\)&lt;/span&gt;，其中之前提到的&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;也每次下采样（即除以&lt;span class=&#34;math inline&#34;&gt;\(2\)&lt;/span&gt;）&lt;/p&gt;
+&lt;p&gt;一整张图的局部相似度评估使用滑动窗口计算，最后取平均&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[S_l=\dfrac{1}{N_l}\sum^{N_l}_{i=1}S_{local}(x_i, y_i)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;多尺度的评价指标则为加权乘积&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[S=\prod^L_{l=1}S_l^{\beta_l}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(\beta_l=\{0.0448,0.2856,0.3001,0.2363,0.1333\}\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;自然度&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;评估自然度一般都是一个主观的任务，较难以量化，作者这里使用统计的方法来评估。首先选取了3000张灰度图像，包含了各种各样自然场景的图片，然后统计他们的平均值和方差，发现他们分别符合高斯分布和Beta分布：&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 60; 
+			flex-basis: 145px&#34;
+	&gt;
+	&lt;a href=&#34;https://kegalas.uk/p/hdr%E8%89%B2%E8%B0%83%E6%98%A0%E5%B0%84%E5%9B%BE%E5%83%8F%E8%B4%A8%E9%87%8F%E8%AF%84%E4%BB%B7%E7%AE%80%E8%BF%B0/2.jpg&#34; data-size=&#34;515x850&#34;&gt;
+		&lt;img src=&#34;https://kegalas.uk/p/hdr%E8%89%B2%E8%B0%83%E6%98%A0%E5%B0%84%E5%9B%BE%E5%83%8F%E8%B4%A8%E9%87%8F%E8%AF%84%E4%BB%B7%E7%AE%80%E8%BF%B0/2.jpg&#34;
+			width=&#34;515&#34;
+			height=&#34;850&#34;
+			srcset=&#34;https://kegalas.uk/p/hdr%E8%89%B2%E8%B0%83%E6%98%A0%E5%B0%84%E5%9B%BE%E5%83%8F%E8%B4%A8%E9%87%8F%E8%AF%84%E4%BB%B7%E7%AE%80%E8%BF%B0/2_huc9a8c3fb0b4231b28faabe64d5b199d4_51616_480x0_resize_q75_box.jpg 480w, https://kegalas.uk/p/hdr%E8%89%B2%E8%B0%83%E6%98%A0%E5%B0%84%E5%9B%BE%E5%83%8F%E8%B4%A8%E9%87%8F%E8%AF%84%E4%BB%B7%E7%AE%80%E8%BF%B0/2_huc9a8c3fb0b4231b28faabe64d5b199d4_51616_1024x0_resize_q75_box.jpg 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;2.jpg&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;2.jpg&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;即&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[P_m(m)=\dfrac{1}{\sqrt{2\pi}\sigma_m}\exp\left[-\dfrac{(m-\mu_m)^2}{2\sigma^2_m}\right]
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[P_d(d)=\dfrac{(1-d)^{\beta_d-1}d^{\alpha_d-1}}{B(\alpha_d,\beta_d)}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(\mu_m=115.94,\sigma_m=27.99,\alpha_d=4.4,\beta_d=10.1\)&lt;/span&gt;。最近的研究认为对于人眼来说亮度和对比度更像是独立的要素，所以作者就将自然度评估定义为二者的乘积&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[N=\dfrac{1}{K}P_mP_d
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(K=\max\{P_m,P_d\}\)&lt;/span&gt;。从上面的介绍也可以看出来自然度这一部分不需要HDR原图的相关信息，所以这部分是无参评估指标。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;综合评估&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[Q=aS^{\alpha}+(1-a)N^{\beta}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(a\in[0,1]\)&lt;/span&gt;，而&lt;span class=&#34;math inline&#34;&gt;\(\alpha,\beta\)&lt;/span&gt;则定义了二者的灵敏度。&lt;/p&gt;
+&lt;h1 id=&#34;fsitm&#34;&gt;FSITM&lt;/h1&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://ieeexplore.ieee.org/abstract/document/6985727/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;FSITM: A Feature Similarity Index For Tone-Mapped Images&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;本文的作者使用log-Gabor滤波来提取图像特征。本文基于一个简单的事实：理想的HDR图片和其对应的SDR图片应该同一个像素的同一个通道，拥有相同的相位。&lt;/p&gt;
+&lt;p&gt;作者使用了一种叫做二次对偶（quadratic pairs）的技术，来更好的描述图像的信息。偶对称和奇对称滤波器分别记为&lt;span class=&#34;math inline&#34;&gt;\(M^e_{\rho r},M^o_{\rho r}\)&lt;/span&gt;，其中&lt;span class=&#34;math inline&#34;&gt;\(\rho,r\)&lt;/span&gt;分别是该滤波器的缩放因子和方向。对图像&lt;span class=&#34;math inline&#34;&gt;\(f(x)\)&lt;/span&gt;进行滤波得到其响应&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\bigg[e_{\rho r}(x),o_{\rho r}(x)\bigg]=\bigg[f(x)*M^e_{\rho r}, f(x)*M^o_{\rho r}\bigg]
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;于是我们计算局部相位为（原文应该是打错了，这里修改了过来）&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\phi_{pr}(x)=\arctan2\bigg(e_{\rho r}(x), o_{\rho r}(x)\bigg)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\arctan2(x,y)=2\arctan\dfrac{x}{\sqrt{x^2+y^2}+y}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;以上是对于特定的缩放和方向的，将所有缩放和方向综合起来考虑，得到我们所用的加权局部相位为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\text{ph}(x)=\arctan2\bigg[\sum_{\rho, r}e_{\rho r}(x), \sum_{\rho, r}o_{\rho r}(x)\bigg]
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;对于HDR图&lt;span class=&#34;math inline&#34;&gt;\(H\)&lt;/span&gt;和LDR图&lt;span class=&#34;math inline&#34;&gt;\(L\)&lt;/span&gt;，首先用简单的对数函数计算&lt;span class=&#34;math inline&#34;&gt;\(LogH=\log(H)\)&lt;/span&gt;，然后对于所有通道&lt;span class=&#34;math inline&#34;&gt;\(C\)&lt;/span&gt;都计算&lt;span class=&#34;math inline&#34;&gt;\(\text{ph}(x)\)&lt;/span&gt;，定义特征相似指标如下&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[F^C(I_1,I_2)=|P_1^C(x)\cap P_2^C(x)|/(row\times col)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[P(x)=U(\text{ph}(x))
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(U\)&lt;/span&gt;是单位阶跃函数（注：相位的取值范围为&lt;span class=&#34;math inline&#34;&gt;\([-\pi/2,+\pi/2]\)&lt;/span&gt;）。然后定义FSITM如下&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\text{FSITM}^C=\alpha F^C(H,L)+(1-\alpha)F^C(LogH,L)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;算法流程如下图&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 233; 
+			flex-basis: 561px&#34;
+	&gt;
+	&lt;a href=&#34;https://kegalas.uk/p/hdr%E8%89%B2%E8%B0%83%E6%98%A0%E5%B0%84%E5%9B%BE%E5%83%8F%E8%B4%A8%E9%87%8F%E8%AF%84%E4%BB%B7%E7%AE%80%E8%BF%B0/4.jpg&#34; data-size=&#34;716x306&#34;&gt;
+		&lt;img src=&#34;https://kegalas.uk/p/hdr%E8%89%B2%E8%B0%83%E6%98%A0%E5%B0%84%E5%9B%BE%E5%83%8F%E8%B4%A8%E9%87%8F%E8%AF%84%E4%BB%B7%E7%AE%80%E8%BF%B0/4.jpg&#34;
+			width=&#34;716&#34;
+			height=&#34;306&#34;
+			srcset=&#34;https://kegalas.uk/p/hdr%E8%89%B2%E8%B0%83%E6%98%A0%E5%B0%84%E5%9B%BE%E5%83%8F%E8%B4%A8%E9%87%8F%E8%AF%84%E4%BB%B7%E7%AE%80%E8%BF%B0/4_hudde5dfb005f2421b52e3681b277f1a0b_50067_480x0_resize_q75_box.jpg 480w, https://kegalas.uk/p/hdr%E8%89%B2%E8%B0%83%E6%98%A0%E5%B0%84%E5%9B%BE%E5%83%8F%E8%B4%A8%E9%87%8F%E8%AF%84%E4%BB%B7%E7%AE%80%E8%BF%B0/4_hudde5dfb005f2421b52e3681b277f1a0b_50067_1024x0_resize_q75_box.jpg 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;4.jpg&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;4.jpg&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;h1 id=&#34;fftmi&#34;&gt;FFTMI&lt;/h1&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://ieeexplore.ieee.org/document/8894517&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;FFTMI: Features Fusion for Natural Tone-Mapped Images Quality Evaluation&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;本文将TMQI-II和FSITM中的一部分因子组合起来形成更好的指标。感觉没什么可讲的，略过。&lt;/p&gt;
+&lt;h1 id=&#34;btmqi&#34;&gt;BTMQI&lt;/h1&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://ieeexplore.ieee.org/abstract/document/7384762&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Blind Quality Assessment of Tone-Mapped Images Via Analysis of Information, Naturalness, and Structure&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;BTMQI是一种无参评估指标。本文认为因为动态范围的限制，tone mapping后的图像无法保存所有HDR原图的信息，所以有理由认为保留了更多信息的图像其质量越高。本文首先就要估计图片中的信息量，作者使用了一种增亮/减暗的方法来评估原图和中间过渡图片的信息量。中间过渡图片定义如下&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[I_i=\min(\max(M_i\cdot I, 0), 255)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(I\)&lt;/span&gt;是tone mapping得到的SDR图片，而&lt;span class=&#34;math inline&#34;&gt;\(M_i\)&lt;/span&gt;是一系列常数乘数。作者使用信息熵来评估信息量&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[E(p)=-\int p(x)\log p(x)dx
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;我认为这里的熵计算可能是先转成灰度图再来计算的，因为三通道不是那么好处理。再转成灰度图后统计直方图，将每一个亮度的频率除以总数当做概率，然后就可以计算熵了。&lt;/p&gt;
+&lt;p&gt;取&lt;span class=&#34;math inline&#34;&gt;\(M_i\)&lt;/span&gt;为&lt;span class=&#34;math inline&#34;&gt;\(M=\{1,n,\frac{1}{n}|n=1.5,2.0,\cdots,10\}\)&lt;/span&gt;，计算不同过渡图片的熵为&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 54; 
+			flex-basis: 130px&#34;
+	&gt;
+	&lt;a href=&#34;https://kegalas.uk/p/hdr%E8%89%B2%E8%B0%83%E6%98%A0%E5%B0%84%E5%9B%BE%E5%83%8F%E8%B4%A8%E9%87%8F%E8%AF%84%E4%BB%B7%E7%AE%80%E8%BF%B0/3.jpg&#34; data-size=&#34;437x804&#34;&gt;
+		&lt;img src=&#34;https://kegalas.uk/p/hdr%E8%89%B2%E8%B0%83%E6%98%A0%E5%B0%84%E5%9B%BE%E5%83%8F%E8%B4%A8%E9%87%8F%E8%AF%84%E4%BB%B7%E7%AE%80%E8%BF%B0/3.jpg&#34;
+			width=&#34;437&#34;
+			height=&#34;804&#34;
+			srcset=&#34;https://kegalas.uk/p/hdr%E8%89%B2%E8%B0%83%E6%98%A0%E5%B0%84%E5%9B%BE%E5%83%8F%E8%B4%A8%E9%87%8F%E8%AF%84%E4%BB%B7%E7%AE%80%E8%BF%B0/3_hufdb36dec990c0044e87819f933f5ae05_53389_480x0_resize_q75_box.jpg 480w, https://kegalas.uk/p/hdr%E8%89%B2%E8%B0%83%E6%98%A0%E5%B0%84%E5%9B%BE%E5%83%8F%E8%B4%A8%E9%87%8F%E8%AF%84%E4%BB%B7%E7%AE%80%E8%BF%B0/3_hufdb36dec990c0044e87819f933f5ae05_53389_1024x0_resize_q75_box.jpg 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;3.jpg&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;3.jpg&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;上图中红色曲线是左边的图，蓝色曲线是右边的图。显然(a)图比(b)图要好得多，其信息熵也更高。而(d)虽然在绝大部分情况下由于(e)，但还是在一些部分下略逊。&lt;/p&gt;
+&lt;p&gt;为了平衡效果和效率作者最终采用了&lt;span class=&#34;math inline&#34;&gt;\(M=\{1,n,\frac{1}{n}|n=3.5,5,6.5,8\}\)&lt;/span&gt;这&lt;span class=&#34;math inline&#34;&gt;\(9\)&lt;/span&gt;个数。当然，这是对于全图的信息量，根据业界一般的思路，也要考虑局部的信息量，于是&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[E_t(I_i)=wE_g(I_i)+(1-w)E_l(I_i)^v
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;对于每一张过渡图片&lt;span class=&#34;math inline&#34;&gt;\(I_i\)&lt;/span&gt;，分别计算全局的和局部的信息量&lt;span class=&#34;math inline&#34;&gt;\(E_g(I_i)\)&lt;/span&gt;和&lt;span class=&#34;math inline&#34;&gt;\(E_l(I_i)\)&lt;/span&gt;，然后再将它们结合起来考虑。其中&lt;span class=&#34;math inline&#34;&gt;\(w=0.59,v=1.5\)&lt;/span&gt;是一个可调常数。局部信息量就是滑动窗口再求平均&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[E_l(I_i)=\dfrac{1}{L}\sum^L_{j=1}E(B_{i,j})
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(L\)&lt;/span&gt;是滑动窗口的个数，而滑动窗口的大小为&lt;span class=&#34;math inline&#34;&gt;\(72\times 72\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;当然，我们评测的信息量实际上只关注了有多少信息，而没有关注信息是什么样的。为了评估图片是否自然，作者直接照搬了TMQI中提出的方法，这里记作&lt;span class=&#34;math inline&#34;&gt;\(N\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;实际上对于结构的关注并没有体现在信息量中，于是又引入第三项。由于是无参指标，没有办法跟HDR图片对比，所以这里采用了索贝尔算子来提取梯度大小图&lt;span class=&#34;math inline&#34;&gt;\(G\)&lt;/span&gt;。因为只想要基础的结构，所以又使用一个阶跃函数来去除多余的部分，&lt;span class=&#34;math inline&#34;&gt;\(T=0.05\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[X(n)=\begin{cases}
+1,&amp;\text{if}\ G(n)\geq T \\
+0,&amp;\text{otherwise}
+\end{cases}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;将&lt;span class=&#34;math inline&#34;&gt;\(G\)&lt;/span&gt;用阶跃函数过滤之后得到的图记作&lt;span class=&#34;math inline&#34;&gt;\(S\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;综上所述，我们将11个特征记作&lt;span class=&#34;math inline&#34;&gt;\(\{E_t(I_i),N,S|i=1,2,\cdots,9\}\)&lt;/span&gt;。作者说可以用任意一种方法（如支持向量机）将这11个特征进行映射，得到一个标量评分，使其和人类主观评价相符（将人类评分数据集用于SVM训练）。&lt;/p&gt;
+&lt;h1 id=&#34;tmis-lpm&#34;&gt;TMIs-lpm&lt;/h1&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://ieeexplore.ieee.org/document/9057578&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Tone-Mapped Image Quality Assessment for Electronics Displays by Combining Luminance Partition and Colorfulness Index&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;思路和上一篇差不多，也是找一大堆特征，然后用SVM和主观评价拟合。不过区别是它首先将图片转化为LAB颜色空间，然后在L分量上使用Kmeans将图片分类为HR、DR、MR三个区域（高光、暗光、中等光），然后分别提取特征。这里Kmeans之前在全图应用了一次&lt;span class=&#34;math inline&#34;&gt;\(7\times 7\)&lt;/span&gt;的高斯滤波，来应对局部变化太快的情况。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;局部熵和对比度&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;这里的熵和BTMQI里面的是一样的，只不过通过实验，作者认为只有HR和DR区域比较需要这个指标，因为中等光区域的信息保留比较好。记作&lt;span class=&#34;math inline&#34;&gt;\(E_1, E_2\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;为了更好的评估HR和DR区域，又引入了两个对比度指标&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[C_M=\dfrac{I_{max}-I_{min}}{I_{max}+I_{min}}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(I_{max},I_{min}\)&lt;/span&gt;分别为HR或DR区域中的最大亮度、最小亮度。&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[C_L=\sum_LL(i,j)^2P_L(i,j)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(L(i,j)\)&lt;/span&gt;是两个像素的亮度差异值，&lt;span class=&#34;math inline&#34;&gt;\(P_L(i,j)\)&lt;/span&gt;是亮度差异值的概率分布（本人估计可能是滑动窗口内的所有亮度差异值的直方图统计出来的概率，看不懂作者想表达什么，但大概是一个加权平均值）。&lt;/p&gt;
+&lt;p&gt;总共四个指标分别记为&lt;span class=&#34;math inline&#34;&gt;\(C_{M1},C_{M2},C_{L1},C_{L2}\)&lt;/span&gt;。虽然作者好像没有明说，但是这六个指标应该都是局部区域算完再取平均的。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;颜色指标&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;颜色指标只在MR区域上进行，使用了LAB中的A和B分量&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[C_{ab} = \log\left(\dfrac{\sigma_a}{|\mu_a|^{0.2}}\right)\cdot \log\left(\dfrac{\sigma_b}{|\mu_b|^{0.2}}\right)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(\sigma\)&lt;/span&gt;和&lt;span class=&#34;math inline&#34;&gt;\(\mu\)&lt;/span&gt;就是A和B通道的标准差和均值了。这个是全图的，局部的指标为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[C_{RMS}=\sqrt{\dfrac{1}{m*n}\sum^m_{i=1}\sum^n_{j=1}(I_{i,j}-I_{mean})^2}{}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(m,n\)&lt;/span&gt;分别为滑动窗口的大小，而&lt;span class=&#34;math inline&#34;&gt;\(I_{i,j},I_{mean}\)&lt;/span&gt;即为特定像素的颜色值和该窗口的平均值。分别计算A和B通道的指标，得到两个指标&lt;span class=&#34;math inline&#34;&gt;\(C_{RMSa},C_{RMSb}\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;结构信息&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;作者使用GLCM算法提取图片的材质信息，其中使用能量信息&lt;span class=&#34;math inline&#34;&gt;\(G_E\)&lt;/span&gt;，对比度信息&lt;span class=&#34;math inline&#34;&gt;\(G_C\)&lt;/span&gt;，相关系数&lt;span class=&#34;math inline&#34;&gt;\(G_H\)&lt;/span&gt;，均匀度&lt;span class=&#34;math inline&#34;&gt;\(G_V\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;同时，使用Canny算子进行边缘检测，然后在所有边缘像素上，统计&lt;span class=&#34;math inline&#34;&gt;\(8\times 8\)&lt;/span&gt;的邻居像素的均值&lt;span class=&#34;math inline&#34;&gt;\(H_1\)&lt;/span&gt;，标准差&lt;span class=&#34;math inline&#34;&gt;\(H_2\)&lt;/span&gt;，峰值&lt;span class=&#34;math inline&#34;&gt;\(H_3\)&lt;/span&gt;，偏度（skewness）&lt;span class=&#34;math inline&#34;&gt;\(H_4\)&lt;/span&gt;&lt;/p&gt;
+&lt;h1 id=&#34;vqgc&#34;&gt;VQGC&lt;/h1&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://ieeexplore.ieee.org/document/9082863/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Blind Quality Assessment for Tone-Mapped Images by Analysis of Gradient and Chromatic Statistics&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;也是提取了一大堆特征然后用SVM拟合，特征有新意但是整个过程没什么新意，略过。&lt;/p&gt;
+&lt;h1 id=&#34;tres&#34;&gt;TReS&lt;/h1&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://openaccess.thecvf.com/content/WACV2022/html/Golestaneh_No-Reference_Image_Quality_Assessment_via_Transformers_Relative_Ranking_and_Self-Consistency_WACV_2022_paper.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;No-Reference Image Quality Assessment via Transformers, Relative Ranking, and Self-Consistency&lt;/a&gt;
+大体也是提取特征然后拟合的，只不过使用CNN提取局部特征，用Transformer计算非局部信息。然后将二者提取到的特征送到一个全连接层映射出一个得分，质量的损失函数即预测得分和人类主观评分的均方误差。后面还用了个Relative Ranking和Self-Consistency的损失函数加在里面。最后训练出来的模型就是端到端的评估模型。&lt;/p&gt;
+&lt;h1 id=&#34;hdr10hdr10hlgvividaces资料解读&#34;&gt;HDR10、HDR10+、HLG、Vivid、ACES资料解读&lt;/h1&gt;
+&lt;p&gt;TODO
+&lt;a class=&#34;link&#34; href=&#34;https://en.wikipedia.org/wiki/Academy_Color_Encoding_System&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://en.wikipedia.org/wiki/Academy_Color_Encoding_System&lt;/a&gt;&lt;/p&gt;
+</description>
+        </item>
+        <item>
         <title>将网易云下载的mp3封面从「碟片」移动到「封面」，解决foobar2000的显示问题</title>
         <link>https://kegalas.uk/p/%E5%B0%86%E7%BD%91%E6%98%93%E4%BA%91%E4%B8%8B%E8%BD%BD%E7%9A%84mp3%E5%B0%81%E9%9D%A2%E4%BB%8E%E7%A2%9F%E7%89%87%E7%A7%BB%E5%8A%A8%E5%88%B0%E5%B0%81%E9%9D%A2%E8%A7%A3%E5%86%B3foobar2000%E7%9A%84%E6%98%BE%E7%A4%BA%E9%97%AE%E9%A2%98/</link>
         <pubDate>Wed, 26 Feb 2025 12:31:42 +0800</pubDate>
@@ -152,6 +375,7 @@
     &gt;https://en.wikipedia.org/wiki/Perceptual_quantizer&lt;/a&gt;找到。由公式和图像可知，PQ曲线最高支持到10000nits亮度。&lt;/p&gt;
 &lt;p&gt;PQ曲线是同样的，那对于只有400nits亮度的显示屏如何显示1.0大小的信号呢？答案是：不要使用1.0大小的信号。通过某一些方法（见后，即tonemapping）将1.0大小的信号缩放到0.7左右，并且视频、图像文件里都只存0.7以下的数字。&lt;/p&gt;
 &lt;p&gt;实际上这并不是乱说的，HDR视频制作过程中metadata确实会有记录视频制作时的显示器亮度，以及视频播放时显示器的亮度（至少HDR Vivid确实有），这对于HDR的合理播放至关重要。&lt;/p&gt;
+&lt;p&gt;当然，这是假设了一个显示器直接根据PQ值输出亮度，实际上有些显示器自带tone mapping将PQ曲线规定的0~10000nits映射到自己的亮度值如0~400nits。据说也有的显示器是直接将超出的亮度裁剪掉。&lt;/p&gt;
 &lt;p&gt;接下来我们再来说说位深。从刚刚的描述中你也注意到，我们完全可以用&lt;span class=&#34;math inline&#34;&gt;\([0,255]\)&lt;/span&gt;来表示HDR的所有亮度值&lt;span class=&#34;math inline&#34;&gt;\([0,1]\)&lt;/span&gt;啊，为什么我们经常说HDR必须用上&lt;span class=&#34;math inline&#34;&gt;\(10\)&lt;/span&gt;bit呢？&lt;/p&gt;
 &lt;p&gt;我们先以简单的线性视角来看，如果要量化&lt;span class=&#34;math inline&#34;&gt;\([0,100]\)&lt;/span&gt;nits这个区间，我们使用&lt;span class=&#34;math inline&#34;&gt;\(8\)&lt;/span&gt;位深度，那么就是用&lt;span class=&#34;math inline&#34;&gt;\(256\)&lt;/span&gt;个数去表示&lt;span class=&#34;math inline&#34;&gt;\([0,100]\)&lt;/span&gt;，每两个连续的量化之间的差异是&lt;span class=&#34;math inline&#34;&gt;\(100/256\approx 0.4\)&lt;/span&gt;。而如果我们要量化&lt;span class=&#34;math inline&#34;&gt;\([0,10000]\)&lt;/span&gt;nits这个区间，那么差异就是&lt;span class=&#34;math inline&#34;&gt;\(10000/256\approx40\)&lt;/span&gt;，大了一百倍，这造成的结果就是渐变变化跨度太大，有“条带”现象的出现。举个例子如下，从左到右量化精度越来越高，两个连续量化之间的差异越来越小。&lt;/p&gt;
 &lt;p&gt;&lt;figure 
