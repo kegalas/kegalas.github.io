@@ -313,7 +313,7 @@ static constexpr uint64_t HTABLE_HEADER_ARRAY_SIZE = 1 << HTABLE_HEADER_MAX_DEPT
 */
 ```
 
-存储了四种数据，首先是`max_depth_`，代表`global_depth_`的上限，然后就是`global_depth_`自己，用于表示`directory`现在的大小，以及用于映射关系。之后是`local_depths_`，这是一个数组，每个元素都是`8`位无符号整数，代表对应表项的`local_depth`，可知最多有`512`个表项。最后的`bucket_page_ids_`也是一个数组，类型为`page_id_t`的数组，存储表项对应的`bucket`的页号。
+存储了四种数据，首先是`max_depth_`，代表`global_depth_`的上限，然后就是`global_depth_`自己，用于表示`directory`现在的大小，以及用于映射关系。之后是`local_depths_`，这是一个数组，每个元素都是`8`位无符号整数，代表对应表项的`local_depth`，可知directory最多有`512`个表项。最后的`bucket_page_ids_`也是一个数组，类型为`page_id_t`的数组，存储表项对应的`bucket`的页号。
 
 ```cpp
 static constexpr uint64_t HTABLE_DIRECTORY_MAX_DEPTH = 9;
@@ -373,6 +373,27 @@ template class ExtendibleHTableBucketPage<GenericKey<64>, RID, GenericComparator
 
 这样的模板特化。首先我们知道了，KV中的V是`RID`（第一个除外，应该只是用来调试的）。什么是`RID`？实际上，又可以看做是一种指针。`RID`存储了两个成员变量`page_id_`和`slot_num_`，也就是说，具体的数据是存在别的页中，存在序号为`slot_num_`的部分。这一部分具体可以阅读`src/include/common/rid.h`
 
-然后是前面的`GenericKey<>`是什么？他其实是一个包装的数组，当作哈希值来使用。这个数组里面可以存我们数据库里的具体的数据（称作`Tuple`，以后再说），也可以直接存整数值（仅用于测试意义）。`GenericKey<4>`代表数组长度为`4`（数组类型为`char[]`）。具体可见`src/include/storage/index/generic_key.h`。
+然后是前面的`GenericKey<>`是什么？他其实是一个包装的数组，当作哈希值来使用。这个数组可以用我们数据库里的具体的数据来设置（称作`Tuple`，以后再说），也可以直接整数值来设置（仅用于测试意义）。`GenericKey<4>`代表数组长度为`4`（数组类型为`char[]`）。具体可见`src/include/storage/index/generic_key.h`。
 
 同样的这个文件里，定义了`GenericComparator<>`，具体做的事就是比较`GenericKey<>`之间的大小关系，当然，也就是通过比较数组，或者说比较`Tuple`来实现的。
+
+这个`Tuple`其实就是我们在数据库表里看到的一行数据，具体展开就太大了，跟这里也关系没有太密切，我放到后面的附录来说。
+
+## Task3
+
+上一个task我们了解了可扩展Hash大概是怎么运行的，也介绍了一下三个层级的信息是如何存储的，接下来我们来具体实现可扩展Hash的功能。具体需要修改的代码在`src/container/disk/hash/disk_extendible_hash_table.cpp`
+
+先介绍`DiskExtendibleHashTable`的成员变量：
+
+- `index_name_`，似乎没有作用，只在构造函数里进行了赋值。
+- `bpm_`，即一个BufferPoolManager，我们创建、读取各种page的时候会用到。
+- `cmp_`，用于在查询等功能中比较数据键值的。
+- `hash_fn_`，TODO
+- `header_max_depth_, directory_max_depth_, bucket_max_size_`，前面介绍过了，不再重复。
+- `header_page_id_`，显然，你要访问hash表必须得有个入口，才能找到header的内容，才能依次往下访问数据，所以我们必须存一下header所在的页的页号。
+
+首先，在你创建这个hash表的时候（即调用构造函数），还没有任何数据被插入，所以我们只需要创建一个`header_page`即可，后面插入数据的时候才会按需要创建directory或者bucket。具体
+
+# 附录
+
+## Tuple
