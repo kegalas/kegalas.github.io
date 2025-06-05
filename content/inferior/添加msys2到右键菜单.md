@@ -97,3 +97,5 @@ Windows Registry Editor Version 5.00
 [-HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\Mingw64Here]
 [-HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\Clang64Here]
 ```
+
+另外，如果你要将msys2的命令行集成到Windows Terminal，那么你可以看看[https://www.msys2.org/docs/terminals/](https://www.msys2.org/docs/terminals/)

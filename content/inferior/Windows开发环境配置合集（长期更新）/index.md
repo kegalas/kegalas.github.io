@@ -108,7 +108,15 @@ AVD设置TODO（包括用软连接把安装目录转移等）
 
 ## Noto
 
-TODO
+[https://fonts.google.com/noto/specimen/Noto+Sans+Mono](https://fonts.google.com/noto/specimen/Noto+Sans+Mono)
+
+我一般用作备用字体，当Jetbrains Mono和软件自带备用字体无法显示汉字等字符时（比如emacs），我就会使用Noto字体来补充。
+
+## Nerd
+
+[https://www.nerdfonts.com/font-downloads](https://www.nerdfonts.com/font-downloads)
+
+这个项目为其他各种字体添加了icon，便于各类命令行软件进行icon显示，例如zsh、vim、emacs，我这里下载的当然是Jetbrains Mono Nerd。
 
 # Git
 
