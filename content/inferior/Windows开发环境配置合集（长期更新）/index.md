@@ -30,27 +30,7 @@ all-the-icons很奇怪，不会被use-package安装，我们`M-x package-install
 
 另外，我安装了lsp-pyright来提供python的补全，python里面也要用pip安装pyright才能运行。
 
-此时，用GUI版本的Emacs已经可以了，但是如果想在命令行里用Emacs，则需要添加环境变量。出于对环境变量冲突的恐惧，我没有直接将Emacs的bin添加进PATH，我选择了照抄Vim的bat文件。如下
-
-```bat
-@echo off
-rem -- Run Emacs --
-
-setlocal
-set EMACS_EXE_DIR=D:\Program_Files\Emacs\emacs-29.1\bin
-if exist "%EMACS%\emacs-29.1\bin\emacs.exe" set EMACS_EXE_DIR=%EMACS%\emacs-29.1\bin
-if exist "%EMACSRUNTIME%\emacs.exe" set EMACS_EXE_DIR=%EMACSRUNTIME%
-
-if not exist "%EMACS_EXE_DIR%\emacs.exe" (
-    echo "%EMACS_EXE_DIR%\emacs.exe" not found
-    goto :eof
-)
-
-"%EMACS_EXE_DIR%\emacs.exe"  %*
-
-```
-
-把这个文件保存为`emacs.bat`，然后找一个文件夹放进去，例如我放在了`xxx\myExec`下，然后把这个文件夹添加到PATH的末尾。
+此时，用GUI版本的Emacs已经可以了，但是如果想在命令行里用Emacs，则需要添加环境变量。出于对环境变量冲突的恐惧，我没有直接将Emacs的bin添加进PATH，而是新建了一个目录`xxx\myExec`，用于存放各种可执行文件的软链接，通过`New-Item -ItemType SymbolicLink -Path "emacs.exe" -Target "X:\xxx\emacs.exe"`建立软链接，然后把这个文件夹添加到PATH的末尾。
 
 ## IDEA
 
@@ -136,29 +116,7 @@ AVD设置TODO（包括用软连接把安装目录转移等）
 
 ![21.jpg](21.jpg)
 
-这里思虑再三我还是选择第二个。如果选第一个，更小心的避免PATH冲突，可以用和Emacs一样的手法：
-
-```bat
-@echo off
-rem -- Run GIT --
-
-setlocal
-set GIT_EXE_DIR=D:\Program_Files\Git\bin
-if exist "%GIT%\bin\git.exe" set GIT_EXE_DIR=%GIT%\bin
-if exist "%GITRUNTIME%\git.exe" set GIT_EXE_DIR=%GITRUNTIME%
-
-if not exist "%GIT_EXE_DIR%\git.exe" (
-    echo "%GIT_EXE_DIR%\git.exe" not found
-    goto :eof
-)
-
-"%GIT_EXE_DIR%\git.exe"  %*
-
-```
-
-但是，这样做许多软件就识别不到git，例如jetbrains家的IDE。所以我还是选择第二个好了。
-
-但是会不会和msys2中的软件冲突，还有待观察。目前我把他的环境变量顺序放到msys2以下。
+这里思虑再三我还是选择第二个。但是会不会和msys2中的软件冲突，还有待观察。目前我把他的环境变量顺序放到msys2以下。如果还是感觉不放心，可以把git的环境变量删了，效仿我们在emacs中提到的方法，在`xxx\myExec`目录下建一个指向`git.exe`的软链接。
 
 ![22.jpg](22.jpg)
 

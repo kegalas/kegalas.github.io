@@ -1,7 +1,7 @@
 ---
 title: "CMU15445(2023 Fall)数据库组件功能速查"
 date: 2024-04-29T14:09:51+08:00
-draft: false
+draft: true
 tags:
   - C++
   - 水文
@@ -151,7 +151,7 @@ buffer pool中的东西分为两部分，第一部分是Project 1中实现的，
 
 ## Task 1
 
-在上一部分，我们实现的`BufferPoolManager`实现的比较底层的操作。程序员需要手动创建页、获取页、删除页、Unpin页。本部分要求我们，实现一个wrapper，能够在构造的时候获取页，析构的时候Unpin、删除页。同时，实现要求我们保证并发安全，我们也要自动地控制锁。
+在上一部分，我们实现的`BufferPoolManager`实现的比较底层的操作。程序员需要手动创建页、获取页、删除页、Unpin页。本部分要求我们，实现一个wrapper，能够在构造的时候获取页，析构的时候Unpin、删除页。同时，实现要求我们保证并发安全，所以也要自动地控制锁。
 
 首先关注`src/include/storage/page/page_guard.h`，其中有三个类：
 
@@ -295,7 +295,7 @@ static constexpr uint64_t HTABLE_HEADER_ARRAY_SIZE = 1 << HTABLE_HEADER_MAX_DEPT
 
 第一个定义了元信息的大小，第二个定义了`bustub`默认的`max_depth`，第三个定义了默认的表大小。接下来我们看`ExtendibleHTableHeaderPage`的成员函数
 
-- 所有构造函数和析构函数都被禁用了，根据代码的注释说这样是为了保证内存安全。我水平不够暂时不了解原理。
+- 所有构造函数和析构函数都被禁用了，根据代码的注释说这样是为了保证内存安全。我水平不够暂时不了解原理。不过这样操作后就不能正常声明Header Page了，后续似乎都是通过强制类型转换来将普通页变成Header页。
 - `Init`，传入`max_depth`，让我们对`header`进行初始化。我们照做即可，注意表项要全部初始化为`INVALID_PAGE_ID`，代表没有指向任何一个`directory`
 - `HashToDirectoryIndex`，传入32位无符号整数的哈希值，找到对应的表项。就像我们之前说的一样，找到高`max_depth`位就行。`return hash>>(32-max_depth_);`。可能要特殊处理`0`深度的情况。
 - `GetDirectoryPageId`，传入表项下标，返回页号。说白了就是根据数组下标返回数组元素。
@@ -313,7 +313,7 @@ static constexpr uint64_t HTABLE_HEADER_ARRAY_SIZE = 1 << HTABLE_HEADER_MAX_DEPT
 */
 ```
 
-存储了四种数据，首先是`max_depth_`，代表`global_depth_`的上限，然后就是`global_depth_`自己，用于表示`directory`现在的大小，以及用于映射关系。之后是`local_depths_`，这是一个数组，每个元素都是`8`位无符号整数，代表对应表项的`local_depth`，可知directory最多有`512`个表项。最后的`bucket_page_ids_`也是一个数组，类型为`page_id_t`的数组，存储表项对应的`bucket`的页号。
+存储了四种数据，和成员变量一一对应，首先是`max_depth_`，代表`global_depth_`的上限，然后就是`global_depth_`自己，用于表示`directory`现在的大小，以及用于映射关系。之后是`local_depths_`，这是一个数组，每个元素都是`8`位无符号整数，代表对应表项的`local_depth`，可知directory最多有`512`个表项。最后的`bucket_page_ids_`也是一个数组，类型为`page_id_t`的数组，存储表项对应的`bucket`的页号。
 
 ```cpp
 static constexpr uint64_t HTABLE_DIRECTORY_MAX_DEPTH = 9;
@@ -350,12 +350,14 @@ static constexpr uint64_t HTABLE_DIRECTORY_ARRAY_SIZE = 1 << HTABLE_DIRECTORY_MA
 
 首先是`METADATA`，八个字节组成，分别是`bucket`的当前大小和最大大小。之后就是实际存储的键值对（KV）。每个键值对的键和值的大小不定（括号后面的是序号），具体存的什么数据，之后会介绍。
 
-直接来看成员函数
+成员变量也很简单，和页的内容一一对应。`size_`表示当前大小，`max_size_`表示最大大小，`array_`则是后面的KV对的数组，他的类型是`MappingType`，定义为模板`std::pair<KeyType, ValueType>`
+
+来看成员函数
 
 - 所有构造函数和析构函数都被禁用
 - `Init`，负责初始化`max_size_`和`size_`
-- `LookUp`，传入`key`和比较`key`的比较函数，查找这个`bucket`里有没有`key`相等的元素，返回`value`。（本课程不考虑`key`冲突，也不考虑`multimap`这样的情况）
-- `Insert`，传入`key, value, cmp`，插入到`bucket`中，只要`key`没出现过并且空间还有空闲就可以插入。
+- `LookUp`，传入`key`和比较`key`的比较函数，查找这个`bucket`里有没有`key`相等的元素，返回`value`。（本课程不考虑`key`冲突，也不考虑`multimap`这样的情况）。这里直接遍历数组`array_`，依次比较每个`key`即可进行查找。
+- `Insert`，传入`key, value, cmp`，插入到`bucket`中，只要`key`没出现过并且`array_`空间还有空闲就可以插入。
 - `Remove`，传入`key, cmp`，删除`key`对应的元素。注意，删除的时候，要把后面的所有元素往前移动一个来填补空缺。因为我们的插入是顺着插入，找到第一个空闲就插入。
 
 省略掉其他的`getter`和`setter`，现在我们来讨论一下，它`bucket`里面的KV究竟是在存什么。
@@ -379,7 +381,9 @@ template class ExtendibleHTableBucketPage<GenericKey<64>, RID, GenericComparator
 
 这个`Tuple`其实就是我们在数据库表里看到的一行数据，具体展开就太大了，跟这里也关系没有太密切，我放到后面的附录来说。
 
-## Task3
+## Task 3
+
+TODO：重新用更好的语言组织这一段。
 
 上一个task我们了解了可扩展Hash大概是怎么运行的，也介绍了一下三个层级的信息是如何存储的，接下来我们来具体实现可扩展Hash的功能。具体需要修改的代码在`src/container/disk/hash/disk_extendible_hash_table.cpp`
 
@@ -392,8 +396,222 @@ template class ExtendibleHTableBucketPage<GenericKey<64>, RID, GenericComparator
 - `header_max_depth_, directory_max_depth_, bucket_max_size_`，前面介绍过了，不再重复。
 - `header_page_id_`，显然，你要访问hash表必须得有个入口，才能找到header的内容，才能依次往下访问数据，所以我们必须存一下header所在的页的页号。
 
-首先，在你创建这个hash表的时候（即调用构造函数），还没有任何数据被插入，所以我们只需要创建一个`header_page`即可，后面插入数据的时候才会按需要创建directory或者bucket。具体
+首先，在你创建这个hash表的时候（即调用构造函数），还没有任何数据被插入，所以我们只需要创建一个空的`header_page`即可，后面插入数据的时候才会按需要创建directory或者bucket。具体来说，我们要实现一堆功能，我们先讲比较简单的查询过程，再讲复杂的插入和删除过程。
+
+**查询**
+
+*找到header*
+
+这个比较简单，像我们之前说的一样，通过将Key转为hash值，再用hash高位来获取对应的header项（即directory的下标），这里我们使用之前实现的`ExtendibleHTableHeaderPage`类中的`HashToDirectoryIndex`方法。至于获取header page，我们首先通过bpm中的`FetchPageRead`，输入`header_page_id_`来获取一个读页面，然后再用`.As<ExtendibleHTableHeaderPage>()`来将其类型转换为header page，然后就可以调用其方法了。
+
+*找到header中的directory*
+
+首先我们在获取到directory的下标之后，就要获取其页号，正好我们的header page中也已经实现了这个方法，即`GetDirectoryPageId`。当然，可能在查询的时候并不存在对应的directory页，即返回了无效页号，进行特判然后返回`false`。之后我们如法炮制`.As<ExtendibleHTableDirectoryPage>()`
+
+*找到directory中的bucket*
+
+在获取了Directory Page之后，我们就可以调用之前实现的`HashToBucketIndex`，来获取bucket的下标，然后调用`GetBucketPageId`来获取bucket的页号，当然，如果没有找到也要进行特判。之后我们如法炮制`.As<ExtendibleHTableBucketPage<K, V, KC>>()`
+
+*找到bucket的对应数据*
+
+这一步最简单，调用Bucket Page中实现的`Lookup`即可。
+
+**插入**
+
+插入要麻烦很多，涉及到扩充directory时的一系列新建、迁移操作。我们先看最简单的，
+
+*不需要新建任何东西，有空位可以直接插入*
+
+- 首先，插入时我们还是要获取header page，方法同前。
+- 获取directory page，方法同前。
+- 获取bucket page，方法同前。不过注意因为我们需要写入，所以需要调用`AsMut<ExtendibleHTableBucketPage<K, V, KC>>()`
+- 进行插入，调用Bucket page的`Insert`函数。
+    - `Insert`返回`true`，则说明插入成功
+    - `Insert`返回`false`，则说明插入不成功，两种情况，一种情况是已经有一样的数据了，另一种是Bucket满了。这里我们讨论的是有空位的情况，所以只可能是有数据了，所以直接返回插入失败即可。
+
+*需要新建bucket*
+
+这种情况发生在获取bucket的页号时返回了无效页号的时候。
+
+- `bpm_->NewPageGuarded`来获取一个新的页
+- `directory->SetBucketPageId`来给directory中的存储bucket页号的数组赋值
+- `bpm_->FetchPageWrite`、`.AsMut<ExtendibleHTableBucketPage<K, V, KC>>`来获取bucket page
+- `bucket_page->Init`来初始化bucket
+- `bucket_page->Insert`进行插入，通常来说会成功，可以return其返回值。
+
+*需要新建directory*
+
+这种情况发生在获取directory的页号时返回了无效页号的时候。
+
+- `bpm_->NewPageGuarded`来获取一个新的页
+- `header->SetDirectoryPageId`来给header中的存储directory页号的数组赋值
+- `bpm_->FetchPageWrite`、`.AsMut<ExtendibleHTableDirectoryPage>`来获取directory page
+- `dir_page->Init`来初始化directory
+- 调用新建bucket来插入数据的函数，也就是上一部分所讲的内容。
+
+*bucket满了，需要扩充、迁移*
+
+这种情况同前所述，发生在bucket page调用`Insert`返回`false`，但用`Lookup`却找不到数据的时候。插入时扩充的流程已经在Task 2中介绍，这里就只说实现流程
+
+- 先增加该bucket的local depth，即`dir_page->IncrLocalDepth`
+- 如果该local depth大于了directory的global depth，则说明directory需要扩容。因为local depth指的是bucket中所有的数据的key的最低`local_depth_`位是相同的，global depth则被用于取下标，key的最低`global_depth_`位对应着directory中bucket数组的下标。当local depth等于global depth时，说明directory每一个位置都对应着不同的bucket，不能再进行bucket分裂，所以directory必须扩充，然后再进行分裂。扩充直接调用`dir_page->IncrGlobalDepth`即可，见前文的实现。
+- 进行bucket的分裂。经过了上一条过程，保证了bucket一定可以分裂，（如果不满足自增后的local depth大于global depth，则代表本来就可以分裂）。首先通过前文实现的`dir_page->GetSplitImageIndex`来获取bucket下标的“镜像下标”。我们需要分配一个新的bucket page，进行初始化等等。
+- 分裂之后进行数据迁移，因为local depth增加，通常情况下数据会根据多出来的那一位的`0`或`1`的取值分为两类，前一类留在旧的bucket中，后一类需要搬迁到新的bucket中。我们可以先将老的bucket数据复制一份，然后清空老bucket。再根据新的local depth mask分别将数据插入到两个bucket中。
+- 重新映射directory。因为我们多出来了一个bucket，所以需要让directory中的一些项指向这个bucket。一般来说只需要将镜像下标的项指向这个bucket即可。
+
+但是，有一种非常棘手的特殊情况。假设现在directory的大小为1，而bucket的大小为2，里面有两个数据的hash值分别为`11...000000`、`11...010000`，而我们需要插入的新数据是`11...100000`，这就导致我们需要将global depth首先扩充到5，才能将已有的两个数据映射到不同的下标上。也就是说我们之前虽然进行了bucket分裂，但是所有数据都还是留存在了老的bucket中，还是无法插入新数据（新数据由于映射关系也不会插入新bucket中）。
+
+我们之前的代码只会分裂一次，并没有考虑到老数据全部待在老bucket中的情况。为了解决这个问题，我们可以使用递归的思路，直接在分裂和重映射之后再次从头进行一次插入过程即可。
+
+这里的重映射也值得说一说，在我们反复的扩充时，可能就不只有两个下标指向同一个bucket了，可能有4个、8个更多个，而只用“镜像下标”是无法表示那么多的，需要使用local_depth_mask来依次遍历所有需要重映射的下标。
+
+**删除**
+
+删除也比较麻烦，主要是涉及到收缩directory
+
+- 首先，插入时我们还是要获取header page，方法同前。
+- 获取directory page，方法同前。
+- 获取bucket page，方法同前。
+- 调用`bucket_page->Remove`，先将数据从bucket中删除。
+- 删除数据之后，理论上就有可能将之前分裂的两个bucket合并成一个。例如假设bucket的大小为2，现在有互为镜像下标的两个bucket分别存入了2个和1个数据，如果删掉数据，变成存了1个和1个数据的bucket，则可以合并。但是每次都这样检查并合并就太复杂了，在bustub里面，当且仅当该bucket为空或者镜像下标的bucket为空才会合并。于是我们就检查这个条件是否成立，如果不为空就直接不合并了。我们这里计这两个bucket中，数据不空的为$\alpha$，数据空的为$\beta$
+- 除了检查是否为空bucket，还要检查global depth是否为0，如果为0也没有合并的需要。如果下标和其镜像下标相同，那么也没有合并的需要。另外，还需要检查bucket和其镜像下标bucket的local depth是否相等，相等的才能合并，因为我们总是假设共用一个bucket的两个directory项具有同样的local depth
+- 如果所有的检测都通过，那么我们需要将所有的bucket中，页号等于$\alpha$或$\beta$的所有bucket，都更换其页号为$\alpha$的页号，并且将对应的local depth减一。这一步也就进行了bucket合并。然后再删除掉$\beta$页
+- 注意我们合并完之后可能还是一个空bucket，此时就可以循环或者递归的方式检测还是否可以继续合并。
+- 当我们递归式的合并结束后，就可以检测directory是否可以收缩了。当且仅当所有local depth都小于global depth时，可以进行收缩。因为此时所有bucket都至少有两个directory项指向他。
+- 如果可以收缩，就进行收缩，由于directory的数组大小是固定的，所以我们简单一点可以直接对global depth减一，而不清除数组值。
+
+## Task 4
+
+这里要求我们处理并发安全，其实只要之前实现好了PageGuard，然后在访问页的时候`FetchPageWrite`和`FetchPageRead`就没有并发问题了。注意，页用完了要及时Drop，以提高并发度。
+
+# Project 3
+
+TODO: 关于SQL parser、binder、planner的介绍
+
+![9.jpg](9.jpg)
+
+本project负责将SQL语句转化为实际执行的数据操作。具体来说，SQL语句首先经过Parser和Binder将其转化为抽象语法树，之后经过Planner，将抽象语法树转化为转化成一颗由操作符组成的树，然后在经过Optimizer，将这棵树中多余的操作符去除。之后就按照树形结构执行剩下的操作符。下面是一颗典型的操作符树
+
+![10.jpg](10.jpg)
+
+本Project负责的实际上就是实现所有这些操作符，然后在此基础上完成一些Optimizer的算法。前面三个组件都是项目已经实现好的。
+
+## 已实现部分介绍
+
+有几个操作符已经实现了，可以作为参考。
+
+### AbstractExecutor 
+
+首先，所有的操作符都继承与这个类，我们看看他的变量和函数。
+
+成员变量就一个，是`exec_ctx_`，它是一个`ExecutorContext*`，里面存储了执行操作时所需要的上下文内容，主要包括下个project要用的`Transaction`、`TransactionManager`等，之前实现过的`BufferPoolManager`，以及`Catalog`等等。（TODO：介绍）
+
+成员函数除去构造析构，有
+
+- `Init`，用于初始化，必须要在下面的`Next`之前调用
+- `Next`，用于执行操作符，然后返回数据（`Tuple`及其`RID`）。具体来说，数据库对于数据的处理是一条一条（即`Tuple`）来执行的，例如最简单的遍历操作，我们就需要一直调用`Next`，获取所有`Tuple`，直到遍历结束。又比如累加，就需要操作符执行“子操作符”遍历之后，返回其累加和。
+- `GetOutputSchema`，`Schema`这个东西其实就记载了数据库表中的每一列代表什么数据类型。（TODO：介绍）
+- `GetOutputSchema`，返回成员变量`exec_ctx_`
+
+### Projection
+
+它的作用是实现表达式计算，对输入数据应用该表达式，得到返回值。
+
+成员变量多了两个
+
+- `plan_`，存储了一个`ProjectionPlanNode*`，即planner生产的节点，里面存储了将会用到的表达式，包含以下三种：`ColumnValueExpression`、`ConstantExpression`、`ArithmeticExpression`。都很简单，就是原样保留Tuple中一列的值的表达式，常数表达式和算术表达式。
+- `child_executor_`，是一个指向子节点的指针，后续的几乎所有操作符都有这种变量。
+
+后面的绝大部分都包含这两个成员变量，不再介绍。
+
+成员函数的签名保持不变，介绍一下实现
+
+- `Init`，由于Projection本身没有什么需要初始化的，所以只用调用子节点的初始化。
+- `Next`，Projection是对输入应用操作符，所以要先得到输入，就执行子节点的`Next`来得到。然后对子节点返回的`Tuple`使用`plan_->GetExpressions`，得到表达式执行后的值，然后将值组合成一个新的`Tuple`进行返回即可。
+
+### Filter
+
+filter负责执行条件判断，满足条件的会返回给上层，不满足的则会被过滤。直接看成员函数
+
+- `Init`，调用子节点的初始化。
+- `Next`，返回子节点给出的数据中第一个满足条件的。具体来说，`FilterPlanNode`中有一个`GetPredicate`函数，其返回的谓词表达式可以判断一个`Tuple`是否满足条件。我们重复调用子节点的`Next`，执行判断，直到满足条件，然后就返回。当我们反复调用Filter的`Next`时，子节点返回的值就会从上一次的地方接着往下遍历返回。直到子节点全部遍历完，Filter也就遍历完了。
+
+### Values
+
+values用于插入的时候提供输入数据，没有子节点，自己的`ValuesPlanNode`中存储了所有要插入的数据。
+
+由于可以插入多行数据，所以我们的成员变量中要加入一个`cursor_`表示该返回哪一行数据了。
+
+同样的原因，我们的`Init`函数就需要初始化这个`cursor_`为`0`。
+
+在执行`Next`时，我们通过`cursor_`访问`plan_->GetValues()`提供的数组，然后将其值组成一个新的`Tuple`进行返回即可。
+## Task 1
+
+### SeqScan
+
+这里我们要实现遍历`Table`的功能。
+
+需要注意的成员变量是`iter_`，他是一个`TableIterator`的指针，能够让我们遍历一个Table。来看成员函数
+
+- `Init`，首先我们当然是要初始化迭代器，这个迭代器在`exec_ctx_`中找到`catalog`，再找到`table_info`，再找到其迭代器保存下来即可。
+- `Next`，按照一般想法来说，只需要判断`iter_`是否遍历完，若没完就`GetRID`和`GetTuple`，然后迭代器自增就完了。但是这里的SeqScan和数据库支持一些特性。首先是`Table`中的数据在删除时不会直接从内存中移除，而仅仅是打上了一个已被删除的标签。另外是为了优化，`Filter`中的判断条件允许直接在`SeqScan`中进行判断。所以，我们建立一个循环，不断自增迭代器，直到第一个没有被删除，并且满足条件的数据。然后保存数据准备返回，之后再自增迭代器准备好下一次调用。
+
+### Insert
+
+插入的节点总是包含一个能够提供值的子节点。插入一个数据不仅要将数据本身插入到`Table`中，还要将`Index`进行更新（即Project 2）所实现的。回忆一下，我们放在可扩哈希里的是数据的Hash和其RID，我们将数据插入`Table`后就会得到这个RID。
+
+来看成员函数
+
+- `Init`，首先还是要初始化子节点，为了便于处理，我在成员变量中添加了一个标记，来确认该插入操作之前是否进行过，防止重复执行`Next`，这里对这个标记进行初始化。
+- `Next`，首先还是通过`exec_ctx_`一路获取到`catalog, table_info, index_infos`。插入到`Table`的一条数据分为两部分，即`TupleMeta`和`Tuple`本身，`TupleMeta`存储了数据元信息，在Project3中我们只会用到标记是否删除的功能，所以我们需要将`is_delete_`设置为`false`。然后，我们调用子节点的`Next`来获取一个`Tuple`，然后通过`table_info->table_->InsertTuple`进行插入，其返回一个RID。之后我们调用该`Tuple`的`KeyFromTuple`函数来获取Key，然后调用`index_info->index_->InsertEntry`来插入到哈希表中。反复调用子节点的`Next`来获取数据并插入，直到全部插入。最后本`Next`返回的Tuple是一个`INTEGER`类型，表示一共插入了多少条数据。
+
+### Update
+
+这个节点会修改已存在`Tuple`的值。同样的，最后返回的Tuple是一个`INTEGER`类型，表示一共修改了多少条数据。该节点会修改子节点提供的所有值，所以当局部修改一个`Table`时，其子节点通常会是一个`Filter`，或者优化后是一个带有谓词的`SeqScan`。项目建议我们通过删掉老的，增加新的来实现修改。
+
+- `Init`，基本和`Insert`节点一样。
+- `Next`，前面也提到，先删除，后插入，我们就来讲一下删除怎么删。首先从子节点的`Next`获取到`Tuple`及其RID，然后我们使用`table_info_->table_->UpdateTupleMeta`，将这个RID对应的meta数据的`is_deleted_`改成`true`，然后别忘了要同步修改哈希表，这里调用`index_info->index_->DeleteEntry`。插入的数据来源于`plan_->target_expressions_`，计算其表达式组合成`Tuple`。
+
+### Delete
+
+删除节点就没什么好讲的了，无非是`Update`节点进行删除后不进行插入。其他都一样。
+
+### IndexScan
+
+显然的，当我们需要查找主键等于某个特定值的`Tuple`时，一个一个翻找`Table`就太慢了。而我们的可扩哈希表就是为了对付这种查找任务的。
+
+在本项目中，SQL语句为``SELECT FROM <table> WHERE <index column> = <val>``时，会调用到这个节点，并且`Index`一定是`HashTableIndexForTwoIntegerColumn`类型，可以安全的进行强制类型转换。本项目也是非常简化的，不支持数据拥有相同的Key，所以只会找到一个符合条件的数据。
+
+- `Init`，由前所述，我们首先`htable_ = dynamic_cast<HashTableIndexForTwoIntegerColumn *>(index_info_->index_.get());`，然后通过`plan_->pred_key_->val_`和`htable_->GetKeySchema()`构建一个Key，之后通过`htable_->ScanKey`来获取所有的符合条件的数据（事实上只有一个，但为了符合接口还是将其保存到`result_`的vector中）。
+- `Next`，和`SeqScan`就比较像了，只不过不再遍历`Table`，而是直接遍历`result_`了，也要注意处理被删除的情况、处理谓词。
+
+### Optimizing SeqScan to IndexScan
+
+正如前面所说的，当`WHERE`只要求一个列等于给定值的条件，并且这一列已经被索引，就可以用`IndexScan`替代`SeqScan`，而这个“替代”是需要我们实现的。
+
+当使用`SELECT * FROM t1 WHERE v1 = 1;`时，planner会生成两个节点，分别为`Filter`和`SeqScan`。在优化为`IndexScan`之前，操作就会被优化为带有谓词的`SeqScan`。所以我们在优化的时候是寻找包含特殊谓词的`SeqScan`。
+
+原项目已经实现了一些优化措施可以给我们参考，优化到`IndexScan`的函数为`OptimizeSeqScanAsIndexScan`，流程如下（TODO：详解）
+
+- 获取函数输入的`plan`的子节点，因为我们是从根节点依次往下递归优化的，所以我们首先要对子节点调用`OptimizeSeqScanAsIndexScan`，然后将优化后的节点保存下来
+- 调用`plan->CloneWithChildren`，将优化后的子节点传入，获得本节点优化后的版本，即`optimized_plan`
+- 前面也说过，优化是在树上递归执行的，如果本节点并不是`SeqScan`，那么直接返回即可。
+- 如果`optimized_plan->GetType() == PlanType::SeqScan`，那么就要检查其谓词是否符合条件。首先通过类型转换将`optimized_plan`转换为`SeqScanPlanNode`，然后调用`.filter_predicate_.get()`得到其谓词表达式。
+- 如果谓词为空或者不为`ComparisonExpression`，则直接返回。
+- 获取谓词的左右操作数，确保一个是`ColumnValueExpression`，另一个是`ConstantValueExpression`，否则直接返回。
+- 通过`catalog_.GetTableIndexes`获取`index_info`，当`column_expr.GetColIdx()`等于`index_info`的`key_attrs`时，就可以构造一个新的`IndexScanPlanNode`进行返回了。否则还是返回`optimized_plan`。
+
+## Task 2
+
+
 
 # 附录
 
 ## Tuple
+
+
+# TODO
+
+[https://github.com/kegalas/bustub/blob/project3/src/execution/insert_executor.cpp](https://github.com/kegalas/bustub/blob/project3/src/execution/insert_executor.cpp)中似乎`cnt++;`没有考虑到插入失败的情况
+
+project4中检查clang-tidy的建议。
