@@ -2,6 +2,7 @@
 title: ubuntu安装deepin-qq时遇到的问题与解决
 date: 2021-01-03 12:16:26
 image: cover.jpg
+draft: false
 tags:
   - Ubuntu
   - Linux
