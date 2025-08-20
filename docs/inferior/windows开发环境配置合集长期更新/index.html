@@ -127,22 +127,7 @@
 <p>现在emacs29自带use-package，直接打开就可以，不需要手动安装。</p>
 <p>all-the-icons很奇怪，不会被use-package安装，我们<code>M-x package-install all-the-icons</code>安装重启即可。</p>
 <p>另外，我安装了lsp-pyright来提供python的补全，python里面也要用pip安装pyright才能运行。</p>
-<p>此时，用GUI版本的Emacs已经可以了，但是如果想在命令行里用Emacs，则需要添加环境变量。出于对环境变量冲突的恐惧，我没有直接将Emacs的bin添加进PATH，我选择了照抄Vim的bat文件。如下</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bat" data-lang="bat"><span style="display:flex;"><span>@<span style="color:#66d9ef">echo</span> off
-</span></span><span style="display:flex;"><span><span style="color:#75715e">rem -- Run Emacs --</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">setlocal</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">set</span> EMACS_EXE_DIR=D:\Program_Files\Emacs\emacs-29.1\bin
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> <span style="color:#66d9ef">exist</span> <span style="color:#e6db74">&#34;</span>%EMACS%<span style="color:#e6db74">\emacs-29.1\bin\emacs.exe&#34;</span> <span style="color:#66d9ef">set</span> EMACS_EXE_DIR=%EMACS%\emacs-29.1\bin
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> <span style="color:#66d9ef">exist</span> <span style="color:#e6db74">&#34;</span>%EMACSRUNTIME%<span style="color:#e6db74">\emacs.exe&#34;</span> <span style="color:#66d9ef">set</span> EMACS_EXE_DIR=%EMACSRUNTIME%
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> <span style="color:#66d9ef">not</span> <span style="color:#66d9ef">exist</span> <span style="color:#e6db74">&#34;</span>%EMACS_EXE_DIR%<span style="color:#e6db74">\emacs.exe&#34;</span> (
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#34;</span>%EMACS_EXE_DIR%<span style="color:#e6db74">\emacs.exe&#34;</span> not found
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">goto</span> :eof
-</span></span><span style="display:flex;"><span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;</span>%EMACS_EXE_DIR%<span style="color:#e6db74">\emacs.exe&#34;</span>  %*
-</span></span></code></pre></div><p>把这个文件保存为<code>emacs.bat</code>，然后找一个文件夹放进去，例如我放在了<code>xxx\myExec</code>下，然后把这个文件夹添加到PATH的末尾。</p>
+<p>此时，用GUI版本的Emacs已经可以了，但是如果想在命令行里用Emacs，则需要添加环境变量。出于对环境变量冲突的恐惧，我没有直接将Emacs的bin添加进PATH，而是新建了一个目录<code>xxx\myExec</code>，用于存放各种可执行文件的软链接，通过<code>New-Item -ItemType SymbolicLink -Path &quot;emacs.exe&quot; -Target &quot;X:\xxx\emacs.exe&quot;</code>建立软链接，然后把这个文件夹添加到PATH的末尾。</p>
 <h2 id="idea">IDEA</h2>
 <p><a class="link" href="https://www.jetbrains.com/idea/download/?section=windows"  target="_blank" rel="noopener"
     >https://www.jetbrains.com/idea/download/?section=windows</a>，官网下载，我现在主要用Community版本，免费，而且其是可商用的，这点和其他很多软件的社区版不同。</p>
@@ -214,7 +199,13 @@
 <p><a class="link" href="https://www.jetbrains.com/lp/mono/"  target="_blank" rel="noopener"
     >https://www.jetbrains.com/lp/mono/</a>，下载解压，得到一大堆ttf格式的文件。虽然你可以一个一个双击安装，但是太慢了，我推荐你把它们全部选中，拖入到<code>C:\Windows\Fonts</code>文件夹中，可以批量安装。</p>
 <h2 id="noto">Noto</h2>
-<p>TODO</p>
+<p><a class="link" href="https://fonts.google.com/noto/specimen/Noto&#43;Sans&#43;Mono"  target="_blank" rel="noopener"
+    >https://fonts.google.com/noto/specimen/Noto+Sans+Mono</a></p>
+<p>我一般用作备用字体，当Jetbrains Mono和软件自带备用字体无法显示汉字等字符时（比如emacs），我就会使用Noto字体来补充。</p>
+<h2 id="nerd">Nerd</h2>
+<p><a class="link" href="https://www.nerdfonts.com/font-downloads"  target="_blank" rel="noopener"
+    >https://www.nerdfonts.com/font-downloads</a></p>
+<p>这个项目为其他各种字体添加了icon，便于各类命令行软件进行icon显示，例如zsh、vim、emacs，我这里下载的当然是Jetbrains Mono Nerd。</p>
 <h1 id="git">Git</h1>
 <h2 id="git-for-windows">Git for Windows</h2>
 <p><figure 
@@ -296,23 +287,7 @@
 	<figcaption>21.jpg</figcaption>
 	
 </figure></p>
-<p>这里思虑再三我还是选择第二个。如果选第一个，更小心的避免PATH冲突，可以用和Emacs一样的手法：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bat" data-lang="bat"><span style="display:flex;"><span>@<span style="color:#66d9ef">echo</span> off
-</span></span><span style="display:flex;"><span><span style="color:#75715e">rem -- Run GIT --</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">setlocal</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">set</span> GIT_EXE_DIR=D:\Program_Files\Git\bin
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> <span style="color:#66d9ef">exist</span> <span style="color:#e6db74">&#34;</span>%GIT%<span style="color:#e6db74">\bin\git.exe&#34;</span> <span style="color:#66d9ef">set</span> GIT_EXE_DIR=%GIT%\bin
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> <span style="color:#66d9ef">exist</span> <span style="color:#e6db74">&#34;</span>%GITRUNTIME%<span style="color:#e6db74">\git.exe&#34;</span> <span style="color:#66d9ef">set</span> GIT_EXE_DIR=%GITRUNTIME%
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> <span style="color:#66d9ef">not</span> <span style="color:#66d9ef">exist</span> <span style="color:#e6db74">&#34;</span>%GIT_EXE_DIR%<span style="color:#e6db74">\git.exe&#34;</span> (
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#34;</span>%GIT_EXE_DIR%<span style="color:#e6db74">\git.exe&#34;</span> not found
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">goto</span> :eof
-</span></span><span style="display:flex;"><span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;</span>%GIT_EXE_DIR%<span style="color:#e6db74">\git.exe&#34;</span>  %*
-</span></span></code></pre></div><p>但是，这样做许多软件就识别不到git，例如jetbrains家的IDE。所以我还是选择第二个好了。</p>
-<p>但是会不会和msys2中的软件冲突，还有待观察。目前我把他的环境变量顺序放到msys2以下。</p>
+<p>这里思虑再三我还是选择第二个。但是会不会和msys2中的软件冲突，还有待观察。目前我把他的环境变量顺序放到msys2以下。如果还是感觉不放心，可以把git的环境变量删了，效仿我们在emacs中提到的方法，在<code>xxx\myExec</code>目录下建一个指向<code>git.exe</code>的软链接。</p>
 <p><figure 
 	
 		class="gallery-image" 
@@ -482,6 +457,8 @@
 <h2 id="alacritty">alacritty</h2>
 <h2 id="windterm">WindTerm</h2>
 <h2 id="mobaxterm">MobaXterm</h2>
+<h2 id="cmder">Cmder</h2>
+<p>用作后台运行的脚本启动器</p>
 <h1 id="cc相关">C/C++相关</h1>
 <h2 id="gcc">GCC</h2>
 <p>这里使用的是<code>MSYS2</code>，<a class="link" href="https://www.msys2.org/"  target="_blank" rel="noopener"
@@ -1223,6 +1200,7 @@
       <ol>
         <li><a href="#jetbrains-mono">Jetbrains Mono</a></li>
         <li><a href="#noto">Noto</a></li>
+        <li><a href="#nerd">Nerd</a></li>
       </ol>
     </li>
     <li><a href="#git">Git</a>
@@ -1242,6 +1220,7 @@
         <li><a href="#alacritty">alacritty</a></li>
         <li><a href="#windterm">WindTerm</a></li>
         <li><a href="#mobaxterm">MobaXterm</a></li>
+        <li><a href="#cmder">Cmder</a></li>
       </ol>
     </li>
     <li><a href="#cc相关">C/C++相关</a>

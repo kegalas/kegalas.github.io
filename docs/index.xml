@@ -6,7 +6,1321 @@
         <description>Recent content on KegalaS的个人博客</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Sun, 11 May 2025 15:42:58 +0800</lastBuildDate><atom:link href="https://kegalas.uk/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Mon, 14 Jul 2025 19:48:36 +0800</lastBuildDate><atom:link href="https://kegalas.uk/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>像差矫正简述</title>
+        <link>https://kegalas.uk/p/%E5%83%8F%E5%B7%AE%E7%9F%AB%E6%AD%A3%E7%AE%80%E8%BF%B0/</link>
+        <pubDate>Mon, 14 Jul 2025 19:48:36 +0800</pubDate>
+        
+        <guid>https://kegalas.uk/p/%E5%83%8F%E5%B7%AE%E7%9F%AB%E6%AD%A3%E7%AE%80%E8%BF%B0/</guid>
+        <description>&lt;img src="https://kegalas.uk/p/%E5%83%8F%E5%B7%AE%E7%9F%AB%E6%AD%A3%E7%AE%80%E8%BF%B0/cover.jpg" alt="Featured image of post 像差矫正简述" /&gt;&lt;h1 id=&#34;前言&#34;&gt;前言&lt;/h1&gt;
+&lt;p&gt;这篇文章是接在相机PSF标定之后的，我们也说过，PSF表征着光学系统的所有像差（除了畸变），也就描述了相机拍摄出来的照片是如何变得模糊的。我们获得PSF的目的实际上就是去校正这个相差，将图片中模糊的地方变得清晰。理论上来说，任何一种PSF标定方法得出的PSF都可以无缝接在这里面的所有像差矫正方法之前。&lt;/p&gt;
+&lt;h1 id=&#34;extreme-quality-computational-imaging-via-degradation-framework&#34;&gt;Extreme-Quality Computational Imaging via Degradation Framework&lt;/h1&gt;
+&lt;p&gt;之前的部分见上一篇博客，在预估完PSF后，就介绍了本文的校正模型。&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 217; 
+			flex-basis: 522px&#34;
+	&gt;
+	&lt;a href=&#34;https://kegalas.uk/p/%E5%83%8F%E5%B7%AE%E7%9F%AB%E6%AD%A3%E7%AE%80%E8%BF%B0/21.jpg&#34; data-size=&#34;1138x523&#34;&gt;
+		&lt;img src=&#34;https://kegalas.uk/p/%E5%83%8F%E5%B7%AE%E7%9F%AB%E6%AD%A3%E7%AE%80%E8%BF%B0/21.jpg&#34;
+			width=&#34;1138&#34;
+			height=&#34;523&#34;
+			srcset=&#34;https://kegalas.uk/p/%E5%83%8F%E5%B7%AE%E7%9F%AB%E6%AD%A3%E7%AE%80%E8%BF%B0/21_hu57955e7d46c7d853eaf4ee407e3741b1_100168_480x0_resize_q75_box.jpg 480w, https://kegalas.uk/p/%E5%83%8F%E5%B7%AE%E7%9F%AB%E6%AD%A3%E7%AE%80%E8%BF%B0/21_hu57955e7d46c7d853eaf4ee407e3741b1_100168_1024x0_resize_q75_box.jpg 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;21.jpg&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;21.jpg&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;这是一个端到端的网络，输入一个退化的sRGB图像&lt;span class=&#34;math inline&#34;&gt;\(I_{DE}\)&lt;/span&gt;，输出重建后的图像&lt;span class=&#34;math inline&#34;&gt;\(I_{PRED}\)&lt;/span&gt;，大体上可以分为三个模块。&lt;/p&gt;
+&lt;p&gt;首先是FOV编码器。因为空间信息和退化有强相关性，本文提出了FOV模块来利用空间特征。这个网络的细节在上图的下方，可以看到它被用于计算一个mask，然后影响到&lt;span class=&#34;math inline&#34;&gt;\(I_{DE}\)&lt;/span&gt;的输出。&lt;/p&gt;
+&lt;p&gt;第二部分是一个可变形解码器。由于PSF的不规则形状和大小，传统的卷积层不是很适合来处理退化，因为传统卷积层只会获取到固定位置的特征。&lt;/p&gt;
+&lt;p&gt;最后一部分是KPN模块。按照前人的研究结果，预测卷积核来间接预测结果要比直接预测结果要更稳定一些，但是这会增加模型的开销，尤其是卷积核很大的时候。于是本文提出了一种扩大卷积的方式，来让卷积核影响更广的范围。可以看图像来理解。&lt;/p&gt;
+&lt;p&gt;我们预估的PSF到底用在哪里了呢？实际上在预估完PSF后，我们将ground truth与其进行卷积，合成退化图像。后面的恢复网络在这个配对数据上进行训练。&lt;/p&gt;
+&lt;h1 id=&#34;large-depth-of-field-ultra-compact-microscope-by-progressive-optimization-and-deep-learning&#34;&gt;Large depth-of-field ultra-compact microscope by progressive optimization and deep learning&lt;/h1&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.nature.com/articles/s41467-023-39860-0&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://www.nature.com/articles/s41467-023-39860-0&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;本文主要是针对手机相机进行优化，让它能够较好的实现显微任务。作者指出过往的端到端方法计算开销太大，所以本文提出了一种渐进式的优化方法。&lt;/p&gt;
+&lt;p&gt;首先第一个需要优化的是镜头设计。首先考虑传统的镜头设计方法，例如光线追踪等等，来手动设计一系列镜头，后续的优化算法在每个镜头上都进行一次，选出最好的那一个。使用这种方法减小了参数量，从而减小开销。&lt;/p&gt;
+&lt;p&gt;关于镜头是如何设计的笔者不懂，也不是PSF估计的重点，就跳过。但是我们需要记得一些概念。在设计镜头的时候要考虑一个两难问题：景深和横向分辨率的关系，横向分辨率越大，景深越小。而对于一个显微镜来说景深是比较重要的。传统的增加景深的做法是减小数字孔径（NA），也就通常意味着减小物理孔径（光圈）或者增大焦距。但是减小光圈会导致进光量减小，从而减小信噪比；而增长焦距则会增大体积，对手机这种设备来说是不行的。&lt;/p&gt;
+&lt;p&gt;为了解决这个问题，本文开发了一种叫diffractive optical element (DOE)的物理元件，放在光圈之前。这个DOE在这里是一个三次曲面，表示为&lt;span class=&#34;math inline&#34;&gt;\(\alpha(x^3,y^3)\)&lt;/span&gt;。这里的&lt;span class=&#34;math inline&#34;&gt;\(\alpha\)&lt;/span&gt;是唯一一个参数，用于控制在不同的defocus（离焦）下PSF的扩散，从而控制景深大小。&lt;/p&gt;
+&lt;p&gt;针对这个&lt;span class=&#34;math inline&#34;&gt;\(\alpha\)&lt;/span&gt;，本文均匀选择了&lt;span class=&#34;math inline&#34;&gt;\([0.005,0.075]\)&lt;/span&gt;上的15个值，每一个都做成一套系统（顺带一提材料便宜、工艺简单、成本很低），然后在神经网络上训练，选出最好的。最后选出来的是&lt;span class=&#34;math inline&#34;&gt;\(\alpha=0.03\)&lt;/span&gt;，使得景深增加了10倍。&lt;/p&gt;
+&lt;p&gt;网络架构基于pix2pix，可以很好的适应细节丰富的图像复原任务。本文获取训练数据的方式是，使用商用的显微镜，上下调节物镜高度，获得一系列图像&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 93; 
+			flex-basis: 225px&#34;
+	&gt;
+	&lt;a href=&#34;https://kegalas.uk/p/%E5%83%8F%E5%B7%AE%E7%9F%AB%E6%AD%A3%E7%AE%80%E8%BF%B0/17.jpg&#34; data-size=&#34;770x821&#34;&gt;
+		&lt;img src=&#34;https://kegalas.uk/p/%E5%83%8F%E5%B7%AE%E7%9F%AB%E6%AD%A3%E7%AE%80%E8%BF%B0/17.jpg&#34;
+			width=&#34;770&#34;
+			height=&#34;821&#34;
+			srcset=&#34;https://kegalas.uk/p/%E5%83%8F%E5%B7%AE%E7%9F%AB%E6%AD%A3%E7%AE%80%E8%BF%B0/17_hu572ef19402fee0b4aea32341ed0791a0_96912_480x0_resize_q75_box.jpg 480w, https://kegalas.uk/p/%E5%83%8F%E5%B7%AE%E7%9F%AB%E6%AD%A3%E7%AE%80%E8%BF%B0/17_hu572ef19402fee0b4aea32341ed0791a0_96912_1024x0_resize_q75_box.jpg 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;17.jpg&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;17.jpg&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;其中使用算法将每张图片中最清晰的部分提取出来，合并成一个all-in-focus图像，作为Ground-Truth。然后对每一张图片，使用本文设计的镜头在对应高度下的PSF进行卷积，最后再合并起来，得到近似的本文镜头拍摄的退化图象。二者作为配对数据送入pix2pix中进行训练。&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 131; 
+			flex-basis: 315px&#34;
+	&gt;
+	&lt;a href=&#34;https://kegalas.uk/p/%E5%83%8F%E5%B7%AE%E7%9F%AB%E6%AD%A3%E7%AE%80%E8%BF%B0/18.jpg&#34; data-size=&#34;845x643&#34;&gt;
+		&lt;img src=&#34;https://kegalas.uk/p/%E5%83%8F%E5%B7%AE%E7%9F%AB%E6%AD%A3%E7%AE%80%E8%BF%B0/18.jpg&#34;
+			width=&#34;845&#34;
+			height=&#34;643&#34;
+			srcset=&#34;https://kegalas.uk/p/%E5%83%8F%E5%B7%AE%E7%9F%AB%E6%AD%A3%E7%AE%80%E8%BF%B0/18_hua181b31e773e09ec8e5199f3caf4a337_121386_480x0_resize_q75_box.jpg 480w, https://kegalas.uk/p/%E5%83%8F%E5%B7%AE%E7%9F%AB%E6%AD%A3%E7%AE%80%E8%BF%B0/18_hua181b31e773e09ec8e5199f3caf4a337_121386_1024x0_resize_q75_box.jpg 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;18.jpg&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;18.jpg&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;在PSF的标定方面很简单，用光刻技术直接在一块1mm厚的玻璃板子上刻了一系列1um的小孔，然后直接用镜头拍摄。&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 147; 
+			flex-basis: 353px&#34;
+	&gt;
+	&lt;a href=&#34;https://kegalas.uk/p/%E5%83%8F%E5%B7%AE%E7%9F%AB%E6%AD%A3%E7%AE%80%E8%BF%B0/15.jpg&#34; data-size=&#34;671x455&#34;&gt;
+		&lt;img src=&#34;https://kegalas.uk/p/%E5%83%8F%E5%B7%AE%E7%9F%AB%E6%AD%A3%E7%AE%80%E8%BF%B0/15.jpg&#34;
+			width=&#34;671&#34;
+			height=&#34;455&#34;
+			srcset=&#34;https://kegalas.uk/p/%E5%83%8F%E5%B7%AE%E7%9F%AB%E6%AD%A3%E7%AE%80%E8%BF%B0/15_hu04736ce613643b983e5f4cba5f75b7af_37586_480x0_resize_q75_box.jpg 480w, https://kegalas.uk/p/%E5%83%8F%E5%B7%AE%E7%9F%AB%E6%AD%A3%E7%AE%80%E8%BF%B0/15_hu04736ce613643b983e5f4cba5f75b7af_37586_1024x0_resize_q75_box.jpg 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;15.jpg&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;15.jpg&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 95; 
+			flex-basis: 229px&#34;
+	&gt;
+	&lt;a href=&#34;https://kegalas.uk/p/%E5%83%8F%E5%B7%AE%E7%9F%AB%E6%AD%A3%E7%AE%80%E8%BF%B0/16.jpg&#34; data-size=&#34;780x814&#34;&gt;
+		&lt;img src=&#34;https://kegalas.uk/p/%E5%83%8F%E5%B7%AE%E7%9F%AB%E6%AD%A3%E7%AE%80%E8%BF%B0/16.jpg&#34;
+			width=&#34;780&#34;
+			height=&#34;814&#34;
+			srcset=&#34;https://kegalas.uk/p/%E5%83%8F%E5%B7%AE%E7%9F%AB%E6%AD%A3%E7%AE%80%E8%BF%B0/16_hu824c97503e8943fbb62da1f91aea52eb_47719_480x0_resize_q75_box.jpg 480w, https://kegalas.uk/p/%E5%83%8F%E5%B7%AE%E7%9F%AB%E6%AD%A3%E7%AE%80%E8%BF%B0/16_hu824c97503e8943fbb62da1f91aea52eb_47719_1024x0_resize_q75_box.jpg 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;16.jpg&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;16.jpg&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;在如何对图片使用PSF卷积得到退化图像，本文建立了一个更细致的模型&lt;/p&gt;
+&lt;p&gt;由于相机系统拥有大FOV和大NA，导致PSF就更不像一个冲激函数了。为了解决这个问题，提出了一个考虑到PSF平移可变性的前向模型，并且优化了计算开销。假设具有平移可变性PSF的光学模型如下&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[i(x,y)=\sum_{u,v,z}s(u,v)p(u,v,x-u,y-v,z)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\((u,v)\)&lt;/span&gt;和&lt;span class=&#34;math inline&#34;&gt;\((x,y)\)&lt;/span&gt;分别是物平面和像平面的坐标，而&lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;代表不同的深度，每个像&lt;span class=&#34;math inline&#34;&gt;\(s(u,v)\)&lt;/span&gt;都对应一个PSF矩阵，表示为&lt;span class=&#34;math inline&#34;&gt;\(p(u,v,x,y,z)\)&lt;/span&gt;。由上式也看得出来计算他要迭代所有PSF，复杂度很高，需要对其进行降维。作者这里的想法是进行矩阵分解，将PSF分成一系列基&lt;span class=&#34;math inline&#34;&gt;\(h_i(x,y)\)&lt;/span&gt;的加权和&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[p(u,v,x,y,z) = \sum^N_{i} w_i(u,v,z)h_i(x,y,z)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(N\)&lt;/span&gt;是具有平移不变性的基&lt;span class=&#34;math inline&#34;&gt;\(h_i\)&lt;/span&gt;的个数。在实践上，对每个深度&lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt;，都只标定一共&lt;span class=&#34;math inline&#34;&gt;\(M\)&lt;/span&gt;个PSF，最后得到一个PSF集合&lt;span class=&#34;math inline&#34;&gt;\(\{p(u,v,x_i,y_i,z)\},1\leq i\leq M\)&lt;/span&gt;。这些PSF经过下采样、剪裁、向量化，最后合并成一个矩阵&lt;span class=&#34;math inline&#34;&gt;\(\mathbf{P}\)&lt;/span&gt;，同样的也有基矩阵&lt;span class=&#34;math inline&#34;&gt;\(\mathbf{H}\)&lt;/span&gt;和权重矩阵&lt;span class=&#34;math inline&#34;&gt;\(\mathbf{W}\)&lt;/span&gt;，于是我们就可以通过数值方法估计&lt;span class=&#34;math inline&#34;&gt;\(\mathbf{H,W}\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\mathbf{\hat H},\mathbf{\hat W}=\underset{\mathbf{H},\mathbf{W}}{\arg\min}||\mathbf{H}\times\mathbf{W}-\mathbf{P}||^2_2
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;估计完成后，就可以将成像系统表示为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[i(x,y,z)=\sum^N_{i=1}\sum_{u,v}s(u,v)w_i(u,v)h_i(x-u,y-v,z)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;使用卷积表示则更简单&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[i(x,y)=\sum^N_{i=1}\{(s(u,v)\times w_i(u,v))\ast h_i(u,v)\}[x,y]
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;作者使用一个电动控制台和一个显微镜来获取训练数据。首先用显微镜在正好对上焦的位置拍摄一张图片（文中称作一个sample），然后在&lt;span class=&#34;math inline&#34;&gt;\([-150\mu m,150\mu m]\)&lt;/span&gt;的范围上以&lt;span class=&#34;math inline&#34;&gt;\(10\mu m\)&lt;/span&gt;为步长移动显微镜来拍摄，从而得到一系列配对的训练数据。&lt;/p&gt;
+&lt;p&gt;似乎本文提出的镜头在PSF标定和使用方面就只有上面这些内容。下面的部分似乎是用于效果对比，将本文的神经网络方法和传统的PSF去卷积方法对比。&lt;/p&gt;
+&lt;p&gt;TODO：有待补完，Deconvolution部分本文说的很模糊，并且疑似有公式错误。&lt;/p&gt;
+&lt;h1 id=&#34;a-physics-informed-low-rank-deep-neural-network-for-blind-and-universal-lens-aberration-correction&#34;&gt;A Physics-informed Low-rank Deep Neural Network for Blind and Universal Lens Aberration Correction&lt;/h1&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://openaccess.thecvf.com/content/CVPR2024/html/Gong_A_Physics-informed_Low-rank_Deep_Neural_Network_for_Blind_and_Universal_CVPR_2024_paper.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://openaccess.thecvf.com/content/CVPR2024/html/Gong_A_Physics-informed_Low-rank_Deep_Neural_Network_for_Blind_and_Universal_CVPR_2024_paper.html&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;本文介绍了一种使用一组典型PSF来提取特征基，从而为畸变建模的方法。&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 113; 
+			flex-basis: 272px&#34;
+	&gt;
+	&lt;a href=&#34;https://kegalas.uk/p/%E5%83%8F%E5%B7%AE%E7%9F%AB%E6%AD%A3%E7%AE%80%E8%BF%B0/19.jpg&#34; data-size=&#34;682x601&#34;&gt;
+		&lt;img src=&#34;https://kegalas.uk/p/%E5%83%8F%E5%B7%AE%E7%9F%AB%E6%AD%A3%E7%AE%80%E8%BF%B0/19.jpg&#34;
+			width=&#34;682&#34;
+			height=&#34;601&#34;
+			srcset=&#34;https://kegalas.uk/p/%E5%83%8F%E5%B7%AE%E7%9F%AB%E6%AD%A3%E7%AE%80%E8%BF%B0/19_hu67dd6c6cd69fbbec7df3746feb09524a_58713_480x0_resize_q75_box.jpg 480w, https://kegalas.uk/p/%E5%83%8F%E5%B7%AE%E7%9F%AB%E6%AD%A3%E7%AE%80%E8%BF%B0/19_hu67dd6c6cd69fbbec7df3746feb09524a_58713_1024x0_resize_q75_box.jpg 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;19.jpg&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;19.jpg&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;这里从Zemax里选出了20个PSF数据，因为PSF是具有旋转对称性的，于是又将一个平面上的PSF拆成多个同心圆环，然后再将圆环展开成长方形，将长方形前后拼合。最后将20个镜头的PSF长方形拼合起来得到一个矩阵，对其进行ONMF（正交非负矩阵分解）分解，得到一组基&lt;span class=&#34;math inline&#34;&gt;\(\{B_i\}\)&lt;/span&gt;，之后所有的PSF都可以由下式表述&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[k=\sum_i\alpha_i\cdot B_i
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;图像退化过程就可以由下式表述&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[Y=X\ast(\sum_i\alpha_i\cdot B_i) + n = \sum_i(\alpha_i\cdot X)\ast B_i + n
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;是锐利图像，&lt;span class=&#34;math inline&#34;&gt;\(Y\)&lt;/span&gt;是退化图象，而&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;是噪声。&lt;/p&gt;
+&lt;p&gt;我们同样可以将退化图象进行分解，分解出模糊成分&lt;span class=&#34;math inline&#34;&gt;\(\{Y_i=(\alpha_i\cdot X)\ast B_i\}\)&lt;/span&gt;。之后，我们就可以通过预训练的方式，训练一个去卷积模型，通过预测参数&lt;span class=&#34;math inline&#34;&gt;\(\alpha_i\)&lt;/span&gt;的值来消除像差。&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 207; 
+			flex-basis: 499px&#34;
+	&gt;
+	&lt;a href=&#34;https://kegalas.uk/p/%E5%83%8F%E5%B7%AE%E7%9F%AB%E6%AD%A3%E7%AE%80%E8%BF%B0/20.jpg&#34; data-size=&#34;1329x639&#34;&gt;
+		&lt;img src=&#34;https://kegalas.uk/p/%E5%83%8F%E5%B7%AE%E7%9F%AB%E6%AD%A3%E7%AE%80%E8%BF%B0/20.jpg&#34;
+			width=&#34;1329&#34;
+			height=&#34;639&#34;
+			srcset=&#34;https://kegalas.uk/p/%E5%83%8F%E5%B7%AE%E7%9F%AB%E6%AD%A3%E7%AE%80%E8%BF%B0/20_hu224a1faa10b8aea2f649aae73c2b532d_149481_480x0_resize_q75_box.jpg 480w, https://kegalas.uk/p/%E5%83%8F%E5%B7%AE%E7%9F%AB%E6%AD%A3%E7%AE%80%E8%BF%B0/20_hu224a1faa10b8aea2f649aae73c2b532d_149481_1024x0_resize_q75_box.jpg 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;20.jpg&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;20.jpg&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;本文提出的方法主要分为三块。第一块负责将原图的模糊成分（特征）提取出来。&lt;/p&gt;
+&lt;p&gt;在训练过程中，使用Zemax及其中的PSF，来将一个锐利图像&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;合成出一个退化图象&lt;span class=&#34;math inline&#34;&gt;\(\tilde{Y_i}=X\ast(\alpha_i\cdot B_i)\)&lt;/span&gt;，然后将退化图像&lt;span class=&#34;math inline&#34;&gt;\(\tilde{Y}\)&lt;/span&gt;和基&lt;span class=&#34;math inline&#34;&gt;\(B\)&lt;/span&gt;一起送进基于U-net的网络中，输出模糊成分&lt;span class=&#34;math inline&#34;&gt;\(Y_i\)&lt;/span&gt;，使用的损失函数如下&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\mathcal{L}_{decom} = ||Y-\sum_iY_i||_2+\sum_i(Y_i-\tilde{Y}_i)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中第一项是为了让&lt;span class=&#34;math inline&#34;&gt;\(Y_i\)&lt;/span&gt;的加和和输入一样（我怀疑是不是符号有误），第二项是为了让每一项&lt;span class=&#34;math inline&#34;&gt;\(Y_i\)&lt;/span&gt;和合成的&lt;span class=&#34;math inline&#34;&gt;\(\tilde{Y}_i\)&lt;/span&gt;一样。&lt;/p&gt;
+&lt;p&gt;然后是第二部分，进行去卷积。本文提取出来的模糊成分和普通照片的特征区别挺大的，所以不能按常规的思路在空间域上进行去卷积，作者这里使用了在特征域上去卷积的方式。&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[X^*_i=\arg\min||Y_i-X_i\ast B_i||
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;在实现上，作者使用了一个基于特征的自适应维纳滤波网络，设&lt;span class=&#34;math inline&#34;&gt;\(f_i\)&lt;/span&gt;是可学习的线性滤波器集合，和&lt;span class=&#34;math inline&#34;&gt;\(Y_i\)&lt;/span&gt;进行卷积来获得有用的特征，于是&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[F_iY_i=F_i(X_i\ast B_i)+F_in
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;这里的&lt;span class=&#34;math inline&#34;&gt;\(F_i\)&lt;/span&gt;是&lt;span class=&#34;math inline&#34;&gt;\(f_i\)&lt;/span&gt;的傅立叶变换（作者能不能统一一下大小写，其他的大写都是空间域的，只有&lt;span class=&#34;math inline&#34;&gt;\(F\)&lt;/span&gt;是频域的）。于是，我们的优化目标也就等价于寻找一个维纳滤波操作&lt;span class=&#34;math inline&#34;&gt;\(G_i\)&lt;/span&gt;来进行像差矫正&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[X_i^*=\arg\min||G_iF_iY_i-F_iX_i||
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;最后误差函数是&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\mathcal{L}_{deconv} = ||F_iX_i-G_iF_iY_i||_2
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;这里我个人觉得作者说的很乱，作者的意思看图可能更容易理解。首先将模糊成分&lt;span class=&#34;math inline&#34;&gt;\(Y_i\)&lt;/span&gt;送进特征提取器，提取特征得到&lt;span class=&#34;math inline&#34;&gt;\(F_iY_i\)&lt;/span&gt;，这个&lt;span class=&#34;math inline&#34;&gt;\(F_i\)&lt;/span&gt;似乎是可学习的，然后将其送入预训练的维纳滤波&lt;span class=&#34;math inline&#34;&gt;\(G_i\)&lt;/span&gt;中，这一部分是不可训练的。然后得到的&lt;span class=&#34;math inline&#34;&gt;\(G_iF_iY_i\)&lt;/span&gt;再经过一系列网络，输出了一个预测的&lt;span class=&#34;math inline&#34;&gt;\(\hat X_i\)&lt;/span&gt;。网络的目标是期望这个&lt;span class=&#34;math inline&#34;&gt;\(F_i\hat X_i\)&lt;/span&gt;和真实标注&lt;span class=&#34;math inline&#34;&gt;\(F_iX_i\)&lt;/span&gt;更接近。&lt;/p&gt;
+&lt;p&gt;目前来说将预估出来的&lt;span class=&#34;math inline&#34;&gt;\(X_i\)&lt;/span&gt;组合起来就得到了锐利图片，但事实上由于分解的不精确性和去卷积的伪影，最终会影响到图像质量。为此作者又提出了第三部分，基于注意力的混合模块。这个模块是一个可训练的网络，输入所有的锐利patch，输出一张完整的锐利的图。&lt;/p&gt;
+&lt;h1 id=&#34;image-restoration-for-optical-zooming-system-based-on-alvarez-lenses&#34;&gt;Image restoration for optical zooming system based on Alvarez lenses&lt;/h1&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://opg.optica.org/oe/fulltext.cfm?uri=oe-31-22-35765&amp;amp;id=540720&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://opg.optica.org/oe/fulltext.cfm?uri=oe-31-22-35765&amp;amp;id=540720&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;本篇解决了基于Alvarez镜头组的光学变焦系统的图像恢复问题，有很多光学设计的内容，不过我不懂，除去这一部分的话本文内容不多。&lt;/p&gt;
+&lt;p&gt;首先是获取配对数据，仍然是使用锐利图像，然后卷积上PSF得到退化图象。对于图像恢复部分，本文基于MIMO-UNet进行了修改&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 179; 
+			flex-basis: 430px&#34;
+	&gt;
+	&lt;a href=&#34;https://kegalas.uk/p/%E5%83%8F%E5%B7%AE%E7%9F%AB%E6%AD%A3%E7%AE%80%E8%BF%B0/22.jpg&#34; data-size=&#34;1011x564&#34;&gt;
+		&lt;img src=&#34;https://kegalas.uk/p/%E5%83%8F%E5%B7%AE%E7%9F%AB%E6%AD%A3%E7%AE%80%E8%BF%B0/22.jpg&#34;
+			width=&#34;1011&#34;
+			height=&#34;564&#34;
+			srcset=&#34;https://kegalas.uk/p/%E5%83%8F%E5%B7%AE%E7%9F%AB%E6%AD%A3%E7%AE%80%E8%BF%B0/22_hu54372c1f78364c33e23797e331df4a23_64653_480x0_resize_q75_box.jpg 480w, https://kegalas.uk/p/%E5%83%8F%E5%B7%AE%E7%9F%AB%E6%AD%A3%E7%AE%80%E8%BF%B0/22_hu54372c1f78364c33e23797e331df4a23_64653_1024x0_resize_q75_box.jpg 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;22.jpg&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;22.jpg&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 259; 
+			flex-basis: 622px&#34;
+	&gt;
+	&lt;a href=&#34;https://kegalas.uk/p/%E5%83%8F%E5%B7%AE%E7%9F%AB%E6%AD%A3%E7%AE%80%E8%BF%B0/23.jpg&#34; data-size=&#34;1051x405&#34;&gt;
+		&lt;img src=&#34;https://kegalas.uk/p/%E5%83%8F%E5%B7%AE%E7%9F%AB%E6%AD%A3%E7%AE%80%E8%BF%B0/23.jpg&#34;
+			width=&#34;1051&#34;
+			height=&#34;405&#34;
+			srcset=&#34;https://kegalas.uk/p/%E5%83%8F%E5%B7%AE%E7%9F%AB%E6%AD%A3%E7%AE%80%E8%BF%B0/23_hu9ac246440863c6bc974cd58c095e92d7_50041_480x0_resize_q75_box.jpg 480w, https://kegalas.uk/p/%E5%83%8F%E5%B7%AE%E7%9F%AB%E6%AD%A3%E7%AE%80%E8%BF%B0/23_hu9ac246440863c6bc974cd58c095e92d7_50041_1024x0_resize_q75_box.jpg 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;23.jpg&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;23.jpg&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;损失函数使用CharbonnierLoss&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[Loss=\sqrt{(output-input)^2+\epsilon^2}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h1 id=&#34;neural-nano-optics-for-high-quality-thin-lens-imaging&#34;&gt;Neural nano-optics for high-quality thin lens imaging&lt;/h1&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.nature.com/articles/s41467-021-26443-0&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://www.nature.com/articles/s41467-021-26443-0&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;本文针对超透镜进行校正。&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 141; 
+			flex-basis: 338px&#34;
+	&gt;
+	&lt;a href=&#34;https://kegalas.uk/p/%E5%83%8F%E5%B7%AE%E7%9F%AB%E6%AD%A3%E7%AE%80%E8%BF%B0/24.jpg&#34; data-size=&#34;1030x730&#34;&gt;
+		&lt;img src=&#34;https://kegalas.uk/p/%E5%83%8F%E5%B7%AE%E7%9F%AB%E6%AD%A3%E7%AE%80%E8%BF%B0/24.jpg&#34;
+			width=&#34;1030&#34;
+			height=&#34;730&#34;
+			srcset=&#34;https://kegalas.uk/p/%E5%83%8F%E5%B7%AE%E7%9F%AB%E6%AD%A3%E7%AE%80%E8%BF%B0/24_hu0524fa783bc0f03a75882446cd97e7b7_102578_480x0_resize_q75_box.jpg 480w, https://kegalas.uk/p/%E5%83%8F%E5%B7%AE%E7%9F%AB%E6%AD%A3%E7%AE%80%E8%BF%B0/24_hu0524fa783bc0f03a75882446cd97e7b7_102578_1024x0_resize_q75_box.jpg 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;24.jpg&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;24.jpg&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;本文将超透镜的设计融入到了训练过程中，超透镜的参数可由下式表述&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\phi(r)=\sum^n_{i=0}a_i\left(\dfrac{r}{R}\right)^{2i}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;由于笔者不是很清楚光学设计，所以就把这里简单当做一个函数，参数可调，场景用其获取能产生一些数值。&lt;/p&gt;
+&lt;p&gt;上图描述的是整个端到端的流程，其可以用下式表述&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[O=f_{\text{DECONV}}(P_{\text{DECONV}}, f_{\text{SENSOR}}(I\ast f_{\text{META}}(P_{\text{META}})), f_{\text{META}}(P_{\text{META}}))
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(P_{\text{META}}\)&lt;/span&gt;就是超透镜的参数，使用函数&lt;span class=&#34;math inline&#34;&gt;\(f_{\text{META}}\)&lt;/span&gt;计算出理论PSF，和输入信号进行卷积（在训练过程中是数据集的gt图像）。&lt;span class=&#34;math inline&#34;&gt;\(f_{\text{SENSOR}}\)&lt;/span&gt;模拟传感器的行为，其中包含了传感器的噪声。然后就是去卷积的神经网络&lt;span class=&#34;math inline&#34;&gt;\(f_{\text{DECONV}}\)&lt;/span&gt;，其参数为&lt;span class=&#34;math inline&#34;&gt;\(P_{\text{DECONV}}\)&lt;/span&gt;，接受传感器产生的图像，并且由于是非盲，也接受PSF，最终生成一张预测的清晰图像。损失函数就是gt和预测之间的L1损失。&lt;/p&gt;
+&lt;p&gt;在联合优化过后，就使用最优的超透镜参数去制造超透镜物理实体。&lt;/p&gt;
+&lt;h1 id=&#34;realistic-image-degradation-with-measured-psf&#34;&gt;Realistic Image Degradation with Measured PSF&lt;/h1&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://arxiv.org/abs/1801.02197&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://arxiv.org/abs/1801.02197&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;这篇文章虽然是反过来模拟像差的，但很多文章是用合成数据的，这篇文章也可以进行一定了解。&lt;/p&gt;
+&lt;p&gt;本文采集的PSF是用高精度仪器采集的，不是用我们之前说到的各种数值和深度学习方法，用的是单色滤镜，所以只有单通道的PSF。一共测试了27个镜头，有三个参数：离焦&lt;span class=&#34;math inline&#34;&gt;\(\Delta z\)&lt;/span&gt;、图像高度&lt;span class=&#34;math inline&#34;&gt;\(R\)&lt;/span&gt;、
+方位角&lt;span class=&#34;math inline&#34;&gt;\(\phi\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;由于这个测量的精度很高(0.3um)，比传感器的像素尺寸(3um)小的多，所以可以进行下采样来提升效率。在本文中，下采样至大约6um的像素大小，得到一个13x13的PSF。&lt;/p&gt;
+&lt;p&gt;作者这里是想对每一个像素都卷积一个专属于它的PSF，从而达到比较好的结果。为此，作者将之前测量到的PSF作为gt，将&lt;span class=&#34;math inline&#34;&gt;\(\Delta z\)&lt;/span&gt;、&lt;span class=&#34;math inline&#34;&gt;\(R\)&lt;/span&gt;、&lt;span class=&#34;math inline&#34;&gt;\(\phi\)&lt;/span&gt;作为数据输入，让神经网络拟合出PSF。然后对每一个像素都预测一个PSF。但作者认为这又太麻烦了，PSF在短距离内变化不大，不如直接用插值的方法去弄。&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 143; 
+			flex-basis: 344px&#34;
+	&gt;
+	&lt;a href=&#34;https://kegalas.uk/p/%E5%83%8F%E5%B7%AE%E7%9F%AB%E6%AD%A3%E7%AE%80%E8%BF%B0/27.jpg&#34; data-size=&#34;709x494&#34;&gt;
+		&lt;img src=&#34;https://kegalas.uk/p/%E5%83%8F%E5%B7%AE%E7%9F%AB%E6%AD%A3%E7%AE%80%E8%BF%B0/27.jpg&#34;
+			width=&#34;709&#34;
+			height=&#34;494&#34;
+			srcset=&#34;https://kegalas.uk/p/%E5%83%8F%E5%B7%AE%E7%9F%AB%E6%AD%A3%E7%AE%80%E8%BF%B0/27_hu1c8af06c60a367fd87f6947eadadd1bd_48430_480x0_resize_q75_box.jpg 480w, https://kegalas.uk/p/%E5%83%8F%E5%B7%AE%E7%9F%AB%E6%AD%A3%E7%AE%80%E8%BF%B0/27_hu1c8af06c60a367fd87f6947eadadd1bd_48430_1024x0_resize_q75_box.jpg 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;27.jpg&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;27.jpg&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;上面的红点是有测量过PSF的位置，其他位置通过双线性插值得到。&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 294; 
+			flex-basis: 706px&#34;
+	&gt;
+	&lt;a href=&#34;https://kegalas.uk/p/%E5%83%8F%E5%B7%AE%E7%9F%AB%E6%AD%A3%E7%AE%80%E8%BF%B0/28.jpg&#34; data-size=&#34;692x235&#34;&gt;
+		&lt;img src=&#34;https://kegalas.uk/p/%E5%83%8F%E5%B7%AE%E7%9F%AB%E6%AD%A3%E7%AE%80%E8%BF%B0/28.jpg&#34;
+			width=&#34;692&#34;
+			height=&#34;235&#34;
+			srcset=&#34;https://kegalas.uk/p/%E5%83%8F%E5%B7%AE%E7%9F%AB%E6%AD%A3%E7%AE%80%E8%BF%B0/28_hu43a77b870ca9b8d8ec2cb216a059748d_30159_480x0_resize_q75_box.jpg 480w, https://kegalas.uk/p/%E5%83%8F%E5%B7%AE%E7%9F%AB%E6%AD%A3%E7%AE%80%E8%BF%B0/28_hu43a77b870ca9b8d8ec2cb216a059748d_30159_1024x0_resize_q75_box.jpg 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;28.jpg&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;28.jpg&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;之后使用插值的或真实的PSF对图像卷积就得到了退化图像，同时为了减小拍摄图像自带的退化，还对数据提前使用了盲去卷积。&lt;/p&gt;
+&lt;p&gt;但是在模拟退化的这个过程中，没有考虑到离焦距离&lt;span class=&#34;math inline&#34;&gt;\(\Delta z\)&lt;/span&gt;，作者后面说了一大堆提出的PSF模型有&lt;span class=&#34;math inline&#34;&gt;\(\Delta z\)&lt;/span&gt;的好处，但我并没有看到和计算退化有什么关系，整篇文章都很乱。&lt;/p&gt;
+&lt;h1 id=&#34;end-to-end-hybrid-refractive-diffractive-lens-design-with-differentiable-ray-wave-model&#34;&gt;End-to-end hybrid refractive-diffractive lens design with differentiable ray-wave model&lt;/h1&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://dl.acm.org/doi/full/10.1145/3680528.3687640&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://dl.acm.org/doi/full/10.1145/3680528.3687640&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;这篇文章首次提出一个可微分的、精度高的折射-衍射混合成像模型，来让镜头设计和神经网络结合在一起，从而能够端到端的进行训练。&lt;/p&gt;
+&lt;p&gt;同前，光学部分不是很懂，简要介绍一下提到的公式。&lt;/p&gt;
+&lt;p&gt;本文的镜头组如下图&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 363; 
+			flex-basis: 871px&#34;
+	&gt;
+	&lt;a href=&#34;https://kegalas.uk/p/%E5%83%8F%E5%B7%AE%E7%9F%AB%E6%AD%A3%E7%AE%80%E8%BF%B0/25.jpg&#34; data-size=&#34;930x256&#34;&gt;
+		&lt;img src=&#34;https://kegalas.uk/p/%E5%83%8F%E5%B7%AE%E7%9F%AB%E6%AD%A3%E7%AE%80%E8%BF%B0/25.jpg&#34;
+			width=&#34;930&#34;
+			height=&#34;256&#34;
+			srcset=&#34;https://kegalas.uk/p/%E5%83%8F%E5%B7%AE%E7%9F%AB%E6%AD%A3%E7%AE%80%E8%BF%B0/25_hub0b3e4142dca85df2597f5af7773a201_47678_480x0_resize_q75_box.jpg 480w, https://kegalas.uk/p/%E5%83%8F%E5%B7%AE%E7%9F%AB%E6%AD%A3%E7%AE%80%E8%BF%B0/25_hub0b3e4142dca85df2597f5af7773a201_47678_1024x0_resize_q75_box.jpg 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;25.jpg&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;25.jpg&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;他首先是一连串折射镜片，最后接上一个衍射镜片（衍射光学元件，DOE），然后再接到传感器上。在模拟这个镜头的物理性质时，使用了一种光线-光波结合的方法，在前面的折射镜片上使用光线追踪，而在后面的DOE上使用相位调制等方法去分析。&lt;/p&gt;
+&lt;p&gt;蒙特卡洛光线追踪的过程可以表示如下&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\left\{\begin{matrix}
+\mathcal{I}_n(\mathcal S_n):(o^{n-1}, d^{n-1},\phi^{n-1},\lambda)\to (o^{n}, d^{n-1},\phi^{n},\lambda)\\
+\mathcal{R}_n(\mathcal S_n):(o^{n}, d^{n-1},\phi^{n},\lambda)\to (o^{n}, d^{n},\phi^{n},\lambda) \\
+(o,d,\phi,\lambda)=(\mathcal{R}_N\mathcal{I}_N\dots\mathcal{R}_1\mathcal{I}_1)(o^0, d^0, \phi^0, \lambda)
+\end{matrix}\right.
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(\mathcal{I}\)&lt;/span&gt;指的是光线与平面&lt;span class=&#34;math inline&#34;&gt;\(\mathcal{S}\)&lt;/span&gt;的相交，&lt;span class=&#34;math inline&#34;&gt;\(\mathcal{R}\)&lt;/span&gt;指的是光线在平面&lt;span class=&#34;math inline&#34;&gt;\(\mathcal{S}\)&lt;/span&gt;上的折射，&lt;span class=&#34;math inline&#34;&gt;\(o,d,\phi,\lambda\)&lt;/span&gt;分别是位置、角度、相位、波长。当计算完所有折射后，光线就抵达DOE前表面，此时可以计算光场为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[U_{DOE^-}=\sum^{spp}_{i=1}u_i\exp(j\phi_i)\cos&lt;d_i, n&gt;
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(u_i\)&lt;/span&gt;是振幅，&lt;span class=&#34;math inline&#34;&gt;\(\phi_i\)&lt;/span&gt;是光线&lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt;的相位，&lt;span class=&#34;math inline&#34;&gt;\(spp\)&lt;/span&gt;是蒙特卡洛采样的光线数，&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;是DOE表面的法向量。在DOE的调制过后，光场可以写为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[U_{DOE^+}=U_{DOE^-}\exp\left(j\dfrac{n_\lambda-1}{n_0-1}\dfrac{\lambda_0}{\lambda}\phi_0\right)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;计算完之后，我们就可以算出传感器表面的光场&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[U_{Sensor}=\mathcal{F}^{-1}(\mathcal{F}(U_{DOE^+})H)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(H\)&lt;/span&gt;是传递函数，之后PSF计算如下&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[PSF=|U_{Sensor}|^2
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 200; 
+			flex-basis: 482px&#34;
+	&gt;
+	&lt;a href=&#34;https://kegalas.uk/p/%E5%83%8F%E5%B7%AE%E7%9F%AB%E6%AD%A3%E7%AE%80%E8%BF%B0/26.jpg&#34; data-size=&#34;1089x542&#34;&gt;
+		&lt;img src=&#34;https://kegalas.uk/p/%E5%83%8F%E5%B7%AE%E7%9F%AB%E6%AD%A3%E7%AE%80%E8%BF%B0/26.jpg&#34;
+			width=&#34;1089&#34;
+			height=&#34;542&#34;
+			srcset=&#34;https://kegalas.uk/p/%E5%83%8F%E5%B7%AE%E7%9F%AB%E6%AD%A3%E7%AE%80%E8%BF%B0/26_hubee10749488b94a86bb5175b4edc98ba_100737_480x0_resize_q75_box.jpg 480w, https://kegalas.uk/p/%E5%83%8F%E5%B7%AE%E7%9F%AB%E6%AD%A3%E7%AE%80%E8%BF%B0/26_hubee10749488b94a86bb5175b4edc98ba_100737_1024x0_resize_q75_box.jpg 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;26.jpg&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;26.jpg&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;在实验中，作者计算了10x10个RGB PSF。同样，使用PSF来和图像卷积，构造出退化图像。之后使用NAFNet作为图像恢复模型，损失函数如下&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\mathcal{L}=\mathcal{L}_{pixel}(\mathcal{N}(PSF\ast I), I) + \alpha\mathcal{L}_{percep}(\mathcal{N}(PSF\ast I), I)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(I\)&lt;/span&gt;是输入图像，也被当做ground truth使用，&lt;span class=&#34;math inline&#34;&gt;\(\mathcal{N}\)&lt;/span&gt;代表着NAFNet，&lt;span class=&#34;math inline&#34;&gt;\(\mathcal{L}_{pixel}\)&lt;/span&gt;代表均方误差，&lt;span class=&#34;math inline&#34;&gt;\(\mathcal{L}_{percep}\)&lt;/span&gt;代表着VGG loss。&lt;/p&gt;
+&lt;h1 id=&#34;grayscale-to-hyperspectral-at-any-resolution-using-a-phase-only-lens&#34;&gt;Grayscale to Hyperspectral at Any Resolution Using a Phase-Only Lens&lt;/h1&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://arxiv.org/abs/2412.02798&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://arxiv.org/abs/2412.02798&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;这篇文章主要面向metalens的像差矫正。本文使用的相机由一个衍射元件和一个无滤镜的传感器组成，获取到多个波长的光线，输出的是一个加和的灰度图。本文的目标是从这个灰度图中恢复出31个通道的图像。使用的是一个conditional denoising diffusion model&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 109; 
+			flex-basis: 262px&#34;
+	&gt;
+	&lt;a href=&#34;https://kegalas.uk/p/%E5%83%8F%E5%B7%AE%E7%9F%AB%E6%AD%A3%E7%AE%80%E8%BF%B0/30.jpg&#34; data-size=&#34;559x512&#34;&gt;
+		&lt;img src=&#34;https://kegalas.uk/p/%E5%83%8F%E5%B7%AE%E7%9F%AB%E6%AD%A3%E7%AE%80%E8%BF%B0/30.jpg&#34;
+			width=&#34;559&#34;
+			height=&#34;512&#34;
+			srcset=&#34;https://kegalas.uk/p/%E5%83%8F%E5%B7%AE%E7%9F%AB%E6%AD%A3%E7%AE%80%E8%BF%B0/30_hu33e12c4142afa5cfb9c62a9b2cb1558d_71330_480x0_resize_q75_box.jpg 480w, https://kegalas.uk/p/%E5%83%8F%E5%B7%AE%E7%9F%AB%E6%AD%A3%E7%AE%80%E8%BF%B0/30_hu33e12c4142afa5cfb9c62a9b2cb1558d_71330_1024x0_resize_q75_box.jpg 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;30.jpg&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;30.jpg&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;一个高光谱图像（HSI），记作&lt;span class=&#34;math inline&#34;&gt;\(\mathbf{x}\in\mathcal{R}^{H\times W\times C}_{\geq 0}\)&lt;/span&gt;，被传感器测量后变成单通道的&lt;span class=&#34;math inline&#34;&gt;\(\mathbf{y}\in\mathcal{R}^{H\times W}_{\geq 0}\)&lt;/span&gt;，成像的过程为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\mathbf{y}(u,v)=\mathcal{M}(x)=\sum_\lambda o(\lambda)\cdot f(u,v,\lambda) \underset{(u, v)}{\ast} \mathbf{x}(u,v,\lambda)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(f(u,v,\lambda)\)&lt;/span&gt;是PSF，&lt;span class=&#34;math inline&#34;&gt;\(\lambda\)&lt;/span&gt;是波长。&lt;span class=&#34;math inline&#34;&gt;\(o(\lambda)\)&lt;/span&gt;是传感器的光谱响应。于是对于高光谱图像的测量就变成了一个线性的编码过程，将3D的高光谱“体”编码成2D“图”。这里的PSF测量似乎不是本文的重点，根据附录来说PSF似乎是理论计算值，整个实验是在合成数据上进行的。&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 148; 
+			flex-basis: 356px&#34;
+	&gt;
+	&lt;a href=&#34;https://kegalas.uk/p/%E5%83%8F%E5%B7%AE%E7%9F%AB%E6%AD%A3%E7%AE%80%E8%BF%B0/29.jpg&#34; data-size=&#34;539x363&#34;&gt;
+		&lt;img src=&#34;https://kegalas.uk/p/%E5%83%8F%E5%B7%AE%E7%9F%AB%E6%AD%A3%E7%AE%80%E8%BF%B0/29.jpg&#34;
+			width=&#34;539&#34;
+			height=&#34;363&#34;
+			srcset=&#34;https://kegalas.uk/p/%E5%83%8F%E5%B7%AE%E7%9F%AB%E6%AD%A3%E7%AE%80%E8%BF%B0/29_hub5d1a0450ea0081f6b29c5b5923c60b5_50694_480x0_resize_q75_box.jpg 480w, https://kegalas.uk/p/%E5%83%8F%E5%B7%AE%E7%9F%AB%E6%AD%A3%E7%AE%80%E8%BF%B0/29_hub5d1a0450ea0081f6b29c5b5923c60b5_50694_1024x0_resize_q75_box.jpg 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;29.jpg&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;29.jpg&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;在本文的实验中使用了8个PSF，目的是为了测试哪种光学编码器（指的应该是衍射元件而非神经网络中的编码器）是最好的。左边的PSF较为稀疏，能够产生更锐利的图像，但是编码光谱信息的能力比右边的PSF弱。因为重建任务需要同时保持空间和光谱的高准确性，所以哪种PSF较好并不是很显然。&lt;/p&gt;
+&lt;p&gt;这上面的每一种PSF都可以通过设计合适的metalens来在物理上实现。我认为作者的逻辑应该是先用这八种PSF去测试，看哪种效果最好，然后依照最好的这个PSF来生产metalens。&lt;/p&gt;
+&lt;p&gt;本文使用扩散模型来解决图像恢复问题，但并不是整张图上进行，而是分patch进行，作者说从实验结果上来看这样是更好的。&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 264; 
+			flex-basis: 635px&#34;
+	&gt;
+	&lt;a href=&#34;https://kegalas.uk/p/%E5%83%8F%E5%B7%AE%E7%9F%AB%E6%AD%A3%E7%AE%80%E8%BF%B0/31.jpg&#34; data-size=&#34;1107x418&#34;&gt;
+		&lt;img src=&#34;https://kegalas.uk/p/%E5%83%8F%E5%B7%AE%E7%9F%AB%E6%AD%A3%E7%AE%80%E8%BF%B0/31.jpg&#34;
+			width=&#34;1107&#34;
+			height=&#34;418&#34;
+			srcset=&#34;https://kegalas.uk/p/%E5%83%8F%E5%B7%AE%E7%9F%AB%E6%AD%A3%E7%AE%80%E8%BF%B0/31_hud0154917283db05c888dd615fd885e62_124012_480x0_resize_q75_box.jpg 480w, https://kegalas.uk/p/%E5%83%8F%E5%B7%AE%E7%9F%AB%E6%AD%A3%E7%AE%80%E8%BF%B0/31_hud0154917283db05c888dd615fd885e62_124012_1024x0_resize_q75_box.jpg 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;31.jpg&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;31.jpg&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;训练数据是从ARAD1K中获取的HSI，然后使用我们前面介绍的成像模型来合成退化图像，然后就得到了配对数据&lt;span class=&#34;math inline&#34;&gt;\((x_0^{(i)}, y^{(i)})\)&lt;/span&gt;。看起来作者意识到它的合成过程中，卷积计算涉及到了patch以外的信号，但是结果上来说影响不大。&lt;/p&gt;
+&lt;p&gt;同上图介绍的，往扩散模型中添加condition是通过将&lt;span class=&#34;math inline&#34;&gt;\(x,y\)&lt;/span&gt;拼在一起实现的，然后让模型在每一步的中间都输出一个预测的HSI&lt;span class=&#34;math inline&#34;&gt;\((\hat{\mathbf{x}}^p_0)\)&lt;/span&gt;，再将他们拼成一张大图，使用前述成像过程进行一次退化，让它的结果和真实标签&lt;span class=&#34;math inline&#34;&gt;\(y\)&lt;/span&gt;一致，作者说用这个方法引道全局的去噪过程。如下&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 141; 
+			flex-basis: 340px&#34;
+	&gt;
+	&lt;a href=&#34;https://kegalas.uk/p/%E5%83%8F%E5%B7%AE%E7%9F%AB%E6%AD%A3%E7%AE%80%E8%BF%B0/32.jpg&#34; data-size=&#34;553x390&#34;&gt;
+		&lt;img src=&#34;https://kegalas.uk/p/%E5%83%8F%E5%B7%AE%E7%9F%AB%E6%AD%A3%E7%AE%80%E8%BF%B0/32.jpg&#34;
+			width=&#34;553&#34;
+			height=&#34;390&#34;
+			srcset=&#34;https://kegalas.uk/p/%E5%83%8F%E5%B7%AE%E7%9F%AB%E6%AD%A3%E7%AE%80%E8%BF%B0/32_huaa5a130c2a463f2ca51088ebe5e121b0_50745_480x0_resize_q75_box.jpg 480w, https://kegalas.uk/p/%E5%83%8F%E5%B7%AE%E7%9F%AB%E6%AD%A3%E7%AE%80%E8%BF%B0/32_huaa5a130c2a463f2ca51088ebe5e121b0_50745_1024x0_resize_q75_box.jpg 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;32.jpg&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;32.jpg&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;其中上标&lt;span class=&#34;math inline&#34;&gt;\(p\)&lt;/span&gt;代表patch，&lt;span class=&#34;math inline&#34;&gt;\(Stitch\)&lt;/span&gt;代表这个拼图的过程，&lt;span class=&#34;math inline&#34;&gt;\(\mathcal{M}\)&lt;/span&gt;就是前面的成像过程。由于&lt;span class=&#34;math inline&#34;&gt;\(y\)&lt;/span&gt;和&lt;span class=&#34;math inline&#34;&gt;\(x_0\)&lt;/span&gt;是max-normalized的，所以模型预测出来的HSI是带有一个未知的比例因子的，为了校正这个比例因子，多了一步过程，也就是这个cross-patch guidance。&lt;/p&gt;
+&lt;p&gt;（上图有误，应该是&lt;span class=&#34;math inline&#34;&gt;\(\arg\min\)&lt;/span&gt;）将&lt;span class=&#34;math inline&#34;&gt;\(\hat x\)&lt;/span&gt;乘以一个因子再拼起来，然后经过成像模型退化，尽量和标签&lt;span class=&#34;math inline&#34;&gt;\(y\)&lt;/span&gt;一致，取这个最好的因子&lt;span class=&#34;math inline&#34;&gt;\(c\)&lt;/span&gt;，再取和标签的误差，作为优化&lt;span class=&#34;math inline&#34;&gt;\(x_t\)&lt;/span&gt;的误差。将&lt;span class=&#34;math inline&#34;&gt;\(x_t\)&lt;/span&gt;优化后再放入扩散模型的去噪过程中。&lt;/p&gt;
+&lt;p&gt;最后按照这个模型走&lt;span class=&#34;math inline&#34;&gt;\(T\)&lt;/span&gt;步去噪过程，就得到了最终预测的HSI。作者将光谱的不确定性量化如下&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\text{Uncertainty} = \sum_{\lambda}\text{Var}(\{\mathbf{x}_0\}^N_{i=0})
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;一共预测了&lt;span class=&#34;math inline&#34;&gt;\(N\)&lt;/span&gt;次。&lt;/p&gt;
+&lt;h1 id=&#34;achromatic-single-metalens-imaging-viadeepneural-network&#34;&gt;Achromatic Single Metalens Imaging viaDeepNeural Network&lt;/h1&gt;
+&lt;p&gt;本文也是针对metalens进行像差矫正，但是没有引入PSF数据。模型没什么特别的，主要关注一下成像模型和数据获取方式。&lt;/p&gt;
+&lt;p&gt;首先介绍一下本文使用的成像模型&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[I_{sensor} = C(\mathbf{w}\cdot\mathbf{v}\cdot e\mathbf{D}(T(I_{gt}(\lambda))_{H^{-1}}\ast PSF(\lambda))+n)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(I_{sensor}\)&lt;/span&gt;是相机获取到的图像，&lt;span class=&#34;math inline&#34;&gt;\(I_{gt}(\lambda)\)&lt;/span&gt;是真实图像的该波长下的分量，&lt;span class=&#34;math inline&#34;&gt;\(T\)&lt;/span&gt;指的是一个转换函数，将gt图像转化成显示屏上的图像。相机获取的一部分数据实际上是对着显示屏拍。&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 164; 
+			flex-basis: 394px&#34;
+	&gt;
+	&lt;a href=&#34;https://kegalas.uk/p/%E5%83%8F%E5%B7%AE%E7%9F%AB%E6%AD%A3%E7%AE%80%E8%BF%B0/33.jpg&#34; data-size=&#34;875x532&#34;&gt;
+		&lt;img src=&#34;https://kegalas.uk/p/%E5%83%8F%E5%B7%AE%E7%9F%AB%E6%AD%A3%E7%AE%80%E8%BF%B0/33.jpg&#34;
+			width=&#34;875&#34;
+			height=&#34;532&#34;
+			srcset=&#34;https://kegalas.uk/p/%E5%83%8F%E5%B7%AE%E7%9F%AB%E6%AD%A3%E7%AE%80%E8%BF%B0/33_huca1c278ff67e8bc9f8cb83166bbd9c8d_67791_480x0_resize_q75_box.jpg 480w, https://kegalas.uk/p/%E5%83%8F%E5%B7%AE%E7%9F%AB%E6%AD%A3%E7%AE%80%E8%BF%B0/33_huca1c278ff67e8bc9f8cb83166bbd9c8d_67791_1024x0_resize_q75_box.jpg 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;33.jpg&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;33.jpg&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(PSF(\lambda)\)&lt;/span&gt;是在该波长下的PSF，&lt;span class=&#34;math inline&#34;&gt;\(\ast\)&lt;/span&gt;是卷积，&lt;span class=&#34;math inline&#34;&gt;\(\mathbf{W}\)&lt;/span&gt;是色彩平衡矩阵，&lt;span class=&#34;math inline&#34;&gt;\(\mathbf{V}\)&lt;/span&gt;代表晕影，&lt;span class=&#34;math inline&#34;&gt;\(H\)&lt;/span&gt;代表透视投影矩阵，&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;代表镜头畸变，&lt;span class=&#34;math inline&#34;&gt;\(e\)&lt;/span&gt;是曝光参数，&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;是噪声，&lt;span class=&#34;math inline&#34;&gt;\(C\)&lt;/span&gt;是剪裁函数，剪裁最大最小信号值。&lt;/p&gt;
+&lt;p&gt;本文是盲去卷积，没有使用测量的PSF。作者认为是metalens的测量比较困难，而且和波长相关，并且PSF通常还不是uniform的。&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 197; 
+			flex-basis: 474px&#34;
+	&gt;
+	&lt;a href=&#34;https://kegalas.uk/p/%E5%83%8F%E5%B7%AE%E7%9F%AB%E6%AD%A3%E7%AE%80%E8%BF%B0/34.jpg&#34; data-size=&#34;1413x715&#34;&gt;
+		&lt;img src=&#34;https://kegalas.uk/p/%E5%83%8F%E5%B7%AE%E7%9F%AB%E6%AD%A3%E7%AE%80%E8%BF%B0/34.jpg&#34;
+			width=&#34;1413&#34;
+			height=&#34;715&#34;
+			srcset=&#34;https://kegalas.uk/p/%E5%83%8F%E5%B7%AE%E7%9F%AB%E6%AD%A3%E7%AE%80%E8%BF%B0/34_hu09b76942ab43c3971270ef7ef8d71ea5_204225_480x0_resize_q75_box.jpg 480w, https://kegalas.uk/p/%E5%83%8F%E5%B7%AE%E7%9F%AB%E6%AD%A3%E7%AE%80%E8%BF%B0/34_hu09b76942ab43c3971270ef7ef8d71ea5_204225_1024x0_resize_q75_box.jpg 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;34.jpg&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;34.jpg&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;上面的成像模型很全面，但是本文主要只关注彩色图像的质量增强，于是就只保留了&lt;span class=&#34;math inline&#34;&gt;\(\mathbf{w},\mathbf{v},PSF\)&lt;/span&gt;这三项，其他的项在数据采集的过程中去除。其中，曝光参数的去除是通过手动设定相机曝光实现的。镜头畸变和透视投影是通过拍摄test charts来去除的。去除过程见上图h部分。gt到显示器的转移矩阵是通过校正显示器去除的。&lt;/p&gt;
+&lt;p&gt;可以从上图的g部分看到有效性，矫正过的图片在几何上和gt高度相似，在雾状退化、分辨率降低等方面就证实了我们只剩下前述的3项需要矫正。&lt;/p&gt;
+&lt;p&gt;矫正就没什么好说的，UNet一把抓。损失函数是&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\mathcal{L}=\alpha L_{Perceptual}+\beta L_{PSNR}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[L_{Perceptual}=\sum^n_{i=m}\beta_il_{p_i}(I_{gt}, I_{restored})
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[l_p(I_{gt}, I_{restored}) = ||P(I_{gt})-P(I_{restored})||^2
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(P(\cdot)\)&lt;/span&gt;指的是预训练的VGG19，&lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt;是指模型的第&lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt;个卷积层。&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[L_{PSNR} = \dfrac{1}{(10\log 10((I_{max}^2)/MSE(I_{gt}, I_{restored})))}
+\]&lt;/span&gt;&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>相机PSF标定简述</title>
+        <link>https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/</link>
+        <pubDate>Sat, 31 May 2025 19:08:39 +0800</pubDate>
+        
+        <guid>https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/</guid>
+        <description>&lt;img src="https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/cover.jpg" alt="Featured image of post 相机PSF标定简述" /&gt;&lt;h1 id=&#34;前言&#34;&gt;前言&lt;/h1&gt;
+&lt;p&gt;简单来说，PSF就是光学系统的冲激响应。对于一个在光轴上的理想点光源（即一个冲激信号），相机所成的像就是该相机的PSF。事实上，PSF就表征着该光学系统的所有像差（除了畸变），也就描述了相机拍摄出来的照片是如何变得模糊的。如果能够获得相机的PSF，再加上去卷积操作（通常需要维纳滤波等抗噪声的方法），就能将退化图象恢复为理想图像。&lt;/p&gt;
+&lt;h1 id=&#34;camera-intrinsic-blur-kernel-estimation-a-reliable-framework&#34;&gt;Camera Intrinsic Blur Kernel Estimation: A Reliable Framework&lt;/h1&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://openaccess.thecvf.com/content_cvpr_2015/html/Mosleh_Camera_Intrinsic_Blur_2015_CVPR_paper.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://openaccess.thecvf.com/content_cvpr_2015/html/Mosleh_Camera_Intrinsic_Blur_2015_CVPR_paper.html&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;本文给出的成像模型如下&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[b = S(v(d(h(i)))\ast k)+n
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt;是物平面，&lt;span class=&#34;math inline&#34;&gt;\(h\)&lt;/span&gt;是一个平面映射(planar homography)，将物平面透视投影到像平面上。而紧随其后的&lt;span class=&#34;math inline&#34;&gt;\(d\)&lt;/span&gt;则代表着几何畸变(geometric distortion)，这是由于真实相机并不是完美的小孔成像系统。之后的&lt;span class=&#34;math inline&#34;&gt;\(v\)&lt;/span&gt;则代表着光学晕影(optical vignetting)，然后这一串的结果和PSF核&lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt;进行卷积，再通过采样函数&lt;span class=&#34;math inline&#34;&gt;\(S\)&lt;/span&gt;和一个加性噪声&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;（零均值高斯噪声），就得到了最终的图像&lt;span class=&#34;math inline&#34;&gt;\(b\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;以往的工作为了估计&lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt;，通常都会依次估计&lt;span class=&#34;math inline&#34;&gt;\(h,d,v\)&lt;/span&gt;，然后再来估计&lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt;。这个估计鲁棒性不是很好，作者这里使用的方法绕过了对这三者的估计，记&lt;span class=&#34;math inline&#34;&gt;\(u=v(d(h(i)))\)&lt;/span&gt;，作者要直接获取到这个&lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt;，成像模型变为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[b = S(u\ast k) + n
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;首先作者弄了四张图&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 162; 
+			flex-basis: 390px&#34;
+	&gt;
+	&lt;a href=&#34;https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/1.jpg&#34; data-size=&#34;555x341&#34;&gt;
+		&lt;img src=&#34;https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/1.jpg&#34;
+			width=&#34;555&#34;
+			height=&#34;341&#34;
+			srcset=&#34;https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/1_hucf67539020a25dbf02c4578a4d58ccff_43119_480x0_resize_q75_box.jpg 480w, https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/1_hucf67539020a25dbf02c4578a4d58ccff_43119_1024x0_resize_q75_box.jpg 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;1.jpg&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;1.jpg&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;第一张为棋盘格图，第二张图为期望为&lt;span class=&#34;math inline&#34;&gt;\(0.5\)&lt;/span&gt;的伯努利分布噪声，第三第四张图则为全黑和全白图。这些图像都是直接在电脑上合成的，然后将其在高分辨率显示屏上显示，再用待测相机去拍摄。之后需要将拍摄到的图和原始合成的图进行对齐。&lt;/p&gt;
+&lt;p&gt;首先从棋盘格图入手&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 108; 
+			flex-basis: 260px&#34;
+	&gt;
+	&lt;a href=&#34;https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/2.jpg&#34; data-size=&#34;526x485&#34;&gt;
+		&lt;img src=&#34;https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/2.jpg&#34;
+			width=&#34;526&#34;
+			height=&#34;485&#34;
+			srcset=&#34;https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/2_hu043642c7b15207d125e7b69231b1b434_43249_480x0_resize_q75_box.jpg 480w, https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/2_hu043642c7b15207d125e7b69231b1b434_43249_1024x0_resize_q75_box.jpg 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;2.jpg&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;2.jpg&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;作者使用Harris corner detector来进行角点检测。由于拍摄的时候是正对着拍的，所以各个角点之间的空间关系不变，合成图和拍摄图的映射关系非常直观。&lt;/p&gt;
+&lt;p&gt;对于一个格子内的四个角点，我们就可以通过双线性插值的方法，将拍摄图上的任意坐标映射到合成图上。首先，记合成图上的四个角点分别为&lt;span class=&#34;math inline&#34;&gt;\(c_1=(\alpha_1, \beta_1),c_2=(\alpha_2, \beta_1),c_3=(\alpha_2, \beta_2),c_4=(\alpha_1, \beta_2)\)&lt;/span&gt;，然后记拍摄图上的对应四个角点的坐标为&lt;span class=&#34;math inline&#34;&gt;\(c_1&#39;=(x_1, y_1),c_2&#39;=(x_2, y_2),c_3&#39;=(x_3, y_3),c_4&#39;=(x_4, y_4)\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;于是，任意在方格&lt;span class=&#34;math inline&#34;&gt;\(C&#39;\)&lt;/span&gt;内的点的坐标&lt;span class=&#34;math inline&#34;&gt;\((x,y)\)&lt;/span&gt;都可以用方格&lt;span class=&#34;math inline&#34;&gt;\(C\)&lt;/span&gt;内的坐标&lt;span class=&#34;math inline&#34;&gt;\((\alpha,\beta)\)&lt;/span&gt;表示，&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\begin{bmatrix}
+ x &amp; y
+\end{bmatrix}=
+\begin{bmatrix}
+ \alpha\beta &amp; \alpha &amp; \beta &amp; 1
+\end{bmatrix}
+\begin{bmatrix}
+1 &amp; -1 &amp; -1 &amp; 1 \\
+-1 &amp; 1 &amp; 0 &amp; 0 \\
+-1 &amp; 0 &amp; 1 &amp; 0 \\
+1 &amp; 0 &amp; 0 &amp; 0
+\end{bmatrix}
+\begin{bmatrix}
+c_1&#39; \\
+c_2&#39; \\
+c_3&#39; \\
+c_4&#39;
+\end{bmatrix}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;当然，这其中的坐标以方格的左下角为原点，并且进行归一化。&lt;/p&gt;
+&lt;p&gt;下一步，我们就可以通过warping的方式来获取前文提到的&lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt;（注，前文提到的&lt;span class=&#34;math inline&#34;&gt;\(b\)&lt;/span&gt;就是相机直接拍摄得到的伯努利噪声图像），算法如下&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 115; 
+			flex-basis: 276px&#34;
+	&gt;
+	&lt;a href=&#34;https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/3.jpg&#34; data-size=&#34;734x636&#34;&gt;
+		&lt;img src=&#34;https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/3.jpg&#34;
+			width=&#34;734&#34;
+			height=&#34;636&#34;
+			srcset=&#34;https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/3_hudc4dec33a8caa571fc0899a05709712a_72049_480x0_resize_q75_box.jpg 480w, https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/3_hudc4dec33a8caa571fc0899a05709712a_72049_1024x0_resize_q75_box.jpg 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;3.jpg&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;3.jpg&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;这里的图片&lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt;即为合成得到的伯努利噪声原图。这里描述的是对每一个棋盘格的方格内的坐标，在&lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt;上进行采样，然后将其值放到相机拍摄图像的对应坐标位置上。这一步主要是模拟了相机几何畸变和平面映射的过程。接下来再模拟晕影的过程&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[u(x,y)=l(x,y)+i&#39;(x,y)(w(x,y)-l(x,y))
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;这里的&lt;span class=&#34;math inline&#34;&gt;\(l\)&lt;/span&gt;指的是相机对着全黑图片拍摄的结果，而&lt;span class=&#34;math inline&#34;&gt;\(w\)&lt;/span&gt;则是对着全白图片拍摄的结果。这样我们就得到了需要的&lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;设&lt;span class=&#34;math inline&#34;&gt;\(b,u\)&lt;/span&gt;的大小为&lt;span class=&#34;math inline&#34;&gt;\(M\times N\)&lt;/span&gt;，PSF核的大小为&lt;span class=&#34;math inline&#34;&gt;\(R\times R\)&lt;/span&gt;，如果将成像模型转换成向量形式，并且省略掉采样函数的话（因为只是简单的线性映射），有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\mathbf{b}=\mathbf{uk}+\mathbf{n}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(\mathbf{b}\in\mathbb{R}^{MN},\mathbf{n}\in\mathbb{R}^{MN},\mathbf{k}\in\mathbb{R}^{RR},\mathbf{u}\in\mathbb{R}^{MN\times RR}\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;伯努利噪声有均匀的谱密度函数（SDF），如果在理想的无噪声环境下，那么有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[|\mathcal{F}(b)|^2=
+|\mathcal{F}(i)|^2
+|\mathcal{F}(k)|^2
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(\mathcal F\)&lt;/span&gt;是傅里叶变换。于是理想的PSF就是&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[|\mathcal{F}(k&#39;)|^2=\dfrac{|\mathcal{F}(b)||\overline{\mathcal{F}(b)}|}{|\mathcal{F}(u)||\overline{\mathcal{F}(u)}|}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;使用梯度下降法来估计这里的&lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt;，就有&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\min_k E(k)=||\mathbf{\hat u}\mathbf{k}-\mathbf{\hat b}||^2+\lambda||\mathbf{k}||^2+\mu||\nabla \mathbf{k}||^2+\gamma|||\mathcal{F}(\mathbf{k})|-|\mathcal{F}(\mathbf{k&#39;})|||^2
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中第一项是为了更符合远图数据，第二项是为了让核稀疏，第三项是平滑项，第四项是为了更接近理想PSF。为了允许采集多张图像，这里的&lt;span class=&#34;math inline&#34;&gt;\(\mathbf{\hat u}\)&lt;/span&gt;是多个&lt;span class=&#34;math inline&#34;&gt;\(\mathbf{u}\)&lt;/span&gt;上下堆叠在一起的，同理&lt;span class=&#34;math inline&#34;&gt;\(\mathbf{\hat b}\)&lt;/span&gt;也是，这之后还有展开形式和其梯度，详情见原文，这里不再赘述。&lt;/p&gt;
+&lt;p&gt;总而言之，对着这个目标函数使用梯度下降法最后求得了我们需要的PSF核&lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt;。&lt;/p&gt;
+&lt;h1 id=&#34;direct-psf-estimation-using-a-random-noise-target&#34;&gt;Direct PSF estimation using a random noise target&lt;/h1&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.spiedigitallibrary.org/conference-proceedings-of-spie/7537/75370B/Direct-PSF-estimation-using-a-random-noise-target/10.1117/12.837591.short&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://www.spiedigitallibrary.org/conference-proceedings-of-spie/7537/75370B/Direct-PSF-estimation-using-a-random-noise-target/10.1117/12.837591.short&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 130; 
+			flex-basis: 313px&#34;
+	&gt;
+	&lt;a href=&#34;https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/4.jpg&#34; data-size=&#34;741x568&#34;&gt;
+		&lt;img src=&#34;https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/4.jpg&#34;
+			width=&#34;741&#34;
+			height=&#34;568&#34;
+			srcset=&#34;https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/4_hu5ee38b048eeb4b95d87c2c6f676aecb4_49976_480x0_resize_q75_box.jpg 480w, https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/4_hu5ee38b048eeb4b95d87c2c6f676aecb4_49976_1024x0_resize_q75_box.jpg 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;4.jpg&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;4.jpg&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;整个流程如下，首先是进行几何配准(geometric registration)，如下图&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 235; 
+			flex-basis: 564px&#34;
+	&gt;
+	&lt;a href=&#34;https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/5.jpg&#34; data-size=&#34;772x328&#34;&gt;
+		&lt;img src=&#34;https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/5.jpg&#34;
+			width=&#34;772&#34;
+			height=&#34;328&#34;
+			srcset=&#34;https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/5_hu6a5459f7978ec869c967afeb5e81b6fb_46687_480x0_resize_q75_box.jpg 480w, https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/5_hu6a5459f7978ec869c967afeb5e81b6fb_46687_1024x0_resize_q75_box.jpg 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;5.jpg&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;5.jpg&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;左边是数字图像原图，右边是相机拍摄到的图片。使用图中的四个标志点进行对准，计算得到一个投影矩阵，能够将数字图投影到拍摄图上。和其他思路差不多，都是通过模拟投影来应对相机的几何畸变等问题。现在两张图剩下的差异就为亮度、噪声、锐度等。&lt;/p&gt;
+&lt;p&gt;于是在几何配准后的下一步是色调映射，这里使用的是非线性的一条曲线。为了估计这条曲线的参数就需要使用数字图像左上角的灰度梯度图，需要用摄像机重新拍摄一张。在每一个灰色梯度块内提取出一个平均值，来和数字图像上的值建立映射关系，进而估计出曲线参数。然后对数字图像全局使用这个曲线，来让其亮度和拍摄的图像保持一致。&lt;/p&gt;
+&lt;p&gt;然后将图片分为&lt;span class=&#34;math inline&#34;&gt;\(96\times 80\)&lt;/span&gt;的小块，然后对每一个小块使用FFT，然后再通过计算就可以得到OTF（光传递函数），进一步的得到PSF。我们下面来解析一下这个过程。&lt;/p&gt;
+&lt;p&gt;在本文的模型中，相机的PSF是具有平移可变性的，每个空间位置的PSF是不一样的。如图&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 218; 
+			flex-basis: 525px&#34;
+	&gt;
+	&lt;a href=&#34;https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/6.jpg&#34; data-size=&#34;1247x570&#34;&gt;
+		&lt;img src=&#34;https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/6.jpg&#34;
+			width=&#34;1247&#34;
+			height=&#34;570&#34;
+			srcset=&#34;https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/6_hu42b23aafec0d4fb46bfc24cea105fcac_96684_480x0_resize_q75_box.jpg 480w, https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/6_hu42b23aafec0d4fb46bfc24cea105fcac_96684_1024x0_resize_q75_box.jpg 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;6.jpg&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;6.jpg&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;可以看到位于中间位置的PSF比较理想，而靠近边缘的则已经无法保持圆形了。于是，成像模型为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[i(x,y)=\sum_{x_0,y_0}h(x,y;x_0,y_0)\cdot o(x_0,y_0)+n(x,y)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(o(\cdot,\cdot)\)&lt;/span&gt;是输入信号，而&lt;span class=&#34;math inline&#34;&gt;\(i(\cdot,\cdot)\)&lt;/span&gt;是经过PSF后变模糊的图像。这里的&lt;span class=&#34;math inline&#34;&gt;\(h\)&lt;/span&gt;就是PSF，而&lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;是加性噪声。&lt;/p&gt;
+&lt;p&gt;实践上我们不需要考虑每一个位置的PSF来计算某个点的输出，因为PSF能取值的范围很小，大部分都取&lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt;，又因为相近位置的PSF非常相似，所以可以考虑将图片分为&lt;span class=&#34;math inline&#34;&gt;\(96\times 80\)&lt;/span&gt;的小块，每一块内共享一个PSF。于是，成像模型变为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[i(x,y)=(p\ast o)(x,y)+n(x,y)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;在频域内就变为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[I(u,v)=P(u,v)O(u,v)+N(u,v)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;这里的&lt;span class=&#34;math inline&#34;&gt;\(P\)&lt;/span&gt;就是OTF。于是它的估计就很简单&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\hat P(u,v)=\dfrac{I(u,v)}{\hat O(u,v)}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;对OTF使用逆FFT就得到了PSF。&lt;/p&gt;
+&lt;p&gt;现在再来说一说数字图像的选择，这里选择的除了灰阶和标志物之外，背景是白噪声。由于白噪声在FFT之后还是白噪声，所以它是均匀的（homogeneous，我不是很理解什么意思），频域上也就不会出现在&lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt;附近的分量。如果分母上有&lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt;附近的分量就会影响OTF的估计（应该和去卷积操作中近似0的分量导致无法恢复图像是一个原理）。&lt;/p&gt;
+&lt;p&gt;在图像块上估计PSF确实避免了很多计算开销，但是也降低了估计的稳定性，于是本文又提出一个算法来规则化相邻的PSF。&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 175; 
+			flex-basis: 420px&#34;
+	&gt;
+	&lt;a href=&#34;https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/7.jpg&#34; data-size=&#34;540x308&#34;&gt;
+		&lt;img src=&#34;https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/7.jpg&#34;
+			width=&#34;540&#34;
+			height=&#34;308&#34;
+			srcset=&#34;https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/7_hua09528451187418e105ad39d6cd4c548_25678_480x0_resize_q75_box.jpg 480w, https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/7_hua09528451187418e105ad39d6cd4c548_25678_1024x0_resize_q75_box.jpg 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;7.jpg&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;7.jpg&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;如图，左边的大框表示了之前对图像进行切割的&lt;span class=&#34;math inline&#34;&gt;\(96\times 80\)&lt;/span&gt;的图像块，里面的小框表示了块内的像素。显然，根据前文所描述的，每个大框拥有一个PSF，这个PSF也是用&lt;span class=&#34;math inline&#34;&gt;\(96\times 80\)&lt;/span&gt;的图像进行表示的。为了进行PSF的平滑，将9个PSF的同一位置的像素提取出来（图中这一次选择了左上角），然后将其排列成&lt;span class=&#34;math inline&#34;&gt;\(3\times 3\)&lt;/span&gt;的一个矩阵，对其进行中值滤波，然后再将矩阵的值放回到原来的9个PSF中。如果在算法中发现PSF估计错误（例如异常值），则将其替换为邻居的PSF值。这里使用的滤波核为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[H = \begin{bmatrix}
+ 1 &amp; 2 &amp; 1\\
+ 2 &amp; 4 &amp; 2\\
+ 1 &amp; 2 &amp; 1
+\end{bmatrix}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;最后就是一个阈值处理，将PSF中小于某一个值的量直接设置为0，从而进行降噪。显然，主要需要降噪的部分为PSF图像的边界部分，阈值窗的形状如下&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 193; 
+			flex-basis: 465px&#34;
+	&gt;
+	&lt;a href=&#34;https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/8.jpg&#34; data-size=&#34;568x293&#34;&gt;
+		&lt;img src=&#34;https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/8.jpg&#34;
+			width=&#34;568&#34;
+			height=&#34;293&#34;
+			srcset=&#34;https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/8_hu142bdf2229ec56a8d091b29929703afc_30702_480x0_resize_q75_box.jpg 480w, https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/8_hu142bdf2229ec56a8d091b29929703afc_30702_1024x0_resize_q75_box.jpg 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;8.jpg&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;8.jpg&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;形式化的定义如下&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[S(x,y)=1-T(x)T(y)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[T(n)=\begin{cases}
+ 1 &amp; \text{ if } 0\leq|n|\leq\alpha\frac{N}{2} \\
+ 0.5\left[1+\cos\left(\pi\dfrac{n-\alpha\frac{N}{2}}{2(1-\alpha)\frac{N}{2}}\right)\right] &amp; \text{ if } \alpha\frac{N}{2}\leq|n|\leq\frac{N}{2}
+\end{cases}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(N\)&lt;/span&gt;为窗口大小，&lt;span class=&#34;math inline&#34;&gt;\(\alpha\)&lt;/span&gt;为可调参数。阈值过滤如下&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[p(x,y)=\begin{cases}
+ 0 &amp; \text{ if } \tilde{p}(x,y)&lt;\tilde{p}_{max}S(x,y) \\
+ \tilde{p}(x,y) &amp; \text{ otherwise }
+\end{cases}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(\tilde{p}(x,y)\)&lt;/span&gt;是过滤前的PSF，而&lt;span class=&#34;math inline&#34;&gt;\(\tilde{p}_{max}\)&lt;/span&gt;则是PSF中的最大值。&lt;/p&gt;
+&lt;h1 id=&#34;2d-sub-pixel-point-spread-function-measurement-using-a-virtual-point-like-source&#34;&gt;2D Sub-pixel Point Spread Function Measurement Using a Virtual Point-Like Source&lt;/h1&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://link.springer.com/article/10.1007/s11263-016-0948-8&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://link.springer.com/article/10.1007/s11263-016-0948-8&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;本文使用的成像模型和第一篇是一样的&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[b = S(g(h(a))\ast k)+n
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;把透视投影和几何畸变通过校正的方式去掉，就得到&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[b = S(a\ast k)+n
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;如果&lt;span class=&#34;math inline&#34;&gt;\(a\)&lt;/span&gt;本身是一个冲激函数，那么最终的结果就是一个PSF&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[b=S(k)+n
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;但是现实中难以直接做出一个点光源，本文使用了一个平行光源和一个反射球面来制造一个非常近似的点光源。直接对着这个光源拍照就得到了PSF。&lt;/p&gt;
+&lt;p&gt;为了让这个反射光像一个点光源，相机放置的位置也是非常重要的，摆的不对反射光线就不近似于点光源了。作者这里通过光线追踪的方式来分析相机应该怎么放。&lt;/p&gt;
+&lt;p&gt;首先建立坐标系，以反射球面的球心为坐标系原点建立球面坐标，对于任意一个点都可以表示为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\mathbf T  = \mathbf r R, \mathbf r = [\cos(\alpha),\sin(\alpha)\sin(\theta),\sin(\alpha)\cos(\theta)]^T
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(R\)&lt;/span&gt;是到原点的距离，&lt;span class=&#34;math inline&#34;&gt;\(\alpha\)&lt;/span&gt;为极角（&lt;span class=&#34;math inline&#34;&gt;\(x-y\)&lt;/span&gt;平面），&lt;span class=&#34;math inline&#34;&gt;\(\theta\)&lt;/span&gt;为方位角（&lt;span class=&#34;math inline&#34;&gt;\(y-z\)&lt;/span&gt;）平面。&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 138; 
+			flex-basis: 333px&#34;
+	&gt;
+	&lt;a href=&#34;https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/9.jpg&#34; data-size=&#34;493x355&#34;&gt;
+		&lt;img src=&#34;https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/9.jpg&#34;
+			width=&#34;493&#34;
+			height=&#34;355&#34;
+			srcset=&#34;https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/9_huf9cc41cdc8c1713f5b25e67fc61f7ed6_19145_480x0_resize_q75_box.jpg 480w, https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/9_huf9cc41cdc8c1713f5b25e67fc61f7ed6_19145_1024x0_resize_q75_box.jpg 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;9.jpg&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;9.jpg&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;之后，让平行光从&lt;span class=&#34;math inline&#34;&gt;\(\mathbf s = [-1, 0, 0]^T\)&lt;/span&gt;的方向射入（即&lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;轴反向），反射点在&lt;span class=&#34;math inline&#34;&gt;\(\mathbf T\)&lt;/span&gt;上，那么，反射光线的方向就可以表示为&lt;span class=&#34;math inline&#34;&gt;\(\mathbf s&#39;=[\cos(2\alpha),\sin(2\alpha)\sin(\theta),\sin(2\alpha)\cos(\theta)]^T\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;于是，反射光线上的任意一点都可以用参数方程表示&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\begin{bmatrix}
+ x\\
+ y\\
+ z
+\end{bmatrix}=
+\begin{bmatrix}
+\cos(\alpha)\\
+\sin(\alpha)\sin(\theta)\\
+\sin(\alpha)\cos(\theta)
+\end{bmatrix}R
++t
+\begin{bmatrix}
+\cos(2\alpha)\\
+\sin(2\alpha)\sin(\theta)\\
+\sin(2\alpha)\cos(\theta)
+\end{bmatrix}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 107; 
+			flex-basis: 257px&#34;
+	&gt;
+	&lt;a href=&#34;https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/10.jpg&#34; data-size=&#34;587x548&#34;&gt;
+		&lt;img src=&#34;https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/10.jpg&#34;
+			width=&#34;587&#34;
+			height=&#34;548&#34;
+			srcset=&#34;https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/10_hu2a85ad6c8215e983592aa8c7952c820a_39078_480x0_resize_q75_box.jpg 480w, https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/10_hu2a85ad6c8215e983592aa8c7952c820a_39078_1024x0_resize_q75_box.jpg 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;10.jpg&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;10.jpg&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;让光轴对准原点，并且在&lt;span class=&#34;math inline&#34;&gt;\(xy\)&lt;/span&gt;平面内，与&lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;轴形成一个夹角&lt;span class=&#34;math inline&#34;&gt;\(\alpha_c\)&lt;/span&gt;，此时反射后的光线如果能通过入瞳就可以进入成像系统。一个理想成像系统的入瞳半径可以通过焦距&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;和光圈数（f-numer）&lt;span class=&#34;math inline&#34;&gt;\(N\)&lt;/span&gt;计算得到&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\dfrac{D}{2} = \dfrac{f}{2N}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;然后该入瞳的圆环（圆环柱）在球心的直角坐标系下就可以表示为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[(-\sin(\alpha_c)x+\cos(\alpha_c)y)^2+z^2=\left(\dfrac{D}{2}\right)^2
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;该圆所在的面垂直于光轴。上式只是定义了一个圆环柱，还需要描述圆环（入瞳）到原点的距离&lt;span class=&#34;math inline&#34;&gt;\(H_c\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\cos(\alpha_c)x+\sin(\alpha_c)y = H_c
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;入射光和反射光向量构成了一个平面&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[-\cos(\theta)y+\sin(\theta)z = 0
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;上面几个式子联立消去&lt;span class=&#34;math inline&#34;&gt;\(x,z\)&lt;/span&gt;就得到了一个关于&lt;span class=&#34;math inline&#34;&gt;\(y\)&lt;/span&gt;的二次方程。这个联立的过程表示反射光与入瞳边缘的两个交点。&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\left(1+\dfrac{\cos(\alpha_c)^2}{\tan(\theta)^2}\right)y^2-2H_c\sin(\alpha_c)y+H_c^2\sin(\alpha_c)^2-\cos(\alpha_c)^2\left(\dfrac{D}{2}\right)^2 = 0
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;我们可以通过限制&lt;span class=&#34;math inline&#34;&gt;\(\theta\)&lt;/span&gt;的取值边界来让上式有实数解&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\tan(\theta) = \pm\sqrt{\left(\dfrac{2H_c}{D}\right)^2\sin(\alpha_c)^2-\cos(\alpha_c)^2}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;将上式的解带入到描述反射光线上点的那个方程中就可以得到反射光线的参数&lt;span class=&#34;math inline&#34;&gt;\(\alpha\)&lt;/span&gt;（使用数值解法，不存在解析解）。当我们精确描述了射入成像系统的光线后，就可以通过光线和物面的交点来描述虚像的边界了&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\cos(\alpha_c)x+\sin(\alpha_c)y = H_c-H_o
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(H_o\)&lt;/span&gt;是物面到入瞳的距离。虚像的形状和大小取决于物面的位置。定义虚像的大小&lt;span class=&#34;math inline&#34;&gt;\(d\)&lt;/span&gt;为，球面反射反射出来的虚像边缘的最小包围圆的直径。用下图来再解释一下这句话&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 121; 
+			flex-basis: 290px&#34;
+	&gt;
+	&lt;a href=&#34;https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/11.jpg&#34; data-size=&#34;578x477&#34;&gt;
+		&lt;img src=&#34;https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/11.jpg&#34;
+			width=&#34;578&#34;
+			height=&#34;477&#34;
+			srcset=&#34;https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/11_hu999e1750e5cec5010c8d847cbdc46d58_32989_480x0_resize_q75_box.jpg 480w, https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/11_hu999e1750e5cec5010c8d847cbdc46d58_32989_1024x0_resize_q75_box.jpg 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;11.jpg&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;11.jpg&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;蓝色的圈是成像边界，红色的圈是能够包住边界的最小圆，或者说外接圆。而所有的外接圆中直径最小的圆，其直径就是虚像的大小。因此最佳的对焦距离就是物面到入瞳的距离&lt;span class=&#34;math inline&#34;&gt;\(H_o\)&lt;/span&gt;，此时外接圆直径最小。&lt;/p&gt;
+&lt;p&gt;虚像的大小&lt;span class=&#34;math inline&#34;&gt;\(d\)&lt;/span&gt;孩取决于反射球的半径&lt;span class=&#34;math inline&#34;&gt;\(R\)&lt;/span&gt;和成像系统的结构。相比之下，衍射极限成像系统的理论分辨率可以用艾里斑的直径来表示，使用光圈数&lt;span class=&#34;math inline&#34;&gt;\(N\)&lt;/span&gt;计算为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[d_d=\dfrac{2.44\lambda N}{M}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(\lambda\)&lt;/span&gt;是光波长，&lt;span class=&#34;math inline&#34;&gt;\(M\)&lt;/span&gt;是成像系统的放大倍率&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[M = \dfrac{f}{H_o-f}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;当保持&lt;span class=&#34;math inline&#34;&gt;\(\alpha_c, f, H_c\)&lt;/span&gt;不变时，光圈数、虚像大小、球面半径的关系如下图(a)所示&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 196; 
+			flex-basis: 471px&#34;
+	&gt;
+	&lt;a href=&#34;https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/12.jpg&#34; data-size=&#34;628x320&#34;&gt;
+		&lt;img src=&#34;https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/12.jpg&#34;
+			width=&#34;628&#34;
+			height=&#34;320&#34;
+			srcset=&#34;https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/12_hu27399fb65adca281cba168bfe3d3eec1_35372_480x0_resize_q75_box.jpg 480w, https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/12_hu27399fb65adca281cba168bfe3d3eec1_35372_1024x0_resize_q75_box.jpg 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;12.jpg&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;12.jpg&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;而(b)则展示了&lt;span class=&#34;math inline&#34;&gt;\(N\)&lt;/span&gt;不变而改变&lt;span class=&#34;math inline&#34;&gt;\(\alpha_c\)&lt;/span&gt;时的关系。(老实说看半天我也不知道到底怎么摆摄像机，感觉是让虚像大小小于衍射极限就行)&lt;/p&gt;
+&lt;p&gt;之后本文关注于如何估计亚像素级的PSF。首先获取&lt;span class=&#34;math inline&#34;&gt;\(n\times n\)&lt;/span&gt;张低分辨率图片&lt;span class=&#34;math inline&#34;&gt;\(b_{i,j},i\in\{0,\cdots,n-1\}, j\in\{0,\cdots,n-1\}\)&lt;/span&gt;，每张图片都是用之前的方法拍到的像素级PSF，唯一的区别是每张图片在拍摄前微小地平移球面镜，微小到亚像素级。&lt;/p&gt;
+&lt;p&gt;将图片&lt;span class=&#34;math inline&#34;&gt;\(b_{i,j}\)&lt;/span&gt;记作&lt;span class=&#34;math inline&#34;&gt;\(\{u_k,v_l\}_{i, j},k\in\{0,\cdots,H-1\}, l\in\{0,\cdots,W-1\}\)&lt;/span&gt;。于是所有的图片的像素就组成了一个非均匀网格&lt;span class=&#34;math inline&#34;&gt;\(\{u,v\}\)&lt;/span&gt;。于是两张图片的相对位置关系就可以通过一个亚像素级的步长&lt;span class=&#34;math inline&#34;&gt;\(\Delta\)&lt;/span&gt;计算出来，&lt;span class=&#34;math inline&#34;&gt;\(\{u,v\}_{i+1, j}=\{u,v\}_{i, j}+\{\Delta, 0\}, \{u,v\}_{i, j+1}=\{u,v\}_{i, j}+\{0, \Delta\}\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 202; 
+			flex-basis: 486px&#34;
+	&gt;
+	&lt;a href=&#34;https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/13.jpg&#34; data-size=&#34;1258x621&#34;&gt;
+		&lt;img src=&#34;https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/13.jpg&#34;
+			width=&#34;1258&#34;
+			height=&#34;621&#34;
+			srcset=&#34;https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/13_hucef27d2cfac7111e783dcf066fc8b898_125458_480x0_resize_q75_box.jpg 480w, https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/13_hucef27d2cfac7111e783dcf066fc8b898_125458_1024x0_resize_q75_box.jpg 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;13.jpg&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;13.jpg&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;于是，高分辨率的PSF就可以通过自然邻近差值从多张低分辨率PSF中重建出来。&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[P(u,v) = \sum_{(u_{a_1},v_{a_2})\in B}w_{a_1,a_2}p(u_{a_1},v_{a_2})
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(B\)&lt;/span&gt;是自然邻居集合，而&lt;span class=&#34;math inline&#34;&gt;\(p(u_{a_1},v_{a_2})\)&lt;/span&gt;表达式超分辨率网格&lt;span class=&#34;math inline&#34;&gt;\(\{u,v\}_{SR}\)&lt;/span&gt;上的点&lt;span class=&#34;math inline&#34;&gt;\((u,v)\)&lt;/span&gt;的自然邻居点，&lt;span class=&#34;math inline&#34;&gt;\(w_{a_1,a_2}\)&lt;/span&gt;代表其对应的权重。&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[w_{a_1,a_2}=\dfrac{A_{(u_{a_1},v_{a_2})}\cap A_{(u,v)}}{A_{(u,v)}}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h1 id=&#34;-psf-estimation-method-of-simple-lens-camera-using-normal-sinh-arcsinh-model-based-on-noise-image-pairs&#34;&gt;# PSF Estimation Method of Simple-Lens Camera Using Normal Sinh-Arcsinh Model Based on Noise Image Pairs&lt;/h1&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://ieeexplore.ieee.org/abstract/document/9373384&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://ieeexplore.ieee.org/abstract/document/9373384&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;本文的绝大部分内容和第一篇文章都一样，但是本文注意到第一篇文章对着全黑和全白图片拍摄的过程并没有考虑到颜色，所以本文在这一方面使用了三颜色的pattern&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 148; 
+			flex-basis: 356px&#34;
+	&gt;
+	&lt;a href=&#34;https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/14.jpg&#34; data-size=&#34;371x250&#34;&gt;
+		&lt;img src=&#34;https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/14.jpg&#34;
+			width=&#34;371&#34;
+			height=&#34;250&#34;
+			srcset=&#34;https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/14_huc57992e059ee167b0bbb95684ac62303_16810_480x0_resize_q75_box.jpg 480w, https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/14_huc57992e059ee167b0bbb95684ac62303_16810_1024x0_resize_q75_box.jpg 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;14.jpg&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;14.jpg&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;下面三张图，都是单颜色通道的0-255的渐变图像，分为18个阶梯，阶梯之间数值相差15。采集到的颜色值和原颜色值的关系可以表示为&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\begin{bmatrix}
+ r&#39;\\
+ g&#39;\\
+ b&#39;
+\end{bmatrix}=
+\begin{bmatrix}
+ c_{r,r} &amp; c_{g,r} &amp; c_{b,r}\\
+c_{r,g} &amp; c_{g,g} &amp; c_{b,g}\\
+c_{r,b} &amp; c_{g,b} &amp; c_{b,b}
+\end{bmatrix}
+\begin{bmatrix}
+ f_r(r)\\
+ f_g(g)\\
+ f_b(b)
+\end{bmatrix}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;我们可以通过原始理论值和实际拍摄值，带入到这个等式中求出所有的参数&lt;span class=&#34;math inline&#34;&gt;\(c\)&lt;/span&gt;和&lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;。从而在校正伯努利噪声的颜色时，可以使用&lt;span class=&#34;math inline&#34;&gt;\([r,g,b]^T=f^{-1}_{r,g,b}\left(C^{-1}\left[[r&#39;,g&#39;,t&#39;]^T\right]\right)\)&lt;/span&gt;直接计算得到。&lt;/p&gt;
+&lt;h1 id=&#34;self-supervised-spatially-variant-psf-estimation-for-aberration-aware-depth-from-defocus&#34;&gt;Self-Supervised Spatially Variant PSF Estimation for Aberration-Aware Depth-from-Defocus&lt;/h1&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://ieeexplore.ieee.org/abstract/document/10446689/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://ieeexplore.ieee.org/abstract/document/10446689/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;这篇文章是先估计PSF然后再用在Depth-from-Defocus任务上的，本文只关注其PSF估计部分。&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 128; 
+			flex-basis: 308px&#34;
+	&gt;
+	&lt;a href=&#34;https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/19.jpg&#34; data-size=&#34;702x547&#34;&gt;
+		&lt;img src=&#34;https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/19.jpg&#34;
+			width=&#34;702&#34;
+			height=&#34;547&#34;
+			srcset=&#34;https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/19_hu46e11b8b19712a290a68db117a4523c9_53328_480x0_resize_q75_box.jpg 480w, https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/19_hu46e11b8b19712a290a68db117a4523c9_53328_1024x0_resize_q75_box.jpg 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;19.jpg&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;19.jpg&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;方法很简单，首先使用相机拍出“Sharp”的图像，然后再拍出“Blur”的图像，使用神经网络拟合出PSF，将PSF和Sharp图像（一部分）卷积，然后计算卷积图和Blur（一部分）的误差。这个误差反向传播给神经网络就可以进行训练了。&lt;/p&gt;
+&lt;p&gt;拍摄sharp图和blur图的唯一区别在于相机的焦距（文中记作&lt;span class=&#34;math inline&#34;&gt;\(d\)&lt;/span&gt;）和光圈F值（文中记作&lt;span class=&#34;math inline&#34;&gt;\(f_d\)&lt;/span&gt;）。（但是我很怀疑本文所说的PSF是否是我们传统上的PSF。我们的PSF是和理想的delta函数对比的，但本文的PSF似乎是不同相机状态和最优相机状态之间的比较值。因为这个sharp图总得有它自己的PSF吧，不可能是理想的delta函数。不过这个训练的思想其实广泛体现在各类深度学习PSF估计上。）&lt;/p&gt;
+&lt;p&gt;本文观察到PSF是旋转对称的，形状只与离中心点的距离有关。所以训练的时候记录像素点的极坐标，将距离&lt;span class=&#34;math inline&#34;&gt;\(IH\)&lt;/span&gt;送入模型中进行训练，得到的PSF用极角&lt;span class=&#34;math inline&#34;&gt;\(\theta\)&lt;/span&gt;进行旋转，再和sharp图像进行卷积。&lt;/p&gt;
+&lt;p&gt;图中的PSF-Net使用UNet结构，误差如下&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\mathcal{L}=\mathcal{L}_{recon}+\alpha\mathcal{L}_{smooth}+\beta\mathcal{L}_{radial}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(\alpha,\beta\)&lt;/span&gt;是可调权重。其中第一项是重建误差，&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\mathcal{L}_{recon} = ||\mathbf{b}, \mathbf{s}\ast\mathbf{p}(\theta)||_1
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;这里的&lt;span class=&#34;math inline&#34;&gt;\(\mathbf b\)&lt;/span&gt;是blur图的一个patch，&lt;span class=&#34;math inline&#34;&gt;\(\mathbf s\)&lt;/span&gt;是sharp图对应位置的patch，&lt;span class=&#34;math inline&#34;&gt;\(\ast\)&lt;/span&gt;是卷积操作，&lt;span class=&#34;math inline&#34;&gt;\(\mathbf p(\theta)\)&lt;/span&gt;代表着将模型输出的psf旋转&lt;span class=&#34;math inline&#34;&gt;\(\theta\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;第二项是光滑项&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\mathcal L_{smooth} = \dfrac{1}{N_p}\sum^{N_p}_{i}|\delta_x p_i|+|\delta_yp_i|
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(\delta_x,\delta_y\)&lt;/span&gt;分别是水平和竖直方向的梯度算子，&lt;span class=&#34;math inline&#34;&gt;\(p_i\)&lt;/span&gt;则是PSF中的一个像素，&lt;span class=&#34;math inline&#34;&gt;\(N_p\)&lt;/span&gt;是PSF的像素总数。这个光滑项主要起到一个抗噪声和平滑PSF的作用。&lt;/p&gt;
+&lt;p&gt;第三项是径向梯度误差。因为PSF都是中间高四周低的形状，为了防止PSF出现甜甜圈状等其他形状，引入了这个误差&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\mathcal{L}_{radial} = \dfrac{1}{K}\sum^{K-1}_{j=0}T(p_{\Omega_{j+1}}-p_{\Omega_{j}})
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(K\)&lt;/span&gt;是一个可调参数，代表着预估的PSF半径&lt;span class=&#34;math inline&#34;&gt;\(p_{\Omega_j}\)&lt;/span&gt;代表着PSF中心周围&lt;span class=&#34;math inline&#34;&gt;\((2j+1)\times(2j+1)\)&lt;/span&gt;的范围的平均值。&lt;span class=&#34;math inline&#34;&gt;\(T\)&lt;/span&gt;是一个阶跃函数，&lt;span class=&#34;math inline&#34;&gt;\(\lambda\geq0\)&lt;/span&gt;时，&lt;span class=&#34;math inline&#34;&gt;\(T(\lambda)=\lambda\)&lt;/span&gt;，其他情况&lt;span class=&#34;math inline&#34;&gt;\(T(\lambda)=0\)&lt;/span&gt;&lt;/p&gt;
+&lt;h1 id=&#34;blind-super-resolution-kernel-estimation-using-an-internal-gan&#34;&gt;Blind Super-Resolution Kernel Estimation using an Internal-GAN&lt;/h1&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://proceedings.neurips.cc/paper/2019/hash/5fd0b37cd7dbbb00f97ba6ce92bf5add-Abstract.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://proceedings.neurips.cc/paper/2019/hash/5fd0b37cd7dbbb00f97ba6ce92bf5add-Abstract.html&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;虽然本文是超分的工作，但是其直接启发了下面的一篇，所以还是介绍一下。&lt;/p&gt;
+&lt;p&gt;本文使用一个GAN，来让生成器生成一个下采样的图片，从而让判别器在patch-level上无法判断生成器生成的假图片和真实的图片在分布上的区别。&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 325; 
+			flex-basis: 781px&#34;
+	&gt;
+	&lt;a href=&#34;https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/20.jpg&#34; data-size=&#34;1019x313&#34;&gt;
+		&lt;img src=&#34;https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/20.jpg&#34;
+			width=&#34;1019&#34;
+			height=&#34;313&#34;
+			srcset=&#34;https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/20_hufe678b990223ba4ead7a118fba5cb38c_44248_480x0_resize_q75_box.jpg 480w, https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/20_hufe678b990223ba4ead7a118fba5cb38c_44248_1024x0_resize_q75_box.jpg 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;20.jpg&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;20.jpg&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;这里的判别器并不是判别图像是否真实，因为一个是原图一个是下采样的图根本就不一样。它输出一个map，表面该像素有多大可能是由原图的像素计算得到的。原文说的是：D trains to output a heat map, referred to as D-map (see fig. 2) indicating for each pixel, how likely is its surrounding patch to be drawn from the original patch-distribution. 我表示根本无法理解。然后作者给出的损失函数如下&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[G^*(I_{LR})=\underset{G}{\arg\min}\max_{D}\{E_{x\sim patch(I_{LR})}[|D(x)-1|+|D(G(x))|]+R\}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(R\)&lt;/span&gt;是正则项后面再介绍，我严重怀疑这个公式有误，为什么会是&lt;span class=&#34;math inline&#34;&gt;\(\max_D\)&lt;/span&gt;？还是根据代码来看看吧&lt;/p&gt;
+&lt;p&gt;判别器的训练代码是&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;train_d&lt;/span&gt;(self):
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        self&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;optimizer_D&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;zero_grad()
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        d_pred_real &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; self&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;D&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;forward(self&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;d_input)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        g_output &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; self&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;G&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;forward(self&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;g_input)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        d_pred_fake &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; self&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;D&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;forward((g_output &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; torch&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;randn_like(g_output) &lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;255.&lt;/span&gt;)&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;detach())
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        loss_d_fake &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; self&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;criterionGAN(d_pred_fake, is_d_input_real&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;False&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        loss_d_real &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; self&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;criterionGAN(d_pred_real, is_d_input_real&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;True&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        loss_d &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; (loss_d_fake &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; loss_d_real) &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0.5&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        loss_d&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;backward()
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        self&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;optimizer_D&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;step()
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;首先这里的&lt;code&gt;d_pred_real&lt;/code&gt;是对原图上拿下来的patch进行判别的结果，而&lt;code&gt;d_pred_fake&lt;/code&gt;则是对生成器生成图片进行判别的结果。然后这里的&lt;code&gt;(loss_d_fake + loss_d_real) * 0.5&lt;/code&gt;就是原公式中的&lt;span class=&#34;math inline&#34;&gt;\(E_{x\sim patch}\)&lt;/span&gt;，梯度下降法再怎么说也是求最小值。&lt;/p&gt;
+&lt;p&gt;然后再看生成器的训练代码&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;train_g&lt;/span&gt;(self):
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        self&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;optimizer_G&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;zero_grad()
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        g_pred &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; self&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;G&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;forward(self&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;g_input)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        d_pred_fake &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; self&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;D&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;forward(g_pred)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        loss_g &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; self&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;criterionGAN(d_last_layer&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;d_pred_fake, is_d_input_real&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;True&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        total_loss_g &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; loss_g &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; self&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;calc_constraints(g_pred)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        total_loss_g&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;backward()
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        self&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;optimizer_G&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;step()
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这里的&lt;code&gt;loss_g&lt;/code&gt;其实相当于&lt;span class=&#34;math inline&#34;&gt;\(|D(G(x))-1|\)&lt;/span&gt;，而&lt;code&gt;self.calc_constraints(g_pred)&lt;/code&gt;是我们后面要说的正则项。至此我认为之前的公式有误。&lt;/p&gt;
+&lt;p&gt;我们再来看看网络结构，首先是判别器&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 309; 
+			flex-basis: 742px&#34;
+	&gt;
+	&lt;a href=&#34;https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/21.jpg&#34; data-size=&#34;622x201&#34;&gt;
+		&lt;img src=&#34;https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/21.jpg&#34;
+			width=&#34;622&#34;
+			height=&#34;201&#34;
+			srcset=&#34;https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/21_hu2335d641ee9dd5d4d603cf970d45a70f_25012_480x0_resize_q75_box.jpg 480w, https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/21_hu2335d641ee9dd5d4d603cf970d45a70f_25012_1024x0_resize_q75_box.jpg 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;21.jpg&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;21.jpg&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;没有多少要说的，一个普通的全卷积网络。作者没有使用池化层，也没有strides，从而更好地判别小patch。&lt;/p&gt;
+&lt;p&gt;然后就是生成器&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 203; 
+			flex-basis: 488px&#34;
+	&gt;
+	&lt;a href=&#34;https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/22.jpg&#34; data-size=&#34;662x325&#34;&gt;
+		&lt;img src=&#34;https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/22.jpg&#34;
+			width=&#34;662&#34;
+			height=&#34;325&#34;
+			srcset=&#34;https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/22_hu228901824d06cc2fada27c17348755d0_33838_480x0_resize_q75_box.jpg 480w, https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/22_hu228901824d06cc2fada27c17348755d0_33838_1024x0_resize_q75_box.jpg 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;22.jpg&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;22.jpg&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;生成器是一个全卷积网络，但是是全线性的，不含任何非线性激活函数。这主要是因为图像降分辨率所用的卷积核就是一个线性操作。在训练完网络之后，将每一层的滤波器卷积起来就得到了超分辨率时需要用到的Kernel，和PSF有一些像。当然，我们知道多个线性层和单个线性层在能力上是等价的，作者这里使用多层的原因是多层易于训练。为了让Kernel更像回事，就加入了一些先验知识来作为正则项&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[R=\alpha\mathcal{L}_{sum\_to\_1}+\beta\mathcal{L}_{boundaries}+\gamma\mathcal{L}_{sparse}+\delta\mathcal{L}_{center}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(\mathcal{L}_{sum\_to\_1}=|1-\sum_{i,j}k_{i,j}|\)&lt;/span&gt;，使得卷积核加和为&lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt;。&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(\mathcal{L}_{boundaries}=\sum_{i,j}|k_{i,j}\cdot m_{i,j}|\)&lt;/span&gt;惩罚靠近边缘的非零值，&lt;span class=&#34;math inline&#34;&gt;\(m_{i,j}\)&lt;/span&gt;是一个和距离有关的权重。&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(\mathcal{L}_{sparse}=\sum_{i,j}|k_{i,j}|^{1/2}\)&lt;/span&gt;鼓励稀疏性，防止产生过渡平滑的Kernel。&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(\mathcal{L}_{center}=||(x_0,y_0)-\sum_{i,j}k_{i,j}\cdot(i,j)/\sum_{i,j}k_{i,j}||\)&lt;/span&gt;来让Kernel的大部分数值集中在中心。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;extreme-quality-computational-imaging-via-degradation-framework&#34;&gt;Extreme-Quality Computational Imaging via Degradation Framework&lt;/h1&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://openaccess.thecvf.com/content/ICCV2021/html/Chen_Extreme-Quality_Computational_Imaging_via_Degradation_Framework_ICCV_2021_paper.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://openaccess.thecvf.com/content/ICCV2021/html/Chen_Extreme-Quality_Computational_Imaging_via_Degradation_Framework_ICCV_2021_paper.html&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;这篇文章的思路基本和上篇文章一样，后面还附带了一个图像恢复网络，我们只讨论它PSF估计的部分。&lt;/p&gt;
+&lt;p&gt;在思路上，本文同样是用网络去生成一个Kernel（也就是PSF），然后让他去和理想图片卷积，然后将合成的图片和真实的图片进行比较来进行学习。&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 193; 
+			flex-basis: 465px&#34;
+	&gt;
+	&lt;a href=&#34;https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/23.jpg&#34; data-size=&#34;1105x570&#34;&gt;
+		&lt;img src=&#34;https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/23.jpg&#34;
+			width=&#34;1105&#34;
+			height=&#34;570&#34;
+			srcset=&#34;https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/23_hu93a83dd30a699f039c41d5b6735a60ab_139723_480x0_resize_q75_box.jpg 480w, https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/23_hu93a83dd30a699f039c41d5b6735a60ab_139723_1024x0_resize_q75_box.jpg 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;23.jpg&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;23.jpg&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;流程上，首先用相机对着棋盘格图片进行拍照，得到经由PSF退化的图像。将图像切成小块，然后通过边缘检测的方法检测棋盘格边缘，再进行上色，这样就得到了比较理想的未退化图像。然后我们就得到了退化前后的配对数据集。由于PSF是具有空间易变性的，所以切成小块之后每一块训练出来的PSF代表着那个位置的PSF。&lt;/p&gt;
+&lt;p&gt;将一个delta函数送入一个深度线性全卷积网络（同上一篇文章），得到一个PSF卷积核，将PSF和未退化图像卷积，得到预测的退化图象，然后将预测图像和真实的退化图象计算L1损失、其他正则项损失，从而更新网络。注意到这里为了保证训练的稳定性，不再使用GAN损失，变成了单纯的（半）监督学习，只不过数据是用别的办法合成的不需要手动采集。&lt;/p&gt;
+&lt;p&gt;总体的损失函数如下&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\mathcal{L} = \alpha\mathcal{L}_{fidelity}+\beta\mathcal{L}_{sum2one}+\gamma\mathcal{L}_{boundary}+\delta\mathcal{L}_{sym}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;中间两个同前面的文章，&lt;span class=&#34;math inline&#34;&gt;\(\mathcal{L}_{fidelity}=||x^d-y||_1\)&lt;/span&gt;就是L1损失，而&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\mathcal{L}_{sym} = \sum_{i,j}(k(i,j)-\dfrac{1}{2}((k(i,j)-k_{sym}(-i,-j))))^2
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;则是一个对PSF的对称性约束。&lt;/p&gt;
+&lt;p&gt;另外，本文注意到FOV不同的位置上PSF的形状更不相似，FOV越大PSF就越不像一个delta函数。或者说，距离光轴越远越不像。所以本文在模型训练中考虑了FOV大小。实际上在代码中，FOV大小被分为三个层次，最近的部分使用较少的网络层数、预估的PSF尺寸较小（&lt;span class=&#34;math inline&#34;&gt;\(19\times 19\)&lt;/span&gt;）、&lt;span class=&#34;math inline&#34;&gt;\(\gamma\)&lt;/span&gt;取值更大（&lt;span class=&#34;math inline&#34;&gt;\(1000\)&lt;/span&gt;），而最远的部分使用更多网络层数，预估的PSF尺寸较大（&lt;span class=&#34;math inline&#34;&gt;\(27\times 27\)&lt;/span&gt;），&lt;span class=&#34;math inline&#34;&gt;\(\gamma\)&lt;/span&gt;取值更小（&lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt;）&lt;/p&gt;
+&lt;h1 id=&#34;a-physics-informed-blur-learning-framework-for-imaging-systems&#34;&gt;A Physics-Informed Blur Learning Framework for Imaging Systems&lt;/h1&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://openaccess.thecvf.com/content/CVPR2025/html/Chen_A_Physics-Informed_Blur_Learning_Framework_for_Imaging_Systems_CVPR_2025_paper.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://openaccess.thecvf.com/content/CVPR2025/html/Chen_A_Physics-Informed_Blur_Learning_Framework_for_Imaging_Systems_CVPR_2025_paper.html&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;本文首先讨论了PSF的形成原理，并且给出了其光学上的模型公式，然后通过估计这个模型的参数，来计算出PSF。&lt;/p&gt;
+&lt;p&gt;有多种光学上的模型可以解释PSF，本文使用的是Seidel PSF model。它通过波前像差来计算PSF&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 204; 
+			flex-basis: 491px&#34;
+	&gt;
+	&lt;a href=&#34;https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/24.jpg&#34; data-size=&#34;610x298&#34;&gt;
+		&lt;img src=&#34;https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/24.jpg&#34;
+			width=&#34;610&#34;
+			height=&#34;298&#34;
+			srcset=&#34;https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/24_hu7b5d63b55e428d28203764c7f0ac8eb0_30777_480x0_resize_q75_box.jpg 480w, https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/24_hu7b5d63b55e428d28203764c7f0ac8eb0_30777_1024x0_resize_q75_box.jpg 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;24.jpg&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;24.jpg&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;波前像差就是理想的波前和真实的波前之间的、在出瞳位置的差距，这种相差导致了在像平面的失焦，于是就产生了PSF。在非相干成像系统中，PSF可由下式计算&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[PSF(H,\lambda) = \left|\mathcal{F}\left(A(\mathbf p)\exp\left(\dfrac{i2\pi W(H,\lambda,\mathbf p)}{\lambda}\right)\right)\right|^2
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(W(H,\lambda,\mathbf p)\)&lt;/span&gt;就是波前像差，&lt;span class=&#34;math inline&#34;&gt;\(\mathbf p=[\rho, \theta]^T\)&lt;/span&gt;是瞳平面上的点，用极坐标表示，其中&lt;span class=&#34;math inline&#34;&gt;\(\rho\in[0, 1], \theta\in [0, 2\pi]\)&lt;/span&gt;。&lt;span class=&#34;math inline&#34;&gt;\(A(\mathbf p)\)&lt;/span&gt;是瞳函数，通常是已知的。波前像差可以进一步分解为Seidel基，&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[W(H,\lambda,\mathbf p) = \sum^\infty_{k=0}\sum^\infty_{l=0}\sum^\infty_{m=0}W_{klm}H^k\rho^l\cos^m(\dfrac{\pi}{2}-\theta)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(k=2p+m, l=2n+m\quad (p,n,m\in \mathbb N)\)&lt;/span&gt;，&lt;span class=&#34;math inline&#34;&gt;\(W_{klm}\)&lt;/span&gt;是Seidel系数，本文中只选取前&lt;span class=&#34;math inline&#34;&gt;\(10\)&lt;/span&gt;项来进行估计和使用。&lt;span class=&#34;math inline&#34;&gt;\(\lambda\)&lt;/span&gt;是光波长，&lt;span class=&#34;math inline&#34;&gt;\(H\)&lt;/span&gt;是归一化的场高度（field height），可以看上图来理解，在其他论文里大概就是FOV的意思。&lt;/p&gt;
+&lt;p&gt;但是Seidel基中的一些参数，例如&lt;span class=&#34;math inline&#34;&gt;\(\rho^2\)&lt;/span&gt;，会同时影响多个方向的SFR。并且，反向推导的问题是一个病态问题，而且他还是一个非线性变换。种种原因导致，在优化过程中会有梯度冲突问题。&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 158; 
+			flex-basis: 380px&#34;
+	&gt;
+	&lt;a href=&#34;https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/25.jpg&#34; data-size=&#34;608x383&#34;&gt;
+		&lt;img src=&#34;https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/25.jpg&#34;
+			width=&#34;608&#34;
+			height=&#34;383&#34;
+			srcset=&#34;https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/25_hu1c8178eeefc10246dac8bfb38eb68672_40130_480x0_resize_q75_box.jpg 480w, https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/25_hu1c8178eeefc10246dac8bfb38eb68672_40130_1024x0_resize_q75_box.jpg 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;25.jpg&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;25.jpg&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;本文提出了一种方法来解决这个问题。，首先修改波前相差的表达式&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[W(H,\lambda,\mathbf p) = \sum_{(p,q,r)\in Q}W_{pqr}(H,\lambda)\rho^p(\sin\theta)^q(\cos\theta)^r
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[Q=\{(2,2,0), (2,0,2), (3,1,0), (3,3,0), (4,2,0), (4,0,2), (5,1,0), (6,2,0), (6,0,2)\}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;这个修改后的表达式中的&lt;span class=&#34;math inline&#34;&gt;\(\sin\theta, \cos\theta\)&lt;/span&gt;确保了只会影响一个方向上的SFR。然后，在优化参数的时候只考虑一个较窄区域的SFR，而不是考虑全局的SFR。最后，优化过程是从中心到边缘逐渐地进行的。&lt;/p&gt;
+&lt;p&gt;上面只讲了PSF的模型是什么样的，要估计哪些参数，下面介绍具体要通过什么方式来估计。估计方法是二阶段的，第一阶段是单通道PSF的估计，然后是跨通道的PSF平移估计。&lt;/p&gt;
+&lt;p&gt;&lt;figure 
+	
+		class=&#34;gallery-image&#34; 
+		style=&#34;
+			flex-grow: 295; 
+			flex-basis: 708px&#34;
+	&gt;
+	&lt;a href=&#34;https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/26.jpg&#34; data-size=&#34;1260x427&#34;&gt;
+		&lt;img src=&#34;https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/26.jpg&#34;
+			width=&#34;1260&#34;
+			height=&#34;427&#34;
+			srcset=&#34;https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/26_hu4d40d33f6aa2552fdd9ddf91d23e4590_82179_480x0_resize_q75_box.jpg 480w, https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/26_hu4d40d33f6aa2552fdd9ddf91d23e4590_82179_1024x0_resize_q75_box.jpg 1024w&#34;
+			loading=&#34;lazy&#34;
+			alt=&#34;26.jpg&#34;&gt;
+	&lt;/a&gt;
+	
+	&lt;figcaption&gt;26.jpg&lt;/figcaption&gt;
+	
+&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;首先，还是要用相机拍棋盘格，获得RAW图像，进行去马赛克、单色化后计算SFR，作为训练目标。&lt;/p&gt;
+&lt;p&gt;搭建一个两层的MLP，记作&lt;span class=&#34;math inline&#34;&gt;\(\mathcal{G}_{\Theta_1}\)&lt;/span&gt;，输入的参数是我们之前介绍的场高度&lt;span class=&#34;math inline&#34;&gt;\(H\)&lt;/span&gt;，输出是我们所需要的&lt;span class=&#34;math inline&#34;&gt;\(W_{pqr}^*\)&lt;/span&gt;。这些输出的系数之后被用于计算SFR&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[SFR^*(H,\phi) = h(g(\mathcal{G}_{\Theta_1}(H), H), \phi)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(g\)&lt;/span&gt;就是之前用来计算PSF的公式&lt;span class=&#34;math inline&#34;&gt;\(|\mathcal F(\cdots)|^2\)&lt;/span&gt;，而&lt;span class=&#34;math inline&#34;&gt;\(h\)&lt;/span&gt;是用于将PSF转化为SFR的公式，里面的&lt;span class=&#34;math inline&#34;&gt;\(\phi\)&lt;/span&gt;是相对于&lt;span class=&#34;math inline&#34;&gt;\(+y\)&lt;/span&gt;轴的角度，可以从第一张图上看出来。训练的损失函数如下&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\Theta_1^*(H)=\underset{\Theta_1}{\arg\min}\sum_H\sum^{2\pi}_{\phi=0}|SFR^*(H,\phi)-SFR(H,\phi)|
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;在每一步优化过程中，&lt;span class=&#34;math inline&#34;&gt;\(H\)&lt;/span&gt;都被限制在一个小范围内，两次优化之间的&lt;span class=&#34;math inline&#34;&gt;\(\Delta H\in(0.03, 0.1)\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;跨通道的PSF平移估计，主要是为了应对色差的影响。为了量化色差，定义下式&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\Delta CA(H,\lambda,\phi) = CA(H,\lambda,\phi) - CA(H,\lambda_G,\phi)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(CA\)&lt;/span&gt;表示色差区域（chromatic aberration area），&lt;span class=&#34;math inline&#34;&gt;\(\Delta CA\)&lt;/span&gt;是色差区域的差异，&lt;span class=&#34;math inline&#34;&gt;\(\lambda\in\{\lambda_R,\lambda_B\}\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;在本文的模型中，色差受到PSF和旋转角的影响，&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[CA^*(H,\lambda,\phi) = \mathcal{L}(PSF^*_S(H,\lambda,x),\phi)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(\mathcal{L}\)&lt;/span&gt;是一个映射函数，而&lt;span class=&#34;math inline&#34;&gt;\(PSF^*_{S}\)&lt;/span&gt;是平移后的&lt;span class=&#34;math inline&#34;&gt;\(PSF^*\)&lt;/span&gt;。为了估计平移，又构建了一个新的MLP，&lt;span class=&#34;math inline&#34;&gt;\(\mathcal{G}_{\Theta_2}\)&lt;/span&gt;，输入&lt;span class=&#34;math inline&#34;&gt;\(PSF^*\)&lt;/span&gt;（来自&lt;span class=&#34;math inline&#34;&gt;\(\mathcal{G}_{\Theta_1}\)&lt;/span&gt;）、波长&lt;span class=&#34;math inline&#34;&gt;\(\lambda\)&lt;/span&gt;、场高度&lt;span class=&#34;math inline&#34;&gt;\(H\)&lt;/span&gt;，输出PSF平移，最终得到平移后的PSF、&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[PSF^*_S(H,\lambda,x)=T(\mathcal{G}_{\Theta_2}(H,\lambda), PSF^*(H,\lambda, x))
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中的&lt;span class=&#34;math inline&#34;&gt;\(T\)&lt;/span&gt;就是平移操作，&lt;span class=&#34;math inline&#34;&gt;\(\lambda\in\{\lambda_R, \lambda_B\}\)&lt;/span&gt;。之后，损失函数如下&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\Theta_2^*(H, \lambda)=\underset{\Theta_2}{\arg\min}\sum_H\sum^{2\pi}_{\phi=0}|\Delta CA^*(H, \lambda, \phi)-\Delta CA(H, \lambda, \phi)|
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h1 id=&#34;a-system-for-estimating-optics-blur-psfs-from-test-chart-images&#34;&gt;A system for estimating optics blur PSFs from test chart images&lt;/h1&gt;
+&lt;p&gt;TODO&lt;/p&gt;
+</description>
+        </item>
+        <item>
         <title>C&#43;&#43;结构体内存对齐和数组内存步幅</title>
         <link>https://kegalas.uk/p/c-%E7%BB%93%E6%9E%84%E4%BD%93%E5%86%85%E5%AD%98%E5%AF%B9%E9%BD%90%E5%92%8C%E6%95%B0%E7%BB%84%E5%86%85%E5%AD%98%E6%AD%A5%E5%B9%85/</link>
         <pubDate>Sun, 11 May 2025 15:42:58 +0800</pubDate>
@@ -225,7 +1539,7 @@
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[Y^{(l+1)}=\sigma\bigg(AY^{(l)}W^{(l)}\bigg)
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;其中&lt;span class=&#34;math inline&#34;&gt;\(Y^{0}=X, Y^{L}=H\)&lt;/span&gt;，而&lt;span class=&#34;math inline&#34;&gt;\(W\)&lt;/span&gt;是可训练权重，本文选用的激活函数&lt;span class=&#34;math inline&#34;&gt;\(\sigma\)&lt;/span&gt;为Leaky-ReLU。&lt;/p&gt;
-&lt;p&gt;在色调映射的网络上，使用全连接网络，期望输入一个线性RGB值，输出一个适配于SDR显示器的RGB值（大部分情况就是sRGB）。对于图中的任意一个像素，将其RGB值、对应分割区域的&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;中的&lt;span class=&#34;math inline&#34;&gt;\(16\)&lt;/span&gt;个特征、&lt;span class=&#34;math inline&#34;&gt;\(H\)&lt;/span&gt;中的&lt;span class=&#34;math inline&#34;&gt;\(18\)&lt;/span&gt;个特征加起来作为FCN的输入（即37个channel），FCN输出一个3个channel的值，即色调映射后的RGB值。&lt;/p&gt;
+&lt;p&gt;在色调映射的网络上，使用全连接网络（FCN，和全卷积网络撞缩写了），期望输入一个线性RGB值，输出一个适配于SDR显示器的RGB值（大部分情况就是sRGB）。对于图中的任意一个像素，将其RGB值、对应分割区域的&lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt;中的&lt;span class=&#34;math inline&#34;&gt;\(16\)&lt;/span&gt;个特征、&lt;span class=&#34;math inline&#34;&gt;\(H\)&lt;/span&gt;中的&lt;span class=&#34;math inline&#34;&gt;\(18\)&lt;/span&gt;个特征加起来作为FCN的输入（即37个channel），FCN输出一个3个channel的值，即色调映射后的RGB值。&lt;/p&gt;
 &lt;p&gt;本文使用的损失函数为&lt;span class=&#34;math inline&#34;&gt;\(L_1\)&lt;/span&gt;损失，即对于输出&lt;span class=&#34;math inline&#34;&gt;\(O\)&lt;/span&gt;和参考&lt;span class=&#34;math inline&#34;&gt;\(R\)&lt;/span&gt;，&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\mathcal L = \sum_{i,j}\sum_{c\in\{R,G,B\}}|R_{c,i,j}-O_{c,i,j}|
 \]&lt;/span&gt;&lt;/p&gt;
@@ -424,7 +1738,7 @@
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://onlinelibrary.wiley.com/doi/abs/10.1111/j.1467-8659.2012.03225.x&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;https://onlinelibrary.wiley.com/doi/abs/10.1111/j.1467-8659.2012.03225.x&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;本文虽然不是纯粹的Tone Mapping，但也值得看一下。&lt;/p&gt;
-&lt;p&gt;本文首先进行区域检测，提取出人脸区域、天空区域、较暗的区域。然后进行全局的对比度和饱和度调整。之后横队人脸、天空、暗区进行单独调整。最终再进行细节和材质的增强。&lt;/p&gt;
+&lt;p&gt;本文首先进行区域检测，提取出人脸区域、天空区域、较暗的区域。然后进行全局的对比度和饱和度调整。之后对人脸、天空、暗区进行单独调整。最终再进行细节和材质的增强。&lt;/p&gt;
 &lt;p&gt;本文的检测部分并没有提出新方法，作者使用了当时最好的方法，也指出如果后续有任何更好的方法都可以直接套在第一阶段里使用。&lt;/p&gt;
 &lt;p&gt;而在全局对比度提升到阶段，将对比度拉升到最大范围（full range），裁剪之前最暗的和最亮的0.5%的像素，然后增加每个像素的饱和度20%。这里的全局指的是除了脸部和天空的所有像素。&lt;/p&gt;
 &lt;p&gt;在人脸部分，首先也是将其分为基础层和细节层，亮度调整仅在基础层进行。统计人脸区域的亮度直方图&lt;/p&gt;
@@ -587,8 +1901,8 @@
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\tilde Z_{x,y} = \sum_{(i,j)\in R_K} G_{x,y}(i,j)K_{x,y}(i,j) + \sum_{(i,j)\notin R_K} G_{x,y}(i,j)K&#39;_{x,y}(i,j)
 \]&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;得出的&lt;span class=&#34;math inline&#34;&gt;\(\tilde V\)&lt;/span&gt;也是log域的亮度，记&lt;span class=&#34;math inline&#34;&gt;\(V=\exp \tilde V\)&lt;/span&gt;。&lt;/p&gt;
-&lt;p&gt;随后来到了本文的ToneMapping环节，定义local mapping函数如下&lt;/p&gt;
+&lt;p&gt;得出的&lt;span class=&#34;math inline&#34;&gt;\(\tilde V\)&lt;/span&gt;也是log域的亮度，记&lt;span class=&#34;math inline&#34;&gt;\(V=\exp \tilde V\)&lt;/span&gt;。 作者可能说的不是很明确，但是&lt;span class=&#34;math inline&#34;&gt;\((i,j)\in R_K\)&lt;/span&gt;指的应该不是图象中所有在区域&lt;span class=&#34;math inline&#34;&gt;\(R_K\)&lt;/span&gt;中的点，而是对于原始的双边滤波器核，在其范围内的那些&lt;span class=&#34;math inline&#34;&gt;\((i,j)\)&lt;/span&gt;，如果这个&lt;span class=&#34;math inline&#34;&gt;\((i,j)\)&lt;/span&gt;在该区域&lt;span class=&#34;math inline&#34;&gt;\(R_K\)&lt;/span&gt;中，则用一套核参数，而不在区域中的用另一套参数。这里&lt;span class=&#34;math inline&#34;&gt;\(\sigma_r\geq\sigma_{r&#39;}\)&lt;/span&gt;，来更关注同区域的像素，减少不同区域像素的影响。&lt;/p&gt;
+&lt;p&gt;定义local mapping函数如下&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\varPsi(L, V;\rho, \gamma)=\left(\dfrac{L}{V}\right)^\rho\varphi^{\gamma}(V)=\left(\dfrac{L}{V}\right)^\rho\left(\dfrac{V}{1+V}\right)^\gamma
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;（注：&lt;span class=&#34;math inline&#34;&gt;\(L/V\)&lt;/span&gt;其实就是等价于log域的&lt;span class=&#34;math inline&#34;&gt;\(\tilde L-\tilde V\)&lt;/span&gt;，也就是提取出细节层。而&lt;span class=&#34;math inline&#34;&gt;\(V/(1+V)\)&lt;/span&gt;其实就是极简版Reinhard。该函数本质上就是对基础层&lt;span class=&#34;math inline&#34;&gt;\(V\)&lt;/span&gt;使用Reinhard压缩，然后对再把细节层加回去。只不过这里有两个参数。并且，如果&lt;span class=&#34;math inline&#34;&gt;\(\rho=\gamma\)&lt;/span&gt;时，该函数退化到Durand的双边滤波方法）&lt;/p&gt;
@@ -638,9 +1952,9 @@
  \rho_{max}, &amp; otherwise
 \end{cases}
 \]&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;前两个值代表着该像素已经和其局部亮度差异很大了，用一个较大的&lt;span class=&#34;math inline&#34;&gt;\(\rho_n\)&lt;/span&gt;会过度增强细节。&lt;/p&gt;
-&lt;p&gt;另外，所有在&lt;span class=&#34;math inline&#34;&gt;\(R\)&lt;/span&gt;边缘的像素，其&lt;span class=&#34;math inline&#34;&gt;\(\rho_n\)&lt;/span&gt;都被设置为&lt;span class=&#34;math inline&#34;&gt;\(\gamma\)&lt;/span&gt;，在边缘和&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;之间的像素的取值则可以通过插值获得。&lt;/p&gt;
-&lt;p&gt;在初步给像素赋初值之后，就采用滤波器来光滑。&lt;/p&gt;
+&lt;p&gt;前两个行代表着该像素原始的亮度&lt;span class=&#34;math inline&#34;&gt;\(L_n\)&lt;/span&gt;已经和其局部亮度&lt;span class=&#34;math inline&#34;&gt;\(V_n\)&lt;/span&gt;差异很大了，用一个较大的&lt;span class=&#34;math inline&#34;&gt;\(\rho_n\)&lt;/span&gt;会过度增强细节。&lt;/p&gt;
+&lt;p&gt;另外，所有在&lt;span class=&#34;math inline&#34;&gt;\(R\)&lt;/span&gt;边缘的像素，其&lt;span class=&#34;math inline&#34;&gt;\(\rho_n\)&lt;/span&gt;都被设置为&lt;span class=&#34;math inline&#34;&gt;\(\gamma\)&lt;/span&gt;，在边缘和&lt;span class=&#34;math inline&#34;&gt;\(D\)&lt;/span&gt;之间的像素的&lt;span class=&#34;math inline&#34;&gt;\(\rho_n\)&lt;/span&gt;取值则可以通过插值获得。&lt;/p&gt;
+&lt;p&gt;在初步给像素赋&lt;span class=&#34;math inline&#34;&gt;\(\rho_n\)&lt;/span&gt;初值之后，就采用滤波器来光滑。&lt;/p&gt;
 &lt;p&gt;下一步是将映射曲线单调化，防止其出现光晕等问题。对于每一个区域&lt;span class=&#34;math inline&#34;&gt;\(R_k\)&lt;/span&gt;，其重塑后的色调映射曲线是&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\hat \varPsi(L,V;\rho, \gamma) = \alpha_k\varPsi(L, V;\rho, \gamma)+\beta_k
 \]&lt;/span&gt;&lt;/p&gt;

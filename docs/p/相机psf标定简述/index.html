@@ -1,0 +1,1259 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='前言 简单来说，PSF就是光学系统的冲激响应。对于一个在光轴上的理想点光源（即一个冲激信号），相机所成的像就是该相机的PSF。事实上，PSF就'><title>相机PSF标定简述</title>
+
+<link rel='canonical' href='https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/'>
+
+<link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='相机PSF标定简述'>
+<meta property='og:description' content='前言 简单来说，PSF就是光学系统的冲激响应。对于一个在光轴上的理想点光源（即一个冲激信号），相机所成的像就是该相机的PSF。事实上，PSF就'>
+<meta property='og:url' content='https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/'>
+<meta property='og:site_name' content='KegalaS的个人博客'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='大学' /><meta property='article:tag' content='计算机视觉' /><meta property='article:tag' content='计算摄影' /><meta property='article:tag' content='计算机图形学' /><meta property='article:published_time' content='2025-05-31T19:08:39&#43;08:00'/><meta property='article:modified_time' content='2025-05-31T19:08:39&#43;08:00'/><meta property='og:image' content='https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/cover.jpg' />
+<meta name="twitter:title" content="相机PSF标定简述">
+<meta name="twitter:description" content="前言 简单来说，PSF就是光学系统的冲激响应。对于一个在光轴上的理想点光源（即一个冲激信号），相机所成的像就是该相机的PSF。事实上，PSF就"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://kegalas.uk/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/cover.jpg' />
+    <link rel="shortcut icon" href="/images/favicon.ico" />
+
+    </head>
+    <body class="
+    article-page has-toc
+">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex 
+    
+        extended
+    
+">
+    
+        <div id="article-toolbar">
+            <a href="/" class="back-home">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="15 6 9 12 15 18" />
+</svg>
+
+
+
+                <span>返回</span>
+            </a>
+        </div>
+    
+<main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/">
+                <img src="/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/cover_hu33a64856d379455576d0eb000fa3eb5e_11271_800x0_resize_q75_box.jpg"
+                        srcset="/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/cover_hu33a64856d379455576d0eb000fa3eb5e_11271_800x0_resize_q75_box.jpg 800w, /p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/cover_hu33a64856d379455576d0eb000fa3eb5e_11271_1600x0_resize_q75_box.jpg 1600w"
+                        width="800" 
+                        height="278" 
+                        loading="lazy"
+                        alt="Featured image of post 相机PSF标定简述" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" >
+                图形学
+            </a>
+        
+    </header>
+    
+
+    <h2 class="article-title">
+        <a href="/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/">相机PSF标定简述</a>
+    </h2>
+
+    
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">May 31, 2025</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 20 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+</div>
+</header>
+
+    <section class="article-content">
+    <h1 id="前言">前言</h1>
+<p>简单来说，PSF就是光学系统的冲激响应。对于一个在光轴上的理想点光源（即一个冲激信号），相机所成的像就是该相机的PSF。事实上，PSF就表征着该光学系统的所有像差（除了畸变），也就描述了相机拍摄出来的照片是如何变得模糊的。如果能够获得相机的PSF，再加上去卷积操作（通常需要维纳滤波等抗噪声的方法），就能将退化图象恢复为理想图像。</p>
+<h1 id="camera-intrinsic-blur-kernel-estimation-a-reliable-framework">Camera Intrinsic Blur Kernel Estimation: A Reliable Framework</h1>
+<p><a class="link" href="https://openaccess.thecvf.com/content_cvpr_2015/html/Mosleh_Camera_Intrinsic_Blur_2015_CVPR_paper.html"  target="_blank" rel="noopener"
+    >https://openaccess.thecvf.com/content_cvpr_2015/html/Mosleh_Camera_Intrinsic_Blur_2015_CVPR_paper.html</a></p>
+<p>本文给出的成像模型如下</p>
+<p><span class="math display">\[b = S(v(d(h(i)))\ast k)+n
+\]</span></p>
+<p>其中<span class="math inline">\(i\)</span>是物平面，<span class="math inline">\(h\)</span>是一个平面映射(planar homography)，将物平面透视投影到像平面上。而紧随其后的<span class="math inline">\(d\)</span>则代表着几何畸变(geometric distortion)，这是由于真实相机并不是完美的小孔成像系统。之后的<span class="math inline">\(v\)</span>则代表着光学晕影(optical vignetting)，然后这一串的结果和PSF核<span class="math inline">\(k\)</span>进行卷积，再通过采样函数<span class="math inline">\(S\)</span>和一个加性噪声<span class="math inline">\(n\)</span>（零均值高斯噪声），就得到了最终的图像<span class="math inline">\(b\)</span>。</p>
+<p>以往的工作为了估计<span class="math inline">\(k\)</span>，通常都会依次估计<span class="math inline">\(h,d,v\)</span>，然后再来估计<span class="math inline">\(k\)</span>。这个估计鲁棒性不是很好，作者这里使用的方法绕过了对这三者的估计，记<span class="math inline">\(u=v(d(h(i)))\)</span>，作者要直接获取到这个<span class="math inline">\(u\)</span>，成像模型变为</p>
+<p><span class="math display">\[b = S(u\ast k) + n
+\]</span></p>
+<p>首先作者弄了四张图</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 162; 
+			flex-basis: 390px"
+	>
+	<a href="/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/1.jpg" data-size="555x341">
+		<img src="/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/1.jpg"
+			width="555"
+			height="341"
+			srcset="/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/1_hucf67539020a25dbf02c4578a4d58ccff_43119_480x0_resize_q75_box.jpg 480w, /p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/1_hucf67539020a25dbf02c4578a4d58ccff_43119_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="1.jpg">
+	</a>
+	
+	<figcaption>1.jpg</figcaption>
+	
+</figure></p>
+<p>第一张为棋盘格图，第二张图为期望为<span class="math inline">\(0.5\)</span>的伯努利分布噪声，第三第四张图则为全黑和全白图。这些图像都是直接在电脑上合成的，然后将其在高分辨率显示屏上显示，再用待测相机去拍摄。之后需要将拍摄到的图和原始合成的图进行对齐。</p>
+<p>首先从棋盘格图入手</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 108; 
+			flex-basis: 260px"
+	>
+	<a href="/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/2.jpg" data-size="526x485">
+		<img src="/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/2.jpg"
+			width="526"
+			height="485"
+			srcset="/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/2_hu043642c7b15207d125e7b69231b1b434_43249_480x0_resize_q75_box.jpg 480w, /p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/2_hu043642c7b15207d125e7b69231b1b434_43249_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="2.jpg">
+	</a>
+	
+	<figcaption>2.jpg</figcaption>
+	
+</figure></p>
+<p>作者使用Harris corner detector来进行角点检测。由于拍摄的时候是正对着拍的，所以各个角点之间的空间关系不变，合成图和拍摄图的映射关系非常直观。</p>
+<p>对于一个格子内的四个角点，我们就可以通过双线性插值的方法，将拍摄图上的任意坐标映射到合成图上。首先，记合成图上的四个角点分别为<span class="math inline">\(c_1=(\alpha_1, \beta_1),c_2=(\alpha_2, \beta_1),c_3=(\alpha_2, \beta_2),c_4=(\alpha_1, \beta_2)\)</span>，然后记拍摄图上的对应四个角点的坐标为<span class="math inline">\(c_1'=(x_1, y_1),c_2'=(x_2, y_2),c_3'=(x_3, y_3),c_4'=(x_4, y_4)\)</span></p>
+<p>于是，任意在方格<span class="math inline">\(C'\)</span>内的点的坐标<span class="math inline">\((x,y)\)</span>都可以用方格<span class="math inline">\(C\)</span>内的坐标<span class="math inline">\((\alpha,\beta)\)</span>表示，</p>
+<p><span class="math display">\[\begin{bmatrix}
+ x & y
+\end{bmatrix}=
+\begin{bmatrix}
+ \alpha\beta & \alpha & \beta & 1
+\end{bmatrix}
+\begin{bmatrix}
+1 & -1 & -1 & 1 \\
+-1 & 1 & 0 & 0 \\
+-1 & 0 & 1 & 0 \\
+1 & 0 & 0 & 0
+\end{bmatrix}
+\begin{bmatrix}
+c_1' \\
+c_2' \\
+c_3' \\
+c_4'
+\end{bmatrix}
+\]</span></p>
+<p>当然，这其中的坐标以方格的左下角为原点，并且进行归一化。</p>
+<p>下一步，我们就可以通过warping的方式来获取前文提到的<span class="math inline">\(u\)</span>（注，前文提到的<span class="math inline">\(b\)</span>就是相机直接拍摄得到的伯努利噪声图像），算法如下</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 115; 
+			flex-basis: 276px"
+	>
+	<a href="/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/3.jpg" data-size="734x636">
+		<img src="/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/3.jpg"
+			width="734"
+			height="636"
+			srcset="/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/3_hudc4dec33a8caa571fc0899a05709712a_72049_480x0_resize_q75_box.jpg 480w, /p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/3_hudc4dec33a8caa571fc0899a05709712a_72049_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="3.jpg">
+	</a>
+	
+	<figcaption>3.jpg</figcaption>
+	
+</figure></p>
+<p>这里的图片<span class="math inline">\(i\)</span>即为合成得到的伯努利噪声原图。这里描述的是对每一个棋盘格的方格内的坐标，在<span class="math inline">\(i\)</span>上进行采样，然后将其值放到相机拍摄图像的对应坐标位置上。这一步主要是模拟了相机几何畸变和平面映射的过程。接下来再模拟晕影的过程</p>
+<p><span class="math display">\[u(x,y)=l(x,y)+i'(x,y)(w(x,y)-l(x,y))
+\]</span></p>
+<p>这里的<span class="math inline">\(l\)</span>指的是相机对着全黑图片拍摄的结果，而<span class="math inline">\(w\)</span>则是对着全白图片拍摄的结果。这样我们就得到了需要的<span class="math inline">\(u\)</span>。</p>
+<p>设<span class="math inline">\(b,u\)</span>的大小为<span class="math inline">\(M\times N\)</span>，PSF核的大小为<span class="math inline">\(R\times R\)</span>，如果将成像模型转换成向量形式，并且省略掉采样函数的话（因为只是简单的线性映射），有</p>
+<p><span class="math display">\[\mathbf{b}=\mathbf{uk}+\mathbf{n}
+\]</span></p>
+<p>其中<span class="math inline">\(\mathbf{b}\in\mathbb{R}^{MN},\mathbf{n}\in\mathbb{R}^{MN},\mathbf{k}\in\mathbb{R}^{RR},\mathbf{u}\in\mathbb{R}^{MN\times RR}\)</span></p>
+<p>伯努利噪声有均匀的谱密度函数（SDF），如果在理想的无噪声环境下，那么有</p>
+<p><span class="math display">\[|\mathcal{F}(b)|^2=
+|\mathcal{F}(i)|^2
+|\mathcal{F}(k)|^2
+\]</span></p>
+<p>其中<span class="math inline">\(\mathcal F\)</span>是傅里叶变换。于是理想的PSF就是</p>
+<p><span class="math display">\[|\mathcal{F}(k')|^2=\dfrac{|\mathcal{F}(b)||\overline{\mathcal{F}(b)}|}{|\mathcal{F}(u)||\overline{\mathcal{F}(u)}|}
+\]</span></p>
+<p>使用梯度下降法来估计这里的<span class="math inline">\(k\)</span>，就有</p>
+<p><span class="math display">\[\min_k E(k)=||\mathbf{\hat u}\mathbf{k}-\mathbf{\hat b}||^2+\lambda||\mathbf{k}||^2+\mu||\nabla \mathbf{k}||^2+\gamma|||\mathcal{F}(\mathbf{k})|-|\mathcal{F}(\mathbf{k'})|||^2
+\]</span></p>
+<p>其中第一项是为了更符合远图数据，第二项是为了让核稀疏，第三项是平滑项，第四项是为了更接近理想PSF。为了允许采集多张图像，这里的<span class="math inline">\(\mathbf{\hat u}\)</span>是多个<span class="math inline">\(\mathbf{u}\)</span>上下堆叠在一起的，同理<span class="math inline">\(\mathbf{\hat b}\)</span>也是，这之后还有展开形式和其梯度，详情见原文，这里不再赘述。</p>
+<p>总而言之，对着这个目标函数使用梯度下降法最后求得了我们需要的PSF核<span class="math inline">\(k\)</span>。</p>
+<h1 id="direct-psf-estimation-using-a-random-noise-target">Direct PSF estimation using a random noise target</h1>
+<p><a class="link" href="https://www.spiedigitallibrary.org/conference-proceedings-of-spie/7537/75370B/Direct-PSF-estimation-using-a-random-noise-target/10.1117/12.837591.short"  target="_blank" rel="noopener"
+    >https://www.spiedigitallibrary.org/conference-proceedings-of-spie/7537/75370B/Direct-PSF-estimation-using-a-random-noise-target/10.1117/12.837591.short</a></p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 130; 
+			flex-basis: 313px"
+	>
+	<a href="/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/4.jpg" data-size="741x568">
+		<img src="/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/4.jpg"
+			width="741"
+			height="568"
+			srcset="/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/4_hu5ee38b048eeb4b95d87c2c6f676aecb4_49976_480x0_resize_q75_box.jpg 480w, /p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/4_hu5ee38b048eeb4b95d87c2c6f676aecb4_49976_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="4.jpg">
+	</a>
+	
+	<figcaption>4.jpg</figcaption>
+	
+</figure></p>
+<p>整个流程如下，首先是进行几何配准(geometric registration)，如下图</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 235; 
+			flex-basis: 564px"
+	>
+	<a href="/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/5.jpg" data-size="772x328">
+		<img src="/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/5.jpg"
+			width="772"
+			height="328"
+			srcset="/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/5_hu6a5459f7978ec869c967afeb5e81b6fb_46687_480x0_resize_q75_box.jpg 480w, /p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/5_hu6a5459f7978ec869c967afeb5e81b6fb_46687_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="5.jpg">
+	</a>
+	
+	<figcaption>5.jpg</figcaption>
+	
+</figure></p>
+<p>左边是数字图像原图，右边是相机拍摄到的图片。使用图中的四个标志点进行对准，计算得到一个投影矩阵，能够将数字图投影到拍摄图上。和其他思路差不多，都是通过模拟投影来应对相机的几何畸变等问题。现在两张图剩下的差异就为亮度、噪声、锐度等。</p>
+<p>于是在几何配准后的下一步是色调映射，这里使用的是非线性的一条曲线。为了估计这条曲线的参数就需要使用数字图像左上角的灰度梯度图，需要用摄像机重新拍摄一张。在每一个灰色梯度块内提取出一个平均值，来和数字图像上的值建立映射关系，进而估计出曲线参数。然后对数字图像全局使用这个曲线，来让其亮度和拍摄的图像保持一致。</p>
+<p>然后将图片分为<span class="math inline">\(96\times 80\)</span>的小块，然后对每一个小块使用FFT，然后再通过计算就可以得到OTF（光传递函数），进一步的得到PSF。我们下面来解析一下这个过程。</p>
+<p>在本文的模型中，相机的PSF是具有平移可变性的，每个空间位置的PSF是不一样的。如图</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 218; 
+			flex-basis: 525px"
+	>
+	<a href="/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/6.jpg" data-size="1247x570">
+		<img src="/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/6.jpg"
+			width="1247"
+			height="570"
+			srcset="/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/6_hu42b23aafec0d4fb46bfc24cea105fcac_96684_480x0_resize_q75_box.jpg 480w, /p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/6_hu42b23aafec0d4fb46bfc24cea105fcac_96684_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="6.jpg">
+	</a>
+	
+	<figcaption>6.jpg</figcaption>
+	
+</figure></p>
+<p>可以看到位于中间位置的PSF比较理想，而靠近边缘的则已经无法保持圆形了。于是，成像模型为</p>
+<p><span class="math display">\[i(x,y)=\sum_{x_0,y_0}h(x,y;x_0,y_0)\cdot o(x_0,y_0)+n(x,y)
+\]</span></p>
+<p>其中<span class="math inline">\(o(\cdot,\cdot)\)</span>是输入信号，而<span class="math inline">\(i(\cdot,\cdot)\)</span>是经过PSF后变模糊的图像。这里的<span class="math inline">\(h\)</span>就是PSF，而<span class="math inline">\(n\)</span>是加性噪声。</p>
+<p>实践上我们不需要考虑每一个位置的PSF来计算某个点的输出，因为PSF能取值的范围很小，大部分都取<span class="math inline">\(0\)</span>，又因为相近位置的PSF非常相似，所以可以考虑将图片分为<span class="math inline">\(96\times 80\)</span>的小块，每一块内共享一个PSF。于是，成像模型变为</p>
+<p><span class="math display">\[i(x,y)=(p\ast o)(x,y)+n(x,y)
+\]</span></p>
+<p>在频域内就变为</p>
+<p><span class="math display">\[I(u,v)=P(u,v)O(u,v)+N(u,v)
+\]</span></p>
+<p>这里的<span class="math inline">\(P\)</span>就是OTF。于是它的估计就很简单</p>
+<p><span class="math display">\[\hat P(u,v)=\dfrac{I(u,v)}{\hat O(u,v)}
+\]</span></p>
+<p>对OTF使用逆FFT就得到了PSF。</p>
+<p>现在再来说一说数字图像的选择，这里选择的除了灰阶和标志物之外，背景是白噪声。由于白噪声在FFT之后还是白噪声，所以它是均匀的（homogeneous，我不是很理解什么意思），频域上也就不会出现在<span class="math inline">\(0\)</span>附近的分量。如果分母上有<span class="math inline">\(0\)</span>附近的分量就会影响OTF的估计（应该和去卷积操作中近似0的分量导致无法恢复图像是一个原理）。</p>
+<p>在图像块上估计PSF确实避免了很多计算开销，但是也降低了估计的稳定性，于是本文又提出一个算法来规则化相邻的PSF。</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 175; 
+			flex-basis: 420px"
+	>
+	<a href="/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/7.jpg" data-size="540x308">
+		<img src="/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/7.jpg"
+			width="540"
+			height="308"
+			srcset="/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/7_hua09528451187418e105ad39d6cd4c548_25678_480x0_resize_q75_box.jpg 480w, /p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/7_hua09528451187418e105ad39d6cd4c548_25678_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="7.jpg">
+	</a>
+	
+	<figcaption>7.jpg</figcaption>
+	
+</figure></p>
+<p>如图，左边的大框表示了之前对图像进行切割的<span class="math inline">\(96\times 80\)</span>的图像块，里面的小框表示了块内的像素。显然，根据前文所描述的，每个大框拥有一个PSF，这个PSF也是用<span class="math inline">\(96\times 80\)</span>的图像进行表示的。为了进行PSF的平滑，将9个PSF的同一位置的像素提取出来（图中这一次选择了左上角），然后将其排列成<span class="math inline">\(3\times 3\)</span>的一个矩阵，对其进行中值滤波，然后再将矩阵的值放回到原来的9个PSF中。如果在算法中发现PSF估计错误（例如异常值），则将其替换为邻居的PSF值。这里使用的滤波核为</p>
+<p><span class="math display">\[H = \begin{bmatrix}
+ 1 & 2 & 1\\
+ 2 & 4 & 2\\
+ 1 & 2 & 1
+\end{bmatrix}
+\]</span></p>
+<p>最后就是一个阈值处理，将PSF中小于某一个值的量直接设置为0，从而进行降噪。显然，主要需要降噪的部分为PSF图像的边界部分，阈值窗的形状如下</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 193; 
+			flex-basis: 465px"
+	>
+	<a href="/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/8.jpg" data-size="568x293">
+		<img src="/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/8.jpg"
+			width="568"
+			height="293"
+			srcset="/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/8_hu142bdf2229ec56a8d091b29929703afc_30702_480x0_resize_q75_box.jpg 480w, /p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/8_hu142bdf2229ec56a8d091b29929703afc_30702_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="8.jpg">
+	</a>
+	
+	<figcaption>8.jpg</figcaption>
+	
+</figure></p>
+<p>形式化的定义如下</p>
+<p><span class="math display">\[S(x,y)=1-T(x)T(y)
+\]</span></p>
+<p><span class="math display">\[T(n)=\begin{cases}
+ 1 & \text{ if } 0\leq|n|\leq\alpha\frac{N}{2} \\
+ 0.5\left[1+\cos\left(\pi\dfrac{n-\alpha\frac{N}{2}}{2(1-\alpha)\frac{N}{2}}\right)\right] & \text{ if } \alpha\frac{N}{2}\leq|n|\leq\frac{N}{2}
+\end{cases}
+\]</span></p>
+<p>其中<span class="math inline">\(N\)</span>为窗口大小，<span class="math inline">\(\alpha\)</span>为可调参数。阈值过滤如下</p>
+<p><span class="math display">\[p(x,y)=\begin{cases}
+ 0 & \text{ if } \tilde{p}(x,y)<\tilde{p}_{max}S(x,y) \\
+ \tilde{p}(x,y) & \text{ otherwise }
+\end{cases}
+\]</span></p>
+<p>其中<span class="math inline">\(\tilde{p}(x,y)\)</span>是过滤前的PSF，而<span class="math inline">\(\tilde{p}_{max}\)</span>则是PSF中的最大值。</p>
+<h1 id="2d-sub-pixel-point-spread-function-measurement-using-a-virtual-point-like-source">2D Sub-pixel Point Spread Function Measurement Using a Virtual Point-Like Source</h1>
+<p><a class="link" href="https://link.springer.com/article/10.1007/s11263-016-0948-8"  target="_blank" rel="noopener"
+    >https://link.springer.com/article/10.1007/s11263-016-0948-8</a></p>
+<p>本文使用的成像模型和第一篇是一样的</p>
+<p><span class="math display">\[b = S(g(h(a))\ast k)+n
+\]</span></p>
+<p>把透视投影和几何畸变通过校正的方式去掉，就得到</p>
+<p><span class="math display">\[b = S(a\ast k)+n
+\]</span></p>
+<p>如果<span class="math inline">\(a\)</span>本身是一个冲激函数，那么最终的结果就是一个PSF</p>
+<p><span class="math display">\[b=S(k)+n
+\]</span></p>
+<p>但是现实中难以直接做出一个点光源，本文使用了一个平行光源和一个反射球面来制造一个非常近似的点光源。直接对着这个光源拍照就得到了PSF。</p>
+<p>为了让这个反射光像一个点光源，相机放置的位置也是非常重要的，摆的不对反射光线就不近似于点光源了。作者这里通过光线追踪的方式来分析相机应该怎么放。</p>
+<p>首先建立坐标系，以反射球面的球心为坐标系原点建立球面坐标，对于任意一个点都可以表示为</p>
+<p><span class="math display">\[\mathbf T  = \mathbf r R, \mathbf r = [\cos(\alpha),\sin(\alpha)\sin(\theta),\sin(\alpha)\cos(\theta)]^T
+\]</span></p>
+<p>其中<span class="math inline">\(R\)</span>是到原点的距离，<span class="math inline">\(\alpha\)</span>为极角（<span class="math inline">\(x-y\)</span>平面），<span class="math inline">\(\theta\)</span>为方位角（<span class="math inline">\(y-z\)</span>）平面。</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 138; 
+			flex-basis: 333px"
+	>
+	<a href="/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/9.jpg" data-size="493x355">
+		<img src="/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/9.jpg"
+			width="493"
+			height="355"
+			srcset="/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/9_huf9cc41cdc8c1713f5b25e67fc61f7ed6_19145_480x0_resize_q75_box.jpg 480w, /p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/9_huf9cc41cdc8c1713f5b25e67fc61f7ed6_19145_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="9.jpg">
+	</a>
+	
+	<figcaption>9.jpg</figcaption>
+	
+</figure></p>
+<p>之后，让平行光从<span class="math inline">\(\mathbf s = [-1, 0, 0]^T\)</span>的方向射入（即<span class="math inline">\(x\)</span>轴反向），反射点在<span class="math inline">\(\mathbf T\)</span>上，那么，反射光线的方向就可以表示为<span class="math inline">\(\mathbf s'=[\cos(2\alpha),\sin(2\alpha)\sin(\theta),\sin(2\alpha)\cos(\theta)]^T\)</span></p>
+<p>于是，反射光线上的任意一点都可以用参数方程表示</p>
+<p><span class="math display">\[\begin{bmatrix}
+ x\\
+ y\\
+ z
+\end{bmatrix}=
+\begin{bmatrix}
+\cos(\alpha)\\
+\sin(\alpha)\sin(\theta)\\
+\sin(\alpha)\cos(\theta)
+\end{bmatrix}R
++t
+\begin{bmatrix}
+\cos(2\alpha)\\
+\sin(2\alpha)\sin(\theta)\\
+\sin(2\alpha)\cos(\theta)
+\end{bmatrix}
+\]</span></p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 107; 
+			flex-basis: 257px"
+	>
+	<a href="/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/10.jpg" data-size="587x548">
+		<img src="/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/10.jpg"
+			width="587"
+			height="548"
+			srcset="/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/10_hu2a85ad6c8215e983592aa8c7952c820a_39078_480x0_resize_q75_box.jpg 480w, /p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/10_hu2a85ad6c8215e983592aa8c7952c820a_39078_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="10.jpg">
+	</a>
+	
+	<figcaption>10.jpg</figcaption>
+	
+</figure></p>
+<p>让光轴对准原点，并且在<span class="math inline">\(xy\)</span>平面内，与<span class="math inline">\(x\)</span>轴形成一个夹角<span class="math inline">\(\alpha_c\)</span>，此时反射后的光线如果能通过入瞳就可以进入成像系统。一个理想成像系统的入瞳半径可以通过焦距<span class="math inline">\(f\)</span>和光圈数（f-numer）<span class="math inline">\(N\)</span>计算得到</p>
+<p><span class="math display">\[\dfrac{D}{2} = \dfrac{f}{2N}
+\]</span></p>
+<p>然后该入瞳的圆环（圆环柱）在球心的直角坐标系下就可以表示为</p>
+<p><span class="math display">\[(-\sin(\alpha_c)x+\cos(\alpha_c)y)^2+z^2=\left(\dfrac{D}{2}\right)^2
+\]</span></p>
+<p>该圆所在的面垂直于光轴。上式只是定义了一个圆环柱，还需要描述圆环（入瞳）到原点的距离<span class="math inline">\(H_c\)</span></p>
+<p><span class="math display">\[\cos(\alpha_c)x+\sin(\alpha_c)y = H_c
+\]</span></p>
+<p>入射光和反射光向量构成了一个平面</p>
+<p><span class="math display">\[-\cos(\theta)y+\sin(\theta)z = 0
+\]</span></p>
+<p>上面几个式子联立消去<span class="math inline">\(x,z\)</span>就得到了一个关于<span class="math inline">\(y\)</span>的二次方程。这个联立的过程表示反射光与入瞳边缘的两个交点。</p>
+<p><span class="math display">\[\left(1+\dfrac{\cos(\alpha_c)^2}{\tan(\theta)^2}\right)y^2-2H_c\sin(\alpha_c)y+H_c^2\sin(\alpha_c)^2-\cos(\alpha_c)^2\left(\dfrac{D}{2}\right)^2 = 0
+\]</span></p>
+<p>我们可以通过限制<span class="math inline">\(\theta\)</span>的取值边界来让上式有实数解</p>
+<p><span class="math display">\[\tan(\theta) = \pm\sqrt{\left(\dfrac{2H_c}{D}\right)^2\sin(\alpha_c)^2-\cos(\alpha_c)^2}
+\]</span></p>
+<p>将上式的解带入到描述反射光线上点的那个方程中就可以得到反射光线的参数<span class="math inline">\(\alpha\)</span>（使用数值解法，不存在解析解）。当我们精确描述了射入成像系统的光线后，就可以通过光线和物面的交点来描述虚像的边界了</p>
+<p><span class="math display">\[\cos(\alpha_c)x+\sin(\alpha_c)y = H_c-H_o
+\]</span></p>
+<p>其中<span class="math inline">\(H_o\)</span>是物面到入瞳的距离。虚像的形状和大小取决于物面的位置。定义虚像的大小<span class="math inline">\(d\)</span>为，球面反射反射出来的虚像边缘的最小包围圆的直径。用下图来再解释一下这句话</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 121; 
+			flex-basis: 290px"
+	>
+	<a href="/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/11.jpg" data-size="578x477">
+		<img src="/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/11.jpg"
+			width="578"
+			height="477"
+			srcset="/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/11_hu999e1750e5cec5010c8d847cbdc46d58_32989_480x0_resize_q75_box.jpg 480w, /p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/11_hu999e1750e5cec5010c8d847cbdc46d58_32989_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="11.jpg">
+	</a>
+	
+	<figcaption>11.jpg</figcaption>
+	
+</figure></p>
+<p>蓝色的圈是成像边界，红色的圈是能够包住边界的最小圆，或者说外接圆。而所有的外接圆中直径最小的圆，其直径就是虚像的大小。因此最佳的对焦距离就是物面到入瞳的距离<span class="math inline">\(H_o\)</span>，此时外接圆直径最小。</p>
+<p>虚像的大小<span class="math inline">\(d\)</span>孩取决于反射球的半径<span class="math inline">\(R\)</span>和成像系统的结构。相比之下，衍射极限成像系统的理论分辨率可以用艾里斑的直径来表示，使用光圈数<span class="math inline">\(N\)</span>计算为</p>
+<p><span class="math display">\[d_d=\dfrac{2.44\lambda N}{M}
+\]</span></p>
+<p>其中<span class="math inline">\(\lambda\)</span>是光波长，<span class="math inline">\(M\)</span>是成像系统的放大倍率</p>
+<p><span class="math display">\[M = \dfrac{f}{H_o-f}
+\]</span></p>
+<p>当保持<span class="math inline">\(\alpha_c, f, H_c\)</span>不变时，光圈数、虚像大小、球面半径的关系如下图(a)所示</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 196; 
+			flex-basis: 471px"
+	>
+	<a href="/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/12.jpg" data-size="628x320">
+		<img src="/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/12.jpg"
+			width="628"
+			height="320"
+			srcset="/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/12_hu27399fb65adca281cba168bfe3d3eec1_35372_480x0_resize_q75_box.jpg 480w, /p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/12_hu27399fb65adca281cba168bfe3d3eec1_35372_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="12.jpg">
+	</a>
+	
+	<figcaption>12.jpg</figcaption>
+	
+</figure></p>
+<p>而(b)则展示了<span class="math inline">\(N\)</span>不变而改变<span class="math inline">\(\alpha_c\)</span>时的关系。(老实说看半天我也不知道到底怎么摆摄像机，感觉是让虚像大小小于衍射极限就行)</p>
+<p>之后本文关注于如何估计亚像素级的PSF。首先获取<span class="math inline">\(n\times n\)</span>张低分辨率图片<span class="math inline">\(b_{i,j},i\in\{0,\cdots,n-1\}, j\in\{0,\cdots,n-1\}\)</span>，每张图片都是用之前的方法拍到的像素级PSF，唯一的区别是每张图片在拍摄前微小地平移球面镜，微小到亚像素级。</p>
+<p>将图片<span class="math inline">\(b_{i,j}\)</span>记作<span class="math inline">\(\{u_k,v_l\}_{i, j},k\in\{0,\cdots,H-1\}, l\in\{0,\cdots,W-1\}\)</span>。于是所有的图片的像素就组成了一个非均匀网格<span class="math inline">\(\{u,v\}\)</span>。于是两张图片的相对位置关系就可以通过一个亚像素级的步长<span class="math inline">\(\Delta\)</span>计算出来，<span class="math inline">\(\{u,v\}_{i+1, j}=\{u,v\}_{i, j}+\{\Delta, 0\}, \{u,v\}_{i, j+1}=\{u,v\}_{i, j}+\{0, \Delta\}\)</span></p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 202; 
+			flex-basis: 486px"
+	>
+	<a href="/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/13.jpg" data-size="1258x621">
+		<img src="/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/13.jpg"
+			width="1258"
+			height="621"
+			srcset="/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/13_hucef27d2cfac7111e783dcf066fc8b898_125458_480x0_resize_q75_box.jpg 480w, /p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/13_hucef27d2cfac7111e783dcf066fc8b898_125458_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="13.jpg">
+	</a>
+	
+	<figcaption>13.jpg</figcaption>
+	
+</figure></p>
+<p>于是，高分辨率的PSF就可以通过自然邻近差值从多张低分辨率PSF中重建出来。</p>
+<p><span class="math display">\[P(u,v) = \sum_{(u_{a_1},v_{a_2})\in B}w_{a_1,a_2}p(u_{a_1},v_{a_2})
+\]</span></p>
+<p>其中<span class="math inline">\(B\)</span>是自然邻居集合，而<span class="math inline">\(p(u_{a_1},v_{a_2})\)</span>表达式超分辨率网格<span class="math inline">\(\{u,v\}_{SR}\)</span>上的点<span class="math inline">\((u,v)\)</span>的自然邻居点，<span class="math inline">\(w_{a_1,a_2}\)</span>代表其对应的权重。</p>
+<p><span class="math display">\[w_{a_1,a_2}=\dfrac{A_{(u_{a_1},v_{a_2})}\cap A_{(u,v)}}{A_{(u,v)}}
+\]</span></p>
+<h1 id="-psf-estimation-method-of-simple-lens-camera-using-normal-sinh-arcsinh-model-based-on-noise-image-pairs"># PSF Estimation Method of Simple-Lens Camera Using Normal Sinh-Arcsinh Model Based on Noise Image Pairs</h1>
+<p><a class="link" href="https://ieeexplore.ieee.org/abstract/document/9373384"  target="_blank" rel="noopener"
+    >https://ieeexplore.ieee.org/abstract/document/9373384</a></p>
+<p>本文的绝大部分内容和第一篇文章都一样，但是本文注意到第一篇文章对着全黑和全白图片拍摄的过程并没有考虑到颜色，所以本文在这一方面使用了三颜色的pattern</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 148; 
+			flex-basis: 356px"
+	>
+	<a href="/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/14.jpg" data-size="371x250">
+		<img src="/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/14.jpg"
+			width="371"
+			height="250"
+			srcset="/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/14_huc57992e059ee167b0bbb95684ac62303_16810_480x0_resize_q75_box.jpg 480w, /p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/14_huc57992e059ee167b0bbb95684ac62303_16810_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="14.jpg">
+	</a>
+	
+	<figcaption>14.jpg</figcaption>
+	
+</figure></p>
+<p>下面三张图，都是单颜色通道的0-255的渐变图像，分为18个阶梯，阶梯之间数值相差15。采集到的颜色值和原颜色值的关系可以表示为</p>
+<p><span class="math display">\[\begin{bmatrix}
+ r'\\
+ g'\\
+ b'
+\end{bmatrix}=
+\begin{bmatrix}
+ c_{r,r} & c_{g,r} & c_{b,r}\\
+c_{r,g} & c_{g,g} & c_{b,g}\\
+c_{r,b} & c_{g,b} & c_{b,b}
+\end{bmatrix}
+\begin{bmatrix}
+ f_r(r)\\
+ f_g(g)\\
+ f_b(b)
+\end{bmatrix}
+\]</span></p>
+<p>我们可以通过原始理论值和实际拍摄值，带入到这个等式中求出所有的参数<span class="math inline">\(c\)</span>和<span class="math inline">\(f\)</span>。从而在校正伯努利噪声的颜色时，可以使用<span class="math inline">\([r,g,b]^T=f^{-1}_{r,g,b}\left(C^{-1}\left[[r',g',t']^T\right]\right)\)</span>直接计算得到。</p>
+<h1 id="self-supervised-spatially-variant-psf-estimation-for-aberration-aware-depth-from-defocus">Self-Supervised Spatially Variant PSF Estimation for Aberration-Aware Depth-from-Defocus</h1>
+<p><a class="link" href="https://ieeexplore.ieee.org/abstract/document/10446689/"  target="_blank" rel="noopener"
+    >https://ieeexplore.ieee.org/abstract/document/10446689/</a></p>
+<p>这篇文章是先估计PSF然后再用在Depth-from-Defocus任务上的，本文只关注其PSF估计部分。</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 128; 
+			flex-basis: 308px"
+	>
+	<a href="/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/19.jpg" data-size="702x547">
+		<img src="/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/19.jpg"
+			width="702"
+			height="547"
+			srcset="/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/19_hu46e11b8b19712a290a68db117a4523c9_53328_480x0_resize_q75_box.jpg 480w, /p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/19_hu46e11b8b19712a290a68db117a4523c9_53328_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="19.jpg">
+	</a>
+	
+	<figcaption>19.jpg</figcaption>
+	
+</figure></p>
+<p>方法很简单，首先使用相机拍出“Sharp”的图像，然后再拍出“Blur”的图像，使用神经网络拟合出PSF，将PSF和Sharp图像（一部分）卷积，然后计算卷积图和Blur（一部分）的误差。这个误差反向传播给神经网络就可以进行训练了。</p>
+<p>拍摄sharp图和blur图的唯一区别在于相机的焦距（文中记作<span class="math inline">\(d\)</span>）和光圈F值（文中记作<span class="math inline">\(f_d\)</span>）。（但是我很怀疑本文所说的PSF是否是我们传统上的PSF。我们的PSF是和理想的delta函数对比的，但本文的PSF似乎是不同相机状态和最优相机状态之间的比较值。因为这个sharp图总得有它自己的PSF吧，不可能是理想的delta函数。不过这个训练的思想其实广泛体现在各类深度学习PSF估计上。）</p>
+<p>本文观察到PSF是旋转对称的，形状只与离中心点的距离有关。所以训练的时候记录像素点的极坐标，将距离<span class="math inline">\(IH\)</span>送入模型中进行训练，得到的PSF用极角<span class="math inline">\(\theta\)</span>进行旋转，再和sharp图像进行卷积。</p>
+<p>图中的PSF-Net使用UNet结构，误差如下</p>
+<p><span class="math display">\[\mathcal{L}=\mathcal{L}_{recon}+\alpha\mathcal{L}_{smooth}+\beta\mathcal{L}_{radial}
+\]</span></p>
+<p><span class="math inline">\(\alpha,\beta\)</span>是可调权重。其中第一项是重建误差，</p>
+<p><span class="math display">\[\mathcal{L}_{recon} = ||\mathbf{b}, \mathbf{s}\ast\mathbf{p}(\theta)||_1
+\]</span></p>
+<p>这里的<span class="math inline">\(\mathbf b\)</span>是blur图的一个patch，<span class="math inline">\(\mathbf s\)</span>是sharp图对应位置的patch，<span class="math inline">\(\ast\)</span>是卷积操作，<span class="math inline">\(\mathbf p(\theta)\)</span>代表着将模型输出的psf旋转<span class="math inline">\(\theta\)</span>。</p>
+<p>第二项是光滑项</p>
+<p><span class="math display">\[\mathcal L_{smooth} = \dfrac{1}{N_p}\sum^{N_p}_{i}|\delta_x p_i|+|\delta_yp_i|
+\]</span></p>
+<p>其中<span class="math inline">\(\delta_x,\delta_y\)</span>分别是水平和竖直方向的梯度算子，<span class="math inline">\(p_i\)</span>则是PSF中的一个像素，<span class="math inline">\(N_p\)</span>是PSF的像素总数。这个光滑项主要起到一个抗噪声和平滑PSF的作用。</p>
+<p>第三项是径向梯度误差。因为PSF都是中间高四周低的形状，为了防止PSF出现甜甜圈状等其他形状，引入了这个误差</p>
+<p><span class="math display">\[\mathcal{L}_{radial} = \dfrac{1}{K}\sum^{K-1}_{j=0}T(p_{\Omega_{j+1}}-p_{\Omega_{j}})
+\]</span></p>
+<p><span class="math inline">\(K\)</span>是一个可调参数，代表着预估的PSF半径<span class="math inline">\(p_{\Omega_j}\)</span>代表着PSF中心周围<span class="math inline">\((2j+1)\times(2j+1)\)</span>的范围的平均值。<span class="math inline">\(T\)</span>是一个阶跃函数，<span class="math inline">\(\lambda\geq0\)</span>时，<span class="math inline">\(T(\lambda)=\lambda\)</span>，其他情况<span class="math inline">\(T(\lambda)=0\)</span></p>
+<h1 id="blind-super-resolution-kernel-estimation-using-an-internal-gan">Blind Super-Resolution Kernel Estimation using an Internal-GAN</h1>
+<p><a class="link" href="https://proceedings.neurips.cc/paper/2019/hash/5fd0b37cd7dbbb00f97ba6ce92bf5add-Abstract.html"  target="_blank" rel="noopener"
+    >https://proceedings.neurips.cc/paper/2019/hash/5fd0b37cd7dbbb00f97ba6ce92bf5add-Abstract.html</a></p>
+<p>虽然本文是超分的工作，但是其直接启发了下面的一篇，所以还是介绍一下。</p>
+<p>本文使用一个GAN，来让生成器生成一个下采样的图片，从而让判别器在patch-level上无法判断生成器生成的假图片和真实的图片在分布上的区别。</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 325; 
+			flex-basis: 781px"
+	>
+	<a href="/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/20.jpg" data-size="1019x313">
+		<img src="/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/20.jpg"
+			width="1019"
+			height="313"
+			srcset="/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/20_hufe678b990223ba4ead7a118fba5cb38c_44248_480x0_resize_q75_box.jpg 480w, /p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/20_hufe678b990223ba4ead7a118fba5cb38c_44248_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="20.jpg">
+	</a>
+	
+	<figcaption>20.jpg</figcaption>
+	
+</figure></p>
+<p>这里的判别器并不是判别图像是否真实，因为一个是原图一个是下采样的图根本就不一样。它输出一个map，表面该像素有多大可能是由原图的像素计算得到的。原文说的是：D trains to output a heat map, referred to as D-map (see fig. 2) indicating for each pixel, how likely is its surrounding patch to be drawn from the original patch-distribution. 我表示根本无法理解。然后作者给出的损失函数如下</p>
+<p><span class="math display">\[G^*(I_{LR})=\underset{G}{\arg\min}\max_{D}\{E_{x\sim patch(I_{LR})}[|D(x)-1|+|D(G(x))|]+R\}
+\]</span></p>
+<p>其中<span class="math inline">\(R\)</span>是正则项后面再介绍，我严重怀疑这个公式有误，为什么会是<span class="math inline">\(\max_D\)</span>？还是根据代码来看看吧</p>
+<p>判别器的训练代码是</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">train_d</span>(self):
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>optimizer_D<span style="color:#f92672">.</span>zero_grad()
+</span></span><span style="display:flex;"><span>        d_pred_real <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>D<span style="color:#f92672">.</span>forward(self<span style="color:#f92672">.</span>d_input)
+</span></span><span style="display:flex;"><span>        g_output <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>G<span style="color:#f92672">.</span>forward(self<span style="color:#f92672">.</span>g_input)
+</span></span><span style="display:flex;"><span>        d_pred_fake <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>D<span style="color:#f92672">.</span>forward((g_output <span style="color:#f92672">+</span> torch<span style="color:#f92672">.</span>randn_like(g_output) <span style="color:#f92672">/</span> <span style="color:#ae81ff">255.</span>)<span style="color:#f92672">.</span>detach())
+</span></span><span style="display:flex;"><span>        loss_d_fake <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>criterionGAN(d_pred_fake, is_d_input_real<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>)
+</span></span><span style="display:flex;"><span>        loss_d_real <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>criterionGAN(d_pred_real, is_d_input_real<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>        loss_d <span style="color:#f92672">=</span> (loss_d_fake <span style="color:#f92672">+</span> loss_d_real) <span style="color:#f92672">*</span> <span style="color:#ae81ff">0.5</span>
+</span></span><span style="display:flex;"><span>        loss_d<span style="color:#f92672">.</span>backward()
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>optimizer_D<span style="color:#f92672">.</span>step()
+</span></span></code></pre></div><p>首先这里的<code>d_pred_real</code>是对原图上拿下来的patch进行判别的结果，而<code>d_pred_fake</code>则是对生成器生成图片进行判别的结果。然后这里的<code>(loss_d_fake + loss_d_real) * 0.5</code>就是原公式中的<span class="math inline">\(E_{x\sim patch}\)</span>，梯度下降法再怎么说也是求最小值。</p>
+<p>然后再看生成器的训练代码</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">train_g</span>(self):
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>optimizer_G<span style="color:#f92672">.</span>zero_grad()
+</span></span><span style="display:flex;"><span>        g_pred <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>G<span style="color:#f92672">.</span>forward(self<span style="color:#f92672">.</span>g_input)
+</span></span><span style="display:flex;"><span>        d_pred_fake <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>D<span style="color:#f92672">.</span>forward(g_pred)
+</span></span><span style="display:flex;"><span>        loss_g <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>criterionGAN(d_last_layer<span style="color:#f92672">=</span>d_pred_fake, is_d_input_real<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>        total_loss_g <span style="color:#f92672">=</span> loss_g <span style="color:#f92672">+</span> self<span style="color:#f92672">.</span>calc_constraints(g_pred)
+</span></span><span style="display:flex;"><span>        total_loss_g<span style="color:#f92672">.</span>backward()
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>optimizer_G<span style="color:#f92672">.</span>step()
+</span></span></code></pre></div><p>这里的<code>loss_g</code>其实相当于<span class="math inline">\(|D(G(x))-1|\)</span>，而<code>self.calc_constraints(g_pred)</code>是我们后面要说的正则项。至此我认为之前的公式有误。</p>
+<p>我们再来看看网络结构，首先是判别器</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 309; 
+			flex-basis: 742px"
+	>
+	<a href="/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/21.jpg" data-size="622x201">
+		<img src="/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/21.jpg"
+			width="622"
+			height="201"
+			srcset="/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/21_hu2335d641ee9dd5d4d603cf970d45a70f_25012_480x0_resize_q75_box.jpg 480w, /p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/21_hu2335d641ee9dd5d4d603cf970d45a70f_25012_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="21.jpg">
+	</a>
+	
+	<figcaption>21.jpg</figcaption>
+	
+</figure></p>
+<p>没有多少要说的，一个普通的全卷积网络。作者没有使用池化层，也没有strides，从而更好地判别小patch。</p>
+<p>然后就是生成器</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 203; 
+			flex-basis: 488px"
+	>
+	<a href="/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/22.jpg" data-size="662x325">
+		<img src="/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/22.jpg"
+			width="662"
+			height="325"
+			srcset="/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/22_hu228901824d06cc2fada27c17348755d0_33838_480x0_resize_q75_box.jpg 480w, /p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/22_hu228901824d06cc2fada27c17348755d0_33838_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="22.jpg">
+	</a>
+	
+	<figcaption>22.jpg</figcaption>
+	
+</figure></p>
+<p>生成器是一个全卷积网络，但是是全线性的，不含任何非线性激活函数。这主要是因为图像降分辨率所用的卷积核就是一个线性操作。在训练完网络之后，将每一层的滤波器卷积起来就得到了超分辨率时需要用到的Kernel，和PSF有一些像。当然，我们知道多个线性层和单个线性层在能力上是等价的，作者这里使用多层的原因是多层易于训练。为了让Kernel更像回事，就加入了一些先验知识来作为正则项</p>
+<p><span class="math display">\[R=\alpha\mathcal{L}_{sum\_to\_1}+\beta\mathcal{L}_{boundaries}+\gamma\mathcal{L}_{sparse}+\delta\mathcal{L}_{center}
+\]</span></p>
+<ul>
+<li><span class="math inline">\(\mathcal{L}_{sum\_to\_1}=|1-\sum_{i,j}k_{i,j}|\)</span>，使得卷积核加和为<span class="math inline">\(1\)</span>。</li>
+<li><span class="math inline">\(\mathcal{L}_{boundaries}=\sum_{i,j}|k_{i,j}\cdot m_{i,j}|\)</span>惩罚靠近边缘的非零值，<span class="math inline">\(m_{i,j}\)</span>是一个和距离有关的权重。</li>
+<li><span class="math inline">\(\mathcal{L}_{sparse}=\sum_{i,j}|k_{i,j}|^{1/2}\)</span>鼓励稀疏性，防止产生过渡平滑的Kernel。</li>
+<li><span class="math inline">\(\mathcal{L}_{center}=||(x_0,y_0)-\sum_{i,j}k_{i,j}\cdot(i,j)/\sum_{i,j}k_{i,j}||\)</span>来让Kernel的大部分数值集中在中心。</li>
+</ul>
+<h1 id="extreme-quality-computational-imaging-via-degradation-framework">Extreme-Quality Computational Imaging via Degradation Framework</h1>
+<p><a class="link" href="https://openaccess.thecvf.com/content/ICCV2021/html/Chen_Extreme-Quality_Computational_Imaging_via_Degradation_Framework_ICCV_2021_paper.html"  target="_blank" rel="noopener"
+    >https://openaccess.thecvf.com/content/ICCV2021/html/Chen_Extreme-Quality_Computational_Imaging_via_Degradation_Framework_ICCV_2021_paper.html</a></p>
+<p>这篇文章的思路基本和上篇文章一样，后面还附带了一个图像恢复网络，我们只讨论它PSF估计的部分。</p>
+<p>在思路上，本文同样是用网络去生成一个Kernel（也就是PSF），然后让他去和理想图片卷积，然后将合成的图片和真实的图片进行比较来进行学习。</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 193; 
+			flex-basis: 465px"
+	>
+	<a href="/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/23.jpg" data-size="1105x570">
+		<img src="/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/23.jpg"
+			width="1105"
+			height="570"
+			srcset="/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/23_hu93a83dd30a699f039c41d5b6735a60ab_139723_480x0_resize_q75_box.jpg 480w, /p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/23_hu93a83dd30a699f039c41d5b6735a60ab_139723_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="23.jpg">
+	</a>
+	
+	<figcaption>23.jpg</figcaption>
+	
+</figure></p>
+<p>流程上，首先用相机对着棋盘格图片进行拍照，得到经由PSF退化的图像。将图像切成小块，然后通过边缘检测的方法检测棋盘格边缘，再进行上色，这样就得到了比较理想的未退化图像。然后我们就得到了退化前后的配对数据集。由于PSF是具有空间易变性的，所以切成小块之后每一块训练出来的PSF代表着那个位置的PSF。</p>
+<p>将一个delta函数送入一个深度线性全卷积网络（同上一篇文章），得到一个PSF卷积核，将PSF和未退化图像卷积，得到预测的退化图象，然后将预测图像和真实的退化图象计算L1损失、其他正则项损失，从而更新网络。注意到这里为了保证训练的稳定性，不再使用GAN损失，变成了单纯的（半）监督学习，只不过数据是用别的办法合成的不需要手动采集。</p>
+<p>总体的损失函数如下</p>
+<p><span class="math display">\[\mathcal{L} = \alpha\mathcal{L}_{fidelity}+\beta\mathcal{L}_{sum2one}+\gamma\mathcal{L}_{boundary}+\delta\mathcal{L}_{sym}
+\]</span></p>
+<p>中间两个同前面的文章，<span class="math inline">\(\mathcal{L}_{fidelity}=||x^d-y||_1\)</span>就是L1损失，而</p>
+<p><span class="math display">\[\mathcal{L}_{sym} = \sum_{i,j}(k(i,j)-\dfrac{1}{2}((k(i,j)-k_{sym}(-i,-j))))^2
+\]</span></p>
+<p>则是一个对PSF的对称性约束。</p>
+<p>另外，本文注意到FOV不同的位置上PSF的形状更不相似，FOV越大PSF就越不像一个delta函数。或者说，距离光轴越远越不像。所以本文在模型训练中考虑了FOV大小。实际上在代码中，FOV大小被分为三个层次，最近的部分使用较少的网络层数、预估的PSF尺寸较小（<span class="math inline">\(19\times 19\)</span>）、<span class="math inline">\(\gamma\)</span>取值更大（<span class="math inline">\(1000\)</span>），而最远的部分使用更多网络层数，预估的PSF尺寸较大（<span class="math inline">\(27\times 27\)</span>），<span class="math inline">\(\gamma\)</span>取值更小（<span class="math inline">\(1\)</span>）</p>
+<h1 id="a-physics-informed-blur-learning-framework-for-imaging-systems">A Physics-Informed Blur Learning Framework for Imaging Systems</h1>
+<p><a class="link" href="https://openaccess.thecvf.com/content/CVPR2025/html/Chen_A_Physics-Informed_Blur_Learning_Framework_for_Imaging_Systems_CVPR_2025_paper.html"  target="_blank" rel="noopener"
+    >https://openaccess.thecvf.com/content/CVPR2025/html/Chen_A_Physics-Informed_Blur_Learning_Framework_for_Imaging_Systems_CVPR_2025_paper.html</a></p>
+<p>本文首先讨论了PSF的形成原理，并且给出了其光学上的模型公式，然后通过估计这个模型的参数，来计算出PSF。</p>
+<p>有多种光学上的模型可以解释PSF，本文使用的是Seidel PSF model。它通过波前像差来计算PSF</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 204; 
+			flex-basis: 491px"
+	>
+	<a href="/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/24.jpg" data-size="610x298">
+		<img src="/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/24.jpg"
+			width="610"
+			height="298"
+			srcset="/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/24_hu7b5d63b55e428d28203764c7f0ac8eb0_30777_480x0_resize_q75_box.jpg 480w, /p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/24_hu7b5d63b55e428d28203764c7f0ac8eb0_30777_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="24.jpg">
+	</a>
+	
+	<figcaption>24.jpg</figcaption>
+	
+</figure></p>
+<p>波前像差就是理想的波前和真实的波前之间的、在出瞳位置的差距，这种相差导致了在像平面的失焦，于是就产生了PSF。在非相干成像系统中，PSF可由下式计算</p>
+<p><span class="math display">\[PSF(H,\lambda) = \left|\mathcal{F}\left(A(\mathbf p)\exp\left(\dfrac{i2\pi W(H,\lambda,\mathbf p)}{\lambda}\right)\right)\right|^2
+\]</span></p>
+<p>其中<span class="math inline">\(W(H,\lambda,\mathbf p)\)</span>就是波前像差，<span class="math inline">\(\mathbf p=[\rho, \theta]^T\)</span>是瞳平面上的点，用极坐标表示，其中<span class="math inline">\(\rho\in[0, 1], \theta\in [0, 2\pi]\)</span>。<span class="math inline">\(A(\mathbf p)\)</span>是瞳函数，通常是已知的。波前像差可以进一步分解为Seidel基，</p>
+<p><span class="math display">\[W(H,\lambda,\mathbf p) = \sum^\infty_{k=0}\sum^\infty_{l=0}\sum^\infty_{m=0}W_{klm}H^k\rho^l\cos^m(\dfrac{\pi}{2}-\theta)
+\]</span></p>
+<p>其中<span class="math inline">\(k=2p+m, l=2n+m\quad (p,n,m\in \mathbb N)\)</span>，<span class="math inline">\(W_{klm}\)</span>是Seidel系数，本文中只选取前<span class="math inline">\(10\)</span>项来进行估计和使用。<span class="math inline">\(\lambda\)</span>是光波长，<span class="math inline">\(H\)</span>是归一化的场高度（field height），可以看上图来理解，在其他论文里大概就是FOV的意思。</p>
+<p>但是Seidel基中的一些参数，例如<span class="math inline">\(\rho^2\)</span>，会同时影响多个方向的SFR。并且，反向推导的问题是一个病态问题，而且他还是一个非线性变换。种种原因导致，在优化过程中会有梯度冲突问题。</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 158; 
+			flex-basis: 380px"
+	>
+	<a href="/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/25.jpg" data-size="608x383">
+		<img src="/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/25.jpg"
+			width="608"
+			height="383"
+			srcset="/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/25_hu1c8178eeefc10246dac8bfb38eb68672_40130_480x0_resize_q75_box.jpg 480w, /p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/25_hu1c8178eeefc10246dac8bfb38eb68672_40130_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="25.jpg">
+	</a>
+	
+	<figcaption>25.jpg</figcaption>
+	
+</figure></p>
+<p>本文提出了一种方法来解决这个问题。，首先修改波前相差的表达式</p>
+<p><span class="math display">\[W(H,\lambda,\mathbf p) = \sum_{(p,q,r)\in Q}W_{pqr}(H,\lambda)\rho^p(\sin\theta)^q(\cos\theta)^r
+\]</span></p>
+<p>其中</p>
+<p><span class="math display">\[Q=\{(2,2,0), (2,0,2), (3,1,0), (3,3,0), (4,2,0), (4,0,2), (5,1,0), (6,2,0), (6,0,2)\}
+\]</span></p>
+<p>这个修改后的表达式中的<span class="math inline">\(\sin\theta, \cos\theta\)</span>确保了只会影响一个方向上的SFR。然后，在优化参数的时候只考虑一个较窄区域的SFR，而不是考虑全局的SFR。最后，优化过程是从中心到边缘逐渐地进行的。</p>
+<p>上面只讲了PSF的模型是什么样的，要估计哪些参数，下面介绍具体要通过什么方式来估计。估计方法是二阶段的，第一阶段是单通道PSF的估计，然后是跨通道的PSF平移估计。</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 295; 
+			flex-basis: 708px"
+	>
+	<a href="/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/26.jpg" data-size="1260x427">
+		<img src="/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/26.jpg"
+			width="1260"
+			height="427"
+			srcset="/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/26_hu4d40d33f6aa2552fdd9ddf91d23e4590_82179_480x0_resize_q75_box.jpg 480w, /p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/26_hu4d40d33f6aa2552fdd9ddf91d23e4590_82179_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="26.jpg">
+	</a>
+	
+	<figcaption>26.jpg</figcaption>
+	
+</figure></p>
+<p>首先，还是要用相机拍棋盘格，获得RAW图像，进行去马赛克、单色化后计算SFR，作为训练目标。</p>
+<p>搭建一个两层的MLP，记作<span class="math inline">\(\mathcal{G}_{\Theta_1}\)</span>，输入的参数是我们之前介绍的场高度<span class="math inline">\(H\)</span>，输出是我们所需要的<span class="math inline">\(W_{pqr}^*\)</span>。这些输出的系数之后被用于计算SFR</p>
+<p><span class="math display">\[SFR^*(H,\phi) = h(g(\mathcal{G}_{\Theta_1}(H), H), \phi)
+\]</span></p>
+<p>其中<span class="math inline">\(g\)</span>就是之前用来计算PSF的公式<span class="math inline">\(|\mathcal F(\cdots)|^2\)</span>，而<span class="math inline">\(h\)</span>是用于将PSF转化为SFR的公式，里面的<span class="math inline">\(\phi\)</span>是相对于<span class="math inline">\(+y\)</span>轴的角度，可以从第一张图上看出来。训练的损失函数如下</p>
+<p><span class="math display">\[\Theta_1^*(H)=\underset{\Theta_1}{\arg\min}\sum_H\sum^{2\pi}_{\phi=0}|SFR^*(H,\phi)-SFR(H,\phi)|
+\]</span></p>
+<p>在每一步优化过程中，<span class="math inline">\(H\)</span>都被限制在一个小范围内，两次优化之间的<span class="math inline">\(\Delta H\in(0.03, 0.1)\)</span>。</p>
+<p>跨通道的PSF平移估计，主要是为了应对色差的影响。为了量化色差，定义下式</p>
+<p><span class="math display">\[\Delta CA(H,\lambda,\phi) = CA(H,\lambda,\phi) - CA(H,\lambda_G,\phi)
+\]</span></p>
+<p>其中<span class="math inline">\(CA\)</span>表示色差区域（chromatic aberration area），<span class="math inline">\(\Delta CA\)</span>是色差区域的差异，<span class="math inline">\(\lambda\in\{\lambda_R,\lambda_B\}\)</span>。</p>
+<p>在本文的模型中，色差受到PSF和旋转角的影响，</p>
+<p><span class="math display">\[CA^*(H,\lambda,\phi) = \mathcal{L}(PSF^*_S(H,\lambda,x),\phi)
+\]</span></p>
+<p>其中<span class="math inline">\(\mathcal{L}\)</span>是一个映射函数，而<span class="math inline">\(PSF^*_{S}\)</span>是平移后的<span class="math inline">\(PSF^*\)</span>。为了估计平移，又构建了一个新的MLP，<span class="math inline">\(\mathcal{G}_{\Theta_2}\)</span>，输入<span class="math inline">\(PSF^*\)</span>（来自<span class="math inline">\(\mathcal{G}_{\Theta_1}\)</span>）、波长<span class="math inline">\(\lambda\)</span>、场高度<span class="math inline">\(H\)</span>，输出PSF平移，最终得到平移后的PSF、</p>
+<p><span class="math display">\[PSF^*_S(H,\lambda,x)=T(\mathcal{G}_{\Theta_2}(H,\lambda), PSF^*(H,\lambda, x))
+\]</span></p>
+<p>其中的<span class="math inline">\(T\)</span>就是平移操作，<span class="math inline">\(\lambda\in\{\lambda_R, \lambda_B\}\)</span>。之后，损失函数如下</p>
+<p><span class="math display">\[\Theta_2^*(H, \lambda)=\underset{\Theta_2}{\arg\min}\sum_H\sum^{2\pi}_{\phi=0}|\Delta CA^*(H, \lambda, \phi)-\Delta CA(H, \lambda, \phi)|
+\]</span></p>
+<h1 id="a-system-for-estimating-optics-blur-psfs-from-test-chart-images">A system for estimating optics blur PSFs from test chart images</h1>
+<p>TODO</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/%E5%A4%A7%E5%AD%A6/">大学</a>
+        
+            <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/">计算机视觉</a>
+        
+            <a href="/tags/%E8%AE%A1%E7%AE%97%E6%91%84%E5%BD%B1/">计算摄影</a>
+        
+            <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/">计算机图形学</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css"integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js"integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8"crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js"integrity="sha384-vZTG03m&#43;2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl"crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.querySelector(`.article-content`), {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ]
+        });})
+</script>
+    
+</article>
+
+    <aside class="related-contents--wrapper">
+    
+    
+        <h2 class="section-title">相关文章</h2>
+        <div class="related-contents">
+            <div class="flex article-list--tile">
+                
+                    
+<article class="has-image">
+    <a href="/p/%E5%83%8F%E5%B7%AE%E7%9F%AB%E6%AD%A3%E7%AE%80%E8%BF%B0/">
+        
+        
+            <div class="article-image">
+                <img src="/p/%E5%83%8F%E5%B7%AE%E7%9F%AB%E6%AD%A3%E7%AE%80%E8%BF%B0/cover.d4bc0c2188bd83830397b04939acbeba_huc45965efbb78f489d2942b8e48485bda_47013_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-1LwMIYi9g4MDl7BJOay&#43;ug==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">像差矫正简述</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/p/%E5%9F%BA%E4%BA%8E%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2%E7%9A%84tone-mapping%E7%AE%80%E8%BF%B0/">
+        
+        
+            <div class="article-image">
+                <img src="/p/%E5%9F%BA%E4%BA%8E%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2%E7%9A%84tone-mapping%E7%AE%80%E8%BF%B0/cover.0d1f710c6f0ca8af1c1e9fb6dd83630f_hud564e3059b92e0982aa63ebb5c38fa59_49577_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-DR9xDG8MqK8cHp&#43;23YNjDw==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">基于图像分割的Tone Mapping简述</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/p/hdr%E8%89%B2%E8%B0%83%E6%98%A0%E5%B0%84%E5%9B%BE%E5%83%8F%E8%B4%A8%E9%87%8F%E8%AF%84%E4%BB%B7%E7%AE%80%E8%BF%B0/">
+        
+        
+            <div class="article-image">
+                <img src="/p/hdr%E8%89%B2%E8%B0%83%E6%98%A0%E5%B0%84%E5%9B%BE%E5%83%8F%E8%B4%A8%E9%87%8F%E8%AF%84%E4%BB%B7%E7%AE%80%E8%BF%B0/cover.180758a5ee73b6597684d5908958cd17_hubce6d89c2fc230acc2296e007ead6ecd_28081_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-GAdYpe5ztll2hNWQiVjNFw==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">HDR色调映射图像质量评价简述</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/p/tone-mapping%E7%AE%80%E8%BF%B0/">
+        
+        
+            <div class="article-image">
+                <img src="/p/tone-mapping%E7%AE%80%E8%BF%B0/cover.5aa682735da6aa1619a10f7cb3c36e37_hue2557a0ca715ca3bab4b5f5b903f073d_123247_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-WqaCc12mqhYZoQ98s8NuNw==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Tone Mapping简述</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/p/grabcut-interactive-foreground-extraction-using-iterated-graph-cuts%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/">
+        
+        
+            <div class="article-image">
+                <img src="/p/grabcut-interactive-foreground-extraction-using-iterated-graph-cuts%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/cover.719f06f8145a0ec2fc378d5f11233592_huf62d2c95a51769be2a7aa0d894297a77_82581_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-cZ8G&#43;BRaDsL8N41fESM1kg==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">GrabCut— Interactive Foreground Extraction Using Iterated Graph Cuts论文精读与复现</h2>
+        </div>
+    </a>
+</article>
+                
+            </div>
+        </div>
+    
+</aside>
+
+     
+    
+        
+    <script src="https://utteranc.es/client.js" 
+        repo="kegalas/blogComments"
+        issue-term="pathname"
+        
+        crossorigin="anonymous"
+        async
+        >
+</script>
+
+<style>
+    .utterances {
+        max-width: unset;
+    }
+</style>
+
+<script>
+    function setUtterancesTheme(theme) {
+        let utterances = document.querySelector('.utterances iframe');
+        if (utterances) {
+            utterances.contentWindow.postMessage(
+                {
+                    type: 'set-theme',
+                    theme: `github-${theme}`
+                },
+                'https://utteranc.es'
+            );
+        }
+    }
+
+    addEventListener('message', event => {
+        if (event.origin !== 'https://utteranc.es') return;
+        setUtterancesTheme(document.documentElement.dataset.scheme)
+    });
+
+    window.addEventListener('onColorSchemeChange', (e) => {
+        setUtterancesTheme(e.detail)
+    })
+</script>
+
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2025 KegalaS的个人博客
+    </section>
+    
+    <section class="powerby">
+         <br />
+        
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    
+        <aside class="sidebar right-sidebar sticky">
+            <section class="widget archives">
+                <div class="widget-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+                </div>
+                <h2 class="widget-title section-title">目录</h2>
+                
+                <div class="widget--toc">
+                    <nav id="TableOfContents">
+  <ol>
+    <li><a href="#前言">前言</a></li>
+    <li><a href="#camera-intrinsic-blur-kernel-estimation-a-reliable-framework">Camera Intrinsic Blur Kernel Estimation: A Reliable Framework</a></li>
+    <li><a href="#direct-psf-estimation-using-a-random-noise-target">Direct PSF estimation using a random noise target</a></li>
+    <li><a href="#2d-sub-pixel-point-spread-function-measurement-using-a-virtual-point-like-source">2D Sub-pixel Point Spread Function Measurement Using a Virtual Point-Like Source</a></li>
+    <li><a href="#-psf-estimation-method-of-simple-lens-camera-using-normal-sinh-arcsinh-model-based-on-noise-image-pairs"># PSF Estimation Method of Simple-Lens Camera Using Normal Sinh-Arcsinh Model Based on Noise Image Pairs</a></li>
+    <li><a href="#self-supervised-spatially-variant-psf-estimation-for-aberration-aware-depth-from-defocus">Self-Supervised Spatially Variant PSF Estimation for Aberration-Aware Depth-from-Defocus</a></li>
+    <li><a href="#blind-super-resolution-kernel-estimation-using-an-internal-gan">Blind Super-Resolution Kernel Estimation using an Internal-GAN</a></li>
+    <li><a href="#extreme-quality-computational-imaging-via-degradation-framework">Extreme-Quality Computational Imaging via Degradation Framework</a></li>
+    <li><a href="#a-physics-informed-blur-learning-framework-for-imaging-systems">A Physics-Informed Blur Learning Framework for Imaging Systems</a></li>
+    <li><a href="#a-system-for-estimating-optics-blur-psfs-from-test-chart-images">A system for estimating optics blur PSFs from test chart images</a></li>
+  </ol>
+</nav>
+                </div>
+            </section>
+        </aside>
+    
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                defer="false"
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

@@ -18,6 +18,7 @@ markup: goldmark
 # WSL2 Ubuntu20.04
 sudo apt install linux-tools-common
 # 也有可能是linux-tools-generic
+# 或者linux-perf
 ```
 
 来安装。但是在WSL2的Ubuntu 20.04上，其可能会报错如下
@@ -55,6 +56,7 @@ git clone https://github.com/brendangregg/FlameGraph.git
 
 ```bash
 perf record -g -F 99 -- ./program -i xxx.txt
+# 可能需要sudo
 ```
 
 这里前面的`-F`是采样频率99Hz的意思。后面的`-i xxx.txt`的意思是说明，你调用程序的命令行参数像原来一样直接加上就可以了，没参数就不加。

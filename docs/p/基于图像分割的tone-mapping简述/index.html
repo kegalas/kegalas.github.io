@@ -195,7 +195,7 @@
 <p><span class="math display">\[Y^{(l+1)}=\sigma\bigg(AY^{(l)}W^{(l)}\bigg)
 \]</span></p>
 <p>其中<span class="math inline">\(Y^{0}=X, Y^{L}=H\)</span>，而<span class="math inline">\(W\)</span>是可训练权重，本文选用的激活函数<span class="math inline">\(\sigma\)</span>为Leaky-ReLU。</p>
-<p>在色调映射的网络上，使用全连接网络，期望输入一个线性RGB值，输出一个适配于SDR显示器的RGB值（大部分情况就是sRGB）。对于图中的任意一个像素，将其RGB值、对应分割区域的<span class="math inline">\(X\)</span>中的<span class="math inline">\(16\)</span>个特征、<span class="math inline">\(H\)</span>中的<span class="math inline">\(18\)</span>个特征加起来作为FCN的输入（即37个channel），FCN输出一个3个channel的值，即色调映射后的RGB值。</p>
+<p>在色调映射的网络上，使用全连接网络（FCN，和全卷积网络撞缩写了），期望输入一个线性RGB值，输出一个适配于SDR显示器的RGB值（大部分情况就是sRGB）。对于图中的任意一个像素，将其RGB值、对应分割区域的<span class="math inline">\(X\)</span>中的<span class="math inline">\(16\)</span>个特征、<span class="math inline">\(H\)</span>中的<span class="math inline">\(18\)</span>个特征加起来作为FCN的输入（即37个channel），FCN输出一个3个channel的值，即色调映射后的RGB值。</p>
 <p>本文使用的损失函数为<span class="math inline">\(L_1\)</span>损失，即对于输出<span class="math inline">\(O\)</span>和参考<span class="math inline">\(R\)</span>，</p>
 <p><span class="math display">\[\mathcal L = \sum_{i,j}\sum_{c\in\{R,G,B\}}|R_{c,i,j}-O_{c,i,j}|
 \]</span></p>
@@ -394,7 +394,7 @@
 <p><a class="link" href="https://onlinelibrary.wiley.com/doi/abs/10.1111/j.1467-8659.2012.03225.x"  target="_blank" rel="noopener"
     >https://onlinelibrary.wiley.com/doi/abs/10.1111/j.1467-8659.2012.03225.x</a></p>
 <p>本文虽然不是纯粹的Tone Mapping，但也值得看一下。</p>
-<p>本文首先进行区域检测，提取出人脸区域、天空区域、较暗的区域。然后进行全局的对比度和饱和度调整。之后横队人脸、天空、暗区进行单独调整。最终再进行细节和材质的增强。</p>
+<p>本文首先进行区域检测，提取出人脸区域、天空区域、较暗的区域。然后进行全局的对比度和饱和度调整。之后对人脸、天空、暗区进行单独调整。最终再进行细节和材质的增强。</p>
 <p>本文的检测部分并没有提出新方法，作者使用了当时最好的方法，也指出如果后续有任何更好的方法都可以直接套在第一阶段里使用。</p>
 <p>而在全局对比度提升到阶段，将对比度拉升到最大范围（full range），裁剪之前最暗的和最亮的0.5%的像素，然后增加每个像素的饱和度20%。这里的全局指的是除了脸部和天空的所有像素。</p>
 <p>在人脸部分，首先也是将其分为基础层和细节层，亮度调整仅在基础层进行。统计人脸区域的亮度直方图</p>
@@ -557,8 +557,8 @@
 \]</span></p>
 <p><span class="math display">\[\tilde Z_{x,y} = \sum_{(i,j)\in R_K} G_{x,y}(i,j)K_{x,y}(i,j) + \sum_{(i,j)\notin R_K} G_{x,y}(i,j)K'_{x,y}(i,j)
 \]</span></p>
-<p>得出的<span class="math inline">\(\tilde V\)</span>也是log域的亮度，记<span class="math inline">\(V=\exp \tilde V\)</span>。</p>
-<p>随后来到了本文的ToneMapping环节，定义local mapping函数如下</p>
+<p>得出的<span class="math inline">\(\tilde V\)</span>也是log域的亮度，记<span class="math inline">\(V=\exp \tilde V\)</span>。 作者可能说的不是很明确，但是<span class="math inline">\((i,j)\in R_K\)</span>指的应该不是图象中所有在区域<span class="math inline">\(R_K\)</span>中的点，而是对于原始的双边滤波器核，在其范围内的那些<span class="math inline">\((i,j)\)</span>，如果这个<span class="math inline">\((i,j)\)</span>在该区域<span class="math inline">\(R_K\)</span>中，则用一套核参数，而不在区域中的用另一套参数。这里<span class="math inline">\(\sigma_r\geq\sigma_{r'}\)</span>，来更关注同区域的像素，减少不同区域像素的影响。</p>
+<p>定义local mapping函数如下</p>
 <p><span class="math display">\[\varPsi(L, V;\rho, \gamma)=\left(\dfrac{L}{V}\right)^\rho\varphi^{\gamma}(V)=\left(\dfrac{L}{V}\right)^\rho\left(\dfrac{V}{1+V}\right)^\gamma
 \]</span></p>
 <p>（注：<span class="math inline">\(L/V\)</span>其实就是等价于log域的<span class="math inline">\(\tilde L-\tilde V\)</span>，也就是提取出细节层。而<span class="math inline">\(V/(1+V)\)</span>其实就是极简版Reinhard。该函数本质上就是对基础层<span class="math inline">\(V\)</span>使用Reinhard压缩，然后对再把细节层加回去。只不过这里有两个参数。并且，如果<span class="math inline">\(\rho=\gamma\)</span>时，该函数退化到Durand的双边滤波方法）</p>
@@ -608,9 +608,9 @@
  \rho_{max}, & otherwise
 \end{cases}
 \]</span></p>
-<p>前两个值代表着该像素已经和其局部亮度差异很大了，用一个较大的<span class="math inline">\(\rho_n\)</span>会过度增强细节。</p>
-<p>另外，所有在<span class="math inline">\(R\)</span>边缘的像素，其<span class="math inline">\(\rho_n\)</span>都被设置为<span class="math inline">\(\gamma\)</span>，在边缘和<span class="math inline">\(D\)</span>之间的像素的取值则可以通过插值获得。</p>
-<p>在初步给像素赋初值之后，就采用滤波器来光滑。</p>
+<p>前两个行代表着该像素原始的亮度<span class="math inline">\(L_n\)</span>已经和其局部亮度<span class="math inline">\(V_n\)</span>差异很大了，用一个较大的<span class="math inline">\(\rho_n\)</span>会过度增强细节。</p>
+<p>另外，所有在<span class="math inline">\(R\)</span>边缘的像素，其<span class="math inline">\(\rho_n\)</span>都被设置为<span class="math inline">\(\gamma\)</span>，在边缘和<span class="math inline">\(D\)</span>之间的像素的<span class="math inline">\(\rho_n\)</span>取值则可以通过插值获得。</p>
+<p>在初步给像素赋<span class="math inline">\(\rho_n\)</span>初值之后，就采用滤波器来光滑。</p>
 <p>下一步是将映射曲线单调化，防止其出现光晕等问题。对于每一个区域<span class="math inline">\(R_k\)</span>，其重塑后的色调映射曲线是</p>
 <p><span class="math display">\[\hat \varPsi(L,V;\rho, \gamma) = \alpha_k\varPsi(L, V;\rho, \gamma)+\beta_k
 \]</span></p>
@@ -941,44 +941,44 @@
                 
                     
 <article class="has-image">
-    <a href="/p/deep-bilateral-learning-for-real-time-image-enhancement%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/">
+    <a href="/p/%E5%83%8F%E5%B7%AE%E7%9F%AB%E6%AD%A3%E7%AE%80%E8%BF%B0/">
         
         
             <div class="article-image">
-                <img src="/p/deep-bilateral-learning-for-real-time-image-enhancement%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/cover.c544671fcae18b2974e28dcd19d110e3_hu21346ed4a71566f3cd713a52c023a686_153701_250x150_fill_q75_box_smart1.jpg" 
+                <img src="/p/%E5%83%8F%E5%B7%AE%E7%9F%AB%E6%AD%A3%E7%AE%80%E8%BF%B0/cover.d4bc0c2188bd83830397b04939acbeba_huc45965efbb78f489d2942b8e48485bda_47013_250x150_fill_q75_box_smart1.jpg" 
                         width="250" 
                         height="150" 
                         loading="lazy" 
                         data-key="" 
-                        data-hash="md5-xURnH8rhiyl04o3NGdEQ4w==">
+                        data-hash="md5-1LwMIYi9g4MDl7BJOay&#43;ug==">
                 
             </div>
         
 
         <div class="article-details">
-            <h2 class="article-title">Deep Bilateral Learning for Real Time Image Enhancement论文速读</h2>
+            <h2 class="article-title">像差矫正简述</h2>
         </div>
     </a>
 </article>
                 
                     
 <article class="has-image">
-    <a href="/p/appprop-all-pairs-appearance-space-edit-propagation%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/">
+    <a href="/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/">
         
         
             <div class="article-image">
-                <img src="/p/appprop-all-pairs-appearance-space-edit-propagation%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0/cover.a6dc0aea3fa6a380f9f56b9bac533904_hueda4c761f5117f950ea670cd72a10b0b_71812_250x150_fill_q75_box_smart1.jpg" 
+                <img src="/p/%E7%9B%B8%E6%9C%BApsf%E6%A0%87%E5%AE%9A%E7%AE%80%E8%BF%B0/cover.323e8fc2f31139a7790886588b4d5590_hu33a64856d379455576d0eb000fa3eb5e_11271_250x150_fill_q75_box_smart1.jpg" 
                         width="250" 
                         height="150" 
                         loading="lazy" 
                         data-key="" 
-                        data-hash="md5-ptwK6j&#43;mo4D59WubrFM5BA==">
+                        data-hash="md5-Mj6PwvMROad5CIZYi01VkA==">
                 
             </div>
         
 
         <div class="article-details">
-            <h2 class="article-title">AppProp: All-Pairs Appearance-Space Edit Propagation论文精读与复现</h2>
+            <h2 class="article-title">相机PSF标定简述</h2>
         </div>
     </a>
 </article>

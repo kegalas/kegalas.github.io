@@ -399,6 +399,7 @@
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># WSL2 Ubuntu20.04</span>
 </span></span><span style="display:flex;"><span>sudo apt install linux-tools-common
 </span></span><span style="display:flex;"><span><span style="color:#75715e"># 也有可能是linux-tools-generic</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 或者linux-perf</span>
 </span></span></code></pre></div><p>来安装。但是在WSL2的Ubuntu 20.04上，其可能会报错如下</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>WARNING: perf not found <span style="color:#66d9ef">for</span> kernel 5.15.153.1-microsoft
 </span></span></code></pre></div><p>原因是perf这个工具和内核强相关，而WSL2的Ubuntu似乎魔改过内核，所以软件包中下载的perf用不了（相反，WSL2 Debian安装<code>linux-perf</code>就没这个问题，不知道为什么）。但我们还可以通过编译来安装。首先下载源码</p>
@@ -416,6 +417,7 @@
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git clone https://github.com/brendangregg/FlameGraph.git
 </span></span></code></pre></div><p>对于某一个程序<code>program</code>，我们通过以下形式生成其运行报告</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>perf record -g -F <span style="color:#ae81ff">99</span> -- ./program -i xxx.txt
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 可能需要sudo</span>
 </span></span></code></pre></div><p>这里前面的<code>-F</code>是采样频率99Hz的意思。后面的<code>-i xxx.txt</code>的意思是说明，你调用程序的命令行参数像原来一样直接加上就可以了，没参数就不加。</p>
 <p>之后你运行<code>perf</code>的目录就会生成一个<code>perf.data</code>文件，然后</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>perf script -f | /path/to/FlameGraph/stackcollapse-perf.pl | /path/to/FlameGraph/flamegraph.pl &gt; flame.svg
