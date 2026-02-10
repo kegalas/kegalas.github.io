@@ -31,7 +31,7 @@ image: cover.jpg
 
 最后一部分是KPN模块。按照前人的研究结果，预测卷积核来间接预测结果要比直接预测结果要更稳定一些，但是这会增加模型的开销，尤其是卷积核很大的时候。于是本文提出了一种扩大卷积的方式，来让卷积核影响更广的范围。可以看图像来理解。
 
-我们预估的PSF到底用在哪里了呢？实际上在预估完PSF后，我们将ground truth与其进行卷积，合成退化图像。后面的恢复网络在这个配对数据上进行训练。
+我们预估的PSF到底用在哪里了呢？实际上在预估完PSF后，我们将ground truth与其进行卷积，合成退化图像。后面的恢复网络在这个配对数据上进行训练。我有点难以区别这算是盲去卷积还是非盲去卷积，说他是盲去卷积，他又利用了估计的PSF合成数据。说他是非盲去卷积，他又没有直接在去卷积的算法中使用PSF。
 
 # Large depth-of-field ultra-compact microscope by progressive optimization and deep learning
 
@@ -103,7 +103,7 @@ TODO：有待补完，Deconvolution部分本文说的很模糊，并且疑似有
 
 [https://openaccess.thecvf.com/content/CVPR2024/html/Gong_A_Physics-informed_Low-rank_Deep_Neural_Network_for_Blind_and_Universal_CVPR_2024_paper.html](https://openaccess.thecvf.com/content/CVPR2024/html/Gong_A_Physics-informed_Low-rank_Deep_Neural_Network_for_Blind_and_Universal_CVPR_2024_paper.html)
 
-本文介绍了一种使用一组典型PSF来提取特征基，从而为畸变建模的方法。
+本文介绍了一种使用一组典型PSF来提取特征基，从而为像差建模的方法。
 
 ![19.jpg](19.jpg)
 
@@ -163,13 +163,155 @@ $$
 
 目前来说将预估出来的$X_i$组合起来就得到了锐利图片，但事实上由于分解的不精确性和去卷积的伪影，最终会影响到图像质量。为此作者又提出了第三部分，基于注意力的混合模块。这个模块是一个可训练的网络，输入所有的锐利patch，输出一张完整的锐利的图。
 
+# Rethinking Coarse-to-Fine Approach in Single Image Deblurring
+
+[https://openaccess.thecvf.com/content/ICCV2021/html/Cho_Rethinking_Coarse-To-Fine_Approach_in_Single_Image_Deblurring_ICCV_2021_paper.html](https://openaccess.thecvf.com/content/ICCV2021/html/Cho_Rethinking_Coarse-To-Fine_Approach_in_Single_Image_Deblurring_ICCV_2021_paper.html)
+
+这篇文章是盲去卷积。提出了MIMO-UNet模型。
+
+这篇文章没有什么背景物理知识，纯粹的网络设计。在去模糊领域，经常用到多尺度信息，即把图片原图，还有各种下采样后的图片送入网络，进行特征提取。这主要是因为图像中的卷积核可大可小，然而你网络的卷积层的大小是固定的，如果要应对巨大的卷积核，你就不得不将卷积层设置的很大，很浪费算力。一种解决方案就是将不同尺度的图像送入网络，这样卷积核的感受野就大了，就相当于使用了大卷积核。
+
+![41.jpg](41.jpg)
+
+之前的工作，通常要训练多个网络来处理多尺度信息，本文提出了一个模型可以同时处理。
+
+![42.jpg](42.jpg)
+
+![43.jpg](43.jpg)
+
+本质上是改进的UNet。其中SCM模块用于提取下采样图的特征，形式是典型的残差连接。由于UNet的每个阶段也要进行下采样，所以SCM提取的特征和UNet的某个阶段的特征尺寸一致，可以进行混合，这里用的是特征注意力混合，首先逐元素相乘，然后通过卷积层，然后再和编码器的特征相加。
+
+这里的UNet的编码器部分可以看作是多输入的编码器，而解码器部分就是多输出的编码器了。之前的多尺度网络有多个网络可以分别训练，而这里的UNet需要将中间的状态提取出来计算误差。从网络结构图中可以看到，从DB中的蓝色部分拿出来特征，通过单个卷积层，然后通过残差连接的方式加上下采样图，得到该尺度下的去模糊图。
+
+传统的多尺度方法，通常信息只能从粗糙层传导到精细层，本文提出了一个AFF模块，让信息往上往下都可以传递。在编码器的信息传入时，要先考虑该层的层级，然后缩放到合适的大小，过大的要下采样，过小的要上采样，拼接在一起，然后卷积。
+
+损失函数如下
+
+$$
+L_{total}=L_{cont}+\lambda L_{MSFR}
+$$
+
+其中
+
+$$
+L_{cont} = \sum^K_{k=1}\dfrac{1}{t_k}||\hat S_k-S_k||_1
+$$
+
+其中$k$代表层级，而$t_k$是元素总数，用于归一化。
+
+$$
+L_{MSFR}=\sum^K_{k=1}\dfrac{1}{t_k}||\mathcal{F}(\hat S_k)-\mathcal{F}(S_k)||_1
+$$
+
+这是在频域上的误差，主要是为了保护高频信息。
+
+# Single Image Defocus Deblurring via Implicit Neural Inverse Kernels
+
+[https://openaccess.thecvf.com/content/ICCV2023/html/Quan_Single_Image_Defocus_Deblurring_via_Implicit_Neural_Inverse_Kernels_ICCV_2023_paper.html](https://openaccess.thecvf.com/content/ICCV2023/html/Quan_Single_Image_Defocus_Deblurring_via_Implicit_Neural_Inverse_Kernels_ICCV_2023_paper.html)
+
+这篇文章是盲去卷积。提出INIKNet模型
+
+首先还是来看一下这篇文章怎样建模去卷积这个问题的，关于退化，有
+
+$$
+y = k\ast x
+$$
+
+其中$k$是PSF，$y$是退化后图像，$x$是理想的锐利图像。记$\mathcal{F}$为离散傅里叶变换，那么上式等价于$\mathcal{F}(y)=\mathcal{F}(x)\odot \mathcal{F}(k)$，根据朴素的去卷积方式，我们就可以求出PSF的（伪）逆
+
+$$
+\mathcal{F}(k^\dagger)[\omega_x,\omega_y]=(\mathcal{F}(k)[s])^{-1},\quad if\quad |\mathcal{F}(k)[\omega_x, \omega_y]|\neq 0
+$$
+
+为了避免除以零，当$|\mathcal{F}(k)[\omega_x, \omega_y]|=0$时上式取$0$。于是去卷积的过程就表述为
+
+$$
+\mathcal{F}(x)=\mathcal{F}(k^\dagger)\odot \mathcal{F}(y)\Rightarrow x=k^\dagger\ast y
+$$
+
+上式的$\omega_x,\omega_y$和$s$文中没有具体标明是什么意思，我认为应该就是矩阵下标。目前这个公式还不能应对随空间变化的PSF，记$\mathbb{K}^\dagger=\{k^\dagger_{i,j}\}_{i,j}$为逆核集合（没有写明下标的含义，也没有解释为什么两个下标是一样的），于是去卷积的过程就可以用一个过程$\mathcal{C}$表示
+
+$$
+\mathcal{C}(y;\mathbb{K}^\dagger)[i,j] = \sum_{x,y}k^\dagger_{i,j}[x,y]y[i-x,j-y]
+$$
+
+上式的意思其实就是每个像素点都有一个自己的PSF，分别进行进行去卷积。由于PSF的尺寸是和物距有关的，当拍摄的场景中，各部分的物距差异很大，则PSF的尺寸差异也会很大。如果不对$\mathbb K^\dagger$加以约束，在去卷积时就会有过拟合的现象。于是作者提出了一个多尺度的方法。
+
+这个方法将逆核$k^\dagger$用一组基$V=[v_1,\cdots,v_N]$来表示（虽然原文用的是dictionary这个词而不是basis）
+
+$$
+k^\dagger=w_1v_1+\cdots+w_Nv_N
+$$
+
+其中$w_1,\cdots,w_N\in R$，是权重。这个方法大大降低了表述所有像素的PSF所需要的空间。为了应对不同的PSF尺寸，可以使用上采样的方式。作者这样做是观察到同一位置的PSF，在不同物距的情况下，差异更多是尺寸上的，但不是形状上的。
+
+记$\mathcal{U}_s$为标准二元（dyadic）上采样算子，其中$s$是上采样的倍数（我估计可能是整数），有
+
+$$
+(\mathcal{U}_s(k))^\dagger = w_1\mathcal{U}_s(v_1)+\cdots+w_N\mathcal{U}_s(v_N)
+$$
+
+这是可以证明的（在补充材料中）。于是，我们就可以使用不同尺度下的基来表述不同尺度下的PSF，记这种缩放后的基为$\{V^r\}^R_{r=1}$
+
+$$
+V^r=[v_1^r, \cdots, v_N^r]\subset R^{M_r\times M_r}, v_n^r = \mathcal{U}_{S_r}(v_n)
+$$
+
+其中$v_n^r$是第$r$个放大尺度下的基元素，$S_r$指的是该尺度下的上采样倍数，决定了$M_r$的大小。当$r$增大时，$S_r$增大，而$M_r$减小。
+
+在下一步之前，我有必要探讨一下作者到底在说什么。首先，$v_1,\cdots,v_n$一定是矩阵，尺寸同$k^\dagger$。作者在记$V=[v_1,\cdots,v_N]$时，用的是方括号，而非花括号，虽然我们明知$V$应该是个集合。同样的，$V^r$应该也是个集合，而$\{V^r\}^R_{r=1}$应该是集合的集合，但作者却用了sub-dictionaries这个词，令人费解，按理来说应该是meta-之类的前缀才对。
+
+现在我们主要关注一下为什么说$M_r$会减小一定是个笔误，作者的原话是$S_r$ denotes an upsampling factor that determines the size parameter $M_r$ of the atom. 可以知道$M_r$是一个尺寸参数。从$V_r\subset R^{M_r\times M_r}$这个表述来看，$M_r$似乎是一个标量。我们已经注意到，前文显然有使用过$k^\dagger[x,y]$这样的表述，表示$k$是集合$R^{M\times M}$中的一个元素，即$k\in R^{M\times M}$，同理可以推出$v_n^r\in R^{M_r\times M_r}$，当$V_r$是由$v_n^r$组成的集合时，$V_r\subset R^{M_r\times M_r}$是符合含义的。我们注意到在补充材料中，有$\mathcal{U}_s: R^{H\times W}\to R^{sH\times sW}$，所以当$r$增大时，如果$S_r$在增大，$M_r$是会增大的。
+
+回到原文，我们可以用新的基来表示逆核
+
+$$
+k^\dagger_{i, j} = w_{1,i,j}v^{r_{i,j}}_1 + \cdots + w_{N,i,j}v^{r_{i,j}}_N\in R^{M_{r_{i,j}}\times M_{r_{i,j}}}
+$$
+
+其中$r_{i,j}$代表的是该像素下的缩放因子。注意到，每个$V^r$集合中的元素都只能用于表示特定尺寸的逆核。
+
+由于冲激函数的筛选性质，有$v_n^{r_{i,j}}\ast y = \sum_r\delta(r-r_{i,j})v^r_n\ast y$，我们可以将之前的过程$\mathcal{C}$重写为
+
+$$
+\mathcal{C}(y)=\sum_{i,j}1_{i,j}\odot (\sum^N_{n=1}w_{n,i,j}v_n^{r_{i,j}}\ast y)
+$$
+
+其中$1_{i,j}$指的是一个矩阵，只在$i,j$这个下标下取$1$，其他位置取$0$。如果记$\mu_{r,i,j}=\delta(r-r_{i,j})$，那么有
+
+$$
+\mathcal{C}(y)=\sum_{i,j}1_{i,j}\odot (\sum^N_{n=1}\sum^R_{r=1}\mu_{r,i,j}w_{n,i,j}v_n^{r}\ast y)
+$$
+
+直觉上进行理解的话，$\mu$控制的是逆核的尺寸，而$w$控制的是形状。后面的模型分别预测$\mu,w,v$，来实现这个去卷积过程。
+
+作者说，简单的上采样$v$，表达能力还不够，不能处理高频信息，于是使用了一个叫INR的模型
+
+$$
+v_n^r[x,y] = \Phi_n(x,y),\ \ [x,y]\in[1,\cdots, M_r]\times(1,\cdots, M_r)
+$$
+
+其中$\Phi$是INR模型，使用一个MLP来实现。
+
+![40.jpg](40.jpg)
+
+本文的网络模型使用了一种改进的、基于LSTM的，coarse-to-fine的架构。首先我们要明白一件事，在这里面，原始分辨率是精细的（fine），而下采样的图片是粗糙的（coarse），这很直观。上图的Bi-LSTM就先通过精细的图像特征来改善粗糙图像上的预测，然后粗糙图像上的特征再反过来改善精细图像上的预测。这里预测的是前文提到的$\mu$和$w$
+
+损失函数如下
+
+$$
+\mathcal{L}=\sum_p\mathcal{L}^{(p)}_{MSE}+\lambda_1\mathcal{L}_{FD}^{(p)}+\lambda_2\mathcal{L}_{LPIPS}^{(p)}
+$$
+
+其中$\mathcal{L}_{FD}$指的是频域的$\ell_1$距离，上标$(p)$表示的是第$p$个缩放尺度。缩放的GT是用未缩放的GT缩放得到。
+
 # Image restoration for optical zooming system based on Alvarez lenses
 
 [https://opg.optica.org/oe/fulltext.cfm?uri=oe-31-22-35765&id=540720](https://opg.optica.org/oe/fulltext.cfm?uri=oe-31-22-35765&id=540720)
 
 本篇解决了基于Alvarez镜头组的光学变焦系统的图像恢复问题，有很多光学设计的内容，不过我不懂，除去这一部分的话本文内容不多。
 
-首先是获取配对数据，仍然是使用锐利图像，然后卷积上PSF得到退化图象。对于图像恢复部分，本文基于MIMO-UNet进行了修改
+首先是获取配对数据，仍然是使用锐利图像，然后卷积上PSF得到退化图像。对于图像恢复部分，本文基于MIMO-UNet进行了修改
 
 ![22.jpg](22.jpg)
 
@@ -177,7 +319,7 @@ $$
 
 损失函数使用CharbonnierLoss
 
-$$
+$$\
 Loss=\sqrt{(output-input)^2+\epsilon^2}
 $$
 
@@ -206,29 +348,6 @@ $$
 其中$P_{\text{META}}$就是超透镜的参数，使用函数$f_{\text{META}}$计算出理论PSF，和输入信号进行卷积（在训练过程中是数据集的gt图像）。$f_{\text{SENSOR}}$模拟传感器的行为，其中包含了传感器的噪声。然后就是去卷积的神经网络$f_{\text{DECONV}}$，其参数为$P_{\text{DECONV}}$，接受传感器产生的图像，并且由于是非盲，也接受PSF，最终生成一张预测的清晰图像。损失函数就是gt和预测之间的L1损失。
 
 在联合优化过后，就使用最优的超透镜参数去制造超透镜物理实体。
-
-# Realistic Image Degradation with Measured PSF
-
-[https://arxiv.org/abs/1801.02197](https://arxiv.org/abs/1801.02197)
-
-这篇文章虽然是反过来模拟像差的，但很多文章是用合成数据的，这篇文章也可以进行一定了解。
-
-本文采集的PSF是用高精度仪器采集的，不是用我们之前说到的各种数值和深度学习方法，用的是单色滤镜，所以只有单通道的PSF。一共测试了27个镜头，有三个参数：离焦$\Delta z$、图像高度$R$、
-方位角$\phi$。
-
-由于这个测量的精度很高(0.3um)，比传感器的像素尺寸(3um)小的多，所以可以进行下采样来提升效率。在本文中，下采样至大约6um的像素大小，得到一个13x13的PSF。
-
-作者这里是想对每一个像素都卷积一个专属于它的PSF，从而达到比较好的结果。为此，作者将之前测量到的PSF作为gt，将$\Delta z$、$R$、$\phi$作为数据输入，让神经网络拟合出PSF。然后对每一个像素都预测一个PSF。但作者认为这又太麻烦了，PSF在短距离内变化不大，不如直接用插值的方法去弄。
-
-![27.jpg](27.jpg)
-
-上面的红点是有测量过PSF的位置，其他位置通过双线性插值得到。
-
-![28.jpg](28.jpg)
-
-之后使用插值的或真实的PSF对图像卷积就得到了退化图像，同时为了减小拍摄图像自带的退化，还对数据提前使用了盲去卷积。
-
-但是在模拟退化的这个过程中，没有考虑到离焦距离$\Delta z$，作者后面说了一大堆提出的PSF模型有$\Delta z$的好处，但我并没有看到和计算退化有什么关系，整篇文章都很乱。
 
 # End-to-end hybrid refractive-diffractive lens design with differentiable ray-wave model
 
@@ -332,7 +451,9 @@ $$
 
 一共预测了$N$次。
 
-# Achromatic Single Metalens Imaging viaDeepNeural Network
+# Achromatic Single Metalens Imaging via Deep Neural Network
+
+[https://pubs.acs.org/doi/abs/10.1021/acsphotonics.3c01870](https://pubs.acs.org/doi/abs/10.1021/acsphotonics.3c01870)
 
 本文也是针对metalens进行像差矫正，但是没有引入PSF数据。模型没什么特别的，主要关注一下成像模型和数据获取方式。
 
@@ -375,3 +496,84 @@ $P(\cdot)$指的是预训练的VGG19，$i$是指模型的第$i$个卷积层。
 $$
 L_{PSNR} = \dfrac{1}{(10\log 10((I_{max}^2)/MSE(I_{gt}, I_{restored})))}
 $$
+
+# Deep-learning-driven end-to-end metalens imaging
+
+[https://www.spiedigitallibrary.org/journals/advanced-photonics/volume-6/issue-6/066002/Deep-learning-driven-end-to-end-metalens-imaging/10.1117/1.AP.6.6.066002.full](https://www.spiedigitallibrary.org/journals/advanced-photonics/volume-6/issue-6/066002/Deep-learning-driven-end-to-end-metalens-imaging/10.1117/1.AP.6.6.066002.full)
+
+本文也是对超透镜进行像差矫正，同样也没用到标定的PSF。
+
+虽说训练的时候没用到标定的PSF，但是本文也介绍了一下为什么metalens的像差这么大
+
+![35.jpg](35.jpg)
+
+实际上metalens的各个波长下的焦距差异很大，如上图c，这在一般的折射镜头里不会差异这么大。于是就导致了，如果你绿色对上焦了，那么红色和蓝色就对不上焦了，可以从上图f中看出一些问题，这里的绿色是最清晰的。这种取决于波长的焦距就导致了轴向色差，
+
+$$
+TAC = |f-f_0|\dfrac{D}{2f}
+$$
+
+其中$f$是该波长在特定入射角下的焦距，$f_0$是metalens和sensor之间的距离，$D$是metalens的直径。从上图e和d中可以看出，在同一个距离下测出来的三通道的PSF差异巨大。
+
+![36.jpg](36.jpg)
+
+本文在测量PSF的时候还会将相机进行旋转，测出不同入射角下的PSF。结果显示有也有较大差异。
+
+为了解决这个像差问题，作者使用了深度学习方法。
+
+![37.jpg](37.jpg)
+
+作者说因为生成式模型可以学习到复杂、高维的信息，所以就采用了对抗学习的架构。起初作者是在RGB空间域上进行对抗学习的，但是观察到恢复出来的图像有一些周期性的pattern，
+
+![38.jpg](38.jpg)
+
+无论是RGB域还是频域都有这个问题，在频域上更加明显。于是作者就直接在频域上进行对抗学习了，GAN架构中的判别器判别的是频域的真伪。训练损失分为保真度的损失和GAN的损失
+
+$$
+L_{Total}=L_{PSNR}+\lambda L_a
+$$
+
+$$
+L_{PSNR}(\hat x, x) = -10\log\dfrac{R^2}{MSE(\hat x, x)}
+$$
+
+$$
+L^D_a=\mathbb{E}[\max(0, 1-D(\mathcal{F}(x)))] + \mathbb{E}_{\hat x}[\max(0, 1+D(\mathcal{F}(\hat x)))]
+$$
+
+$$
+L_a^G=-\mathbb{E}_{\hat x}[D(\mathcal{F}(\hat x))]
+$$
+
+其中$\mathcal F$是傅里叶变换。
+
+由于图像退化在边缘的部分比在中央的部分更严重，所以提供必要的位置信息给模型是有用的。而目前模型只是在各个patch上进行图像恢复，顺序随机，没有引入位置信息。本文将每个patch的在原图中的位置先收集起来，然后用一个$1\times 1$的卷积层进行映射。将这个映射后的位置信息和metalens图片接在一起，再放到恢复模型中进行图像恢复。
+
+之后是本文的数据获取部分。
+
+![39.jpg](39.jpg)
+
+经典拍屏幕。使用的是DIV2K数据集，当然，由于这个metalens的fov限制，只拍了图像中心的1280x800的区域。
+
+# Realistic Image Degradation with Measured PSF
+
+[https://arxiv.org/abs/1801.02197](https://arxiv.org/abs/1801.02197)
+
+这篇文章虽然是反过来模拟像差的，但很多文章是用合成数据的，这篇文章也可以进行一定了解。
+
+本文采集的PSF是用高精度仪器采集的，不是用我们之前说到的各种数值和深度学习方法，用的是单色滤镜，所以只有单通道的PSF。一共测试了27个镜头，有三个参数：离焦$\Delta z$、图像高度$R$、
+方位角$\phi$。
+
+由于这个测量的精度很高(0.3um)，比传感器的像素尺寸(3um)小的多，所以可以进行下采样来提升效率。在本文中，下采样至大约6um的像素大小，得到一个13x13的PSF。
+
+作者这里是想对每一个像素都卷积一个专属于它的PSF，从而达到比较好的结果。为此，作者将之前测量到的PSF作为gt，将$\Delta z$、$R$、$\phi$作为数据输入，让神经网络拟合出PSF。然后对每一个像素都预测一个PSF。但作者认为这又太麻烦了，PSF在短距离内变化不大，不如直接用插值的方法去弄。
+
+![27.jpg](27.jpg)
+
+上面的红点是有测量过PSF的位置，其他位置通过双线性插值得到。
+
+![28.jpg](28.jpg)
+
+之后使用插值的或真实的PSF对图像卷积就得到了退化图像，同时为了减小拍摄图像自带的退化，还对数据提前使用了盲去卷积。
+
+但是在模拟退化的这个过程中，没有考虑到离焦距离$\Delta z$，作者后面说了一大堆提出的PSF模型有$\Delta z$的好处，但我并没有看到和计算退化有什么关系，整篇文章都很乱。

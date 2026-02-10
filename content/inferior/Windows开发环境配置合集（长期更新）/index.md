@@ -441,6 +441,10 @@ C盘下一般会有两个大文件，即`hiberfil.sys`和`pagefile.sys`。前面
 powercfg -h off
 ```
 
+## 代码量统计
+
+[https://github.com/AlDanial/cloc](https://github.com/AlDanial/cloc)
+
 # 环境变量顺序
 
 众所周知，环境变量越靠前的优先级越高。我当前的设置是：最初就有的、Windows目录下的放在最前面；然后放python、java、其他编程语言编译器或者虚拟机的环境变量，这里java的环境变量把java 8放在了最前；之后才是msys的各种环境变量。其他各种应用软件的环境变量可以比较随意，毕竟不会和msys冲突。
