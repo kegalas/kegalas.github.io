@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='前言 首先要明白，OpenFX的官网是https://openeffects.org/，而非http://www.openfx.org/。 另外'><title>如何在Davinci Resolve的OpenFX插件中载入其他动态库</title>
+
+<link rel='canonical' href='https://kegalas.uk/p/%E5%A6%82%E4%BD%95%E5%9C%A8davinci-resolve%E7%9A%84openfx%E6%8F%92%E4%BB%B6%E4%B8%AD%E8%BD%BD%E5%85%A5%E5%85%B6%E4%BB%96%E5%8A%A8%E6%80%81%E5%BA%93/'>
+
+<link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='如何在Davinci Resolve的OpenFX插件中载入其他动态库'>
+<meta property='og:description' content='前言 首先要明白，OpenFX的官网是https://openeffects.org/，而非http://www.openfx.org/。 另外'>
+<meta property='og:url' content='https://kegalas.uk/p/%E5%A6%82%E4%BD%95%E5%9C%A8davinci-resolve%E7%9A%84openfx%E6%8F%92%E4%BB%B6%E4%B8%AD%E8%BD%BD%E5%85%A5%E5%85%B6%E4%BB%96%E5%8A%A8%E6%80%81%E5%BA%93/'>
+<meta property='og:site_name' content='KegalaS的个人博客'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Davinci Resolve' /><meta property='article:tag' content='OpenFX' /><meta property='article:tag' content='C&#43;&#43;' /><meta property='article:tag' content='C' /><meta property='article:tag' content='Windows' /><meta property='article:tag' content='macOS' /><meta property='article:published_time' content='2026-03-11T13:58:22&#43;08:00'/><meta property='article:modified_time' content='2026-03-11T13:58:22&#43;08:00'/>
+<meta name="twitter:title" content="如何在Davinci Resolve的OpenFX插件中载入其他动态库">
+<meta name="twitter:description" content="前言 首先要明白，OpenFX的官网是https://openeffects.org/，而非http://www.openfx.org/。 另外">
+    <link rel="shortcut icon" href="/images/favicon.ico" />
+
+    </head>
+    <body class="
+    article-page has-toc
+">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex 
+    
+        extended
+    
+">
+    
+        <div id="article-toolbar">
+            <a href="/" class="back-home">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="15 6 9 12 15 18" />
+</svg>
+
+
+
+                <span>返回</span>
+            </a>
+        </div>
+    
+<main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/%E5%85%B6%E4%BB%96%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/" >
+                其他计算机科学
+            </a>
+        
+    </header>
+    
+
+    <h2 class="article-title">
+        <a href="/p/%E5%A6%82%E4%BD%95%E5%9C%A8davinci-resolve%E7%9A%84openfx%E6%8F%92%E4%BB%B6%E4%B8%AD%E8%BD%BD%E5%85%A5%E5%85%B6%E4%BB%96%E5%8A%A8%E6%80%81%E5%BA%93/">如何在Davinci Resolve的OpenFX插件中载入其他动态库</a>
+    </h2>
+
+    
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Mar 11, 2026</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 7 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+</div>
+</header>
+
+    <section class="article-content">
+    <h1 id="前言">前言</h1>
+<p>首先要明白，OpenFX的官网是<a class="link" href="https://openeffects.org/"  target="_blank" rel="noopener"
+    >https://openeffects.org/</a>，而非<a class="link" href="http://www.openfx.org/"  target="_blank" rel="noopener"
+    >http://www.openfx.org/</a>。</p>
+<p>另外，虽然达芬奇的版本区别文件（<a class="link" href="https://documents.blackmagicdesign.com/SupportNotes/DaVinci_Resolve_Studio_Features.pdf"  target="_blank" rel="noopener"
+    >https://documents.blackmagicdesign.com/SupportNotes/DaVinci_Resolve_Studio_Features.pdf</a>）中指出，免费版不支持OpenFX，但实际上目前达芬奇20免费版支持了OpenFX在Fusion和调色界面的使用，我进行了简单的尝试，功能一切正常，而且可以导出视频。</p>
+<p>但也不是完全没有问题，达芬奇自己提供的一些闭源OpenFX插件并不可以使用，会有完全破坏视频内容的水印。这些水印是在OpenFX中实现的，而不是在达芬奇软件内。等价于说，任意第三方开发的OpenFX，只要开发者不弄水印，没人管得了你是在免费版还是studio版中使用。</p>
+<p>（题外话，目前我尝试出了一种显示版本限制的情况。自己开发的插件，拖到fusion界面中使用，关掉davinci，把这个插件弄坏，再打开davinci。此时davinci就会同时显示插件损坏，以及要求你购买高级版。）</p>
+<p>达芬奇软件自己提供了几个openfx示例，windows版在目录<code>C:\ProgramData\Blackmagic Design\DaVinci Resolve\Support\Developer\OpenFX</code>下。当然，也提供了Fusion Fuse等插件的示例。就我的看法，OpenFX比Fuse要完备一些。</p>
+<p>这几个OpenFX插件最终的编译产物都是一个单独的.ofx文件。从makefile来看，这个.ofx本质上是一个动态链接库，只是改了后缀名（.dll、.dylib、.so）。当然，这几个插件很小，根本不需要外部依赖。我们自己开发插件时可能就需要第三方库，比如引入深度学习算法需要torch，数值优化需要dlib，传统机器视觉算法需要opencv，等等。有时候，这些三方库会提供静态链接文件，只需要把他链接进.ofx文件即可。但很多时候，因为LGPL的限制，或者根本没有静态库，我们就只能使用动态库了。</p>
+<h1 id="windows上的处理">Windows上的处理</h1>
+<p>在Windows上，动态库的路径查找大概只有两个规则：</p>
+<ul>
+<li>查找exe文件的相同目录</li>
+<li>查找环境变量中的所有目录</li>
+</ul>
+<p>对应到达芬奇的情况下，除了环境变量，就只会查找&quot;Resolve.exe&quot;这个文件所在的目录，例如<code>G:\Program Files\Blackmagic Design\DaVinci Resolve\Resolve.exe</code>。</p>
+<p>然而，OpenFX标准要求我们，要放到一个特定的OFX目录中，例如：<code>C:\Program Files\Common Files\OFX\Plugins\TemporalBlurPlugin.ofx.bundle\Contents\Win64\TemporalBlurPlugin.ofx</code>，这个目录并不是Resolve.exe所在的目录。达芬奇是如何访问这个无法自动查找的.ofx呢？事实上，达芬奇会遍历这整一个OFX文件夹，然后使用类似于<code>LoadLibrary</code>的winapi，进行动态库的延迟加载。</p>
+<p>如果我们只有一个.ofx，那么一切就都没有问题。但是，如果我们的a.ofx，依赖某个b.dll，该怎么办？直觉上来说，我们可能会放到<code>TemporalBlurPlugin.ofx.bundle\Contents\Win64\</code>这个文件夹下，然而这一目录并不在<code>Resolve.exe</code>的同目录下，所以并不会被自动加载。与此同时，达芬奇也并不会进行任何操作，将其他依赖通过<code>LoadLibrary</code>加载。</p>
+<p>那么，还有两种可能。</p>
+<ul>
+<li>把dll直接放到<code>Resolve.exe</code>目录下</li>
+<li>把dll目录加入环境变量</li>
+</ul>
+<p>这两个方法非常直接，但完全不适合正式使用，只适合调试用。首先来说第一条，他有这么几个问题：</p>
+<ol>
+<li>其他openfx宿主无法加载。如果要让vegas、natron等软件都加载，就要复制好几次。</li>
+<li>无法处理同名dll的问题。达芬奇的目录下也有几十个dll，如果你依赖了相同名字的dll，就几乎不可能完成这件事。你既不知道达芬奇所用的库版本，也不知道编译器是什么，强行替换只会导致问题。</li>
+<li>不利于分发。你很难让用户把你的几个dll准确的放到那个目录，删除也不方便删除。</li>
+</ol>
+<p>那么第二条怎么样？他也有几个问题：</p>
+<ol>
+<li>环境变量污染。可能别的软件就会因为你设置了这个环境变量，而载入错误的库，从而崩溃。</li>
+<li>仍然是分发问题。达芬奇用户都是影视方面的，谁懂你环境变量是什么。</li>
+</ol>
+<p>那么，有没有一种好办法，能够让我们把所有dll放在.ofx的相同目录，又能够成功加载？</p>
+<p>好消息是，winapi为我们提供了<code>AddDllDirectory</code>这个函数，它可以让我们自由的添加dll的搜索目录。虽然达芬奇没有使用这个函数来添加.ofx目录，但我们可以自己来。我们可以弄一个代理的空壳插件，在插件中调用<code>AddDllDirectory</code>，并转发所有外部函数调用到真正的插件文件上。</p>
+<p>根据官方文档所说（<a class="link" href="https://openfx.readthedocs.io/en/main/Guide/ofxExample1_Basics.html#life-cycle-of-a-plugin"  target="_blank" rel="noopener"
+    >https://openfx.readthedocs.io/en/main/Guide/ofxExample1_Basics.html#life-cycle-of-a-plugin</a>），ofx插件只需要对外提供两个接口即可：</p>
+<ul>
+<li>OfxGetNumberOfPlugins</li>
+<li>OfxGetPlugin</li>
+</ul>
+<p>所以我们只用转发这两个函数，C代码如下</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;windows.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;shlwapi.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;wchar.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#ifndef MAX_PATH
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#define MAX_PATH 260
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#endif
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">typedef</span> <span style="color:#66d9ef">void</span> OfxPlugin;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">typedef</span> OfxPlugin<span style="color:#f92672">*</span> (<span style="color:#66d9ef">__cdecl</span> <span style="color:#f92672">*</span>PFN_OfxGetPlugin)(<span style="color:#66d9ef">int</span>);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">typedef</span> <span style="color:#a6e22e">int</span> (<span style="color:#66d9ef">__cdecl</span> <span style="color:#f92672">*</span>PFN_OfxGetNumberOfPlugins)(<span style="color:#66d9ef">void</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">static</span> HMODULE g_hModule <span style="color:#f92672">=</span> NULL;    <span style="color:#75715e">// 代理ofx文件
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">static</span> HMODULE g_real <span style="color:#f92672">=</span> NULL;       <span style="color:#75715e">// 插件的真正实现dll文件
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">static</span> PFN_OfxGetPlugin g_real_GetPlugin <span style="color:#f92672">=</span> NULL;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">static</span> PFN_OfxGetNumberOfPlugins g_real_GetNumber <span style="color:#f92672">=</span> NULL;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">static</span> CRITICAL_SECTION g_cs;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">volatile</span> LONG g_initialized <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; <span style="color:#75715e">/* 0 = not init, 1 = init */</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">build_real_dll_path</span>(WCHAR <span style="color:#f92672">*</span>out, <span style="color:#66d9ef">size_t</span> outChars, <span style="color:#66d9ef">const</span> WCHAR <span style="color:#f92672">*</span>realName) {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 从代理的.ofx文件，转到真正的插件实现dll
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>    WCHAR dir[MAX_PATH];
+</span></span><span style="display:flex;"><span>    dir[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74">L</span><span style="color:#e6db74">&#39;\0&#39;</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">GetModuleFileNameW</span>(g_hModule, dir, MAX_PATH);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">PathRemoveFileSpecW</span>(dir);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">PathCombineW</span>(out, dir, realName);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">static</span> BOOL <span style="color:#a6e22e">ensure_real_loaded</span>(<span style="color:#66d9ef">void</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 线程安全地加载插件的实现dll
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">InterlockedCompareExchange</span>(<span style="color:#f92672">&amp;</span>g_initialized, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>) <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">&amp;&amp;</span> g_real <span style="color:#f92672">!=</span> NULL) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> TRUE;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">EnterCriticalSection</span>(<span style="color:#f92672">&amp;</span>g_cs);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (g_real <span style="color:#f92672">!=</span> NULL) {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">LeaveCriticalSection</span>(<span style="color:#f92672">&amp;</span>g_cs);
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">InterlockedExchange</span>(<span style="color:#f92672">&amp;</span>g_initialized, <span style="color:#ae81ff">1</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> TRUE;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    WCHAR dllPath[MAX_PATH];
+</span></span><span style="display:flex;"><span>    dllPath[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74">L</span><span style="color:#e6db74">&#39;\0&#39;</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">build_real_dll_path</span>(dllPath, MAX_PATH, <span style="color:#e6db74">L</span><span style="color:#e6db74">&#34;libSomePluginImpl.dll&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    g_real <span style="color:#f92672">=</span> <span style="color:#a6e22e">LoadLibraryExW</span>(dllPath, NULL, LOAD_WITH_ALTERED_SEARCH_PATH);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>g_real) {
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// fallback: 插件目录加入到搜索目录，非常老的系统中可能会失败
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        WCHAR dir[MAX_PATH];
+</span></span><span style="display:flex;"><span>        dir[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74">L</span><span style="color:#e6db74">&#39;\0&#39;</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">GetModuleFileNameW</span>(g_hModule, dir, MAX_PATH);
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">PathRemoveFileSpecW</span>(dir);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">SetDefaultDllDirectories</span>(LOAD_LIBRARY_SEARCH_DEFAULT_DIRS <span style="color:#f92672">|</span> LOAD_LIBRARY_SEARCH_USER_DIRS);
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">AddDllDirectory</span>(dir);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        g_real <span style="color:#f92672">=</span> <span style="color:#a6e22e">LoadLibraryW</span>(dllPath);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (g_real) {
+</span></span><span style="display:flex;"><span>        FARPROC p1 <span style="color:#f92672">=</span> <span style="color:#a6e22e">GetProcAddress</span>(g_real, <span style="color:#e6db74">&#34;OfxGetPlugin&#34;</span>);
+</span></span><span style="display:flex;"><span>        FARPROC p2 <span style="color:#f92672">=</span> <span style="color:#a6e22e">GetProcAddress</span>(g_real, <span style="color:#e6db74">&#34;OfxGetNumberOfPlugins&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (p1) g_real_GetPlugin <span style="color:#f92672">=</span> (PFN_OfxGetPlugin)p1;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (p2) g_real_GetNumber <span style="color:#f92672">=</span> (PFN_OfxGetNumberOfPlugins)p2;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">LeaveCriticalSection</span>(<span style="color:#f92672">&amp;</span>g_cs);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">InterlockedExchange</span>(<span style="color:#f92672">&amp;</span>g_initialized, (g_real <span style="color:#f92672">!=</span> NULL) <span style="color:#f92672">?</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">:</span> <span style="color:#ae81ff">2</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> (g_real <span style="color:#f92672">!=</span> NULL);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#ifdef __cplusplus
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">extern</span> <span style="color:#e6db74">&#34;C&#34;</span> {
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#endif
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#if defined(WIN32) || defined(WIN64)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#define OfxExport extern __declspec(dllexport)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#else
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#define OfxExport extern
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#endif
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>OfxExport OfxPlugin <span style="color:#f92672">*</span><span style="color:#a6e22e">OfxGetPlugin</span>(<span style="color:#66d9ef">int</span> nth) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span><span style="color:#a6e22e">ensure_real_loaded</span>()) <span style="color:#66d9ef">return</span> NULL;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>g_real_GetPlugin) <span style="color:#66d9ef">return</span> NULL;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">g_real_GetPlugin</span>(nth);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>OfxExport <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">OfxGetNumberOfPlugins</span>(<span style="color:#66d9ef">void</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span><span style="color:#a6e22e">ensure_real_loaded</span>()) <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>g_real_GetNumber) <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">g_real_GetNumber</span>();
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#ifdef __cplusplus
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>} <span style="color:#75715e">// extern &#34;C&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#75715e">#endif
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>BOOL WINAPI <span style="color:#a6e22e">DllMain</span>(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved) {
+</span></span><span style="display:flex;"><span>    (<span style="color:#66d9ef">void</span>)lpvReserved;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (fdwReason <span style="color:#f92672">==</span> DLL_PROCESS_ATTACH) {
+</span></span><span style="display:flex;"><span>        g_hModule <span style="color:#f92672">=</span> (HMODULE)hinstDLL;
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">InitializeCriticalSection</span>(<span style="color:#f92672">&amp;</span>g_cs);
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">InterlockedExchange</span>(<span style="color:#f92672">&amp;</span>g_initialized, <span style="color:#ae81ff">0</span>);
+</span></span><span style="display:flex;"><span>    } <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (fdwReason <span style="color:#f92672">==</span> DLL_PROCESS_DETACH) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (g_real) {
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">FreeLibrary</span>(g_real);
+</span></span><span style="display:flex;"><span>            g_real <span style="color:#f92672">=</span> NULL;
+</span></span><span style="display:flex;"><span>            g_real_GetPlugin <span style="color:#f92672">=</span> NULL;
+</span></span><span style="display:flex;"><span>            g_real_GetNumber <span style="color:#f92672">=</span> NULL;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">DeleteCriticalSection</span>(<span style="color:#f92672">&amp;</span>g_cs);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> TRUE;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>除开一些辅助函数和锁相关的逻辑，这个代码很简单。我们重新定义了<code>OfxGetPlugin</code>和<code>OfxGetNumberOfPlugins</code>两个函数，当外界调用这两个函数时，我们便将其转发到真正的实现。</p>
+<p>如何找到真正的实现？在函数<code>ensure_real_loaded</code>中，我们调用<code>LoadLibraryExW</code>来自动的加载预定义的dll文件，并且同时将目录加入查找范围。如果windows版本较老，就会回退到<code>AddDllDirectory</code>和<code>LoadLibraryW</code>两个函数来进行目录添加和dll加载。当加载完成后，我们就调用<code>GetProcAddress</code>来获取真正的实现函数的地址，然后记录下来。</p>
+<p>在转发的时候，我们将调用，转发到这些记录下来的函数地址即可。注意，这个C代码连C标准库都没依赖，只依赖了winapi。主要是考虑到mingw环境下，c标准库需要引用一个非系统dll，有些麻烦。</p>
+<p>下一个问题，我们怎么知道依赖哪些dll？在cmake中，我们链接到的是三方库的target，我们并不知道三方库还有哪些间接引用。不过cmake提供的<code>file(GET_RUNTIME_DEPENDENCIES)</code>函数非常方便。下面给出一个例子（先只看WIN32的部分，APPLE的部分后面会讲。另外我只给出了mingw的情况，msvc可能还需要其他处理）</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cmake" data-lang="cmake"><span style="display:flex;"><span>set(<span style="color:#e6db74">SRC_DIR</span> <span style="color:#e6db74">&#34;${CMAKE_CURRENT_SOURCE_DIR}/src&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>set(<span style="color:#e6db74">OFX_ROOT</span> <span style="color:#e6db74">&#34;${CMAKE_CURRENT_SOURCE_DIR}/third_party/OpenFX-1.4&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>set(<span style="color:#e6db74">OFX_SUPPORT_ROOT</span> <span style="color:#e6db74">&#34;${CMAKE_CURRENT_SOURCE_DIR}/third_party/OFXSupport&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>if(<span style="color:#e6db74">APPLE</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>  set(<span style="color:#e6db74">INSTALL_PATH</span> <span style="color:#e6db74">&#34;/Library/OFX/Plugins&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>  set(<span style="color:#e6db74">OFX_ARCH</span> <span style="color:#e6db74">&#34;MacOS&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>elseif(<span style="color:#e6db74">WIN32</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>  set(<span style="color:#e6db74">INSTALL_PATH</span> <span style="color:#e6db74">&#34;C:/Program Files/Common Files/OFX/Plugins&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>  set(<span style="color:#e6db74">OFX_ARCH</span> <span style="color:#e6db74">&#34;Win64&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>else()<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>  message(<span style="color:#e6db74">FATAL_ERROR</span> <span style="color:#e6db74">&#34;Platform not supported&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>endif()<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>set(<span style="color:#e6db74">PLUGIN_NAME</span> <span style="color:#e6db74">&#34;SomePlugin&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>if(<span style="color:#e6db74">WIN32</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>  set(<span style="color:#e6db74">PLG_WRAPPER_NAME</span> <span style="color:#e6db74">&#34;${PLUGIN_NAME}&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>  set(<span style="color:#e6db74">PLG_IMPL_NAME</span> <span style="color:#e6db74">&#34;SomePluginImpl&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>  add_library(<span style="color:#f92672">${</span>PLG_WRAPPER_NAME<span style="color:#f92672">}</span> <span style="color:#e6db74">SHARED</span> <span style="color:#f92672">${</span>SRC_DIR<span style="color:#f92672">}</span><span style="color:#e6db74">/plugin_wrapper.c</span>) <span style="color:#75715e"># 即上述的c代码
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  target_link_libraries(<span style="color:#f92672">${</span>PLG_WRAPPER_NAME<span style="color:#f92672">}</span> <span style="color:#e6db74">PRIVATE</span> <span style="color:#e6db74">shlwapi</span>) <span style="color:#75715e"># 我们调用了shlwapi.h，需要链接
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>else()<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>  set(<span style="color:#e6db74">PLG_IMPL_NAME</span> <span style="color:#e6db74">&#34;${PLUGIN_NAME}&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>endif()<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>set(<span style="color:#e6db74">PLUGIN_SOURCES</span> <span style="color:#75715e"># 真正的插件实现源码
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#f92672">${</span>SRC_DIR<span style="color:#f92672">}</span><span style="color:#e6db74">/xxx.h</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">${</span>SRC_DIR<span style="color:#f92672">}</span><span style="color:#e6db74">/xxx.cpp</span>
+</span></span><span style="display:flex;"><span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>file(<span style="color:#e6db74">GLOB_RECURSE</span> <span style="color:#e6db74">OFX_SUPPORT_SOURCES</span> <span style="color:#f92672">${</span>OFX_SUPPORT_ROOT<span style="color:#f92672">}</span><span style="color:#e6db74">/Library/*.cpp</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>get_filename_component(<span style="color:#e6db74">EXCLUDE_FILE</span> <span style="color:#e6db74">&#34;${OFX_SUPPORT_ROOT}/Library/ofxsHWNDInteract.cpp&#34;</span> <span style="color:#e6db74">ABSOLUTE</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>list(<span style="color:#e6db74">REMOVE_ITEM</span> <span style="color:#e6db74">OFX_SUPPORT_SOURCES</span> <span style="color:#e6db74">&#34;${EXCLUDE_FILE}&#34;</span>) <span style="color:#75715e"># NOTE: 很扯淡，但是这个文件确实被官方vcxproj里面排除了
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>list(<span style="color:#e6db74">APPEND</span> <span style="color:#e6db74">PLUGIN_SOURCES</span> <span style="color:#f92672">${</span>OFX_SUPPORT_SOURCES<span style="color:#f92672">}</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>add_library(<span style="color:#f92672">${</span>PLG_IMPL_NAME<span style="color:#f92672">}</span> <span style="color:#e6db74">SHARED</span> <span style="color:#f92672">${</span>PLUGIN_SOURCES<span style="color:#f92672">}</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>target_include_directories(<span style="color:#f92672">${</span>PLG_IMPL_NAME<span style="color:#f92672">}</span> <span style="color:#e6db74">PRIVATE</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">${</span>OFX_ROOT<span style="color:#f92672">}</span><span style="color:#e6db74">/include</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">${</span>OFX_SUPPORT_ROOT<span style="color:#f92672">}</span><span style="color:#e6db74">/include</span>
+</span></span><span style="display:flex;"><span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>if(<span style="color:#e6db74">APPLE</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>  set_target_properties(<span style="color:#f92672">${</span>PLG_IMPL_NAME<span style="color:#f92672">}</span> <span style="color:#e6db74">PROPERTIES</span> <span style="color:#e6db74">LINK_FLAGS</span> <span style="color:#e6db74">&#34;-fvisibility=hidden -Wl,-exported_symbols_list,${CMAKE_CURRENT_SOURCE_DIR}/src/osx_symbols.txt&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>  set_target_properties(<span style="color:#f92672">${</span>PLG_IMPL_NAME<span style="color:#f92672">}</span> <span style="color:#e6db74">PROPERTIES</span> <span style="color:#e6db74">INSTALL_RPATH</span> <span style="color:#e6db74">&#34;@loader_path/../Frameworks;@loader_path/../Libraries&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>  set(<span style="color:#e6db74">CMAKE_INSTALL_RPATH_USE_LINK_PATH</span> <span style="color:#e6db74">TRUE</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>elseif(<span style="color:#e6db74">WIN32</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>  set_target_properties(<span style="color:#f92672">${</span>PLG_IMPL_NAME<span style="color:#f92672">}</span> <span style="color:#e6db74">PROPERTIES</span> <span style="color:#e6db74">LINK_FLAGS</span> <span style="color:#e6db74">&#34;-shared -fvisibility=hidden -Xlinker --version-script=${CMAKE_CURRENT_SOURCE_DIR}/src/mingw_symbols.txt&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>endif()<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>target_link_libraries(<span style="color:#f92672">${</span>PLG_IMPL_NAME<span style="color:#f92672">}</span> <span style="color:#e6db74">PUBLIC</span> <span style="color:#e6db74">xxxlib</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>target_link_libraries(<span style="color:#f92672">${</span>PLG_IMPL_NAME<span style="color:#f92672">}</span> <span style="color:#e6db74">PUBLIC</span> <span style="color:#e6db74">yyylib</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>if(<span style="color:#e6db74">WIN32</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>  set_target_properties(<span style="color:#f92672">${</span>PLG_WRAPPER_NAME<span style="color:#f92672">}</span> <span style="color:#e6db74">PROPERTIES</span> <span style="color:#e6db74">PREFIX</span> <span style="color:#e6db74">&#34;&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>  set_target_properties(<span style="color:#f92672">${</span>PLG_WRAPPER_NAME<span style="color:#f92672">}</span> <span style="color:#e6db74">PROPERTIES</span> <span style="color:#e6db74">SUFFIX</span> <span style="color:#e6db74">&#34;.ofx&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>else()<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>  set_target_properties(<span style="color:#f92672">${</span>PLG_IMPL_NAME<span style="color:#f92672">}</span> <span style="color:#e6db74">PROPERTIES</span> <span style="color:#e6db74">PREFIX</span> <span style="color:#e6db74">&#34;&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>  set_target_properties(<span style="color:#f92672">${</span>PLG_IMPL_NAME<span style="color:#f92672">}</span> <span style="color:#e6db74">PROPERTIES</span> <span style="color:#e6db74">SUFFIX</span> <span style="color:#e6db74">&#34;.ofx&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>endif()<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>set(<span style="color:#e6db74">OFX_ARCH_NAME</span> <span style="color:#f92672">${</span>OFX_ARCH<span style="color:#f92672">}</span> <span style="color:#e6db74">CACHE</span> <span style="color:#e6db74">STRING</span> <span style="color:#e6db74">&#34;OpenFX target OS and architecture&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>if(<span style="color:#e6db74">WIN32</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>  install(<span style="color:#e6db74">TARGETS</span> <span style="color:#f92672">${</span>PLG_WRAPPER_NAME<span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">RUNTIME</span> <span style="color:#e6db74">DESTINATION</span> <span style="color:#f92672">${</span>INSTALL_PATH<span style="color:#f92672">}</span><span style="color:#e6db74">/</span><span style="color:#f92672">${</span>PLUGIN_NAME<span style="color:#f92672">}</span><span style="color:#e6db74">.ofx.bundle/Contents/</span><span style="color:#f92672">${</span>OFX_ARCH_NAME<span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">COMPONENT</span> <span style="color:#e6db74">davinci</span>
+</span></span><span style="display:flex;"><span>  )<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>endif()<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>install(<span style="color:#e6db74">TARGETS</span> <span style="color:#f92672">${</span>PLG_IMPL_NAME<span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">RUNTIME</span> <span style="color:#e6db74">DESTINATION</span> <span style="color:#f92672">${</span>INSTALL_PATH<span style="color:#f92672">}</span><span style="color:#e6db74">/</span><span style="color:#f92672">${</span>PLUGIN_NAME<span style="color:#f92672">}</span><span style="color:#e6db74">.ofx.bundle/Contents/</span><span style="color:#f92672">${</span>OFX_ARCH_NAME<span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">COMPONENT</span> <span style="color:#e6db74">davinci</span>
+</span></span><span style="display:flex;"><span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>install(<span style="color:#e6db74">FILES</span> <span style="color:#f92672">${</span>SRC_DIR<span style="color:#f92672">}</span><span style="color:#e6db74">/Info.plist</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">DESTINATION</span> <span style="color:#f92672">${</span>INSTALL_PATH<span style="color:#f92672">}</span><span style="color:#e6db74">/</span><span style="color:#f92672">${</span>PLUGIN_NAME<span style="color:#f92672">}</span><span style="color:#e6db74">.ofx.bundle/Contents</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">COMPONENT</span> <span style="color:#e6db74">davinci</span>
+</span></span><span style="display:flex;"><span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>set(<span style="color:#e6db74">LIB_INSTALL_DIR</span> <span style="color:#e6db74">&#34;UNKNOWN&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>if(<span style="color:#e6db74">apple</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>  set(<span style="color:#e6db74">LIB_INSTALL_DIR</span> <span style="color:#f92672">${</span>INSTALL_PATH<span style="color:#f92672">}</span><span style="color:#e6db74">/</span><span style="color:#f92672">${</span>PLUGIN_NAME<span style="color:#f92672">}</span><span style="color:#e6db74">.ofx.bundle/Contents/Libraries</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>elseif(<span style="color:#e6db74">WIN32</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>  set(<span style="color:#e6db74">LIB_INSTALL_DIR</span> <span style="color:#f92672">${</span>INSTALL_PATH<span style="color:#f92672">}</span><span style="color:#e6db74">/</span><span style="color:#f92672">${</span>PLUGIN_NAME<span style="color:#f92672">}</span><span style="color:#e6db74">.ofx.bundle/Contents/</span><span style="color:#f92672">${</span>OFX_ARCH_NAME<span style="color:#f92672">}</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>endif()<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>if(<span style="color:#e6db74">APPLE</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>  configure_file(
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;${CMAKE_CURRENT_SOURCE_DIR}/cmake/fix_deps_macos.cmake.in&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;${CMAKE_CURRENT_BINARY_DIR}/fix_deps.cmake&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">@ONLY</span>
+</span></span><span style="display:flex;"><span>  )<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>elseif(<span style="color:#e6db74">WIN32</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>  configure_file(
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;${CMAKE_CURRENT_SOURCE_DIR}/cmake/fix_deps_win.cmake.in&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;${CMAKE_CURRENT_BINARY_DIR}/fix_deps.cmake&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">@ONLY</span>
+</span></span><span style="display:flex;"><span>  )<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>endif()<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>install(<span style="color:#e6db74">SCRIPT</span> <span style="color:#e6db74">&#34;${CMAKE_CURRENT_BINARY_DIR}/fix_deps.cmake&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">COMPONENT</span> <span style="color:#e6db74">davinci</span>
+</span></span><span style="display:flex;"><span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span></code></pre></div><p>这里只是定义了一些target、一些目录，一些编译链接选项。下面是<code>fix_deps_win.cmake.in</code>，真正执行dll复制逻辑</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cmake" data-lang="cmake"><span style="display:flex;"><span>set(<span style="color:#e6db74">TARGET_BINARY</span> <span style="color:#e6db74">&#34;@INSTALL_PATH@/@PLUGIN_NAME@.ofx.bundle/Contents/@OFX_ARCH_NAME@/lib@PLG_IMPL_NAME@.dll&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>set(<span style="color:#e6db74">LIB_DIR</span> <span style="color:#e6db74">&#34;@INSTALL_PATH@/@PLUGIN_NAME@.ofx.bundle/Contents/@OFX_ARCH_NAME@&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>file(<span style="color:#e6db74">GET_RUNTIME_DEPENDENCIES</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">LIBRARIES</span> <span style="color:#e6db74">&#34;${TARGET_BINARY}&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">RESOLVED_DEPENDENCIES_VAR</span> <span style="color:#e6db74">_resolved_deps</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">UNRESOLVED_DEPENDENCIES_VAR</span> <span style="color:#e6db74">_unresolved_deps</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 排除windows 系统库
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#e6db74">PRE_EXCLUDE_REGEXES</span> <span style="color:#e6db74">&#34;C:/WINDOWS/.*&#34;</span> <span style="color:#e6db74">&#34;C:\\\\WINDOWS\\\\.*&#34;</span> <span style="color:#e6db74">&#34;api-ms-win.*&#34;</span> <span style="color:#e6db74">&#34;ext-ms-win.*&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">POST_EXCLUDE_REGEXES</span> <span style="color:#e6db74">&#34;C:/WINDOWS/.*&#34;</span> <span style="color:#e6db74">&#34;C:\\\\WINDOWS\\\\.*&#34;</span> <span style="color:#e6db74">&#34;api-ms-win.*&#34;</span> <span style="color:#e6db74">&#34;ext-ms-win.*&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">DIRECTORIES</span> <span style="color:#e6db74">&#34;G:/Program_Files/msys64/mingw64/bin/&#34;</span>
+</span></span><span style="display:flex;"><span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>message(<span style="color:#e6db74">STATUS</span> <span style="color:#e6db74">&#34;Found resolved dependencies for ${TARGET_BINARY}:\n ${_resolved_deps}&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>set(<span style="color:#e6db74">_all_binaries_to_fix</span> <span style="color:#e6db74">&#34;${TARGET_BINARY}&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>foreach(<span style="color:#e6db74">_lib</span> <span style="color:#f92672">${</span>_resolved_deps<span style="color:#f92672">}</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    get_filename_component(<span style="color:#e6db74">_lib_name</span> <span style="color:#e6db74">&#34;${_lib}&#34;</span> <span style="color:#e6db74">NAME</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    set(<span style="color:#e6db74">_new_lib_path</span> <span style="color:#e6db74">&#34;${LIB_DIR}/${_lib_name}&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    file(<span style="color:#e6db74">COPY</span> <span style="color:#e6db74">&#34;${_lib}&#34;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">DESTINATION</span> <span style="color:#e6db74">&#34;${LIB_DIR}/&#34;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">FOLLOW_SYMLINK_CHAIN</span>
+</span></span><span style="display:flex;"><span>    )<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    list(<span style="color:#e6db74">APPEND</span> <span style="color:#e6db74">_all_binaries_to_fix</span> <span style="color:#e6db74">&#34;${_new_lib_path}&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>endforeach()<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>if(<span style="color:#e6db74">_unresolved_deps</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    message(<span style="color:#e6db74">WARNING</span> <span style="color:#e6db74">&#34;Unresolved dependencies: ${_unresolved_deps}&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>endif()<span style="color:#960050;background-color:#1e0010">
+</span></span></span></code></pre></div><h1 id="macos上的处理">macOS上的处理</h1>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/davinci-resolve/">Davinci Resolve</a>
+        
+            <a href="/tags/openfx/">OpenFX</a>
+        
+            <a href="/tags/c&#43;&#43;/">C&#43;&#43;</a>
+        
+            <a href="/tags/c/">C</a>
+        
+            <a href="/tags/windows/">Windows</a>
+        
+            <a href="/tags/macos/">macOS</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css"integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js"integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8"crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js"integrity="sha384-vZTG03m&#43;2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl"crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.querySelector(`.article-content`), {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ]
+        });})
+</script>
+    
+</article>
+
+    <aside class="related-contents--wrapper">
+    
+    
+        <h2 class="section-title">相关文章</h2>
+        <div class="related-contents">
+            <div class="flex article-list--tile">
+                
+                    
+<article class="">
+    <a href="/p/c-%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">C&#43;&#43;最佳实践学习笔记</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="">
+    <a href="/p/c-%E7%BB%93%E6%9E%84%E4%BD%93%E5%86%85%E5%AD%98%E5%AF%B9%E9%BD%90%E5%92%8C%E6%95%B0%E7%BB%84%E5%86%85%E5%AD%98%E6%AD%A5%E5%B9%85/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">C&#43;&#43;结构体内存对齐和数组内存步幅</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="">
+    <a href="/inferior/windows%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91-%E9%9A%8F%E6%89%8B%E8%AE%B0%E5%BD%95/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Windows驱动开发 随手记录</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="">
+    <a href="/inferior/c&#43;&#43;%E5%B9%B6%E5%8F%91%E6%94%AF%E6%8C%81%E5%BA%93%E7%94%A8%E6%B3%95%E9%80%9F%E6%9F%A5/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">C&#43;&#43;并发支持库用法速查</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="">
+    <a href="/inferior/%E6%B7%BB%E5%8A%A0msys2%E5%88%B0%E5%8F%B3%E9%94%AE%E8%8F%9C%E5%8D%95/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">添加msys2到右键菜单</h2>
+        </div>
+    </a>
+</article>
+                
+            </div>
+        </div>
+    
+</aside>
+
+     
+    
+        
+    <script src="https://utteranc.es/client.js" 
+        repo="kegalas/blogComments"
+        issue-term="pathname"
+        
+        crossorigin="anonymous"
+        async
+        >
+</script>
+
+<style>
+    .utterances {
+        max-width: unset;
+    }
+</style>
+
+<script>
+    function setUtterancesTheme(theme) {
+        let utterances = document.querySelector('.utterances iframe');
+        if (utterances) {
+            utterances.contentWindow.postMessage(
+                {
+                    type: 'set-theme',
+                    theme: `github-${theme}`
+                },
+                'https://utteranc.es'
+            );
+        }
+    }
+
+    addEventListener('message', event => {
+        if (event.origin !== 'https://utteranc.es') return;
+        setUtterancesTheme(document.documentElement.dataset.scheme)
+    });
+
+    window.addEventListener('onColorSchemeChange', (e) => {
+        setUtterancesTheme(e.detail)
+    })
+</script>
+
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2026 KegalaS的个人博客
+    </section>
+    
+    <section class="powerby">
+         <br />
+        
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    
+        <aside class="sidebar right-sidebar sticky">
+            <section class="widget archives">
+                <div class="widget-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+                </div>
+                <h2 class="widget-title section-title">目录</h2>
+                
+                <div class="widget--toc">
+                    <nav id="TableOfContents">
+  <ol>
+    <li><a href="#前言">前言</a></li>
+    <li><a href="#windows上的处理">Windows上的处理</a></li>
+    <li><a href="#macos上的处理">macOS上的处理</a></li>
+  </ol>
+</nav>
+                </div>
+            </section>
+        </aside>
+    
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                defer="false"
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

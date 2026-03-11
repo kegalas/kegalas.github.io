@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='导航页面 Z-Buffer介绍 首先说说为什么要引入Z-Buffer，在我们之前的光栅化操作中，我们完全没有管三角形的前后关系 2.jpg 拿这张图来举例，'><title>从零开始的软渲染器 Z-Buffer</title>
+
+<link rel='canonical' href='https://kegalas.uk/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-z-buffer/'>
+
+<link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='从零开始的软渲染器 Z-Buffer'>
+<meta property='og:description' content='导航页面 Z-Buffer介绍 首先说说为什么要引入Z-Buffer，在我们之前的光栅化操作中，我们完全没有管三角形的前后关系 2.jpg 拿这张图来举例，'>
+<meta property='og:url' content='https://kegalas.uk/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-z-buffer/'>
+<meta property='og:site_name' content='KegalaS的个人博客'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='图形学' /><meta property='article:tag' content='渲染' /><meta property='article:tag' content='干货' /><meta property='article:published_time' content='2024-10-03T14:42:25&#43;08:00'/><meta property='article:modified_time' content='2024-10-03T14:42:25&#43;08:00'/><meta property='og:image' content='https://kegalas.uk/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-z-buffer/cover.jpg' />
+<meta name="twitter:title" content="从零开始的软渲染器 Z-Buffer">
+<meta name="twitter:description" content="导航页面 Z-Buffer介绍 首先说说为什么要引入Z-Buffer，在我们之前的光栅化操作中，我们完全没有管三角形的前后关系 2.jpg 拿这张图来举例，"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://kegalas.uk/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-z-buffer/cover.jpg' />
+    <link rel="shortcut icon" href="/images/favicon.ico" />
+
+    </head>
+    <body class="
+    article-page has-toc
+">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex 
+    
+        extended
+    
+">
+    
+        <div id="article-toolbar">
+            <a href="/" class="back-home">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="15 6 9 12 15 18" />
+</svg>
+
+
+
+                <span>返回</span>
+            </a>
+        </div>
+    
+<main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-z-buffer/">
+                <img src="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-z-buffer/cover_huefaede8fa769a1822bd7ca8a439b248c_38510_800x0_resize_q75_box.jpg"
+                        srcset="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-z-buffer/cover_huefaede8fa769a1822bd7ca8a439b248c_38510_800x0_resize_q75_box.jpg 800w, /p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-z-buffer/cover_huefaede8fa769a1822bd7ca8a439b248c_38510_1600x0_resize_q75_box.jpg 1600w"
+                        width="800" 
+                        height="487" 
+                        loading="lazy"
+                        alt="Featured image of post 从零开始的软渲染器 Z-Buffer" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" >
+                图形学
+            </a>
+        
+    </header>
+    
+
+    <h2 class="article-title">
+        <a href="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-z-buffer/">从零开始的软渲染器 Z-Buffer</a>
+    </h2>
+
+    
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Oct 03, 2024</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 3 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+</div>
+</header>
+
+    <section class="article-content">
+    <p><u><strong><a class="link" href="../%e4%bb%8e%e9%9b%b6%e5%bc%80%e5%a7%8b%e7%9a%84%e8%bd%af%e6%b8%b2%e6%9f%93%e5%99%a8-%e5%af%bc%e8%88%aa/" >导航页面</a></strong></u></p>
+<h1 id="z-buffer介绍">Z-Buffer介绍</h1>
+<p>首先说说为什么要引入Z-Buffer，在我们之前的光栅化操作中，我们完全没有管三角形的前后关系</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 129; 
+			flex-basis: 311px"
+	>
+	<a href="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-z-buffer/2.jpg" data-size="555x427">
+		<img src="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-z-buffer/2.jpg"
+			width="555"
+			height="427"
+			srcset="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-z-buffer/2_hu166f413db2b5433b87b1a767ed7bb2f4_52135_480x0_resize_q75_box.jpg 480w, /p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-z-buffer/2_hu166f413db2b5433b87b1a767ed7bb2f4_52135_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="2.jpg">
+	</a>
+	
+	<figcaption>2.jpg</figcaption>
+	
+</figure></p>
+<p>拿这张图来举例，假设我们的摄像机在<span class="math inline">\(S\)</span>点，则我们看到的<span class="math inline">\(ABC\)</span>则会完全遮盖住<span class="math inline">\(abc\)</span>，但是，我们在光栅化的时候没有考虑到距离的因素。实际上我们绘制在屏幕上的三角形取决于绘制的顺序，如果我们先绘制<span class="math inline">\(ABC\)</span>再绘制<span class="math inline">\(abc\)</span>，则我们只会看到<span class="math inline">\(abc\)</span>。这还是简单的情况，复杂的情况还有三角形相交等等。</p>
+<p>为了引入距离以及遮挡关系，我们使用Z-Buffer算法。</p>
+<p>把摄像机对准的方向当作<span class="math inline">\(z\)</span>轴负半轴，则所有点的<span class="math inline">\(z\)</span>轴坐标也就确定了，显然的，<span class="math inline">\(z\)</span>坐标大的点在前面，遮挡了<span class="math inline">\(z\)</span>坐标小的物体，我们绘制三角形的时候，检测这个像素点的<span class="math inline">\(z\)</span>坐标最大是多少，比它大，则绘制该像素，并且更新最大值，否则不绘制。</p>
+<p>注意这里的<span class="math inline">\(z\)</span>轴坐标是透视投影之后的坐标。</p>
+<h1 id="具体实现">具体实现</h1>
+<p>话不多说我们直接上代码</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">bool</span> ras<span style="color:#f92672">::</span>trianglePhong(
+</span></span><span style="display:flex;"><span>    TGAImage <span style="color:#f92672">&amp;</span> image,
+</span></span><span style="display:flex;"><span>    geo<span style="color:#f92672">::</span>TriCoords <span style="color:#66d9ef">const</span> <span style="color:#f92672">&amp;</span> tcoords,
+</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>array<span style="color:#f92672">&lt;</span>geo<span style="color:#f92672">::</span>OARColorf, <span style="color:#ae81ff">3</span><span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">const</span> <span style="color:#f92672">&amp;</span> colors,
+</span></span><span style="display:flex;"><span>    geo<span style="color:#f92672">::</span>vec4f <span style="color:#66d9ef">const</span> <span style="color:#f92672">&amp;</span> lightPos, <span style="color:#75715e">// 光的位置
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    geo<span style="color:#f92672">::</span>OARColorf <span style="color:#66d9ef">const</span> <span style="color:#f92672">&amp;</span> light, <span style="color:#75715e">// 光的颜色
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    geo<span style="color:#f92672">::</span>vec4f <span style="color:#66d9ef">const</span> <span style="color:#f92672">&amp;</span> cameraPos, <span style="color:#75715e">//相机的位置
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">float</span> zbuffer[]
+</span></span><span style="display:flex;"><span>){
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">float</span> <span style="color:#66d9ef">const</span> EPS <span style="color:#f92672">=</span> <span style="color:#ae81ff">1e-5</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> width <span style="color:#f92672">=</span> image.getWidth(), height <span style="color:#f92672">=</span> image.getHeight();
+</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>array<span style="color:#f92672">&lt;</span>geo<span style="color:#f92672">::</span>vec2i,<span style="color:#ae81ff">3</span><span style="color:#f92672">&gt;</span> screenPoints;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>;i<span style="color:#f92672">&lt;</span><span style="color:#ae81ff">3</span>;i<span style="color:#f92672">++</span>){
+</span></span><span style="display:flex;"><span>        screenPoints[i][<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> (<span style="color:#66d9ef">int</span>)(tcoords.screenCoords[i][<span style="color:#ae81ff">0</span>] <span style="color:#f92672">/</span> tcoords.screenCoords[i].w<span style="color:#f92672">+</span><span style="color:#ae81ff">.5f</span>);
+</span></span><span style="display:flex;"><span>        screenPoints[i][<span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> (<span style="color:#66d9ef">int</span>)(tcoords.screenCoords[i][<span style="color:#ae81ff">1</span>] <span style="color:#f92672">/</span> tcoords.screenCoords[i].w<span style="color:#f92672">+</span><span style="color:#ae81ff">.5f</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> maxx <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>, minx <span style="color:#f92672">=</span> width<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, maxy <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>, miny <span style="color:#f92672">=</span> height<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>;i<span style="color:#f92672">&lt;</span><span style="color:#ae81ff">3</span>;i<span style="color:#f92672">++</span>){
+</span></span><span style="display:flex;"><span>        maxx <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>max(maxx, screenPoints[i].x);
+</span></span><span style="display:flex;"><span>        minx <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>min(minx, screenPoints[i].x);
+</span></span><span style="display:flex;"><span>        maxy <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>max(maxy, screenPoints[i].y);
+</span></span><span style="display:flex;"><span>        miny <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>min(miny, screenPoints[i].y);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    maxx <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>min(maxx, width<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>);
+</span></span><span style="display:flex;"><span>    minx <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>max(minx, <span style="color:#ae81ff">0</span>);
+</span></span><span style="display:flex;"><span>    maxy <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>min(maxy, height<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>);
+</span></span><span style="display:flex;"><span>    miny <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>max(miny, <span style="color:#ae81ff">0</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    geo<span style="color:#f92672">::</span>vec4f kd <span style="color:#f92672">=</span> {<span style="color:#ae81ff">.75f</span>, <span style="color:#ae81ff">.75f</span>, <span style="color:#ae81ff">.75f</span>, <span style="color:#ae81ff">1.f</span>};
+</span></span><span style="display:flex;"><span>    geo<span style="color:#f92672">::</span>vec4f ks <span style="color:#f92672">=</span> {<span style="color:#ae81ff">1.f</span>, <span style="color:#ae81ff">1.f</span>, <span style="color:#ae81ff">1.f</span>, <span style="color:#ae81ff">1.f</span>};
+</span></span><span style="display:flex;"><span>    geo<span style="color:#f92672">::</span>vec4f ka <span style="color:#f92672">=</span> {<span style="color:#ae81ff">.2f</span>, <span style="color:#ae81ff">.2f</span>, <span style="color:#ae81ff">.2f</span>, <span style="color:#ae81ff">1.f</span>}; <span style="color:#75715e">//设置三种反射的反射因子
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> x<span style="color:#f92672">=</span>minx;x<span style="color:#f92672">&lt;=</span>maxx;x<span style="color:#f92672">++</span>){
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> y<span style="color:#f92672">=</span>miny;y<span style="color:#f92672">&lt;=</span>maxy;y<span style="color:#f92672">++</span>){
+</span></span><span style="display:flex;"><span>            std<span style="color:#f92672">::</span>tuple<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">float</span>,<span style="color:#66d9ef">float</span>,<span style="color:#66d9ef">float</span><span style="color:#f92672">&gt;</span> ret <span style="color:#f92672">=</span> geo<span style="color:#f92672">::</span>getBarycentric(screenPoints, geo<span style="color:#f92672">::</span>vec2i(x,y));
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">float</span> alpha <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>get<span style="color:#f92672">&lt;</span><span style="color:#ae81ff">0</span><span style="color:#f92672">&gt;</span> (ret);
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">float</span> beta  <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>get<span style="color:#f92672">&lt;</span><span style="color:#ae81ff">1</span><span style="color:#f92672">&gt;</span> (ret);
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">float</span> gamma <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>get<span style="color:#f92672">&lt;</span><span style="color:#ae81ff">2</span><span style="color:#f92672">&gt;</span> (ret);
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span>(alpha<span style="color:#f92672">&lt;-</span>EPS <span style="color:#f92672">||</span> beta<span style="color:#f92672">&lt;-</span>EPS <span style="color:#f92672">||</span> gamma<span style="color:#f92672">&lt;-</span>EPS) <span style="color:#66d9ef">continue</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">float</span> z <span style="color:#f92672">=</span> alpha <span style="color:#f92672">*</span> tcoords.screenCoords[<span style="color:#ae81ff">0</span>].z <span style="color:#f92672">+</span>
+</span></span><span style="display:flex;"><span>                      beta  <span style="color:#f92672">*</span> tcoords.screenCoords[<span style="color:#ae81ff">1</span>].z <span style="color:#f92672">+</span>
+</span></span><span style="display:flex;"><span>                      gamma <span style="color:#f92672">*</span> tcoords.screenCoords[<span style="color:#ae81ff">2</span>].z;
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// z值在这里可以先这样用，下一节我们会发现这样插值是有误差的
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            <span style="color:#75715e">// 虽然我们这里传进来的是屏幕空间而非剪裁空间，但这两个空间的z坐标是相同的
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span>(z<span style="color:#f92672">&lt;</span>zbuffer[y<span style="color:#f92672">*</span>width<span style="color:#f92672">+</span>x]){
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">continue</span>;
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            zbuffer[y<span style="color:#f92672">*</span>width<span style="color:#f92672">+</span>x] <span style="color:#f92672">=</span> z;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            geo<span style="color:#f92672">::</span>vec4f norm <span style="color:#f92672">=</span> alpha<span style="color:#f92672">*</span>tcoords.norms[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">+</span> beta<span style="color:#f92672">*</span>tcoords.norms[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">+</span> gamma<span style="color:#f92672">*</span>tcoords.norms[<span style="color:#ae81ff">2</span>];
+</span></span><span style="display:flex;"><span>            geo<span style="color:#f92672">::</span>vec4f world <span style="color:#f92672">=</span>  alpha<span style="color:#f92672">*</span>tcoords.worldCoords[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">+</span> beta<span style="color:#f92672">*</span>tcoords.worldCoords[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">+</span> gamma<span style="color:#f92672">*</span>tcoords.worldCoords[<span style="color:#ae81ff">2</span>];
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// 插值得出三角形内点的世界坐标与法向量
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>            geo<span style="color:#f92672">::</span>vec4f l <span style="color:#f92672">=</span> geo<span style="color:#f92672">::</span>normalized(lightPos<span style="color:#f92672">-</span>world); <span style="color:#75715e">//顶点到光源的单位向量
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            geo<span style="color:#f92672">::</span>vec4f v <span style="color:#f92672">=</span> geo<span style="color:#f92672">::</span>normalized(cameraPos<span style="color:#f92672">-</span>world); <span style="color:#75715e">//顶点到相机的单位向量
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            geo<span style="color:#f92672">::</span>vec4f h <span style="color:#f92672">=</span> geo<span style="color:#f92672">::</span>normalized(v<span style="color:#f92672">+</span>l); <span style="color:#75715e">//半程向量
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            geo<span style="color:#f92672">::</span>normalize(norm); <span style="color:#75715e">// 不进行单位化，specular就会过强
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>            geo<span style="color:#f92672">::</span>OARColorf ld <span style="color:#f92672">=</span> kd <span style="color:#f92672">*</span> light <span style="color:#f92672">*</span> std<span style="color:#f92672">::</span>max(<span style="color:#ae81ff">0.f</span>, geo<span style="color:#f92672">::</span>dot(l, norm));
+</span></span><span style="display:flex;"><span>            geo<span style="color:#f92672">::</span>OARColorf ls <span style="color:#f92672">=</span> ks <span style="color:#f92672">*</span> light <span style="color:#f92672">*</span> std<span style="color:#f92672">::</span>pow(std<span style="color:#f92672">::</span>max(<span style="color:#ae81ff">0.f</span>,geo<span style="color:#f92672">::</span>dot(norm, h)), <span style="color:#ae81ff">100.f</span>);
+</span></span><span style="display:flex;"><span>            geo<span style="color:#f92672">::</span>OARColorf la <span style="color:#f92672">=</span> ka <span style="color:#f92672">*</span> geo<span style="color:#f92672">::</span>vec4f(<span style="color:#ae81ff">.3f</span>, <span style="color:#ae81ff">.3f</span>, <span style="color:#ae81ff">.3f</span>, <span style="color:#ae81ff">1.f</span>); <span style="color:#75715e">//三种光强
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            geo<span style="color:#f92672">::</span>vec4f intensity <span style="color:#f92672">=</span> ld <span style="color:#f92672">+</span> ls <span style="color:#f92672">+</span> la;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            geo<span style="color:#f92672">::</span>OARColor color <span style="color:#f92672">=</span> geo<span style="color:#f92672">::</span>toOARColor(
+</span></span><span style="display:flex;"><span>                (alpha <span style="color:#f92672">*</span> colors[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">+</span> beta  <span style="color:#f92672">*</span> colors[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">+</span> gamma <span style="color:#f92672">*</span> colors[<span style="color:#ae81ff">2</span>]) <span style="color:#f92672">*</span> intensity
+</span></span><span style="display:flex;"><span>            );
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// 最终物体的颜色是 自身颜色*光照颜色
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            image.setFragment(x,y,color);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> true;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>需要注意的是，我们这里直接用线性的重心坐标插值去计算三角形内部像素的<span class="math inline">\(z\)</span>轴坐标了。虽然这里这样用确实效果还可以，但是下一节我们将会知道这样的差值是有误差的。</p>
+<h1 id="使用例">使用例</h1>
+<p>我们继续使用teapot模型，代码见 <strong><a class="link" href="https://github.com/kegalas/oar/blob/main/tutorial/chapter7/src/main.cpp"  target="_blank" rel="noopener"
+    >这里</a></strong>  。</p>
+<p><figure 
+	
+		class="gallery-image" 
+		style="
+			flex-grow: 99; 
+			flex-basis: 239px"
+	>
+	<a href="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-z-buffer/1.jpg" data-size="968x971">
+		<img src="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-z-buffer/1.jpg"
+			width="968"
+			height="971"
+			srcset="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-z-buffer/1_hu54bfecedb7595eb7e441a463a4147c33_21056_480x0_resize_q75_box.jpg 480w, /p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-z-buffer/1_hu54bfecedb7595eb7e441a463a4147c33_21056_1024x0_resize_q75_box.jpg 1024w"
+			loading="lazy"
+			alt="1.jpg">
+	</a>
+	
+	<figcaption>1.jpg</figcaption>
+	
+</figure></p>
+<p>现在观察壶嘴连接处，已经不会再有穿模的现象了。</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a>
+        
+            <a href="/tags/%E6%B8%B2%E6%9F%93/">渲染</a>
+        
+            <a href="/tags/%E5%B9%B2%E8%B4%A7/">干货</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css"integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js"integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8"crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js"integrity="sha384-vZTG03m&#43;2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl"crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.querySelector(`.article-content`), {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ]
+        });})
+</script>
+    
+</article>
+
+    <aside class="related-contents--wrapper">
+    
+    
+        <h2 class="section-title">相关文章</h2>
+        <div class="related-contents">
+            <div class="flex article-list--tile">
+                
+                    
+<article class="has-image">
+    <a href="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2%E4%B8%8E%E8%A7%86%E8%A7%92/">
+        
+        
+            <div class="article-image">
+                <img src="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2%E4%B8%8E%E8%A7%86%E8%A7%92/cover.bc5e9bb4ee7415f3e4ade00309df817c_hudaf40032a0fd8dda1c6536765f6be1f9_238362_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-vF6btO50FfPkreADCd&#43;BfA==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">从零开始的软渲染器 坐标变换与视角</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%85%89%E7%85%A7%E5%88%9D%E6%AD%A5/">
+        
+        
+            <div class="article-image">
+                <img src="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%85%89%E7%85%A7%E5%88%9D%E6%AD%A5/cover.a31dfa1d472e7236ca0da074207d7576_hu04f6e4c5c5d9e8c832c6dfeafddfe37e_257114_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-ox36HUcucjbKDaB0IH11dg==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">从零开始的软渲染器 光照初步</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E6%A8%A1%E5%9E%8B%E5%BA%93/">
+        
+        
+            <div class="article-image">
+                <img src="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E6%A8%A1%E5%9E%8B%E5%BA%93/cover.30e111997b0a8b14a681475f99347374_hu1d5ada73bf6b5a759e3568aecd125470_50161_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-MOERmXsKixSmgUdfmTRzdA==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">从零开始的软渲染器 模型库</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E7%BA%BF%E6%AE%B5%E5%92%8C%E4%B8%89%E8%A7%92%E5%BD%A2%E7%9A%84%E5%85%89%E6%A0%85%E5%8C%96/">
+        
+        
+            <div class="article-image">
+                <img src="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E7%BA%BF%E6%AE%B5%E5%92%8C%E4%B8%89%E8%A7%92%E5%BD%A2%E7%9A%84%E5%85%89%E6%A0%85%E5%8C%96/cover.3eba88ce14bf80744d7e83238ed0ec4e_hu72dadf0d98aceb343e3fe7cb76faf398_301126_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-PrqIzhS/gHRNfoMjjtDsTg==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">从零开始的软渲染器 线段和三角形的光栅化</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="has-image">
+    <a href="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%9B%BE%E7%89%87%E5%A4%84%E7%90%86%E5%BA%93/">
+        
+        
+            <div class="article-image">
+                <img src="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E8%BD%AF%E6%B8%B2%E6%9F%93%E5%99%A8-%E5%9B%BE%E7%89%87%E5%A4%84%E7%90%86%E5%BA%93/cover.941490c741ffb85644dfdbec13c85e5f_hu2fa2362891bfb402ec26ffe12b2b88a0_64078_250x150_fill_q75_box_smart1.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy" 
+                        data-key="" 
+                        data-hash="md5-lBSQx0H/uFZE39vsE8heXw==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">从零开始的软渲染器 图片处理库</h2>
+        </div>
+    </a>
+</article>
+                
+            </div>
+        </div>
+    
+</aside>
+
+     
+    
+        
+    <script src="https://utteranc.es/client.js" 
+        repo="kegalas/blogComments"
+        issue-term="pathname"
+        
+        crossorigin="anonymous"
+        async
+        >
+</script>
+
+<style>
+    .utterances {
+        max-width: unset;
+    }
+</style>
+
+<script>
+    function setUtterancesTheme(theme) {
+        let utterances = document.querySelector('.utterances iframe');
+        if (utterances) {
+            utterances.contentWindow.postMessage(
+                {
+                    type: 'set-theme',
+                    theme: `github-${theme}`
+                },
+                'https://utteranc.es'
+            );
+        }
+    }
+
+    addEventListener('message', event => {
+        if (event.origin !== 'https://utteranc.es') return;
+        setUtterancesTheme(document.documentElement.dataset.scheme)
+    });
+
+    window.addEventListener('onColorSchemeChange', (e) => {
+        setUtterancesTheme(e.detail)
+    })
+</script>
+
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2026 KegalaS的个人博客
+    </section>
+    
+    <section class="powerby">
+         <br />
+        
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    
+        <aside class="sidebar right-sidebar sticky">
+            <section class="widget archives">
+                <div class="widget-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+                </div>
+                <h2 class="widget-title section-title">目录</h2>
+                
+                <div class="widget--toc">
+                    <nav id="TableOfContents">
+  <ol>
+    <li><a href="#z-buffer介绍">Z-Buffer介绍</a></li>
+    <li><a href="#具体实现">具体实现</a></li>
+    <li><a href="#使用例">使用例</a></li>
+  </ol>
+</nav>
+                </div>
+            </section>
+        </aside>
+    
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                defer="false"
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='前言 本博客和之前写的现代C&#43;&#43;学习笔记侧重点不同，那一篇偏重C&#43;&#43;的特性学习，而本篇则注重于怎么去用、什么时候用、什么时候不用这些特性。 本博'><title>C&#43;&#43;最佳实践学习笔记</title>
+
+<link rel='canonical' href='https://kegalas.uk/p/c-%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/'>
+
+<link rel="stylesheet" href="/scss/style.min.css"><meta property='og:title' content='C&#43;&#43;最佳实践学习笔记'>
+<meta property='og:description' content='前言 本博客和之前写的现代C&#43;&#43;学习笔记侧重点不同，那一篇偏重C&#43;&#43;的特性学习，而本篇则注重于怎么去用、什么时候用、什么时候不用这些特性。 本博'>
+<meta property='og:url' content='https://kegalas.uk/p/c-%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/'>
+<meta property='og:site_name' content='KegalaS的个人博客'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='C&#43;&#43;' /><meta property='article:published_time' content='2026-02-10T15:22:00&#43;08:00'/><meta property='article:modified_time' content='2026-02-10T15:22:00&#43;08:00'/>
+<meta name="twitter:title" content="C&#43;&#43;最佳实践学习笔记">
+<meta name="twitter:description" content="前言 本博客和之前写的现代C&#43;&#43;学习笔记侧重点不同，那一篇偏重C&#43;&#43;的特性学习，而本篇则注重于怎么去用、什么时候用、什么时候不用这些特性。 本博">
+    <link rel="shortcut icon" href="/images/favicon.ico" />
+
+    </head>
+    <body class="
+    article-page has-toc
+">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex 
+    
+        extended
+    
+">
+    
+        <div id="article-toolbar">
+            <a href="/" class="back-home">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="15 6 9 12 15 18" />
+</svg>
+
+
+
+                <span>返回</span>
+            </a>
+        </div>
+    
+<main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/%E5%85%B6%E4%BB%96%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/" >
+                其他计算机科学
+            </a>
+        
+    </header>
+    
+
+    <h2 class="article-title">
+        <a href="/p/c-%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">C&#43;&#43;最佳实践学习笔记</a>
+    </h2>
+
+    
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Feb 10, 2026</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 2 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+</div>
+</header>
+
+    <section class="article-content">
+    <h1 id="前言">前言</h1>
+<p>本博客和之前写的<a class="link" href="../%e7%8e%b0%e4%bb%a3c-%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0" >现代C++学习笔记</a>侧重点不同，那一篇偏重C++的特性学习，而本篇则注重于怎么去用、什么时候用、什么时候不用这些特性。</p>
+<p>本博客算是对市面上已有的经验的总结，主要来源于：</p>
+<p><a class="link" href="https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines"  target="_blank" rel="noopener"
+    >https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines</a></p>
+<p><a class="link" href="https://medium.com/@amalpp42/idioms-in-c-f6b1c19fa605"  target="_blank" rel="noopener"
+    >https://medium.com/@amalpp42/idioms-in-c-f6b1c19fa605</a></p>
+<p><a class="link" href="https://en.wikibooks.org/wiki/More_C%2B%2B_Idioms"  target="_blank" rel="noopener"
+    >https://en.wikibooks.org/wiki/More_C%2B%2B_Idioms</a></p>
+<p><a class="link" href="https://freegeektime.com/posts/100040501/"  target="_blank" rel="noopener"
+    >https://freegeektime.com/posts/100040501/</a></p>
+<p><a class="link" href="https://github.com/romenrg/evergreen-skills-developers"  target="_blank" rel="noopener"
+    >https://github.com/romenrg/evergreen-skills-developers</a></p>
+<h1 id="泛用">泛用</h1>
+<h2 id="直接在代码中表达意图">直接在代码中表达意图</h2>
+<p>比如，在函数参数中<code>change_speed(Speed s)</code>就要比<code>change_speed(double s)</code>要好，后者不知道是什么单位的。返回值也是同理。</p>
+<p>然后，最好能将一段代码封装成小函数，取上恰当的名字，例如</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> size; <span style="color:#f92672">++</span>i){
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// ... 进行一些查找操作
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
+</span></span></code></pre></div><p>就没有下面的代码好</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>FindXXX(v);
+</span></span></code></pre></div><h2 id="能用新的c标准就用能用标准库就用">能用新的c++标准就用，能用标准库就用</h2>
+<p>新标准提供的东西能够写出更明白、更安全、甚至性能更好的代码。例如c++11提供的智能指针、c++20提供的<code>std::span</code>、<code>std::ranges</code>。</p>
+<p>能用标准库就用，别自己造轮子。自己造轮子花费的大量时间，很可能得不到多少收益，甚至不一定打得过标准库。如果标准库中没有，或者难用（如正则表达式），优先找成熟、文档齐全的第三方库。你必须明白为什么要自己造轮子，才能去造。例如：别人都没这个功能；最小化依赖；极致性能。</p>
+<h2 id="保证静态类型安全">保证静态类型安全</h2>
+<p>常见的静态类型安全问题包含：</p>
+<ul>
+<li>使用<code>union</code></li>
+<li>类型转换</li>
+<li>传递数组指针</li>
+<li>下标超出范围</li>
+<li>窄化转换</li>
+</ul>
+<p>解决方法是：</p>
+<ul>
+<li>使用<code>std::variant</code>，可见<a class="link" href="https://zhuanlan.zhihu.com/p/595288133"  target="_blank" rel="noopener"
+    >zhuanlan.zhihu.com/p/595288133</a>、<a class="link" href="https://zhuanlan.zhihu.com/p/597987861"  target="_blank" rel="noopener"
+    >zhuanlan.zhihu.com/p/597987861</a>。</li>
+<li>减少使用，或者用模板来替代一部分转换。</li>
+<li>使用<code>std::span</code></li>
+<li>使用<code>std::span</code></li>
+<li>减少使用，使用<code>gsl::narrow_cast</code>。使用静态分析工具来检查。</li>
+</ul>
+<h2 id="能在编译期进行检查的事就别放到运行期">能在编译期进行检查的事就别放到运行期</h2>
+<h2 id="不能在编译期检查的也要在运行期检查">不能在编译期检查的也要在运行期检查</h2>
+<h1 id="性能">性能</h1>
+<h2 id="不要不经过测试就说代码有性能问题">不要不经过测试就说代码有性能问题</h2>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/c&#43;&#43;/">C&#43;&#43;</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css"integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js"integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8"crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js"integrity="sha384-vZTG03m&#43;2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl"crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.querySelector(`.article-content`), {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ]
+        });})
+</script>
+    
+</article>
+
+    <aside class="related-contents--wrapper">
+    
+    
+        <h2 class="section-title">相关文章</h2>
+        <div class="related-contents">
+            <div class="flex article-list--tile">
+                
+                    
+<article class="">
+    <a href="/p/%E5%A6%82%E4%BD%95%E5%9C%A8davinci-resolve%E7%9A%84openfx%E6%8F%92%E4%BB%B6%E4%B8%AD%E8%BD%BD%E5%85%A5%E5%85%B6%E4%BB%96%E5%8A%A8%E6%80%81%E5%BA%93/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">如何在Davinci Resolve的OpenFX插件中载入其他动态库</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="">
+    <a href="/p/c-%E7%BB%93%E6%9E%84%E4%BD%93%E5%86%85%E5%AD%98%E5%AF%B9%E9%BD%90%E5%92%8C%E6%95%B0%E7%BB%84%E5%86%85%E5%AD%98%E6%AD%A5%E5%B9%85/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">C&#43;&#43;结构体内存对齐和数组内存步幅</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="">
+    <a href="/inferior/c&#43;&#43;%E5%B9%B6%E5%8F%91%E6%94%AF%E6%8C%81%E5%BA%93%E7%94%A8%E6%B3%95%E9%80%9F%E6%9F%A5/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">C&#43;&#43;并发支持库用法速查</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="">
+    <a href="/p/%E7%8E%B0%E4%BB%A3c-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">现代C&#43;&#43;学习笔记</h2>
+        </div>
+    </a>
+</article>
+                
+                    
+<article class="">
+    <a href="/p/%E5%B0%86%E7%BD%91%E6%98%93%E4%BA%91%E4%B8%8B%E8%BD%BD%E7%9A%84mp3%E5%B0%81%E9%9D%A2%E4%BB%8E%E7%A2%9F%E7%89%87%E7%A7%BB%E5%8A%A8%E5%88%B0%E5%B0%81%E9%9D%A2%E8%A7%A3%E5%86%B3foobar2000%E7%9A%84%E6%98%BE%E7%A4%BA%E9%97%AE%E9%A2%98/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">将网易云下载的mp3封面从「碟片」移动到「封面」，解决foobar2000的显示问题</h2>
+        </div>
+    </a>
+</article>
+                
+            </div>
+        </div>
+    
+</aside>
+
+     
+    
+        
+    <script src="https://utteranc.es/client.js" 
+        repo="kegalas/blogComments"
+        issue-term="pathname"
+        
+        crossorigin="anonymous"
+        async
+        >
+</script>
+
+<style>
+    .utterances {
+        max-width: unset;
+    }
+</style>
+
+<script>
+    function setUtterancesTheme(theme) {
+        let utterances = document.querySelector('.utterances iframe');
+        if (utterances) {
+            utterances.contentWindow.postMessage(
+                {
+                    type: 'set-theme',
+                    theme: `github-${theme}`
+                },
+                'https://utteranc.es'
+            );
+        }
+    }
+
+    addEventListener('message', event => {
+        if (event.origin !== 'https://utteranc.es') return;
+        setUtterancesTheme(document.documentElement.dataset.scheme)
+    });
+
+    window.addEventListener('onColorSchemeChange', (e) => {
+        setUtterancesTheme(e.detail)
+    })
+</script>
+
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2026 KegalaS的个人博客
+    </section>
+    
+    <section class="powerby">
+         <br />
+        
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    
+        <aside class="sidebar right-sidebar sticky">
+            <section class="widget archives">
+                <div class="widget-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+                </div>
+                <h2 class="widget-title section-title">目录</h2>
+                
+                <div class="widget--toc">
+                    <nav id="TableOfContents">
+  <ol>
+    <li><a href="#前言">前言</a></li>
+    <li><a href="#泛用">泛用</a>
+      <ol>
+        <li><a href="#直接在代码中表达意图">直接在代码中表达意图</a></li>
+        <li><a href="#能用新的c标准就用能用标准库就用">能用新的c++标准就用，能用标准库就用</a></li>
+        <li><a href="#保证静态类型安全">保证静态类型安全</a></li>
+        <li><a href="#能在编译期进行检查的事就别放到运行期">能在编译期进行检查的事就别放到运行期</a></li>
+        <li><a href="#不能在编译期检查的也要在运行期检查">不能在编译期检查的也要在运行期检查</a></li>
+      </ol>
+    </li>
+    <li><a href="#性能">性能</a>
+      <ol>
+        <li><a href="#不要不经过测试就说代码有性能问题">不要不经过测试就说代码有性能问题</a></li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+                </div>
+            </section>
+        </aside>
+    
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                defer="false"
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
