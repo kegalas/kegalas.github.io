@@ -92,6 +92,8 @@ static volatile LONG g_initialized = 0; /* 0 = not init, 1 = init */
 static void build_real_dll_path(WCHAR *out, size_t outChars, const WCHAR *realName) {
     // 从代理的.ofx文件，转到真正的插件实现dll
 
+    (void)outChars;
+
     WCHAR dir[MAX_PATH];
     dir[0] = L'\0';
     GetModuleFileNameW(g_hModule, dir, MAX_PATH);
@@ -141,7 +143,7 @@ static BOOL ensure_real_loaded(void) {
 
     LeaveCriticalSection(&g_cs);
 
-    InterlockedExchange(&g_initialized, (g_real != NULL) ? 1 : 2);
+    InterlockedExchange(&g_initialized, (g_real != NULL) ? 1 : 0);
     return (g_real != NULL);
 }
 
@@ -178,16 +180,17 @@ BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved) {
         InitializeCriticalSection(&g_cs);
         InterlockedExchange(&g_initialized, 0);
     } else if (fdwReason == DLL_PROCESS_DETACH) {
-        if (g_real) {
-            FreeLibrary(g_real);
-            g_real = NULL;
-            g_real_GetPlugin = NULL;
-            g_real_GetNumber = NULL;
-        }
+        // NOTE: https://learn.microsoft.com/zh-cn/windows/win32/api/libloaderapi/nf-libloaderapi-freelibrary
+        // https://learn.microsoft.com/zh-cn/windows/win32/dlls/dllmain
+        // 不应该在此调用FreeLibrary(g_real)，否则会陷入死锁。windows在程序关闭时会自动处理这件事。
+        g_real = NULL;
+        g_real_GetPlugin = NULL;
+        g_real_GetNumber = NULL;
         DeleteCriticalSection(&g_cs);
     }
     return TRUE;
 }
+
 ```
 
 除开一些辅助函数和锁相关的逻辑，这个代码很简单。我们重新定义了`OfxGetPlugin`和`OfxGetNumberOfPlugins`两个函数，当外界调用这两个函数时，我们便将其转发到真正的实现。
@@ -345,3 +348,242 @@ endif()
 ```
 
 # macOS上的处理
+
+macOS拥有截然不同的动态库处理规则。简便来说，也有两条
+
+1. 解析二进制文件中保存的“install name”，从中找到例如`/xxx/lib/a.dylib`或`@rpath/b.dylib`这种路径。
+2. 回退到系统路径查找，例如`/usr/local/lib`，`/usr/lib`。但是不包括homebrew安装的库，即`/opt/homebrew`。
+
+macOS完全不会像windows一样自动查找可执行文件目录，更别提动态库了。但是这个install name给了我们很大空间，它是可以修改的。我们可以先用`otool`工具看看它长什么样
+
+```bash
+$ otool -L SomePlugin.ofx
+
+SomePlugin.ofx:
+	@rpath/SomePlugin.ofx (compatibility version 0.0.0, current version 0.0.0)
+	@rpath/libAAA.0.1.0.dylib (compatibility version 0.1.0, current version 0.1.0)
+	/usr/lib/libc++.1.dylib (compatibility version 1.0.0, current version 2000.67.0)
+	/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1356.0.0)
+```
+
+可以看到，除了自身之外，他还引用了一个库libAAA，并且它的路径被标记为`@rpath`。`@rpath`其实是一个路径列表，macOS需要去这个列表里的目录查询是否存在这样的动态库，例如`libAAA.0.1.0.dylib`。这个列表可以用下列命令查询
+
+```bash
+otool -l SomePlugin.ofx
+```
+
+注意从原来大写的`-L`改成小写的`-l`，里面会有一些标记为LC_RPATH的项，这些项就组成了我们的`@rpath`需要的列表。我们可以通过`install_name_tool`来修改这个LC_RPATH，例如
+
+```bash
+install_name_tool -add_rpath "@loader_path/../Libraries" SomePlugin.ofx
+```
+
+我们就往插件里添加了一个rpath项了。同时，上述代码有一个新的概念`@loader_path`。其实，macOS还有一个`@executable_path`，它们是如下的含义
+
+- `@executable_path`指向可执行程序的目录，也就是说，如果可执行文件`a`引用了`b.dylib`，对于`b.dylib`来说，`@executable_path`是`a`所在的目录。
+- `@loader_path`指向动态库所在的目录，也就是`b.dylib`所在的目录。这对我们很有用。
+
+就上面这个例子的`@loader_path/../Libraries`，就意味着，我们加载`SomePlugin.ofx`时，需要去其上级目录下的`Libraries`去找库，于是我们就可以把所有库全放在这个文件夹内。
+
+因为每次编译都会重置`rpath`，而我们不太可能每次都去手动调用`install_name_tool`。好在cmake提供了一个便利的方式，之前我们的cmake文件中也写了，回顾一下：
+
+```cmake
+set_target_properties(${PLG_IMPL_NAME} PROPERTIES INSTALL_RPATH "@loader_path/../Frameworks;@loader_path/../Libraries")
+```
+
+这里，我同时添加了`Frameworks`和`Libraries`，作为经典的macOS目录结构。
+
+到目前为止，我们解决了第一层的依赖问题，即系统知道如何去找`SomePlugin.ofx`的依赖了。但是，加入`SomePlugin.ofx`依赖`a.dylib`，而`a.dylib`又依赖`b.dylib`，那我们也得用`install_name_tool`去修改`a.dylib`，并且递归的修改`b.dylib`、`c.dylib`等等。
+
+macOS的开发者们已经开发了一些工具，例如`macdylibbundler`，然而它非常不智能。首先它处理已存在的文件夹非常暴力，直接删除，导致我不能先处理我的库，再处理第三方库。另外，例如插件引用的是libfmt.dylib（一个符号链接别名），它会直接拆解符号连接，直接把libfmt.12.1.0.dylib复制过来并直接指向它，而非复制一个libfmt.12.1.0.dylib，建立一个libfmt.12.dylib指向它，再建立一个libfmt.dylib指向它。
+
+我们又回到手写cmake上，之前用在Windows上的`GET_RUNTIME_DEPENENCIES`仍然可以用，并且会递归查找所有依赖。只要我们遍历所有依赖，然后用`install_name_tool`一个一个修改不就行了？然后我们会写出如下的**不完美**代码
+
+```cmake
+set(TARGET_BINARY "@INSTALL_PATH@/@PLUGIN_NAME@.ofx.bundle/Contents/@OFX_ARCH_NAME@/@PLG_IMPL_NAME@.ofx")
+set(LIB_DIR "@INSTALL_PATH@/@PLUGIN_NAME@.ofx.bundle/Contents/Libraries")
+
+file(GET_RUNTIME_DEPENDENCIES
+    LIBRARIES "${TARGET_BINARY}"
+    RESOLVED_DEPENDENCIES_VAR _resolved_deps
+    UNRESOLVED_DEPENDENCIES_VAR _unresolved_deps
+    # 排除macOS 系统库
+    PRE_EXCLUDE_REGEXES "^/usr/lib/.*" "^/System/Library/.*"
+    POST_EXCLUDE_REGEXES "^/usr/lib/.*" "^/System/Library/.*"
+)
+
+message(STATUS "Found resolved dependencies: ${_resolved_deps}")
+
+set(_all_binaries_to_fix "${TARGET_BINARY}")
+
+foreach(_lib ${_resolved_deps})
+    get_filename_component(_lib_name "${_lib}" NAME)
+
+    set(_new_lib_path "${LIB_DIR}/${_lib_name}")
+
+    file(COPY "${_lib}"
+      DESTINATION "${LIB_DIR}/"
+      FOLLOW_SYMLINK_CHAIN
+    )
+
+    execute_process(COMMAND install_name_tool -id
+      "@loader_path/../Libraries/${_lib_name}"
+      "${_new_lib_path}"
+    )
+    list(APPEND _all_binaries_to_fix "${_new_lib_path}")
+endforeach()
+
+foreach(_target_file ${_all_binaries_to_fix})
+  file(GET_RUNTIME_DEPENDENCIES
+      LIBRARIES "${_target_file}"
+      RESOLVED_DEPENDENCIES_VAR _sub_resolved_deps
+      UNRESOLVED_DEPENDENCIES_VAR _sub_unresolved_deps
+      # 排除macOS 系统库
+      PRE_EXCLUDE_REGEXES "^/usr/lib/.*" "^/System/Library/.*"
+      POST_EXCLUDE_REGEXES "^/usr/lib/.*" "^/System/Library/.*"
+  )
+
+  message(STATUS "Found resolved dependencies for ${_target_file}:\n ${_sub_resolved_deps}")
+
+  foreach(_old_path ${_sub_resolved_deps})
+    get_filename_component(_lib_name "${_old_path}" NAME)
+
+    # 不管 _target_file 是否真的引用了 _old_path，
+    # 如果不匹配，install_name_tool 会静默跳过。
+    execute_process(COMMAND install_name_tool -change
+      "${_old_path}"
+      "@loader_path/../Libraries/${_lib_name}"
+      "${_target_file}"
+    )
+  endforeach()
+endforeach()
+
+# 签名（由内而外）
+message(STATUS "Signing all bundled binaries...")
+foreach(_file ${_all_binaries_to_fix})
+    execute_process(COMMAND codesign --force --sign - "${_file}")
+endforeach()
+execute_process(COMMAND codesign --force --deep --sign -
+  "@INSTALL_PATH@/@PLUGIN_NAME@.ofx.bundle")
+
+if(_unresolved_deps)
+    message(WARNING "Unresolved dependencies: ${_unresolved_deps}")
+endif()
+
+```
+
+这段代码直觉上很容易理解，我们先找到`SomePlugin.ofx`的所有依赖，然后复制过来修改它们自身的id。这一步主要是因为这些依赖通常在homebrew里，所以需要复制到`SomePlugin.ofx`的`@rpath`里。把它们的ID改成基于 `@loader_path` 的，防止它去系统路径乱找。
+
+接着再找到这些库各自的依赖，故技重施使用`GET_RUNTIME_DEPENDENCIES`找。这些库在复制过来之后，通常还用“硬路径”直接指向自己依赖的`/opt/homebrew`库，我们要一一地改成`@loader_path/../Libraries/`中的库。
+
+最后，由于改这些路径会破坏macOS的签名，所以还要重新进行签名。
+
+听起来十分完美，然而有一个严重的问题。cmake用`GET_RUNTIME_DEPENDENCIES`得到的目录，和`otool -L`得到的目录可能不完全一样。例如：
+
+```
+cmake: /opt/homebrew/Cellar/ffmpeg/8.0.1_1/lib/libavcodec.62.dylib
+otool: /opt/homebrew/opt/ffmpeg/lib/libavcodec.62.dylib
+```
+
+懂homebrew的可能都知道，这两个目录就是一个目录，只不过用了不同的符号链接。但是，`install_name_tool`非常蠢，只要两个目录字符串不严格相等，就无法替换目录。不得已，我们只能请出最古老的方法了：正则表达式手动硬解析
+
+```cmake
+set(TARGET_BINARY "@INSTALL_PATH@/@PLUGIN_NAME@.ofx.bundle/Contents/@OFX_ARCH_NAME@/@PLG_IMPL_NAME@.ofx")
+set(LIB_DIR "@INSTALL_PATH@/@PLUGIN_NAME@.ofx.bundle/Contents/Libraries")
+
+file(GET_RUNTIME_DEPENDENCIES
+    LIBRARIES "${TARGET_BINARY}"
+    RESOLVED_DEPENDENCIES_VAR _resolved_deps
+    UNRESOLVED_DEPENDENCIES_VAR _unresolved_deps
+    # 排除macOS 系统库
+    PRE_EXCLUDE_REGEXES "^/usr/lib/.*" "^/System/Library/.*"
+    POST_EXCLUDE_REGEXES "^/usr/lib/.*" "^/System/Library/.*"
+)
+
+message(STATUS "Found resolved dependencies: ${_resolved_deps}")
+
+set(_all_binaries_to_fix "${TARGET_BINARY}")
+
+foreach(_lib ${_resolved_deps})
+    get_filename_component(_lib_name "${_lib}" NAME)
+
+    set(_new_lib_path "${LIB_DIR}/${_lib_name}")
+
+    file(COPY "${_lib}"
+      DESTINATION "${LIB_DIR}/"
+      FOLLOW_SYMLINK_CHAIN
+    )
+
+    execute_process(COMMAND install_name_tool -id
+      "@loader_path/../Libraries/${_lib_name}"
+      "${_new_lib_path}"
+    )
+    list(APPEND _all_binaries_to_fix "${_new_lib_path}")
+endforeach()
+
+foreach(_target_file ${_all_binaries_to_fix})
+  execute_process(
+    COMMAND otool -L "${_target_file}"
+    OUTPUT_VARIABLE _otool_out
+  )
+
+  string(REPLACE "\n" ";" _lines "${_otool_out}")
+  foreach(_line ${_lines})
+    if(_line MATCHES "[ \t](/[^ ]+) \\(" AND NOT _line MATCHES "(/usr/lib/|/System/Library/)")
+      string(REGEX REPLACE ".*[ \t](/[^ ]+) \\(.*" "\\1" _old_path "${_line}")
+
+      get_filename_component(_lib_name "${_old_path}" NAME)
+
+      execute_process(COMMAND install_name_tool
+        -change "${_old_path}"
+        "@loader_path/../Libraries/${_lib_name}"
+        "${_target_file}"
+      )
+    endif()
+  endforeach()
+
+endforeach()
+
+# 签名（由内而外）
+message(STATUS "Signing all bundled binaries...")
+foreach(_file ${_all_binaries_to_fix})
+    execute_process(COMMAND codesign --force --sign - "${_file}")
+endforeach()
+execute_process(COMMAND codesign --force --deep --sign -
+  "@INSTALL_PATH@/@PLUGIN_NAME@.ofx.bundle")
+
+if(_unresolved_deps)
+    message(WARNING "Unresolved dependencies: ${_unresolved_deps}")
+endif()
+
+```
+
+我们直接用正则表达式，解析出任意不在系统目录下的库，然后直接进行替换，保证了字符串的严格相等。不过这也有一个坏处，如果某天苹果进行了一次巨大升级，我们的代码就要改了。
+
+# 附录
+
+## macOS下检测依赖库是否全都可以找到
+
+给出以下代码
+
+```cpp
+#include <dlfcn.h>
+#include <cstdio>
+
+int main() {
+    void* handle = dlopen("/Library/OFX/Plugins/SomePlugin.ofx.bundle/Contents/MacOS/SomePlugin.ofx", RTLD_NOW);
+    if (!handle) {
+        printf("failed!\n");
+        return 1;
+    }
+    printf("ok!\n");
+    dlclose(handle);
+    return 0;
+}
+```
+
+如果所有的`@rpath`、`@loader_path`之类的全部配置正确，那么他一定是可以输出`ok!`的。如果没有成功的话，可以使用otool去一个一个找，是谁缺了东西。
+
+## windows下的依赖库查询
+
+推荐使用`Dependencies`来查找依赖库。不过需要注意的是，这个查找是静态的查找，如果软件是通过`LoadLibrary`来在运行时加载，这个软件就没用了。这时候，我就推荐你使用微软出品的`SysinternalsSuite`中的`Procmon`来检测，对任意软件进行观察，观察它加载dll的行为，如果没找到肯定会报错。

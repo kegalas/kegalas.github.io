@@ -108,7 +108,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 7 分钟
+                    阅读时长: 13 分钟
                 </time>
             </div>
         
@@ -185,6 +185,8 @@
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">build_real_dll_path</span>(WCHAR <span style="color:#f92672">*</span>out, <span style="color:#66d9ef">size_t</span> outChars, <span style="color:#66d9ef">const</span> WCHAR <span style="color:#f92672">*</span>realName) {
 </span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 从代理的.ofx文件，转到真正的插件实现dll
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>    (<span style="color:#66d9ef">void</span>)outChars;
+</span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    WCHAR dir[MAX_PATH];
 </span></span><span style="display:flex;"><span>    dir[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74">L</span><span style="color:#e6db74">&#39;\0&#39;</span>;
 </span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">GetModuleFileNameW</span>(g_hModule, dir, MAX_PATH);
@@ -234,7 +236,7 @@
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">LeaveCriticalSection</span>(<span style="color:#f92672">&amp;</span>g_cs);
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">InterlockedExchange</span>(<span style="color:#f92672">&amp;</span>g_initialized, (g_real <span style="color:#f92672">!=</span> NULL) <span style="color:#f92672">?</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">:</span> <span style="color:#ae81ff">2</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">InterlockedExchange</span>(<span style="color:#f92672">&amp;</span>g_initialized, (g_real <span style="color:#f92672">!=</span> NULL) <span style="color:#f92672">?</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">:</span> <span style="color:#ae81ff">0</span>);
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> (g_real <span style="color:#f92672">!=</span> NULL);
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
@@ -271,12 +273,12 @@
 </span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">InitializeCriticalSection</span>(<span style="color:#f92672">&amp;</span>g_cs);
 </span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">InterlockedExchange</span>(<span style="color:#f92672">&amp;</span>g_initialized, <span style="color:#ae81ff">0</span>);
 </span></span><span style="display:flex;"><span>    } <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (fdwReason <span style="color:#f92672">==</span> DLL_PROCESS_DETACH) {
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (g_real) {
-</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">FreeLibrary</span>(g_real);
-</span></span><span style="display:flex;"><span>            g_real <span style="color:#f92672">=</span> NULL;
-</span></span><span style="display:flex;"><span>            g_real_GetPlugin <span style="color:#f92672">=</span> NULL;
-</span></span><span style="display:flex;"><span>            g_real_GetNumber <span style="color:#f92672">=</span> NULL;
-</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// NOTE: https://learn.microsoft.com/zh-cn/windows/win32/api/libloaderapi/nf-libloaderapi-freelibrary
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#75715e">// https://learn.microsoft.com/zh-cn/windows/win32/dlls/dllmain
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#75715e">// 不应该在此调用FreeLibrary(g_real)，否则会陷入死锁。windows在程序关闭时会自动处理这件事。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        g_real <span style="color:#f92672">=</span> NULL;
+</span></span><span style="display:flex;"><span>        g_real_GetPlugin <span style="color:#f92672">=</span> NULL;
+</span></span><span style="display:flex;"><span>        g_real_GetNumber <span style="color:#f92672">=</span> NULL;
 </span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">DeleteCriticalSection</span>(<span style="color:#f92672">&amp;</span>g_cs);
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> TRUE;
@@ -425,6 +427,198 @@
 </span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    message(<span style="color:#e6db74">WARNING</span> <span style="color:#e6db74">&#34;Unresolved dependencies: ${_unresolved_deps}&#34;</span>)<span style="color:#960050;background-color:#1e0010">
 </span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>endif()<span style="color:#960050;background-color:#1e0010">
 </span></span></span></code></pre></div><h1 id="macos上的处理">macOS上的处理</h1>
+<p>macOS拥有截然不同的动态库处理规则。简便来说，也有两条</p>
+<ol>
+<li>解析二进制文件中保存的“install name”，从中找到例如<code>/xxx/lib/a.dylib</code>或<code>@rpath/b.dylib</code>这种路径。</li>
+<li>回退到系统路径查找，例如<code>/usr/local/lib</code>，<code>/usr/lib</code>。但是不包括homebrew安装的库，即<code>/opt/homebrew</code>。</li>
+</ol>
+<p>macOS完全不会像windows一样自动查找可执行文件目录，更别提动态库了。但是这个install name给了我们很大空间，它是可以修改的。我们可以先用<code>otool</code>工具看看它长什么样</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ otool -L SomePlugin.ofx
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>SomePlugin.ofx:
+</span></span><span style="display:flex;"><span>	@rpath/SomePlugin.ofx <span style="color:#f92672">(</span>compatibility version 0.0.0, current version 0.0.0<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>	@rpath/libAAA.0.1.0.dylib <span style="color:#f92672">(</span>compatibility version 0.1.0, current version 0.1.0<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>	/usr/lib/libc++.1.dylib <span style="color:#f92672">(</span>compatibility version 1.0.0, current version 2000.67.0<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>	/usr/lib/libSystem.B.dylib <span style="color:#f92672">(</span>compatibility version 1.0.0, current version 1356.0.0<span style="color:#f92672">)</span>
+</span></span></code></pre></div><p>可以看到，除了自身之外，他还引用了一个库libAAA，并且它的路径被标记为<code>@rpath</code>。<code>@rpath</code>其实是一个路径列表，macOS需要去这个列表里的目录查询是否存在这样的动态库，例如<code>libAAA.0.1.0.dylib</code>。这个列表可以用下列命令查询</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>otool -l SomePlugin.ofx
+</span></span></code></pre></div><p>注意从原来大写的<code>-L</code>改成小写的<code>-l</code>，里面会有一些标记为LC_RPATH的项，这些项就组成了我们的<code>@rpath</code>需要的列表。我们可以通过<code>install_name_tool</code>来修改这个LC_RPATH，例如</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>install_name_tool -add_rpath <span style="color:#e6db74">&#34;@loader_path/../Libraries&#34;</span> SomePlugin.ofx
+</span></span></code></pre></div><p>我们就往插件里添加了一个rpath项了。同时，上述代码有一个新的概念<code>@loader_path</code>。其实，macOS还有一个<code>@executable_path</code>，它们是如下的含义</p>
+<ul>
+<li><code>@executable_path</code>指向可执行程序的目录，也就是说，如果可执行文件<code>a</code>引用了<code>b.dylib</code>，对于<code>b.dylib</code>来说，<code>@executable_path</code>是<code>a</code>所在的目录。</li>
+<li><code>@loader_path</code>指向动态库所在的目录，也就是<code>b.dylib</code>所在的目录。这对我们很有用。</li>
+</ul>
+<p>就上面这个例子的<code>@loader_path/../Libraries</code>，就意味着，我们加载<code>SomePlugin.ofx</code>时，需要去其上级目录下的<code>Libraries</code>去找库，于是我们就可以把所有库全放在这个文件夹内。</p>
+<p>因为每次编译都会重置<code>rpath</code>，而我们不太可能每次都去手动调用<code>install_name_tool</code>。好在cmake提供了一个便利的方式，之前我们的cmake文件中也写了，回顾一下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cmake" data-lang="cmake"><span style="display:flex;"><span>set_target_properties(<span style="color:#f92672">${</span>PLG_IMPL_NAME<span style="color:#f92672">}</span> <span style="color:#e6db74">PROPERTIES</span> <span style="color:#e6db74">INSTALL_RPATH</span> <span style="color:#e6db74">&#34;@loader_path/../Frameworks;@loader_path/../Libraries&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span></code></pre></div><p>这里，我同时添加了<code>Frameworks</code>和<code>Libraries</code>，作为经典的macOS目录结构。</p>
+<p>到目前为止，我们解决了第一层的依赖问题，即系统知道如何去找<code>SomePlugin.ofx</code>的依赖了。但是，加入<code>SomePlugin.ofx</code>依赖<code>a.dylib</code>，而<code>a.dylib</code>又依赖<code>b.dylib</code>，那我们也得用<code>install_name_tool</code>去修改<code>a.dylib</code>，并且递归的修改<code>b.dylib</code>、<code>c.dylib</code>等等。</p>
+<p>macOS的开发者们已经开发了一些工具，例如<code>macdylibbundler</code>，然而它非常不智能。首先它处理已存在的文件夹非常暴力，直接删除，导致我不能先处理我的库，再处理第三方库。另外，例如插件引用的是libfmt.dylib（一个符号链接别名），它会直接拆解符号连接，直接把libfmt.12.1.0.dylib复制过来并直接指向它，而非复制一个libfmt.12.1.0.dylib，建立一个libfmt.12.dylib指向它，再建立一个libfmt.dylib指向它。</p>
+<p>我们又回到手写cmake上，之前用在Windows上的<code>GET_RUNTIME_DEPENENCIES</code>仍然可以用，并且会递归查找所有依赖。只要我们遍历所有依赖，然后用<code>install_name_tool</code>一个一个修改不就行了？然后我们会写出如下的<strong>不完美</strong>代码</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cmake" data-lang="cmake"><span style="display:flex;"><span>set(<span style="color:#e6db74">TARGET_BINARY</span> <span style="color:#e6db74">&#34;@INSTALL_PATH@/@PLUGIN_NAME@.ofx.bundle/Contents/@OFX_ARCH_NAME@/@PLG_IMPL_NAME@.ofx&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>set(<span style="color:#e6db74">LIB_DIR</span> <span style="color:#e6db74">&#34;@INSTALL_PATH@/@PLUGIN_NAME@.ofx.bundle/Contents/Libraries&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>file(<span style="color:#e6db74">GET_RUNTIME_DEPENDENCIES</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">LIBRARIES</span> <span style="color:#e6db74">&#34;${TARGET_BINARY}&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">RESOLVED_DEPENDENCIES_VAR</span> <span style="color:#e6db74">_resolved_deps</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">UNRESOLVED_DEPENDENCIES_VAR</span> <span style="color:#e6db74">_unresolved_deps</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 排除macOS 系统库
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#e6db74">PRE_EXCLUDE_REGEXES</span> <span style="color:#e6db74">&#34;^/usr/lib/.*&#34;</span> <span style="color:#e6db74">&#34;^/System/Library/.*&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">POST_EXCLUDE_REGEXES</span> <span style="color:#e6db74">&#34;^/usr/lib/.*&#34;</span> <span style="color:#e6db74">&#34;^/System/Library/.*&#34;</span>
+</span></span><span style="display:flex;"><span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>message(<span style="color:#e6db74">STATUS</span> <span style="color:#e6db74">&#34;Found resolved dependencies: ${_resolved_deps}&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>set(<span style="color:#e6db74">_all_binaries_to_fix</span> <span style="color:#e6db74">&#34;${TARGET_BINARY}&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>foreach(<span style="color:#e6db74">_lib</span> <span style="color:#f92672">${</span>_resolved_deps<span style="color:#f92672">}</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    get_filename_component(<span style="color:#e6db74">_lib_name</span> <span style="color:#e6db74">&#34;${_lib}&#34;</span> <span style="color:#e6db74">NAME</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    set(<span style="color:#e6db74">_new_lib_path</span> <span style="color:#e6db74">&#34;${LIB_DIR}/${_lib_name}&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    file(<span style="color:#e6db74">COPY</span> <span style="color:#e6db74">&#34;${_lib}&#34;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">DESTINATION</span> <span style="color:#e6db74">&#34;${LIB_DIR}/&#34;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">FOLLOW_SYMLINK_CHAIN</span>
+</span></span><span style="display:flex;"><span>    )<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    execute_process(<span style="color:#e6db74">COMMAND</span> <span style="color:#e6db74">install_name_tool</span> <span style="color:#e6db74">-id</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">&#34;@loader_path/../Libraries/${_lib_name}&#34;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">&#34;${_new_lib_path}&#34;</span>
+</span></span><span style="display:flex;"><span>    )<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    list(<span style="color:#e6db74">APPEND</span> <span style="color:#e6db74">_all_binaries_to_fix</span> <span style="color:#e6db74">&#34;${_new_lib_path}&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>endforeach()<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>foreach(<span style="color:#e6db74">_target_file</span> <span style="color:#f92672">${</span>_all_binaries_to_fix<span style="color:#f92672">}</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>  file(<span style="color:#e6db74">GET_RUNTIME_DEPENDENCIES</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">LIBRARIES</span> <span style="color:#e6db74">&#34;${_target_file}&#34;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">RESOLVED_DEPENDENCIES_VAR</span> <span style="color:#e6db74">_sub_resolved_deps</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">UNRESOLVED_DEPENDENCIES_VAR</span> <span style="color:#e6db74">_sub_unresolved_deps</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e"># 排除macOS 系统库
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>      <span style="color:#e6db74">PRE_EXCLUDE_REGEXES</span> <span style="color:#e6db74">&#34;^/usr/lib/.*&#34;</span> <span style="color:#e6db74">&#34;^/System/Library/.*&#34;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">POST_EXCLUDE_REGEXES</span> <span style="color:#e6db74">&#34;^/usr/lib/.*&#34;</span> <span style="color:#e6db74">&#34;^/System/Library/.*&#34;</span>
+</span></span><span style="display:flex;"><span>  )<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>  message(<span style="color:#e6db74">STATUS</span> <span style="color:#e6db74">&#34;Found resolved dependencies for ${_target_file}:\n ${_sub_resolved_deps}&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>  foreach(<span style="color:#e6db74">_old_path</span> <span style="color:#f92672">${</span>_sub_resolved_deps<span style="color:#f92672">}</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    get_filename_component(<span style="color:#e6db74">_lib_name</span> <span style="color:#e6db74">&#34;${_old_path}&#34;</span> <span style="color:#e6db74">NAME</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    <span style="color:#75715e"># 不管 _target_file 是否真的引用了 _old_path，
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e"># 如果不匹配，install_name_tool 会静默跳过。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    execute_process(<span style="color:#e6db74">COMMAND</span> <span style="color:#e6db74">install_name_tool</span> <span style="color:#e6db74">-change</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">&#34;${_old_path}&#34;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">&#34;@loader_path/../Libraries/${_lib_name}&#34;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">&#34;${_target_file}&#34;</span>
+</span></span><span style="display:flex;"><span>    )<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>  endforeach()<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>endforeach()<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># 签名（由内而外）
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>message(<span style="color:#e6db74">STATUS</span> <span style="color:#e6db74">&#34;Signing all bundled binaries...&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>foreach(<span style="color:#e6db74">_file</span> <span style="color:#f92672">${</span>_all_binaries_to_fix<span style="color:#f92672">}</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    execute_process(<span style="color:#e6db74">COMMAND</span> <span style="color:#e6db74">codesign</span> <span style="color:#e6db74">--force</span> <span style="color:#e6db74">--sign</span> <span style="color:#e6db74">-</span> <span style="color:#e6db74">&#34;${_file}&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>endforeach()<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>execute_process(<span style="color:#e6db74">COMMAND</span> <span style="color:#e6db74">codesign</span> <span style="color:#e6db74">--force</span> <span style="color:#e6db74">--deep</span> <span style="color:#e6db74">--sign</span> <span style="color:#e6db74">-</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;@INSTALL_PATH@/@PLUGIN_NAME@.ofx.bundle&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>if(<span style="color:#e6db74">_unresolved_deps</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    message(<span style="color:#e6db74">WARNING</span> <span style="color:#e6db74">&#34;Unresolved dependencies: ${_unresolved_deps}&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>endif()<span style="color:#960050;background-color:#1e0010">
+</span></span></span></code></pre></div><p>这段代码直觉上很容易理解，我们先找到<code>SomePlugin.ofx</code>的所有依赖，然后复制过来修改它们自身的id。这一步主要是因为这些依赖通常在homebrew里，所以需要复制到<code>SomePlugin.ofx</code>的<code>@rpath</code>里。把它们的ID改成基于 <code>@loader_path</code> 的，防止它去系统路径乱找。</p>
+<p>接着再找到这些库各自的依赖，故技重施使用<code>GET_RUNTIME_DEPENDENCIES</code>找。这些库在复制过来之后，通常还用“硬路径”直接指向自己依赖的<code>/opt/homebrew</code>库，我们要一一地改成<code>@loader_path/../Libraries/</code>中的库。</p>
+<p>最后，由于改这些路径会破坏macOS的签名，所以还要重新进行签名。</p>
+<p>听起来十分完美，然而有一个严重的问题。cmake用<code>GET_RUNTIME_DEPENDENCIES</code>得到的目录，和<code>otool -L</code>得到的目录可能不完全一样。例如：</p>
+<pre tabindex="0"><code>cmake: /opt/homebrew/Cellar/ffmpeg/8.0.1_1/lib/libavcodec.62.dylib
+otool: /opt/homebrew/opt/ffmpeg/lib/libavcodec.62.dylib
+</code></pre><p>懂homebrew的可能都知道，这两个目录就是一个目录，只不过用了不同的符号链接。但是，<code>install_name_tool</code>非常蠢，只要两个目录字符串不严格相等，就无法替换目录。不得已，我们只能请出最古老的方法了：正则表达式手动硬解析</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cmake" data-lang="cmake"><span style="display:flex;"><span>set(<span style="color:#e6db74">TARGET_BINARY</span> <span style="color:#e6db74">&#34;@INSTALL_PATH@/@PLUGIN_NAME@.ofx.bundle/Contents/@OFX_ARCH_NAME@/@PLG_IMPL_NAME@.ofx&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>set(<span style="color:#e6db74">LIB_DIR</span> <span style="color:#e6db74">&#34;@INSTALL_PATH@/@PLUGIN_NAME@.ofx.bundle/Contents/Libraries&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>file(<span style="color:#e6db74">GET_RUNTIME_DEPENDENCIES</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">LIBRARIES</span> <span style="color:#e6db74">&#34;${TARGET_BINARY}&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">RESOLVED_DEPENDENCIES_VAR</span> <span style="color:#e6db74">_resolved_deps</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">UNRESOLVED_DEPENDENCIES_VAR</span> <span style="color:#e6db74">_unresolved_deps</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 排除macOS 系统库
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#e6db74">PRE_EXCLUDE_REGEXES</span> <span style="color:#e6db74">&#34;^/usr/lib/.*&#34;</span> <span style="color:#e6db74">&#34;^/System/Library/.*&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">POST_EXCLUDE_REGEXES</span> <span style="color:#e6db74">&#34;^/usr/lib/.*&#34;</span> <span style="color:#e6db74">&#34;^/System/Library/.*&#34;</span>
+</span></span><span style="display:flex;"><span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>message(<span style="color:#e6db74">STATUS</span> <span style="color:#e6db74">&#34;Found resolved dependencies: ${_resolved_deps}&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>set(<span style="color:#e6db74">_all_binaries_to_fix</span> <span style="color:#e6db74">&#34;${TARGET_BINARY}&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>foreach(<span style="color:#e6db74">_lib</span> <span style="color:#f92672">${</span>_resolved_deps<span style="color:#f92672">}</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    get_filename_component(<span style="color:#e6db74">_lib_name</span> <span style="color:#e6db74">&#34;${_lib}&#34;</span> <span style="color:#e6db74">NAME</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    set(<span style="color:#e6db74">_new_lib_path</span> <span style="color:#e6db74">&#34;${LIB_DIR}/${_lib_name}&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    file(<span style="color:#e6db74">COPY</span> <span style="color:#e6db74">&#34;${_lib}&#34;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">DESTINATION</span> <span style="color:#e6db74">&#34;${LIB_DIR}/&#34;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">FOLLOW_SYMLINK_CHAIN</span>
+</span></span><span style="display:flex;"><span>    )<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    execute_process(<span style="color:#e6db74">COMMAND</span> <span style="color:#e6db74">install_name_tool</span> <span style="color:#e6db74">-id</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">&#34;@loader_path/../Libraries/${_lib_name}&#34;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">&#34;${_new_lib_path}&#34;</span>
+</span></span><span style="display:flex;"><span>    )<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    list(<span style="color:#e6db74">APPEND</span> <span style="color:#e6db74">_all_binaries_to_fix</span> <span style="color:#e6db74">&#34;${_new_lib_path}&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>endforeach()<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>foreach(<span style="color:#e6db74">_target_file</span> <span style="color:#f92672">${</span>_all_binaries_to_fix<span style="color:#f92672">}</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>  execute_process(
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">COMMAND</span> <span style="color:#e6db74">otool</span> <span style="color:#e6db74">-L</span> <span style="color:#e6db74">&#34;${_target_file}&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">OUTPUT_VARIABLE</span> <span style="color:#e6db74">_otool_out</span>
+</span></span><span style="display:flex;"><span>  )<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>  string(<span style="color:#e6db74">REPLACE</span> <span style="color:#e6db74">&#34;\n&#34;</span> <span style="color:#e6db74">&#34;;&#34;</span> <span style="color:#e6db74">_lines</span> <span style="color:#e6db74">&#34;${_otool_out}&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>  foreach(<span style="color:#e6db74">_line</span> <span style="color:#f92672">${</span>_lines<span style="color:#f92672">}</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    if(<span style="color:#e6db74">_line</span> <span style="color:#e6db74">MATCHES</span> <span style="color:#e6db74">&#34;[ \t](/[^ ]+) \\(&#34;</span> <span style="color:#e6db74">AND</span> <span style="color:#e6db74">NOT</span> <span style="color:#e6db74">_line</span> <span style="color:#e6db74">MATCHES</span> <span style="color:#e6db74">&#34;(/usr/lib/|/System/Library/)&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>      string(<span style="color:#e6db74">REGEX</span> <span style="color:#e6db74">REPLACE</span> <span style="color:#e6db74">&#34;.*[ \t](/[^ ]+) \\(.*&#34;</span> <span style="color:#e6db74">&#34;\\1&#34;</span> <span style="color:#e6db74">_old_path</span> <span style="color:#e6db74">&#34;${_line}&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>      get_filename_component(<span style="color:#e6db74">_lib_name</span> <span style="color:#e6db74">&#34;${_old_path}&#34;</span> <span style="color:#e6db74">NAME</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>      execute_process(<span style="color:#e6db74">COMMAND</span> <span style="color:#e6db74">install_name_tool</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">-change</span> <span style="color:#e6db74">&#34;${_old_path}&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;@loader_path/../Libraries/${_lib_name}&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;${_target_file}&#34;</span>
+</span></span><span style="display:flex;"><span>      )<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    endif()<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>  endforeach()<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>endforeach()<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># 签名（由内而外）
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>message(<span style="color:#e6db74">STATUS</span> <span style="color:#e6db74">&#34;Signing all bundled binaries...&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>foreach(<span style="color:#e6db74">_file</span> <span style="color:#f92672">${</span>_all_binaries_to_fix<span style="color:#f92672">}</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    execute_process(<span style="color:#e6db74">COMMAND</span> <span style="color:#e6db74">codesign</span> <span style="color:#e6db74">--force</span> <span style="color:#e6db74">--sign</span> <span style="color:#e6db74">-</span> <span style="color:#e6db74">&#34;${_file}&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>endforeach()<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>execute_process(<span style="color:#e6db74">COMMAND</span> <span style="color:#e6db74">codesign</span> <span style="color:#e6db74">--force</span> <span style="color:#e6db74">--deep</span> <span style="color:#e6db74">--sign</span> <span style="color:#e6db74">-</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;@INSTALL_PATH@/@PLUGIN_NAME@.ofx.bundle&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>if(<span style="color:#e6db74">_unresolved_deps</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    message(<span style="color:#e6db74">WARNING</span> <span style="color:#e6db74">&#34;Unresolved dependencies: ${_unresolved_deps}&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>endif()<span style="color:#960050;background-color:#1e0010">
+</span></span></span></code></pre></div><p>我们直接用正则表达式，解析出任意不在系统目录下的库，然后直接进行替换，保证了字符串的严格相等。不过这也有一个坏处，如果某天苹果进行了一次巨大升级，我们的代码就要改了。</p>
+<h1 id="附录">附录</h1>
+<h2 id="macos下检测依赖库是否全都可以找到">macOS下检测依赖库是否全都可以找到</h2>
+<p>给出以下代码</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;dlfcn.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;cstdio&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">void</span><span style="color:#f92672">*</span> handle <span style="color:#f92672">=</span> dlopen(<span style="color:#e6db74">&#34;/Library/OFX/Plugins/SomePlugin.ofx.bundle/Contents/MacOS/SomePlugin.ofx&#34;</span>, RTLD_NOW);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>handle) {
+</span></span><span style="display:flex;"><span>        printf(<span style="color:#e6db74">&#34;failed!</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    printf(<span style="color:#e6db74">&#34;ok!</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+</span></span><span style="display:flex;"><span>    dlclose(handle);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>如果所有的<code>@rpath</code>、<code>@loader_path</code>之类的全部配置正确，那么他一定是可以输出<code>ok!</code>的。如果没有成功的话，可以使用otool去一个一个找，是谁缺了东西。</p>
+<h2 id="windows下的依赖库查询">windows下的依赖库查询</h2>
+<p>推荐使用<code>Dependencies</code>来查找依赖库。不过需要注意的是，这个查找是静态的查找，如果软件是通过<code>LoadLibrary</code>来在运行时加载，这个软件就没用了。这时候，我就推荐你使用微软出品的<code>SysinternalsSuite</code>中的<code>Procmon</code>来检测，对任意软件进行观察，观察它加载dll的行为，如果没找到肯定会报错。</p>
 
 </section>
 
@@ -724,6 +918,12 @@
     <li><a href="#前言">前言</a></li>
     <li><a href="#windows上的处理">Windows上的处理</a></li>
     <li><a href="#macos上的处理">macOS上的处理</a></li>
+    <li><a href="#附录">附录</a>
+      <ol>
+        <li><a href="#macos下检测依赖库是否全都可以找到">macOS下检测依赖库是否全都可以找到</a></li>
+        <li><a href="#windows下的依赖库查询">windows下的依赖库查询</a></li>
+      </ol>
+    </li>
   </ol>
 </nav>
                 </div>
